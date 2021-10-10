@@ -1,0 +1,115 @@
+body {
+  color: #333333;
+  background-color: white;
+  margin: 1em 4%;
+}
+h1 {
+  text-indent: 100%;
+  height: 60px;
+  white-space: nowrap;
+  overflow: hidden;
+  margin-left: 20%;
+  background-image: url("../images/jarp-logo.png");
+  background-repeat: no-repeat;
+}
+.entry0, .entry1 {
+  border-top-style: dotted;
+  border-top-width: 2px;
+  border-top-color: DarkSlateGray;
+  padding: 0 0.5em 0 0.5em;
+}
+.entry0 {
+  background-color: #f0f0f0;
+}
+blockquote, pre {
+  margin: 0.5em 6%;
+  padding: 0em 0.5em;
+  color: DarkSlateGray;
+  border-left-color: DarkSlateGray;
+  border-left-style: ridge;
+  border-left-width: 2px;
+  overflow: auto; overflow-y: hidden;
+}
+dt {
+  margin: 0.5em 2.5em;
+/*  padding: 0em 0.5em;*/
+}
+
+ol, ul, dd {
+  margin: 0.5em 3.5em;
+  padding: 0em 0.5em;
+}
+
+dd ol {
+  margin-left: 1em;
+}
+
+blockquote dt {
+  margin: 0.5em 0em;
+  padding: 0em 0.5em 0.5em 0.em;
+}
+
+blockquote ol, blockquote ul, blockquote dd {
+  margin: 0.5em 0.5em;
+  padding: 0em 0.5em;
+}
+h2 {
+  margin-bottom: 0;
+  padding: 0.5em 0;
+  text-align: center;
+  background-color: #d0f0f0;
+  border-top-style: dotted;
+  border-top-width: 2px;
+  border-color: DarkSlateGray;
+}
+p {
+  margin: 0 2em;
+  padding-bottom: 0.5em;
+  padding-top: 0em;
+}
+
+blockquote p {
+  margin-left: 0;
+  padding-bottom: 0;
+}
+
+hr.hide {
+  display: none;
+}
+
+blockquote dt {
+}
+
+img{
+  border:solid 1px #ccc;
+  padding:4px;
+}
+
+form table {
+  margin: 0.5em 0;
+  padding: 0.5em;
+  border-color: DarkSlateGray;
+  border-style: ridge;
+  border-width: 1px;
+  float: right;
+}
+
+form a img {
+  display: block;
+}
+
+address {
+  clear: both;
+  text-align: right;
+}
+
+address br {
+  clear: both;
+}
+
+address img {
+  float: right;
+  padding-top: 0.5em;
+  border: 0;
+}
+/* vim: set sw=2: */

@@ -1,0 +1,239 @@
+body#gmail-google-com {
+	background-color: #ebe2cd !important;
+}
+
+/* header image */
+body#gmail-google-com div#ds_inbox img {
+	display: none !important;
+}
+
+body#gmail-google-com div#ds_inbox {
+	background-image: url(http://persistent.info/images/20041005.gmaillogo.gif) !important;
+	width: 143px !important;
+	height: 59px !important;
+	background-repeat: no-repeat !important;
+}
+
+/* regular links */
+body#gmail-google-com span.lk,
+body#gmail-google-com a.lc,
+body#gmail-google-com a.lk
+{
+	text-decoration: none !important;
+	color: #9f3638 !important;
+}
+
+/* read/unread row colors */
+body#gmail-google-com table.tlc tr.ur {
+	background-color: #d3cbb8 !important;
+}
+
+body#gmail-google-com table.tlc tr.rr {
+	background-color: #ebe2cd !important;
+}
+
+body#gmail-google-com table.tlc tr.ur td,
+body#gmail-google-com table.tlc tr.rr td{
+	border: 0 !important;
+}
+
+/* message hovering snippet expansion */
+body#gmail-google-com table.tlc tr.ur:hover,
+body#gmail-google-com table.tlc tr.rr:hover{
+	background-color: #ffc !important;
+}
+
+body#gmail-google-com table.tlc tr.ur:hover td,
+body#gmail-google-com table.tlc tr.rr:hover td{
+	border-width: 1px 0 1px 0 !important;
+	border-color: black !important;
+	border-style: solid !important;
+	vertical-align: top !important;
+}
+
+body#gmail-google-com table.tlc tr.ur:hover .sn,
+body#gmail-google-com table.tlc tr.rr:hover .sn{
+	display: block !important;
+	white-space: normal !important;
+}
+
+/* and email address display */
+body#gmail-google-com table.tlc tr.ur:hover td span,
+body#gmail-google-com table.tlc tr.rr:hover td span {
+	display: block;
+}
+
+/* labels should still be inline */
+body#gmail-google-com table.tlc tr.ur:hover td span.ct,
+body#gmail-google-com table.tlc tr.rr:hover td span.ct{
+	display: inline;
+}
+
+body#gmail-google-com table.tlc tr.ur:hover td span[id]:after,
+body#gmail-google-com table.tlc tr.rr:hover td span[id]:after{
+  content: attr(id);
+  display: block;
+  margin-left: -38px; /* hack to hide "user_" id prefix */
+  color: #b6af9e;
+}
+
+
+/* sidebar links */
+body#gmail-google-com div#nav table.cv,
+body#gmail-google-com div#nav table.cv td {
+	background: #ebe2cd !important;
+}
+
+body#gmail-google-com table.cv td.tl,
+body#gmail-google-com table.cv td.bl {
+	height: 0 !important;
+}
+
+/* both current and other */
+body#gmail-google-com table.cv td span.lk,
+body#gmail-google-com div.nl span.lk{
+	display: block !important;
+	background: #d3cbb8 !important;
+	border: solid 1px #b5ae9f !important;
+	-moz-border-radius: 6px !important;
+	padding: 2px !important;
+	margin-right: 5px !important;
+}
+
+
+/* just the current one */
+body#gmail-google-com table.cv td span.lk {
+	background: #d3cbb8 !important;
+	border: solid 1px #b5ae9f !important;
+}
+
+/* unselected ones */
+body#gmail-google-com div.nl span.lk {
+	background: #ebe2cd !important;
+	border: solid 1px #ebe2cd !important;
+}
+
+body#gmail-google-com div.nl span.lk:hover {
+	background: #d3cbb8 !important;
+	border-color: #b5ae9f !important;
+}
+
+/* hide "New!" super-script */
+body#gmail-google-com div#nav sup {
+	display: none !important;
+}
+
+
+/* side border */
+body#gmail-google-com div#co div {
+	border: 0 !important;	
+}
+
+/* top/bottom bar */
+body#gmail-google-com div#tc_top table,
+body#gmail-google-com div#tc_top table td.tl,
+body#gmail-google-com div#tc_top table td.tr,
+body#gmail-google-com div#tc_top table.th,
+
+body#gmail-google-com div#tc_bot table,
+body#gmail-google-com div#tc_bot table td.bl,
+body#gmail-google-com div#tc_bot table td.br,
+body#gmail-google-com div#tc_bot table.th{
+	background: none !important;
+}
+
+body#gmail-google-com div#co div#tc_top,
+body#gmail-google-com div#co div#tc_bot {
+	border: solid 1px black !important;
+	-moz-border-radius: 8px !important;
+	padding: 2px !important;
+	margin: 5px 0 5px 0 !important;
+	background: #d3cbb8 !important;
+}
+
+/* selection links in bar */
+body#gmail-google-com div#co div#tc_top span.l,
+body#gmail-google-com div#co div#tc_bot span.l{
+	color: #9f3638 !important;
+}
+
+
+/* mailbox contents */
+body#gmail-google-com div#co div#tbd {
+	background: #ebe2cd !important;
+	border: solid 1px black !important;
+	-moz-border-radius: 8px !important;
+	padding: 4px 0 4px 0 !important;
+}
+
+/* labels */
+body#gmail-google-com div#nb_0 {
+	background: none;
+	padding: 0;
+	margin: 0;
+	border: 0;
+}
+
+body#gmail-google-com div#nb_0 div {
+	background: none;
+	padding: 0px;
+	margin: 0;
+	border: 0;
+}
+
+body#gmail-google-com div#nb_0 div div {
+	border: solid 1px #56765e;
+	-moz-border-radius: 6px !important;
+	padding: 0 1px 0 0 !important;
+}
+
+body#gmail-google-com div#nb_0 div div div {
+	border: 0 !important;
+	padding: 0 !important;
+	background: none !important;
+	-moz-border-radius: 0 !important;
+}
+
+body#gmail-google-com div#nb_0 div.s,
+body#gmail-google-com div#nb_0 div.h{
+	padding: 1px 3px 0 3px !important;
+	background: none !important;
+	border-bottom: solid 1px #56765e !important;
+	-moz-opacity: 0.5;
+}
+
+body#gmail-google-com div#nb_0 table,
+body#gmail-google-com div#nb_0 table td.tl,
+body#gmail-google-com div#nb_0 table td.tr,
+body#gmail-google-com div#nb_0 table td.bl,
+body#gmail-google-com div#nb_0 table td.br {
+	background: none !important;
+}
+
+body#gmail-google-com div#nb_0 table.nb {
+	background: #d0e7c5 !important;
+	-moz-border-radius-bottomright: 6 !important;
+	-moz-border-radius-bottomleft: 6 !important;
+}
+
+body#gmail-google-com div#nb_0 table.nb div.lk {
+	text-decoration: none !important;
+	margin: 3px 0 0 3px !important;
+}
+
+/* edit labels links */
+body#gmail-google-com div#nb_0 table.nb div#prf_l {
+	margin-right: 50px !important;
+	-moz-opacity: 0.7 !important;
+}
+
+
+/* hide invite link */
+body#gmail-google-com #il {
+	display: none !important;
+}
+
+/* hide footer */
+body#gmail-google-com div#ft {
+	display: none !important;
+}
