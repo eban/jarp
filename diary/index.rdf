@@ -9,31 +9,31 @@
   xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
   xmlns:taxo="http://purl.org/rss/1.0/modules/taxonomy/"
   xmlns:trackback="http://madskills.com/public/xml/rss/module/trackback/">
-  <channel rdf:about="http://jarp.does.notwork.org/diary/index.rdf">
+  <channel rdf:about="https://eban.github.io/jarp/diary/index.rdf">
     <title>Just another Ruby porter,</title>
-    <link>http://jarp.does.notwork.org/diary/</link>
+    <link>https://eban.github.io/jarp/diary/</link>
     <description>たぶんRubyに関する日誌</description>
-    <image rdf:resource="http://jarp.does.notwork.org/diary/JARP.png"/>
+    <image rdf:resource="https://eban.github.io/jarp/diary/JARP.png"/>
     <items>
       <rdf:Seq>
-        <rdf:li resource="http://jarp.does.notwork.org/201702151"/>
-        <rdf:li resource="http://jarp.does.notwork.org/201702111"/>
-        <rdf:li resource="http://jarp.does.notwork.org/201701041"/>
-        <rdf:li resource="http://jarp.does.notwork.org/201612281"/>
-        <rdf:li resource="http://jarp.does.notwork.org/201612261"/>
+        <rdf:li resource="https://eban.github.io/jarp/201702151"/>
+        <rdf:li resource="https://eban.github.io/jarp/201702111"/>
+        <rdf:li resource="https://eban.github.io/jarp/201701041"/>
+        <rdf:li resource="https://eban.github.io/jarp/201612281"/>
+        <rdf:li resource="https://eban.github.io/jarp/201612261"/>
       </rdf:Seq>
     </items>
     <dc:creator>eban</dc:creator>
     <dc:language>ja</dc:language>
   </channel>
-  <image rdf:about="http://jarp.does.notwork.org/diary/JARP.png">
+  <image rdf:about="https://eban.github.io/jarp/diary/JARP.png">
     <title>Just another Ruby porter,</title>
-    <url>http://jarp.does.notwork.org/diary/JARP.png</url>
-    <link>http://jarp.does.notwork.org/diary/</link>
+    <url>https://eban.github.io/jarp/diary/JARP.png</url>
+    <link>https://eban.github.io/jarp/diary/</link>
   </image>
-  <item rdf:about="http://jarp.does.notwork.org/201702151">
+  <item rdf:about="https://eban.github.io/jarp/201702151">
     <title>第27回シェル芸勉強会を #Vimシェル芸 で</title>
-    <link>http://jarp.does.notwork.org/201702151</link>
+    <link>https://eban.github.io/jarp/201702151</link>
     <description>
 Q1 GNU sedと同じ。
 % echo abcdefghijklmn | ex /dev/stdin +'s/\(.\)\(.\)/\1\u\2/g|p|q!'
@@ -239,9 +239,9 @@ tはcopyの別名。cはchangeなのでcopyは短縮形でもcoと書かない�
     <dc:creator>eban</dc:creator>
     <dc:date>2017-02-15T21:39:00.409972+09:00</dc:date>
   </item>
-  <item rdf:about="http://jarp.does.notwork.org/201702111">
+  <item rdf:about="https://eban.github.io/jarp/201702111">
     <title>第27回シェル芸勉強会</title>
-    <link>http://jarp.does.notwork.org/201702111</link>
+    <link>https://eban.github.io/jarp/201702111</link>
     <description>
 今回はリモート参戦。
 sedのtがどーのこーのとあったので、Q6をtを使って解く。
@@ -321,9 +321,9 @@ sのパターンで10個以上になったらmatchしないようにしてやれ
     <dc:creator>eban</dc:creator>
     <dc:date>2017-02-12T01:25:44.893339+09:00</dc:date>
   </item>
-  <item rdf:about="http://jarp.does.notwork.org/201701041">
+  <item rdf:about="https://eban.github.io/jarp/201701041">
     <title>GNU sed 4.3 released</title>
-    <link>http://jarp.does.notwork.org/201701041</link>
+    <link>https://eban.github.io/jarp/201701041</link>
     <description>
 ああ、とうとう名無しのラベルは受け付けなくなってしまった。
 バグ認定だ。
@@ -365,9 +365,9 @@ sed (GNU sed) 4.2.2
     <dc:creator>eban</dc:creator>
     <dc:date>2017-02-12T01:25:00.338392+09:00</dc:date>
   </item>
-  <item rdf:about="http://jarp.does.notwork.org/201612281">
+  <item rdf:about="https://eban.github.io/jarp/201612281">
     <title>忘年会</title>
-    <link>http://jarp.does.notwork.org/201612281</link>
+    <link>https://eban.github.io/jarp/201612281</link>
     <description>
 HUBには芋しかない。あと寒い。
 </description>
@@ -379,9 +379,9 @@ HUBには芋しかない。あと寒い。
     <dc:creator>eban</dc:creator>
     <dc:date>2016-12-29T00:41:15.744087+09:00</dc:date>
   </item>
-  <item rdf:about="http://jarp.does.notwork.org/201612261">
+  <item rdf:about="https://eban.github.io/jarp/201612261">
     <title>第26回シェル芸勉強会 Q3 #シェル芸</title>
-    <link>http://jarp.does.notwork.org/201612261</link>
+    <link>https://eban.github.io/jarp/201612261</link>
     <description>
 とりあえずQ3でunzipしない別解を思い付いたので。
 % cp 20141019OSC_LT.pptx img.zip
