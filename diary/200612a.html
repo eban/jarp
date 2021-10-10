@@ -1,0 +1,415 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2006-12-a</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="200611c.html">
+<link rel="next" href="200612b.html">
+
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2006年12月上旬〜</p>
+<hr>
+<div>
+<a href="200611c.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="200612b.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2006/12/01 start -->
+<h2><a name="20061201" href="200612a.html#20061201">2006-12-01 (Fri)</a></h2>
+<!-- 2006-12-02 14:25:16 -->
+
+<div class="entry1">
+<h3><a name="200612011" title="200612011" href="200612a.html#200612011">■</a> 
+11月のspam</h3>
+<p>
+469通。Gmail側約3600スレッド。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200612012" title="200612012" href="200612a.html#200612012">■</a> 
+[Vim] Vim7の対応する括弧に対する挙動</h3>
+<p>
+そうそう。タイトルの件も気になってたんだった。<br>
+対応する括弧の色が変わるといきなりカーソルが飛んだように見えて、<br>
+どっちがカーソルなのかわからなくなる。<br>
+これは正直いらいらする。<br>
+どこで設定されてるかわからないので、
+</p>
+<pre>
+:help paren&lt;TAB&gt;
+</pre>
+<p>
+で補完してみたら、match-parensとmatchparenあたりがあやしい。<br>
+実際はmatchparenだった。
+</p>
+<pre>
+You can avoid loading this plugin by setting the &quot;loaded_matchparen&quot; variable: &gt;
+      :let loaded_matchparen = 1
+</pre>
+<p>
+らしい。というわけで~/.vimrcに
+</p>
+<pre>
+let loaded_matchparen = 1
+</pre>
+<p>
+と書いて解決。
+</p>
+<!-- section end -->
+</div>
+<!-- 2006/12/01 end -->
+
+
+
+<hr class="hide">
+<!-- 2006/12/02 start -->
+<h2><a name="20061202" href="200612a.html#20061202">2006-12-02 (Sat)</a></h2>
+<!-- 2006-12-03 02:49:29 -->
+
+<div class="entry1">
+<h3><a name="200612021" title="200612021" href="200612a.html#200612021">■</a> 
+[FC6] switchdesk-gui</h3>
+<p>
+
+<a href="http://www.atmarkit.co.jp/flinux/rensai/linuxtips/970switchdesk.html">Fedora Coreでデスクトップを切り替えるには</a>
+
+を見ると、システムメニューに追加されるらしいので入れてみた。<br>
+やはり現れない。うーむ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200612022" title="200612022" href="200612a.html#200612022">■</a> 
+[FC6] GNOME</h3>
+<p>
+って、考えてみたらあの記事はGNOMEだよな。<br>
+せっかく入れたんだからswitchdeskでGNOMEへ切り替えてみる。<br>
+KDEよりメモリの使用量が少ない気がする。なんか軽い。<br>
+システムもあるし。でも時計の文字が小さすぎ。<br>
+これさえなんとかなればあまり不満はない。<br>
+まあ、FCを使い始めの頃はGNOMEを使ってたわけだし。
+</p>
+<!-- section end -->
+</div>
+<!-- 2006/12/02 end -->
+
+
+
+<hr class="hide">
+<!-- 2006/12/03 start -->
+<h2><a name="20061203" href="200612a.html#20061203">2006-12-03 (Sun)</a></h2>
+<!-- 2006-12-04 02:34:11 -->
+
+<div class="entry1">
+<h3><a name="200612031" title="200612031" href="200612a.html#200612031">■</a> 
+<a href="http://www.rubyinside.com/advent2006/2-erubis.html">[Ruby] Erubis - A faster alternative to ERB / eRuby</a></h3>
+<p>
+
+<a href="http://www.kuwata-lab.com/erubis/">Erubis</a>速すぎ。
+pure rubyなのにerubyより速いなんて。
+</p>
+
+<p>
+使い方はERBとほとんど同じ。たとえば
+<a href="http://jp.rubyist.net/magazine/?0017-BundledLibraries#l4">るびまのERBの基本的な使い方の例</a>
+
+</p>
+<pre>
+require 'erb'
+str = &quot;hoge&quot;
+erb = ERB.new(&quot;value = &lt;%= str %&gt;&quot;)
+puts erb.result(binding)
+</pre>
+<p>
+と同じことをするには
+</p>
+<pre>
+require 'erubis'
+str = &quot;hoge&quot;
+erb = Erubis::Eruby.new(&quot;value = &lt;%= str %&gt;&quot;)
+puts erb.result(binding)
+</pre>
+<p>
+となる。置き換えも簡単そうだ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2006/12/03 end -->
+
+
+
+<hr class="hide">
+<!-- 2006/12/04 start -->
+<h2><a name="20061204" href="200612a.html#20061204">2006-12-04 (Mon)</a></h2>
+<!-- 2006-12-05 02:03:46 -->
+
+<div class="entry1">
+<h3><a name="200612041" title="200612041" href="200612a.html#200612041">■</a> 
+[Ruby] CONFIG_SHELL問題</h3>
+<p>
+今日Ruby 1.8.5-p2がリリースされたもんだから、<br>
+また
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-dev/29358">CONFIG_SHELL問題</a>がクローズアップされることになった。<br>
+これはautoconf 2.60で作ったconfigureだと、<br>
+NetBSD上で実行するとなぜか内部的にkshが使われてしまい、<br>
+その挙動の違いでエラーが起きるのが原因。
+</p>
+
+<p>
+具体的には
+</p>
+<pre>
+prefix=/usr/local
+sitedir='${prefix}/lib/ruby/site_ruby'
+SITE_DIR=&quot;`eval \&quot;echo ${sitedir}\&quot;`&quot;
+</pre>
+<p>
+のevalでエラーが起こる。これはshellのメタ文字をquoteするためなんだけど、<br>
+実際はquoteされない。たとえば
+</p>
+<pre>
+prefix='*'
+sitedir='${prefix}'
+SITE_DIR=&quot;`eval \&quot;echo ${sitedir}\&quot;`&quot;
+</pre>
+<p>
+とした場合、SITE_DIRは'*'になるのを期待しているが、<br>
+実際はshellによって挙動は違う。NetBSDのkshではエラーになるし、<br>
+ash,bashはカレントディレクトリのファイルをワイルドカード展開してしまう。<br>
+唯一zshだけが*となる。<br>
+
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-dev/29444">[ruby-dev:29444]</a>のようにquoteする位置をずらすと、<br>
+zsh,kshは期待通りに動くが、ash,bashは展開されてしまう。
+</p>
+
+<p>
+あ、そうか。もう一段必要なんだから\が足りないのか。
+</p>
+<pre>
+SITE_DIR=&quot;`eval echo \\\&quot;${sitedir}\\\&quot;`&quot;
+</pre>
+<p>
+が正解のようだ。いや、kshがだめだ。うーむ。じゃ
+</p>
+<pre>
+SITE_DIR=`eval echo \&quot;${sitedir}\&quot;`
+</pre>
+<p>
+ならどうだろう？外側の&quot;&quot;は本質的には要らないはず。<br>
+これでとりあえずNetBSDのkshでもいけてるようだ。
+</p>
+
+<p>
+NetBSDだとなぜ内部的にkshが使われてしまうのかという疑問は残るが。
+</p>
+<!-- section end -->
+</div>
+<!-- 2006/12/04 end -->
+
+
+
+<hr class="hide">
+<!-- 2006/12/05 start -->
+<h2><a name="20061205" href="200612a.html#20061205">2006-12-05 (Tue)</a></h2>
+<!-- 2006-12-06 02:19:14 -->
+
+<div class="entry1">
+<h3><a name="200612051" title="200612051" href="200612a.html#200612051">■</a> 
+[Diigo] Diigoのブックマークは#以降を無視する</h3>
+<p>
+なんか変だなと思った原因はこれだったか。<br>
+拡張だからちょっと手が出ない。<br>
+del.icio.usへのマルチポストも無視されてるようだ。<br>
+やっぱbookmarkletにしたいよなあ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2006/12/05 end -->
+
+
+
+<hr class="hide">
+<!-- 2006/12/06 start -->
+<h2><a name="20061206" href="200612a.html#20061206">2006-12-06 (Wed)</a></h2>
+<!-- 2006-12-07 01:30:34 -->
+
+<div class="entry1">
+<h3><a name="200612061" title="200612061" href="200612a.html#200612061">■</a> 
+<a href="http://xruby.com/">[Ruby] XRuby</a></h3>
+<blockquote><p>
+XRuby is an open source Ruby compiler which compiles Ruby
+source code (.rb) to Java bytecode (.class).
+</p></blockquote>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200612062" title="200612062" href="200612a.html#200612062">■</a> 
+[DVD] ぽすれん</h3>
+<p>
+ぽすれんの配送を郵便にして早2ヶ月。やたらとむらがある。<br>
+翌日に届くときもあれば3日かかるときもある。<br>
+最近は年末のせいか遅くなりがち。2,3日が普通になりつつある。<br>
+って、じゃヤマトに戻したほうがいいじゃん。
+</p>
+<!-- section end -->
+</div>
+<!-- 2006/12/06 end -->
+
+
+
+<hr class="hide">
+<!-- 2006/12/07 start -->
+<h2><a name="20061207" href="200612a.html#20061207">2006-12-07 (Thu)</a></h2>
+<!-- 2006-12-08 02:28:24 -->
+
+<div class="entry1">
+<h3><a name="200612071" title="200612071" href="200612a.html#200612071">■</a> 
+[FC6] Xfce</h3>
+<p>
+ついでにXfceを試す。これもそれほど不満はない。<br>
+時計はLED形式すれば十分な大きさと言えるし、<br>
+下手したらGNOMEよりも自分の好きな設定にできてるかもしれない。
+</p>
+<!-- section end -->
+</div>
+<!-- 2006/12/07 end -->
+
+
+
+<hr class="hide">
+<!-- 2006/12/08 start -->
+<h2><a name="20061208" href="200612a.html#20061208">2006-12-08 (Fri)</a></h2>
+<!-- 2006-12-09 02:29:08 -->
+
+<div class="entry1">
+<h3><a name="200612081" title="200612081" href="200612a.html#200612081">■</a> 
+[FC6] Beagle</h3>
+<p>
+Firefoxのステータスラインを見るといつの間にか犬がいる。<br>
+マウスカーソルを持ってくと&quot;Beagle Indexing active. Click to disable.&quot;と出た。<br>
+たぶんFC6にしてから入ったんだよね。<br>
+自分で入れた覚えないしなあ。<br>
+あ、でもDesktop Searchってどっかで設定した気がしないでもない。<br>
+よく見たらアンインストールできないようだ。<br>
+やはりシステムにインストールされてるのか。
+</p>
+<!-- section end -->
+</div>
+<!-- 2006/12/08 end -->
+
+
+
+<hr class="hide">
+<!-- 2006/12/09 start -->
+<h2><a name="20061209" href="200612a.html#20061209">2006-12-09 (Sat)</a></h2>
+<!-- 2006-12-10 02:39:33 -->
+
+<div class="entry1">
+<h3><a name="200612091" title="200612091" href="200612a.html#200612091">■</a> 
+<a href="http://ctrlproxy.vernstok.nl/">[Soft] ctrlproxy 3.0.0</a></h3>
+<blockquote><dl>
+<dt>
+About:
+<dd>
+ctrlproxy is an IRC server with multiserver support. It runs as a
+daemon and connects to a number of IRC servers, then allows you to connect
+from a workstation and work as the user that is logged in to the IRC
+server. After you disconnect, it maintains the connection to the server.
+It acts like any normal IRC server, so you can use any IRC client to
+connect to it. It supports multiple client connections to one IRC server
+(under the same nick), allowing you to connect to IRC using your IRC nick,
+even while you have an IRC session open somewhere else. It supports logging
+(in any user-specified format), password authentication, and CTCP (in case
+no clients are connected).   IRC servers can be contacted over IPv6 and/or
+using SSL. Automatic identification with NickServ is supported, as well as
+various types of backlog. 
+</dl></blockquote>
+<!-- section end -->
+</div>
+<!-- 2006/12/09 end -->
+
+
+
+<hr class="hide">
+<!-- 2006/12/10 start -->
+<h2><a name="20061210" href="200612a.html#20061210">2006-12-10 (Sun)</a></h2>
+<!-- 2006-12-11 01:28:07 -->
+
+<div class="entry1">
+<h3><a name="200612101" title="200612101" href="200612a.html#200612101">■</a> 
+免許更新</h3>
+<p>
+やっと行けた。15時半までってのはなかなか予定が合わないな。
+</p>
+<!-- section end -->
+</div>
+<!-- 2006/12/10 end -->
+
+<hr>
+<div>
+<a href="200611c.html">&lt;Prev(,)</a> | 
+<a href="200612b.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

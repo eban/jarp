@@ -1,0 +1,584 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2015-8-c</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="201508b.html">
+<link rel="next" href="201509a.html">
+
+<link rel="stylesheet" type="text/css" href="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.css">
+<script async type="text/javascript" src="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.js"></script>
+<script type="text/javascript">
+<!--       
+$(document).ready(function() {
+  prettyPrint();
+});
+-->
+</script>
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2015年8月下旬〜</p>
+<hr>
+<div>
+<a href="201508b.html" accesskey=",">&lt;Older(,)</a> | 
+<a href="201509a.html" accesskey=".">Newer(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2015/08/21 start -->
+<h2><a name="20150821" href="201508c.html#20150821">2015-08-21 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="201508211" title="201508211" href="201508c.html#201508211">■</a> 
+本当は間違っていた拡張リスト</h3>
+<p>
+昨日の方法は実は間違っていて各行には
+</p>
+<pre>
+Extension0=/home/eban/.thunderbird/XXXXXXXX.default/extensions/{58D4392A-842E-11DE-B51A-C7B855D89593}.xpi
+Extension1=/home/eban/.thunderbird/XXXXXXXX.default/extensions/keyconfig@dorando
+Extension2=/home/eban/.thunderbird/XXXXXXXX.default/extensions/{46551EC9-40F0-4e47-8E18-8E5CF550CFB8}.xpi
+</pre>
+<p>
+のようにExtensionN=をつけないといけなかった。<br>
+でも、Thunderbirdは文句も言わずに受け付けてくれて、<br>
+しかもExtensionN=もちゃんとつけてくれた。気が利いてる！
+</p>
+<!-- section end -->
+</div>
+<!-- 2015/08/21 end -->
+
+
+
+<hr class="hide">
+<!-- 2015/08/22 start -->
+<h2><a name="20150822" href="201508c.html#20150822">2015-08-22 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="201508221" title="201508221" href="201508c.html#201508221">■</a> 
+ファイルのタイムスタンプ #シェル芸</h3>
+<p>
+2015-08-22 01:23:45という形式で得たい。<br>
+Rubyだとこんな感じだ。
+</p>
+<pre>
+% ruby -e 'puts File.stat(ARGV[0]).mtime.strftime(&quot;%F %T&quot;)' file.txt
+2014-08-22 01:23:45
+</pre>
+<p>
+GNU coreutils lsなら形式を指定できるので可能。ちょっとまどろっこしいが。
+</p>
+<pre>
+% ls -l --time-style=&quot;+%F %T&quot; file.txt | cut -d' ' -f6,7
+2014-08-22 01:23:45
+</pre>
+<p>
+そこでstat(1)になるわけだけど、これも余計なものがついてしまう。
+</p>
+<pre>
+% stat -c %y file.txt
+2014-08-22 01:23:45.000000000 +0900
+% stat -c %y file.txt | cut -c-19
+2014-08-22 01:23:45
+</pre>
+<p>
+info statを眺めていたら
+</p>
+<pre>
+   The ‘%W’, ‘%X’, ‘%Y’, and ‘%Z’ formats accept a precision preceded by
+a period to specify the number of digits to print after the decimal
+point.  For example, ‘%.3X’ outputs the last access time to millisecond
+precision.  If a period is given but no precision, ‘stat’ uses 9 digits,
+so ‘%.X’ is equivalent to ‘%.9X’.  When discarding excess precision,
+time stamps are truncated toward minus infinity.
+</pre>
+<p>
+とあった。%yについては何も書かれてない。<br>
+ひょっとしてと試してみたら、printfと同じ挙動になっていた。
+</p>
+<pre>
+% stat -c %.19y file.txt         
+2014-08-22 01:23:45
+</pre>
+<p>
+ソースを読んでみたら最終的にはprintfに&quot;%.19s&quot;のように伝わるようで、<br>
+結局そういうことだった。つまりこんなことも可能なわけだ。
+</p>
+<pre>
+% stat -c %U file.txt 
+eban
+% stat -c %10U file.txt
+      eban
+</pre>
+<!-- section end -->
+</div>
+<!-- 2015/08/22 end -->
+
+
+
+<hr class="hide">
+<!-- 2015/08/23 start -->
+<h2><a name="20150823" href="201508c.html#20150823">2015-08-23 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="201508231" title="201508231" href="201508c.html#201508231">■</a> 
+AWS Lambda functionでcontext.doneを呼んだからってすぐ終了するわけではない</h3>
+<p>
+エラー処理してcontext.doneなりcontext.failを呼べば、<br>
+なんとかく終了するような気がするが、<br>
+実際は処理が続行し思わぬ挙動になる。<br>
+たとえば
+</p>
+<pre>
+if (err) {
+  console.log(&quot;Error&quot;);
+  context.fail(&quot;&quot;);
+}
+console.log(&quot;Success&quot;);
+</pre>
+<p>
+のように書いてしまうとSuccessと表示される。<br>
+elseで囲むかif文の中でreturnする必要あり。<br>
+終わると思い込んでいると中々このバグに気づかない。
+</p>
+<!-- section end -->
+</div>
+<!-- 2015/08/23 end -->
+
+
+
+<hr class="hide">
+<!-- 2015/08/24 start -->
+<h2><a name="20150824" href="201508c.html#20150824">2015-08-24 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="201508241" title="201508241" href="201508c.html#201508241">■</a> 
+convertでスケッチ状に</h3>
+<p>
+-sketchはかすれさせるためじゃなくて、<br>
+その名の通りスケッチっぽくする効果なので、<br>
+ちょっとその例を紹介。
+</p>
+<pre>
+% convert bakeneko-2015-orig.png -type grayscale -sketch 10x10+30x0 bakeneko-2015-sketch.png
+</pre>
+<p>
+<img src="../images/bakeneko-2015-orig.png" alt="">
+<img src="../images/bakeneko-2015-sketch.png" alt="">
+</p>
+<p>
+当然ではあるが、サイズはでかくなる。
+</p>
+<!-- section end -->
+</div>
+<!-- 2015/08/24 end -->
+
+
+
+<hr class="hide">
+<!-- 2015/08/25 start -->
+<h2><a name="20150825" href="201508c.html#20150825">2015-08-25 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="201508251" title="201508251" href="201508c.html#201508251">■</a> 
+amazonにcURLでアクセスすると高い確率で503になる</h3>
+<p>
+Pocketに登録するのにcURLでtitleを取ろうとして気づいた。<br>
+amazonにアクセスするとやたらと503になる。
+</p>
+<pre>
+% repeat 10 { curl -sL -w '%{http_code}\n' http://www.amazon.co.jp/dp/B00XVN1OSU/ -o /dev/null; sleep 1 }
+503
+200
+503
+200
+200
+503
+200
+503
+503
+503
+</pre>
+<p>
+全部503になるならあきらめもするが、<br>
+こんなHTTPステータスがランダムに返ってくるんじゃ、<br>
+200になるまで繰り返す処理をする人も出てくるわけで、<br>
+余計負荷が上がるだけだと思うんだけどねえ。<br>
+それはそれとしてブラウザからだとそんなことにはならないので、<br>
+試しに内容が空のUser-Agentをつけてみたらいけた。
+</p>
+<pre>
+% repeat 10 { curl -sL -w '%{http_code}\n' http://www.amazon.co.jp/dp/B00XVN1OSU/ -o /dev/null -A ''; sleep 1 }
+200
+200
+200
+200
+200
+200
+200
+200
+200
+200
+</pre>
+<p>
+wgetも同様なので-U &quot;&quot;が必要。
+</p>
+<!-- section end -->
+</div>
+<!-- 2015/08/25 end -->
+
+
+
+<hr class="hide">
+<!-- 2015/08/26 start -->
+<h2><a name="20150826" href="201508c.html#20150826">2015-08-26 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="201508261" title="201508261" href="201508c.html#201508261">■</a> 
+statでls -l相当</h3>
+<p>
+stat --helpを見てたら部品は揃ってるようで簡単に実現できた。
+</p>
+<pre>
+% ls -l util-linux_2.25.2*
+-rw-r--r-- 1 eban eban  308972 2015-08-05 10:38:42 util-linux_2.25.2-4ubuntu3.debian.tar.xz
+-rw-r--r-- 1 eban eban    3563 2015-08-05 10:38:41 util-linux_2.25.2-4ubuntu3.dsc
+-rw-r--r-- 1 eban eban 3703644 2014-10-27 18:39:03 util-linux_2.25.2.orig.tar.xz
+% stat -c &quot;%A %h %U %G %7s %.19y %n&quot; util-linux_2.25.2*
+-rw-r--r-- 1 eban eban  308972 2015-08-05 10:38:42 util-linux_2.25.2-4ubuntu3.debian.tar.xz
+-rw-r--r-- 1 eban eban    3563 2015-08-05 10:38:41 util-linux_2.25.2-4ubuntu3.dsc
+-rw-r--r-- 1 eban eban 3703644 2014-10-27 18:39:03 util-linux_2.25.2.orig.tar.xz
+</pre>
+<p>
+本当はサイズの文字列の長さを動的に求めないといけないが、結構いけるもんだな。<br>
+</p>
+<p>
+ああ、export TIME_STYLE=&quot;+%F %T&quot;してあるのでちょっとずるしてる。
+</p>
+<!-- section end -->
+</div>
+<!-- 2015/08/26 end -->
+
+
+
+<hr class="hide">
+<!-- 2015/08/27 start -->
+<h2><a name="20150827" href="201508c.html#20150827">2015-08-27 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="201508271" title="201508271" href="201508c.html#201508271">■</a> 
+findでls -l相当</h3>
+<p>
+findでもできた。
+</p>
+<pre>
+% ls -l util-linux_2.25.2*
+-rw-r--r-- 1 eban eban  308972 2015-08-05 10:38:42 util-linux_2.25.2-4ubuntu3.debian.tar.xz
+-rw-r--r-- 1 eban eban    3563 2015-08-05 10:38:41 util-linux_2.25.2-4ubuntu3.dsc
+-rw-r--r-- 1 eban eban 3703644 2014-10-27 18:39:03 util-linux_2.25.2.orig.tar.xz
+% find util-linux_2.25.2* -printf &quot;%M %n %u %g %7s %TY-%Tm-%Td %.8TT %p\n&quot;
+-rw-r--r-- 1 eban eban  308972 2015-08-05 10:38:42 util-linux_2.25.2-4ubuntu3.debian.tar.xz
+-rw-r--r-- 1 eban eban    3563 2015-08-05 10:38:41 util-linux_2.25.2-4ubuntu3.dsc
+-rw-r--r-- 1 eban eban 3703644 2014-10-27 18:39:03 util-linux_2.25.2.orig.tar.xz
+</pre>
+<p>
+いや形式にこだわらなければ-lsでいいんだけどね。
+</p>
+<pre>
+% find util-linux_2.25.2* -ls                                             
+31069467  304 -rw-r--r--   1 eban     eban       308972 Aug  5 10:38 util-linux_2.25.2-4ubuntu3.debian.tar.xz
+31069465    4 -rw-r--r--   1 eban     eban         3563 Aug  5 10:38 util-linux_2.25.2-4ubuntu3.dsc
+31069466 3620 -rw-r--r--   1 eban     eban      3703644 Oct 27  2014 util-linux_2.25.2.orig.tar.xz
+</pre>
+<!-- section end -->
+</div>
+<!-- 2015/08/27 end -->
+
+
+
+<hr class="hide">
+<!-- 2015/08/28 start -->
+<h2><a name="20150828" href="201508c.html#20150828">2015-08-28 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="201508281" title="201508281" href="201508c.html#201508281">■</a> 
+Ericsson's Exchange EWS Provider</h3>
+<p>
+ThunderbirdのLightningにOutlookの予定表と同期してくれるプラグインを以前使っていたことがある。<br>
+Thunderbirdの更新についていけなくなってほとんどreadonly状態だったので外しちゃったんだけど、<br>
+ふとまた探してみたら完璧に甦っていた。
+</p>
+<p>
+http://askubuntu.com/questions/562498/how-do-i-sync-my-exchange-calendar-in-ubuntu-thunderbird-lightning How Do I Sync My Exchange Calendar in Ubuntu (Thunderbird / Lightning)? - Ask Ubuntu<br>
+この通りにすればokだ。<br>
+Ericssonってあのエリクソンだよな。なぜか凄く活発に活動してる。
+</p>
+<!-- section end -->
+</div>
+<!-- 2015/08/28 end -->
+
+
+
+<hr class="hide">
+<!-- 2015/08/29 start -->
+<h2><a name="20150829" href="201508c.html#20150829">2015-08-29 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="201508291" title="201508291" href="201508c.html#201508291">■</a> 
+<a href="https://blog.ueda.asia/?p=6877">第18回シェル芸勉強会にUstで参加</a></h3>
+<p>
+今回もUstで参戦。
+</p>
+<h4><a name="201508291S1" href="201508c.html#201508291S1">_</a> <strong>Q1 次のファイルは1列目がキー、2列目が値ですが、「オトン」と「オカン」の両方の値があるキーを探してください。</strong>: </h4>
+<div class="sub">
+<p>
+まずは小手調べ問題。ひねりなし。
+</p>
+<pre>
+% grep 'オ[トカ]ン' text | sort -u | cut -d' ' -f1 | uniq -d
+003
+</pre>
+</div>
+<h4><a name="201508291S2" href="201508c.html#201508291S2">_</a> <strong>Q2 次の２つのファイルについて、aだけにあるレコード、bだけにあるレコード、両方にあるレコードを分類せよ</strong>: </h4>
+<div class="sub">
+<p>
+grepで力技。
+</p>
+<pre>
+% grep -vf b a | sed 's/^/a /'; grep -vf a b | sed 's/^/b /'; grep -f b a | sed 's/^/c /'
+a 鹿島田
+a 川崎
+b 登戸
+b 南多摩
+c 谷保
+c 分倍河原
+</pre>
+<p>
+diffを使った解がなかなかあざやかだったので別解。GNU diffの特有のオプションを使用。
+</p>
+<pre>
+% diff --new-l='b %L' --old-l='a %L' --unchanged-l='c %L' &lt;(sort a) &lt;(sort b) | sort   
+a 川崎
+a 鹿島田
+b 南多摩
+b 登戸
+c 分倍河原
+c 谷保
+</pre>
+<p>
+まあ、長いんであれだけど。
+</p>
+</div>
+<h4><a name="201508291S3" href="201508c.html#201508291S3">_</a> <strong>Q3 次の３つのファイルについて、それぞれ書いてある数字の合計値を求めましょう。</strong>: </h4>
+<div class="sub">
+<p>
+空白と改行を+に変換するが、最後の改行も変換されると構文エラーになるので無理矢理0を追加している。
+</p>
+<pre>
+% for i in a b c;do echo &quot;$i $[`tr -s ' \n' + &lt; $i`0]&quot; ;done         
+a 15
+b 6
+c 24
+</pre>
+<p>
+numsumを使えばこんな方法も。
+</p>
+<pre>
+% for i in a b c;do echo -n &quot;$i &quot;; xargs -n1 &lt; $i | numsum; done 
+a 15
+b 6
+c 24
+</pre>
+</div>
+<h4><a name="201508291S4" href="201508c.html#201508291S4">_</a> <strong>Q4 xのついている場所の縦軸と横軸の記号を出力するワンライナーを考えてください。</strong>: </h4>
+<div class="sub">
+<p>
+awk芸。これもひねりなし。
+</p>
+<pre>
+% awk 'NR==1{split($0,a,&quot;&quot;);FS=&quot;&quot;;next}i=index($0,&quot;x&quot;){print $1&quot;-&quot;a[i]}' cross
+a-b
+f-d
+</pre>
+</div>
+<h4><a name="201508291S5" href="201508c.html#201508291S5">_</a> <strong>Q5 次のテキストから空白行の重複だけ除去してください。つまり、2行以上の空白行を1行にまとめてください。</strong>: </h4>
+<div class="sub">
+<p>
+これはcat -sで終了。他にmore -sでもok。<br>
+あとsed -zを使った例のawk版。
+</p>
+<pre>
+% awk 'gsub(/\n\n+/,&quot;\n\n&quot;)' RS='\0' ORS= text
+あ
+あ
+
+い
+い
+
+う
+
+え
+
+お お
+お
+お
+</pre>
+</div>
+<h4><a name="201508291S6" href="201508c.html#201508291S6">_</a> <strong>Q6 チェスボードの画像ファイルを作ってください。</strong>: </h4>
+<div class="sub">
+<p>
+PBMのP1ならテキストファイルなので簡単。
+</p>
+<pre>
+% (echo 'P1 8 8'; printf &quot;0101010110101010%.0s&quot; {1..4}) | convert - -scale 5000% chess.png
+</pre>
+<p>
+convertは見易くしてるだけで、肝はprintfだけ。4回繰り返しになる。<br>
+このくらいなら直接埋め込んじゃったほうが手っ取り早い。<br>
+だったらひねらずこれでいいな。
+</p>
+<pre>
+% s=0101010110101010; echo P1 8 8 $s$s$s$s | convert - -scale 5000% chess.png
+</pre>
+</div>
+<h4><a name="201508291S7" href="201508c.html#201508291S7">_</a> <strong>Q7 次のファイルには1組だけ同じ文字が含まれていますが、何行目と何行目にあるでしょうか？</strong>: </h4>
+<div class="sub">
+<p>
+これもひねりなし。
+</p>
+<pre>
+% grep -o . chinese_characters | sort | uniq -d | grep -f - -n chinese_characters      
+6:㕐㕑㕒㕓㕔㕕㕖㕗㕘㕙㕚㕛㕜㕝㕞㕟
+13:㗀㗁㗂㗃㗄㗅㗆㗇㗈㗉㕐㗊㗋㗌㗍㗎
+</pre>
+</div>
+<h4><a name="201508291S8" href="201508c.html#201508291S8">_</a> <strong>Q8 次のファイルの中に、複数回登場する数字の並びがいくつかありますが、その中で最長のものはどれでしょうか?</strong>: </h4>
+<div class="sub">
+<p>
+入れ子になっているとだめだが、この場合はいけてしまう。
+</p>
+<pre>
+% sed 's/\(...\+\).*\1/\n\1\n\1\n/g' number | uniq -d 
+003
+922
+</pre>
+<p>
+この結果を見れば何をやってるかわかると思うし、入れ子がだめな理由もわかるだろう。
+</p>
+<pre>
+% sed 's/\(...\+\)\(.*\)\1/[\1]\2[\1]/g' number      
+8264611130023148519839960536022802096895154738213681101[003]238[003]191122723[922]378[922]942503388843815799
+</pre>
+</div>
+<!-- section end -->
+</div>
+<!-- 2015/08/29 end -->
+
+
+
+<hr class="hide">
+<!-- 2015/08/30 start -->
+<h2><a name="20150830" href="201508c.html#20150830">2015-08-30 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="201508301" title="201508301" href="201508c.html#201508301">■</a> 
+Q8落穂拾い</h3>
+<p>
+あちこち解答を見てまわってQ8はこんな方法もあるなとと思った。
+</p>
+<pre>
+% awk '$0=$0$0$0' number | fold -3 | sort | uniq -d
+003
+922
+</pre>
+<p>
+3回分連結させることで3文字に満たないのを積極的に次のずれに利用すれば、<br>
+余計な文字を挿入させなくてもいい。<br>
+つまりsedならこんな感じ。
+</p>
+<pre>
+% sed 's/.*/&amp;&amp;&amp;/;s/.../&amp;\n/g' number | sort | uniq -d
+003
+922
+</pre>
+<!-- section end -->
+</div>
+<!-- 2015/08/30 end -->
+
+
+
+<hr class="hide">
+<!-- 2015/08/31 start -->
+<h2><a name="20150831" href="201508c.html#20150831">2015-08-31 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="201508311" title="201508311" href="201508c.html#201508311">■</a> 
+Windows 10でScanSnap S1500、問題なし</h3>
+<p>
+@ScanSnapJPさんから
+<a href="https://twitter.com/ScanSnapJP/status/638287428860575744">メンション</a>が来てびっくり。<br>
+見てみると問題なく使えるとのことで一安心。<br>
+<a href="http://faq.pfu.jp/faq/show/1366">ScanSnapのWindows® 10 日本語版 への対応状況を教えてください。 | ScanSnap よくあるご質問 (PFU)</a></p>
+<!-- section end -->
+</div>
+<!-- 2015/08/31 end -->
+
+<hr>
+<div>
+<a href="201508b.html">&lt;Older(,)</a> | 
+<a href="201509a.html">Newer(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

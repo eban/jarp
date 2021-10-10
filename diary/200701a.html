@@ -1,0 +1,610 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2007-1-a</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="200612c.html">
+<link rel="next" href="200701b.html">
+
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2007年1月上旬〜</p>
+<hr>
+<div>
+<a href="200612c.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="200701b.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2007/01/01 start -->
+<h2><a name="20070101" href="200701a.html#20070101">2007-01-01 (Mon)</a></h2>
+<!-- 2007-01-02 02:46:11 -->
+
+<div class="entry1">
+<h3><a name="200701011" title="200701011" href="200701a.html#200701011">■</a> 
+12月のspam</h3>
+<p>
+298通。Gmail側約4100スレッド。<br>
+今回はbefore:2006/11/30で検索して全部消した。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200701012" title="200701012" href="200701a.html#200701012">■</a> 
+[Video] GOOD LUCK!!</h3>
+<p>
+年末に録っておいたGOOD LUCK!!全話を一気に見た。<br>
+1.5倍速で5時間かかったよ。<br>
+「華麗なる一族」が1/14から始まることがよくわかった。<br>
+何度このCMを見たことか。
+</p>
+<!-- section end -->
+</div>
+<!-- 2007/01/01 end -->
+
+
+
+<hr class="hide">
+<!-- 2007/01/02 start -->
+<h2><a name="20070102" href="200701a.html#20070102">2007-01-02 (Tue)</a></h2>
+<!-- 2007-01-03 02:44:12 -->
+
+<div class="entry1">
+<h3><a name="200701021" title="200701021" href="200701a.html#200701021">■</a> 
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-talk/232148">[Ruby] operator precedence of assignment</a></h3>
+<p>
+この挙動を変えられたら全世界のRuby Golferが非常に困るので、<br>
+是非ともこのままで。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200701022" title="200701022" href="200701a.html#200701022">■</a> 
+<a href="http://magicssoft.ru/?folder=projects&amp;page=GRZipII">[Soft] GRZip II</a></h3>
+<p>
+圧縮速度が速いのが特長。
+</p><blockquote><p>
+GRZipII - is a high-performance file compressor based on
+Burrows-Wheeler Transform, Schindler Transform, Move-To-Front and
+Weighted Frequency Counting. It uses The Block-Sorting Lossless Data
+Compression Algorithm, which has received considerable attention over
+recent years for both its simplicity and effectiveness. This
+implementation has compression rate of 2.234 bps on the Calgary
+Corpus(14 files) without preprocessing filters.
+</p></blockquote><p>
+Ruby 1.8.5 patchlevel 12のtarballで試してみる。
+</p>
+<pre>
+% LANG=C wc -c ruby-1.8.5-p12.tar.gz 
+4526961 ruby-1.8.5-p12.tar.gz
+% gzip -d ruby-1.8.5-p12.tar.gz
+% LANG=C wc -c ruby-1.8.5-p12.tar 
+20172800 ruby-1.8.5-p12.tar
+% time gzip -9c ruby-1.8.5-p12.tar |LANG=C wc -c
+4480536
+gzip -9c ruby-1.8.5-p12.tar  4.15s user 0.04s system 99% cpu 4.229 total
+LANG=C wc -c  0.00s user 0.00s system 0% cpu 4.228 total
+</pre>
+<p>
+元より小さくなったというわけでパッケージングスクリプトは-9がついてないらしい。<br>
+この際それはどうでもいいとして、
+</p>
+<pre>
+% time bzip2 -9c ruby-1.8.5-p12.tar |LANG=C wc -c
+3859696
+bzip2 -9c ruby-1.8.5-p12.tar  10.40s user 0.13s system 97% cpu 10.778 total
+LANG=C wc -c  0.00s user 0.01s system 0% cpu 10.776 total
+% time grzip -c ruby-1.8.5-p12.tar |LANG=C wc -c 
+3441254                                                                   
+grzip -c ruby-1.8.5-p12.tar  8.26s user 0.20s system 98% cpu 8.589 total
+LANG=C wc -c  0.00s user 0.01s system 0% cpu 8.588 total
+</pre>
+<p>
+たしかにbzip2より速いし圧縮率も高い。<br>
+しかし標準入力を受けつけないのはいただけない。<br>
+</p>
+<!-- section end -->
+</div>
+<!-- 2007/01/02 end -->
+
+
+
+<hr class="hide">
+<!-- 2007/01/03 start -->
+<h2><a name="20070103" href="200701a.html#20070103">2007-01-03 (Wed)</a></h2>
+<!-- 2007-01-04 02:39:08 -->
+
+<div class="entry1">
+<h3><a name="200701031" title="200701031" href="200701a.html#200701031">■</a> 
+[Ruby] 4つのブランチ</h3>
+<p>
+なんだかんだで今4つのブランチになってる。
+</p>
+<pre>
+ruby_1_8_5(CVS):
+% ./miniruby -v
+ruby 1.8.5 (2006-12-25 patchlevel 12) [i386-linux]
+
+ruby_1_8(SVN):
+% ./miniruby -v
+ruby 1.8.5 (2007-01-03 patchlevel 5000) [i386-linux]
+
+trunk(SVN):
+% ./miniruby -v
+ruby 1.9.0 (2007-01-03 patchlevel 0) [i386-linux]
+
+matzruby(SVN):
+% ./miniruby -v
+ruby 1.9.0 (2007-01-03 patchlevel 0) [i386-linux] - matz
+</pre>
+<p>
+ruby_1_8_5がまだCVSなのは
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-dev/30045">キーワード置換問題</a>が解決してないため。<br>
+matzrubyはまつもとさんのわがままで作られたが、<br>
+これはたぶん好き勝手にいじりたいためだろう。
+</p>
+
+<p>
+一応patchlevelと- matzでそれぞれ区別ができるようにはなっている。
+</p>
+<!-- section end -->
+</div>
+<!-- 2007/01/03 end -->
+
+
+
+<hr class="hide">
+<!-- 2007/01/04 start -->
+<h2><a name="20070104" href="200701a.html#20070104">2007-01-04 (Thu)</a></h2>
+<!-- 2007-01-05 02:54:11 -->
+
+<div class="entry1">
+<h3><a name="200701041" title="200701041" href="200701a.html#200701041">■</a> 
+[CD] ELLEGARDEN</h3>
+<p>
+ELEVEN FIRE CRACKERSを一日中聴きまくる。さいこー。
+</p>
+<!-- section end -->
+</div>
+<!-- 2007/01/04 end -->
+
+
+
+<hr class="hide">
+<!-- 2007/01/05 start -->
+<h2><a name="20070105" href="200701a.html#20070105">2007-01-05 (Fri)</a></h2>
+<!-- 2007-01-06 02:27:28 -->
+
+<div class="entry1">
+<h3><a name="200701051" title="200701051" href="200701a.html#200701051">■</a> 
+<a href="http://freshmeat.net/projects/vtmalloc/">[Soft] vtmalloc 1.0</a></h3>
+<blockquote><dl>
+<dt>
+About:
+<dd>
+vtmalloc is a fast memory allocator for multi-threaded applications
+and Tcl. It provides low contention and the ability to return memory to the
+system. 
+</dl></blockquote>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200701052" title="200701052" href="200701a.html#200701052">■</a> 
+<a href="http://hocwp.free.fr/xbindkeys/xbindkeys.html">[Soft] xbindkeys 1.7.4</a></h3>
+<blockquote><dl>
+<dt>
+Changes:
+<dd>
+A minor change in xbindkeys.spec. A small English correction in
+warnings. Configuration files are reloaded on the fly when they have
+changed, so there is no more need to send a HUP signal to reload them.
+Minor guile bugfixes.
+</dl></blockquote><p>
+最近デスクトップ環境をいろいろ試した結果不満なのはショートカットキーの設定。<br>
+自分の好きなように設定できなかったりするので、これでできるといいんだが。
+</p>
+<!-- section end -->
+</div>
+<!-- 2007/01/05 end -->
+
+
+
+<hr class="hide">
+<!-- 2007/01/06 start -->
+<h2><a name="20070106" href="200701a.html#20070106">2007-01-06 (Sat)</a></h2>
+<!-- 2007-01-07 02:08:08 -->
+
+<div class="entry1">
+<h3><a name="200701061" title="200701061" href="200701a.html#200701061">■</a> 
+<a href="http://moss.csc.ncsu.edu/~mueller/pthreads/">[Soft] FSU Pthreads (POSIX Threads)</a></h3>
+<p>
+YARVではnative thread必須なわけでこのままだとDJGPP等はサポート外になる。<br>
+それはそれでもう役目を終えたかなと思うわけだが、<br>
+気になって調べてみたら
+<a href="http://moss.csc.ncsu.edu/~mueller/pthreads/">FSUPthreads</a>
+
+ってのを見つけてしまった。あるもんだな。
+</p>
+
+<p>
+ちょっとクロスコンパイルしてみたが結構面倒。<br>
+どうしようかな。久し振りにdosemu環境でも作ってみようかな。
+</p>
+<!-- section end -->
+</div>
+<!-- 2007/01/06 end -->
+
+
+
+<hr class="hide">
+<!-- 2007/01/07 start -->
+<h2><a name="20070107" href="200701a.html#20070107">2007-01-07 (Sun)</a></h2>
+<!-- 2007-01-08 03:33:53 -->
+
+<div class="entry1">
+<h3><a name="200701071" title="200701071" href="200701a.html#200701071">■</a> 
+<a href="http://mymadcat.com/vimsessions/">[Vim] Vimsessions 0.1</a></h3>
+<blockquote><p>
+Vimsessions allows you to keep you vim session files at your fingertips. Just
+tell vimsessions where your session file are, and it will add it to its popup
+menu. Clicking an entry in the popup menu will launch vim with the right
+sessions. Vimsessions sits in your tray, so it's totally unobtrusive.
+</p></blockquote>
+<!-- section end -->
+</div>
+<!-- 2007/01/07 end -->
+
+
+
+<hr class="hide">
+<!-- 2007/01/08 start -->
+<h2><a name="20070108" href="200701a.html#20070108">2007-01-08 (Mon)</a></h2>
+<!-- 2007-01-09 03:17:06 -->
+
+<div class="entry1">
+<h3><a name="200701081" title="200701081" href="200701a.html#200701081">■</a> 
+[Vim] vim scp://host/fileが動かなくなった</h3>
+<p>
+なぜかvim7になってからvim scp://host/fileが動かなくなってしまった。<br>
+scriptでログを取ってみたらscp自体が失敗してるようだ。<br>
+でも:!scp host:file .は成功する。<br>
+vim6をインストールしなおして確認してみたら、vim6ではまったく問題ない。<br>
+表示を見比べてみたら、vim6では
+</p>
+<pre>
+:!scp -q host:file /tmp/v303796/0
+</pre>
+<p>
+という感じで実行し、vim7では
+</p>
+<pre>
+:!scp -q 'host:file' /tmp/v303837/0
+</pre>
+<p>
+という感じ。''の違いか？実際に手で打ってみたら''でも問題ない。<br>
+さっぱり原因がわからんなあ。
+</p>
+
+<p>
+なんか~/.vimrcの中にまずいもんでもあるのか？<br>
+最小限にして試してみよう。
+</p>
+<pre>
+% vim -u /dev/null --cmd 'set nocp|filetype plugin on' scp://host/file
+</pre>
+<p>
+あ、うまくいった。やはり~/.vimrcの中に原因はあるらしい。<br>
+もう3時だしつづきは明日。
+</p>
+<!-- section end -->
+</div>
+<!-- 2007/01/08 end -->
+
+
+
+<hr class="hide">
+<!-- 2007/01/09 start -->
+<h2><a name="20070109" href="200701a.html#20070109">2007-01-09 (Tue)</a></h2>
+<!-- 2007-01-10 02:09:50 -->
+
+<div class="entry1">
+<h3><a name="200701091" title="200701091" href="200701a.html#200701091">■</a> 
+[Vim] vim scp://host/fileが動かなくなった原因</h3>
+<p>
+set fileencoding=japanだった。うーむ。<br>
+これは巷で出回ってる日本語コード自動判別の一部なわけなんだけど、なぜ？
+</p>
+<pre>
+% vim -u /dev/null --cmd 'set nocp|filetype plugin on|set fenc=ascii' scp://host/file
+</pre>
+<p>
+でもだめみたい。fileencodingを設定すると失敗する。<br>
+明日は別のホストでも試してみよう。
+</p>
+
+<p>
+なんでこんなことしてるかというと簡単なメモが共有できるからってのと、<br>
+手元とリモートの~/.zshrcを同じエディタで一度に編集できて心地好いから。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200701092" title="200701092" href="200701a.html#200701092">■</a> 
+[Vim] vim -u NONE</h3>
+<p>
+驚くほど早く立ち上がるよこりゃ。<br>
+~/.vimrcを整理することを考えたほうがよさそうだ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200701093" title="200701093" href="200701a.html#200701093">■</a> 
+[Linux] subversion 1.4.2のインストール</h3>
+<p>
+tarballを取ってきて次のような感じで進める。<br>
+</p>
+<pre>
+% tar xfv src/subversion-1.4.2.tar.gz
+% cd subversion-1.4.2
+% tar xfv ../src/apr-1.2.8.tar.bz2
+% mv apr-1.2.8 apr
+% tar xfv ../src/apr-util-1.2.8.tar.bz2
+% mv apr-util-1.2.8 apr-util
+% tar xfv ../src/neon-0.26.2.tar.gz
+% mv neon-0.26.2 neon
+% sh autogen.sh
+% CFLAGS=-Os CXXFLAGS=-Os ./configure --disable-dependency-tracking --disable-nls ;: subversion
+% make
+</pre>
+<p>
+apr, apr-util, neonはバージョンを取った名前に変更すれば、<br>
+autogen.shが全部面倒見てくれる。<br>
+メッセージに日本語が出てもコピペするときに困るので--disable-nlsをつけた。<br>
+なんかいつもLANG=C svn ...とかやってるので。<br>
+でもヘルプは日本語で見たいんだよなあ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2007/01/09 end -->
+
+
+
+<hr class="hide">
+<!-- 2007/01/10 start -->
+<h2><a name="20070110" href="200701a.html#20070110">2007-01-10 (Wed)</a></h2>
+<!-- 2007-01-11 01:52:15 -->
+
+<div class="entry1">
+<h3><a name="200701101" title="200701101" href="200701a.html#200701101">■</a> 
+<a href="http://dvd95.sf.net/">[Soft] dvd95 1.1p2</a></h3>
+<blockquote><dl>
+<dt>
+About:
+<dd>
+DVD95 is an GNOME application to convert DVD9 to DVD5 (4.7 GB). It
+needs no additional packages, since embedded versions of vamps and
+dvdauthor are included. The interface is pretty simple to use. The
+shrinking factor may be computed for best results, or an adaptive
+compression ratio method may be used. The DVD can be converted to a file
+tree or an ISO file. The result can be viewed in xine, vlc, or mplayer.
+Burning the converted image is done with third party software. The output
+can either include or omit the menus in the source. 
+</dl></blockquote>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200701102" title="200701102" href="200701a.html#200701102">■</a> 
+<a href="http://auriga.wearlab.de/~alb/nmdb/">[Soft] nmdb 0.11</a></h3>
+<blockquote><dl>
+<dt>
+About:
+<dd>
+nmdb is a network database (dbm-style) that uses the TIPC protocol
+to communicate with its clients. It consists of an in-memory cache that
+saves (key, value) pairs, and a persistent backend that stores the pairs
+on disk. Both work in combination, but the use of the backend is optional,
+so you can use the server only for cache queries, pretty much like
+memcached. 
+</dl></blockquote>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200701103" title="200701103" href="200701a.html#200701103">■</a> 
+<a href="https://wiki.sistec.dlr.de/SVNChecker">[Soft] SVNChecker 0.1</a></h3>
+<blockquote><dl>
+<dt>
+About:
+<dd>
+SVNChecker is a framework for Subversion pre-commit hooks in order
+to implement checks of the to-be-committed files before they are
+committed. For example, you can check for the code style or unit tests.
+The output of the checks can be send by mail, written to a file, or simply
+printed to the console.
+</dl></blockquote>
+
+<p>
+URL: 
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200701104" title="200701104" href="200701a.html#200701104">■</a> 
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-talk/233133">[Ruby] Tattle</a></h3>
+<p>
+集めてるということなので協力してあげよう。
+</p>
+<pre>
+% gem up tattle
+Updating installed gems...
+Need to update 31 gems from http://gems.rubyforge.org
+...............................
+complete
+Attempting remote update of tattle
+Successfully installed tattle-1.0.1
+Installing ri documentation for tattle-1.0.1...
+Installing RDoc documentation for tattle-1.0.1...
+Gems: [tattle] updated
+% tattle report
+prefix, /usr/local
+ruby_version, 1.8.5
+host_vendor, pc
+ruby_install_name, ruby
+build, i386-pc-linux
+target_cpu, i386
+arch, i386-linux
+rubygems_version, 0.9.0.8
+SHELL, /bin/sh
+host_os, linux
+report_time, Thu Jan 11 01:19:21 +0900 2007
+host_cpu, i386
+key, f01a981c8a722c330d45557ef856021122b771d8e8e6161c2ffc23af2666c512
+LIBRUBY, libruby.so.1.8.5
+LIBRUBY_SO, libruby.so.1.8.5
+target, i386-pc-linux
+</pre>
+<p>
+という情報を
+<a href="http://tattle.rubygarden.org/">http://tattle.rubygarden.org/</a>へ送るらしい。<br>
+結果を見るとix68とかは正規化したのも見たいな。<br>
+それにしてもi486がやけに多いな。ほんとにi486なんだろうか？<br>
+</p>
+
+<p>
+1.9.0が1個もない。<br>
+そりゃそうだよな。
+<a href="http://blog.segment7.net/articles/2006/12/26/rubygems-beta-0-9-0-8">Beta版</a>
+
+では&quot;RubyGems now installs on ruby 1.9&quot;ということらしいが、<br>
+実際やってみるとエラーになるわけでいろいろいじらないとインストールできない。<br>
+というわけ1.9の結果も送ってあげよう。
+</p>
+<pre>
+/usr/local/lib/ruby/gems/1.9/gems/tattle-1.0.1/lib/tattle.rb:54: warning: out-of-scope variable - key
+ruby_install_name, ruby
+build, i386-pc-linux
+host_cpu, i386
+host_vendor, pc
+host_os, linux
+key, f01a981c8a722c330d45557ef856021122b771d8e8e6161c2ffc23af2666c512
+ruby_version, 1.9.0
+SHELL, /bin/sh
+prefix, /usr/local
+LIBRUBY, libruby.so.1.9.0
+target, i386-pc-linux
+target_cpu, i386
+report_time, 2007-01-11 01:35:39 +0900
+rubygems_version, 0.9.0.8
+arch, i386-linux
+LIBRUBY_SO, libruby.so.1.9.0
+</pre>
+<p>
+なんか警告出てるけど
+</p>
+<pre>
+ def system_data
+   data = DESIRED_CONFIG_KEYS.inject({}) do |hash, key|
+     hash[key] = Config::CONFIG[key]
+     hash
+   end
+   ...
+   data['key'] = key
+   ...
+end
+
+# Read key (if available)
+def key
+  ...
+end
+</pre>
+<p>
+ブロック変数の値を見ようとしてるわけじゃないので問題なし。
+</p>
+<pre>
+1.8.5 (53.44%)
+1.8.4 (41.62%)
+1.8.2 (3.17%)
+1.8.1 (1.23%)
+1.9.0 (0.18%)
+</pre>
+<p>
+よしよし。
+</p>
+<!-- section end -->
+</div>
+<!-- 2007/01/10 end -->
+
+<hr>
+<div>
+<a href="200612c.html">&lt;Prev(,)</a> | 
+<a href="200701b.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

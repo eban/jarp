@@ -1,0 +1,552 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2015-1-c</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="201501b.html">
+<link rel="next" href="201502a.html">
+
+<link rel="stylesheet" type="text/css" href="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.css">
+<script type="text/javascript" src="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.js"></script>
+<script type="text/javascript">
+<!--       
+$(document).ready(function() {
+  prettyPrint();
+});
+-->
+</script>
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2015年1月下旬〜</p>
+<hr>
+<div>
+<a href="201501b.html" accesskey=",">&lt;Older(,)</a> | 
+<a href="201502a.html" accesskey=".">Newer(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2015/01/21 start -->
+<h2><a name="20150121" href="201501c.html#20150121">2015-01-21 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="201501211" title="201501211" href="201501c.html#201501211">■</a> 
+sedでも対応してみる</h3>
+<p>
+awkの$3は3つあることを確認している。<br>
+つまりsedでも3個あることを確認すればいい。<br>
+フィールドが3個ということは区切りは2個なので/ .* /でok。
+</p>
+<pre>
+% seq 100|xargs -n3|sed '/ .* /s/[^ ]*$/Fizz/'|xargs -n5|sed '/ .* .* .* /s/[0-9]*$/Buzz/'|xargs -n1
+</pre>
+<p>
+ちょっと不恰好だけど、正規表現で条件を書けばいける。
+</p>
+<!-- section end -->
+</div>
+<!-- 2015/01/21 end -->
+
+
+
+<hr class="hide">
+<!-- 2015/01/22 start -->
+<h2><a name="20150122" href="201501c.html#20150122">2015-01-22 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="201501221" title="201501221" href="201501c.html#201501221">■</a> 
+readの挙動</h3>
+<p>
+while read lineで読んでいるときに最終行に改行がないとループを抜けてしまう。<br>
+だが、read自身はちゃんとlineへ反映させているのであった。
+</p>
+<pre>
+% bash -c 'echo -n foo | while read line; do echo $line; done'                  
+% bash -c 'echo -n foo | { while read line; do echo $line; done; echo $line; }'
+foo
+</pre>
+<p>
+つまりwhileの条件でreadが偽だったら$lineの中身を見ればいい。たとえば
+</p>
+<pre>
+% bash -c 'echo -n foo | { while read line || [ -n &quot;$line&quot; ]; do echo $line; done; }'
+foo
+</pre>
+<p>
+みたいに。
+</p>
+<!-- section end -->
+</div>
+<!-- 2015/01/22 end -->
+
+
+
+<hr class="hide">
+<!-- 2015/01/23 start -->
+<h2><a name="20150123" href="201501c.html#20150123">2015-01-23 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="201501231" title="201501231" href="201501c.html#201501231">■</a> 
+<a href="http://nullpopopo.blogcube.info/2015/01/nukenum-awk.html">面接官 ｢1～250までの数字がある。1つだけ抜けてる数字がある時、どうやってその数字を探し出しますか？」 をcommで解く #シェル芸</a></h3>
+<p>
+これはdiffでもいいけどcommとかjoinを使うと簡単。
+</p>
+<pre>
+% seq 250 | sed 128d | sort &gt; nums
+% seq 250 | sort | comm -23 - nums      
+128
+</pre>
+<p>
+1つだけじゃなく何個でもok。
+</p>
+<pre>
+% seq 250 | sed '50d;128d;200d' | sort &gt; nums
+% seq 250 | sort | comm -23 - nums           
+128
+200
+50
+% seq 250 | sort | join -v1 - nums
+128
+200
+50
+</pre>
+<p>
+commやjoinはあらかじめsortしておく必要がある。
+</p>
+<!-- section end -->
+</div>
+<!-- 2015/01/23 end -->
+
+
+
+<hr class="hide">
+<!-- 2015/01/24 start -->
+<h2><a name="20150124" href="201501c.html#20150124">2015-01-24 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="201501241" title="201501241" href="201501c.html#201501241">■</a> 
+commとjoinの違い</h3>
+<p>
+commは共通部分を抜き出すのに使うが、複数並んでいても1個しか相手にされない。<br>
+一方joinは並んでいると全部共通部分とみなす。これは何を意味するかというとgrepの代わりに使える。
+</p>
+<pre>
+% printf '1\n2\n2\n2\n3\n' | comm -12 - &lt;(echo 2)
+2
+% printf '1\n2\n2\n2\n3\n' | join - &lt;(echo 2)
+2
+2
+2
+</pre>
+<p>
+grepの代わりになって何がうれしいんだという話ではあるが。
+</p>
+<!-- section end -->
+</div>
+<!-- 2015/01/24 end -->
+
+
+
+<hr class="hide">
+<!-- 2015/01/25 start -->
+<h2><a name="20150125" href="201501c.html#20150125">2015-01-25 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="201501251" title="201501251" href="201501c.html#201501251">■</a> 
+例の250の問題をgrepで #シェル芸</h3>
+<p>
+よく考えてみたらcommを使わなくてもgrepでいけるのであった。
+</p>
+<pre>
+% seq 250 | sed 128d &gt; nums      
+% seq 250 | grep -xv -f nums
+128
+% seq 250 | sed '50d;128d;200d' &gt; nums       
+% seq 250 | grep -xv -f nums
+50
+128
+200
+</pre>
+<p>
+-xは強制的に行全体でPATTERNの一致処理を行うという意味。^と$がつく感じ。<br>
+この場合は-wでもいいが、空白とか含まれる場合は-xが必須となる。<br>
+sortする必要もないし、こっちのほうがいいかも。
+</p>
+<!-- section end -->
+</div>
+<!-- 2015/01/25 end -->
+
+
+
+<hr class="hide">
+<!-- 2015/01/26 start -->
+<h2><a name="20150126" href="201501c.html#20150126">2015-01-26 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="201501261" title="201501261" href="201501c.html#201501261">■</a> 
+250じゃなくて10万だとOOM Killer</h3>
+<p>
+例の問題はgrepで250ぐらいならなんともないが、<br>
+10万ぐらいになると8GBあってもメモリが足りなくなる。
+</p>
+<pre>
+% seq 100000 | sed 5000d &gt; nums100K     
+% time seq 100000 | grep -xv -f nums100K
+zsh: broken pipe  seq 100000 | 
+zsh: killed       grep -xv -f nums100K
+seq 100000  0.00s user 0.00s system 0% cpu 19:12.16 total
+</pre>
+<p>
+/var/log/syslogを見るとOOM Killerに殺されていた。
+</p>
+<pre>
+Jan 26 23:07:41 m kernel: [ 1572.506071] Out of memory: Kill process 7702 (grep) score 922 or sacrifice child
+Jan 26 23:07:41 m kernel: [ 1572.506073] Killed process 7702 (grep) total-vm:15207580kB, anon-rss:7427400kB, file-rss:0kB
+</pre>
+<p>
+こういうときはどうするかというとfgrepを使う。
+</p>
+<pre>
+% time seq 100000 | fgrep -xv -f nums100K 
+5000
+seq 100000  0.00s user 0.00s system 1% cpu 0.191 total
+fgrep -xv -f nums100K  0.06s user 0.00s system 33% cpu 0.194 total
+</pre>
+<p>
+まじかっていうほどあっさり通る。正規表現がいかにメモリを食うかがわかる例。
+</p>
+<!-- section end -->
+</div>
+<!-- 2015/01/26 end -->
+
+
+
+<hr class="hide">
+<!-- 2015/01/27 start -->
+<h2><a name="20150127" href="201501c.html#20150127">2015-01-27 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="201501271" title="201501271" href="201501c.html#201501271">■</a> 
+commとjoinの速度</h3>
+<p>
+5000万ぐらいになるとfgrepでも結構苦しくなる。
+</p>
+<pre>
+% seq 50000000 | sed 5000d &gt; nums50M
+% time seq 50000000 | fgrep -xv -f nums50M 
+5000
+seq 50000000  0.99s user 0.25s system 1% cpu 1:55.80 total
+fgrep -xv -f nums50M  113.18s user 2.62s system 99% cpu 1:56.03 total
+</pre>
+<p>
+2分近くかかっている。少しでも速く実行したいならjoinやcommを使う。
+</p>
+<pre>
+% time seq 50000000 | sort | join -v1 - &lt;(sort nums50M)
+5000
+seq 50000000  0.77s user 0.13s system 7% cpu 12.189 total
+sort  15.41s user 1.81s system 35% cpu 48.196 total
+join -v1 - &lt;(sort nums50M)  8.13s user 0.28s system 17% cpu 48.195 total
+% time seq 50000000 | sort | comm -23 - &lt;(sort nums50M)
+5000
+seq 50000000  0.81s user 0.14s system 9% cpu 9.953 total
+sort  15.62s user 1.96s system 41% cpu 42.238 total
+comm -23 - &lt;(sort nums50M)  4.22s user 0.28s system 10% cpu 42.237 total
+</pre>
+<p>
+2倍以上速い。実はほとんどソートしてる時間だったりする。<br>
+あらかじめソートしといていいなら10秒かからない。
+</p>
+<pre>
+% seq 50000000 | sort &gt; seq50Ms
+% seq 50000000 | sed 5000d | sort &gt; nums50Ms
+% time join -v1 seq50Ms nums50Ms                  
+5000
+join -v1 seq50Ms nums50Ms  6.95s user 0.10s system 99% cpu 7.060 total
+% time comm -23 seq50Ms nums50Ms
+5000
+comm -23 seq50Ms nums50Ms  3.52s user 0.11s system 99% cpu 3.633 total
+</pre>
+<p>
+grepの代わりになって実はうれしいのである。
+</p>
+<!-- section end -->
+</div>
+<!-- 2015/01/27 end -->
+
+
+
+<hr class="hide">
+<!-- 2015/01/28 start -->
+<h2><a name="20150128" href="201501c.html#20150128">2015-01-28 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="201501281" title="201501281" href="201501c.html#201501281">■</a> 
+convertの引数の順番はやはり大事</h3>
+<p>
+PDFを画像にするときの定番にconvertがある。<br>
+-densityで指定しても低いままだなあとずっと思っていたが、<br>
+これも順番がものすごく大事だとわかった。<br>
+たとえば
+</p>
+<pre>
+% convert foo.pdf -density 300 foo.jpg
+</pre>
+<p>
+とかやりがちだが、これだと全然意味がない。
+</p>
+<pre>
+% convert -density 300 foo.pdf foo.jpg
+</pre>
+<p>
+のようにfoo.pdfの前に-densityを置く。-verboseをつけるとよくわかる。
+</p>
+<pre>
+% convert -verbose '残照.pdf[1]' -density 300 /tmp/foo.jpg
+&quot;gs&quot; -q -dQUIET -dSAFER -dBATCH -dNOPAUSE -dNOPROMPT -dMaxBitmap=500000000 -dAlignToPixels=0 -dGridFitTT=2 &quot;-sDEVICE=pngalpha&quot; -dTextAlphaBits=4 -dGraphicsAlphaBits=4 &quot;-r72x72&quot; -dFirstPage=2 -dLastPage=2 &quot;-sOutputFile=/tmp/magick-_Uc3SdUw-%08d&quot; &quot;-f/tmp/magick-qPsh2kGe&quot; &quot;-f/tmp/magick-fujmhwsW&quot;
+/tmp/magick-_Uc3SdUw-00000001 PNG 298x496 298x496+0+0 8-bit DirectClass 4.22KB 0.010u 0:00.000
+残照.pdf[1]=&gt;残照.pdf[1] PDF 298x496 298x496+0+0 16-bit DirectClass 0.000u 0:00.000
+残照.pdf[1]=&gt;/tmp/foo.jpg[1] PDF 298x496 298x496+0+0 16-bit DirectClass 0.000u 0:00.000
+</pre>
+<p>
+内部的にはgsが変換してるが、-r72x72となってる。つまり-density 72ということだ。<br>
+これはconvertのデフォルトの値と思われる。<br>
+ファイル名の後に-density 300を指定しても後の祭りということになる。
+</p>
+<pre>
+% convert -verbose -density 300 '残照.pdf[1]' /tmp/foo.jpg
+&quot;gs&quot; -q -dQUIET -dSAFER -dBATCH -dNOPAUSE -dNOPROMPT -dMaxBitmap=500000000 -dAlignToPixels=0 -dGridFitTT=2 &quot;-sDEVICE=pngalpha&quot; -dTextAlphaBits=4 -dGraphicsAlphaBits=4 &quot;-r300x300&quot; -dFirstPage=2 -dLastPage=2 &quot;-sOutputFile=/tmp/magick-YslpFx3t-%08d&quot; &quot;-f/tmp/magick-XPhLyekZ&quot; &quot;-f/tmp/magick-mVgnGZAu&quot;
+/tmp/magick-YslpFx3t-00000001 PNG 1240x2066 1240x2066+0+0 8-bit DirectClass 17.3KB 0.060u 0:00.060
+残照.pdf[1]=&gt;残照.pdf[1] PDF 1240x2066 1240x2066+0+0 16-bit DirectClass 0.000u 0:00.000
+残照.pdf[1]=&gt;/tmp/foo.jpg[1] PDF 1240x2066 1240x2066+0+0 16-bit DirectClass 16.4KB 0.040u 0:00.039
+</pre>
+<p>
+これで-r300x300になった。
+</p>
+<!-- section end -->
+</div>
+<!-- 2015/01/28 end -->
+
+
+
+<hr class="hide">
+<!-- 2015/01/29 start -->
+<h2><a name="20150129" href="201501c.html#20150129">2015-01-29 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="201501291" title="201501291" href="201501c.html#201501291">■</a> 
+libcを検索してどうする</h3>
+<p>
+GHOSTが話題だが
+<a href="http://ma.ttias.be/ghost-critical-glibc-update-cve-2015-0235-gethostbyname-calls/">このページ</a>にあるglibcを使ってるプロセスを探す方法はつっこまずにはいられない。
+</p>
+<pre>
+$ lsof | grep libc | awk '{print $1}' | sort | uniq
+</pre>
+<p>
+コメントでawkだのsort -uを使えば短くなるとかあるのはまあお約束として、問題はlibcで検索してるところ。
+</p>
+<pre>
+% lsof |grep -o 'libc.*' | sort -u
+libc-2.19.so
+libc.mo
+libcairo-gobject.so.2.11301.0
+libcairo.so.2.11301.0
+libcanberra-0.30/libcanberra-pulse.so
+libcanberra-gtk-module.so
+libcanberra-gtk.so.0.1.9
+libcanberra-gtk3-module.so
+libcanberra-gtk3.so.0.1.9
+libcanberra.so.0.2.5
+libcap-ng.so.0.0.0
+libcap.so.2.24
+libcgmanager.so.0.0.0
+libcom_err.so.2.1
+libcpufreq.so.0.0.0
+libcpugraph.so
+libcroco-0.6.so.3.0.1
+libcrypt-2.19.so
+libcrypto.so.1.0.0
+libcups.so.2
+libcurl.so.4.3.0
+</pre>
+<p>
+libcで始まるライブラリはいっぱいあるわけで。
+</p>
+<p>
+というよりもすべてのプロセスはlibcに依存していると言っていいわけで、<br>
+libcで検索すること自体ナンセンス。
+</p>
+<p>
+lsofは引数で指定したファイルをopenしているプロセスを表示してくれるので、<br>
+たとえばlibcrypto.soを使ってるのを探したければ、こんな感じでok。
+</p>
+<pre>
+% lsof /lib/x86_64-linux-gnu/libcrypto.so.1.0.0
+COMMAND     PID USER  FD   TYPE DEVICE SIZE/OFF     NODE NAME
+python     2958 eban mem    REG    8,2  1961344 43253810 /lib/x86_64-linux-gnu/libcrypto.so.1.0.0
+python     2967 eban mem    REG    8,2  1961344 43253810 /lib/x86_64-linux-gnu/libcrypto.so.1.0.0
+python     2979 eban mem    REG    8,2  1961344 43253810 /lib/x86_64-linux-gnu/libcrypto.so.1.0.0
+indicator  2990 eban mem    REG    8,2  1961344 43253810 /lib/x86_64-linux-gnu/libcrypto.so.1.0.0
+ssh        3435 eban mem    REG    8,2  1961344 43253810 /lib/x86_64-linux-gnu/libcrypto.so.1.0.0
+ssh        3438 eban mem    REG    8,2  1961344 43253810 /lib/x86_64-linux-gnu/libcrypto.so.1.0.0
+ssh        3611 eban mem    REG    8,2  1961344 43253810 /lib/x86_64-linux-gnu/libcrypto.so.1.0.0
+ssh        3622 eban mem    REG    8,2  1961344 43253810 /lib/x86_64-linux-gnu/libcrypto.so.1.0.0
+ssh        3636 eban mem    REG    8,2  1961344 43253810 /lib/x86_64-linux-gnu/libcrypto.so.1.0.0
+ruby       3748 eban mem    REG    8,2  1961344 43253810 /lib/x86_64-linux-gnu/libcrypto.so.1.0.0
+x11vnc    22351 eban mem    REG    8,2  1961344 43253810 /lib/x86_64-linux-gnu/libcrypto.so.1.0.0
+w3m       25870 eban mem    REG    8,2  1961344 43253810 /lib/x86_64-linux-gnu/libcrypto.so.1.0.0
+</pre>
+<!-- section end -->
+</div>
+<!-- 2015/01/29 end -->
+
+
+
+<hr class="hide">
+<!-- 2015/01/30 start -->
+<h2><a name="20150130" href="201501c.html#20150130">2015-01-30 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="201501301" title="201501301" href="201501c.html#201501301">■</a> 
+xargsの罠</h3>
+<p>
+xargsの-L1と-n1って1行につき1個書いてあるときは特に違いはないと思っていたが、罠があった。
+</p>
+<pre>
+-L max-lines
+       Use at most max-lines nonblank input lines per command line.  Trailing blanks cause an input line to be
+       logically continued on the next input line.  Implies -x.
+</pre>
+<p>
+つまり後ろに空白があると次の行へ継続しているとみなされる。
+</p>
+<pre>
+% printf &quot;a \nb\n&quot; | cat -A
+a $
+b$
+% printf &quot;a \nb\n&quot; | xargs -L1 -t
+/bin/echo a b 
+a b
+% printf &quot;a \nb\n&quot; | xargs -n1 -t
+/bin/echo a 
+a
+/bin/echo b 
+b
+</pre>
+<p>
+適当に引数リストを作ってたりすると理解不能なバグになりそう。
+</p>
+<!-- section end -->
+</div>
+<!-- 2015/01/30 end -->
+
+
+
+<hr class="hide">
+<!-- 2015/01/31 start -->
+<h2><a name="20150131" href="201501c.html#20150131">2015-01-31 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="201501311" title="201501311" href="201501c.html#201501311">■</a> 
+xargsの罠 その2</h3>
+<p>
+xargsで並列実行させる-Pオプションはお手軽でいいが、これにも罠がある。<br>
+単に-P4とつけても意味がない。<br>
+</p>
+<pre>
+% seq 10 | xargs -t -P4
+/bin/echo 1 2 3 4 5 6 7 8 9 10 
+1 2 3 4 5 6 7 8 9 10
+</pre>
+<p>
+一気に実行されてしまう。ここでは-n1が必要になる。
+</p>
+<pre>
+% seq 10 | xargs -t -P4 -n1
+/bin/echo 1 
+/bin/echo 2 
+/bin/echo 3 
+/bin/echo 4 
+1
+/bin/echo 5 
+2
+4
+/bin/echo 6 
+/bin/echo 7 
+3
+/bin/echo 8 
+5
+/bin/echo 9 
+7
+6
+/bin/echo 10 
+8
+10
+9
+</pre>
+<p>
+結果は同じ場合が多いので気づきにくい。
+</p>
+<!-- section end -->
+</div>
+<!-- 2015/01/31 end -->
+
+<hr>
+<div>
+<a href="201501b.html">&lt;Older(,)</a> | 
+<a href="201502a.html">Newer(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

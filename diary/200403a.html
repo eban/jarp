@@ -1,0 +1,472 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2004-3-a</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="200402c.html">
+<link rel="next" href="200403b.html">
+
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2004年3月上旬〜</p>
+<hr>
+<div>
+<a href="200402c.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="200403b.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2004/03/01 start -->
+<h2><a name="20040301" href="200403a.html#20040301">2004-03-01 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="200403011" title="200403011" href="200403a.html#200403011">■</a> 
+2月のspam</h3>
+<p>
+3222通。しかし不思議なほどここ3ヶ月数はほとんど同じ。
+2月は2日少ないから微妙に増えてる計算に。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200403012" title="200403012" href="200403a.html#200403012">■</a> 
+[RSS] index.rdfの更新</h3>
+<p>
+1日に何度もindex.rdfを更新すると、どんどん今日の分がどんどん増えてしまうことに気づいた。
+というわけで、同じリンクの古い要素は消すことにしよう。
+ついでにカテゴリーっぽくdc:subjectに反映。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200403013" title="200403013" href="200403a.html#200403013">■</a> 
+[RSS] Bloglinesのdc:subjectの扱い</h3>
+<p>
+itemにdc:creatorをつけないとBloginlesはdc:subjectをどのように表示するのか？
+つけるとonでつけないとInになると予想。というわけで、今日の分はつけない。
+</p>
+<!-- section end -->
+</div>
+<!-- 2004/03/01 end -->
+
+
+
+<hr class="hide">
+<!-- 2004/03/02 start -->
+<h2><a name="20040302" href="200403a.html#20040302">2004-03-02 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="200403021" title="200403021" href="200403a.html#200403021">■</a> 
+[Worm] 200通を越えるworm</h3>
+<p>
+NetskyやらBagleやら何やらの亜種がいっぱい来てる。
+もう面倒だからzipファイルとexeファイルの添付は全部worm扱い。
+~/.procmailrcから抜粋。
+</p>
+<pre>
+:0 B
+* ^UEsDBAoAA[AQ]AAA
+junk/.
+
+:0 B
+* ^TVqQAAMAAAAEAAAA//8AALgAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+junk/.
+</pre>
+
+<!-- section end -->
+</div>
+<!-- 2004/03/02 end -->
+
+
+
+<hr class="hide">
+<!-- 2004/03/03 start -->
+<h2><a name="20040303" href="200403a.html#20040303">2004-03-03 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="200403031" title="200403031" href="200403a.html#200403031">■</a> 
+[Worm] ruby-bugsの設定忘れ</h3>
+<p>
+ブロックしたwormを確認してたら、ruby-bugs宛のものが見つかった。
+しまったなあ。そっちの設定を忘れてた。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200403032" title="200403032" href="200403a.html#200403032">■</a> 
+<a href="http://japan.cnet.com/news/ent/story/0,2000047623,20064607,00.htm">[Worm] ウイルススキャンをすり抜ける--Bagleワーム、一挙に5つの亜種出現</a></h3>
+<p>
+パスワードつきのzipファイルとはねえ。
+</p><blockquote><p>
+「多くのゲートウェイスキャン機能ではファイルを展開してスキャンできないことから、このワームはこの隙をうまくくぐり抜けている」（Hypponen）
+</p></blockquote><blockquote><p>
+「Zipファイルの中身が正当なファイルである可能性のほうがずっと高いことから、.exe形式のスクリーンセーバーや.pifファイルに比べ、. zipファイルが遮断される可能性ははるかに低い。また、このファイルがフォルダのように見えれば、受け取ったユーザーはこれが良性のものであると考えてしまいがちだろう」（Emm）
+</p></blockquote><p>
+こうなってみると
+<a href="200403a.html#200403021">昨日の処置</a>もあながち悪くなさげ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2004/03/03 end -->
+
+
+
+<hr class="hide">
+<!-- 2004/03/04 start -->
+<h2><a name="20040304" href="200403a.html#20040304">2004-03-04 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="200403041" title="200403041" href="200403a.html#200403041">■</a> 
+[Procmail] PIFとEXE</h3>
+<p>
+PIFとEXEのヘッダは似てるのでひとつにまとめよう。
+</p>
+<pre>
+* ^TV[qo][QA]AA[ME]AAAA[EC]AAAA//8AA[LE][gA]AAAAAAAAAQ
+</pre>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200403042" title="200403042" href="200403a.html#200403042">■</a> 
+[MDA] Procmailをやめたい</h3>
+<p>
+~/.procmailrcを見ると、もうなにがなんだかよくわからない状態だ。
+procmailをやめたいんだけど
+<a href="http://agriroot.aua.gr/~nikant/nkvir/">YAVR</a>に代わるものがないとなあ。
+ZIPとPIFとEXEぐらいでいけるかな。
+しばらく様子を見て考えよう。
+</p>
+<!-- section end -->
+</div>
+<!-- 2004/03/04 end -->
+
+
+
+<hr class="hide">
+<!-- 2004/03/05 start -->
+<h2><a name="20040305" href="200403a.html#20040305">2004-03-05 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="200403051" title="200403051" href="200403a.html#200403051">■</a> 
+[Ruby] 鬼車</h3>
+<p>
+とうとう鬼車が入った。でもmake test-allが終わらなくなった。うーむ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2004/03/05 end -->
+
+
+
+<hr class="hide">
+<!-- 2004/03/06 start -->
+<h2><a name="20040306" href="200403a.html#20040306">2004-03-06 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="200403061" title="200403061" href="200403a.html#200403061">■</a> 
+[Mail] DoS攻撃？</h3>
+<p>
+なんか夜中からruby-list-ctl, ruby-talk-ctl, ruby-core-ctlへ20,30秒間隔でメールを送ってくるやつがいる。
+今のところそれほど負荷もないので大丈夫だけど、何が目的なんだ？
+fmlだと*-ctlへ送られてくる変なメールは勝手にrejectされるから、
+中身がどうなっているのかわからない。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200403062" title="200403062" href="200403a.html#200403062">■</a> 
+<a href="200403a.html#200403051">[Ruby] make test-allが終わらない理由</a></h3>
+<p>
+
+<a href="200403a.html#200403051">昨日のmake test-allが終わらない件</a> は鬼車になってstruct re_registersのサイズが変わったのが原因だった。
+strscanのdependに$(srcdir)/regex.hがなかったため、
+これがre-compileされてなかった。
+</p>
+
+<p>
+<a href="http://rrr.jin.gr.jp/rwiki?cmd=view;name=ruby-cvs-2004-03-06#a142737">http://rrr.jin.gr.jp/rwiki?cmd=view;name=ruby-cvs-2004-03-06#a142737</a></p>
+<!-- section end -->
+</div>
+<!-- 2004/03/06 end -->
+
+
+
+<hr class="hide">
+<!-- 2004/03/07 start -->
+<h2><a name="20040307" href="200403a.html#20040307">2004-03-07 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="200403071" title="200403071" href="200403a.html#200403071">■</a> 
+[Mail] ruby-{core,list,talk}-ctlへの攻撃</h3>
+<p>
+未だに止まず。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200403072" title="200403072" href="200403a.html#200403072">■</a> 
+[Ruby] Makefileの$&lt;と$?</h3>
+<p>
+GNU makeだと$&lt;はサフィックスルール以外のどこでも使えるから混乱が生じたようだ。
+元々$&lt;はサフィックスルールの中でしか使えない。
+だからpmakeでは空になる。
+一方$?はコンポーネントリストのうち、ターゲットよりも新しいものに展開される。
+</p>
+<pre>
+% echo 'all: foo.c bar.c; @echo $?' &gt;Makefile
+% touch all; sleep 1; touch foo.c bar.c
+% make
+foo.c bar.c
+</pre>
+<p>
+このように複数になる場合もある。
+今回は
+</p>
+<pre>
+lex.c: keywords
+</pre>
+<p>
+という形で$?はkeywordsにしかならないから問題なく使える。
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-dev/23161">[ruby-dev:23161]</a></p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200403073" title="200403073" href="200403a.html#200403073">■</a> 
+[Ruby] Cygwinのflock</h3>
+<p>
+flockしたままのファイルをさらにopenして書き込もうとするとEACCESSになる。
+そもそもすでにopenしてるわけだからそのfile handleを渡せばいいわけなんだよね。
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-dev/23157">[ruby-dev:23157]</a></p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200403074" title="200403074" href="200403a.html#200403074">■</a> 
+[TV] 特命リサーチ 200X II</h3>
+<p>
+なぬ？今週で終了？先週も粘菌についてなにかわかったら追って報告するとかなんとか言ってなかったっけ？
+</p>
+<!-- section end -->
+</div>
+<!-- 2004/03/07 end -->
+
+
+
+<hr class="hide">
+<!-- 2004/03/08 start -->
+<h2><a name="20040308" href="200403a.html#20040308">2004-03-08 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="200403081" title="200403081" href="200403a.html#200403081">■</a> 
+[XSL] index.rdfにxml-stylesheetを追加</h3>
+<p>
+ブラウザがXSLT対応していればそれなりに表示できるようにxml-stylesheetを追加してみたが、IEでしかまともに見れず。
+なかなか難しいね。ちゃんとsummaryを作ればいいんだろうけど。
+</p>
+
+<p>
+というわけで、content:encodedではなくdescriptionを表示することにしよう。
+なんかmozillaはdisable-output-escapingの処理がxsltprocともIEとも違うな。
+あ、xsl:value-ofには使えない？と思ったらxsl:textもだめだな。うーむ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2004/03/08 end -->
+
+
+
+<hr class="hide">
+<!-- 2004/03/09 start -->
+<h2><a name="20040309" href="200403a.html#20040309">2004-03-09 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="200403091" title="200403091" href="200403a.html#200403091">■</a> 
+<a href="http://use.perl.org/articles/04/03/01/181242.shtml">[Perl] Perl 5.005_04</a></h3>
+<p>
+ふと気づくとPerl 5.005_04がリリースされているのであった。
+本当はBloglinesで気づいていたんだけど、見て見ぬふりをしていたというか。
+</p>
+
+<p>
+jperl5.005_03-20000401をあてると、ほとんどoffsetだけだ。
+win32/{Makefile,win32.c}がrejectになるけど、大した問題ではない。
+新しいjperlを出したほうがいいのかな。
+そんなにユーザがいるとも思えないんだけど。
+もうuploadのしかたも忘れちゃったよなあ。4年も前のことだし。
+</p>
+<!-- section end -->
+</div>
+<!-- 2004/03/09 end -->
+
+
+
+<hr class="hide">
+<!-- 2004/03/10 start -->
+<h2><a name="20040310" href="200403a.html#20040310">2004-03-10 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="200403101" title="200403101" href="200403a.html#200403101">■</a> 
+[XSL] if, choose, when, otherwise</h3>
+<p>
+結局xslで変換するときはcontent:encodedじゃなくてdescriptionを使うようにした。
+ついでにBloglinesのように交互にitemの背景色を変えている。
+でもここの記述が気に入らない。
+</p>
+<pre>
+&lt;xsl:template match=&quot;rss:item&quot;&gt;
+ &lt;xsl:if test=&quot;position() mod 2 = 1&quot;&gt;
+  &lt;div style=&quot;background-color: #e9e9e9;&quot;&gt;
+   &lt;xsl:call-template name=&quot;item&quot; /&gt;
+  &lt;/div&gt;
+ &lt;/xsl:if&gt;
+ &lt;xsl:if test=&quot;position() mod 2 = 0&quot;&gt;
+   &lt;xsl:call-template name=&quot;item&quot; /&gt;
+ &lt;/xsl:if&gt;
+&lt;/xsl:template&gt;
+</pre>
+<p>
+のように奇数と偶数のitemで&lt;div sytle=&quot;..&quot;&gt;&lt;/div&gt;で囲むようにしてるわけなんだけど、
+xsl:ifが2つあったりcall-templateが2つあったりでなんかむだっぽい。
+choose, when, otherwiseを使ってみるとなんか余計に行数ばかり食って、
+もっと気に入らない。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200403102" title="200403102" href="200403a.html#200403102">■</a> 
+[XSL] xsl:attribute</h3>
+<p>
+色々調べてみるとxsl:attributeを使えば
+</p>
+<pre>
+&lt;xsl:template match=&quot;rss:item&quot;&gt;
+ &lt;div&gt;
+  &lt;xsl:if test=&quot;position() mod 2 = 1&quot;&gt;
+   &lt;xsl:attribute name=&quot;style&quot;&gt;background-color: #e9e9e9;&lt;/xsl:attribute&gt;
+  &lt;/xsl:if&gt;
+  &lt;xsl:call-template name=&quot;item&quot; /&gt;
+ &lt;/div&gt;
+&lt;/xsl:template&gt;
+</pre>
+<p>
+と書けるようだ。これで2行目の&lt;div&gt;の属性になるあたりが予想外だ。
+実際には
+</p>
+<pre>
+&lt;div style=&quot;background-color: #e9e9e9;&quot;&gt;
+  &lt;h2&gt;
+    &lt;a href=&quot;http://jarp.jin.gr.jp/diary/200403a.html#200403102&quot;&gt;[2004-03-10-2] xsl:attribute&lt;/a&gt;
+  &lt;/h2&gt;
+  &lt;p&gt;色々調べてみるとxsl:attributeを使えば...&lt;/p&gt;
+&lt;/div&gt;
+</pre>
+<p>
+のようにxsltで変換される。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200403103" title="200403103" href="200403a.html#200403103">■</a> 
+[XSL] xsl:element</h3>
+<p>
+もう一歩進めてxsl:elementを使って
+</p>
+<pre>
+&lt;xsl:template match=&quot;rss:item&quot;&gt;
+ &lt;xsl:element name=&quot;div&quot;&gt;
+  &lt;xsl:if test=&quot;position() mod 2 = 1&quot;&gt;
+   &lt;xsl:attribute name=&quot;style&quot;&gt;background-color: #e9e9e9;&lt;/xsl:attribute&gt;
+  &lt;/xsl:if&gt;
+  &lt;xsl:call-template name=&quot;item&quot; /&gt;
+ &lt;/xsl:element&gt;
+&lt;/xsl:template&gt;
+</pre>
+<p>
+とすれば、それほど違和感はないかな。
+</p>
+
+<p>
+しかし、つくづくxmlってのは冗長な世界だと思ったり思わなかったり。
+</p>
+<!-- section end -->
+</div>
+<!-- 2004/03/10 end -->
+
+<hr>
+<div>
+<a href="200402c.html">&lt;Prev(,)</a> | 
+<a href="200403b.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

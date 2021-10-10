@@ -1,0 +1,647 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2003-2-a</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="200301c.html">
+<link rel="next" href="200302b.html">
+
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2003年2月上旬〜</p>
+<hr>
+<div>
+<a href="200301c.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="200302b.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2003/02/01 start -->
+<h2><a name="20030201" href="200302a.html#20030201">2003-02-01 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="200302011" title="200302011" href="200302a.html#200302011">■</a> 
+1月のspam</h3>
+<p>
+406通。yarpc MLは1月で閉鎖されたはずなのに今日もspamは来てる。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200302012" title="200302012" href="200302a.html#200302012">■</a> 
+<a href="http://raa.ruby-lang.org/project/optionparser/">[Ruby] OptionParser 0.12</a></h3>
+<p>
+更新。
+</p>
+<!-- section end -->
+</div>
+<!-- 2003/02/01 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/02/02 start -->
+<h2><a name="20030202" href="200302a.html#20030202">2003-02-02 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="200302021" title="200302021" href="200302a.html#200302021">■</a> 
+[IRC] ircIIのlog</h3>
+<p>
+2003-02-02.logのような名前でIRCのlogを取りたくなって適当に作ってみた。
+</p>
+<pre>
+alias prefix_zero {
+  @ function_return = $0
+  if (function_return &lt; 10) { @ function_return = [0$0] }
+}
+alias get.date {
+  @ MON_NAMES = [Jan Feb Mar Apr May Jun Jul Aug Sep Nov Dec]
+  @ now = [$stime($time())]
+  @ date.0 = [$word(4 $now)]
+  @ date.1 = [$prefix_zero($rmatch($word(1 $now) $MON_NAMES))]
+  @ date.2 = [$prefix_zero($word(2 $now))]
+  assign -MON_NAMES
+  assign -now
+}
+get.date
+eval echo $date[0]-$date[1]-$date[2]
+</pre>
+<p>
+やっぱ、strftimeが欲しくなるね。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200302022" title="200302022" href="200302a.html#200302022">■</a> 
+<a href="http://fluxbox.sf.net/">[Linux] Fluxbox 0.1.14</a></h3>
+<p>
+昨日makeしたFluxboxを使いはじめた。
+まだkeysをちょっといじったぐらい。
+</p>
+<pre>
+Mod1 j :NextWindow
+Mod1 k :PrevWindow
+Mod1 i :Minimize
+Mod1 u :Raise
+Mod1 Shift j :ExecCommand kterm &amp;
+</pre>
+<p>
+の4つはtwmの頃からのキーバインディングなので外せない。
+ktermの起動はなぜjなのかというと、
+NEWS OSではjtermだったからというのが理由なんだけど、
+10数年使い続けるともはや変えることもできない。あとはtabのために
+</p>
+<pre>
+Mod1 n :NextTab
+Mod1 p :PrevTab
+</pre>
+<p>
+も追加。
+xclockのtabを中ボタンでドラッグしてktermへ集めてみたら、
+xclock側がでかくなった。なるほど。大きさはやっぱ揃えるわけか。
+</p>
+<!-- section end -->
+</div>
+<!-- 2003/02/02 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/02/03 start -->
+<h2><a name="20030203" href="200302a.html#20030203">2003-02-03 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="200302031" title="200302031" href="200302a.html#200302031">■</a> 
+<a href="http://raa.ruby-lang.org/project/rubymail/">[Ruby] rubymail 0.13</a></h3>
+<p>
+更新。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200302032" title="200302032" href="200302a.html#200302032">■</a> 
+[Ruby] 助田プロダクツ</h3>
+<p>
+たぶんなんかの情報が更新されて、
+どどっとRAAに出てきたんだと思うけど、
+よくわからないのは
+<a href="http://raa.ruby-lang.org/project/win32ole/">win32ole</a>で、なぜ0.5.2ではなく0.5.1なんでしょう？
+</p>
+<!-- section end -->
+</div>
+<!-- 2003/02/03 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/02/04 start -->
+<h2><a name="20030204" href="200302a.html#20030204">2003-02-04 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="200302041" title="200302041" href="200302a.html#200302041">■</a> 
+[Virus] WORM_SOBIG.A</h3>
+<p>
+久し振りにbig@boss.comから例のアレをもらう。
+ヘッダを見るとイタリアかららしい。
+と書いてるうちに日本からもう一個。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200302042" title="200302042" href="200302a.html#200302042">■</a> 
+[Ruby] JARH</h3>
+<pre>
+print %w[Just another Ruby hacker,] * &quot; &quot;
+</pre>
+
+<!-- section end -->
+</div>
+<!-- 2003/02/04 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/02/05 start -->
+<h2><a name="20030205" href="200302a.html#20030205">2003-02-05 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="200302051" title="200302051" href="200302a.html#200302051">■</a> 
+<a href="http://raa.ruby-lang.org/project/strongtyping/">[Ruby] strongtyping 2.0.1</a></h3>
+<p>
+更新。
+</p>
+<!-- section end -->
+</div>
+<!-- 2003/02/05 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/02/06 start -->
+<h2><a name="20030206" href="200302a.html#20030206">2003-02-06 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="200302061" title="200302061" href="200302a.html#200302061">■</a> 
+<a href="http://syscalltrack.sourceforge.net/">[Linux] syscalltrack 0.82</a></h3>
+<p>
+これは面白そうだ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200302062" title="200302062" href="200302a.html#200302062">■</a> 
+村上里佳子のだんな</h3>
+<p>
+渡部篤郎(わたべあつろう)。で、あっちは渡辺篤史(わたなべあつし)。
+</p>
+<!-- section end -->
+</div>
+<!-- 2003/02/06 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/02/07 start -->
+<h2><a name="20030207" href="200302a.html#20030207">2003-02-07 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="200302071" title="200302071" href="200302a.html#200302071">■</a> 
+<a href="200302a.html#200302071">[Linux] syscalltrack</a></h3>
+<p>
+RUNNINGを読むと
+</p>
+<pre>
+% sudo module/sct_load
+% sudo =sct_config upload sct_config/sct_example.conf
+</pre>
+<p>
+とすればいいらしい。
+</p>
+<pre>
+% sudo cat /dev/sct_log
+syscall: 172[&quot;zsh&quot;]: 10_unlink(&quot;/home/watanabe/.zshhist.172&quot;) = -2 (rule 2)
+syscall: 172[&quot;zsh&quot;]: 10_unlink(&quot;/home/watanabe/.zshhist.172&quot;) = 0 (rule 2)
+syscall: 172[&quot;zsh&quot;]: 10_unlink(&quot;/home/watanabe/.zshhist.LOCK&quot;) = 0 (rule 2)
+syscall: 298[&quot;zsh&quot;]: 20_getpid(void) (rule 3)
+syscall: 298[&quot;sudo&quot;]: 5_open(&quot;/etc/passwd&quot;, 0, 438) (rule 9)
+syscall: 298[&quot;sudo&quot;]: 5_open(&quot;/etc/passwd&quot;, 0, 438) (rule 9)
+syscall: 298[&quot;sudo&quot;]: 20_getpid(void) (rule 3)
+syscall: 298[&quot;sudo&quot;]: 213_setuid(0) (rule 10)
+^C
+</pre>
+<p>
+おお、ログが残ってる。
+setopt sharehistoryしてるから.zshhistを毎回いじってる様も見える。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200302072" title="200302072" href="200302a.html#200302072">■</a> 
+<a href="http://gcc.gnu.org/">[GNU] GCC 3.2.2</a></h3>
+<p>
+リリースされた。makeは明日だな。
+</p>
+<!-- section end -->
+</div>
+<!-- 2003/02/07 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/02/08 start -->
+<h2><a name="20030208" href="200302a.html#20030208">2003-02-08 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="200302081" title="200302081" href="200302a.html#200302081">■</a> 
+<a href="http://freepan.org/">FreePAN(The Free Programming Archive Network)</a></h3>
+<p>
+ここってファイルごと全部集めてるんだね。今はRubyしかないようだけど。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200302082" title="200302082" href="200302a.html#200302082">■</a> 
+[Linux] Fluxbox</h3>
+<p>
+1週間使ったけど、なぜか重い。Rubyをmakeしてるとxmmsの音が途切れる。
+load averageも4に近いもんなあ。というわけでIceWMに戻した。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200302083" title="200302083" href="200302a.html#200302083">■</a> 
+<a href="http://gcc.gnu.org/">[GNU] GCC 3.2.2</a></h3>
+<p>
+DESTDIRが使えるようになったらしい。
+</p>
+<pre>
+% CFLAGS=-Os CXXFLAGS=-Os CC=/usr/bin/gcc ../configure \
+  --enable-languages=c,c++ --with-system-zlib \
+  --enable-sjlj-exceptions --enable-threads \
+  --disable-version-specific-runtime-libs --disable-nls \
+  --without-included-gettext --without-catgets
+% make BOOT_CFLAGS=-Os STAGE1_CFLAGS=-Os CFLAGS=-Os \
+  DEBUG_FLAGS= CONFIG_CXXFLAGS='-ffunction-sections -fdata-sections' \
+  bootstrap
+</pre>
+
+
+<!-- section end -->
+</div>
+<!-- 2003/02/08 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/02/09 start -->
+<h2><a name="20030209" href="200302a.html#20030209">2003-02-09 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="200302091" title="200302091" href="200302a.html#200302091">■</a> 
+<a href="http://raa.ruby-lang.org/project/rubymail/">[Ruby] RubyMail 0.14</a></h3>
+<p>
+更新。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200302092" title="200302092" href="200302a.html#200302092">■</a> 
+[GNU] Bisonの秘密</h3>
+<p>
+1.5の次が1.75で、その次が1.875ということは、
+</p>
+<pre>
+1.9375, 1.96875, 1.984375, ...
+</pre>
+<p>
+と続くのだろうか？
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200302093" title="200302093" href="200302a.html#200302093">■</a> 
+[@nifty] ニフティ</h3>
+<p>
+半年振りぐらいでニフティにアクセスした。
+<a href="http://raa.ruby-lang.org/project/ruby-libcurl/">Ruby/libcurl</a>を使って発言するスクリプトができてからとか考えているうちに早半年。
+<a href="http://www.weatherlight.org/~crouton/journal/?200301B#t200301151">小澤さん</a>の気持ちがなんとなくわかる。
+</p>
+
+<p>
+フォーラム自体かなり衰退しているので、
+そんなスクリプトも日の目を見ることもないかもしれない。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200302094" title="200302094" href="200302a.html#200302094">■</a> 
+<a href="http://cygwin.com/ml/cygwin-announce/2003-02/msg00012.html">[Cygwin] Cygwin 1.3.20-1</a></h3>
+<p>
+とりあえず問題なし。cygtclという名前に関して議論あったようだけど、
+Tcl/Tk 8.4からはcygというprefixは止めたようだ。
+Rubyのext/tcltklib/stubs.cもcyg prefix対応しようと思ってたけど、
+しなくてよかったというか。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200302095" title="200302095" href="200302a.html#200302095">■</a> 
+[Ruby][Cygwin] Tcl/Tk 8.4</h3>
+<p>
+やっぱ
+<a href="200211a.html#200211021">stubだと動かない。</a>Tcl/Tkをふだん使わないだけにデバッグする気にならないとこがだめだめだ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200302096" title="200302096" href="200302a.html#200302096">■</a> 
+[Ruby][MinGW] -L&quot;/lib&quot;</h3>
+<p>
+例の-lruby-static対応で入った変更で--prefix=''とした場合に
+</p>
+<pre>
+gcc -mno-cygwin -shared -s curses.def \
+  -L&quot;C:/cygwin/home/watanabe/ruby/mingw&quot; \
+  -L&quot;/lib&quot; -o curses.so curses.o \
+  -lmsvcrt-ruby18 -lcurses  -lwsock32  
+curses.o(.text+0x130):curses.c: undefined reference to `SP'
+&lt;以下省略&gt;
+</pre>
+<p>
+となってしまうことに気づく。/libはCygwin専用だしなあ。configure時に
+</p>
+<pre>
+--libdir=/usr/lib/mingw
+</pre>
+<p>
+を追加するとそこにインストールしてしまうし。うーむ。
+</p>
+
+<p>
+mswin32だと-L&quot;/usr/lib&quot;になってるね。
+ということはうまい解決策があるはずだ。
+明日も休みだしそのあたりを調べよう。
+</p>
+<!-- section end -->
+</div>
+<!-- 2003/02/09 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/02/10 start -->
+<h2><a name="20030210" href="200302a.html#20030210">2003-02-10 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="200302101" title="200302101" href="200302a.html#200302101">■</a> 
+<a href="http://www.dm4lab.to/~usa/ruby/d/200302a.html#id20030207_P1_1">[Ruby] 浮動小数点値リテラル</a></h3>
+<p>
+rb_warning()はverbose modeじゃないと出ません。そこがrb_warn()との違い。
+</p>
+<pre>
+% ruby -ve '.1'
+ruby 1.8.0 (2003-02-09) [i386-linux]
+-e:1: warning: no .&lt;digit&gt; floating literal anymore; put 0 before dot
+-e:1: syntax error
+-e:1: warning: useless use of a literal in void context
+</pre>
+<p>
+でもこれが原因で絶対にsyntax errorになるわけだから、
+warningというのはおかしいとも言えるか。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200302102" title="200302102" href="200302a.html#200302102">■</a> 
+<a href="http://www.arc.ritsumei.ac.jp/kachina/mikio/qdbm/">QDBM</a></h3>
+<p>
+面白そう。Cygwinも
+<a href="../files/qdbm-1.0.0-depot.c.diff">ちょっと変更</a>すればmake checkが通った。
+mmapを使ってるのでMinGW等への移植は面倒そうだ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200302103" title="200302103" href="200302a.html#200302103">■</a> 
+[Ruby] make --no-print-directory no-isntall DESTDIR=/tmp</h3>
+<p>
+knuさんの変更でまただめになってしまった。
+どうも意図が伝わってないようだ。変更を無にされている。
+とりあえず'--'だけでも削除するようにしよう。
+</p>
+
+<p>
+何が問題かというと
+</p>
+<pre>
+make --no-print-directory no-isntall DESTDIR=/tmp
+</pre>
+<p>
+と実行すると、ext/extmk.rbで
+</p>
+<pre>
+[&quot;--no-print-directory&quot;, &quot;--&quot;, &quot;DESTDIR=/tmp&quot;, &quot;-n&quot;, &quot;DESTDIR=/tmp&quot;]
+</pre>
+<p>
+のように$mflagsに&quot;--&quot;が間に入り、&quot;-n&quot;がターゲットになってしまい
+</p>
+<pre>
+make[1]: *** No rule to make target `-n'.  Stop.
+</pre>
+<p>
+makeがエラーになる。
+Cygwinのmakeだと--unixオプションが勝手に指定されるので、
+気づかないうちに&quot;--&quot;が入ることになる。
+</p>
+
+<p>
+消された
+</p>
+<pre>
+$mflags.delete_if{|x| x == '-' || x == '--'}
+</pre>
+<p>
+を復活させるのも芸がないので、これを使わなくて済む方法を考えよう。
+要するに&quot;-n&quot;が&quot;--&quot;の後にあるのがまずいんだから、これを前に持ってくればいい。
+つまり
+</p>
+<pre>
+ $mflags &lt;&lt; '-n' if $dryrun
+</pre>
+<p>
+を
+</p>
+<pre>
+ $mflags.unshift '-n' if $dryrun
+</pre>
+<p>
+とすればいいだろう。これで
+</p>
+<pre>
+[&quot;-n&quot;, &quot;--no-print-directory&quot;, &quot;--&quot;, &quot;DESTDIR=/tmp&quot;, &quot;DESTDIR=/tmp&quot;]
+</pre>
+<p>
+となる。ついでにDESTDIRなんだけど、これも
+</p>
+<pre>
+$mflags &lt;&lt; &quot;DESTDIR=#{$destdir}&quot;
+</pre>
+<p>
+じゃなくて
+</p>
+<pre>
+$mflags |= [&quot;DESTDIR=#{$destdir}&quot;]
+</pre>
+<p>
+としよう。そうすれば最終的に
+</p>
+<pre>
+[&quot;-n&quot;, &quot;--no-print-directory&quot;, &quot;--&quot;, &quot;DESTDIR=/tmp&quot;]
+</pre>
+<p>
+となる。
+</p>
+
+<p>
+と思ったら$mflags.set?というmethodの存在でつまづく。
+</p>
+<pre>
+$mflags |= [&quot;DESTDIR=#{$destdir}&quot;]
+</pre>
+<p>
+で別のオブジェクトになるので、set? methodが無効になってしまう。
+</p>
+<pre>
+$mflags &lt;&lt; &quot;DESTDIR=#{$destdir}&quot; unless $mflags.index(&quot;DESTDIR=#{$destdir}&quot;)
+</pre>
+<p>
+とするか、単純に順番を変えよう。
+</p>
+<pre>
+$continue = $mflags.set?(?k)
+$mflags |= [&quot;DESTDIR=#{$destdir}&quot;]
+</pre>
+
+<p>
+あ、-n, -kの判断も//iで代用しちゃってるねえ。
+$nmakeを全然見てないので、なかださんの変更もなかったことになってる。
+ちょっとまずいなあ。Borland makeは
+</p>
+<pre>
+-N                Increases MAKE's compatibility with NMAKE
+-n                Prints commands but does not do them
+</pre>
+<p>
+のように別々のオプションとして存在するので、単純に//iを使うわけにはいかない。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200302104" title="200302104" href="200302a.html#200302104">■</a> 
+[Ruby] make -n install</h3>
+<p>
+Makefile.inのほうもknuさんの変更で$(MAKE)が間接的な参照になってしまい、
+GNU makeでも
+</p>
+<pre>
+make -n install
+</pre>
+<p>
+が役立たずになってるけど、いいのかな？
+最近はmake no-install派なもんでどっちでもいいんだけど。
+</p>
+<!-- section end -->
+</div>
+<!-- 2003/02/10 end -->
+
+<hr>
+<div>
+<a href="200301c.html">&lt;Prev(,)</a> | 
+<a href="200302b.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

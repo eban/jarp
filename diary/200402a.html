@@ -1,0 +1,466 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2004-2-a</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="200401c.html">
+<link rel="next" href="200402b.html">
+
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2004年2月上旬〜</p>
+<hr>
+<div>
+<a href="200401c.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="200402b.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2004/02/01 start -->
+<h2><a name="20040201" href="200402a.html#20040201">2004-02-01 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="200402011" title="200402011" href="200402a.html#200402011">■</a> 
+1月のspam</h3>
+<p>
+3257通。MyDoomも混じってるようだけど、分別するのも面倒だしねえ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200402012" title="200402012" href="200402a.html#200402012">■</a> 
+[Mail] ruby-talk ML</h3>
+<p>
+members_onlyにして、
+MODE_BIFURCATE_HOOKでNewsgroup:にcomp.lang.rubyを含んでいたら
+$member_pを1にするという処理を入れればよさそうだ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200402013" title="200402013" href="200402a.html#200402013">■</a> 
+[Mail] ruby-list ML</h3>
+<p>
+From詐称のせいでruby-listにもMyDoomが流れてしまう。
+というわけでruby-talk MLで上記の変更をしても、
+spamassassinを外すことはできないわけだ。
+というか、ruby-list MLもなんとかしないとまずいね。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200402014" title="200402014" href="200402a.html#200402014">■</a> 
+[Worm] MyDoom</h3>
+<p>
+はっきり言ってこの状況はMyDoomを作ったやつもかなり欝陶しいに違いない。
+絶対作者自身も受け取ってるはずだから。ってそんなことは承知の上か。
+</p>
+<!-- section end -->
+</div>
+<!-- 2004/02/01 end -->
+
+
+
+<hr class="hide">
+<!-- 2004/02/02 start -->
+<h2><a name="20040202" href="200402a.html#20040202">2004-02-02 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="200402021" title="200402021" href="200402a.html#200402021">■</a> 
+[Cygwin] Cygwin 1.5.7のiconv.h</h3>
+<p>
+Cygwin 1.5.7にはなぜか/usr/include/iconv.hが存在する。
+どうもnewlibで実装されたiconvの一部がパッケージミスかなにかで、
+Cygwin 1.5.7へ混入してしまったようだ。
+このiconv.hは/usr/lib/libiconv{.dll,}.aとは全く相容れない代物なので、
+libiconvのre-installが必要。
+さもないとRubyのext/iconvはリンク時にundefined referenceになってしまう。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200402022" title="200402022" href="200402a.html#200402022">■</a> 
+[Ruby] Interixのdlopen</h3>
+<p>
+<a href="200401c.html#200401303">nkf.soでSEGVる件</a>はdlopenにRTDL_GLOBALを指定してると起こるようだ。
+これは共有ライブラリ同士でシンボルを参照してる場合に必要なんだけど、
+ということはぶつかってるのがあるのか？
+まあ、Init_*だけ見えればいいでしょってことで、
+とりあえずRTDL_GLOBALは指定しないことにした。
+</p>
+
+<p>
+1.8へのバックポートも完。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200402023" title="200402023" href="200402a.html#200402023">■</a> 
+<a href="http://www.nifty.com/support/member/kyukai_s.htm">[Nifty] 一時休会</a></h3>
+<p>
+やめるかどうか悩んでいるうちに2年ぐらい経つが、
+一時休会という素敵なオプションを発見。3年寝かせることにした。
+</p>
+<!-- section end -->
+</div>
+<!-- 2004/02/02 end -->
+
+
+
+<hr class="hide">
+<!-- 2004/02/03 start -->
+<h2><a name="20040203" href="200402a.html#20040203">2004-02-03 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="200402031" title="200402031" href="200402a.html#200402031">■</a> 
+[Mail][fml] ruby-talk MLをmembersとcomp.lang.rubyだけに制限</h3>
+<p>
+PERMIT_POST_FROMをmembers_onlyにして、
+</p>
+<pre>
+$MODE_BIFURCATE_HOOK = q#
+    my $ng = GET_ORIGINAL_HEADER_FIELD_VALUE(&quot;Newsgroups&quot;);
+    if ($ng =~ /\bcomp\.lang\.ruby\b/) {
+        $member_p = 1;
+    }
+#;
+</pre>
+<p>
+を追加。これでエラーメールも受け付けなくなるはず。
+</p>
+
+<p>
+と思ったらなんかヘッダの情報が違うとrrr方面からつっこまれた。
+</p>
+<pre>
+$MODE_BIFURCATE_HOOK = q#
+    my $ng = GET_ORIGINAL_HEADER_FIELD_VALUE(&quot;Newsgroups&quot;);
+    if ($ng =~ /\bcomp\.lang\.ruby\b/) {
+        $member_p = 1;
+        $Envelope{'mode:stranger'} = 0;
+    }
+#;
+</pre>
+<p>
+これでいいはず。
+<a href="http://blade.nagaokaut.ac.jp/ruby/ruby-talk/91411">okだ。</a>comp.lang.rubyからの記事もちゃんとList-*:がつくようになった。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200402032" title="200402032" href="200402a.html#200402032">■</a> 
+[Ruby][Interix] -RとLD_LIBRARY_PATH</h3>
+<p>
+なぜかInterixにはldconfigがない。
+最初から環境変数LD_LIBRARY_PATHに/usr/lib:/usr/X11R6/libが設定されている。
+ldのオプションの-Rでpathを埋め込むことは可能。
+<a href="http://rrr.jin.gr.jp/rwiki?cmd=view;name=ruby-cvs-2004-01-31#a023904">この変更</a>はそういう意味なんだけど、
+なんと埋め込むと逆にLD_LIBRARY_PATHを見なくなることが判明した。
+この場合、なかださんの
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-dev/22688">outdirパッチ</a>をあてると使えるmake test-allができなくなってしまう。うーむ。
+-Rで埋め込むのはやめるか。
+</p>
+<!-- section end -->
+</div>
+<!-- 2004/02/03 end -->
+
+
+
+<hr class="hide">
+<!-- 2004/02/04 start -->
+<h2><a name="20040204" href="200402a.html#20040204">2004-02-04 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="200402041" title="200402041" href="200402a.html#200402041">■</a> 
+[Mail] ruby-list MLへのMyDoom</h3>
+<p>
+いいかげんうっとうしくなってきたので、
+*.exeや*.zip等が添付されてるメールはMLへ流さないようにした。
+が、その後メールが来ないのでちゃんと設定されてるかどうかはまだわからない。
+ruby-listも流量が少なくなったなあ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2004/02/04 end -->
+
+
+
+<hr class="hide">
+<!-- 2004/02/05 start -->
+<h2><a name="20040205" href="200402a.html#20040205">2004-02-05 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="200402051" title="200402051" href="200402a.html#200402051">■</a> 
+<a href="200402a.html#200402021">[Cygwin] iconv問題</a></h3>
+<p>
+<a href="http://cygwin.com/ml/cygwin/2004-02/msg00205.html">というわけで</a>次のCygwinが出るまでは、やはりlibiconvの再インストールが必要。
+</p>
+<!-- section end -->
+</div>
+<!-- 2004/02/05 end -->
+
+
+
+<hr class="hide">
+<!-- 2004/02/06 start -->
+<h2><a name="20040206" href="200402a.html#20040206">2004-02-06 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="200402061" title="200402061" href="200402a.html#200402061">■</a> 
+[Worm] YAVRとMyDoom</h3>
+<p>
+やはりYAVRの精度がよくない。新しいのがあるかなと
+<a href="http://agriroot.aua.gr/~nikant/nkvir-changelog">YAVRのChangeLog</a>を見たら、更新されてた。これでしばらく様子見。
+それにしても12日を過ぎれば治まるんだろうか？
+まだ、Swenも週に1,2通来るしなあ。困ったもんだ。
+</p>
+
+<p>
+<a href="http://agriroot.aua.gr/~nikant/nkvir/">YAVR(Yet Another antiVirus Recipe)</a>は
+<a href="http://www.atdot.net/yarv/">YARV(Yet another RubyVM)</a>とも
+<a href="http://phrogz.net/ProgrammingRuby/">YAPV(Yet Another Pickaxe Version)</a>とも違うんで間違えないように。
+</p>
+<!-- section end -->
+</div>
+<!-- 2004/02/06 end -->
+
+
+
+<hr class="hide">
+<!-- 2004/02/07 start -->
+<h2><a name="20040207" href="200402a.html#20040207">2004-02-07 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="200402071" title="200402071" href="200402a.html#200402071">■</a> 
+休み</h3>
+<p>
+今日はPCを立ち上げず。いつ以来だろう？
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200402072" title="200402072" href="200402a.html#200402072">■</a> 
+[TV][映画] ロード・オブ・ザ・リング</h3>
+<p>
+何しに旅に出るのか忘れていた。
+イライジャ・ウッドがついこの間やってた「パラサイト」に出ていたことを思い出した。
+</p>
+<!-- section end -->
+</div>
+<!-- 2004/02/07 end -->
+
+
+
+<hr class="hide">
+<!-- 2004/02/08 start -->
+<h2><a name="20040208" href="200402a.html#20040208">2004-02-08 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="200402081" title="200402081" href="200402a.html#200402081">■</a> 
+[Mail] ruby-listにまたMyDoom</h3>
+<p>
+あれ？なんで通ってしまったんだ？もうちょっとゆるくしてみるか。
+</p>
+<pre>
+$START_HOOK .= q#
+    if ($e{'Body'} =~ /\tfilename=&quot;.*\.(vbs|js|jse|exe|zip|scr|pif|cmd)&quot;/i) {
+        &amp;Log(&quot;maybe virus&quot;);
+        $DO_NOTHING = 1;
+    }
+#;
+</pre>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200402082" title="200402082" href="200402a.html#200402082">■</a> 
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-talk/91727">[Ruby] RedCloth 2.0</a></h3>
+<p>
+_whyはこういうのが好きだね。
+</p>
+<!-- section end -->
+</div>
+<!-- 2004/02/08 end -->
+
+
+
+<hr class="hide">
+<!-- 2004/02/09 start -->
+<h2><a name="20040209" href="200402a.html#20040209">2004-02-09 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="200402091" title="200402091" href="200402a.html#200402091">■</a> 
+[Mail][Ruby] またまたruby-talk news gateway発狂</h3>
+<p>
+11時近くに出社してみると、なんかruby-talkがすごいことになってた。
+またnews gatewayかよ。
+とりあえずmembers onlyにし、
+なかださんの提案に従いMessage-ID重複チェック用cacheを100から1000にして様子見。
+13時頃にやっとログが静かになった。
+15時頃まで引き続き様子を見て大丈夫そうなのでnews gateway解禁。
+</p>
+
+<p>
+しばらくするとベルリンでnews gatewayを動かしている
+Dennis Oelkersという人から呑気に
+</p>
+<pre>
+I checked the logs, and it seems that the News -&gt; Mail Job lost
+track of the Xref's it had already seen several times.
+
+I'm digging in the code atm (thanks god it's written in Ruby), and I
+hope it'll be fixed soon.
+</pre>
+<p>
+と来たよ。
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-talk/92472">[ruby-talk:92472]</a></p>
+
+<p>
+ったくdaveの作るものは欠陥ばかりでまったく信用できん。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200402092" title="200402092" href="200402a.html#200402092">■</a> 
+<a href="200402a.html#200402081">[Mail] ruby-listのMyDoomの件</a></h3>
+<p>
+$START_HOOKでは%eが使えない気がしてきたので、%Envelopeを使ってみる。
+早速来た。
+</p>
+<pre>
+04/02/09 23:12:25 maybe virus (********@********.co.jp)
+</pre>
+<p>
+やっぱそうだったのか。それにしてもなぜruby-listにばかり来るんだ？
+ToとFromの両方が条件に合うのは結構確率は低いと思うんだけど。
+</p>
+<!-- section end -->
+</div>
+<!-- 2004/02/09 end -->
+
+
+
+<hr class="hide">
+<!-- 2004/02/10 start -->
+<h2><a name="20040210" href="200402a.html#20040210">2004-02-10 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="200402101" title="200402101" href="200402a.html#200402101">■</a> 
+[Mail] HTMLメール</h3>
+<p>
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-talk/92536">[ruby-talk:92536]</a>を見てても思った。なかださんにも言われたが、
+text/htmlを削ってもmultipartのままにしといたら
+quoted-printableが解除されないかぎりあまり意味がない。
+</p>
+<pre>
+&amp;ADD_CONTENT_HANDLER('multipart/.*', 'text/plain', 'allow');
+</pre>
+<p>
+を追加してみるとどうなるのか様子見。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200402102" title="200402102" href="200402a.html#200402102">■</a> 
+[Mail] fmlのskip設定</h3>
+<p>
+現在ruby-talk MLはcomp.lang.rubyかメンバからのpostだけが有効になっているが、
+メンバ登録してskipにしとけばメールを受け取らずにMLへ投げることができる。
+ふだんは
+<a href="http://blade.nagaokaut.ac.jp/ruby/ruby-talk/index.shtml">blade</a>で見てて、たまにMLへ返事を送りたい人にはお勧め。
+bladeはちゃんとオリジナルのメールも用意されている。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200402103" title="200402103" href="200402a.html#200402103">■</a> 
+[今日のトリビア] 浜崎あゆみ</h3>
+<p>
+「はまさき」ではなく「はまざき」と読むと笑われるそうだが、
+何度聞いても本人は「はまざき」と発音している。
+鼻がつまってるだけかもしれないが。
+</p>
+<!-- section end -->
+</div>
+<!-- 2004/02/10 end -->
+
+<hr>
+<div>
+<a href="200401c.html">&lt;Prev(,)</a> | 
+<a href="200402b.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

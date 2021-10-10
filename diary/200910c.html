@@ -1,0 +1,456 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2009-10-c</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="200910b.html">
+<link rel="next" href="200911a.html">
+
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2009年10月下旬〜</p>
+<hr>
+<div>
+<a href="200910b.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="200911a.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2009/10/21 start -->
+<h2><a name="20091021" href="200910c.html#20091021">2009-10-21 (Wed)</a></h2>
+<!-- 2009-10-22 00:42:28 -->
+
+<div class="entry1">
+<h3><a name="200910211" title="200910211" href="200910c.html#200910211">■</a> 
+[Tips] ROXTermのOpen URL in browser</h3>
+<p>
+gnome-terminalでもURLらしいものは右クリックでbrowserへ飛ばせるが、<br>
+ROXTermの場合はクリックした場所がホスト名だとトップになるようだ。<br>
+つまり
+</p>
+
+<pre>
+http://jarp.does.notwork.org/diary/
+</pre>
+<p>
+の場合は
+</p>
+
+<pre>
+http://jarp.does.notwork.org/
+</pre>
+<p>
+になる。でdiaryの部分で右クリックすればちゃんと全体のURLになる。<br>
+これは結構かしこい。<br>
+最初は意味がわからずなんかたまにトップへ飛ばされるなあバグか？と思っていた。
+</p>
+<!-- section end -->
+</div>
+<!-- 2009/10/21 end -->
+
+
+
+<hr class="hide">
+<!-- 2009/10/22 start -->
+<h2><a name="20091022" href="200910c.html#20091022">2009-10-22 (Thu)</a></h2>
+<!-- 2009-10-23 01:58:19 -->
+
+<div class="entry1">
+<h3><a name="200910221" title="200910221" href="200910c.html#200910221">■</a> 
+<a href="http://golf.shinh.org/p.rb?Count+diamonds+level+3">[Golf] Count diamonds level 3</a></h3>
+<p>
+ダイアを数える三部作最後の問題。うっかりsubmitわすれてたが、<br>
+まあどうでもいい記録なのでしなくて正解か。
+</p>
+
+<pre>
+$/=gets
+loop{gets;i=0;i+=1while sub! /\*(.{39})\* \*/m,' \1   ';p i}
+</pre>
+<p>
+要するに
+</p>
+
+<pre>
+ *
+* *
+</pre>
+<p>
+という組を数えているだけ。基本はみんなそんな感じ。上側か下側かぐらいで。
+</p>
+
+<p>
+Rubyの
+<a href="http://golf.shinh.org/reveal.rb?Count+diamonds+level+3/hide24/1255101819&amp;rb">トップ</a>
+
+を見ると下側のほうが有利みたい。
+</p>
+
+<pre>
+p gsub!('* *'){$'[39]}.count'4'while gets'
+-'
+</pre>
+<p>
+$'を使うのはうまいなあ。でも'4'は謎すぎる。
+</p>
+
+<p>
+あ、そうか。わかった。$'[39]は&quot;*&quot;ならアスキーコードの42、&quot; &quot;なら32なので、<br>
+&quot;4&quot;をcountすればいいんだ。頭よすぎ。
+</p>
+
+<pre>
+% ruby -e 'p &quot;&quot;.sub(&quot;&quot;){42}'  
+&quot;42&quot;
+</pre>
+
+
+<!-- section end -->
+</div>
+<!-- 2009/10/22 end -->
+
+
+
+<hr class="hide">
+<!-- 2009/10/23 start -->
+<h2><a name="20091023" href="200910c.html#20091023">2009-10-23 (Fri)</a></h2>
+<!-- 2009-10-24 04:26:15 -->
+
+<div class="entry1">
+<h3><a name="200910231" title="200910231" href="200910c.html#200910231">■</a> 
+[DQ9] DQ9終了</h3>
+<p>
+まったく終わった感がない。
+</p>
+<!-- section end -->
+</div>
+<!-- 2009/10/23 end -->
+
+
+
+<hr class="hide">
+<!-- 2009/10/24 start -->
+<h2><a name="20091024" href="200910c.html#20091024">2009-10-24 (Sat)</a></h2>
+<!-- 2009-10-25 01:28:15 -->
+
+<div class="entry1">
+<h3><a name="200910241" title="200910241" href="200910c.html#200910241">■</a> 
+<a href="http://golf.shinh.org/reveal.rb?Count+diamonds+level+3/flog/1255995473&amp;pl">[Golf] Count diamonds level 3</a></h3>
+<p>
+flogさんの解。なぜか*がどこにもなく正規表現の中に謎の改行3つ。<br>
+どうしてそんなものを数えるだけで通るのか？
+</p>
+
+<p>
+3つといえば
+</p>
+
+<pre>
+ *
+* *
+</pre>
+<p>
+の部分は現在行と次の行をうまく演算して&quot;***&quot;にできれば<br>
+1行に扱えて楽だよなあとbash版を考えていたときに思ったが、<br>
+これもそのようで。&quot;*&quot;と&quot; &quot;はex-orで改行になる。
+</p>
+
+<pre>
+% perl -le 'print (ord(&quot;*&quot;) ^ ord(&quot; &quot;))'
+10
+% perl -e 'print &quot;*&quot; ^ &quot; &quot;' |od -c
+0000000  \n
+0000001
+</pre>
+<p>
+たまたま改行になったから不思議に思えたが、なるほどねえ。<br>
+$/.$_で1行ずれるので$_^=$/.$_で全行次行とのex-orになり、<br>
+上下対称の下側も同じ結果になるので2で割れば解となる。<br>
+賢い。
+</p>
+<!-- section end -->
+</div>
+<!-- 2009/10/24 end -->
+
+
+
+<hr class="hide">
+<!-- 2009/10/25 start -->
+<h2><a name="20091025" href="200910c.html#20091025">2009-10-25 (Sun)</a></h2>
+<!-- 2009-10-26 00:58:57 -->
+
+<div class="entry1">
+<h3><a name="200910251" title="200910251" href="200910c.html#200910251">■</a> 
+[Fedora] Fedora 12 betaのiso imageのサイズが減少</h3>
+<p>
+Fedoraのiso imageのサイズは9が3.3GB, 10,11が3.4GBなのに、<br>
+12 betaは2.9GBと減少しているのに気づいた。
+</p>
+
+<p>
+
+<a href="http://permalink.gmane.org/gmane.linux.redhat.fedora.core.announce/2626">Fedora 12 Beta now available!</a>
+という記事によるとRPMはgzipじゃなくて<br>
+xzで圧縮するようになったようだ。たぶんこれが原因だろうな。
+</p><blockquote><ul>
+<li>Smaller and faster updates - In Fedora 11, the optional yum-presto
+plugin, developed by Fedora contributor Jonathan Dieter, reduced update
+size by transmitting only the changes in the updated packages. Now, the
+plugin is installed by default. Also, RPMs now use XZ rather than gzip
+for compression, providing smaller package sizes without the memory and
+CPU penalties associated with bzip2. This lets us fit more software into
+each Fedora image, and uses less space on mirrors, making their
+administrators' lives a little easier. Thanks to the Fedora
+infrastructure team for their work in generating delta RPMs.
+</ul></blockquote>
+<!-- section end -->
+</div>
+<!-- 2009/10/25 end -->
+
+
+
+<hr class="hide">
+<!-- 2009/10/26 start -->
+<h2><a name="20091026" href="200910c.html#20091026">2009-10-26 (Mon)</a></h2>
+<!-- 2009-10-27 00:20:55 -->
+
+<div class="entry1">
+<h3><a name="200910261" title="200910261" href="200910c.html#200910261">■</a> 
+<a href="http://www.commandlinefu.com/commands/view/3802/to-print-a-specific-line-from-a-file">[Tips] To print a specific line from a file</a></h3>
+<p>
+結構高ポイントだが、
+</p>
+
+<pre>
+sed -n 5p &lt;file&gt;
+</pre>
+<p>
+これは逆に考えると
+</p>
+
+<pre>
+sed '5!d' &lt;file&gt;
+</pre>
+<p>
+となる。5行目だけ表示するってことは5行目以外を削除と同じ。<br>
+golfではこの考えかたは有効。
+</p>
+<!-- section end -->
+</div>
+<!-- 2009/10/26 end -->
+
+
+
+<hr class="hide">
+<!-- 2009/10/27 start -->
+<h2><a name="20091027" href="200910c.html#20091027">2009-10-27 (Tue)</a></h2>
+<!-- 2009-10-28 01:51:47 -->
+
+<div class="entry1">
+<h3><a name="200910271" title="200910271" href="200910c.html#200910271">■</a> 
+<a href="http://github.com/mikel/mail/">[Ruby] Mail</a></h3>
+<p>
+なんともぐぐりにくい名前だよね。損だと思うよ。
+</p>
+
+<p>
+なぜか常にtlsになってしまうのでサーバはgmailでちょっと試してみた。<br>
+localhostで試すと、どうせ
+<a href="200909c.html#200909291">そこに飛んでくわけだし</a>
+。
+</p>
+
+<pre>
+require 'rubygems'
+require 'mail'
+
+Mail.defaults do
+  smtp 'smtp.gmail.com', 587
+  user 'username@gmail.com'
+  pass 'password'
+end
+
+mail = Mail.new do
+  from 'username@gmail.com'
+  to 'username@gmail.com'
+  subject 'test'
+  body &quot;test&quot;
+end
+
+mail.deliver!
+</pre>
+<p>
+DSLだな。わかりやすいね。
+</p>
+
+<p>
+ref: 
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-talk/348825">[ruby-talk:348825]</a>
+</p>
+<!-- section end -->
+</div>
+<!-- 2009/10/27 end -->
+
+
+
+<hr class="hide">
+<!-- 2009/10/28 start -->
+<h2><a name="20091028" href="200910c.html#20091028">2009-10-28 (Wed)</a></h2>
+<!-- 2009-10-29 04:51:22 -->
+
+<div class="entry1">
+<h3><a name="200910281" title="200910281" href="200910c.html#200910281">■</a> 
+<a href="http://www.garbagecollect.jp/~usa/d/200910c.html#id20091028_P1">[mswin32] VC9+msvcrt.dll</a></h3>
+<p>
+これはシンボルのファイルを作ればgrepで簡単にわかる。こんな感じで:
+</p>
+
+<pre>
+% grep -vwf msvcrt-xp.sym ruby-msvcrt-vc9.sym 
+_except_handler4_common
+_ftol2
+_ftol2_sse
+</pre>
+<p>
+ruby-msvcrt-vc9.symにはあってmsvcrt-xp.symにはない行を抜き出すことを意味する。
+</p>
+<!-- section end -->
+</div>
+<!-- 2009/10/28 end -->
+
+
+
+<hr class="hide">
+<!-- 2009/10/29 start -->
+<h2><a name="20091029" href="200910c.html#20091029">2009-10-29 (Thu)</a></h2>
+<!-- 2009-10-30 02:36:59 -->
+
+<div class="entry1">
+<h3><a name="200910291" title="200910291" href="200910c.html#200910291">■</a> 
+[ニコ動] ニコニコ動画(9)</h3>
+<p>
+ニコ動用のぐりもんや拡張は特に問題なく動いてるようなので一安心。<br>
+しかしあのランキングはどうなんだろう。見づらいよね。<br>
+ランキング動画にも影響するんかな。
+</p>
+<!-- section end -->
+</div>
+<!-- 2009/10/29 end -->
+
+
+
+<hr class="hide">
+<!-- 2009/10/30 start -->
+<h2><a name="20091030" href="200910c.html#20091030">2009-10-30 (Fri)</a></h2>
+<!-- 2009-10-31 22:34:20 -->
+
+<div class="entry1">
+<h3><a name="200910301" title="200910301" href="200910c.html#200910301">■</a> 
+<a href="http://www.ubuntu.com/getubuntu/releasenotes/910">[Ubuntu] Ubuntu 9.10</a></h3>
+<p>
+会社で2つほどインストールして問題なかったので、家のPCにも入れた。<br>
+30分ぐらい。簡単にインストールできるのはいいが、<br>
+Fedoraを認識してくれないのでgrubのメニューに出てこない。<br>
+たぶんFedoraはlvmにインストールしてるからだろう。<br>
+今まではそれでもgrubのコマンドでconfigfileすれば読めたんだけど、<br>
+Ubuntu 9.10はgrub2になっていてまったく読めない。
+</p>
+
+<p>
+というわけでFedora 11が起動しなくなってしまった。つづく。
+</p>
+<!-- section end -->
+</div>
+<!-- 2009/10/30 end -->
+
+
+
+<hr class="hide">
+<!-- 2009/10/31 start -->
+<h2><a name="20091031" href="200910c.html#20091031">2009-10-31 (Sat)</a></h2>
+<!-- 2009-10-31 23:32:45 -->
+
+<div class="entry1">
+<h3><a name="200910311" title="200910311" href="200910c.html#200910311">■</a> 
+[Fedora] 起動できなくなったFedora 11を復活させる</h3>
+<p>
+UbuntuのGRUBじゃ読めなくても適当に古いGRUBで起動させれば読めるわけで、<br>
+
+<a href="ftp://alpha.gnu.org/gnu/grub/">本家</a>からgrub-0.97-i386-pc.ext2fsを取ってきて、<br>
+USBフラッシュにdd if=grub-0.97-i386-pc.ext2fs of=/dev/sddで書き込み。<br>
+これで立ち上がると思ったらなぜか無視される。<br>
+BIOSの設定見てもUSB-HDDが先なのに変だなと思ったが、<br>
+考えてみたら本物のUSB-HDDもつながっているのだった。<br>
+そっちかよ!と外してやっとGRUBのコマンドラインが出てきた。<br>
+あとはconfigfileでmenu.lstを読み込んでokのはずだが、<br>
+なぜかエラーになる。よく見るとsdbなのでhd1のはずだが、hd2になっている。<br>
+なるほどUSBフラッシュのほうがhd1扱いなんだなと、<br>
+eでメニューを書き換えてhd2に変更。これでやっと立ち上がった。
+</p>
+
+<p>
+今度はUbuntuのメニューにFedora 11を載せる方法を調べないと。
+</p>
+<!-- section end -->
+</div>
+<!-- 2009/10/31 end -->
+
+<hr>
+<div>
+<a href="200910b.html">&lt;Prev(,)</a> | 
+<a href="200911a.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

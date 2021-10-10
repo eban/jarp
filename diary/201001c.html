@@ -1,0 +1,455 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2010-1-c</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="201001b.html">
+<link rel="next" href="201002a.html">
+
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2010年1月下旬〜</p>
+<hr>
+<div>
+<a href="201001b.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="201002a.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2010/01/21 start -->
+<h2><a name="20100121" href="201001c.html#20100121">2010-01-21 (Thu)</a></h2>
+<!-- 2010-01-22 01:04:14 -->
+
+<div class="entry1">
+<h3><a name="201001211" title="201001211" href="201001c.html#201001211">■</a> 
+[DVD] DVDの一番時間の長いタイトルを得る</h3>
+<p>
+mplayerの-identifyを使うと簡単にタイトルの時間の長さが得られる。
+</p>
+
+<pre>
+% mplayer dvd:// -vo dummy -ao dummy -identify 2&gt;/dev/null |\
+  grep 'ID_DVD_TITLE_[0-9]*_LENGTH' 
+ID_DVD_TITLE_1_LENGTH=285.000
+ID_DVD_TITLE_2_LENGTH=611.000
+ID_DVD_TITLE_3_LENGTH=64.000
+ID_DVD_TITLE_4_LENGTH=30.500
+ID_DVD_TITLE_5_LENGTH=15.500
+ID_DVD_TITLE_6_LENGTH=12.500
+ID_DVD_TITLE_7_LENGTH=5.500
+ID_DVD_TITLE_8_LENGTH=64.000
+ID_DVD_TITLE_9_LENGTH=30.500
+ID_DVD_TITLE_10_LENGTH=15.500
+ID_DVD_TITLE_11_LENGTH=12.500
+ID_DVD_TITLE_12_LENGTH=5.500
+ID_DVD_TITLE_13_LENGTH=7281.333
+</pre>
+<p>
+あとはソートしなくても大体わかるが一応秒数でソート。
+</p>
+
+<pre>
+% mplayer dvd:// -vo dummy -ao dummy -identify 2&gt;/dev/null |\
+  grep 'ID_DVD_TITLE_[0-9]*_LENGTH' | sort -t= -nk2
+ID_DVD_TITLE_12_LENGTH=5.500
+ID_DVD_TITLE_7_LENGTH=5.500
+ID_DVD_TITLE_11_LENGTH=12.500
+ID_DVD_TITLE_6_LENGTH=12.500
+ID_DVD_TITLE_10_LENGTH=15.500
+ID_DVD_TITLE_5_LENGTH=15.500
+ID_DVD_TITLE_4_LENGTH=30.500
+ID_DVD_TITLE_9_LENGTH=30.500
+ID_DVD_TITLE_3_LENGTH=64.000
+ID_DVD_TITLE_8_LENGTH=64.000
+ID_DVD_TITLE_1_LENGTH=285.000
+ID_DVD_TITLE_2_LENGTH=611.000
+ID_DVD_TITLE_13_LENGTH=7281.333
+</pre>
+<p>
+13が一番長いのでmplayer dvd://13で再生すればいいわけだ。
+</p>
+
+<p>
+と思ったらlsdvdなんてコマンドがあったよ？
+</p>
+
+<pre>
+% lsdvd -d
+&lt;中略&gt;
+Longest track: 13
+</pre>
+
+
+<!-- section end -->
+</div>
+<!-- 2010/01/21 end -->
+
+
+
+<hr class="hide">
+<!-- 2010/01/22 start -->
+<h2><a name="20100122" href="201001c.html#20100122">2010-01-22 (Fri)</a></h2>
+<!-- 2010-01-23 02:28:20 -->
+
+<div class="entry1">
+<h3><a name="201001221" title="201001221" href="201001c.html#201001221">■</a> 
+[Thunderbird] Thunderbird3で月別アーカイブ</h3>
+<p>
+Nostalgyを使っているとあまり関係ないが、<br>
+ベータのころは月別アーカイブだったのがなぜか年別になっていたので調査。<br>
+
+<a href="http://kb.mozillazine.org/Thunderbird_3.0_-_New_Features_and_Changes#New_.22Archives.22_Folder">New &quot;Archives&quot; Folder</a>
+によるとdefaultが変わったらしい。
+<ul>
+<li>The currently implemented scheme creates an Archives
+    folder which contains subfolders for each year. In
+    turn, those folders can contain per-month subfolders
+    (see figure to the right). This is determined by a
+    preference mail.server.default.archive_granularity (or
+    mail.server.server#.archive_granularity for a specific
+    account) with 0=single Archives folder, 1=by-year
+    subfolders (default), and 2=year/month subfolders.
+</ul>
+というわけで月別にしたければ設定エディタで<br>
+mail.server.default.archive_granularityを2にする。
+</p>
+<!-- section end -->
+</div>
+<!-- 2010/01/22 end -->
+
+
+
+<hr class="hide">
+<!-- 2010/01/23 start -->
+<h2><a name="20100123" href="201001c.html#20100123">2010-01-23 (Sat)</a></h2>
+<!-- 2010-01-25 00:51:06 -->
+
+<div class="entry1">
+<h3><a name="201001231" title="201001231" href="201001c.html#201001231">■</a> 
+[Firefox] 動かないぐりもん</h3>
+<p>
+てっきり3.6のせいだと思っていたが、考えてみるとF12のFxはまだ3.5.6なのであった。<br>
+どういうこと？
+</p>
+
+<p>
+あ、続出どころか何も動いてないなこりゃ。<br>
+いつからだろう。
+</p>
+
+<p>
+そろそろプロファイルも新しくするか。
+</p>
+<!-- section end -->
+</div>
+<!-- 2010/01/23 end -->
+
+
+
+<hr class="hide">
+<!-- 2010/01/24 start -->
+<h2><a name="20100124" href="201001c.html#20100124">2010-01-24 (Sun)</a></h2>
+<!-- 2010-01-25 00:50:45 -->
+
+<div class="entry1">
+<h3><a name="201001241" title="201001241" href="201001c.html#201001241">■</a> 
+[Firefox] ぐりもんが動かない理由</h3>
+<p>
+よくわからないのでgm_scripts/*を覗いてみたら、なんとconfig.xmlしかない。<br>
+まいったね。動かないわけだよ。<br>
+Fxからみるとconfig.xmlのおかげで存在するように見えるけど、<br>
+実体はなかったわけか。ってなんで消えてんだ？
+</p>
+
+<p>
+config.xmlがあるので一個一個取ってくれば復活できるけど、<br>
+この機会にぐりもんなしでどれくらい耐えられるか試してみる。<br>
+すでに一週間ぐらい経ってる気がするが。
+</p>
+<!-- section end -->
+</div>
+<!-- 2010/01/24 end -->
+
+
+
+<hr class="hide">
+<!-- 2010/01/25 start -->
+<h2><a name="20100125" href="201001c.html#20100125">2010-01-25 (Mon)</a></h2>
+<!-- 2010-01-26 02:37:41 -->
+
+<div class="entry1">
+<h3><a name="201001251" title="201001251" href="201001c.html#201001251">■</a> 
+[Firefox] Firefoxのスムーズスクロール機能</h3>
+<p>
+Firefoxはなんでそんなにスムーズスクロール機能を使わせようとするのか？<br>
+更新するときに勝手にチェックされることが多い。<br>
+毎回かどうかは知らないけど。ぬるぬる動くのはいやだよ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2010/01/25 end -->
+
+
+
+<hr class="hide">
+<!-- 2010/01/26 start -->
+<h2><a name="20100126" href="201001c.html#20100126">2010-01-26 (Tue)</a></h2>
+<!-- 2010-01-27 01:47:22 -->
+
+<div class="entry1">
+<h3><a name="201001261" title="201001261" href="201001c.html#201001261">■</a> 
+[Dovecot] Fatal: Time just moved backwards by 311 seconds.</h3>
+<p>
+なんか5分ぐらい時計が進んでるのでntpdate -bで無理矢理システムクロックを<br>
+設定したらdovecotが死んだ。
+</p>
+
+<blockquote><p>
+Jan 26 10:57:14 fantasia dovecot: dovecot: Fatal: Time just moved
+backwards by 311 seconds. This might cause a lot of problems, so I'll
+just kill myself now.<br>
+
+<a href="http://wiki.dovecot.org/TimeMovedBackwards">http://wiki.dovecot.org/TimeMovedBackwards</a>
+</p></blockquote><p>
+まあそういうことなんだろうね。
+</p>
+<!-- section end -->
+</div>
+<!-- 2010/01/26 end -->
+
+
+
+<hr class="hide">
+<!-- 2010/01/27 start -->
+<h2><a name="20100127" href="201001c.html#20100127">2010-01-27 (Wed)</a></h2>
+<!-- 2010-01-28 00:30:19 -->
+
+<div class="entry1">
+<h3><a name="201001271" title="201001271" href="201001c.html#201001271">■</a> 
+[Linux] dfの日本語メッセージ</h3>
+<p>
+dfの日本語メッセージがバイト数じゃなくて文字数でカウントしてるようで、<br>
+ずれまくる。Ubuntu 9.10だとこんな感じ。
+</p>
+
+<pre>
+% df -h /
+ファイルシステム            サイズ  使用  残り 使用% マウント位置
+/dev/sda1              16G  4.3G   11G  30% /
+</pre>
+<p>
+ずれるとなんとなく使用が11G!やばいとか思ってしまって心臓に悪い。
+</p>
+
+<p>
+これがUbuntu 8.04 LTSやFedora12だと
+</p>
+
+<pre>
+% df -h /
+Filesystem          サイズ  使用  残り 使用% マウント位置
+/dev/sda1              27G  4.8G   22G  19% /
+</pre>
+<p>
+のようになんと「ファイルシステム」が「Filesystem」のままになっている。<br>
+これはわざとだな。
+</p>
+<!-- section end -->
+</div>
+<!-- 2010/01/27 end -->
+
+
+
+<hr class="hide">
+<!-- 2010/01/28 start -->
+<h2><a name="20100128" href="201001c.html#20100128">2010-01-28 (Thu)</a></h2>
+<!-- 2010-01-29 00:43:06 -->
+
+<div class="entry1">
+<h3><a name="201001281" title="201001281" href="201001c.html#201001281">■</a> 
+[Cygwin] Cygwinのgawkがなぜか遅い</h3>
+<p>
+どういうわけか会社のとあるPCだけ遅い。
+</p>
+
+<pre>
+% time gawk 'BEGIN{print &quot;hoge&quot;}'
+hoge
+gawk 'BEGIN{print &quot;hoge&quot;}'  2.20s user 0.03s system 96% cpu 2.326 total
+</pre>
+<p>
+どういうこと？straceして確かめてみると待ちが入るんだよねえ。
+</p>
+
+<pre>
+   28  296958 [main] gawk 680 void: 0x0 = signal (10, 0x4237C0)
+   34  296992 [main] gawk 680 fhandler_base::fstat: here
+   25  297017 [main] gawk 680 fstat64: 0 = fstat (0, 0x22CC40)
+   25  297042 [main] gawk 680 fhandler_base::fstat: here
+   26  297068 [main] gawk 680 fstat64: 0 = fstat (1, 0x22CC40)
+  105  297173 [main] gawk 680 fhandler_base::fstat: here
+   22  297195 [main] gawk 680 fstat64: 0 = fstat (2, 0x22CC40)
+2119562 2416757 [main] gawk 680 isatty: 0 = isatty (1)    450 2417207 [main] gawk 680 fhandler_base::fstat: here
+   26 2417233 [main] gawk 680 fstat64: 0 = fstat (1, 0x22C750)
+  324 2417557 [main] gawk 680 sig_send: sendsig 0x714, pid 680, signal -34, its_me 1
+   32 2417589 [main] gawk 680 sig_send: wakeup 0x6D4
+   33 2417622 [main] gawk 680 sig_send: Waiting for pack.wakeup 0x6D4
+   28 2417650 [sig] gawk 680 wait_sig: signalling pack.wakeup 0x6D4
+</pre>
+<p>
+何を2秒も待ってんだか。
+</p>
+
+<p>
+そろそろこれも1.7に上げるか。
+</p>
+<!-- section end -->
+</div>
+<!-- 2010/01/28 end -->
+
+
+
+<hr class="hide">
+<!-- 2010/01/29 start -->
+<h2><a name="20100129" href="201001c.html#20100129">2010-01-29 (Fri)</a></h2>
+<!-- 2010-01-30 14:39:40 -->
+
+<div class="entry1">
+<h3><a name="201001291" title="201001291" href="201001c.html#201001291">■</a> 
+[Cygwin] Cygwinのgawkがなぜか遅い原因が判明</h3>
+<p>
+Cygwin 1.7へ上げてもgawkが遅い件は変わらなかったが、<br>
+straceの結果には変化があった。
+</p>
+
+<pre>
+  426  275957 [main] gawk 980 pwdgrp::load: \etc\group curr_lines 69765
+   50  276007 [main] gawk 980 pwdgrp::load: \etc\group load succeeded
+ 1147  277154 [main] gawk 980 pwdgrp::read_group: Completing /etc/group: passwd/group_GID_clash(10545/10513):S-1-5-21-1202660629-1425521274-1801674531-513:10545:eban
+2184231 2461385 [main] gawk 980 isatty: 1 = isatty (1)
+ 2396 2463781 [main] gawk 980 fhandler_base::fstat: here
+</pre>
+<p>
+/etc/groupを読み込むのに2秒かかってるらしい。<br>
+昨日のstraceの結果にはそんなのどこにもなかったのに。<br>
+たしかにmkgroupのときに-dをつけたから7万行近くあるけど2秒もかかるかねえ。<br>
+とりあえずmkgroup -lと-dなしの結果で/etc/groupを置き換えた。<br>
+解決。全体的にCygwinが速くなったよ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2010/01/29 end -->
+
+
+
+<hr class="hide">
+<!-- 2010/01/30 start -->
+<h2><a name="20100130" href="201001c.html#20100130">2010-01-30 (Sat)</a></h2>
+<!-- 2010-01-31 03:39:55 -->
+
+<div class="entry1">
+<h3><a name="201001301" title="201001301" href="201001c.html#201001301">■</a> 
+[RSS] ほんとにGoogle Readerであらゆるページが講読可能か？</h3>
+<p>
+可能ではない。akrさんとことか木村さんとことか。
+</p><blockquote><p>
+Google was not able to access this page to check for updates. This
+page may be unavailable or have other restrictions that prevent Google
+from getting updates.
+</p></blockquote><p>
+と言われてしまう。RSSへ変換するAPIはいろいろあるけど、やっぱ汎用は難しいよねえ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2010/01/30 end -->
+
+
+
+<hr class="hide">
+<!-- 2010/01/31 start -->
+<h2><a name="20100131" href="201001c.html#20100131">2010-01-31 (Sun)</a></h2>
+<!-- 2010-02-01 00:47:32 -->
+
+<div class="entry1">
+<h3><a name="201001311" title="201001311" href="201001c.html#201001311">■</a> 
+[Firefox] 新しいプロファイル</h3>
+<p>
+どういうわけかモナーフォントにするbookmarkletが効かないなと、<br>
+ここ数年(長すぎ)思っていたわけだが、<br>
+今日ついに新しいプロファイルでなにが悪いのか調査することにした。<br>
+まっさらな状態だとさすがに効く。<br>
+で徐々にいろんなものをコピーしてたら、どうもprefs.jsが元凶のようで。<br>
+こいつは変な文字コードが入ってしまっていて、<br>
+vimが自動判別できず編集するのも苦労してたので、<br>
+もうこの際捨てることにした。<br>
+おかげでいろんなものを再設定することになったけど、<br>
+小さくなっていい感じではある。
+</p>
+
+<p>
+見た感じだと昔の拡張がprefs.jsへ設定を残していたようで残骸がいっぱいあった。<br>
+なんか起動も心持ち速くなった気がする。
+</p>
+<!-- section end -->
+</div>
+<!-- 2010/01/31 end -->
+
+<hr>
+<div>
+<a href="201001b.html">&lt;Prev(,)</a> | 
+<a href="201002a.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

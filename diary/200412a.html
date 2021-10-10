@@ -1,0 +1,578 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2004-12-a</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="200411c.html">
+<link rel="next" href="200412b.html">
+
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2004年12月上旬〜</p>
+<hr>
+<div>
+<a href="200411c.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="200412b.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2004/12/01 start -->
+<h2><a name="20041201" href="200412a.html#20041201">2004-12-01 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="200412011" title="200412011" href="200412a.html#200412011">■</a> 
+11月のspam</h3>
+<p>
+5367通。確実に増えてる。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200412012" title="200412012" href="200412a.html#200412012">■</a> 
+<a href="http://www.python.org/2.4/">[Soft] Python 2.4</a></h3>
+<p>
+更新。またしてもmake testが会社のPCで成功し家のPCで失敗。
+そろそろ新しいdistroにすべきか。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200412013" title="200412013" href="200412a.html#200412013">■</a> 
+[DQ8] 全部閉じる</h3>
+<p>
+□ボタンで全部閉じることに気づいた。ってマニュアルに書いてある。
+</p>
+<!-- section end -->
+</div>
+<!-- 2004/12/01 end -->
+
+
+
+<hr class="hide">
+<!-- 2004/12/02 start -->
+<h2><a name="20041202" href="200412a.html#20041202">2004-12-02 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="200412021" title="200412021" href="200412a.html#200412021">■</a> 
+<a href="http://www.rim.or.jp/support/announce/041130.html">[Mail] 今後のリムネットメールサービス改善対応につきまして</a></h3>
+<p>
+現状報告のメールが来た。全然改善されないので
+</p><blockquote><ul>
+<li>コンピューターウィルス対策の導入
+<li>迷惑メール対策の導入
+<li>メールサービスを構成する各種サーバー機器を処理能力の高い機器へ交換
+<li>既存機器の動作調整を引き続き実行
+</ul></blockquote><p>
+ということになったらしい。次はがんばってくれよー。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200412022" title="200412022" href="200412a.html#200412022">■</a> 
+[Soft] MPDのid3v1_encoding</h3>
+<p>
+man mpdしてみるとこんな記述があった。
+</p>
+<pre>
+id3v1_encoding &lt;charset&gt;
+       This  specifies  the character set used for the ID3v1 tags. Sup-
+       ported characters sets also can be obtained from the  iconv.  By
+       default ISO8859-1 is used.
+</pre>
+<p>
+これで指定すればいいらしい。というわけで、~/.mpdconfに
+</p>
+<pre>
+id3v1_encoding Shift_JIS
+</pre>
+<p>
+を追加し、mpd --create-dbしてデータベースを作り直し。
+これで
+<a href="http://www.musicpd.org/ncmpc.shtml">ncmpc</a>の表示は完璧。
+でも今度は
+<a href="http://www.iosart.com/foxytunes/firefox/">FoxyTunes</a>
+が???に化ける。うーむ。あちらを立てればこちらが立たず。
+</p>
+
+<p>
+ChangeLogを見ると最新の0.11.5で入った機能なので、
+FoxyTunes側が対応してないのかもしれない。
+考えてみるといままで表示されていたのが不思議なくらい。
+</p>
+<!-- section end -->
+</div>
+<!-- 2004/12/02 end -->
+
+
+
+<hr class="hide">
+<!-- 2004/12/03 start -->
+<h2><a name="20041203" href="200412a.html#20041203">2004-12-03 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="200412031" title="200412031" href="200412a.html#200412031">■</a> 
+朝</h3>
+<p>
+初霜。寒いわけだ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200412032" title="200412032" href="200412a.html#200412032">■</a> 
+<a href="http://cia.navi.cx/">[Ruby] CIA Open Source Notification System</a></h3>
+<p>
+結局shugoさんがCIA形式でメールを送るスクリプトを作ったので、
+<a href="http://cia.navi.cx/stats/project/ruby/">Ruby/CIA</a>が復活。
+</p>
+
+<p>
+Link: 
+<a href="http://cia.navi.cx/">CIA</a>
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200412033" title="200412033" href="200412a.html#200412033">■</a> 
+[MPD] ncmpc</h3>
+<p>
+なんだかんだで
+<a href="http://www.iosart.com/foxytunes/firefox/">FoxyTunes</a>より
+<a href="http://www.musicpd.org/ncmpc.shtml">ncmpc</a>のほうが気に入ってしまったので、FoxyTunesの文字化けはもういいやという状態になりつつある。
+そのうち直るでしょう、たぶん。
+</p>
+<!-- section end -->
+</div>
+<!-- 2004/12/03 end -->
+
+
+
+<hr class="hide">
+<!-- 2004/12/04 start -->
+<h2><a name="20041204" href="200412a.html#20041204">2004-12-04 (Sat)</a></h2>
+<!-- 2004-12-05 02:04:35 -->
+
+<div class="entry1">
+<h3><a name="200412041" title="200412041" href="200412a.html#200412041">■</a> 
+<a href="http://bogofilter.sf.net/">[Soft] Bogofilter 0.93.2</a></h3>
+<p>
+Changes:
+</p><blockquote><p>
+This version uses one transaction for all reads, to ensure proper
+atomicity and isolation. It can also be compiled for Berkeley DB
+support without transactions. It adds a username formatting option,
+and a &quot;remove environment&quot; parameter.
+</p></blockquote>
+<!-- section end -->
+</div>
+<!-- 2004/12/04 end -->
+
+
+
+<hr class="hide">
+<!-- 2004/12/05 start -->
+<h2><a name="20041205" href="200412a.html#20041205">2004-12-05 (Sun)</a></h2>
+<!-- 2004-12-06 03:00:20 -->
+
+<div class="entry1">
+<h3><a name="200412051" title="200412051" href="200412a.html#200412051">■</a> 
+[Book] 「Subversion」解説書—バージョン管理システム</h3>
+<p>
+予約をカートに入れたまま忘れていた。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200412052" title="200412052" href="200412a.html#200412052">■</a> 
+[Video] 2倍速再生</h3>
+<p>
+Clip-Onで1.5倍速再生に慣れたせいか、VHSでの2倍速再生でも問題なく聞き取れるようになった。
+DQ8やってて録画していたビデオが溜ってるときに便利だ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200412053" title="200412053" href="200412a.html#200412053">■</a> 
+[RSS] CIA形式からRSSへ</h3>
+<p>
+xsltprocで変換してみようと思ったが、timestampがUNIX Timeなもんだから困る。
+さすがにstrftime相当はないよなあ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2004/12/05 end -->
+
+
+
+<hr class="hide">
+<!-- 2004/12/06 start -->
+<h2><a name="20041206" href="200412a.html#20041206">2004-12-06 (Mon)</a></h2>
+<!-- 2004-12-07 02:04:09 -->
+
+<div class="entry1">
+<h3><a name="200412061" title="200412061" href="200412a.html#200412061">■</a> 
+[Ruby] DJGPP対応</h3>
+<p>
+最近DJGPPでmakeしてないと思い、HEADでmakeしてみると案の定エラーに。
+DJGPPにはsetrlimitは存在するのにrlim_tは定義されてないのが原因のようだ。
+</p>
+<pre>
+#ifdef HAVE_RLIM_T
+#if SIZEOF_RLIM_T == SIZEOF_INT
+# define RLIM2NUM(v) UINT2NUM(v)
+# define NUM2RLIM(v) NUM2UINT(v)
+#elif SIZEOF_RLIM_T == SIZEOF_LONG
+# define RLIM2NUM(v) ULONG2NUM(v)
+# define NUM2RLIM(v) NUM2ULONG(v)
+#elif SIZEOF_RLIM_T == SIZEOF_LONG_LONG
+# define RLIM2NUM(v) ULL2NUM(v)
+# define NUM2RLIM(v) NUM2ULL(v)
+#else
+# error cannot find an integer type which size is same as rlim_t.
+#endif
+#endif
+</pre>
+<p>
+ここで見てるのはHAVE_RLIM_TじゃなくてSIZEOF_RLIM_Tだから
+</p>
+<pre>
+#if SIZEOF_RLIM_T
+</pre>
+<p>
+としよう。で、configure.inに
+</p>
+<pre>
+case &quot;$target_os&quot; in
+msdosdjgpp*)
+  ac_cv_sizeof_rlim_t=4;;
+esac
+</pre>
+<p>
+を追加。
+</p>
+
+<p>
+ついでに今日の非stdio化に対応。ダミーのis_socketとshutdownを定義。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200412062" title="200412062" href="200412a.html#200412062">■</a> 
+[Linux] ccacheがSEGV</h3>
+<p>
+Linuxでcygwin版rubyをクロスコンパイルしてるとなぜかcursesをコンパイルするところでSEGVに。
+調べてみるとccacheがSEGVになってるようだ。
+見た感じだとコマンドラインがやたらと長い。これが原因か？
+いや、数だな。32個あたりに限界があるようだ。
+</p>
+<pre>
+% echo 'main(){}' &gt;main.c
+% ccache gcc $(ruby -e 'print &quot;-I. &quot; * 30') main.c
+% ccache gcc $(ruby -e 'print &quot;-I. &quot; * 31') main.c
+zsh: segmentation fault  ccache gcc $(ruby -e 'print &quot;-I. &quot; * 31') main.c
+</pre>
+<p>
+ccacheをmakeし直してみると全然問題ない。うーむ。なんだったんだろう？
+記念にCC='diet gcc'で作っとこう。
+</p>
+<!-- section end -->
+</div>
+<!-- 2004/12/06 end -->
+
+
+
+<hr class="hide">
+<!-- 2004/12/07 start -->
+<h2><a name="20041207" href="200412a.html#20041207">2004-12-07 (Tue)</a></h2>
+<!-- 2004-12-08 02:03:33 -->
+
+<div class="entry1">
+<h3><a name="200412071" title="200412071" href="200412a.html#200412071">■</a> 
+<a href="http://lftp.yar.ru/">[Soft] lftp 3.0.12</a></h3>
+<p>
+Changes:
+</p><blockquote><p>
+A new ftps:initial-prot setting was added. FTP over HTTP proxies
+with the CONNECT method can now use proxy authorization. The &quot;mirror&quot;
+command was fixed not to chmod unchanged files. Excluding files for the
+sftp protocol was fixed. The transfer of growing files over the fish
+protocol was fixed. mkdir over hftp was fixed. The delay between
+connection attempts was fixed. The Polish translation was updated. 
+</p></blockquote>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200412072" title="200412072" href="200412a.html#200412072">■</a> 
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-talk/122695">[Google] Read comp.lang.ruby through Google Groupsl</a></h3>
+<p>
+Blogのような見た目だ。subscribeすると未読管理もできたりする。
+</p>
+
+<p>
+link: 
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-talk/122695">[ruby-talk:122695]</a>, 
+<a href="http://groups-beta.google.com/group/comp.lang.ruby">http://groups-beta.google.com/group/comp.lang.ruby</a>
+</p>
+<!-- section end -->
+</div>
+<!-- 2004/12/07 end -->
+
+
+
+<hr class="hide">
+<!-- 2004/12/08 start -->
+<h2><a name="20041208" href="200412a.html#20041208">2004-12-08 (Wed)</a></h2>
+<!-- 2004-12-09 01:53:24 -->
+
+<div class="entry1">
+<h3><a name="200412081" title="200412081" href="200412a.html#200412081">■</a> 
+<a href="http://www.cs.jhu.edu/~seaborn/plash/plash.html">[Security] Plash (the Principle of Least Authority Shell)</a></h3>
+<p>
+About:
+</p><blockquote><p>
+Plash (the Principle of Least Authority Shell) is a Unix shell that
+lets you run Unix programs with access only to the files and directories
+they need to run. In order to implement this, the filesystem is
+virtualized. Each process can have its own namespace, which can contain a
+subset of your files. This is implemented by modifying GNU libc and
+replacing the system calls that use filenames. For example, open() is
+changed so that it sends a message to a file server via a socket. If the
+request is successful, the server sends the client a file descriptor.
+Processes are run as the user 'nobody' in a chroot jail. No kernel
+modifications are required.
+</p></blockquote><p>
+
+<a href="http://www.cs.jhu.edu/~seaborn/plash/README.txt">README.txt</a>
+のShell Overviewを見てちょっと驚いた。
+</p>
+<pre>
+ls .
+</pre>
+<p>
+のように`.'が必須とか、ファイルはdefaultでread-onlyだとか
+</p>
+<pre>
+gcc -c foo.c =&gt; -o foo.o
+</pre>
+<p>
+のように明示的に=&gt;を使ってファイルに対する書き込みを指定しないといけないらしい。
+</p>
+
+<p>
+link: 
+<a href="http://www.cs.jhu.edu/~seaborn/plash/plash.html">http://www.cs.jhu.edu/~seaborn/plash/plash.html</a>
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200412082" title="200412082" href="200412a.html#200412082">■</a> 
+[Ruby] DJGPP対応</h3>
+<p>
+systemが全然動いてなかった。いや実は``も動いてないんだけど。
+なにしろMS-DOSにはpipe(2)なんてないからpopen自体もなんちゃってだしなあ。
+systemは動くようにしたが、popenはいずれまた。
+まずは家のPCにクロスじゃないDJGPPの環境を作らないと。ってそこからかよ!
+</p>
+
+<p>
+まてよ。config.hのHAVE_FORKをundefすれば他の環境でも実験できるか。
+</p>
+<!-- section end -->
+</div>
+<!-- 2004/12/08 end -->
+
+
+
+<hr class="hide">
+<!-- 2004/12/09 start -->
+<h2><a name="20041209" href="200412a.html#20041209">2004-12-09 (Thu)</a></h2>
+<!-- 2004-12-10 02:00:01 -->
+
+<div class="entry1">
+<h3><a name="200412091" title="200412091" href="200412a.html#200412091">■</a> 
+[Firefox] タブを閉じる</h3>
+<p>
+C-wで閉じるんだよねえ。
+<a href="http://extensionroom.mozdev.org/clav/#tabx">Tab X</a>は要らないか。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200412092" title="200412092" href="200412a.html#200412092">■</a> 
+<a href="http://www-zeuthen.desy.de/~friebel/unix/lesspipe.html">[Soft] lesspipe.sh 1.43</a></h3>
+<p>
+lesspipe.shといえば人知れず/usr/bin/にあったりする地味なやつだが、結構いろんなことができるようになってる。
+</p>
+
+<p>
+About:
+</p><blockquote><p>
+lesspipe.sh is an input filter for the pager less as described in
+less's man page. The script runs under a ksh-compatible shell (ksh,
+bash, zsh) and allows you to use less to view files with binary
+content, compressed files, archives, and files contained in
+archives. Viewing files by accessing a device file is implemented to
+some extent (DOS filesystems and tar files). It supports many formats
+(both as plain and compressed files using compress, gzip, bzip2, or
+zip). Syntax highlighting for many languages is available through a
+helper script, &quot;code2color&quot;.
+</p></blockquote><p>
+このSyntax highlightingはREADMEを見ると
+</p>
+<pre>
+Syntax highligting is only tried if less is called with -r or -R !!!
+Suppress syntax highligting:    less file1:..:fileN::  (append 2 colons)
+Force highligting for another language: less file1:..:fileN:suffix
+where suffix denotes the language: .ada .asm .inc .awk .c .h .cpp .cxx
+                                   .groff .html .php .xml .java .js .lsp
+                                   .m4 makefile .pas .patch .diff .pm
+                                   .pl .pod .pov .py .rb .sh .sql
+</pre>
+<p>
+ちゃんとRubyも対応してたりするわけだよ、これが。すばらしい。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200412093" title="200412093" href="200412a.html#200412093">■</a> 
+[Ruby] DJGPPのpopen対応、rb_globの呪い</h3>
+<p>
+結局Linuxでundef HAVE_FORKしてデバッグ。make testも通った。
+しかし、今日の他のコミットでSEGVするようになってしまった。
+原因はrb_globの呪いだ。
+crt0でrb_globを呼び出しているんだけど、
+先月の変更でheapではなくstring objectがバッファに使われるようになったので、ここで落ちる。
+初期化がまだ済んでないから。
+</p>
+
+<p>
+解決策は
+</p><ol>
+<li>GetCommandLine()みたいなものがあればwin32と同じ方法が使える
+<li>なんでcrt0でこんなことをしてるかといえば、sjisファイル名対応だったりするので、それをすっぱりあきらめる
+<li>DJGPPは捨てる
+</ol><p>
+といったあたりか。
+</p>
+<!-- section end -->
+</div>
+<!-- 2004/12/09 end -->
+
+
+
+<hr class="hide">
+<!-- 2004/12/10 start -->
+<h2><a name="20041210" href="200412a.html#20041210">2004-12-10 (Fri)</a></h2>
+<!-- 2004-12-11 01:15:16 -->
+
+<div class="entry1">
+<h3><a name="200412101" title="200412101" href="200412a.html#200412101">■</a> 
+[Perl] cvsweb.cgi</h3>
+<p>
+
+<a href="http://www.ruby-lang.org/cgi-bin/cvsweb.cgi/">cvsweb</a>のtarballを作るところでInternal Server Errorになるという報告を受けた。
+調べてみると-Tのときに
+</p><blockquote><p>
+Insecure dependency in chmod while running with -T switch at /usr/lib/perl5/5.6.1/File/Path.pm line 177.
+</p></blockquote><p>
+ということらしい。5.8.6ではエラーにならないんだけどなあ。
+これのいやらしいところはcvs exportした作業ディレクトリを消す処理が動かないという点。
+700MBほどのtreeがごっそり残ってた。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200412102" title="200412102" href="200412a.html#200412102">■</a> 
+[Ruby] DJGPPの__crt0_glob_function</h3>
+<p>
+sjisのファイル名をあきらめるというのが妥当な線か。
+まあ、Cygwinも同じようにだめだしねえ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2004/12/10 end -->
+
+<hr>
+<div>
+<a href="200411c.html">&lt;Prev(,)</a> | 
+<a href="200412b.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

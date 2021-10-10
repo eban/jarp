@@ -1,0 +1,364 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2007-5-b</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="200705a.html">
+<link rel="next" href="200705c.html">
+
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2007年5月中旬〜</p>
+<hr>
+<div>
+<a href="200705a.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="200705c.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2007/05/11 start -->
+<h2><a name="20070511" href="200705b.html#20070511">2007-05-11 (Fri)</a></h2>
+<!-- 2007-05-12 01:38:31 -->
+
+<div class="entry1">
+<h3><a name="200705111" title="200705111" href="200705b.html#200705111">■</a> 
+[穴] FizzBuzzを正規表現で解く</h3>
+<p>
+nに整数が入っているとして、3の倍数かどうかを正規表現でチェックするには
+</p>
+<pre>
+&quot;#&quot;*n =~ /^(###)+$/
+</pre>
+<p>
+とすれば簡単にわかる。それと
+<a href="http://d.hatena.ne.jp/shinichiro_h/20070509#1178693484">最適解の1個</a>
+と組み合わせてこんなのを考えてみた。
+</p>
+<pre>
+def f(n,i,s)&quot;#&quot;*n=~ /^(#{&quot;#&quot;*i})+$/&amp;&amp;s end
+1.upto(?d){|n|puts f(n,3,&quot;Fizz%s&quot;%s=f(n,5,:Buzz))||s||n}
+</pre>
+<p>
+まだ縮むが(procとか$nにするとか)、そっちが目的ではないので。
+</p>
+<!-- section end -->
+</div>
+<!-- 2007/05/11 end -->
+
+
+
+<hr class="hide">
+<!-- 2007/05/12 start -->
+<h2><a name="20070512" href="200705b.html#20070512">2007-05-12 (Sat)</a></h2>
+<!-- 2007-05-13 02:11:42 -->
+
+<div class="entry1">
+<h3><a name="200705121" title="200705121" href="200705b.html#200705121">■</a> 
+<a href="http://freshmeat.net/projects/atunes/">[Soft] aTunes 1.6.1</a></h3>
+<blockquote><dl>
+<dt>
+About:
+<dd>
+aTunes is a full-featured audio player and organizer, with some
+ripping and encoding tools included. It supports MP3, Ogg, WMA, WAV, and
+MP4.
+</dl></blockquote>
+<!-- section end -->
+</div>
+<!-- 2007/05/12 end -->
+
+
+
+<hr class="hide">
+<!-- 2007/05/13 start -->
+<h2><a name="20070513" href="200705b.html#20070513">2007-05-13 (Sun)</a></h2>
+<!-- 2007-05-14 01:33:21 -->
+
+<div class="entry1">
+<h3><a name="200705131" title="200705131" href="200705b.html#200705131">■</a> 
+<a href="http://tech.groups.yahoo.com/group/vimannounce/message/178">[Vim] Stable Vim version 7.1 has been released</a></h3>
+<blockquote><dl>
+<dt>
+Announcing: Vim (Vi IMproved) version 7.1
+<dd>
+This is a stable release of Vim, version 7.1. Since version 7.0 lots of
+problems were fixed and runtime files were updated. It has been one
+year and five days since 7.0!
+<dd>
+Most of Vim 7.1 was already available as patches for quite a while. A
+couple of test versions were made to spot problems in the distribution.
+Therefore Vim 7.1 can be considered very stable.
+<dd>
+If you are using an older version, it is highly recommended you install
+Vim 7.1. Several crashing bugs and a security issue were fixed.
+<dd>
+Once you have installed Vim 7.1 you can find details about the
+changes since Vim 7.0 with &quot;:help version-7.1&quot;.
+</dl></blockquote>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200705132" title="200705132" href="200705b.html#200705132">■</a> 
+[穴] putc</h3>
+<p>
+存在を忘れていたputcが今役に立つときがきた。<br>
+しかし、putcの戻り値がnilじゃなくて引数そのものだったとは。
+</p>
+<!-- section end -->
+</div>
+<!-- 2007/05/13 end -->
+
+
+
+<hr class="hide">
+<!-- 2007/05/14 start -->
+<h2><a name="20070514" href="200705b.html#20070514">2007-05-14 (Mon)</a></h2>
+<!-- 2007-05-15 01:20:02 -->
+
+<div class="entry1">
+<h3><a name="200705141" title="200705141" href="200705b.html#200705141">■</a> 
+[Bash] read</h3>
+<p>
+bashでwhile readしてて最終行に改行がないと読めないという現象にぶちあたった。
+</p>
+<pre>
+% echo foo | bash -c 'read;echo $?' 
+0
+% echo -n foo | bash -c 'read;echo $?'
+1
+</pre>
+<p>
+ということらしい。zshでも同じなのでsh系はみんなそうなのかも。<br>
+このおかげでとある問題は大幅にサイズを縮められるわけなんだけど。
+</p>
+<!-- section end -->
+</div>
+<!-- 2007/05/14 end -->
+
+
+
+<hr class="hide">
+<!-- 2007/05/15 start -->
+<h2><a name="20070515" href="200705b.html#20070515">2007-05-15 (Tue)</a></h2>
+<!-- 2007-05-16 01:43:27 -->
+
+<div class="entry1">
+<h3><a name="200705151" title="200705151" href="200705b.html#200705151">■</a> 
+[穴] 見直し</h3>
+<p>
+なんか抜かれて悔しかったので過去問を見直し。<br>
+するとなぜか縮む。ほんと不思議。いろいろ見直すとやはり縮む。不思議。
+</p>
+<!-- section end -->
+</div>
+<!-- 2007/05/15 end -->
+
+
+
+<hr class="hide">
+<!-- 2007/05/16 start -->
+<h2><a name="20070516" href="200705b.html#20070516">2007-05-16 (Wed)</a></h2>
+<!-- 2007-05-17 01:33:55 -->
+
+<div class="entry1">
+<h3><a name="200705161" title="200705161" href="200705b.html#200705161">■</a> 
+[Linux] Fedora Core 6をネットワークインストール再挑戦</h3>
+<p>
+またCD-ROMドライブしかないPCへFedora Core 6をインストールすることになった。<br>
+
+<a href="200704b.html#200704121">前回</a>の反省でhttpじゃなくてftpならいけるはずだと思い、<br>
+ちょうどいい機会なので試す。<br>
+うちの会社のFTPゲートウェイは
+</p>
+<pre>
+ユーザ名: ユーザ名@ftpサイトのホスト名
+パスワード: パスワード
+</pre>
+<p>
+という感じで指定するタイプなので、
+</p>
+<pre>
+FTPサイト名: FTPゲートウェイ
+Fedora Coreディレクトリ: /pub/linux/fedora/core/6/i386/os
+</pre>
+<p>
+としてUse non-anonymous userをcheckしておく。あとは
+</p>
+<pre>
+ユーザ名: anonymous@ftp.iij.ad.jp
+パスワード: メールアドレス
+</pre>
+<p>
+てな感じで簡単にいけた。
+</p>
+
+<p>
+あとboot promptでip=,netmask=,gateway=を指定しなければ全部聞いてくるので、<br>
+無理に指定しないほうがよさげ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2007/05/16 end -->
+
+
+
+<hr class="hide">
+<!-- 2007/05/17 start -->
+<h2><a name="20070517" href="200705b.html#20070517">2007-05-17 (Thu)</a></h2>
+<!-- 2007-05-18 01:38:40 -->
+
+<div class="entry1">
+<h3><a name="200705171" title="200705171" href="200705b.html#200705171">■</a> 
+<a href="http://userstyles.org/style/show/2365">[Firefox] Gmail Tweaks</a></h3>
+<p>
+右側の広告を消してExpand All等のツール類をアイコンだけにして、<br>
+表示領域を広げている。これが欲しかったんだよねえ。<br>
+
+<a href="http://userstyles.org/style/show/1708">Gmail - remove ads, collapse right column</a>
+だと<br>
+cut&amp;tryして自分で値を探さないといけないからちょっと面倒だった。
+</p>
+<!-- section end -->
+</div>
+<!-- 2007/05/17 end -->
+
+
+
+<hr class="hide">
+<!-- 2007/05/18 start -->
+<h2><a name="20070518" href="200705b.html#20070518">2007-05-18 (Fri)</a></h2>
+<!-- 2007-05-19 01:34:18 -->
+
+<div class="entry1">
+<h3><a name="200705181" title="200705181" href="200705b.html#200705181">■</a> 
+[Firefox] FoxTorrent</h3>
+<p>
+以前FC6でFoxTorrent 1.0を試したら全然動かなくて残念な思いをしたが、<br>
+
+<a href="http://opentechpress.jp/developer/article.pl?sid=07/05/18/0059234">Open Tech Pressの記事</a>
+
+を見ると1.03ではいけてるようだ。<br>
+早速ためしてみるとRedSwoosh deamonを何度も起動しようとして失敗してる様子。<br>
+psしてもたしかに起動してない。lddしてみたらlibssl.so.0.9.8にリンクしてる。<br>
+FC6はもう0.9.8bだしなあ。しかたないのでsymlink張ってldconfigしてみる。<br>
+libcryptoも同様か。これでなんとか起動できるようになった。<br>
+でもなぜかダウンロードはしてくれないのであった。残念。<br>
+また半年ほど寝かせよう。
+</p>
+<!-- section end -->
+</div>
+<!-- 2007/05/18 end -->
+
+
+
+<hr class="hide">
+<!-- 2007/05/19 start -->
+<h2><a name="20070519" href="200705b.html#20070519">2007-05-19 (Sat)</a></h2>
+<!-- 2007-05-20 02:08:36 -->
+
+<div class="entry1">
+<h3><a name="200705191" title="200705191" href="200705b.html#200705191">■</a> 
+ビデオを消化</h3>
+<p>
+遅く起きてひがな一日まったりとビデオを消化。<br>
+ボルケーノが意外に面白かった。<br>
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200705192" title="200705192" href="200705b.html#200705192">■</a> 
+[Wellness] 白衣高血圧</h3>
+<p>
+世界一受けたい授業で「白衣高血圧」というのを説明していた。<br>
+ふだんは正常なのに医者の前だと緊張して血圧が高くなることをいうらしい。<br>
+やっぱあるんだな。その逆もあるらしい。こっちはふだんが高血圧なので危ない。
+</p>
+<!-- section end -->
+</div>
+<!-- 2007/05/19 end -->
+
+
+
+<hr class="hide">
+<!-- 2007/05/20 start -->
+<h2><a name="20070520" href="200705b.html#20070520">2007-05-20 (Sun)</a></h2>
+<!-- 2007-05-21 01:35:31 -->
+
+<div class="entry1">
+<h3><a name="200705201" title="200705201" href="200705b.html#200705201">■</a> 
+<a href="http://www.naan.net/trac/wiki/TwitterNotifier">[twitter] TwitterNotifier</a></h3>
+<p>
+
+<a href="http://userscripts.org/scripts/show/8684">twitter lite</a>
+が右サイドバー的なUIに変化してしまったので、<br>
+
+<a href="http://www.naan.net/trac/wiki/TwitterNotifier">TwitterNotifier</a>という拡張に乗り換えた。<br>
+日記を書いてる今はなぜかつながんなくなってしまったけど。
+</p>
+<!-- section end -->
+</div>
+<!-- 2007/05/20 end -->
+
+<hr>
+<div>
+<a href="200705a.html">&lt;Prev(,)</a> | 
+<a href="200705c.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

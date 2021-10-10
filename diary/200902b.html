@@ -1,0 +1,396 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2009-2-b</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="200902a.html">
+<link rel="next" href="200902c.html">
+
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2009年2月中旬〜</p>
+<hr>
+<div>
+<a href="200902a.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="200902c.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2009/02/11 start -->
+<h2><a name="20090211" href="200902b.html#20090211">2009-02-11 (Wed)</a></h2>
+<!-- 2009-02-13 02:29:43 -->
+
+<div class="entry1">
+<h3><a name="200902111" title="200902111" href="200902b.html#200902111">■</a> 
+[Gmail] GmailでGadget</h3>
+<p>
+GmailでもiGoogleのGadgetが使えるんだけど、<br>
+いつまで経っても自動で再読み込みしないから<br>
+気温を表示してくれるGadgetが使いものにならない。<br>
+と思ったけど、Firefoxはコンテキストメニューに<br>
+「指定間隔ごとに再読み込み」なる機能があるよ!
+</p>
+
+<p>
+あと設定ができないのでXMLを取ってきて書き換えてgithubに置いてたり。<br>
+末尾に.txt?.xmlをつけるのがポイント。
+</p>
+<!-- section end -->
+</div>
+<!-- 2009/02/11 end -->
+
+
+
+<hr class="hide">
+<!-- 2009/02/12 start -->
+<h2><a name="20090212" href="200902b.html#20090212">2009-02-12 (Thu)</a></h2>
+<!-- 2009-02-13 02:26:56 -->
+
+<div class="entry1">
+<h3><a name="200902121" title="200902121" href="200902b.html#200902121">■</a> 
+[Twitter] TwitterのRSS</h3>
+<p>
+前から疑問なんだけど、TwitterのRSSは長いと切れる。<br>
+たかだか140文字しかないのに。なんでこんな中途半端な仕様なの？
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200902122" title="200902122" href="200902b.html#200902122">■</a> 
+[Git] git svn clone</h3>
+<p>
+git svnでmirrorする人が多いようだけど、<br>
+どうせ全部あったって無駄だし時間もかかるし、<br>
+-r 22000:HEADぐらいで十分だと思うよ。
+</p>
+
+<pre>
+% git svn clone -s -r 22000:HEAD http://svn.ruby-lang.org/repos/ruby
+</pre>
+<p>
+とかで。古いのが欲しければそこだけ後からfetchもできる。
+</p>
+
+<pre>
+% git svn fetch -r 21900:21999
+</pre>
+<p>
+git gcするとobjectがpackされる。
+</p>
+
+<pre>
+% du -sh
+62M	.
+% git gc
+Counting objects: 7102, done.
+Compressing objects: 100% (4097/4097), done.
+Writing objects: 100% (7102/7102), done.
+Total 7102 (delta 3084), reused 6738 (delta 2804)
+du -sh
+51M	.
+</pre>
+
+
+<!-- section end -->
+</div>
+<!-- 2009/02/12 end -->
+
+
+
+<hr class="hide">
+<!-- 2009/02/13 start -->
+<h2><a name="20090213" href="200902b.html#20090213">2009-02-13 (Fri)</a></h2>
+<!-- 2009-02-14 01:19:58 -->
+
+<div class="entry1">
+<h3><a name="200902131" title="200902131" href="200902b.html#200902131">■</a> 
+[Git] bare repos</h3>
+<p>
+cloneだとソースがcheckoutされた状態だけど、
+</p>
+
+<pre>
+% mkdir foo.git
+% cd foo.git
+% git --bare init
+% git --bare svn init -s http://svn....
+% git --bare svn fetch
+</pre>
+<p>
+ならbareなリポジトリが作れるようだ。<br>
+git svn init, git svn fetchをまとめてgit svn cloneだとだめなのが惜しいな。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200902132" title="200902132" href="200902b.html#200902132">■</a> 
+[Gmail] Gmailでメモ</h3>
+<p>
+Gmailでメモを書いて自分宛てに送るよりも、<br>
+保存してドラフトに残しておいたほうが便利なことに気づいた。<br>
+追加で書けるし、検索もin:draftsをつけるだけだし。
+</p>
+<!-- section end -->
+</div>
+<!-- 2009/02/13 end -->
+
+
+
+<hr class="hide">
+<!-- 2009/02/14 start -->
+<h2><a name="20090214" href="200902b.html#20090214">2009-02-14 (Sat)</a></h2>
+<!-- 2009-02-15 02:16:53 -->
+
+<div class="entry1">
+<h3><a name="200902141" title="200902141" href="200902b.html#200902141">■</a> 
+暑い</h3>
+<p>
+びっくりしたのは家の中より外のほうがあったかかったことだ。<br>
+むしろ暑かった。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200902142" title="200902142" href="200902b.html#200902142">■</a> 
+[Thunderbird] 右上の検索窓の挙動</h3>
+<p>
+Thunderbirdで検索しようとして途中まで打ってBSで全部消すと、<br>
+そこから文字を打ってもなぜか字が薄くなって<br>
+しかもインクリメンタル検索できなくなる。<br>
+この変な挙動はいったいなんのため？
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2009/02/14 end -->
+
+
+
+<hr class="hide">
+<!-- 2009/02/15 start -->
+<h2><a name="20090215" href="200902b.html#20090215">2009-02-15 (Sun)</a></h2>
+<!-- 2009-02-16 01:12:15 -->
+
+<div class="entry1">
+<h3><a name="200902151" title="200902151" href="200902b.html#200902151">■</a> 
+[Ogg] .oggと.oga</h3>
+<p>
+なんか1周するのが速いなと思ったら、<br>
+ファイル名が.oggじゃなくて.ogaになっていて<br>
+プレーヤが認識していなかった。<br>
+F10のSound Juicerがそういう設定なんだな。<br>
+正式には.ogaが正しいんだろうけど、<br>
+設定で.oggしとこう。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2009/02/15 end -->
+
+
+
+<hr class="hide">
+<!-- 2009/02/16 start -->
+<h2><a name="20090216" href="200902b.html#20090216">2009-02-16 (Mon)</a></h2>
+<!-- 2009-02-17 02:08:38 -->
+
+<div class="entry1">
+<h3><a name="200902161" title="200902161" href="200902b.html#200902161">■</a> 
+[Network] またネットワーク不調</h3>
+<p>
+ルータがだめなのかと思ったら、ノートPCだと問題ないし。うーむ。<br>
+これもなんどアップロード失敗したことか。
+</p>
+<!-- section end -->
+</div>
+<!-- 2009/02/16 end -->
+
+
+
+<hr class="hide">
+<!-- 2009/02/17 start -->
+<h2><a name="20090217" href="200902b.html#20090217">2009-02-17 (Tue)</a></h2>
+<!-- 2009-02-18 00:45:43 -->
+
+<div class="entry1">
+<h3><a name="200902171" title="200902171" href="200902b.html#200902171">■</a> 
+[Fedora] VL ゴシックが細くなったような</h3>
+<p>
+なんか所々違和感があるのはVL ゴシックが変わったのか？<br>
+再起動したらネットワークのほうは調子いいようだ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200902172" title="200902172" href="200902b.html#200902172">■</a> 
+[Subversion] post-commit</h3>
+<p>
+cia.vcがダウンしたらrubyのcommitの終了時も<br>
+タイムアウトするまで待つようになってしまったらしく、<br>
+httpじゃなくてmailを送るように変更した。<br>
+たまにそんな苦情も出てたし結構ダウンしてたのかな。
+</p>
+
+<p>
+もうpost-commit自体batchコマンドへつっこんじゃうのがいいのかな。<br>
+環境変数とかが引き継がれるならそれでもよさげだ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2009/02/17 end -->
+
+
+
+<hr class="hide">
+<!-- 2009/02/18 start -->
+<h2><a name="20090218" href="200902b.html#20090218">2009-02-18 (Wed)</a></h2>
+<!-- 2009-02-19 01:34:02 -->
+
+<div class="entry1">
+<h3><a name="200902181" title="200902181" href="200902b.html#200902181">■</a> 
+[Solaris] batch</h3>
+<p>
+man batchしてみたら環境変数もbatchを実行した時点のものが<br>
+保持されると書いてあった。
+</p>
+
+<p>
+確認:
+</p>
+
+<pre>
+% echo 'env &gt; env.log' | foo=bar batch
+commands will be executed using /bin/zsh
+job 1234964025.b at Wed Feb 18 22:33:45 2009
+% grep foo env.log
+foo=bar
+</pre>
+<p>
+なるほど。カレントディレクトリも保持されるわけで、結構使い途がありそう。
+</p>
+<!-- section end -->
+</div>
+<!-- 2009/02/18 end -->
+
+
+
+<hr class="hide">
+<!-- 2009/02/19 start -->
+<h2><a name="20090219" href="200902b.html#20090219">2009-02-19 (Thu)</a></h2>
+<!-- 2009-02-20 01:25:37 -->
+
+<div class="entry1">
+<h3><a name="200902191" title="200902191" href="200902b.html#200902191">■</a> 
+[Git] git commitのついでにgit pushも</h3>
+<p>
+やっぱgit commitしても、ついgit pushを忘れるよね。<br>
+もうどうせならcommitしたらpushも自動的にやらせちゃえ。
+</p>
+
+<pre>
+% vi .git/hooks/post-commit
+% cat .git/hooks/post-commit
+#!/bin/sh
+#
+# An example hook script that is called after a successful
+# commit is made.
+#
+# To enable this hook, make this file executable.
+
+git push
+% chmod +x .git/hooks/post-commit
+</pre>
+<p>
+コメントに書いてあるようにchmod +xも忘れずに。
+</p>
+<!-- section end -->
+</div>
+<!-- 2009/02/19 end -->
+
+
+
+<hr class="hide">
+<!-- 2009/02/20 start -->
+<h2><a name="20090220" href="200902b.html#20090220">2009-02-20 (Fri)</a></h2>
+<!-- 2009-02-21 23:11:08 -->
+
+<div class="entry1">
+<h3><a name="200902201" title="200902201" href="200902b.html#200902201">■</a> 
+[日記] 日記をgitで管理？</h3>
+<p>
+昨日のはいずれこの日記をgitでdeployするための布石なんだけど、<br>
+まあ実験して満足して終わる可能性のが高い。
+</p>
+<!-- section end -->
+</div>
+<!-- 2009/02/20 end -->
+
+<hr>
+<div>
+<a href="200902a.html">&lt;Prev(,)</a> | 
+<a href="200902c.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

@@ -1,0 +1,345 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2012-5-b</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="201205a.html">
+<link rel="next" href="201205c.html">
+
+<link rel="stylesheet" type="text/css" href="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.css">
+<script type="text/javascript" src="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.js"></script>
+<script type="text/javascript">
+<!--       
+$(document).ready(function() {
+  prettyPrint();
+});
+-->
+</script>
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2012年5月中旬〜</p>
+<hr>
+<div>
+<a href="201205a.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="201205c.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2012/05/11 start -->
+<h2><a name="20120511" href="201205b.html#20120511">2012-05-11 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="201205111" title="201205111" href="201205b.html#201205111">■</a> 
+<a href="http://fastladder.com/close.html">Fastladder : Shut-down of Fastladder service</a></h3>
+<p>
+FLDRが今月で終了ということで久し振りにLDRに戻した。opmlをexportしてimportしただけで完了。<br>
+もうちょっとコンパクトな表示にしたいので
+<a href="http://usersstyles.org">userstyles</a>で探そう。
+</p>
+<!-- section end -->
+</div>
+<!-- 2012/05/11 end -->
+
+
+
+<hr class="hide">
+<!-- 2012/05/12 start -->
+<h2><a name="20120512" href="201205b.html#20120512">2012-05-12 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="201205121" title="201205121" href="201205b.html#201205121">■</a> 
+<a href="http://userstyles.org/styles/23121/apprentice-ldr-customized-css-skin">Apprentice [LDR Customized CSS Skin] - Themes and Skins for Livedoor</a></h3>
+<p>
+ヘッダ部や左側のフィード一覧がコンパクトになってかなりいい感じ。<br>
+おすすめ。
+</p>
+<p>
+それはそれとして、OpenFLも試してみないとな。
+</p>
+<!-- section end -->
+</div>
+<!-- 2012/05/12 end -->
+
+
+
+<hr class="hide">
+<!-- 2012/05/13 start -->
+<h2><a name="20120513" href="201205b.html#20120513">2012-05-13 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="201205131" title="201205131" href="201205b.html#201205131">■</a> 
+ffmpegでid3 tagをつける</h3>
+<p>
+とりあえずタイトルだけなら-metadata title=&quot;曲名&quot;でok。<br>
+しかしこれid3v2 2.4.0になっちゃうので古いプレーヤーだと表示できない。T30とか。<br>
+これを2.3.0にするには-id3v2_version 3とする。これでT30でもいけた。日本語もok。<br>
+ボカロはタイトルだけ入れとこう。
+</p>
+<!-- section end -->
+</div>
+<!-- 2012/05/13 end -->
+
+
+
+<hr class="hide">
+<!-- 2012/05/14 start -->
+<h2><a name="20120514" href="201205b.html#20120514">2012-05-14 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="201205141" title="201205141" href="201205b.html#201205141">■</a> 
+KB2686509がインストールできない</h3>
+<p>
+Windows XPでなぜかWindows Updateが失敗する。KB2686509だけインストールできない。<br>
+ぐぐったら結構いるようで。
+</p>
+<pre>
+HKEY_LOCAL_MACHINE¥SYSTEM\CurrentControlSet\Control\Keyboard Layout
+</pre>
+<p>
+のScancode Mapを消せばいけるという話。<br>
+regeditでKeyboard Layoutをexport、tmp.regで保存、<br>
+一時的にScancode Mapを消してWindows Update、<br>
+tmp.regをダブルクリック、元に戻して再起動でいけた。
+</p>
+<!-- section end -->
+</div>
+<!-- 2012/05/14 end -->
+
+
+
+<hr class="hide">
+<!-- 2012/05/15 start -->
+<h2><a name="20120515" href="201205b.html#20120515">2012-05-15 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="201205151" title="201205151" href="201205b.html#201205151">■</a> 
+LDR Full Feed 0.0.34が動かない</h3>
+<p>
+LDRへ移行ついでにLDR Full Feedも上げたら動かなくなってしまった。Gマークが出てこない。<br>
+どうもLDR Full Feed 0.0.34とGreasemonkey 0.9.19との相性が悪いようで。<br>
+いや、Greasemonkey 0.9.19のバグかな。<br>
+Greasemonkey 0.9.18か0.9.20.beta1以上を使えばok。
+</p>
+<!-- section end -->
+</div>
+<!-- 2012/05/15 end -->
+
+
+
+<hr class="hide">
+<!-- 2012/05/16 start -->
+<h2><a name="20120516" href="201205b.html#20120516">2012-05-16 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="201205161" title="201205161" href="201205b.html#201205161">■</a> 
+なぜかPATHを見るLinuxのshebang</h3>
+<p>
+Cygwinでは前から絶対パスで書かなくてもshebangで実行できることは知っていたが、<br>
+Ubuntu 12.04でもPATHを見てるようだ。
+<pre>
+% echo '#! echo' &gt; x.sh
+% chmod +x x.sh
+% ./x.sh
+ ./x.sh
+% PATH= ./x.sh
+zsh: ./x.sh: bad interpreter: echo: no such file or directory
+% uname -r
+3.2.0-24-generic
+</pre>
+</p>
+<p>
+いっぽうCentOS 5ではやはりだめ。
+</p>
+<pre>
+% echo '#! echo' &gt; x.sh
+% chmod +x x.sh
+% ./x.sh
+zsh: no such file or directory: ./x.sh
+% uname -r
+2.6.18-53.el5PAE
+</pre>
+<p>
+Ubuntu 11.10のkernel 3.0.0-15-genericやFedora 16でもいけたからLinuxのkenrel 3からの機能か？<br>
+これが使えるとenv技しなくてもいいとかまあ結構便利ではあるが、<br>
+全OSがそうなってないと結局は使えないんだよねえ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2012/05/16 end -->
+
+
+
+<hr class="hide">
+<!-- 2012/05/17 start -->
+<h2><a name="20120517" href="201205b.html#20120517">2012-05-17 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="201205171" title="201205171" href="201205b.html#201205171">■</a> 
+shebangのPATHを見てるのはzshだったの巻</h3>
+<p>
+Linuxのkernelじゃないよとガチャピンの人が言ってたので、<br>
+いろいろ試してみたらどうも最近のzshの機能だったようで。
+</p>
+<pre>
+% echo '#! echo' &gt; x.sh
+% chmod +x x.sh
+% zsh -c ./x.sh
+ ./x.sh
+% bash -c ./x.sh       
+bash: ./x.sh: echo: bad interpreter: No such file or directory
+</pre>
+<p>
+同じkernel, glibcでbashだとだめ。つまりzshが気を利かせていることになる。<br>
+別のマシンに古いzshのがあったので、試してみたらやはりこちらではだめだった。
+</p>
+<pre>
+% zsh -c 'echo $ZSH_VERSION;./x.sh'
+4.3.17
+ ./x.sh
+% ./zsh -c 'echo $ZSH_VERSION;./x.sh'
+4.3.10
+zsh:1: ./x.sh: bad interpreter: echo: no such file or directory
+</pre>
+<p>
+この間になにか変更があったのかと
+<a href="http://zsh.sourceforge.net/releases.html">リリースノート</a>を読んでみたがよくわからず。<br>
+PATH_SCRIPTはすげーあやしいんだが。
+</p>
+<!-- section end -->
+</div>
+<!-- 2012/05/17 end -->
+
+
+
+<hr class="hide">
+<!-- 2012/05/18 start -->
+<h2><a name="20120518" href="201205b.html#20120518">2012-05-18 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="201205181" title="201205181" href="201205b.html#201205181">■</a> 
+zshのPATH_SCRIPT</h3>
+<p>
+よくわからないので、いろいろ実行して違いを見てみたが、やはりわからない。
+</p>
+<pre>
+% printf '#!/bin/sh\necho $0\n' &gt; ~/bin/x.sh
+% cat ~/bin/x.sh
+#!/bin/sh
+echo $0
+% chmod +x ~/bin/x.sh
+% rehash
+% zsh +o PATH_SCRIPT x.sh 
+zsh: can't open input file: x.sh
+zsh: exit 127   zsh x.sh
+% zsh -o PATH_SCRIPT x.sh                   
+x.sh
+</pre>
+<p>
+これがいったい何を意味しているのか？
+</p>
+<!-- section end -->
+</div>
+<!-- 2012/05/18 end -->
+
+
+
+<hr class="hide">
+<!-- 2012/05/19 start -->
+<h2><a name="20120519" href="201205b.html#20120519">2012-05-19 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="201205191" title="201205191" href="201205b.html#201205191">■</a> 
+理不尽な時計設定</h3>
+<p>
+先日を使い始めた
+<a href="201204c.html#201204231">古いレコーダー</a>なんだけど、かなり理不尽だ。<br>
+すでにテレビから時報が消えたのでこの機器で自動で合わせることができない件はまあいいとして、<br>
+手動でなぜか合わせることができない。設定しようとすると禁止マークが出てくる。<br>
+とはいえ久し振りに電源入れたときは合わせられたわけでどういうことだといろいろ試してみたら、<br>
+録画予約が1件でも登録されているとなぜか時計を手動で設定できないことがわかった。<br>
+いやいやその録画予約のために時計を合わせたいわけなんだけど。<br>
+これはいったいどういう仕様なんだ？<br>
+時報がなくなることを想定してなくて、そのあたりのテストが不十分だったのか？<br>
+それにしても禁止する必要がどこにあるんだか。
+</p>
+<!-- section end -->
+</div>
+<!-- 2012/05/19 end -->
+
+
+
+<hr class="hide">
+<!-- 2012/05/20 start -->
+<h2><a name="20120520" href="201205b.html#20120520">2012-05-20 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="201205201" title="201205201" href="201205b.html#201205201">■</a> 
+<a href="http://c.cocacola.co.jp/trip/">ぶらり、小さなたび</a></h3>
+<p>
+チケットを150枚ほどためにためて挑んでみたが
+<a href="http://c.cocacola.co.jp/trip/ranking.htm">4位</a>だった。<br>
+この瞬間でも1位取れないとなると無理だな。
+</p>
+<!-- section end -->
+</div>
+<!-- 2012/05/20 end -->
+
+<hr>
+<div>
+<a href="201205a.html">&lt;Prev(,)</a> | 
+<a href="201205c.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

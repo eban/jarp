@@ -1,0 +1,388 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2013-7-a</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="201306c.html">
+<link rel="next" href="201307b.html">
+
+<link rel="stylesheet" type="text/css" href="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.css">
+<script type="text/javascript" src="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.js"></script>
+<script type="text/javascript">
+<!--       
+$(document).ready(function() {
+  prettyPrint();
+});
+-->
+</script>
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2013年7月上旬〜</p>
+<hr>
+<div>
+<a href="201306c.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="201307b.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2013/07/01 start -->
+<h2><a name="20130701" href="201307a.html#20130701">2013-07-01 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="201307011" title="201307011" href="201307a.html#201307011">■</a> 
+6月のspam</h3>
+<p>
+431通。
+<a href="201306b.html#201306161">例のspam</a>の分だけ増えている形。
+
+</p>
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="201307012" title="201307012" href="201307a.html#201307012">■</a> 
+TLSv1の件</h3>
+<p>
+twitterで話題になっていた件。<br>
+実はOpenSSL 1.0でつながらないサーバがあり、<br>
+わざわざOpenSSL 0.9.8をリンクしてごまかしていたが、<br>
+思いがけず解決してしまった。
+</p>
+<p>
+curlなら--tlsv1(-1)、wgetなら--secure-protocol=TLSv1でいけた。
+</p>
+<!-- section end -->
+</div>
+<!-- 2013/07/01 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/07/02 start -->
+<h2><a name="20130702" href="201307a.html#20130702">2013-07-02 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="201307021" title="201307021" href="201307a.html#201307021">■</a> 
+<a href="https://chrome.google.com/webstore/detail/ato-ichinen/pojaolkbbklmcifckclknpolncdmbaph">ato-ichinen</a></h3>
+<p>
+なぜか最近人の名前とかでぐぐってもwikipediaが出てこなくて不思議だったが、<br>
+ato-ichinenを入れてたからだった。つまりそういう人のページは1年以上更新されてないんだな。<br>
+なかなか興味深い。
+</p>
+<!-- section end -->
+</div>
+<!-- 2013/07/02 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/07/03 start -->
+<h2><a name="20130703" href="201307a.html#20130703">2013-07-03 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="201307031" title="201307031" href="201307a.html#201307031">■</a> 
+vimでclipboardからpaste</h3>
+<p>
+*という名前のレジスタに入ってるらしいので
+</p>
+<pre>
+&quot;*p
+</pre>
+<p>
+でpaste可能。+clipboardなら使えるはず。
+</p>
+<pre>
+% vim --version|grep -o '[-+]clipboard'
++clipboard
+</pre>
+<!-- section end -->
+</div>
+<!-- 2013/07/03 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/07/04 start -->
+<h2><a name="20130704" href="201307a.html#20130704">2013-07-04 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="201307041" title="201307041" href="201307a.html#201307041">■</a> 
+RSS Reader</h3>
+<p>
+結局のところInoReaderとThe Old Readerの2つを使ってる。<br>
+どっちもフィードの検索ができるので。<br>
+とはいうもののどちらも日本語検索がどうしようもないので、<br>
+二度手間ではあるけど両方で検索してみたり。<br>
+ほとんどヒットしないが検索したいときは大体アルファベットなのであまり困らない。
+</p>
+<p>
+The Old Readerのほうは1文字ずつばらばらにして検索してるイメージ。<br>
+&quot;名門&quot;なら&quot;名&quot;と&quot;門&quot;のOR的な。それで説明のつかないものも含まれるが。
+</p>
+<!-- section end -->
+</div>
+<!-- 2013/07/04 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/07/05 start -->
+<h2><a name="20130705" href="201307a.html#20130705">2013-07-05 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="201307051" title="201307051" href="201307a.html#201307051">■</a> 
+Congrats on earning your first 15,000 daily step badge!</h3>
+<p>
+とかメールが来た。調べてみると14000台までは行ってたが、15000越えてなかった。<br>
+実際は16000歩を越えていた。なんでこんなに歩いたのか。
+</p>
+<!-- section end -->
+</div>
+<!-- 2013/07/05 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/07/06 start -->
+<h2><a name="20130706" href="201307a.html#20130706">2013-07-06 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="201307061" title="201307061" href="201307a.html#201307061">■</a> 
+awkのsubの戻り値</h3>
+<p>
+置き換えた数が返るので0か1しかない。これは何に役に立つかというと
+</p>
+<pre>
+sed -n 's/re/str/p'
+</pre>
+<p>
+相当が
+</p>
+<pre>
+awk 'sub(/re/,&quot;str&quot;)'
+</pre>
+<p>
+と書けるわけだ。置き換えた行だけ表示する。<br>
+<strike>置き換えてその行が0だけとか空行になっちゃうとだめだが。</strike><br>
+追記(2013-07-07): いや、$0じゃないんだからそんな例外はない。
+</p>
+<!-- section end -->
+</div>
+<!-- 2013/07/06 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/07/07 start -->
+<h2><a name="20130707" href="201307a.html#20130707">2013-07-07 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="201307071" title="201307071" href="201307a.html#201307071">■</a> 
+<a href="http://route477.net/d/?date=20130705#p01">長すぎる行を省略</a></h3>
+<p>
+&amp;&amp;=を使うと結構すっきり書ける。
+</p>
+<pre>
+% cat README | head | ruby -pe '$_[/.{50}(.*)/,1]&amp;&amp;=&quot;...&quot;'
+= What's Ruby
+
+Ruby is the interpreted scripting language for qui...
+easy object-oriented programming.  It has many fea...
+process text files and to do system management tas...
+Perl).  It is simple, straight-forward, and extens...
+
+
+== Features of Ruby
+
+</pre>
+<p>
+Ruby 2.0以上ならonigmoの\Kが使える。
+</p>
+<pre>
+% cat README | head | ruby -pe '$_[/.{50}\K.*/]&amp;&amp;=&quot;...&quot;'
+= What's Ruby
+
+Ruby is the interpreted scripting language for qui...
+easy object-oriented programming.  It has many fea...
+process text files and to do system management tas...
+Perl).  It is simple, straight-forward, and extens...
+
+
+== Features of Ruby
+
+</pre>
+<p>
+もちろん素直にsubでもいい。
+</p>
+<pre>
+% cat README | head | ruby -pe 'sub(/.{50}\K.*/,&quot;...&quot;)' 
+= What's Ruby
+
+Ruby is the interpreted scripting language for qui...
+easy object-oriented programming.  It has many fea...
+process text files and to do system management tas...
+Perl).  It is simple, straight-forward, and extens...
+
+
+== Features of Ruby
+
+</pre>
+<!-- section end -->
+</div>
+<!-- 2013/07/07 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/07/08 start -->
+<h2><a name="20130708" href="201307a.html#20130708">2013-07-08 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="201307081" title="201307081" href="201307a.html#201307081">■</a> 
+<a href="https://twitter.com/yurakawa/status/353502359915208706">typoしないようにするには</a></h3>
+<p>
+確かに見て打ってもtypoしそうだ。
+</p>
+<pre>
+watch -n 1 -d 'netstat -an | grep &quot;:80&quot; | awk -F '&quot;'&quot; &quot;'&quot;' '&quot;'&quot;'{print $6F}'&quot;'&quot;' | sort | uniq -c'
+</pre>
+<p>
+しかしこれはもっと簡単に書ける。<br>
+どうなっているのかは実際に実行してみるといい。<br>
+watchの上部に実行されているコマンドラインが表示される。
+</p>
+<pre>
+netstat -an | grep &quot;:80&quot; | awk -F ' ' '{print $6F}' | sort | uniq -c
+</pre>
+<p>
+これならわかる。ここを''で囲んで機械的に'を処理するとああなるわけだが、<br>
+無理に'を使うこともない。&quot;や\も使うべき。
+</p>
+<pre>
+watch -n 1 -d 'netstat -an | grep &quot;:80&quot; | awk -F &quot; &quot; &quot;{print \$6F}&quot; | sort | uniq -c'
+</pre>
+<p>
+とすればtypoも少なくなるだろう。<br>
+さらにFSは最初から&quot; &quot;なので-F &quot; &quot;は不要だし、grepもawkで処理すれば不要なので、
+</p>
+<pre>
+watch -n 1 -d 'netstat -an | awk &quot;/:80/{print \$6F}&quot; | sort | uniq -c'
+</pre>
+<p>
+となる。
+</p>
+<!-- section end -->
+</div>
+<!-- 2013/07/08 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/07/09 start -->
+<h2><a name="20130709" href="201307a.html#20130709">2013-07-09 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="201307091" title="201307091" href="201307a.html#201307091">■</a> 
+RSS Subscription Extension</h3>
+<p>
+InoReaderの[設定]-[その他]を見てたらおすすめされたので<br>
+<a href="https://chrome.google.com/webstore/detail/rss-subscription-extensio/nlbjncdgjeocebhnmkbbbdekmmmcbfjd">RSS Subscription Extension(by Google)</a>をインストール。<br>
+subscribe用には http://www.inoreader.com/?add_feed=%s を使えばok。<br>
+The Old Reader用には http://theoldreader.com/feeds/subscribe?url=%s で。
+</p>
+<p>
+しかし、ボタンを押してもLoading...と出たきり先に進まない。<br>
+ぐぐってみたらこんな記事が。<br>
+<a href="http://taisy0.com/2013/03/16/15009.html">Google、「Chrome」向け拡張機能「RSS Subscription Extension」の提供を終了</a><br>
+どうなってるのか？3月で一旦停止してまた始めたのかな。
+</p>
+<p>
+by Googleではないのも発見した。<br>
+<a href="https://chrome.google.com/webstore/detail/rss-subscription-extensio/bmjffnfcokiodbeiamclanljnaheeoke">RSS Subscription Extension</a><br>
+こちらはすでにThe Old Reader, Feedly等が登録されていた。ちゃんとsubscribeもok。<br>
+とりあえずこっちを使おう。
+</p>
+<!-- section end -->
+</div>
+<!-- 2013/07/09 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/07/10 start -->
+<h2><a name="20130710" href="201307a.html#20130710">2013-07-10 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="201307101" title="201307101" href="201307a.html#201307101">■</a> 
+Cygwinのsetup.exe</h3>
+<p>
+以前使っていたPCだとsetup.exeでパッケージを検索する際のincremental searchが遅くて<br>
+全然使いものにならなかったが、速いPCだとちゃんと機能するんだなと初めて便利だと思った。
+</p>
+<p>
+あとこういうインストール系が走り出すとsynergyが使えなくなるのが不便。<br>
+セキュリティ上止むを得ないかもしれないが。
+</p>
+<!-- section end -->
+</div>
+<!-- 2013/07/10 end -->
+
+<hr>
+<div>
+<a href="201306c.html">&lt;Prev(,)</a> | 
+<a href="201307b.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

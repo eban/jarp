@@ -1,0 +1,454 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2007-4-c</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="200704b.html">
+<link rel="next" href="200705a.html">
+
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2007年4月下旬〜</p>
+<hr>
+<div>
+<a href="200704b.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="200705a.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2007/04/21 start -->
+<h2><a name="20070421" href="200704c.html#20070421">2007-04-21 (Sat)</a></h2>
+<!-- 2007-04-22 17:58:11 -->
+
+<div class="entry1">
+<h3><a name="200704211" title="200704211" href="200704c.html#200704211">■</a> 
+<a href="http://golf.shinh.org/p.rb?inverse+matrix#Ruby">[穴] 逆行列</a></h3>
+<p>
+iroriさんの転置行列を使う方法はかなり謎だ。それで誤差がおさえられる？<br>
+それよりmathn.rbがrequire &quot;matrix&quot;してることに気づいてなかった。
+</p>
+<!-- section end -->
+</div>
+<!-- 2007/04/21 end -->
+
+
+
+<hr class="hide">
+<!-- 2007/04/22 start -->
+<h2><a name="20070422" href="200704c.html#20070422">2007-04-22 (Sun)</a></h2>
+<!-- 2007-04-23 23:10:03 -->
+
+<div class="entry1">
+<h3><a name="200704221" title="200704221" href="200704c.html#200704221">■</a> 
+<a href="http://userstyles.org/stylish/">[Firefox] Stylish</a></h3>
+<p>
+
+<a href="http://userstyles.org/stylish/">Stylish</a>を入れたついでに、
+
+<a href="http://userstyles.org/style/show/438">Gmail - Bigger Fonts</a>
+と
+
+<a href="http://userstyles.org/style/show/1708">Gmail - remove ads, collapse right column</a>
+を入れてみた。<br>
+Gmailはやっぱ字が小さすぎるよねえ。<br>
+Stylishは再起動せずに瞬時に反映できて心地いい。
+</p>
+<!-- section end -->
+</div>
+<!-- 2007/04/22 end -->
+
+
+
+<hr class="hide">
+<!-- 2007/04/23 start -->
+<h2><a name="20070423" href="200704c.html#20070423">2007-04-23 (Mon)</a></h2>
+<!-- 2007-04-24 01:59:14 -->
+
+<div class="entry1">
+<h3><a name="200704231" title="200704231" href="200704c.html#200704231">■</a> 
+[X] LANG=ja_JP.eucJP xterm -lc</h3>
+<p>
+xterm eucでぐぐると
+</p>
+<pre>
+% LANG=ja_JP.eucJP xterm -lc
+</pre>
+<p>
+で、eucの端末ができあがるみたいな記述があるけど、<br>
+FC6でやってみてもばけばけ。
+</p>
+<pre>
+% LC_TIME=ja_JP.eucJP date
+2007G/  47n 24F| 2PMKF| 01:47:39 JST
+</pre>
+<p>
+ほんとなら
+</p>
+<pre>
+2007年  4月 24日 火曜日 01:47:39 JST
+</pre>
+<p>
+となるはずなんだが。ちょうど最上位ビットが落ちてる形だな。
+</p>
+<pre>
+% echo '2007年  4月 24日 火曜日 01:47:39 JST' |perl -pe '$_&amp;=&quot;\x7f&quot;x length'
+2007G/  47n 24F| 2PMKF| 01:47:39 JST
+</pre>
+<p>
+luitのバグだろうか？
+</p>
+<!-- section end -->
+</div>
+<!-- 2007/04/23 end -->
+
+
+
+<hr class="hide">
+<!-- 2007/04/24 start -->
+<h2><a name="20070424" href="200704c.html#20070424">2007-04-24 (Tue)</a></h2>
+<!-- 2007-04-25 01:55:34 -->
+
+<div class="entry1">
+<h3><a name="200704241" title="200704241" href="200704c.html#200704241">■</a> 
+[FC6] errno: TLS definition in /lib/libc.so.6 section .tbss mismatches non-TLS reference</h3>
+<p>
+とある古いソフトをmakeしてたら見慣れないエラーが出た。<br>
+FC6の環境ではextern int errno;は御法度らしい。
+</p>
+<pre>
+% cat foo.c
+#include &lt;stdio.h&gt;
+extern int errno;
+main()
+{
+    printf(&quot;%d\n&quot;, errno);
+}
+% gcc foo.c
+/usr/bin/ld: errno: TLS definition in /lib/libc.so.6 section .tbss mismatches non-TLS reference in /tmp/ccIJSo8n.o
+/lib/libc.so.6: could not read symbols: Bad value
+collect2: ld はステータス 1 で終了しました
+</pre>
+<p>
+スレッド対応のためerrnoは#include &lt;errno.h&gt;することで最終的には
+</p>
+<pre>
+#   define errno (*__errno_location ())
+</pre>
+<p>
+と定義されてるので、もう昔のようにextern int errno;だけじゃまずいわけだ。
+</p>
+
+<p>
+それはそれとして、一々ソースを書き換えて#include &lt;errno.h&gt;を挿入するのも面倒なので、<br>
+CFLAGSに--include=/usr/include/errno.hを追加することにした。
+</p>
+<pre>
+% gcc --include=/usr/include/errno.h foo.c
+</pre>
+<p>
+のようにこれで通る。
+</p>
+<!-- section end -->
+</div>
+<!-- 2007/04/24 end -->
+
+
+
+<hr class="hide">
+<!-- 2007/04/25 start -->
+<h2><a name="20070425" href="200704c.html#20070425">2007-04-25 (Wed)</a></h2>
+<!-- 2007-04-26 00:49:46 -->
+
+<div class="entry1">
+<h3><a name="200704251" title="200704251" href="200704c.html#200704251">■</a> 
+[FC6] ruby-rdoc</h3>
+<p>
+Fedora Core 6ではrdocが別のパッケージになってる。ちょっと意外だった。
+</p>
+<pre>
+% yum list ruby-rdoc
+Loading &quot;installonlyn&quot; plugin
+Loading &quot;fastestmirror&quot; plugin
+Setting up repositories
+Loading mirror speeds from cached hostfile
+Reading repository metadata in from local files
+Installed Packages
+ruby-rdoc.i386                           1.8.5.35-2.fc6         installed
+</pre>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200704252" title="200704252" href="200704c.html#200704252">■</a> 
+[Wellness] 血圧計</h3>
+<p>
+12月に受けた健康診断の結果面談てのが月曜日にあった。<br>
+血圧が高いからこれから1ヶ月ほど測定しろとのお達し。<br>
+4ヶ月も経ってから言われてもなあ。<br>
+まあすぐさまamazonで適当に5000円ぐらいの血圧計を発注して、今日それが届いた。<br>
+さっそく測ってみたら128の80ぐらいとまあまあ正常な値。<br>
+やはり極度のびびりなんだろうか。本番に弱いタイプらしい。<br>
+アウェーでは戦わないほうがいいようだ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2007/04/25 end -->
+
+
+
+<hr class="hide">
+<!-- 2007/04/26 start -->
+<h2><a name="20070426" href="200704c.html#20070426">2007-04-26 (Thu)</a></h2>
+<!-- 2007-04-27 01:22:16 -->
+
+<div class="entry1">
+<h3><a name="200704261" title="200704261" href="200704c.html#200704261">■</a> 
+[twitter] gmail chatsでtwitter</h3>
+<p>
+twitter@twitter.comをinviteして、<br>
+twitterのSettingsのPhone &amp; IMのInstant Messengerで<br>
+gmailのアドレス、Gtalkをsaveして、ええとこの後なんだったっけかな。<br>
+後から確認できないのか。うーむ。<br>
+ま、とにかくgmail chatsからtwitterできるようになって<br>
+gmail側にログを残せるようになった。<br>
+なったってのは変か。今日からtwitterを始めたわけだし。
+</p>
+<!-- section end -->
+</div>
+<!-- 2007/04/26 end -->
+
+
+
+<hr class="hide">
+<!-- 2007/04/27 start -->
+<h2><a name="20070427" href="200704c.html#20070427">2007-04-27 (Fri)</a></h2>
+<!-- 2007-04-28 02:06:28 -->
+
+<div class="entry1">
+<h3><a name="200704271" title="200704271" href="200704c.html#200704271">■</a> 
+[Soft] nsupdateとFQDN</h3>
+<p>
+やっと新PCにリプレースしたはいいが、<br>
+nsupdateがうまいこと動かなくなった。<br>
+なぜかREFUSEDになってしまう。<br>
+-dオプションでデバッグモードにしてみると、<br>
+どうも上位へリクエストを送っちゃってる様子。<br>
+ドメインを省略しちゃいけないのかとFQDNで書いたら通った。<br>
+つまりどんだけ古い環境を今まで使っていたかって話か？<br>
+そういえばkernelも2.4だったしな。
+</p>
+<!-- section end -->
+</div>
+<!-- 2007/04/27 end -->
+
+
+
+<hr class="hide">
+<!-- 2007/04/28 start -->
+<h2><a name="20070428" href="200704c.html#20070428">2007-04-28 (Sat)</a></h2>
+<!-- 2007-04-29 02:27:45 -->
+
+<div class="entry1">
+<h3><a name="200704281" title="200704281" href="200704c.html#200704281">■</a> 
+<a href="http://freshmeat.net/projects/advancedbashscriptingguide/">[Doc] Advanced Bash Scripting Guide 4.3 (Stable)</a></h3>
+<blockquote><dl>
+<dt>
+About:
+<dd>
+The Advanced Bash Scripting Guide is both a reference and a
+tutorial on shell scripting. This comprehensive book (the equivalent of
+800+ print pages) covers almost every aspect of shell scripting. It
+contains over 320 profusely commented illustrative examples, and a number
+of tables. Not just a shell scripting tutorial, this book also provides an
+introduction to basic programming techniques, such as sorting and
+recursion. It is well suited for either individual study or classroom use.
+It covers Bash version 3+.
+</dl></blockquote>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200704282" title="200704282" href="200704c.html#200704282">■</a> 
+<a href="http://freshmeat.net/projects/wiki2xhtml/">[Soft] wiki2xhtml 2.5.1</a></h3>
+<blockquote><dl>
+<dt>
+About:
+<dd>
+wiki2xhtml can create complete Web pages and uses a clean XHTML
+syntax. It can insert galleries, a menu, a footer, and nearly all elements
+you know from the Wikipedia. The pages are formatted with CSS. All designs
+can be adjusted by hand, and custom ones can be used as well. wiki2xhtml
+generates the HTML pages from simple text files in the MediaWiki syntax.
+You can also use own (X)HTML code or other script languages inside; there
+are no restrictions. The GUI is composed of a Code Paste Window where you
+can insert wiki code that will be generated live. A click into the result,
+the XHTML code, copies it into the clipboard.
+</dl></blockquote>
+<!-- section end -->
+</div>
+<!-- 2007/04/28 end -->
+
+
+
+<hr class="hide">
+<!-- 2007/04/29 start -->
+<h2><a name="20070429" href="200704c.html#20070429">2007-04-29 (Sun)</a></h2>
+<!-- 2007-04-30 15:38:36 -->
+
+<div class="entry1">
+<h3><a name="200704291" title="200704291" href="200704c.html#200704291">■</a> 
+<a href="http://addictedtonew.com/archives/187/ruby-twitter-gem/">[twitter] Ruby Twitter Gem</a></h3>
+<p>
+twitterのgemがあるらしい。
+</p>
+<pre>
+% gem install hpricot --source http://code.whytheluckystiff.net -v 0.4.86
+Need to update 38 gems from http://code.whytheluckystiff.net
+......................................
+complete
+Select which gem to install for your platform (i386-linux)
+ 1. hpricot 0.4.86 (mswin32)
+ 2. hpricot 0.4.86 (ruby)
+ 3. Skip this gem
+ 4. Cancel installation
+&gt; 2
+Building native extensions.  This could take a while...
+Successfully installed hpricot-0.4.86
+Installing ri documentation for hpricot-0.4.86...
+Installing RDoc documentation for hpricot-0.4.86...
+% gem install -y twitter
+Successfully installed twitter-0.1.0
+Successfully installed hoe-1.2.0
+Successfully installed rubyforge-0.4.1
+Installing ri documentation for twitter-0.1.0...
+Installing ri documentation for hoe-1.2.0...
+Installing ri documentation for rubyforge-0.4.1...
+Installing RDoc documentation for twitter-0.1.0...
+Installing RDoc documentation for hoe-1.2.0...
+Installing RDoc documentation for rubyforge-0.4.1...
+</pre>
+<p>
+結構いろんなもんに依存してるな。~/.twitterに
+</p>
+<pre>
+email: 登録したメールアドレス
+password: パスワード
+</pre>
+<p>
+と書いてこんな感じで。
+</p>
+<pre>
+% twitter post $(nkf -Ew&lt;&lt;&lt;RubyTwitterGemでコマンドラインからポスト)
+
+Got it! New twitter created at: Sun Apr 29 17:20:39 +0000 2007
+</pre>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200704292" title="200704292" href="200704c.html#200704292">■</a> 
+[twitter] テーマが突然変わった</h3>
+<p>
+そのおかげで
+<a href="http://userscripts.org/scripts/show/8457">twitter mod</a>がかなりかっこわるい感じになった。<br>
+どうしたもんかな。
+</p>
+
+<p>
+それにしても
+<a href="http://twitter.com/home">http://twitter.com/home</a>の重いこと重いこと。
+</p>
+<!-- section end -->
+</div>
+<!-- 2007/04/29 end -->
+
+
+
+<hr class="hide">
+<!-- 2007/04/30 start -->
+<h2><a name="20070430" href="200704c.html#20070430">2007-04-30 (Mon)</a></h2>
+<!-- 2007-05-01 03:05:49 -->
+
+<div class="entry1">
+<h3><a name="200704301" title="200704301" href="200704c.html#200704301">■</a> 
+[twitter] twitter@twitter.comが不調</h3>
+<p>
+twitter@twitter.comがずーっとofflineでgmail chatが使えない。<br>
+代わりに
+<a href="http://userscripts.org/scripts/show/8684">twitter_lite</a>を使うことにした。<br>
+しかしなぜかgmailと相性が悪い。<br>
+greasemonkeyの設定でユーザスクリプトを実行しないページに<br>
+https://mail.google.coma/gmail/を追加した。<br>
+これでひとまずok。
+</p>
+
+<p>
+twitter liteは結構頻繁に更新されてるようだ。<br>
+他のも試してみよう。
+</p>
+<!-- section end -->
+</div>
+<!-- 2007/04/30 end -->
+
+<hr>
+<div>
+<a href="200704b.html">&lt;Prev(,)</a> | 
+<a href="200705a.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

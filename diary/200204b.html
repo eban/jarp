@@ -1,0 +1,708 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2002-4-b</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="200204a.html">
+<link rel="next" href="200204c.html">
+
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2002年4月中旬〜</p>
+<hr>
+<div>
+<a href="200204a.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="200204c.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2002/04/11 start -->
+<h2><a name="20020411" href="200204b.html#20020411">2002-04-11 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="200204111" title="200204111" href="200204b.html#200204111">■</a> 
+<a href="http://www.uclibc.org/">uClibc 0.9.11</a></h3>
+<p>
+large file対応がどうのこうのとあるが、とりあえず
+</p>
+<pre>
+DOLFS = false
+</pre>
+<p>
+のままにしとこう。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200204112" title="200204112" href="200204b.html#200204112">■</a> 
+diffutils 2.8.1</h3>
+<p>
+折角なのでuClibc 0.9.11でmakeしてみる。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200204113" title="200204113" href="200204b.html#200204113">■</a> 
+util-linux-2.11q</h3>
+<p>
+久し振りに更新してみた。これはなんとなく恐いのでglibcのまま。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200204114" title="200204114" href="200204b.html#200204114">■</a> 
+ruby-talk-ja</h3>
+<p>
+
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-talk/38039">quoted-printableな記事</a> だと化ける。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/04/11 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/04/12 start -->
+<h2><a name="20020412" href="200204b.html#20020412">2002-04-12 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="200204121" title="200204121" href="200204b.html#200204121">■</a> 
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-list/34863">ruby-talk-ja</a></h3>
+<p>
+ruby-talk MLもsubscribeしたままだと、
+ruby-talk-ja MLは(日本語訳+オリジナル)なので、
+サイズ的に3倍に膨れあがる。unsubscribeした。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200204122" title="200204122" href="200204b.html#200204122">■</a> 
+<a href="200201b.html#200201171">JARH</a></h3>
+<p>
+というわけで別解を考えてみた。
+</p>
+<pre>
+print true ? &quot;Just another Ruby hacker,&quot; :-P
+</pre>
+<p>
+Pはどこにも定義されてないんだけど、評価されないからundefinedにはならない。
+だから
+</p>
+<pre>
+print true ? &quot;Just another Ruby hacker,&quot; :-D
+</pre>
+<p>
+というのもありだ。
+</p>
+
+<p>
+久し振りに全部実行してみるとなんか変だ。
+1.7だとエラーになるし、1.6.7でもHash#defaultの挙動が前と違っているようだ。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/04/12 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/04/13 start -->
+<h2><a name="20020413" href="200204b.html#20020413">2002-04-13 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="200204131" title="200204131" href="200204b.html#200204131">■</a> 
+[Ruby] Hash#default=</h3>
+<p>
+やっぱいつのまにか仕様変更になってる。
+</p>
+<pre>
+% ruby-1.6.6 -ve 'p({}.default=1)'
+ruby 1.6.6 (2001-12-26) [i386-linux]
+{}
+% ruby-1.6.7 -ve 'p({}.default=1)'
+ruby 1.6.7 (2002-03-01) [i586-linux]
+1
+</pre>
+<p>
+Hash#defaultがdefault値を返すんだから、
+1.6.6までがバグっていたということだろう。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200204132" title="200204132" href="200204b.html#200204132">■</a> 
+<a href="200204b.html#200204121">ruby-talk-ja</a></h3>
+<p>
+読み返してみるとruby-talkをunsubscribeしたように読める。
+ruby-talkにも投稿してるのでunsubscribeしたのはruby-talk-jaのほう。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200204133" title="200204133" href="200204b.html#200204133">■</a> 
+<a href="http://libw11.sourceforge.net/">[Cygwin] libw11</a></h3>
+<p>
+独立してたのか。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/04/13 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/04/14 start -->
+<h2><a name="20020414" href="200204b.html#20020414">2002-04-14 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="200204141" title="200204141" href="200204b.html#200204141">■</a> 
+look</h3>
+<p>
+util-linuxを上げたらlookが見るwordsの場所が/usr/share/dict/wordsに変更になってた。
+</p>
+<pre>
+% sudo ln -s /usr/dict /usr/share
+</pre>
+<p>
+としとこう。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200204142" title="200204142" href="200204b.html#200204142">■</a> 
+<a href="http://crux.nu/">CRUX</a></h3>
+<pre>
+About: CRUX is a lightweight, i686-optimized Linux distribution
+targeted at experienced Linux users. The primary focus of this
+distribution is &quot;keep it simple&quot;, which is reflected in a simple
+tar.gz-based package system, BSD-style initscripts, and a relatively
+small collection of trimmed packages. The secondary focus is
+utilization of new Linux features and recent tools and libraries.
+</pre>
+<p>
+BSD-styleのinitscriptsってあたりに魅かれるものがある。
+でもi686-optimizedじゃきっと動かないよなあ、このマシンじゃ。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/04/14 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/04/15 start -->
+<h2><a name="20020415" href="200204b.html#20020415">2002-04-15 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="200204151" title="200204151" href="200204b.html#200204151">■</a> 
+[Autoconf] Obsolete Macros</h3>
+<p>
+info autoconfしていたらObsoleteなマクロの一覧を見つけた。
+AC_CANONICAL三兄弟をAC_CANONICAL_SYSTEMにしようと思ってたのに、
+obsoleteなのか。AC_CANONICAL_TARGETだけで十分らしい。
+</p>
+
+<p>
+
+<a href="../files/autoconf-obsolete">こんなリスト</a> を用意してみた。
+GNU grepだと-fでパターンをファイルで指定できるので
+</p>
+<pre>
+% grep -w -f autoconf-obsolete configure.in
+AC_INIT(ruby.h)
+  AC_ERROR(cached CC is different -- throw away $cache_file
+AC_EXEEXT
+AC_OBJEXT
+AC_CHECK_TYPES([long long, off_t])
+AC_OUTPUT($FIRSTMAKEFILE Makefile ext/extmk.rb)
+</pre>
+<p>
+という感じで実行できる。あ、AC_INITとかは使い方がobsolete
+ということで、AC_INIT自体がobsoleteなわけではない。
+で、この場合は調べてみると結局obsoleteな使い方だった。
+古い意味で使うときは
+</p>
+<pre>
+AC_INIT
+AC_CONFIG_SRCDIR(UNIQUE-FILE-IN-SOURCE-DIR)
+</pre>
+<p>
+とせよということらしい。今のAC_INITは
+</p>
+<pre>
+AC_INIT(PACKAGE, VERSION, [BUG-REPORT], [TARNAME])
+</pre>
+<p>
+と引数がまるで違う。
+ま、たぶん今までのなんだかわけのわからんファイルを指定するというのが、
+そもそも間違っていたと思うので十分納得できる変更だ。
+AC_ERRORはAC_MSG_ERRORに変更。
+AC_EXEEXT, AC_OBJEXTはなくても自動的にEXEEXTとOBJEXTは設定される。
+AC_CHECK_TYPEはなんか説明が長くてよくわからない。
+AC_OUTPUTには引数がなくなった。
+</p>
+<pre>
+AC_CONFIG_FILES(FILE...)
+AC_CONFIG_COMMANDS([default], EXTRA-CMDS, INIT-CMDS)
+AC_OUTPUT
+</pre>
+<p>
+とせよということらしい。つまり
+</p>
+<pre>
+AC_CONFIG_FILES([$FIRSTMAKEFILE Makefile ext/extmk.rb])
+AC_OUTPUT
+</pre>
+<p>
+という感じか？
+</p>
+
+<p>
+AC_CHECK_TYPEは後で詳しく調べよう。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/04/15 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/04/16 start -->
+<h2><a name="20020416" href="200204b.html#20020416">2002-04-16 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="200204161" title="200204161" href="200204b.html#200204161">■</a> 
+<a href="http://www.ruby-lang.org/en/raa-list.rhtml?name=http-access2">http-access2_D</a></h3>
+<p>
+更新。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200204162" title="200204162" href="200204b.html#200204162">■</a> 
+<a href="http://www.ruby-lang.org/en/raa-list.rhtml?name=SOAP4R">SOAP4R 1.4.3</a></h3>
+<p>
+うーむ。
+</p>
+<pre>
+test/interop/clientSOAP::Lite.rb
+test/interopR2/clientSOAP::Lite.rb
+sample/RAA/SOAP::Lite.pl
+</pre>
+<p>
+というファイル名はWindowsじゃやばいっす。
+ま、大して影響はないが、::を__へrenameしてパッケージング。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200204163" title="200204163" href="200204b.html#200204163">■</a> 
+<a href="http://www.ruby-lang.org/en/raa-list.rhtml?name=Ruby%2FGoogle">ruby-google 0.2.0</a></h3>
+<p>
+というわけで全部揃った。
+そういえばsetup.iniに依存関係も書けるんだったよなあ。
+これも調べておかないと。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200204164" title="200204164" href="200204b.html#200204164">■</a> 
+<a href="http://www.ruby-lang.org/en/raa-list.rhtml?name=csv">csv 1.1.1</a></h3>
+<p>
+更新。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200204165" title="200204165" href="200204b.html#200204165">■</a> 
+商品出荷のお知らせ</h3>
+<p>
+プレイステーション・ドットコム・ジャパンからメール。
+「商品出荷のお知らせ」とあるが、中身には肝心の何を出荷したかが書かれてない。
+注文番号は書いてある。
+</p>
+<pre>
+ご注文商品はホームページ上の（http://www.jp.playstation.com/）
+「ログイン/ご購入履歴」よりご確認ください。
+</pre>
+<p>
+わからん。なんでそんな変なシステムになってるの？
+商品名を明記するのがそんなに大変なことなのか？
+</p>
+
+<p>
+いや見に行かなくてもPS2Linuxしか注文してないから、これ以外考えられないのだが。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/04/16 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/04/17 start -->
+<h2><a name="20020417" href="200204b.html#20020417">2002-04-17 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="200204171" title="200204171" href="200204b.html#200204171">■</a> 
+[Ruby] ccache i686-pc-cygwin-gcc</h3>
+<p>
+ccache i686-pc-cygwin-gccだとdllwrapでまずい。
+いいかげんgcc -sharedにすべきか？
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200204172" title="200204172" href="200204b.html#200204172">■</a> 
+[Ruby] i686-pc-cygwin-gcc -shared</h3>
+<p>
+とりあえずconfig.statusのLDSHAREDなどを書き換えて試す。
+</p>
+<pre>
+s,@LDSHARED@,ccache i686-pc-cygwin-gcc -shared -s,;t t
+s,@LIBRUBY_LDSHARED@,ccache i686-pc-cygwin-gcc -shared -s,;t t
+s,@LIBRUBY_DLDFLAGS@,--out-implib=$(LIBRUBY) $(RUBYDEF),;t t
+</pre>
+<p>
+これでいけそうかなと思ったら、tcltklibでこけた。
+</p>
+<pre>
+Warning: .drectve `%.*s' unrecognized
+Warning: .drectve `%.*s' unrecognized
+Warning: .drectve `%.*s' unrecognized
+Warning: .drectve `%.*s' unrecognized
+Cannot export ??_C@_03KBFG@Tcl?$AA@: symbol not found
+Cannot export ??_C@_0DM@EBFE@This?5interpreter?5does?5not?5suppor@: \
+  symbol not found
+</pre>
+<p>
+VC++用のlibraryをそのまま使っているが、ここにきて破綻したようだ。
+あ、--def=tcltklib.defが無効で、-Wl,--export-all-symbolになってるからか。
+extmk.rbから--def=を外そう。warningは残るが、これで一応最後まで通った。
+</p>
+
+<p>
+libtclstub.aとlibtkstub.aは自前で作ってみるか。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200204173" title="200204173" href="200204b.html#200204173">■</a> 
+spam</h3>
+<p>
+むぅ。今月はもう100通を越えた。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/04/17 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/04/18 start -->
+<h2><a name="20020418" href="200204b.html#20020418">2002-04-18 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="200204181" title="200204181" href="200204b.html#200204181">■</a> 
+<a href="http://www.jin.gr.jp/~nahi/RWiki/index.cgi?cmd=view;name=NaHi">Ruby/Googleとdate2</a></h3>
+<p>
+なひさんには内緒で
+<a href="200203c.html#200203314">作ってたりする</a>
+。いや内緒でもなんでもないんだが。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200204182" title="200204182" href="200204b.html#200204182">■</a> 
+<a href="http://www.loveruby.net/~aamine/ja/diary/latest.html#d17_1">関数定義の抜き出し</a></h3>
+<p>
+この際egrepでの処理もsedにやらせて
+</p>
+<pre>
+% sed -n '/^[a-zA-Z]/{;/[{;]/d;s/)/)\
+/;p;}' array.c
+</pre>
+<p>
+とか。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/04/18 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/04/19 start -->
+<h2><a name="20020419" href="200204b.html#20020419">2002-04-19 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="200204191" title="200204191" href="200204b.html#200204191">■</a> 
+[Ruby 1.7] autoconf 2.5x Obsolete Macros対応</h3>
+<p>
+commitした。
+</p>
+<pre>
+AC_INIT(ruby, 1.7.2)
+</pre>
+<p>
+としたけど、もう1個こんなものを増やしちゃけないよね。
+と思って最初は適当に
+</p>
+<pre>
+AC_INIT(ruby, 0.0)
+</pre>
+<p>
+としてみたんだが、どうすべきか？--helpすると最初に
+</p>
+<pre>
+`configure' configures ruby 1.7.2 to adapt to many kinds of systems.
+</pre>
+<p>
+と表示されるようになるのでとりあえず1.7.2を入れてみた。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200204192" title="200204192" href="200204b.html#200204192">■</a> 
+[Ruby 1.7] 最新mingw対応(&lt;mswsock.h&gt;)</h3>
+<p>
+w32apiの&lt;mswsock.h&gt;と&lt;winsock2.h&gt;の変更の影響でエラーになっていた。
+しかたないので&lt;mswsock.h&gt;を明示的にinclude。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200204193" title="200204193" href="200204b.html#200204193">■</a> 
+[Ruby 1.6, 1.7] 最新mingw対応(&lt;winsock2.h&gt;)</h3>
+<p>
+&lt;winsock2.h&gt;でsockaddr_storageが定義されるようになった。
+ext/socket/extconf.rbでのチェックで
+_WIN32のときは&lt;windows.h&gt;と&lt;mswsock.h&gt;をincludeするように変更。
+</p>
+
+<p>
+&lt;windows.h&gt;をincludeすると&lt;winsock2.h&gt;もincludeされちゃう
+w32apiが余計なお世話的な気もするが。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200204194" title="200204194" href="200204b.html#200204194">■</a> 
+[Ruby 1.7] Cygwin/MinGW上ではgcc -sharedを使う</h3>
+<p>
+
+<a href="200204b.html#200204171">ccache</a> の件がなくてもgcc -sharedにしようと思ってはいたんだけど。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200204195" title="200204195" href="200204b.html#200204195">■</a> 
+<a href="http://www.webmin.com/webmin/">Webmin 0.960</a></h3>
+<p>
+os_list.txtにPlamoは流石にない。自分で付け加えてみた。
+</p>
+<pre>
+--- os_list.txt.orig	2002-04-15 15:33:04.000000000 +0900
++++ os_list.txt	2002-04-17 18:14:42.000000000 +0900
+@@ -167 +167,2 @@
+ Cygwin				1.3	cygwin		1.3
++Plamo				2.2	slackware-linux	2.2
+</pre>
+<p>
+slackwareに近いと思うのでslackware-linuxでいいかな。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200204196" title="200204196" href="200204b.html#200204196">■</a> 
+Linux (for PlayStation2) Release 1.0</h3>
+<p>
+来た。でもベータ版ですでに満足してしまっているので、熱が冷めた感がある。
+解説書と書いてある小冊子を見てもkernelは2.4.1だし、他もほとんど変わりなし。
+とりえあずインストールする必要なしと判断。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/04/19 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/04/20 start -->
+<h2><a name="20020420" href="200204b.html#20020420">2002-04-20 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="200204201" title="200204201" href="200204b.html#200204201">■</a> 
+[Ruby] バージョン</h3>
+<p>
+そもそもversion.hの中にも
+</p>
+<pre>
+#define RUBY_VERSION &quot;1.7.2&quot;
+#define RUBY_RELEASE_DATE &quot;2002-04-19&quot;
+#define RUBY_VERSION_CODE 172
+#define RUBY_RELEASE_CODE 20020419
+</pre>
+<p>
+と同じものがある。
+ANSI C必須になってるわけだし、これってなんとかなりそうな気もする。
+</p>
+
+<p>
+AC_INITのほうは--helpや--versionすると表示される。
+autoconf 2.53ならconfig.hにも
+</p>
+<pre>
+#define PACKAGE_NAME &quot;ruby&quot;
+#define PACKAGE_TARNAME &quot;ruby&quot;
+#define PACKAGE_VERSION &quot;1.7.2&quot;
+#define PACKAGE_STRING &quot;ruby 1.7.2&quot;
+</pre>
+<p>
+と入る。で、--versionのほうはなぜかconfigureに直に書かれてしまうんだよね。
+PACKAGE_VERSIONとかを参照してればversion.hから抜き出して加工できるのに。
+とりあえずはPACKAGE_*は使わないからどうでもいいかもしれないけど。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200204202" title="200204202" href="200204b.html#200204202">■</a> 
+<a href="http://www.ruby-lang.org/en/raa-list.rhtml?name=eruby">eruby 0.9.8</a></h3>
+<p>
+更新。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200204203" title="200204203" href="200204b.html#200204203">■</a> 
+この先撮映禁止…の先(ハートの4)</h3>
+<p>
+コマ送りして見ると3種類ぐらいのテクニックが使われているのがわかった。
+2枚目に置くのはコマ送りしなくてもわかるけど、
+ちょっと折り目を入れたときのテクニックは本当にすごい。
+一瞬で上半分と下半分のカードを入れ換えてる。
+</p>
+<!-- section end -->
+</div>
+<!-- 2002/04/20 end -->
+
+<hr>
+<div>
+<a href="200204a.html">&lt;Prev(,)</a> | 
+<a href="200204c.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

@@ -1,0 +1,485 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2015-12-a</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="201511c.html">
+<link rel="next" href="201512b.html">
+
+<link rel="stylesheet" type="text/css" href="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.css">
+<script async type="text/javascript" src="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.js"></script>
+<script type="text/javascript">
+<!--       
+$(document).ready(function() {
+  prettyPrint();
+});
+-->
+</script>
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2015年12月上旬〜</p>
+<hr>
+<div>
+<a href="201511c.html" accesskey=",">&lt;Older(,)</a> | 
+<a href="201512b.html" accesskey=".">Newer(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2015/12/01 start -->
+<h2><a name="20151201" href="201512a.html#20151201">2015-12-01 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="201512011" title="201512011" href="201512a.html#201512011">■</a> 
+Docker小ネタ</h3>
+<p>
+コンテナを消すときに
+</p>
+<pre>
+% docker ps -l
+% docker rm `docker ps -lq`
+</pre>
+<p>
+ってのはヒストリーを呼び出してよくやるが、<br>
+打つ文字が長くなっても
+</p>
+<pre>
+% docker ps -l
+% docker ps -lq|xargs docker rm
+</pre>
+<p>
+のほうがカーソルをあちこち動かさなくて済む分なんとなく速い。
+</p>
+<p>
+巷にはdocker images --treeとか--vizとか便利そうなオプションの使用例があるが、<br>
+できるだけ小さく保つという方針によりすでにdeprecate。<br>
+--treeに関しては<br>
+<a href="https://github.com/docker/docker/pull/5001">Deprecate 'docker images --tree' and 'docker images --viz' by shykes · Pull Request #5001 · docker/docker</a><br>
+を参照。
+</p>
+<!-- section end -->
+</div>
+<!-- 2015/12/01 end -->
+
+
+
+<hr class="hide">
+<!-- 2015/12/02 start -->
+<h2><a name="20151202" href="201512a.html#20151202">2015-12-02 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="201512021" title="201512021" href="201512a.html#201512021">■</a> 
+dockviz</h3>
+<p>
+昨日の--treeの件はdockvizを使うと解決する。<br>
+dockerを起動するのもいいが、dockviz自体はstaticにlinkされてるので抜き出しちゃってもいい。<br>
+</p>
+<pre>
+% docker run nate/dockviz images
+Unable to find image 'nate/dockviz:latest' locally
+latest: Pulling from nate/dockviz
+8bd831364921: Pull complete
+3dfb5e1486b5: Pull complete
+607d274e6daa: Pull complete
+Digest: sha256:9afe152b794ae8480b230545ec75bc81f5e11a0b9d28158bb609479de5a95a72
+Status: Downloaded newer image for nate/dockviz:latest
+Unable to access Docker socket, please run like this:
+  docker run --rm -v /var/run/docker.sock:/var/run/docker.sock nate/dockviz images &lt;args&gt;
+For more help, run 'dockviz help'
+% docker ps -lq | xargs docker export | tar x dockviz
+% file dockviz
+dockviz: ELF 64-bit LSB executable, x86-64, version 1 (SYSV), statically linked, stripped
+% ./dockviz images -t
+├─8bd831364921 Virtual Size: 5.9 MB
+│ └─3dfb5e1486b5 Virtual Size: 5.9 MB
+│   └─607d274e6daa Virtual Size: 5.9 MB Tags: nate/dockviz:latest
+├─039b63dd2cba Virtual Size: 1.1 MB
+│ └─c51f86c28340 Virtual Size: 1.1 MB Tags: busybox:latest
+└─0c5a95b92fbb Virtual Size: 87.0 MB
+  └─c59aaaa35c20 Virtual Size: 87.0 MB
+    └─40f9f9531e43 Virtual Size: 820.7 MB
+      └─560151ab7b6b Virtual Size: 882.4 MB
+        └─dec1400ab1bd Virtual Size: 882.4 MB
+          └─a0d99d01b2a3 Virtual Size: 905.5 MB
+            └─232ed8986774 Virtual Size: 1.0 GB
+              └─3859c9a9c729 Virtual Size: 1.8 GB
+                └─86cceda0c83a Virtual Size: 1.8 GB
+                  └─ca77a6cff892 Virtual Size: 1.8 GB
+                    └─be540060a179 Virtual Size: 1.8 GB
+                      └─fc9a7b5c096a Virtual Size: 1.8 GB
+                        └─7db11899a300 Virtual Size: 1.8 GB Tags: hone/mruby-cli:latest
+</pre>
+<p>
+コンテナを立てるためだけに、わざとエラーを起こしてる。
+</p>
+<!-- section end -->
+</div>
+<!-- 2015/12/02 end -->
+
+
+
+<hr class="hide">
+<!-- 2015/12/03 start -->
+<h2><a name="20151203" href="201512a.html#20151203">2015-12-03 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="201512031" title="201512031" href="201512a.html#201512031">■</a> 
+factor</h3>
+<p>
+素数といえばfactorだが、このfactorへの入力はかなり柔軟に指定できる。<br>
+</p>
+<pre>
+% factor 10 20
+10: 2 5
+20: 2 2 5
+% echo 10 20 | factor
+10: 2 5
+20: 2 2 5
+% echo &quot;10\n20&quot;         
+10
+20
+% echo &quot;10\n20&quot; | factor
+10: 2 5
+20: 2 2 5
+</pre>
+<p>
+引数でもいいし、標準入力でもいいし、複数でもいいし、まったくもって使いやすい。
+</p>
+<!-- section end -->
+</div>
+<!-- 2015/12/03 end -->
+
+
+
+<hr class="hide">
+<!-- 2015/12/04 start -->
+<h2><a name="20151204" href="201512a.html#20151204">2015-12-04 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="201512041" title="201512041" href="201512a.html#201512041">■</a> 
+BASHでCSVを扱う #シェル芸</h3>
+<p>
+<a href="http://qiita.com/yasuhiroki/items/fad876db9e5505fceb03">Bash - そのシェルスクリプトもうちょっとシンプルに書けそう Tips集（Golf/シェル芸ではない） - Qiita</a><br>
+の
+</p>
+<pre>
+cat data.csv | while read line
+do
+  cols=(`echo $line | tr ',' ' '`)
+  for ((i=0; i &lt; ${#cols[@]}; i++)) {
+    echo &quot;Column $((i+1)): ${cols[$i]}&quot;
+  }
+done
+</pre>
+<p>
+はもっと簡潔に書ける。BASHならread -aで配列に直接入れられる。
+</p>
+<pre>
+cat data.csv | while read line
+do
+  cols=(`echo $line | tr ',' ' '`)
+</pre>
+<p>
+は
+</p>
+<pre>
+cat data.csv | while IFS=, read -a cols
+do
+</pre>
+<p>
+でいい。
+</p>
+<pre>
+% bash -c 'echo &quot;a,b c,d&quot; | while IFS=, read -a f;do for i in &quot;${f[@]}&quot;;do echo &quot;$i&quot;;done;done'
+a
+b c
+d
+</pre>
+<!-- section end -->
+</div>
+<!-- 2015/12/04 end -->
+
+
+
+<hr class="hide">
+<!-- 2015/12/05 start -->
+<h2><a name="20151205" href="201512a.html#20151205">2015-12-05 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="201512051" title="201512051" href="201512a.html#201512051">■</a> 
+csvtool</h3>
+<p>
+ぐぐるとLinuxでCSVを扱うにはcsvtoolというのがあるらしい。<br>
+debianにはcsvtoolのパッケージがあるのでちょっと試してみた。<br>
+</p>
+<pre>
+% seq 9 | xargs -n3 | tr ' ' , # テスト用のCSVを用意
+1,2,3
+4,5,6
+7,8,9
+% seq 9 | xargs -n3 | tr ' ' , | csvtool col 2 - # 2番目のフィールドだけ
+2
+5
+8
+% seq 9 | xargs -n3 | tr ' ' , | csvtool col 2- - # 先頭のフィールドを削除
+2,3
+5,6
+8,9
+% seq 9 | xargs -n3 | tr ' ' , | csvtool setcolumns 2 - # 2番目まで
+1,2
+4,5
+7,8
+% seq 9 | xargs -n3 | tr ' ' , | csvtool width - # フィールド数
+3
+% seq 9 | xargs -n3 | tr ' ' , | csvtool height - # レコード数
+3
+% seq 9 | xargs -n3 | tr ' ' , | csvtool head 2 - # 先頭の2レコード
+1,2,3
+4,5,6
+% seq 9 | xargs -n3 | tr ' ' , | csvtool drop 2 - # 先頭の2レコードを削除
+7,8,9
+% echo 'a,&quot;b\nc&quot;,d' | bash -c 'x(){ for i in &quot;$@&quot;;{ echo $i;};}; export -f x; csvtool call x -'
+a
+b c
+d
+</pre>
+<p>
+&quot;b\nc&quot;のような&quot;&quot;と改行を含むフィールドもok。<br>
+callを使うとcallback的にコマンドが呼ばれる。
+</p>
+<!-- section end -->
+</div>
+<!-- 2015/12/05 end -->
+
+
+
+<hr class="hide">
+<!-- 2015/12/06 start -->
+<h2><a name="20151206" href="201512a.html#20151206">2015-12-06 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="201512061" title="201512061" href="201512a.html#201512061">■</a> 
+gawk 4以降でCSVを扱う</h3>
+<p>
+FPATがあるので-F,ではできなかった&quot;&quot;対応が可能となる。改行を含むことまではできないが。
+</p>
+<pre>
+% echo 'a,&quot;b,c&quot;,d' | gawk '{OFS=&quot;|&quot;; $1=$1; print}' FPAT='[^,]+|\&quot;[^\&quot;]+\&quot;'
+a|&quot;b,c&quot;|d
+</pre>
+<p>
+RubyでいうところのString#scanのようなものと考えればいい。
+</p>
+<p>
+gawkのinfoでは
+<a href="https://www.gnu.org/software/gawk/manual/html_node/Splitting-By-Content.html">FPATの例</a>としては
+</p>
+<pre>
+FPAT = &quot;([^,]+)|(\&quot;[^\&quot;]+\&quot;)&quot;
+</pre>
+<p>
+のように()をつけてるが、実は意味がない。
+</p>
+<!-- section end -->
+</div>
+<!-- 2015/12/06 end -->
+
+
+
+<hr class="hide">
+<!-- 2015/12/07 start -->
+<h2><a name="20151207" href="201512a.html#20151207">2015-12-07 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="201512071" title="201512071" href="201512a.html#201512071">■</a> 
+ExcelでCSV形式で保存</h3>
+<p>
+改行を含むフィールドがあると
+</p>
+<pre>
+&quot;a\r\nb&quot;
+</pre>
+<p>
+ではなく
+</p>
+<pre>
+&quot;a\nb&quot;
+</pre>
+<p>
+のようになぜかCRがつかない形式になる。<br>
+行末はCR+LFなのでawk的にはRS=&quot;\r\n&quot;にすれば普通に扱えてしまうのであった。
+</p>
+<!-- section end -->
+</div>
+<!-- 2015/12/07 end -->
+
+
+
+<hr class="hide">
+<!-- 2015/12/08 start -->
+<h2><a name="20151208" href="201512a.html#20151208">2015-12-08 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="201512081" title="201512081" href="201512a.html#201512081">■</a> 
+CygwinのGNU awk</h3>
+<p>
+CygwinのGNU awkはバイナリマウントしてれば全部バイナリモードになるかといえば実はそうではない。<br>
+勝手に入力時にCR+LFをLFに変換してしまう。<br>
+昨日の例はCygwinでは通用しない。<br>
+バイナリモードにするにはBEGINでBINMODE=&quot;r&quot;とするか、<br>
+コマンドラインで-r BINMODE=rのようにする。
+</p>
+<pre>
+% printf '\r\n' | gawk '{print length()}'
+0
+% printf '\r\n' | gawk -v BINMODE=r '{print length()}'
+1
+</pre>
+<!-- section end -->
+</div>
+<!-- 2015/12/08 end -->
+
+
+
+<hr class="hide">
+<!-- 2015/12/09 start -->
+<h2><a name="20151209" href="201512a.html#20151209">2015-12-09 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="201512091" title="201512091" href="201512a.html#201512091">■</a> 
+busybox --install</h3>
+<p>
+busyboxといえばsymlinkだが、あれってコマンドがいっぱいあって実際に作るのは面倒。<br>
+busyboxと打てばコマンド一覧が出るのでこれを拾えばいいが実は--installというオプションがある。<br>
+これを使えばhardlinkが作れる。-sでsymlinkになる。
+</p>
+<pre>
+% mkdir bin
+% busybox --install -s bin
+% ls bin
+[	  cp		 egrep	      httpd	lsmod	  passwd      seq		 taskset      unlzop
+[[	  cpio		 env	      hwclock	lzcat	  patch       setkeycodes	 tee	      unxz
+acpid	  crond		 expand       id	lzma	  pidof       setsid		 telnet       unzip
+adjtimex  crontab	 expr	      ifconfig	lzop	  ping	      sh		 telnetd      uptime
+ar	  cttyhack	 false	      ifdown	lzopcat   ping6       sha1sum		 test	      usleep
+arp	  cut		 fdisk	      ifup	md5sum	  pivot_root  sha256sum		 tftp	      uudecode
+arping	  date		 fgrep	      init	mdev	  poweroff    sha512sum		 time	      uuencode
+ash	  dc		 find	      insmod	microcom  printf      sleep		 timeout      vconfig
+awk	  dd		 fold	      ionice	mkdir	  ps	      sort		 top	      vi
+basename  deallocvt	 free	      ip	mkfifo	  pwd	      start-stop-daemon  touch	      watch
+blockdev  depmod	 freeramdisk  ipcalc	mknod	  rdate       stat		 tr	      watchdog
+brctl	  devmem	 fstrim       kill	mkswap	  readlink    static-sh		 traceroute   wc
+bunzip2   df		 ftpget       killall	mktemp	  realpath    strings		 traceroute6  wget
+bzcat	  diff		 ftpput       klogd	modinfo   reboot      stty		 true	      which
+bzip2	  dirname	 getopt       last	modprobe  renice      su		 tty	      who
+cal	  dmesg		 getty	      less	more	  reset       sulogin		 tunctl       whoami
+cat	  dnsdomainname  grep	      ln	mount	  rev	      swapoff		 udhcpc       xargs
+chgrp	  dos2unix	 groups       loadfont	mt	  rm	      swapon		 udhcpd       xz
+chmod	  dpkg		 gunzip       loadkmap	mv	  rmdir       switch_root	 umount       xzcat
+chown	  dpkg-deb	 gzip	      logger	nameif	  rmmod       sync		 uname	      yes
+chpasswd  du		 halt	      login	nc	  route       sysctl		 uncompress   zcat
+chroot	  dumpkmap	 head	      logname	netstat   rpm	      syslogd		 unexpand
+chvt	  dumpleases	 hexdump      logread	nslookup  rpm2cpio    tac		 uniq
+clear	  echo		 hostid       losetup	od	  run-parts   tail		 unix2dos
+cmp	  ed		 hostname     ls	openvt	  sed	      tar		 unlzma
+% ls -l bin/cp
+lrwxrwxrwx 1 eban eban 12 2015-12-10 02:47:26 bin/cp -&gt; /bin/busybox
+</pre>
+<p>
+Dockerfileで役に立つ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2015/12/09 end -->
+
+
+
+<hr class="hide">
+<!-- 2015/12/10 start -->
+<h2><a name="20151210" href="201512a.html#20151210">2015-12-10 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="201512101" title="201512101" href="201512a.html#201512101">■</a> 
+<a href="https://twitter.com/monera_world/status/674655741274284032">ツイッター人望指数</a></h3>
+<p>
+定義が提案されていたのでシェル芸を。
+</p>
+<pre>
+% curl -Ls twitter.com/nhk_news  | grep -o '[0-9]\+人'| awk '$0=($2*++$2/++$1)^.5' RS=
+</pre>
+<p>
+で、実際にデータ見てみたらこれじゃだめだと判明。commifyされていた。
+</p>
+<pre>
+% curl -Ls twitter.com/nhk_news  | grep -o '[0-9,]\+人'
+14人
+1,588,067人
+</pre>
+<p>
+というわけでこうだな。
+</p>
+<pre>
+curl -Ls twitter.com/nhk_news  | grep -o '[0-9,]\+人' | tr -d , | awk '$0=($2*++$2/++$1)^.5' RS=
+</pre>
+<!-- section end -->
+</div>
+<!-- 2015/12/10 end -->
+
+<hr>
+<div>
+<a href="201511c.html">&lt;Older(,)</a> | 
+<a href="201512b.html">Newer(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

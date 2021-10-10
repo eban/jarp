@@ -1,0 +1,465 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2013-12-b</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="201312a.html">
+<link rel="next" href="201312c.html">
+
+<link rel="stylesheet" type="text/css" href="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.css">
+<script type="text/javascript" src="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.js"></script>
+<script type="text/javascript">
+<!--       
+$(document).ready(function() {
+  prettyPrint();
+});
+-->
+</script>
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2013年12月中旬〜</p>
+<hr>
+<div>
+<a href="201312a.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="201312c.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2013/12/11 start -->
+<h2><a name="20131211" href="201312b.html#20131211">2013-12-11 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="201312111" title="201312111" href="201312b.html#201312111">■</a> 
+find -lsは日本語のファイル名があるとなぜか8進数</h3>
+<p>
+これどうしたもんかとどうせなら-printfでls -l相当に近づけるべくごにょごにょしてみたが、<br>
+秒だけがなぜか小数点以下もつけくれるもんで結構うっとうしい。
+</p>
+<pre>
+% touch あいうえお
+% find . -ls
+31209908    4 drwxr-xr-x   2 eban     eban         4096 Dec 12 02:17 .
+31209910    0 -rw-r--r--   1 eban     eban            0 Dec 12 02:17 ./\343\201\202\343\201\204\343\201\206\343\201\210\343\201\212
+% find . -printf '%08s %C+ %p\n'
+    4096 2013-12-12+02:17:37.4381328510 .
+       0 2013-12-12+02:17:37.4381328510 ./あいうえお
+</pre>
+<p>
+とにかく秒のところにはwith fractional partが決まり文句になっていて、<br>
+省略できるのは%Ccだけのようだ。
+</p>
+<pre>
+% find . -printf '%08s %Cc %p\n'
+    4096 Thu Dec 12 02:17:37 2013 .
+       0 Thu Dec 12 02:17:37 2013 ./あいうえお
+</pre>
+<p>
+サイズとかはhuman readableになるようなオプションはなさげ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2013/12/11 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/12/12 start -->
+<h2><a name="20131212" href="201312b.html#20131212">2013-12-12 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="201312121" title="201312121" href="201312b.html#201312121">■</a> 
+久し振りに立ち上げたFirefox</h3>
+<p>
+使ってないPCを久し振りに起動してFirefoxを立ち上げたら、下段になんかメッセージが出てきた。
+</p>
+<pre>
+お久しぶりです！ 
+Firefox はしばらく使われていなかったようです。
+プロファイルを掃除して新品のようにきれにしますか？
+Firefox をリセット(E)...
+</pre>
+<p>
+まあ、使ってないしどうなるか見てみたいのでリセットしてみた。
+</p>
+<pre>
+Firefox を初期状態にリセットしますか？
+次のデータが保存されます
+  ウィンドウとタブ
+  履歴とブックマーク
+  保存されているパスワード
+  入力フォームの履歴
+  Cookie
+Firefoxの再起動後、その他のデータは削除されます。
+  Firefox をリセット キャンセル
+</pre>
+<p>
+保存じゃなくて逆に何を削除するのか教えて欲しいが、<br>
+まあ、それくらい残ってればいいかと続行してリセット。<br>
+設定移行ウィザードでもろもろインポートされる。
+</p>
+<pre>
+Firefox のリセット
+  Firefox 古いデータを掃除している間、しばらくお待ちください...
+おかえり！
+Firefox はプロファイルをリセットできました。以下は開いていたウィンドウとタブの一覧です。
+これらを復元するか、または白紙の状態で開始できます。
+</pre>
+<p>
+で、どうなったかというと拡張が全部削除された。盲点だった。<br>
+なんか清々しい気分だ。安易すぎた。まあ、いいか。
+</p>
+<!-- section end -->
+</div>
+<!-- 2013/12/12 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/12/13 start -->
+<h2><a name="20131213" href="201312b.html#20131213">2013-12-13 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="201312131" title="201312131" href="201312b.html#201312131">■</a> 
+tenki jpの構造が変わった</h3>
+<p>
+divが増えた。そうなると1個tableがずれて前にある同じ構造の10分観測値のほうにぶちあたった。<br>
+つまり10分間隔になった。そんな頻度でクロールしないので、正確には10分単位ででたらめな間隔になった。<br>
+</p>
+<p>
+XPathの
+</p>
+<pre>
+//*[@id=&quot;bd-main&quot;]/div[4]/table/tbody/tr[2]
+</pre>
+<p>
+div[4]をdiv[5]にすればいけるが、また増えたら書き換える必要がありなんとかしたいところ。<br>
+そもそもこのXPathはGoogle Chromeの要素の検証のElementsタブで右クリックしてCopy XPathしたもの。<br>
+これはこれで便利だが、他にも表現できる。
+</p>
+<p>
+tenki jpのアメダス実況のページには10分観測値と60分観測値がある。<br>
+これはtableで、両方ともclass=&quot;amedas_table_entries&quot;になっている。<br>
+classが違ってれば簡単な話だが、まあ、CSSで共通のスタイルにするという目的なんだから同じで当たり前。<br>
+それはそれとして、divの階層ではなくtableのほうで考ると
+</p>
+<pre>
+//table[@class=&quot;amedas_table_entries&quot;]/tbody/tr[2]
+</pre>
+<p>
+とも表現可能で、その2つの観測値tableの欲しいところを指すことになる。<br>
+あとはYahoo! PipesのTailを使えば後ろの1個だけが抽出可能になる。<br>
+一応これで解決した。でもそこもXPathだけでいけるはずだ。<br>
+最初は
+</p>
+<pre>
+//table[@class=&quot;amedas_table_entries&quot;][last()]/tbody/tr[2]
+</pre>
+<p>
+を試したが、なぜか変わらない。2つ残る。いろいろぐぐってみると優先順位かと思い当たった。
+</p>
+<pre>
+(//table[@class=&quot;amedas_table_entries&quot;])[last()]/tbody/tr[2]
+</pre>
+<p>
+ここにカッコが必要。これでTailが不要になった。
+</p>
+<p>
+divの個数には依存しなくなったが、はたしてどうなることやら。<br>
+間隔はでたらめでも情報は増えるし、放置しておいてもよかったのかもしれない。<br>
+ちょっとうっとうしいが。
+</p>
+<!-- section end -->
+</div>
+<!-- 2013/12/13 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/12/14 start -->
+<h2><a name="20131214" href="201312b.html#20131214">2013-12-14 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="201312141" title="201312141" href="201312b.html#201312141">■</a> 
+nasne 2.10 録画された番組のチャプター情報の表示・操作</h3>
+<p>
+torneでフラッシュ送りすると情報表示されるが、<br>
+そのときに妙な区切りみたいなものが出る番組があることに気づいた。<br>
+何が違うのかと思ったらnasneで録った番組だ。
+<a href="http://www.jp.playstation.com/info/release/nr_20131211_torne_update.html">これ</a>だな。
+</p>
+<blockquote><p>
+■“ナスネ” システムソフトウェア バージョン2.10以上で録画された番組のチャプター情報の表示・操作<br><br>
+“ナスネ” システムソフトウェア バージョン2.10以上で録画された番組のチャプター情報の表示および操作に対応しました。<br>
+チャプターが設定されたビデオでは、タイムバーにチャプターマークが表示され、左スティックの左右でチャプタージャンプができます。
+</p></blockquote>
+<p>
+これはめちゃめちゃ便利。チャプターと言ってるが、要するにCMスキップなわけで。<br>
+今まではリモコンのFLASHとNEXTに違いがなかったが、<br>
+やっとNEXTがNEXTとして機能するようなった。
+</p>
+<p>
+それにしてもなぜnasneだけなのか。
+</p>
+<!-- section end -->
+</div>
+<!-- 2013/12/14 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/12/15 start -->
+<h2><a name="20131215" href="201312b.html#20131215">2013-12-15 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="201312151" title="201312151" href="201312b.html#201312151">■</a> 
+tenki jp + Yahoo! Pipes + IFTTTの組み合わせ</h3>
+<p>
+tenki jpのHTMLからYahoo! PipesとIFTTTと2つ経由してtwitterにつぶやいているので、<br>
+たぶんかなり取り零しが起こるんじゃないかと思っていたが、<br>
+思ったほど起きない。むしろアメダスRSS本家があった頃よりも更新が速かったりする。<br>
+しかも本家は気温、降水量、風向き、風速が別のitemになってたので、<br>
+IFTTTで気温しかtwitterにつぶやけなかったが、まとめられるようになった。<br>
+なんかいいことづくめのような？
+</p>
+<p>
+取り零しに関しては本当は最新の1個だけじゃなくて数個RSSに入れとけばいいんだけど、<br>
+tableのrowspanのせいでXPathが書けない。これなんとかなるもんかな。
+</p>
+<!-- section end -->
+</div>
+<!-- 2013/12/15 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/12/16 start -->
+<h2><a name="20131216" href="201312b.html#20131216">2013-12-16 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="201312161" title="201312161" href="201312b.html#201312161">■</a> 
+なぜチャプター情報はnasneだけなのか？</h3>
+<p>
+<a href="https://twitter.com/tornev/status/412486551893856256">鳥</a>がつぶやいていた。<br>
+裏でゲームが動いてるかもしれないからという理由か。<br>
+うちのPS3はtorne専用で使ってるからそんな心配いらないんだが。
+</p>
+<!-- section end -->
+</div>
+<!-- 2013/12/16 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/12/17 start -->
+<h2><a name="20131217" href="201312b.html#20131217">2013-12-17 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="201312171" title="201312171" href="201312b.html#201312171">■</a> 
+tail -1 | awk</h3>
+<p>
+最後の行だけawkでなんか処理させたいときはtail -1を呼ばなくても、<br>
+END{print $1}のようにEND{}でいける。$0とかNFとかもそのまま保持されている。
+
+</p>
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="201312172" title="201312172" href="201312b.html#201312172">■</a> 
+<a href="http://www.commandlinefu.com/commands/view/12985/mean-color-of-an-image">mean color of an image</a></h3>
+<p>
+というわけでこれなんだけど、
+</p>
+<pre>
+convert image.jpg -resize 1x1 txt: | tail -1 | awk '{gsub(/[,\)]/,&quot; &quot;); print $3+$4+$5}'
+</pre>
+<p>
+tail -1は不要になり
+</p>
+<pre>
+convert image.jpg -resize 1x1 txt: | awk 'END{gsub(/[,\)]/,&quot; &quot;); print $3+$4+$5}'
+</pre>
+<p>
+と書ける。が、しかしこれバグってる。
+</p>
+<pre>
+% convert 0000.jpg -resize 1x1 txt:
+# ImageMagick pixel enumeration: 1,1,255,srgb
+0,0: (219,223,206)  #DBDFCE  srgb(219,223,206)
+</pre>
+<p>
+なんだから、$3が(219になってしまう。ってことは0とみなされる。<br>
+/[,(]/にしないとまずい。あとmeanっていうなら3で割るよねえ。
+</p>
+<pre>
+% convert 0000.jpg -resize 1x1 txt: | awk 'END{gsub(/[,(]/,&quot; &quot;); print ($3+$4+$5)/3}' 
+216
+</pre>
+<p>
+実をいうとconvertにはmeanを計算する機能もある。
+</p>
+<pre>
+% convert 0000.jpg -format &quot;%[mean]&quot; info: 
+54798.2
+% identify -format &quot;%[mean]&quot; 0000.jpg
+54798.2
+</pre>
+<p>
+まあ、結局はidentifyなんだけど、この値は65535がmaxなので
+</p>
+<pre>
+% echo $[54798.2*255/65535]
+213.22256809338521
+</pre>
+<p>
+ってことになるが、微妙に結果が違う。そのあたりは-resizeのアルゴリズムに依る。
+</p>
+<pre>
+% convert 0000.jpg txt: | head                                                                 
+# ImageMagick pixel enumeration: 590,450,255,srgb
+0,0: (180,220, 97)  #B4DC61  srgb(180,220,97)
+1,0: (196,225,145)  #C4E191  srgb(196,225,145)
+2,0: (133,169, 95)  #85A95F  srgb(133,169,95)
+3,0: (118,158, 62)  #769E3E  srgb(118,158,62)
+4,0: (111,149, 46)  #6F952E  srgb(111,149,46)
+5,0: (130,166, 66)  #82A642  srgb(130,166,66)
+6,0: (150,175,109)  #96AF6D  srgb(150,175,109)
+7,0: (132,160, 86)  #84A056  srgb(132,160,86)
+8,0: (129,164, 70)  #81A446  srgb(129,164,70)
+% convert 0000.jpg txt: | awk -F'[(, ]+' 'i++{sum+=$3+$4+$5}END{print sum/(NR-1)/3}'            
+213.223
+</pre>
+<p>
+%[mean]はほんとに機械的に平均を計算している。<br>
+今回はgsubじゃなくてFSを設定する方法でやってみた。<br>
+i++は先頭だけ除くという意味。ああ、意味的には!/^#/のほうがわかりやすいか。
+</p>
+<!-- section end -->
+</div>
+<!-- 2013/12/17 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/12/18 start -->
+<h2><a name="20131218" href="201312b.html#20131218">2013-12-18 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="201312181" title="201312181" href="201312b.html#201312181">■</a> 
+no-ipから例のお知らせが来ない</h3>
+<p>
+<a href="201311c.html#20131124">この対策</a>でうまくいったのか？<br>
+23日後ってのは今となっては意味不明だ。<br>
+たぶんその前のメールが23日前だったんだろうと思い、<br>
+メールを確認したら30-7ということだった。<br>
+30日間有効だけど、更新しないとその7日前に通知が来る。<br>
+ってことはあれでうまくいったようだ。<br>
+まず適当に127.0.0.1と設定し、続いて本当のIPアドレスを設定する。<br>
+これを23日以内で繰り返す。cronの設定は面倒なので1日と16日の月2回にしよう。
+</p>
+<!-- section end -->
+</div>
+<!-- 2013/12/18 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/12/19 start -->
+<h2><a name="20131219" href="201312b.html#20131219">2013-12-19 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="201312191" title="201312191" href="201312b.html#201312191">■</a> 
+androidでまともにswipeさせる</h3>
+<p>
+最近のandroidだとinputコマンドにswipeがあるが、<br>
+これを使っても起動時のアンロックがうまくいかない。<br>
+そこで定番はgeteventしてsendeventになるが、これが使いにくい。<br>
+何しろgeteventした結果をそのままsendeventには使えないから。<br>
+16進と10進、余計な:を削除とか。<br>
+まあそれは変換すればいいだけだけど、問題はタイミング。<br>
+adb shell sendeventじゃ論外に遅いし、android上で直接sendeventを動かしてもやっぱり遅い。<br>
+1個のイベントをいちいちコマンド起動してちゃ、まったくもって間に合わない。
+</p>
+<p>
+そこでこのイベントを一気に食わせる方法があるかとぐぐってみたら、<br>
+<a href="http://stackoverflow.com/questions/19063057/android-simulate-fast-swipe">adb - Android simulate fast swipe</a>を発見した。<br>
+なるほど、/dev/input/event?を直接触ればいいんだ。
+</p>
+<pre>
+For example
+
+adb shell
+cd /mnt/sdcard
+cat /dev/input/event2 &gt; events
+Do a few touch screen events, then ctrl-C to kill cat
+
+Now you can play back the captured file of binary events:
+
+cat events &gt; /dev/input/event2
+</pre>
+<p>
+これでばっちりアンロックもできた。
+</p>
+<!-- section end -->
+</div>
+<!-- 2013/12/19 end -->
+
+<hr>
+<div>
+<a href="201312a.html">&lt;Prev(,)</a> | 
+<a href="201312c.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

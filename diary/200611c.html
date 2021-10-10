@@ -1,0 +1,338 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2006-11-c</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="200611b.html">
+<link rel="next" href="200612a.html">
+
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2006年11月下旬〜</p>
+<hr>
+<div>
+<a href="200611b.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="200612a.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2006/11/21 start -->
+<h2><a name="20061121" href="200611c.html#20061121">2006-11-21 (Tue)</a></h2>
+<!-- 2006-11-22 00:58:10 -->
+
+<div class="entry1">
+<h3><a name="200611211" title="200611211" href="200611c.html#200611211">■</a> 
+かぜ</h3>
+<p>
+やっと回復。体温は35℃台へ。やっぱ低体温だな。
+</p>
+<!-- section end -->
+</div>
+<!-- 2006/11/21 end -->
+
+
+
+<hr class="hide">
+<!-- 2006/11/22 start -->
+<h2><a name="20061122" href="200611c.html#20061122">2006-11-22 (Wed)</a></h2>
+<!-- 2006-11-23 13:45:00 -->
+
+<div class="entry1">
+<h3><a name="200611221" title="200611221" href="200611c.html#200611221">■</a> 
+[Screen] ScreenでF1キーに何かを割り当てる</h3>
+<p>
+man screenすると
+</p>
+<pre>
+bindkey -k k1 select 1
+</pre>
+<p>
+でF1キーでwindow 1に切り替わると書いてあるがなぜか利かない。<br>
+その後を読むとINPUT TRANSLATIONという節には
+</p>
+<pre>
+Function key 1        k1          stuff \033OP
+</pre>
+<p>
+と書いてあった。つまりF1キーは&quot;\eOP&quot;を吐かないといけないわけだ。<br>
+vt100ならそうなのかもしれないけど、ktermだしな。
+</p>
+
+<p>
+ちょっと悩んだが、試しに~/.screenrcに
+</p>
+<pre>
+termcapinfo kterm 'k1=\E[11~:k2=\E[12~:k3=\E[13~:k4=\E[14~:k5=\E[15~:'
+</pre>
+<p>
+を加えたらいけた。とりあえずF5まであればいいや。
+</p>
+<!-- section end -->
+</div>
+<!-- 2006/11/22 end -->
+
+
+
+<hr class="hide">
+<!-- 2006/11/23 start -->
+<h2><a name="20061123" href="200611c.html#20061123">2006-11-23 (Thu)</a></h2>
+<!-- 2006-11-24 02:33:20 -->
+
+<div class="entry1">
+<h3><a name="200611231" title="200611231" href="200611c.html#200611231">■</a> 
+[FC6] Systemフォルダ</h3>
+<p>
+ずっと昔のFedora Coreでskkinputに設定したままだったけど、<br>
+FC6になったら勝手にSCIMになってしまったようで。<br>
+で、変更しようと思ってメニューを開いたら、<br>
+なぜかSystemフォルダがNo Entriesなんだけど、なんの冗談？<br>
+たしかコントロールパネルみたいなのがあったよな。<br>
+どこいった？アップグレード時になにか消された？
+</p>
+<!-- section end -->
+</div>
+<!-- 2006/11/23 end -->
+
+
+
+<hr class="hide">
+<!-- 2006/11/24 start -->
+<h2><a name="20061124" href="200611c.html#20061124">2006-11-24 (Fri)</a></h2>
+<!-- 2006-11-25 02:55:18 -->
+
+<div class="entry1">
+<h3><a name="200611241" title="200611241" href="200611c.html#200611241">■</a> 
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-talk/226388">[Mail] Anyone else getting weird flickr errors?</a></h3>
+<p>
+一体なんのことだと試しにruby-talkへ
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-talk/226417">投稿</a>してみたら、<br>
+Your Photo Upload Failedとかいうメールがflickrから返ってきた。<br>
+さっそくruby-talkのメンバファイルを調べてみたが該当するメールアドレスはない。<br>
+ってことは誰かが転送しているのか？これはうっとうしいな。
+</p>
+<!-- section end -->
+</div>
+<!-- 2006/11/24 end -->
+
+
+
+<hr class="hide">
+<!-- 2006/11/25 start -->
+<h2><a name="20061125" href="200611c.html#20061125">2006-11-25 (Sat)</a></h2>
+<!-- 2006-11-26 02:29:11 -->
+
+<div class="entry1">
+<h3><a name="200611251" title="200611251" href="200611c.html#200611251">■</a> 
+[RD-H1] 2Mbpsで十分</h3>
+<p>
+なんかやたらとハードディスクの減りが激しいと思っていたら、<br>
+
+<a href="200610a.html#200610061">クラッシュ</a>以来6.0Mbpsで録画していた。<br>
+そこでどこまで落としても耐えられるか調べた。<br>
+普通に見るなら2Mbpsで十分だな。1.4Mbpsまで落とすとさすがに荒れる。<br>
+動きの少ないドラマは1Mbpsでもいいかもしれない。
+</p>
+<!-- section end -->
+</div>
+<!-- 2006/11/25 end -->
+
+
+
+<hr class="hide">
+<!-- 2006/11/26 start -->
+<h2><a name="20061126" href="200611c.html#20061126">2006-11-26 (Sun)</a></h2>
+<!-- 2006-11-27 02:56:30 -->
+
+<div class="entry1">
+<h3><a name="200611261" title="200611261" href="200611c.html#200611261">■</a> 
+[Ruby] ruby_1_8_5</h3>
+<p>
+ruby_1_8_5ブランチのスタート。
+</p>
+<pre>
+% ./miniruby -v
+ruby 1.8.5 (2006-11-26 patchlevel 1) [i386-linux]
+</pre>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200611262" title="200611262" href="200611c.html#200611262">■</a> 
+[Mail] Carl has sent you a photo from Vacation on Nov 26 17:40:00 MSK 2006</h3>
+<p>
+ってspamだかなんだかわからんメールがやたらくるようになった。<br>
+gromko-oemで捨てちゃえばよさげではある。
+</p>
+<!-- section end -->
+</div>
+<!-- 2006/11/26 end -->
+
+
+
+<hr class="hide">
+<!-- 2006/11/27 start -->
+<h2><a name="20061127" href="200611c.html#20061127">2006-11-27 (Mon)</a></h2>
+<!-- 2006-11-28 00:31:00 -->
+
+<div class="entry1">
+<h3><a name="200611271" title="200611271" href="200611c.html#200611271">■</a> 
+[Mail] wrote spam</h3>
+<p>
+急に増えたwrote spam。
+</p>
+<pre>
+% scan +spam.rdeliver.0611 |grep wrote:
+  414 2006-11-26 17:23   3074 |&quot;Xavier&quot;  | Xavier wrote:&lt;&lt;We have brought you w
+  415 2006-11-26 18:07   5626 |&quot;Tricia Sw| Tricia wrote:&lt;&lt;We have brought you w
+  418 2006-11-26 19:19   6403 |&quot;Hershel V| Hershel wrote:&lt;&lt;We have giving you w
+  421 2006-11-27 03:56   5687 |&quot;Gino Tate| Gino wrote:&lt;&lt;We have giving you winn
+  423 2006-11-27 12:14   6147 |&quot;Marcos Hi| Marcos wrote:&lt;&lt;We have giving you wi
+</pre>
+<p>
+中身もほとんど同じようだ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2006/11/27 end -->
+
+
+
+<hr class="hide">
+<!-- 2006/11/28 start -->
+<h2><a name="20061128" href="200611c.html#20061128">2006-11-28 (Tue)</a></h2>
+<!-- 2006-11-29 02:04:18 -->
+
+<div class="entry1">
+<h3><a name="200611281" title="200611281" href="200611c.html#200611281">■</a> 
+[Google] Google Co-opで自サイト内検索エンジン</h3>
+<p>
+
+<a href="http://www.google.com/coop/">Google Co-op</a>を使ってみた。<br>
+指示に従ったら簡単にできた。<br>
+最下部参照。
+</p>
+<!-- section end -->
+</div>
+<!-- 2006/11/28 end -->
+
+
+
+<hr class="hide">
+<!-- 2006/11/29 start -->
+<h2><a name="20061129" href="200611c.html#20061129">2006-11-29 (Wed)</a></h2>
+<!-- 2006-11-30 21:20:53 -->
+
+<div class="entry1">
+<h3><a name="200611291" title="200611291" href="200611c.html#200611291">■</a> 
+[FC6] GNOMEを入れてみる？</h3>
+<p>
+sudo yum groupinstall 'GNOME Desktop Environment'してみたら、<br>
+100MBと言われたので保留。<br>
+いつの間にアンインストールしたんだか思い出せんが、<br>
+寝てる間にでもインストールさせよう。
+</p>
+<!-- section end -->
+</div>
+<!-- 2006/11/29 end -->
+
+
+
+<hr class="hide">
+<!-- 2006/11/30 start -->
+<h2><a name="20061130" href="200611c.html#20061130">2006-11-30 (Thu)</a></h2>
+<!-- 2006-12-01 01:36:24 -->
+
+<div class="entry1">
+<h3><a name="200611301" title="200611301" href="200611c.html#200611301">■</a> 
+[FC6] 間違えてKDEをインストール</h3>
+<p>
+ぼけてた。なぜかKDEをインストールさせてた。
+</p>
+<pre>
+% echo &quot;yum -y groupinstall 'GNOME Desktop Environment'&quot; |sudo at 10:00
+job 5 at 2006-12-01 10:00
+</pre>
+<p>
+明日の10:00にしとこう。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200611302" title="200611302" href="200611c.html#200611302">■</a> 
+[Vim] Vim7の補完のポップアップメニュー</h3>
+<p>
+補完でのポップアップメニュー。リズムが狂うからやめさせたい。<br>
+:help 'completeopt'を見るといろいろ書いてあるが、リセットさせればよさげ。
+</p>
+<pre>
+set completeopt=
+</pre>
+<p>
+やっとVim6相当に戻った。
+</p>
+<!-- section end -->
+</div>
+<!-- 2006/11/30 end -->
+
+<hr>
+<div>
+<a href="200611b.html">&lt;Prev(,)</a> | 
+<a href="200612a.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

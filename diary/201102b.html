@@ -1,0 +1,383 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2011-2-b</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="201102a.html">
+<link rel="next" href="201102c.html">
+
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2011年2月中旬〜</p>
+<hr>
+<div>
+<a href="201102a.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="201102c.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2011/02/11 start -->
+<h2><a name="20110211" href="201102b.html#20110211">2011-02-11 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="201102111" title="201102111" href="201102b.html#201102111">■</a> 
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-list/47847">[ruby-list:47852] Re: ruby1.9での文字列について</a></h3>
+<p>
+タイミングを外したのでここで。packなら1.8でも1.9でもいけるはずだ。
+</p>
+<pre>
+% /usr/bin/ruby -rnkf -ve 'p [s1=&quot;あ&quot;, NKF.nkf(&quot;-j&quot;,s1)].pack(&quot;A*A*&quot;)'
+ruby 1.8.7 (2010-06-23 patchlevel 299) [x86_64-linux]
+&quot;\343\201\202\e$B$\&quot;\e(B&quot;
+% ruby -rnkf -ve 'p [s1=&quot;あ&quot;, NKF.nkf(&quot;-j&quot;,s1)].pack(&quot;A*A*&quot;)'
+ruby 1.9.3dev (2011-02-11 trunk 30836) [x86_64-linux]
+&quot;\xE3\x81\x82\e$B$\&quot;\e(B&quot;
+</pre>
+<!-- section end -->
+</div>
+<!-- 2011/02/11 end -->
+
+
+
+<hr class="hide">
+<!-- 2011/02/12 start -->
+<h2><a name="20110212" href="201102b.html#20110212">2011-02-12 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="201102121" title="201102121" href="201102b.html#201102121">■</a> 
+<a href="http://golf.shinh.org/p.rb?ON+bit+fixed#Ruby">ON bit fixed</a></h3>
+<p>
+これは適当に1から順番に生成してgrep的なことすると3番目でtimeoutし破綻する。<br>
+というわけで、[0,0,1,1,1]のよう配列を用意していっぱいshuffleしてsortしてuniqするのが簡単。<br>
+蓋を開けてみると見事なまでにshuffle+sort+uniqなわけで。<br>
+combinationとかpermutationとかproductionとか長すぎるのがいけない。
+</p>
+<!-- section end -->
+</div>
+<!-- 2011/02/12 end -->
+
+
+
+<hr class="hide">
+<!-- 2011/02/13 start -->
+<h2><a name="20110213" href="201102b.html#20110213">2011-02-13 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="201102131" title="201102131" href="201102b.html#201102131">■</a> 
+<a href="http://golf.shinh.org/reveal.rb?ON+bit+fixed/tails_1296397447&amp;pl">ON bit fixed</a></h3>
+<p>
+s/01(1*)(0*)$/10$2$1/ これでいけるのか。空白のありなしで判断してるのは賢いな。<br>
+Rubyで書くとこんな感じだ。
+</p>
+<pre>
+a,b=gets.split.map(&amp;:to_i)
+puts $_='0'*(a-b)+'1'*b+&quot;\n&quot;
+print while sub!(/01(1*)(0*)$/,'10\2\1')
+</pre>
+<p>
+単純にRubyに置き換えようと思って
+</p>
+<pre>
+print while gets=~/ /?$_=&quot;0&quot;*($`.to_i-a=$'.to_i)+&quot;1&quot;*a+$/:sub!(/01(1*)(0*)$/,'10\2\1')
+</pre>
+<p>
+のようにしてしまうとgetsが$_を書き換えてしまうので$&lt;.readとかにしないとまずい。
+</p>
+<!-- section end -->
+</div>
+<!-- 2011/02/13 end -->
+
+
+
+<hr class="hide">
+<!-- 2011/02/14 start -->
+<h2><a name="20110214" href="201102b.html#20110214">2011-02-14 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="201102141" title="201102141" href="201102b.html#201102141">■</a> 
+windowsで/etc/hosts</h3>
+<p>
+今日DNSサーバが突然死んで思い出したので書いとく。<br>
+意外に知られてないが、Windowsでも/etc/hosts的なファイルが存在する。<br>
+c:\windows\system32\drivers\etc\hostsあたりにあるので、普通に追加すればok。
+
+</p>
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="201102142" title="201102142" href="201102b.html#201102142">■</a> 
+<a href="http://golf.shinh.org/p.rb?FizzBuzz#Ruby">FizzBuzz.rbが50B!</a></h3>
+<p>
+いやー、これはすごいことになったねえ。Perlが48Bだからほとんど追い付いてきてる。
+</p>
+<!-- section end -->
+</div>
+<!-- 2011/02/14 end -->
+
+
+
+<hr class="hide">
+<!-- 2011/02/15 start -->
+<h2><a name="20110215" href="201102b.html#20110215">2011-02-15 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="201102151" title="201102151" href="201102b.html#201102151">■</a> 
+cppを使ってCのコメントを消す</h3>
+<p>
+単にcppだけだとヘッダファイルを展開してしまってうざい。<br>
+と思ったら、gccには-fpreprocessedなんてオプションがあった。
+</p>
+<pre>
+% cat x.c
+#include &lt;stdio.h&gt;
+// hoge
+/* foo */
+///*
+//*/
+// /* foo */
+/* // */
+main()
+{ /* hoge */ int /* bar */ foo;
+}
+% cpp -fpreprocessed x.c | grep .
+#include &lt;stdio.h&gt;
+main()
+{ int foo;
+}
+</pre>
+<p>
+なかなかいい感じ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2011/02/15 end -->
+
+
+
+<hr class="hide">
+<!-- 2011/02/16 start -->
+<h2><a name="20110216" href="201102b.html#20110216">2011-02-16 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="201102161" title="201102161" href="201102b.html#201102161">■</a> 
+<a href="http://golf.shinh.org/p.rb?MD5#Bash">MD5</a></h3>
+<p>
+普通ならmd5sumを使うところだが、md5sumはファイル名も表示してしまうため消す処理が必要になってしまう。<br>
+そこでopenssl md5だ。GNU sedのs///eでコマンド実行できるので1行ずつばらすにはうってつけ。
+
+</p>
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="201102162" title="201102162" href="201102b.html#201102162">■</a> 
+crontabで第3水曜日に実行</h3>
+<p>
+N日が第何曜日なのかはint((N+6)/7)でわかる。つまり第3なら15日から21日になる。<br>
+あとは水曜日という条件をつければ
+</p>
+<pre>
+0 0 15-21 * Wed command
+</pre>
+<p>
+でいけそうな気がするが、ここに落とし穴がある。日付と曜日を同時に書くとなぜかorになるのだ。<br>
+これだと毎月15日から21日または水曜日に実行される。なんでこんな仕様になっているんだ。<br>
+というわけで、
+</p>
+<pre>
+0 0 15-21 * * test $(LANG=C date +\%a) = Wed &amp;&amp; command
+</pre>
+<p>
+のように書く必要がある。%aはlocaleの影響を受けるのでLANG=Cを入れたほうが無難。
+</p>
+<pre>
+0 0 15-21 * * test $(date +\%w) = 3 &amp;&amp; command
+</pre>
+<p>
+でもいいんだけど、3って何曜日だっけ?てなことになりかねない。
+</p>
+<!-- section end -->
+</div>
+<!-- 2011/02/16 end -->
+
+
+
+<hr class="hide">
+<!-- 2011/02/17 start -->
+<h2><a name="20110217" href="201102b.html#20110217">2011-02-17 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="201102171" title="201102171" href="201102b.html#201102171">■</a> 
+lighttpdへcurlでupload</h3>
+<p>
+ちょっとはまったので備忘録。man curlを見ると<br>
+</p>
+<pre>
+curl -s -F 'filename=@foo.txt' URL
+</pre>
+<p>
+てな感じでお手軽にfoo.txtをuploadできると書いてあったので、<br>
+試してみたら
+</p>
+<pre>
+&lt;?xml version=&quot;1.0&quot; encoding=&quot;iso-8859-1&quot;?&gt;
+&lt;!DOCTYPE html PUBLIC &quot;-//W3C//DTD XHTML 1.0 Transitional//EN&quot;
+         &quot;http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd&quot;&gt;
+&lt;html xmlns=&quot;http://www.w3.org/1999/xhtml&quot; xml:lang=&quot;en&quot; lang=&quot;en&quot;&gt;
+ &lt;head&gt;
+  &lt;title&gt;417 - Expectation Failed&lt;/title&gt;
+ &lt;/head&gt;
+ &lt;body&gt;
+  &lt;h1&gt;417 - Expectation Failed&lt;/h1&gt;
+ &lt;/body&gt;
+&lt;/html&gt;
+</pre>
+<p>
+と言われてしまった。ぐぐってみるとlighttpdがcurlの出すExpect: 100-Continueに対応してないということらしい。<br>
+というわけで、
+</p>
+<pre>
+curl -s -H &quot;Expect:&quot; -F 'filename=@foo.txt' URL
+</pre>
+<p>
+のようにExpect:ヘッダを消せばいけるようだ。<br>
+なんか、ぐぐった結果を見るとtwitter.comでも同じらしい。
+</p>
+<!-- section end -->
+</div>
+<!-- 2011/02/17 end -->
+
+
+
+<hr class="hide">
+<!-- 2011/02/18 start -->
+<h2><a name="20110218" href="201102b.html#20110218">2011-02-18 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="201102181" title="201102181" href="201102b.html#201102181">■</a> 
+<a href="http://welz.org.za/projects/since">since: Stateful Tail</a></h3>
+<p>
+<a href="http://www.cygwin.com/ml/cygwin-announce/2011-02/msg00022.html">cygwin-announce</a>で見つけた。<br>
+仕組みは各ファイルのdevice,i-node番号とサイズを覚えておいて、<br>
+増分だけ表示してるようだ。ってことはtail -F的には使えないな。
+</p>
+<pre>
+% cat ~/.since             
+0000000000000801:0000000003220669:000000000003173b
+% printf &quot;%016x:%016x:%016x\n&quot; `stat -c &quot;%d %i %s&quot; saitama-temp.log`
+0000000000000801:0000000003220669:000000000003173b
+</pre>
+<p>
+あ、ここまで書けるならシェルスクリプトでもいけそうな気がする。<br>
+ddでskipしてやればいいわけだし。
+</p>
+<!-- section end -->
+</div>
+<!-- 2011/02/18 end -->
+
+
+
+<hr class="hide">
+<!-- 2011/02/19 start -->
+<h2><a name="20110219" href="201102b.html#20110219">2011-02-19 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="201102191" title="201102191" href="201102b.html#201102191">■</a> 
+タブッターのショートカットキー</h3>
+<p>
+最近
+<a href="http://tabtter.jp/">タブッター</a>をよくつかうんだけど、これのショートカットキーのj/kがviと逆で困りまくり。<br>
+というわけでgreasemonkeyで入れ替えた。
+</p>
+<pre>
+location.href = &quot;javascript:void (&quot; + 
+  function(){
+    eval('shortcutwin = ' + shortcutwin.toString().replace(&quot;kcode == 74)&quot;, &quot;kcode == 75)&quot;))
+  } + &quot;)()&quot;;
+</pre>
+<p>
+<a href="http://piro.sakura.ne.jp/latest/blosxom/mozilla/xul/2009-11-28_five-wrong-reasons-to-use-eval-in-an-extension.htm">こんな話</a>もあるが気にしない。自分しか使わないしね。
+</p>
+<!-- section end -->
+</div>
+<!-- 2011/02/19 end -->
+
+
+
+<hr class="hide">
+<!-- 2011/02/20 start -->
+<h2><a name="20110220" href="201102b.html#20110220">2011-02-20 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="201102201" title="201102201" href="201102b.html#201102201">■</a> 
+Ubuntuのexim4でGmail smtp経由でメールを送る設定</h3>
+<p>
+ぐぐってみた結果dpkg-reconfigure exim4-configすればいいよと書いてあるが、<br>
+うまくいったのは
+<a href="http://www.manu-j.com/blog/wordpress-exim4-ubuntu-gmail-smtp/75/">この方法</a>だった。<br>
+update-exim4.confもしないといけないのはちょっと面倒だな。
+</p>
+<!-- section end -->
+</div>
+<!-- 2011/02/20 end -->
+
+<hr>
+<div>
+<a href="201102a.html">&lt;Prev(,)</a> | 
+<a href="201102c.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

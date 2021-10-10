@@ -1,0 +1,374 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2014-9-b</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="201409a.html">
+<link rel="next" href="201409c.html">
+
+<link rel="stylesheet" type="text/css" href="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.css">
+<script async type="text/javascript" src="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.js"></script>
+<script type="text/javascript">
+<!--       
+$(document).ready(function() {
+  prettyPrint();
+});
+-->
+</script>
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2014年9月中旬〜</p>
+<hr>
+<div>
+<a href="201409a.html" accesskey=",">&lt;Older(,)</a> | 
+<a href="201409c.html" accesskey=".">Newer(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2014/09/11 start -->
+<h2><a name="20140911" href="201409b.html#20140911">2014-09-11 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="201409111" title="201409111" href="201409b.html#201409111">■</a> 
+grepを忘れていた</h3>
+<p>
+そうそう。grep -oを忘れていた。
+</p>
+<pre>
+% echo {1..100} | grep -Po '\d+'
+</pre>
+<p>
+それにしても-oオプションを考えた人ナイスだよなあ。<br>
+sedだと抜き出す処理って意外に面倒。<br>
+\(\)で囲んで\1とかやらないといけないし。
+</p>
+<!-- section end -->
+</div>
+<!-- 2014/09/11 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/09/12 start -->
+<h2><a name="20140912" href="201409b.html#20140912">2014-09-12 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="201409121" title="201409121" href="201409b.html#201409121">■</a> 
+s3cmd syncで&quot;WARNING: MD5 signatures do not match:...&quot;が出る件</h3>
+<p>
+これが出ると毎回getしちゃうわけで結構うっとうしい。<br>
+で、やっとぐぐってみたわけだけど、<br>
+multipartでputされるともうMD5は使えないらしい。<br>
+しょうがないのでサイズだけで判断するように<br>
+--disable-check-md5をつけることにした。<br>
+さくらのBASE Storageでは--disable-multipartは無理があるようで
+</p>
+<pre>
+WARNING: Retrying failed request: /
+WARNING: 500 (InternalError): We encountered an internal error. Please try again.
+WARNING: Waiting 3 sec...
+WARNING: Retrying failed request: /
+WARNING: 500 (InternalError): We encountered an internal error. Please try again.
+WARNING: Waiting 6 sec...
+WARNING: Retrying failed request: /
+WARNING: 500 (InternalError): We encountered an internal error. Please try again.
+WARNING: Waiting 9 sec...
+</pre>
+<p>
+のようにエラーが続く。
+</p>
+<p>
+CF:
+<a href="http://stackoverflow.com/questions/13390271/aws-s3-s3cmd-warning-md5-signatures-do-not-match-what-do">amazon s3 - aws s3 - s3cmd: &quot;WARNING: MD5 signatures do not match:&quot; - what do? - Stack Overflow</a></p>
+<!-- section end -->
+</div>
+<!-- 2014/09/12 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/09/13 start -->
+<h2><a name="20140913" href="201409b.html#20140913">2014-09-13 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="201409131" title="201409131" href="201409b.html#201409131">■</a> 
+s3cmdの問題というより、さくらのほうに障害</h3>
+<p>
+どうも昨日から障害が発生したらしくアクセスできないようだ。<br>
+<a href="http://support.sakura.ad.jp/mainte/mainteentry.php?id=14275">ネームスペースへアクセスできない障害が発生しております</a><br>
+一部の人だけというが間が悪すぎ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2014/09/13 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/09/14 start -->
+<h2><a name="20140914" href="201409b.html#20140914">2014-09-14 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="201409141" title="201409141" href="201409b.html#201409141">■</a> 
+Google Groupsのダイジェスト</h3>
+<p>
+昔comp.lang.awkのダイジェストをメールで送る設定してたんだけど、<br>
+最近になってやたら目立つなあと思ったら長いこと止まっていたらしい。<br>
+どのくらい止まっていたかというと3年だ。長すぎるだろう。<br>
+全然気づかなかったおれもどうかと思うが。
+</p>
+<blockquote><p>
+Unsure why you received this message? You previously subscribed to digests from this group, but we haven't been sending them for a while. We fixed that, but if you don't want to get these messages, send an email to comp.lang.awk+unsubscribe@googlegroups.com.
+</p></blockquote>
+<p>
+いやいやfor a whileどころじゃないだろう。
+</p>
+<!-- section end -->
+</div>
+<!-- 2014/09/14 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/09/15 start -->
+<h2><a name="20140915" href="201409b.html#20140915">2014-09-15 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="201409151" title="201409151" href="201409b.html#201409151">■</a> 
+<a href="https://twibble.io/">Twibble</a></h3>
+<p>
+RSSをtwitterへポストしてくれるサービス。<br>
+dlvrやiftttと同じようにgrep的なフィルターも用意されている。<br>
+とりあえず使ってみたが、どうなるか？
+</p>
+<!-- section end -->
+</div>
+<!-- 2014/09/15 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/09/16 start -->
+<h2><a name="20140916" href="201409b.html#20140916">2014-09-16 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="201409161" title="201409161" href="201409b.html#201409161">■</a> 
+MOZU Season 1</h3>
+<p>
+録っといたMOZU Season 1を見たが、なんか原作と違いすぎる。<br>
+で、読み直してみたがやはり全然違う。ここまで違うともはや別物だな。<br>
+来月からTBSでSeason 2もやるようだけど、WOWOWではSeason 2は5話しかやってない。<br>
+これどうすんだろう。というかやっぱまた別物なんだろうな。
+</p>
+<!-- section end -->
+</div>
+<!-- 2014/09/16 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/09/17 start -->
+<h2><a name="20140917" href="201409b.html#20140917">2014-09-17 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="201409171" title="201409171" href="201409b.html#201409171">■</a> 
+twibbleを使ってみて</h3>
+<p>
+他のサービスと同じように15分間隔でポーリング。<br>
+既に存在するRSSのエントリーもポストされる。<br>
+無料版でもtwitterは3アカウントまで管理できる。<br>
+画像があると自動でそれもアップロードされるらしいのでちょっと実験。
+</p>
+<p>
+<img src="../images/tyd.png" alt="">
+</p>
+<!-- section end -->
+</div>
+<!-- 2014/09/17 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/09/18 start -->
+<h2><a name="20140918" href="201409b.html#20140918">2014-09-18 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="201409181" title="201409181" href="201409b.html#201409181">■</a> 
+RubyKaigi 2014 1日目</h3>
+<p>
+今回のWho's Whoはいいアイデア。できれば全スピーカーの紹介みたいなコーナーがあるといいんだけど。<br>
+あとto_symはもうちょっとRails側がなんとかしろよと思わないでもない。<br>
+.notは.!でいいらしいよ。
+</p>
+<pre>
+% ruby -e 'p !true, true.!'
+false
+false
+</pre>
+<p>
+無線LANはちょっと不安定。
+</p>
+<!-- section end -->
+</div>
+<!-- 2014/09/18 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/09/19 start -->
+<h2><a name="20140919" href="201409b.html#20140919">2014-09-19 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="201409191" title="201409191" href="201409b.html#201409191">■</a> 
+RubyKaigi 2014 2日目</h3>
+<p>
+Ruby 3.0はSoft-TypingとJITって感じか。<br>
+なんかもう1個あった気がするけど忘れた。<br>
+あと、$=はPerl由来だとばかり思っていたが、<br>
+それはformatのページ長さのわけで。<br>
+確認してみたらperl 4.036でもそうだった。
+</p>
+<pre>
+% grep '$=' *.[ch]
+stab.h:    long page_len;       /* $= */
+</pre>
+<p>
+今日は組込みの話ばかり聞いた。<br>
+午後は無線LANの調子もよかった。<br>
+やっぱ基調講演だけだとそこに全部集まっちゃうからだろうな。
+</p>
+<p>
+宇都宮線は遅延だそうで。
+<a href="http://traininfo.jreast.co.jp/train_info/kanto.aspx">JR東日本：列車運行情報</a>から拾ってtmuxで表示すればいける。
+</p>
+<!-- section end -->
+</div>
+<!-- 2014/09/19 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/09/20 start -->
+<h2><a name="20140920" href="201409b.html#20140920">2014-09-20 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="201409201" title="201409201" href="201409b.html#201409201">■</a> 
+RubyKaigi 2014 3日目</h3>
+<p>
+おはようは間に合えば見るというくらいの気で行ったら全然余裕で間に合った。<br>
+みんな苦労してるんだねえ。
+</p>
+<p>
+アーロンにはなかださんが乗り移っていたらしく、<br>
+すばらしい駄洒落のオンパレードだった。
+</p>
+<p>
+ファミコンのDSL文字列はそのままCで書けばいいと思ったが、<br>
+あれはやっぱCを知らなくても書けるということなんだろうか。<br>
+英語だったのでよくわからんが。
+</p>
+<p>
+Reishは特殊すぎる。
+</p>
+<p>
+トレースして最適化が流行のようで。圧倒的に正しい。
+</p>
+<p>
+今回のRubyKaigiは2つのセッションが同時進行していたが、<br>
+Hall AとHall Bの進み方が違いすぎて、掛け持ちで見ることがほぼ不可能だった。<br>
+たとえばHall Aはオンスケで進む。<br>
+Hall Bが全然管理されてないので、どんどん遅れる。<br>
+間に休憩時間がないので移動時間でさらに数分遅れる。<br>
+3日間この調子だったので見たいセッションをいくつかあきらめざるを得なかった。
+</p>
+<p>
+それにしてもこんなに涼しいRubyKaigiも珍しい。
+
+</p>
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="201409202" title="201409202" href="201409b.html#201409202">■</a> 
+Nexus 7がなくなった</h3>
+<p>
+それよりも問題は昼休みに場所取りとして置いといたノベルティがなくなったことだ。<br>
+ノベルティはまあいいとして、中に入っていたNexus 7がやばい。<br>
+とりあえずAndroidデバイスマネージャーでロックしてベルを鳴らしてみたが、<br>
+どこからも聞こえず。こりゃだめだともうあきらめた。<br>
+ロックだけだとちょっと心配なので、<br>
+もろもろの認証情報を変更したりrevokeしまくったりと対策を講じた。<br>
+キーノートが始まる前にデバイスマネージャーに消去というのがあるのでこれも試してみた。<br>
+で、帰りに念の為スタッフのところへ行ってみたらなんと保管されていた。先に聞くべきだった。<br>
+しかし残念ながらすでに消去は確実に実行されていて、工場出荷状態に戻っていたのであった。<br>
+こういうときに限って不安定なはずの無線LANが生きてるんだよなあ。<br>
+</p>
+<p>
+まっさらになって気持ちも新たにとか思っていたら、<br>
+もりもりバックアップからアプリは復活した。<br>
+設定とかコンテンツはさすがに戻らないが。<br>
+使ってないものばかりなのでこの機会に消そう。
+</p>
+<!-- section end -->
+</div>
+<!-- 2014/09/20 end -->
+
+<hr>
+<div>
+<a href="201409a.html">&lt;Older(,)</a> | 
+<a href="201409c.html">Newer(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

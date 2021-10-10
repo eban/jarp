@@ -1,0 +1,457 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2015-3-b</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="201503a.html">
+<link rel="next" href="201503c.html">
+
+<link rel="stylesheet" type="text/css" href="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.css">
+<script async type="text/javascript" src="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.js"></script>
+<script type="text/javascript">
+<!--       
+$(document).ready(function() {
+  prettyPrint();
+});
+-->
+</script>
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2015年3月中旬〜</p>
+<hr>
+<div>
+<a href="201503a.html" accesskey=",">&lt;Older(,)</a> | 
+<a href="201503c.html" accesskey=".">Newer(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2015/03/11 start -->
+<h2><a name="20150311" href="201503b.html#20150311">2015-03-11 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="201503111" title="201503111" href="201503b.html#201503111">■</a> 
+Ruby 2.1のNumeric#stepの秘密</h3>
+<p>
+<a href="http://docs.ruby-lang.org/ja/2.1.0/method/Numeric/i/step.html">ドキュメント</a>を見るとRuby 2.1ではby:とかto:でも指定できるようになっている。<br>
+順番も気にしなくっていいわけだ。<br>
+実はそれ以外にも使い方があって、なんと省略も可能なのだ。<br>
+loop{|i|}でiがインクリメントされないかなあなんて妄想したことがあるが、<br>
+0.step{|i|}と書ける。無限に続く。
+</p>
+<p>
+<pre>
+% ruby -ve 'p 0.step'
+ruby 2.1.2p95 (2014-05-08) [i386-linux-gnu]
+#&lt;Enumerator: 0:step&gt;
+% ruby -e '0.step{|i|break if i &gt; 8; p i}'
+0
+1
+2
+3
+4
+5
+6
+7
+8
+</pre>
+</p>
+<p>
+by:を使えば偶数だけのstepも可能になる。
+</p>
+<pre>
+% ruby -e '0.step(by:2){|i|break if i &gt; 8; p i}'
+0
+2
+4
+6
+8
+</pre>
+<!-- section end -->
+</div>
+<!-- 2015/03/11 end -->
+
+
+
+<hr class="hide">
+<!-- 2015/03/12 start -->
+<h2><a name="20150312" href="201503b.html#20150312">2015-03-12 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="201503121" title="201503121" href="201503b.html#201503121">■</a> 
+awkでTSVファイルを扱うときの罠</h3>
+<p>
+ちゃんとOFSを設定しないと、$1とかいじっちゃうと再構成されて区切りがOFSになってしまう。<br>
+OFSのデフォルトは空白1個なのでタブ区切りが空白区切りになる。
+</p>
+<pre>
+% printf &quot;a\tb\tc\n&quot; | cat -A
+a^Ib^Ic$
+% printf &quot;a\tb\tc\n&quot; | awk '$1=$1' | cat -A
+a b c$
+% printf &quot;a\tb\tc\n&quot; | awk '$1=$1' OFS='\t' | cat -A
+a^Ib^Ic$
+</pre>
+<p>
+入力に空フィールドがある場合を考えるとFSも'\t'にする必要がある。
+</p>
+<pre>
+% printf &quot;a\tb\t\tc\n&quot; | awk '$1=$1' OFS='\t' | cat -A
+a^Ib^Ic$
+% printf &quot;a\tb\t\tc\n&quot; | awk -F'\t' '$1=$1' OFS='\t' | cat -A
+a^Ib^I^Ic$
+</pre>
+<p>
+ここで-FとOFSがなんかしっくりこないのでそろえてみる。
+</p>
+<pre>
+% printf &quot;a\tb\t\tc\n&quot; | awk '$1=$1' FS='\t' OFS='\t' | cat -A      
+a^Ib^I^Ic$
+</pre>
+<p>
+どうせならと
+</p>
+<pre>
+% printf &quot;a\tb\t\tc\n&quot; | awk '$1=$1' FS=OFS='\t' | cat -A 
+a^Ib^I^Ic$
+</pre>
+<p>
+とまとめてなんかよさげな感じだが、実はこれ、<br>
+FSには&quot;OFS=\t&quot;が設定されるので、全然だめだめなのだ。
+</p>
+<pre>
+% printf &quot;a\tb\t\tc\n&quot; | awk '{print FS}' FS=OFS='\t' | cat -A
+OFS=^I$
+</pre>
+<p>
+まとめたければBEGINで書くしかない。
+</p>
+<pre>
+% printf &quot;a\tb\t\tc\n&quot; | awk 'BEGIN{FS=OFS=&quot;\t&quot;}{print FS}' | cat -A
+^I$
+</pre>
+<!-- section end -->
+</div>
+<!-- 2015/03/12 end -->
+
+
+
+<hr class="hide">
+<!-- 2015/03/13 start -->
+<h2><a name="20150313" href="201503b.html#20150313">2015-03-13 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="201503131" title="201503131" href="201503b.html#201503131">■</a> 
+xargsとparallelの表示</h3>
+<p>
+xargsで並列実行させると表示が混ざってしまうことがある。
+</p>
+<pre>
+% time seq 20 | xargs -P10 -n1 -I{} ruby -e 'puts &quot;a&quot;*20+&quot;{}&quot;'
+aaaaaaaaaaaaaaaaaaaa4
+aaaaaaaaaaaaaaaaaaaa10
+aaaaaaaaaaaaaaaaaaaa11
+aaaaaaaaaaaaaaaaaaaa9aaaaaaaaaaaaaaaaaaaa8
+
+aaaaaaaaaaaaaaaaaaaa5
+aaaaaaaaaaaaaaaaaaaa7
+aaaaaaaaaaaaaaaaaaaa2aaaaaaaaaaaaaaaaaaaa3aaaaaaaaaaaaaaaaaaaa1
+
+
+aaaaaaaaaaaaaaaaaaaa6
+aaaaaaaaaaaaaaaaaaaa12
+aaaaaaaaaaaaaaaaaaaa13
+aaaaaaaaaaaaaaaaaaaa16
+aaaaaaaaaaaaaaaaaaaa17
+aaaaaaaaaaaaaaaaaaaa14
+aaaaaaaaaaaaaaaaaaaa15
+aaaaaaaaaaaaaaaaaaaa20
+aaaaaaaaaaaaaaaaaaaa18
+aaaaaaaaaaaaaaaaaaaa19
+seq 20  0.00s user 0.00s system 77% cpu 0.002 total
+xargs -P10 -n1 -I{} ruby -e 'puts &quot;a&quot;*20+&quot;{}&quot;'  1.46s user 0.10s system 327% cpu 0.475 total
+</pre>
+<p>
+れに対処するにはparallelを使うのが簡単。
+</p>
+<pre>
+% time seq 20 | parallel -j10 -q ruby -e 'puts &quot;a&quot;*20+&quot;{}&quot;'
+aaaaaaaaaaaaaaaaaaaa2
+aaaaaaaaaaaaaaaaaaaa3
+aaaaaaaaaaaaaaaaaaaa4
+aaaaaaaaaaaaaaaaaaaa8
+aaaaaaaaaaaaaaaaaaaa1
+aaaaaaaaaaaaaaaaaaaa5
+aaaaaaaaaaaaaaaaaaaa6
+aaaaaaaaaaaaaaaaaaaa7
+aaaaaaaaaaaaaaaaaaaa9
+aaaaaaaaaaaaaaaaaaaa10
+aaaaaaaaaaaaaaaaaaaa11
+aaaaaaaaaaaaaaaaaaaa12
+aaaaaaaaaaaaaaaaaaaa14
+aaaaaaaaaaaaaaaaaaaa13
+aaaaaaaaaaaaaaaaaaaa16
+aaaaaaaaaaaaaaaaaaaa18
+aaaaaaaaaaaaaaaaaaaa19
+aaaaaaaaaaaaaaaaaaaa15
+aaaaaaaaaaaaaaaaaaaa17
+aaaaaaaaaaaaaaaaaaaa20
+seq 20  0.00s user 0.00s system 67% cpu 0.002 total
+parallel -j10 -q ruby -e 'puts &quot;a&quot;*20+&quot;{}&quot;'  1.65s user 0.21s system 264% cpu 0.700 total
+</pre>
+<p>
+ちょっと時間がかかるが、各ジョブ毎にまとめられるので混ざることはない。
+</p>
+<pre>
+--group  Group output. Output from each jobs is grouped together and is only printed when the command is
+         finished. stderr (standard error) first followed by stdout (standard output). This takes some CPU
+         time. In rare situations GNU parallel takes up lots of CPU time and if it is acceptable that the
+         outputs from different commands are mixed together, then disabling grouping with -u can speedup GNU
+         parallel by a factor of 10.
+
+         --group is the default. Can be reversed with -u.
+</pre>
+<p>
+この--groupがdefaultになっている。
+</p>
+<!-- section end -->
+</div>
+<!-- 2015/03/13 end -->
+
+
+
+<hr class="hide">
+<!-- 2015/03/14 start -->
+<h2><a name="20150314" href="201503b.html#20150314">2015-03-14 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="201503141" title="201503141" href="201503b.html#201503141">■</a> 
+FriendFeedが4月で終了</h3>
+<p>
+以前はかなりお世話になった
+<a href="http://blog.friendfeed.com/2015/03/dear-friendfeed-community-were.html">FriendFeedが4/9で終了する</a>ようだ。<br>
+facebookに吸収されたのだからいつかはこうなると思っていたが、意外に長かった。<br>
+おつかれさま。
+</p>
+<!-- section end -->
+</div>
+<!-- 2015/03/14 end -->
+
+
+
+<hr class="hide">
+<!-- 2015/03/15 start -->
+<h2><a name="20150315" href="201503b.html#20150315">2015-03-15 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="201503151" title="201503151" href="201503b.html#201503151">■</a> 
+行数</h3>
+<p>
+wc -l以外の方法。
+</p>
+<pre>
+% seq 100 | sed -n '$='
+100
+% seq 100 | awk 'END{print NR}'
+100
+% seq 100 | grep -c '^'        
+100
+</pre>
+<p>
+特にgrep fooとかした後にwc -lとやりがちだが、-cを覚えておくといい。
+</p>
+<!-- section end -->
+</div>
+<!-- 2015/03/15 end -->
+
+
+
+<hr class="hide">
+<!-- 2015/03/16 start -->
+<h2><a name="20150316" href="201503b.html#20150316">2015-03-16 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="201503161" title="201503161" href="201503b.html#201503161">■</a> 
+上野東京ライン</h3>
+<p>
+朝は忘れたので乗らなかったが、帰りは品川から。<br>
+ものすごく空いていた。どこにでも座り放題。<br>
+15両編成だったからか？<br>
+なんかダイヤ改正と重なって朝はかなり混乱してるようだが、<br>
+それより品川からだと行き先がわかりにくい。<br>
+常磐線もあるしなあ。<br>
+そうか。横浜あたりだと湘南新宿ラインもあるから、<br>
+すげーややこしいことになったわけか。
+</p>
+<!-- section end -->
+</div>
+<!-- 2015/03/16 end -->
+
+
+
+<hr class="hide">
+<!-- 2015/03/17 start -->
+<h2><a name="20150317" href="201503b.html#20150317">2015-03-17 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="201503171" title="201503171" href="201503b.html#201503171">■</a> 
+Gmailの日本語入力ツール</h3>
+<p>
+Gmailにいつの間にかあ▼というボタンがついているが、<br>
+まさかこれで日本語変換ができるわけないよなと<br>
+クリックしてみるとちゃんとできてしまう。<br>
+びっくりだよ。<br>
+これってGoogle IMEと同じものと考えていいのか？<br>
+いや、いきなり候補が出てこないからちょっと違うな。<br>
+ON/OFFのキーボードショートカットがないのが痛いかと思ったが、<br>
+意外にOFFにすることもないような。<br>
+ONのままでもテキストボックス以外はショートカットが効くので。<br>
+小文字のアルファベットを入力するときぐらいか。
+</p>
+<p>
+それ以前にこれを使う機会がない。
+</p>
+<!-- section end -->
+</div>
+<!-- 2015/03/17 end -->
+
+
+
+<hr class="hide">
+<!-- 2015/03/18 start -->
+<h2><a name="20150318" href="201503b.html#20150318">2015-03-18 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="201503181" title="201503181" href="201503b.html#201503181">■</a> 
+ネットオフからのお知らせ</h3>
+<p>
+なかなか珍しいお知らせをもらった。
+</p>
+<pre>
+出荷検品工程において、一部品質の不良が確認されました。
+若干不備のある状態ではございますが、お読みいただける範囲と判断し、
+誠に勝手ながら代金無償のサービス品として同梱させていただきました。
+
+上記商品代金につきましては、弊社にてキャンセルの手続きをさせて
+いただきます。
+キャンセル後のご請求金額につきましては、手続きが完了次第、
+マイページ/ご注文状況確認欄にてご確認いただけます。
+
+尚、送料無料対象金額でご注文いただいたお客様には、今回のキャンセルに
+関わらず、送料無料で送らせていただいております。
+
+本来であれば、事前にお客様にご相談させていただくべきところでは
+ございますが、ご注文いただいております商品を少しでも早く
+お届けしたいとの思いから、このような対応をさせていただきました。
+何卒、ご容赦いただけます様お願い申し上げます。
+</pre>
+<p>
+どの程度かわからんけど、そのくらいは織り込み済みというか、<br>
+読めなくてもしょうがないくらいの覚悟でいるのでどうでもよかったのだが。<br>
+むしろそんな商品処分できて一石二鳥とか勘繰ったり。
+</p>
+<!-- section end -->
+</div>
+<!-- 2015/03/18 end -->
+
+
+
+<hr class="hide">
+<!-- 2015/03/19 start -->
+<h2><a name="20150319" href="201503b.html#20150319">2015-03-19 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="201503191" title="201503191" href="201503b.html#201503191">■</a> 
+350ml</h3>
+<p>
+最近細長い350mlペットボトルを見かけるようになった。<br>
+500mlと同じ太さで短めというのが主流だが、<br>
+それだと500ml用のペットボトルカバーが使い物にならなくなる。<br>
+細長いタイプだと流用できる。<br>
+あと陳列する際細いほうがいっぱい並べられる。<br>
+このあたりが出てきた理由か？
+</p>
+<!-- section end -->
+</div>
+<!-- 2015/03/19 end -->
+
+
+
+<hr class="hide">
+<!-- 2015/03/20 start -->
+<h2><a name="20150320" href="201503b.html#20150320">2015-03-20 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="201503201" title="201503201" href="201503b.html#201503201">■</a> 
+ネットオフから例の品が届く</h3>
+<p>
+最初の10ページぐらいまでちょっと赤っぽいシミがついていた。<br>
+このくらいなら二値化すれば消える。<br>
+Tポイントで全額払ったもんだから、そのままTポイントで返ってきた。なんか面白い。
+</p>
+<p>
+<img src="../images/umi10-50.png" alt="">
+<img src="../images/umi10-50b.png" alt="">
+</p>
+<!-- section end -->
+</div>
+<!-- 2015/03/20 end -->
+
+<hr>
+<div>
+<a href="201503a.html">&lt;Older(,)</a> | 
+<a href="201503c.html">Newer(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

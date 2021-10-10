@@ -1,0 +1,409 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2006-8-b</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="200608a.html">
+<link rel="next" href="200608c.html">
+
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2006年8月中旬〜</p>
+<hr>
+<div>
+<a href="200608a.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="200608c.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2006/08/11 start -->
+<h2><a name="20060811" href="200608b.html#20060811">2006-08-11 (Fri)</a></h2>
+<!-- 2006-08-12 17:47:31 -->
+
+<div class="entry1">
+<h3><a name="200608111" title="200608111" href="200608b.html#200608111">■</a> 
+[Mail] 5文字系spam</h3>
+<p>
+Re: [a-z]{5}にマッチするSubjectのspamが目立つ。
+</p>
+<pre>
+% grep -r 'Subject: Re: .....$' .
+./249:Subject: Re: foeyu
+./264:Subject: Re: saiew
+./282:Subject: Re: tuqaa
+./283:Subject: Re: iysui
+./235:Subject: Re: hymoq
+./255:Subject: Re: povij
+./248:Subject: Re: pibuu
+./153:Subject: Re: pybuh
+</pre>
+<p>
+中身はブランド物の羅列で
+</p>
+<pre>
+BREITjLING
+OMEGjA
+CARTIjER
+TIFFAjNY &amp; CO
+PATEjK
+ROLEjX
+BVLGAjRI
+</pre>
+<p>
+のように適当に1字はさまれるような小細工をしてくる。
+目につくくらいなわけでその小細工は有効のようだ。
+とりあえずROLEXだけひっかけよう。R.?O.?.?L.?E.?Xでいいか。
+procmailのレシピに追加。
+</p>
+<!-- section end -->
+</div>
+<!-- 2006/08/11 end -->
+
+
+
+<hr class="hide">
+<!-- 2006/08/12 start -->
+<h2><a name="20060812" href="200608b.html#20060812">2006-08-12 (Sat)</a></h2>
+<!-- 2006-08-13 02:24:06 -->
+
+<div class="entry1">
+<h3><a name="200608121" title="200608121" href="200608b.html#200608121">■</a> 
+[Linux] 停電とyum update</h3>
+<p>
+落雷で30秒ほど停電。2週間ぶりの再起動状態になったが、<br>
+その直後数時間でkernel更新のメールが。タイミング悪し。
+</p>
+<!-- section end -->
+</div>
+<!-- 2006/08/12 end -->
+
+
+
+<hr class="hide">
+<!-- 2006/08/13 start -->
+<h2><a name="20060813" href="200608b.html#20060813">2006-08-13 (Sun)</a></h2>
+<!-- 2006-08-14 02:11:38 -->
+
+<div class="entry1">
+<h3><a name="200608131" title="200608131" href="200608b.html#200608131">■</a> 
+[Linux] ソートしてコピー</h3>
+<p>
+
+<a href="200608a.html#200608091">毎回FDでディレクトリエントリを書き換える</a>のもなんだし、ソートしてコピーを考えよう。<br>
+アーティスト名/アルバム名/というディレクトリ構造にしてるので、
+findしてsortしてtarには-Tで渡せばいけそうだな。
+</p>
+<pre>
+% mkdir -p foo/bar
+% touch foo/bar/{1..5}
+% ls -f foo/bar
+..  5  4  2  .  3  1
+</pre>
+<p>
+やはり作った順番とは無関係になるようだ。
+</p>
+<pre>
+% find foo -type f |sort |tar cf - -T - |tar xf - -C /media/disk/
+% ls -f /media/disk/foo/bar
+.  ..  1  2  3  4  5
+</pre>
+<p>
+こんな感じか。
+</p>
+<!-- section end -->
+</div>
+<!-- 2006/08/13 end -->
+
+
+
+<hr class="hide">
+<!-- 2006/08/14 start -->
+<h2><a name="20060814" href="200608b.html#20060814">2006-08-14 (Mon)</a></h2>
+<!-- 2006-08-15 01:46:21 -->
+
+<div class="entry1">
+<h3><a name="200608141" title="200608141" href="200608b.html#200608141">■</a> 
+停電</h3>
+<p>
+夜のニュースを見るまであんなにすごいことになってるとは思わなかった。<br>
+休みでよかったというか、会社のLinux Boxがちょっと心配。<br>
+とりあえずGmailからforwardしてる設定が生き残ってるところをみると大丈夫そう。<br>
+ちなみに2回エラーを起こすとGmailは勝手にdisableにしてくれる。
+</p>
+<!-- section end -->
+</div>
+<!-- 2006/08/14 end -->
+
+
+
+<hr class="hide">
+<!-- 2006/08/15 start -->
+<h2><a name="20060815" href="200608b.html#20060815">2006-08-15 (Tue)</a></h2>
+<!-- 2006-08-16 01:16:09 -->
+
+<div class="entry1">
+<h3><a name="200608151" title="200608151" href="200608b.html#200608151">■</a> 
+[Mail] PayPalを騙るフィッシングメール</h3>
+<p>
+以前PayPalの設定でメールアドレスを変更したけど、今回Toがないメールが来た。<br>
+ヘッダを見てどこへ出したか確認すると設定したのとは違う宛先だった。<br>
+それ以前にDear CustomerだったりHTMLメールだったりと不備が多すぎるわけだが。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200608152" title="200608152" href="200608b.html#200608152">■</a> 
+[LDR] bが取られてかなり不便</h3>
+<p>
+bはlessと同じでPageUpにしてたので、いきなりbookmarkに取られて残念。<br>
+HHKなんだから◇+Lを使えばいいんだろうけど、もう慣れちゃったしなあ。<br>
+
+<a href="200605b.html#200605191">Ctrl+Shiftのとき</a>と同じように殺そうと思ったが、<br>
+これだとfunction(){}を実行してしまうのでbが本当に死んでしまう。<br>
+つまりキーの割り当て自体をやめないとだめなわけだ。うーむ。<br>
+調べよう。
+</p>
+<!-- section end -->
+</div>
+<!-- 2006/08/15 end -->
+
+
+
+<hr class="hide">
+<!-- 2006/08/16 start -->
+<h2><a name="20060816" href="200608b.html#20060816">2006-08-16 (Wed)</a></h2>
+<!-- 2006-08-17 01:47:53 -->
+
+<div class="entry1">
+<h3><a name="200608161" title="200608161" href="200608b.html#200608161">■</a> 
+[Gmail] Gmailでspam扱いされない方法</h3>
+<p>
+またfreshmeat Newsletterがspamになってた。根本的な解決方法を探る。<br>
+まずfreshmeatを騙るspamなんて来たことないので、無条件でham扱いにしても問題ない。<br>
+その線で調べてみるとコンタクトリストに登録してしまえばspamにはならないらしい。<br>
+というわけで早速登録。しばらく様子見。<br>
+</p>
+<!-- section end -->
+</div>
+<!-- 2006/08/16 end -->
+
+
+
+<hr class="hide">
+<!-- 2006/08/17 start -->
+<h2><a name="20060817" href="200608b.html#20060817">2006-08-17 (Thu)</a></h2>
+<!-- 2006-08-18 02:19:36 -->
+
+<div class="entry1">
+<h3><a name="200608171" title="200608171" href="200608b.html#200608171">■</a> 
+[LDR] bとf等を殺す</h3>
+<p>
+Keybind._keyfuncがキーテーブルなのでdeleteできるようだ。
+</p>
+<pre>
+[&quot;shift+ctrl&quot;, &quot;ctrl+shift&quot;, &quot;b&quot;, &quot;f&quot;].forEach(function(k){
+  delete Keybind._keyfunc[k];
+});
+</pre>
+<p>
+これでいいわけか。
+</p>
+<!-- section end -->
+</div>
+<!-- 2006/08/17 end -->
+
+
+
+<hr class="hide">
+<!-- 2006/08/18 start -->
+<h2><a name="20060818" href="200608b.html#20060818">2006-08-18 (Fri)</a></h2>
+<!-- 2006-08-19 01:47:15 -->
+
+<div class="entry1">
+<h3><a name="200608181" title="200608181" href="200608b.html#200608181">■</a> 
+[Linux] LD_DEBUG</h3>
+<p>
+なにげにLD_DEBUGという環境変数の存在を知った。
+</p>
+<pre>
+% LD_DEBUG=help date 
+Valid options for the LD_DEBUG environment variable are:
+
+  libs        display library search paths
+  reloc       display relocation processing
+  files       display progress for input file
+  symbols     display symbol table processing
+  bindings    display information about symbol binding
+  versions    display version dependencies
+  all         all previous options combined
+  statistics  display relocation statistics
+  unused      determined unused DSOs
+  help        display this help message and exit
+
+To direct the debugging output into a file instead of standard output
+a filename can be specified using the LD_DEBUG_OUTPUT environment variable.
+</pre>
+<p>
+ということらしいよ。
+</p>
+<pre>
+% LD_DEBUG=libs LD_DEBUG_OUTPUT=date.log date
+Sat Aug 19 01:45:56 JST 2006
+% cat date.log.18187
+     18187:	find library=librt.so.1 [0]; searching
+     18187:	 search cache=/etc/ld.so.cache
+     18187:	  trying file=/lib/librt.so.1
+     18187:	
+     18187:	find library=libc.so.6 [0]; searching
+     18187:	 search cache=/etc/ld.so.cache
+     18187:	  trying file=/lib/libc.so.6
+     18187:	
+     18187:	find library=libpthread.so.0 [0]; searching
+     18187:	 search cache=/etc/ld.so.cache
+     18187:	  trying file=/lib/libpthread.so.0
+     18187:	
+     18187:	
+     18187:	prelink checking: ok
+     18187:	
+     18187:	calling init: /lib/libpthread.so.0
+     18187:	
+     18187:	
+     18187:	calling init: /lib/libc.so.6
+     18187:	
+     18187:	
+     18187:	calling init: /lib/librt.so.1
+     18187:	
+     18187:	
+     18187:	initialize program: date
+     18187:	
+     18187:	
+     18187:	transferring control: date
+     18187:	
+     18187:	
+     18187:	calling fini: date [0]
+     18187:	
+     18187:	
+     18187:	calling fini: /lib/librt.so.1 [0]
+     18187:	
+     18187:	
+     18187:	calling fini: /lib/libpthread.so.0 [0]
+     18187:	
+     18187:	
+     18187:	calling fini: /lib/libc.so.6 [0]
+     18187:	
+</pre>
+<p>
+なかなか面白いね。
+</p>
+<!-- section end -->
+</div>
+<!-- 2006/08/18 end -->
+
+
+
+<hr class="hide">
+<!-- 2006/08/19 start -->
+<h2><a name="20060819" href="200608b.html#20060819">2006-08-19 (Sat)</a></h2>
+<!-- 2006-08-20 02:21:06 -->
+
+<div class="entry1">
+<h3><a name="200608191" title="200608191" href="200608b.html#200608191">■</a> 
+[CVS] cvs tag</h3>
+<p>
+tagについて調べようとman cvsやinfo cvsしてみたら、<br>
+なんとcvs tag, cvs rtagに関するセクションがない。<br>
+なんで？いつからなくなったんだろう。
+</p>
+<!-- section end -->
+</div>
+<!-- 2006/08/19 end -->
+
+
+
+<hr class="hide">
+<!-- 2006/08/20 start -->
+<h2><a name="20060820" href="200608b.html#20060820">2006-08-20 (Sun)</a></h2>
+<!-- 2006-08-23 01:32:51 -->
+
+<div class="entry1">
+<h3><a name="200608201" title="200608201" href="200608b.html#200608201">■</a> 
+[FC5] フォントがしょぼくなった</h3>
+<p>
+KDEがもろもろ更新されたのでついでにrebootしてみたら、フォントがしょぼくなった。<br>
+どうも18ptあたりから小さくなるとbitmapに切り替わってるような？<br>
+FirefoxでCTRL-+して大きくするときれいになるのでやっぱそんな感じだ。<br>
+困ったねえ。いろんなTrueTypeフォントに変更してもなんか変わんないし。
+</p>
+
+<p>
+ふと思い立って、~/.fonts*を全部移動させてみたらきれいなった。<br>
+前とは違うフォントではあるがこれがデフォルトのフォントなんだなと今更ながらに思う。<br>
+かっこいいかも。
+
+<a href="200409a.html#200409021">このあたりの設定</a>がなにか悪さしてたのかな。
+</p>
+<!-- section end -->
+</div>
+<!-- 2006/08/20 end -->
+
+<hr>
+<div>
+<a href="200608a.html">&lt;Prev(,)</a> | 
+<a href="200608c.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

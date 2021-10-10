@@ -1,0 +1,572 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2006-7-c</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="200607b.html">
+<link rel="next" href="200608a.html">
+
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2006年7月下旬〜</p>
+<hr>
+<div>
+<a href="200607b.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="200608a.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2006/07/21 start -->
+<h2><a name="20060721" href="200607c.html#20060721">2006-07-21 (Fri)</a></h2>
+<!-- 2006-07-22 01:24:15 -->
+
+<div class="entry1">
+<h3><a name="200607211" title="200607211" href="200607c.html#200607211">■</a> 
+[Soft] gitをインストール</h3>
+<p>
+とりあえずgitをインストールしてみないことには始まりそうもないので、
+</p>
+<pre>
+% sudo yum -y install git git-core git-cvs git-svn git-email
+</pre>
+<p>
+でインストール。なぜかgit-archやtlaまでいっしょにインストールされた。
+</p>
+<!-- section end -->
+</div>
+<!-- 2006/07/21 end -->
+
+
+
+<hr class="hide">
+<!-- 2006/07/22 start -->
+<h2><a name="20060722" href="200607c.html#20060722">2006-07-22 (Sat)</a></h2>
+<!-- 2006-07-23 02:38:47 -->
+
+<div class="entry1">
+<h3><a name="200607221" title="200607221" href="200607c.html#200607221">■</a> 
+[FC5] yum updateの自動化</h3>
+<p>
+忘れがちなyum updateを自動化した。
+</p>
+<pre>
+% chkconfig --list yum
+yum             0:off   1:off   2:off   3:off   4:off   5:off   6:off
+% sudo chkconfig yum on
+% chkconfig --list yum 
+yum             0:off   1:off   2:on    3:on    4:on    5:on    6:off
+% sudo service yum start
+夜間 yum 更新の有効化中[  OK  ]
+</pre>
+<p>
+/etc/crontabを見るとdailyは15:02らしい。夜間じゃないと思うぞ。
+それはいいとして、
+</p>
+<pre>
+% sudo ls -l /var/lock/subsys/yum
+-rw-r--r-- 1 root root 0 Jul 22 15:09 /var/lock/subsys/yum
+</pre>
+<p>
+ああ、今日の分にはちょっと遅かったか。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200607222" title="200607222" href="200607c.html#200607222">■</a> 
+[LDR] livedoor Readerのpreの件が直ってるようだ</h3>
+<p>
+さすがだ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200607223" title="200607223" href="200607c.html#200607223">■</a> 
+<a href="http://passionate1842.web.infoseek.co.jp/manga.htm">[Web] 痴漢男</a></h3>
+<p>
+次回は9月半ば。
+調べてみると奇しくもちょうど
+<a href="200507c.html#200507221">1年前</a>に読んだらしい。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200607224" title="200607224" href="200607c.html#200607224">■</a> 
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-talk/203294">[Build] P-language</a></h3>
+<p>
+へえ、
+<a href="http://www.cmake.org/">CMake</a>ってP-language使ってんのか。
+ってどっち？ソースを取ってきて確認。
+</p>
+<pre>
+% tar xf cmake-2.4.2.tar.gz
+% find cmake-2.4.2 -type f |grep -i perl
+cmake-2.4.2/Modules/FindPerl.cmake
+cmake-2.4.2/Modules/FindPerlLibs.cmake
+</pre>
+<p>
+なんか勘違いしてない？
+</p>
+
+<p>
+まあ、現在ではautoconfのほうがPerlに依存してるわけで、
+そんなことにこだわったってしょうがないと思うんだけどね。
+autom4teがPerlで書かれている。
+</p>
+<!-- section end -->
+</div>
+<!-- 2006/07/22 end -->
+
+
+
+<hr class="hide">
+<!-- 2006/07/23 start -->
+<h2><a name="20060723" href="200607c.html#20060723">2006-07-23 (Sun)</a></h2>
+<!-- 2006-07-24 01:48:06 -->
+
+<div class="entry1">
+<h3><a name="200607231" title="200607231" href="200607c.html#200607231">■</a> 
+<a href="http://nyaasoku.blog69.fc2.com/blog-entry-107.html">[ネタ] 土嚢スレ</a></h3>
+<p>
+画像の勢いに笑った。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200607232" title="200607232" href="200607c.html#200607232">■</a> 
+[FC5] apacheを削除</h3>
+<p>
+期日が過ぎてもgenkeyしろとメールが来る。あたりまえか。<br>
+面倒だからapache自身をuninstallすることにした。<br>
+Fedora Core使い出して1度も使ったことないしな。<br>
+でもyum remove apacheしても存在しないという。<br>
+yum search apacheしたらhttpdという名前だった。<br>
+そういえばapache2からはそんな名前だったな。
+</p>
+<!-- section end -->
+</div>
+<!-- 2006/07/23 end -->
+
+
+
+<hr class="hide">
+<!-- 2006/07/24 start -->
+<h2><a name="20060724" href="200607c.html#20060724">2006-07-24 (Mon)</a></h2>
+<!-- 2006-07-25 02:10:21 -->
+
+<div class="entry1">
+<h3><a name="200607241" title="200607241" href="200607c.html#200607241">■</a> 
+[FC5] certwatch</h3>
+<p>
+考えてみるとcertwatchを止めるだけならNOCERTWATCH=yesを/etc/sysconfig/httpdに書いとけばいいわけでapache2を消さなくてもいい。
+/etc/cron.daily/certwatchを見ると
+</p>
+<pre>
+# Use configured httpd binary
+httpd=${HTTPD-/usr/sbin/httpd}
+
+# Sanity checks
+test -z &quot;${NOCERTWATCH}&quot; || exit 0
+test -x ${httpd} || exit 0
+</pre>
+<p>
+だからapache2を消せばもちろんメールは来なくなるわけだが。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200607242" title="200607242" href="200607c.html#200607242">■</a> 
+[FC5] run-parts</h3>
+<p>
+/usr/bin/run-partsを見てたら妙な記述が気になった。
+</p>
+<pre>
+# Ignore *~ and *, scripts
+for i in $1/*[^~,] ; do
+        [ -d $i ] &amp;&amp; continue
+        # Don't run *.{rpmsave,rpmorig,rpmnew,swp} scripts
+        [ &quot;${i%.rpmsave}&quot; != &quot;${i}&quot; ] &amp;&amp; continue
+        [ &quot;${i%.rpmorig}&quot; != &quot;${i}&quot; ] &amp;&amp; continue
+        [ &quot;${i%.rpmnew}&quot; != &quot;${i}&quot; ] &amp;&amp; continue
+        [ &quot;${i%.swp}&quot; != &quot;${i}&quot; ] &amp;&amp; continue
+        [ &quot;${i%,v}&quot; != &quot;${i}&quot; ] &amp;&amp; continue
+</pre>
+<p>
+やけにまわりくどい表現だ。
+$iから.rmpsave等を削除して$iと違っていたらcontinue。
+なぜ素直にcaseを使わないんだろう？
+</p>
+<pre>
+        case $i in
+          *.rpmsave|*.rpmorig|*.rpmnew|*.swp|*,v) continue;;
+        esac
+</pre>
+
+<!-- section end -->
+</div>
+<!-- 2006/07/24 end -->
+
+
+
+<hr class="hide">
+<!-- 2006/07/25 start -->
+<h2><a name="20060725" href="200607c.html#20060725">2006-07-25 (Tue)</a></h2>
+<!-- 2006-07-26 03:04:08 -->
+
+<div class="entry1">
+<h3><a name="200607251" title="200607251" href="200607c.html#200607251">■</a> 
+<a href="http://www.cmake.org/">[Build] CMake</a></h3>
+<p>
+CMakeってMakeだと思っていたけど、どっちかというとconfigureなんだね。
+勘違いしてた。
+</p>
+<pre>
+% printf '#include &lt;stdio.h&gt;\nmain(){printf(&quot;Hello\\n&quot;);}\n' &gt;hello.c
+% echo 'add_executable(hello hello.c)' &gt;CMakeLists.txt
+% cmake .
+-- Check for working C compiler: gcc
+-- Check for working C compiler: gcc -- works
+-- Check size of void*
+-- Check size of void* - done
+-- Check for working CXX compiler: c++
+-- Check for working CXX compiler: c++ -- works
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /some/where/hello
+% make
+Scanning dependencies of target hello
+Building C object CMakeFiles/hello.dir/hello.o
+Linking C executable hello
+% ./hello
+Hello
+% ls -F
+CMakeCache.txt  CMakeLists.txt  Makefile             hello*
+CMakeFiles/     CMakeTmp/       cmake_install.cmake  hello.c
+</pre>
+<p>
+なんかいっぱいファイルが作られてよくわからないな。
+</p>
+<!-- section end -->
+</div>
+<!-- 2006/07/25 end -->
+
+
+
+<hr class="hide">
+<!-- 2006/07/26 start -->
+<h2><a name="20060726" href="200607c.html#20060726">2006-07-26 (Wed)</a></h2>
+<!-- 2006-07-27 01:50:58 -->
+
+<div class="entry1">
+<h3><a name="200607261" title="200607261" href="200607c.html#200607261">■</a> 
+<a href="http://cegcc.berlios.de/">[Soft] CeGCC(Cross Compiler for PocketPC)</a></h3>
+<p>
+freshmeatでこんなものを見つけてしまった。
+</p><blockquote><p>
+CeGCC is a project that offers cross-development tools for Windows CE
+(PocketPC).<br><br>
+We're aiming at providing a consistent and working set of development
+tools that generate code for Windows CE devices such as PDA's and
+smart phones. Our intended development platforms are the cygwin
+environment and GNU/Linux systems. 
+</p></blockquote><p>
+さっそく
+<a href="http://cegcc.berlios.de/prerelease.html">Binary pre-release for Linux</a>
+
+を取ってきてインストール。動くかどうか確認。
+</p>
+<pre>
+% /usr/ppc/bin/arm-wince-pe-gcc -dumpversion
+/usr/ppc/bin/arm-wince-pe-gcc: error while loading shared libraries: \
+  libiconv.so.2: cannot open shared object file: No such file or directory
+</pre>
+<p>
+まじすかー。iconvはglibcに入ってるからlibiconvをインストールしたくないしなあ。<br>
+それ以前にyum searchではlibiconvはみつからないし。
+</p>
+
+<p>
+適当にlibiconv.so.2をでっち上げてみよう。libcで代用。
+</p>
+<pre>
+% ln -s /lib/libc.so.6 /tmp/libiconv.so.2
+% LD_LIBRARY_PATH=/tmp /usr/ppc/bin/arm-wince-pe-gcc -dumpversion
+4.1.0
+</pre>
+<p>
+動いちゃったよ。ちょっとびっくり。
+</p>
+<pre>
+% echo 'main(){}' &gt;main.c
+% LD_LIBRARY_PATH=/tmp /usr/ppc/bin/arm-wince-pe-gcc main.c
+% file a.exe
+a.exe: MS-DOS executable PE  for MS Windows 32-bit
+</pre>
+<p>
+問題ないようだ。なんかうそみたいな話だが。
+</p>
+<!-- section end -->
+</div>
+<!-- 2006/07/26 end -->
+
+
+
+<hr class="hide">
+<!-- 2006/07/27 start -->
+<h2><a name="20060727" href="200607c.html#20060727">2006-07-27 (Thu)</a></h2>
+<!-- 2006-07-28 02:01:10 -->
+
+<div class="entry1">
+<h3><a name="200607271" title="200607271" href="200607c.html#200607271">■</a> 
+[Ruby] CeGCCでRubyをコンパイル</h3>
+<p>
+昨日のCeGCCをRubyで試してみる。まずはconfigureから。
+</p>
+<pre>
+% LD_LIBRARY_PATH=/tmp \
+  PATH=/usr/ppc/bin:$PATH \
+  ac_cv_func_getpgrp_void=yes \
+  ac_cv_func_setpgrp_void=yes \
+  ac_cv_sizeof_long_long=8 \
+  ac_cv_func_memcmp_clean=yes \
+  ac_cv_func_memcmp_working=yes \
+  ../ruby18/configure
+  --target=arm-wince-pe
+  --host=arm-wince-pe
+  --build=i686-pc-linux
+  -C
+</pre>
+<p>
+一応configureは通った。でもmakeするといきなりエラー。
+</p>
+<pre>
+In file included from ../ruby18/ruby.h:684,
+                 from ../ruby18/array.c:15:
+../ruby18/missing.h:88: error: conflicting types for 'memmove'
+../ruby18/missing.h:98: error: conflicting types for 'strcasecmp'
+../ruby18/missing.h:102: error: conflicting types for 'strncasecmp'
+../ruby18/missing.h:106: error: conflicting types for 'strchr'
+../ruby18/missing.h:107: error: conflicting types for 'strrchr'
+&lt;以下省略&gt;
+</pre>
+<p>
+なんか変だな。とりあえずconfigure時のログであるconfig.logを確認。
+</p>
+<pre>
+configure:14946: checking for memmove
+configure:15002: arm-wince-pe-gcc -o conftest.exe -g -O2   conftest.c -lm  &gt;&amp;5
+conftest.c:92: warning: conflicting types for built-in function 'memmove'
+/usr/ppc/lib/gcc/arm-wince-pe/4.1.0/../../../../arm-wince-pe/lib/libm.a: \
+  could not read symbols: Archive has no index; run ranlib to add one
+collect2: ld returned 1 exit status
+</pre>
+<p>
+ranlibせよときたかー。
+</p>
+<pre>
+% LD_LIBRARY_PATH=/tmp sudo /usr/ppc/bin/arm-wince-pe-ranlib \
+  /usr/ppc/arm-wince-pe/lib/libm.a
+</pre>
+<p>
+これでok。config.cacheを消してconfigureしなおしてmake。
+libruby-static.aだけ作ってみる。
+</p>
+<pre>
+% LD_LIBRARY_PATH=/tmp PATH=/usr/ppc/bin:$PATH make libruby-static.a
+</pre>
+<p>
+ところどころ警告は出たが問題なく作れた。
+まだまだ微調整は必要だが結構素性はいいかも。
+</p>
+<!-- section end -->
+</div>
+<!-- 2006/07/27 end -->
+
+
+
+<hr class="hide">
+<!-- 2006/07/28 start -->
+<h2><a name="20060728" href="200607c.html#20060728">2006-07-28 (Fri)</a></h2>
+<!-- 2006-07-30 01:56:16 -->
+
+<div class="entry1">
+<h3><a name="200607281" title="200607281" href="200607c.html#200607281">■</a> 
+[Ruby] 勘違い</h3>
+<p>
+
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-talk/204292">chopが遅いじゃんという話</a>。<br>
+ベンチマークの結果はたしかに遅い。というよりIndexingのほうが速すぎる。<br>
+しばらくだれも気づかなかったんだが、bigstring[0..-1]だとchopにならない。<br>
+-1は最後までという意味なのでbigstringと同じ。<br>
+ほんとはbigstring[0..-2]じゃないと意味がない。<br>
+という
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-talk/204316">事実</a>に気づくまで、
+いろいろな説が出て面白かった。<br>
+</p>
+<!-- section end -->
+</div>
+<!-- 2006/07/28 end -->
+
+
+
+<hr class="hide">
+<!-- 2006/07/29 start -->
+<h2><a name="20060729" href="200607c.html#20060729">2006-07-29 (Sat)</a></h2>
+<!-- 2006-07-30 02:05:53 -->
+
+<div class="entry1">
+<h3><a name="200607291" title="200607291" href="200607c.html#200607291">■</a> 
+[Net] ネットワーク不調</h3>
+<p>
+突然ADSLモデムのリンクが切れた。<br>
+切れるのはたまにあるからしばらくそのまま放っておいたんだが、<br>
+リンクのLEDが点滅から点灯に移行してもあの「カチッ」という音がしない。<br>
+1時間程待っても変化なし。しかたなくもうPCからルータから全部電源落として、<br>
+録っといた救命救急24時を見まくる。<br>
+6話ほど見て電源入れなおしたら、全然問題なし。
+なんだったんだろう？
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200607292" title="200607292" href="200607c.html#200607292">■</a> 
+[Google] Google Earth</h3>
+<p>
+たてつづけに「タモリ倶楽部」と「世界一受けたい授業」でGoogle Earthが出てきた。
+なんかの戦略？
+</p>
+<!-- section end -->
+</div>
+<!-- 2006/07/29 end -->
+
+
+
+<hr class="hide">
+<!-- 2006/07/30 start -->
+<h2><a name="20060730" href="200607c.html#20060730">2006-07-30 (Sun)</a></h2>
+<!-- 2006-07-31 00:59:43 -->
+
+<div class="entry1">
+<h3><a name="200607301" title="200607301" href="200607c.html#200607301">■</a> 
+[Soft] Automatic Firewall 0.3.2</h3>
+<blockquote><dl>
+<dt>
+About:
+<dd>
+Automatic Firewall configures your firewall by looking at your 
+environment and deciding what is a good fit for your needs. It  is
+intended for the novice broadband user to install and forget  about, but
+still be fairly well protected. 
+</dl></blockquote>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200607302" title="200607302" href="200607c.html#200607302">■</a> 
+[Ruby] 質問投げっ放しの人</h3>
+<p>
+
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-talk/204484">[ruby-talk:204484]</a>
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-talk/204859">[ruby-talk:204859]</a>
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-talk/204992">[ruby-talk:204992]</a><br>
+まったく聞く耳持たず。3日連続で同じような時刻にやってきてる。<br>
+さすがに3度目ともなると反応がない。明日も来たら笑うが。
+</p>
+<!-- section end -->
+</div>
+<!-- 2006/07/30 end -->
+
+
+
+<hr class="hide">
+<!-- 2006/07/31 start -->
+<h2><a name="20060731" href="200607c.html#20060731">2006-07-31 (Mon)</a></h2>
+<!-- 2006-08-01 01:30:35 -->
+
+<div class="entry1">
+<h3><a name="200607311" title="200607311" href="200607c.html#200607311">■</a> 
+[Audio] SAMSUNG YP-C1Z</h3>
+<p>
+雑音だらけで使いもんにならなくなった。
+次の曲前の曲ボタンを押すとたまに復活するので騙し騙し使っていたけど、
+もうさすがに限界だ。
+</p>
+
+<p>
+oggファイルが再生できてUSBストレージなプレーヤを探そう。
+</p>
+<!-- section end -->
+</div>
+<!-- 2006/07/31 end -->
+
+<hr>
+<div>
+<a href="200607b.html">&lt;Prev(,)</a> | 
+<a href="200608a.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

@@ -1,0 +1,429 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2004-6-b</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="200406a.html">
+<link rel="next" href="200406c.html">
+
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2004年6月中旬〜</p>
+<hr>
+<div>
+<a href="200406a.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="200406c.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2004/06/11 start -->
+<h2><a name="20040611" href="200406b.html#20040611">2004-06-11 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="200406111" title="200406111" href="200406b.html#200406111">■</a> 
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-dev/23677">[Ruby] linux-gnu問題再燃</a></h3>
+<p>
+なかださんが作ったパッチをちょっといじって、linuxだけに限定したやつをruby-dev MLへ投げた。
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-dev/23685">[ruby-dev:23685]</a></p>
+<!-- section end -->
+</div>
+<!-- 2004/06/11 end -->
+
+
+
+<hr class="hide">
+<!-- 2004/06/12 start -->
+<h2><a name="20040612" href="200406b.html#20040612">2004-06-12 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="200406121" title="200406121" href="200406b.html#200406121">■</a> 
+<a href="http://lftp.yar.ru/">[Soft] lftp 3.0.6</a></h3>
+<p>
+Changes:
+</p><blockquote class="cite"><p>
+Completion for the bm: URL scheme was
+implemented and some bugs were fixed.
+</p></blockquote><p>
+bm:なんて使えるんだ。ftp://ftp.iij.ad.jp/bub/GNU/をgnuで登録してるんだけど、
+<pre>
+% lftp bm:gnu/gcc/
+</pre>
+<p>
+でftp://ftp.iij.ad.jp/bub/GNU/gcc/に直接行けるようだ。なるほど。<br>
+しかし、bm:でcompletionってのがなんだかよくわからない。
+</p>
+<!-- section end -->
+</div>
+<!-- 2004/06/12 end -->
+
+
+
+<hr class="hide">
+<!-- 2004/06/13 start -->
+<h2><a name="20040613" href="200406b.html#20040613">2004-06-13 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="200406131" title="200406131" href="200406b.html#200406131">■</a> 
+[CVS] 改竄実験(1)</h3>
+<p>
+CVSのrepositoryを改竄した場合、どのような影響が出るのか実験してみる。
+</p>
+<pre>
+% repo=$PWD/cvs-repository
+% cvs -d $repo init
+% mkdir tmp; cd tmp
+% cvs -d $repo import -m import foo eban init
+% cd ..
+% cvs -d $repo co foo
+% cd foo
+% echo '1. foo' &gt; foo.txt
+% cat foo.txt
+1. foo
+% cvs add foo.txt
+% cvs ci -m &quot;&quot; foo.txt
+% echo '2. bar' &gt;&gt; foo.txt
+% cat foo.txt
+1. foo
+2. bar
+% cvs ci -m &quot;&quot; foo.txt
+% echo '3. hoge' &gt;&gt; foo.txt
+% cat foo.txt
+1. foo
+2. bar
+3. hoge
+% cvs ci -m &quot;&quot; foo.txt
+% cvs co -p -r1.1 foo/foo.txt
+1. foo
+</pre>
+<p>
+ここで直接$repo/foo/foo.txt,vを書き換えて、
+2. barを追加した変更(1.2)を削除すると、
+</p>
+<pre>
+% cvs update
+% cvs co -p -r1.1 foo/foo.txt
+1. foo
+3. hoge
+</pre>
+<p>
+となる。working spaceでのupdateは何もおこらず、
+1.1を取り出すとあきらかに違うものが出てくる。
+</p>
+
+<p>
+CVSのrepositoryは最新から過去への差分のかたまりになっているので、
+改竄は過去へ影響を与える。
+こういう単純な改竄は簡単に検出が可能。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200406132" title="200406132" href="200406b.html#200406132">■</a> 
+[CVS] 改竄実験(2)</h3>
+<p>
+最新を改竄した場合はどうなるのか？先のfoo.txt,vを元に戻し、
+</p>
+<pre>
+1.3
+log
+@*** empty log message ***
+@
+text
+@1. foo
+2. bar
+3. hoge
+4. fuga
+@
+</pre>
+<p>
+のように4. fugaを加えてみた。
+この状態のままworking spaceでcvs updateしてもなにもおこらない。
+cvs diffしても差がない。でもcoすると
+</p>
+<pre>
+% cvs co -p foo/foo.txt
+1. foo
+2. bar
+3. hoge
+4. fuga
+% cvs co -p -r1.1 foo/foo.txt
+1. foo
+4. fuga
+</pre>
+<p>
+のように4. fugaが追加されている。
+</p>
+
+<p>
+ということはどっちにしても常にcvs updateで同期を取ってるworking spaceへ改竄の伝播は不可能で、最新をcoした結果との比較で確認は可能になる。
+</p>
+
+<p>
+問題は途中を改竄した場合で、2つのrevisionをいじって矛盾がないような変更をすると、
+そこだけ改竄が可能となる。
+まあ、そんなところをピンポイントで改竄してもあまり意味がないけど、
+結局厳密にチェックするには各revision間での差分を見るしかないのかなあ。
+</p>
+
+<p>
+やっぱcommit mailにmd5sumの結果も入れとくというのが、なにかあったときに確認が楽か。
+</p>
+<!-- section end -->
+</div>
+<!-- 2004/06/13 end -->
+
+
+
+<hr class="hide">
+<!-- 2004/06/14 start -->
+<h2><a name="20040614" href="200406b.html#20040614">2004-06-14 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="200406141" title="200406141" href="200406b.html#200406141">■</a> 
+[Cygwin] OpenSSH</h3>
+<p>
+なんか最近VMware上のCygwinへsshして放っておくといつのまにかコネクションが切れてることが多い。
+いつからだろう。ServerAliveIntervalを指定してみるか。
+</p>
+<!-- section end -->
+</div>
+<!-- 2004/06/14 end -->
+
+
+
+<hr class="hide">
+<!-- 2004/06/15 start -->
+<h2><a name="20040615" href="200406b.html#20040615">2004-06-15 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="200406151" title="200406151" href="200406b.html#200406151">■</a> 
+<a href="http://www.ruby-lang.org/">[Ruby] www.ruby-lang.org復活</a></h3>
+<p>
+みなさん、おつかれさまです。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200406152" title="200406152" href="200406b.html#200406152">■</a> 
+<a href="200401a.html#200401101">[CVS] commitinfoとloginfo</a></h3>
+<p>
+これってcommitinfoじゃなくてloginfoを使えって話じゃないだろうか。
+MD5はこんな感じ？
+</p>
+<pre>
+cvs -d /some/where/repository co -p -kb module/file | md5sum
+</pre>
+<p>
+あとでrubyのCVSROOTのloginfoを調べよう。
+</p>
+<!-- section end -->
+</div>
+<!-- 2004/06/15 end -->
+
+
+
+<hr class="hide">
+<!-- 2004/06/16 start -->
+<h2><a name="20040616" href="200406b.html#20040616">2004-06-16 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="200406161" title="200406161" href="200406b.html#200406161">■</a> 
+<a href="http://grimthing.com/bashblogger/">[Soft] Bash Blogger</a></h3>
+<p>
+Bashといいつつも#!/bin/shだったりするあたりはLinux使い？
+考え方はとてもシンプルで面白い。
+</p>
+<!-- section end -->
+</div>
+<!-- 2004/06/16 end -->
+
+
+
+<hr class="hide">
+<!-- 2004/06/17 start -->
+<h2><a name="20040617" href="200406b.html#20040617">2004-06-17 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="200406171" title="200406171" href="200406b.html#200406171">■</a> 
+[Mail] ドイツ語のspam</h3>
+<p>
+最近やたらとドイツ語だかオランダ語だかわからないメールが来る。
+突然来るようになっても学習してないからすり抜けちゃうんだよなあ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200406172" title="200406172" href="200406b.html#200406172">■</a> 
+[Mail] In-Reply-ToとReferencesの追加</h3>
+<p>
+なかださんが我慢できないらしいので、In-Reply-ToとReferncesを追加する小細工をruby-dev MLの設定に入れた。
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-talk/102350">[ruby-talk:102350]</a>の$DIRだけ変えただけなんだけど、なぜか
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-dev/23708">[ruby-dev:23708]</a>にはついてくれない。
+どうも$Envelopeは'h:subject'のようにh:が必要らしい。
+で、その後該当するメールが来ないので、うまくいってんだかどうかは不明。
+</p>
+<!-- section end -->
+</div>
+<!-- 2004/06/17 end -->
+
+
+
+<hr class="hide">
+<!-- 2004/06/18 start -->
+<h2><a name="20040618" href="200406b.html#20040618">2004-06-18 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="200406181" title="200406181" href="200406b.html#200406181">■</a> 
+<a href="http://jt.mozilla.gr.jp/products/firefox/">[Browser] Firefox 0.9</a></h3>
+<p>
+defaultのテーマは前のほうがよかったかな。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200406182" title="200406182" href="200406b.html#200406182">■</a> 
+[CVS] loginfo</h3>
+<p>
+loginfoからversion.hを更新する実験。
+</p>
+<pre>
+DEFAULT work=`mktemp -d`;\
+cd $work;\
+cvs -Q -d %r co %p/version.h;\
+version.hを変更;\
+cvs -d %e ci -Q -m `date +%Y-%m-%d` %p/version.h;\
+rm -rf $work
+</pre>
+<p>
+これで、できそう。
+</p>
+
+<p>
+ここでciしてしまうと無限に自分自身が呼ばれそうだが、
+呼ばれても二度目以降はversion.hに変化はないので、そこで止まる。
+cvs ciは変化がなければ何もしないから、loginfoも動かない。
+まあ、ちょっと無駄なので、ちゃんとやるならversion.hかどうかを見たほうがいいか。
+23:59:59あたりにコミットされると非常に微妙だし。
+</p>
+<!-- section end -->
+</div>
+<!-- 2004/06/18 end -->
+
+
+
+<hr class="hide">
+<!-- 2004/06/19 start -->
+<h2><a name="20040619" href="200406b.html#20040619">2004-06-19 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="200406191" title="200406191" href="200406b.html#200406191">■</a> 
+<a href="200406b.html#200406182">[CVS] loginfo</a></h3>
+<p>
+実際は$workのように変数は使えないとか、backslashでの継続もできないとかいろいろ制約があるのでshell scriptにする必要がある。
+あ、あとbranchをどうするかだな。これは標準入力から取り出すしかないか。
+結構難しいもんだね。
+</p>
+
+<p>
+やはりloginfo_ruby.rbをいじるべきか。
+</p>
+<!-- section end -->
+</div>
+<!-- 2004/06/19 end -->
+
+
+
+<hr class="hide">
+<!-- 2004/06/20 start -->
+<h2><a name="20040620" href="200406b.html#20040620">2004-06-20 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="200406201" title="200406201" href="200406b.html#200406201">■</a> 
+[zsh] diffの補完</h3>
+<p>
+zshを使っているとdiffの2番目の引数のファイルを補完できないのはなぜだ？
+しかたなく\diffとしてみたり。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200406202" title="200406202" href="200406b.html#200406202">■</a> 
+[CVS] 1.11と1.12</h3>
+<p>
+実際にrubyのCVSROOTでversion.h更新実験をしたら、1.11だとブロックしてしまうことがわかった。
+ローカルで実験してたのは1.12.9で、これなら問題ない。
+困ったな。
+</p>
+<!-- section end -->
+</div>
+<!-- 2004/06/20 end -->
+
+<hr>
+<div>
+<a href="200406a.html">&lt;Prev(,)</a> | 
+<a href="200406c.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

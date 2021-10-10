@@ -1,0 +1,630 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2003-9-b</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="200309a.html">
+<link rel="next" href="200309c.html">
+
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2003年9月中旬〜</p>
+<hr>
+<div>
+<a href="200309a.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="200309c.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2003/09/11 start -->
+<h2><a name="20030911" href="200309b.html#20030911">2003-09-11 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="200309111" title="200309111" href="200309b.html#200309111">■</a> 
+<a href="http://www.uclibc.org/">[Linux] uClibc 0.9.21</a></h3>
+<p>
+更新。
+<a href="200307a.html#200307012">-g問題</a>は相変わらず。
+</p>
+<!-- section end -->
+</div>
+<!-- 2003/09/11 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/09/12 start -->
+<h2><a name="20030912" href="200309b.html#20030912">2003-09-12 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="200309121" title="200309121" href="200309b.html#200309121">■</a> 
+[Ruby] ruby-bugs, ruby-bugs-ja</h3>
+<p>
+最新のSpamAssassin 2.55を使うようにした。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200309122" title="200309122" href="200309b.html#200309122">■</a> 
+[Mail] MH</h3>
+<p>
+spamをprocmailでMH形式で保存しているので、久し振りにscanしてみた。
+これだけで、spamかどうか判断できるので結構便利だ。誤判断したときも
+</p>
+<pre>
+% bogofilter -Sn &lt;$(mhpath +spam last)
+% sa-learn --ham --file $(mhpath +spam last)
+% sa-learn --rebuild
+</pre>
+<p>
+てなことをしてみたり。
+</p>
+<pre>
+% grep 'X-Bogosity: Yes' $(mhpath +spam last:100)
+</pre>
+<p>
+して何も出てこなくなったら、SpamAssassinを外してBogofilterだけにしよう。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200309123" title="200309123" href="200309b.html#200309123">■</a> 
+[HTML] mailto</h3>
+<p>
+以前どこかで読んだmailtoを16進で表記する方法を思い出した。
+今更効果があるとも思えないが、この日記も@を&amp;#x40;にしてみる。
+過去のは面倒なのでそのまま。
+</p>
+<!-- section end -->
+</div>
+<!-- 2003/09/12 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/09/13 start -->
+<h2><a name="20030913" href="200309b.html#20030913">2003-09-13 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="200309131" title="200309131" href="200309b.html#200309131">■</a> 
+[Linux] dietlibc 0.23</h3>
+<p>
+更新。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200309132" title="200309132" href="200309b.html#200309132">■</a> 
+<a href="http://cygwin.com/ml/cygwin/2003-09/msg00799.html">[Cygwin] Available for testing: gcc-3.3.1-1 and gcc-mingw-20030911-1</a></h3>
+<p>
+一応Rubyで試す。問題ないようだ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2003/09/13 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/09/14 start -->
+<h2><a name="20030914" href="200309b.html#20030914">2003-09-14 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="200309141" title="200309141" href="200309b.html#200309141">■</a> 
+<a href="http://cygwin.com/ml/cygwin-announce/2003-09/msg00085.html">[Cygwin] Updated: cygwin-1.5.4-1</a></h3>
+<p>
+早くも1.5.4だ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200309142" title="200309142" href="200309b.html#200309142">■</a> 
+<a href="http://www.procmail.org/">[Mail] procmail</a></h3>
+<p>
+procmail -vしてみると
+</p>
+<pre>
+procmail v3.11pre7 1997/04/28 written and created by Stephen R. van den Berg
+                                                        &lt;srb@cuci.nl&gt;
+&lt;後略&gt;
+</pre>
+<p>
+とやけに古い。3.22に上げとこう。
+</p>
+<!-- section end -->
+</div>
+<!-- 2003/09/14 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/09/15 start -->
+<h2><a name="20030915" href="200309b.html#20030915">2003-09-15 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="200309151" title="200309151" href="200309b.html#200309151">■</a> 
+[Mail] cmail2mbox.rb</h3>
+<p>
+いつのまにかwordlist.dbが25MB近くになりちょっと遅くなってきたので、
+作り直してみる。SpamAssassinと組み合わせてるのは実は会社だけで、
+家の遅いマシンではbogofilterだけにしてる。
+適当にネット上にあるspamを食わせてみたんだけど、
+あまり適当すぎてどうもうちに来るspamと合わないような気がする。
+というわけで、cmailのフォルダをmboxに変換しよう。
+cmailにはcmail-c2mという関数があるけど、手で実行するのもなんだし、
+Lispはよくわからないし、Rubyで簡単に使い捨てスクリプトを。
+</p>
+<pre>
+#! /usr/local/bin/ruby
+CMAIL_SEPERATOR = &quot;\C-_\C-L\n&quot;
+gets(CMAIL_SEPERATOR)
+while message = gets(CMAIL_SEPERATOR)
+  print message.chomp(CMAIL_SEPERATOR), &quot;\n&quot;
+end
+</pre>
+<p>
+実に簡単だ。これで、
+</p>
+<pre>
+% cmail2mbox.rb ~/cmail/**/*.030[789]~*spam* | bogofilter -nv -M
+% cmail2mbox.rb ~/cmail/**/spam.030[789] | bogofilter -sv -M
+</pre>
+<p>
+という感じでここ3ヶ月ほどのメールを学習させる。
+これでwordlist.dbが2MBほど。bogotuneを実行してみると
+</p>
+<pre>
+Recommended cache size is 3 Mbytes.
+</pre>
+<p>
+らしいので、-k 3も追加。現在の~/.procmailrc。
+</p>
+<pre>
+MAILDIR=$HOME/Mail/
+PATH=/bin:/usr/bin:/usr/local/bin
+LOGFILE=$HOME/procmail.log
+
+### SPAM
+
+:0 HB:
+* ? bogofilter -k 3 -u -l -v 1&gt;&amp;2
+spam/.
+</pre>
+<p>
+-vの結果もprocmail.logへ出すために1&gt;&amp;2を入れてる。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200309152" title="200309152" href="200309b.html#200309152">■</a> 
+[Mail] cmail2mh.rb</h3>
+<p>
+ついでにMH形式に変換するスクリプトも作った
+</p>
+<pre>
+#! /usr/local/bin/ruby
+CMAIL_SEPERATOR = &quot;\C-_\C-L\n&quot;
+gets(CMAIL_SEPERATOR)
+i = 1
+while message = gets(CMAIL_SEPERATOR)
+  open(i.to_s, &quot;w&quot;) do |fh| fh.print message.chomp(CMAIL_SEPERATOR), &quot;\n&quot; end
+  i += 1
+end
+</pre>
+<p>
+これを使い今月のruby-talkをMH形式に変換。
+</p>
+<pre>
+% mkdir tmp; cd tmp
+% cmai2mh.rb ~/cmail/ruby/ruby-talk.0309
+% find . -type -f | xargs bogofilter -v -B |grep Yes
+./361 X-Bogosity: Yes, tests=bogofilter, spamicity=0.999199, version=0.15.2
+./743 X-Bogosity: Yes, tests=bogofilter, spamicity=1.000000, version=0.15.2
+</pre>
+<p>
+あれと思い調べてみると、たしかにspamだった。
+手で振り分けていたころのメールだが、やはり人間がやるとミスがあるようだ。
+もうおいらより賢い。
+</p>
+<pre>
+% refile -src +. 361 743 +spam
+% bogofilter -Ns -B $(mhpath +spam last:2)
+</pre>
+<p>
+としとこう。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200309153" title="200309153" href="200309b.html#200309153">■</a> 
+[Mail] bogofilterと日本語</h3>
+<p>
+nkf+kakasiを通さなくても適当に学習させればそれなりに検知してくれるようだが、
+たぶんヘッダとか日本語じゃないところで判断してるのかもしれない。
+韓国語だとか中国語もあるし、日本語だけに特化しても意味ないしな。
+というか日本語のspamは圧倒的に少ないので、無視できるかも。
+圧倒的に少なくなったのはruby-bugs, ruby-bugs-jaから来なくなったからか？
+</p>
+
+<p>
+韓国語のspamをよく見ると適当に空白で区切られていた。なるほど。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200309154" title="200309154" href="200309b.html#200309154">■</a> 
+[Mail] 未承諾広告</h3>
+<p>
+&quot;未承諾広告&quot;をbogofilterに食わせてみた。
+</p>
+<pre>
+% echo '未承諾広告' |nkf -j |bogofilter -vvv
+X-Bogosity: Yes, tests=bogofilter, spamicity=0.994208, version=0.15.2
+                                     n    pgood     pbad      fw     U
+&quot;Bz9-9p&quot;                             1  0.000000  0.001425  0.994208 +
+N_P_Q_S_s_x_md                       1  5.79e-03  9.94e-01  9.94e-01
+                                        1.00e-02  4.15e-01  0.100
+% echo 'Subject: 未承諾広告' |nkf -j |bogofilter -vvv
+X-Bogosity: Yes, tests=bogofilter, spamicity=0.999270, version=0.15.2
+                                     n    pgood     pbad      fw     U
+&quot;subj:Bz9-9p&quot;                        8  0.000000  0.011396  0.999270 +
+N_P_Q_S_s_x_md                       1  7.30e-04  9.99e-01  9.99e-01
+                                        1.00e-02  4.15e-01  0.100
+</pre>
+<p>
+ちゃんとSubjectも見てるんだね。スコアが上がってる。
+</p>
+<pre>
+% echo 'Subject: 未承諾広告' |nkf -j |od -tx1z       
+0000000 53 75 62 6a 65 63 74 3a 20 1b 24 42 4c 24 3e 35  &gt;Subject: .$BL$&gt;5&lt;
+0000020 42 7a 39 2d 39 70 1b 28 42 0a                    &gt;Bz9-9p.(B.&lt;
+0000032
+</pre>
+<p>
+なので、&quot;諾広告&quot;しか見てくれない。
+でもそのおかげでうまい具合に&quot;末承諾広告&quot;もspamとみなされる。
+</p>
+<pre>
+% echo 'Subject: 末承諾広告' |nkf -j |bogofilter -vvv 
+X-Bogosity: Yes, tests=bogofilter, spamicity=0.999270, version=0.15.2
+                                     n    pgood     pbad      fw     U
+&quot;subj:BKv&quot;                           0  0.000000  0.000000  0.415000 -
+&quot;subj:Bz9-9p&quot;                        8  0.000000  0.011396  0.999270 +
+N_P_Q_S_s_x_md                       1  7.30e-04  9.99e-01  9.99e-01
+                                        1.00e-02  4.15e-01  0.100
+</pre>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200309155" title="200309155" href="200309b.html#200309155">■</a> 
+[Mail] ~/.bogofilter.cf</h3>
+<p>
+man bogofilterしてみると~/.bogofilter.cfが使えるらしいので、
+~/.procmailrcに-k 3と書くのはやめて、~/.bogofilter.cfに
+</p>
+<pre>
+db_cachesize=3
+</pre>
+<p>
+と書くことにした。サンプルは/etc/bogofilter.cf.sampleにある。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200309156" title="200309156" href="200309b.html#200309156">■</a> 
+<a href="http://www.gmane.org/">[Mail][News] http://www.gmane.org/</a></h3>
+<p>
+GmaneにRuby関係のMLがどのくらいあるのか
+<a href="http://news.gmane.org/?match=ruby">検索</a>してみると、英語のはほとんどあるようだ。
+<a href="http://news.gmane.org/gmane.comp.lang.ruby.documentation/">ruby-doc</a>はMoonWolfさんとこの
+<a href="http://www.moonwolf.com/~arcml/cgi-bin/arcml/?rm=threadlist&amp;list_id=2">archive</a>が稼働してないようなので、便利かもしれない。
+</p>
+
+<p>
+<a href="http://article.gmane.org/gmane.comp.lang.ruby.documentation/37">この記事</a>によると3月ぐらいから提供しているらしい。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200309157" title="200309157" href="200309b.html#200309157">■</a> 
+<a href="http://www.thekelleys.org.uk/dnsmasq/doc.html">[Linux] Dnsmasq 1.14</a></h3>
+<p>
+更新。
+</p>
+<!-- section end -->
+</div>
+<!-- 2003/09/15 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/09/16 start -->
+<h2><a name="20030916" href="200309b.html#20030916">2003-09-16 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="200309161" title="200309161" href="200309b.html#200309161">■</a> 
+[Mail] false positivesとfalse negatives</h3>
+<p>
+ham as spamがfalse positivesでspam as hamがfalse negatives(non-spamがham)。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200309162" title="200309162" href="200309b.html#200309162">■</a> 
+<a href="http://agriroot.aua.gr/~nikant/nkvir/">[Mail] Yet Another antiVirus Recipe</a></h3>
+<p>
+procmailのレシピ。
+</p>
+<pre>
+-VIRLIST: EICAR-AV-TEST(test NOT virus), Iframe exploit, SirCam,
+Nimda, Klez, Hybris, BadTransII, Tanatos(BugBear), MTX, Elkern,
+Blebla, Navidad, MyParty, Magistr, Lentin(Yaha), Frethem, Gibe,
+Mawanella, Generic, Funnypics, Happy, Opasoft(a,d), Scrambler,
+PrettyPark, SysClock, Sobig(a,b,c,f,gen), Avron(Lirva Aliz,
+CodeGreen.a, IISWorm, GOPWorm, LastWord, Heyya, Sharpei, Trood,
+TrojanDownloader.Win32.Ultraset, Ganda, LovGate.f, NetThief,
+LovGate.i, Mimail Apost, Blaster(Lovesan), P2P.VB.ai, Dumaru.a
+</pre>
+<p>
+素晴らしい。~/.procmailrcに
+</p>
+<pre>
+INCLUDERC=$HOME/.procmail/nkvir-rc
+</pre>
+<p>
+を追加しとこう。procmailのlogにはこんな感じで記録される。
+</p>
+<pre>
+---=== WORM-DUMARU 17/09/2003 01:28:21 ===---
+From watanabe  Sun Sep  7 17:36:05 2003
+ Subject: Use this patch immediately ! (PR#574)
+  Folder: /home/watanabe/Mail/virus/virus-Dumaru                          13950
+---=== WORM-SOBIG 17/09/2003 01:28:23 ===---
+From watanabe  Mon Sep  8 16:46:05 2003
+ Subject: Your details
+  Folder: /home/watanabe/Mail/virus/virus-Sobig                          103359
+</pre>
+<p>
+procmailを試すときは
+</p>
+<pre>
+% procmail &lt; virus-mail
+</pre>
+<p>
+のようにすればいい。
+</p>
+<!-- section end -->
+</div>
+<!-- 2003/09/16 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/09/17 start -->
+<h2><a name="20030917" href="200309b.html#20030917">2003-09-17 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="200309171" title="200309171" href="200309b.html#200309171">■</a> 
+<a href="http://www.thekelleys.org.uk/dnsmasq/doc.html">[Linux] Dnsmasq 1.15</a></h3>
+<pre>
+Changes: This is an emergency release which incorporates a facility to
+undo Verisign's wildcard A-record in the .com and .net domains.
+</pre>
+<p>
+素早い対応だ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200309172" title="200309172" href="200309b.html#200309172">■</a> 
+<a href="http://www.openssh.org/">[Linux] OpenSSH 3.7.1</a></h3>
+<p>
+3.7.1になってるけど、3.7はなにがあった？
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200309173" title="200309173" href="200309b.html#200309173">■</a> 
+[Ruby] news gateway</h3>
+<p>
+9/4あたりから止まっていたようで、どっと流れてきた。
+あ、違う。Postedをよく見たら8/4だ。どういうこと？
+</p>
+<!-- section end -->
+</div>
+<!-- 2003/09/17 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/09/18 start -->
+<h2><a name="20030918" href="200309b.html#20030918">2003-09-18 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="200309181" title="200309181" href="200309b.html#200309181">■</a> 
+<a href="http://procps.sf.net/">[Linux] procps 3.1.12</a></h3>
+<p>
+更新。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200309182" title="200309182" href="200309b.html#200309182">■</a> 
+[Mail] 中国語と韓国語のspam</h3>
+<p>
+わざわざcharsetで教えてくれてるわけだし、bogofilterに食わせる必要はない。
+というわけで~/.procmailrcに
+</p>
+<pre>
+:0 HB
+* ^Content-Type:.*\/(GB2312|big5|ks_c_5601-1987)
+{
+    LOG=&quot;---=== ${MATCH} ${DATE} ===---${NL}&quot;
+    :0
+    spam/.
+}
+</pre>
+<p>
+を追加。logはこんな感じ。
+</p>
+<pre>
+---=== GB2312 Thu Sep 18 23:11:37 JST 2003 ===---
+From watanabe  Mon Sep  8 13:08:09 2003
+ Subject: Beijing Chinese Translation
+  Folder: spam/755                                                        16848
+</pre>
+
+<!-- section end -->
+</div>
+<!-- 2003/09/18 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/09/19 start -->
+<h2><a name="20030919" href="200309b.html#20030919">2003-09-19 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="200309191" title="200309191" href="200309b.html#200309191">■</a> 
+<a href="http://agriroot.aua.gr/~nikant/nkvir/">[Mail] Yet Another antiVirus Recipe 1.7.3</a></h3>
+<p>
+早速Swenに対応したようだ。
+Swenはすでに70通ほど来ている。
+しかし1通あたり140KB以上てのはSobigよりでかい。まいったな。
+</p>
+<!-- section end -->
+</div>
+<!-- 2003/09/19 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/09/20 start -->
+<h2><a name="20030920" href="200309b.html#20030920">2003-09-20 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="200309201" title="200309201" href="200309b.html#200309201">■</a> 
+[Virus] Swen</h3>
+<p>
+特徴としてはなぜかFROM, TO, SUBJECTと大文字になっている。
+ただし、経由するサーバによってはFrom, To, Subjectのように書き換わっていることもある。
+とはいうものの圧倒的に大文字が多い。
+SUBJECTがない場合もある。
+SUBJECTの内容は種類が多い。
+New Network Security Updateといった意味ものが多い。
+サイズは140KB以上。
+</p>
+<pre>
+Mime-Version: 1.0
+Content-Type: multipart/mixed; boundary=
+</pre>
+<p>
+が必ずある。
+もともとDateはついてないが、どこか途中のサーバがつけている。
+と、POP3のLISTとTOPだけで判断できないか考えてみた。
+あ、ヘッダだけbogofilterに食わせて傾向を見ればいいのか。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200309202" title="200309202" href="200309b.html#200309202">■</a> 
+クローサー/夕陽天使/SO CLOSE</h3>
+<p>
+なぜMai KurakiのPerfect Crimeなのか？
+茶髪は世界中で流行ってるらしい。
+あ、少林サッカーのあの娘だったのか。
+やっぱワイヤーアクションは面白い。
+</p>
+<!-- section end -->
+</div>
+<!-- 2003/09/20 end -->
+
+<hr>
+<div>
+<a href="200309a.html">&lt;Prev(,)</a> | 
+<a href="200309c.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

@@ -1,0 +1,337 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2009-3-b</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="200903a.html">
+<link rel="next" href="200903c.html">
+
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2009年3月中旬〜</p>
+<hr>
+<div>
+<a href="200903a.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="200903c.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2009/03/11 start -->
+<h2><a name="20090311" href="200903b.html#20090311">2009-03-11 (Wed)</a></h2>
+<!-- 2009-03-12 06:35:57 -->
+
+<div class="entry1">
+<h3><a name="200903111" title="200903111" href="200903b.html#200903111">■</a> 
+[ニコニコ動画] 毎月11日はハンマーの日</h3>
+<p>
+今月も大笑いしたわけです。
+<ul>
+<li>
+<a href="http://www.nicovideo.jp/watch/nm5816779">ハンマー・オブ・ナイツ</a>
+<li>
+<a href="http://www.nicovideo.jp/watch/sm6111033">HAMMER ZONE</a>
+<li>
+<a href="http://www.nicovideo.jp/watch/sm6399751">ハンマーのパーフェクト力入れた教室</a>
+</ul>
+<!-- section end -->
+</div>
+<!-- 2009/03/11 end -->
+
+
+
+<hr class="hide">
+<!-- 2009/03/12 start -->
+<h2><a name="20090312" href="200903b.html#20090312">2009-03-12 (Thu)</a></h2>
+<!-- 2009-03-13 02:03:20 -->
+
+<div class="entry1">
+<h3><a name="200903121" title="200903121" href="200903b.html#200903121">■</a> 
+[Git] subversionのrevision番号からgitのobject IDを表示</h3>
+<p>
+git svn側でsvn diff -rARG1:ARG2相当のことをするためには必要。
+</p>
+
+<pre>
+% git rev-list trunk --grep='@20000 '
+6cb42732f6182d2163274a38bff2dacdab2c9c6b
+</pre>
+<p>
+こんな感じでhash値は得ることができるが、trunkと指定しないといけない。<br>
+でもあらかじめそんなのわからないしねえ。<br>
+なんかwildcard的なものがないとだめだな。
+</p>
+<!-- section end -->
+</div>
+<!-- 2009/03/12 end -->
+
+
+
+<hr class="hide">
+<!-- 2009/03/13 start -->
+<h2><a name="20090313" href="200903b.html#20090313">2009-03-13 (Fri)</a></h2>
+<!-- 2009-03-14 21:24:24 -->
+
+<div class="entry1">
+<h3><a name="200903131" title="200903131" href="200903b.html#200903131">■</a> 
+[Comic] ジャンプで長期連載してるやつ</h3>
+<p>
+Bleachも36巻まで読んだ。NARUTO, ONE PIEACEと長かった。<br>
+37巻は貸出中だった。今はドラゴンボールを読み返してる。<br>
+</p>
+<!-- section end -->
+</div>
+<!-- 2009/03/13 end -->
+
+
+
+<hr class="hide">
+<!-- 2009/03/14 start -->
+<h2><a name="20090314" href="200903b.html#20090314">2009-03-14 (Sat)</a></h2>
+<!-- 2009-03-15 00:32:57 -->
+
+<div class="entry1">
+<h3><a name="200903141" title="200903141" href="200903b.html#200903141">■</a> 
+[Music] FLVからOGGへ変換</h3>
+<p>
+どうもffmpegでoggへ変換すると変なノイズが入ったりとあまりよくない。
+</p>
+
+<pre>
+% ffmpeg -i foo.flv -vn -acodec vorbis -ar 44100 -ab 128k foo.ogg
+</pre>
+<p>
+こんな感じでやってたんだけど、一旦wavを介したほうがいい感じ。
+</p>
+
+<pre>
+% ffmpeg -i foo.flv -vn -ar 44100 foo.wav
+</pre>
+<p>
+でもいいんだけど、ここは
+</p>
+
+<pre>
+% mplayer -quiet -vo null -vc dummy -ao pcm:waveheader:file=foo.wav foo.flv
+</pre>
+<p>
+のほうが倍ぐらい速い。その後は普通にoggencで好きなように。
+</p>
+
+<pre>
+% oggenc -o foo.ogg -q1 foo.wav
+</pre>
+
+<!-- section end -->
+</div>
+<!-- 2009/03/14 end -->
+
+
+
+<hr class="hide">
+<!-- 2009/03/15 start -->
+<h2><a name="20090315" href="200903b.html#20090315">2009-03-15 (Sun)</a></h2>
+<!-- 2009-03-16 01:41:34 -->
+
+<div class="entry1">
+<h3><a name="200903151" title="200903151" href="200903b.html#200903151">■</a> 
+[Git] gitのmergeって結構かしこいな</h3>
+<p>
+termtterを更新してみたらplugin/がplugins/になっていた。<br>
+ちゃんと自動でmergeできてる。
+</p>
+
+<pre>
+% git pull --rebase
+remote: Counting objects: 1276, done.
+remote: Compressing objects: 100% (1136/1136), done.
+remote: Total 1231 (delta 782), reused 123 (delta 89)
+Receiving objects: 100% (1231/1231), 142.33 KiB | 70 KiB/s, done.
+Resolving deltas: 100% (782/782), completed with 35 local objects.
+From git://github.com/jugyo/termtter
+ * [new branch]      config     -&gt; origin/config
+   9317ba9..e1a9f3e  master     -&gt; origin/master
+From git://github.com/jugyo/termtter
+ * [new tag]         ver.0.8.14 -&gt; ver.0.8.14
+First, rewinding head to replay your work on top of it...
+Applying: 30sec
+error: lib/plugin/notify-send.rb: does not exist in index
+Using index info to reconstruct a base tree...
+Falling back to patching base and 3-way merge...
+Renamed lib/plugin/notify-send.rb =&gt; lib/plugins/notify-send.rb
+Auto-merged lib/plugins/notify-send.rb
+Applying: reverse
+error: lib/plugin/notify-send.rb: does not exist in index
+Using index info to reconstruct a base tree...
+Falling back to patching base and 3-way merge...
+Renamed lib/plugin/notify-send.rb =&gt; lib/plugins/notify-send.rb
+Auto-merged lib/plugins/notify-send.rb
+</pre>
+
+<!-- section end -->
+</div>
+<!-- 2009/03/15 end -->
+
+
+
+<hr class="hide">
+<!-- 2009/03/16 start -->
+<h2><a name="20090316" href="200903b.html#20090316">2009-03-16 (Mon)</a></h2>
+<!-- 2009-03-17 01:26:05 -->
+
+<div class="entry1">
+<h3><a name="200903161" title="200903161" href="200903b.html#200903161">■</a> 
+[Net] ADSLモデム不調</h3>
+<p>
+電源入れなおしてもつながらない。<br>
+/var/log/messageを見ると12:17以降だめっぽい。これは困ったな。<br>
+</p>
+<!-- section end -->
+</div>
+<!-- 2009/03/16 end -->
+
+
+
+<hr class="hide">
+<!-- 2009/03/17 start -->
+<h2><a name="20090317" href="200903b.html#20090317">2009-03-17 (Tue)</a></h2>
+<!-- 2009-03-18 01:41:51 -->
+
+<div class="entry1">
+<h3><a name="200903171" title="200903171" href="200903b.html#200903171">■</a> 
+[Net] 原因はまたrouterだった</h3>
+<p>
+なんかおれはどうもこのrouterを信頼しすぎる嫌いがあるな。<br>
+買い換えよう。
+</p>
+<!-- section end -->
+</div>
+<!-- 2009/03/17 end -->
+
+
+
+<hr class="hide">
+<!-- 2009/03/18 start -->
+<h2><a name="20090318" href="200903b.html#20090318">2009-03-18 (Wed)</a></h2>
+<!-- 2009-03-19 01:05:22 -->
+
+<div class="entry1">
+<h3><a name="200903181" title="200903181" href="200903b.html#200903181">■</a> 
+[Work] 1時間早めの出社</h3>
+<p>
+今日からは1時間早めに出社しろとのお達し。眠い。<br>
+6月の陽気で花粉も多めでなんかだるいしで頭も働かない。<br>
+しかも歩数計まで調子が悪いはルータの調子も悪いはで、<br>
+困ったもんだよ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2009/03/18 end -->
+
+
+
+<hr class="hide">
+<!-- 2009/03/19 start -->
+<h2><a name="20090319" href="200903b.html#20090319">2009-03-19 (Thu)</a></h2>
+<!-- 2009-03-20 12:58:18 -->
+
+<div class="entry1">
+<h3><a name="200903191" title="200903191" href="200903b.html#200903191">■</a> 
+[Linux] readom</h3>
+<p>
+こんな簡単なコマンドがあったとは。
+</p>
+
+<pre>
+% readom dev=/dev/dvd f=disc.iso
+</pre>
+<!-- section end -->
+</div>
+<!-- 2009/03/19 end -->
+
+
+
+<hr class="hide">
+<!-- 2009/03/20 start -->
+<h2><a name="20090320" href="200903b.html#20090320">2009-03-20 (Fri)</a></h2>
+<!-- 2009-03-21 01:32:54 -->
+
+<div class="entry1">
+<h3><a name="200903201" title="200903201" href="200903b.html#200903201">■</a> 
+よく寝た</h3>
+<p>
+1度めし食うために起きただけで17時まで寝てた。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200903202" title="200903202" href="200903b.html#200903202">■</a> 
+[twitter] termtter</h3>
+<p>
+pullしたらnotify-sendが出なくなったんで、git co ver.1.0.3して様子見。<br>
+そういえばinitializing...って出ないな。
+</p>
+<!-- section end -->
+</div>
+<!-- 2009/03/20 end -->
+
+<hr>
+<div>
+<a href="200903a.html">&lt;Prev(,)</a> | 
+<a href="200903c.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

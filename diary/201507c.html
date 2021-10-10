@@ -1,0 +1,336 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2015-7-c</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="201507b.html">
+<link rel="next" href="201508a.html">
+
+<link rel="stylesheet" type="text/css" href="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.css">
+<script async type="text/javascript" src="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.js"></script>
+<script type="text/javascript">
+<!--       
+$(document).ready(function() {
+  prettyPrint();
+});
+-->
+</script>
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2015年7月下旬〜</p>
+<hr>
+<div>
+<a href="201507b.html" accesskey=",">&lt;Older(,)</a> | 
+<a href="201508a.html" accesskey=".">Newer(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2015/07/21 start -->
+<h2><a name="20150721" href="201507c.html#20150721">2015-07-21 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="201507211" title="201507211" href="201507c.html#201507211">■</a> 
+Speaker DeckのURL</h3>
+<p>
+タイトルが漢字だとURLが中国語読みになってしまうことで有名なSpeaker Deckだが、<br>
+さすがにひらがなやカタカナはローマ字読みになる。<br>
+いくつか例外があってなぜか「の」はfalseになる場合がある。noってことか？
+</p>
+<p>
+まともなURLにするには/を使えばいいらしい。<br>
+/以降の文字だけがURLになるので適当に英語のタイトルを捏ち上げとくといい。
+</p>
+<!-- section end -->
+</div>
+<!-- 2015/07/21 end -->
+
+
+
+<hr class="hide">
+<!-- 2015/07/22 start -->
+<h2><a name="20150722" href="201507c.html#20150722">2015-07-22 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="201507221" title="201507221" href="201507c.html#201507221">■</a> 
+githubでbookmarkletが動かない</h3>
+<p>
+調べてみるとFirefoxのCSPによる影響だった。<br>
+<a href="https://support.mozilla.org/ja/questions/970761">Bookmarklets don't work on https:// sites</a><br>
+まあ、しょうがないよねえ。<br>
+自己責任でsecurity.csp.enableをfalseにしておこう。
+</p>
+<!-- section end -->
+</div>
+<!-- 2015/07/22 end -->
+
+
+
+<hr class="hide">
+<!-- 2015/07/23 start -->
+<h2><a name="20150723" href="201507c.html#20150723">2015-07-23 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="201507231" title="201507231" href="201507c.html#201507231">■</a> 
+AWS LambdaでCoffeeScript</h3>
+<p>
+AltJsなのでJavaScriptに変換したものをアップロードすれば動いて当然ではあるが、<br>
+以下のような簡単なスクリプトを用意すればCoffeeScriptのまま動かすこともできる。
+</p>
+<pre>
+require(&quot;coffee-script/register&quot;);
+exports.handler = require(&quot;./index.coffee&quot;).handler;
+</pre>
+<!-- section end -->
+</div>
+<!-- 2015/07/23 end -->
+
+
+
+<hr class="hide">
+<!-- 2015/07/24 start -->
+<h2><a name="20150724" href="201507c.html#20150724">2015-07-24 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="201507241" title="201507241" href="201507c.html#201507241">■</a> 
+Note PCの調子が悪い</h3>
+<p>
+Windows7なんだけど、数分で勝手に電源が切れる。<br>
+暑さのせいなんだろうか。<br>
+これを10に上げるのはまずいよな。<br>
+もう7年ぐらい経つし新しいの買うか。
+</p>
+<!-- section end -->
+</div>
+<!-- 2015/07/24 end -->
+
+
+
+<hr class="hide">
+<!-- 2015/07/25 start -->
+<h2><a name="20150725" href="201507c.html#20150725">2015-07-25 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="201507251" title="201507251" href="201507c.html#201507251">■</a> 
+js-xlsxが便利</h3>
+<p>
+普通にrequireしてもいいけど、コマンドとして使えるのでCSVとかJSONに簡単に変換できる。<br>
+-Fも地味に便利。
+</p>
+<pre>
+% xlsx --help
+
+  Usage: xlsx [options] &lt;file&gt; [sheetname]
+
+  Options:
+
+    -h, --help              output usage information
+    -V, --version           output the version number
+    -f, --file &lt;file&gt;       use specified workbook
+    -s, --sheet &lt;sheet&gt;     print specified sheet (default first sheet)
+    -p, --password &lt;pw&gt;     if file is encrypted, try with specified pw
+    -l, --list-sheets       list sheet names and exit
+    -o, --output &lt;file&gt;     output to specified file
+    -B, --xlsb              emit XLSB to &lt;sheetname&gt; or &lt;file&gt;.xlsb
+    -M, --xlsm              emit XLSM to &lt;sheetname&gt; or &lt;file&gt;.xlsm
+    -X, --xlsx              emit XLSX to &lt;sheetname&gt; or &lt;file&gt;.xlsx
+    -S, --formulae          print formulae
+    -j, --json              emit formatted JSON (all fields text)
+    -J, --raw-js            emit raw JS object (raw numbers)
+    -F, --field-sep &lt;sep&gt;   CSV field separator
+    -R, --row-sep &lt;sep&gt;     CSV row separator
+    -n, --sheet-rows &lt;num&gt;  Number of rows to process (0=all rows)
+    --sst                   generate sst
+    --perf                  do not generate output
+    --all                   parse everything; XLS[XMB] write as much as possible
+    --dev                   development mode
+    --read                  read but do not print out contents
+    -q, --quiet             quiet mode
+
+  Default output format is CSV
+  Support email: dev@sheetjs.com
+  Web Demo: http://oss.sheetjs.com/js-xlsx/
+</pre>
+<!-- section end -->
+</div>
+<!-- 2015/07/25 end -->
+
+
+
+<hr class="hide">
+<!-- 2015/07/26 start -->
+<h2><a name="20150726" href="201507c.html#20150726">2015-07-26 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="201507261" title="201507261" href="201507c.html#201507261">■</a> 
+64分割</h3>
+<p>
+巷で話題の「中間管理録トネガワ」を見てて気づいたんだけど、<br>
+この元画像データは8x8のばらばらな64分割になっていて、<br>
+簡単に再利用できないようにガードされてる。<br>
+集英社のサイトも同じだったので、どこかで開発された技術なんだろうな。<br>
+しかもこれ単なる64分割じゃなくて、よく見ると各々重なる部分があるようで。<br>
+ああ、でもCSSでうまいこと復元できるはずだな、これは。
+</p>
+<p>
+<img src="../images/S_H.jpg" alt="">
+</p>
+<!-- section end -->
+</div>
+<!-- 2015/07/26 end -->
+
+
+
+<hr class="hide">
+<!-- 2015/07/27 start -->
+<h2><a name="20150727" href="201507c.html#20150727">2015-07-27 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="201507271" title="201507271" href="201507c.html#201507271">■</a> 
+Thundebird double dash</h3>
+<p>
+<a href="201404b.html#201404171">返信すると&quot;-- \n&quot;以降のsigが消える件</a>は解決してないが、自分が出すメールは
+</p>
+<pre>
+mail.identity.default.suppress_signature_separator
+</pre>
+<p>
+をtrueにすればつかなくなることがわかった。<br>
+もっともsigなんてほとんどつけないからまったく意味ないが。
+</p>
+<p>
+むりやり含めるにはすべて選択してから返信するしかないようだ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2015/07/27 end -->
+
+
+
+<hr class="hide">
+<!-- 2015/07/28 start -->
+<h2><a name="20150728" href="201507c.html#20150728">2015-07-28 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="201507281" title="201507281" href="201507c.html#201507281">■</a> 
+中クリックが調子悪い</h3>
+<p>
+どうもまた外れを引いたようで、バッテリーより先にホイールのほうがだめになった。<br>
+右クリックでだいたい代用が効くがまあ安いし買い替えるか。
+</p>
+<!-- section end -->
+</div>
+<!-- 2015/07/28 end -->
+
+
+
+<hr class="hide">
+<!-- 2015/07/29 start -->
+<h2><a name="20150729" href="201507c.html#20150729">2015-07-29 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="201507291" title="201507291" href="201507c.html#201507291">■</a> 
+Windows10</h3>
+<p>
+予約はしていたが全然降ってくる素振りなし。<br>
+隠しディレクトリもできないし。<br>
+待ってたらWindows Updateが始まる始末。<br>
+いや今更それ要らんでしょ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2015/07/29 end -->
+
+
+
+<hr class="hide">
+<!-- 2015/07/30 start -->
+<h2><a name="20150730" href="201507c.html#20150730">2015-07-30 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="201507301" title="201507301" href="201507c.html#201507301">■</a> 
+J:COMで追い掛け再生</h3>
+<p>
+1.2倍速なので滅多に追い付くことがないが、追い付いてしまうと再生終了になるようだ。<br>
+こうなると再生していた場所もリセットされるので面倒なことこの上ない。
+</p>
+<!-- section end -->
+</div>
+<!-- 2015/07/30 end -->
+
+
+
+<hr class="hide">
+<!-- 2015/07/31 start -->
+<h2><a name="20150731" href="201507c.html#20150731">2015-07-31 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="201507311" title="201507311" href="201507c.html#201507311">■</a> 
+隠しディレクトリだけできた</h3>
+<p>
+かなり長いこと放置して置いたができたのはC:\Windows.~BTだけ。<br>
+空き領域は全然減ってないのでダウンロードはしてないようだ。<br>
+わざわざ有線LAN差して準備してるんだが。
+</p>
+<!-- section end -->
+</div>
+<!-- 2015/07/31 end -->
+
+<hr>
+<div>
+<a href="201507b.html">&lt;Older(,)</a> | 
+<a href="201508a.html">Newer(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

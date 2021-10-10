@@ -1,0 +1,323 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2011-7-b</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="201107a.html">
+<link rel="next" href="201107c.html">
+
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2011年7月中旬〜</p>
+<hr>
+<div>
+<a href="201107a.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="201107c.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2011/07/11 start -->
+<h2><a name="20110711" href="201107b.html#20110711">2011-07-11 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="201107111" title="201107111" href="201107b.html#201107111">■</a> 
+torneの2倍速</h3>
+<p>
+まじで捗る。ニュースとかは2倍速で十分だな。<br>
+特にNHKなんかはゆっくりめで話しているので問題なく聞きとれる。<br>
+1.5倍速で耳がすでに慣れてたからかもしれないが。
+</p>
+<!-- section end -->
+</div>
+<!-- 2011/07/11 end -->
+
+
+
+<hr class="hide">
+<!-- 2011/07/12 start -->
+<h2><a name="20110712" href="201107b.html#20110712">2011-07-12 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="201107121" title="201107121" href="201107b.html#201107121">■</a> 
+<a href="http://www.amazon.co.jp/dp/B00428KX26">Amazon.co.jp： ペンカット【ブラック】 SH601B: 文房具・オフィス用品</a></h3>
+<p>
+このギミックが気に入って衝動買い。<br>
+はさみなんてそんなに使わないが、なんか出先で必要になったりするんだよなあ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2011/07/12 end -->
+
+
+
+<hr class="hide">
+<!-- 2011/07/13 start -->
+<h2><a name="20110713" href="201107b.html#20110713">2011-07-13 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="201107131" title="201107131" href="201107b.html#201107131">■</a> 
+logrotateのdateext</h3>
+<p>
+なにげなく覗いたFedoraの/var/logに違和感を覚えた。
+</p>
+<pre>
+% ls /var/log
+ConsoleKit         boot.log-20110703  dmesg             maillog-20110703   program.log        spooler-20110703
+Xorg.0.log         boot.log-20110710  dmesg.old         maillog-20110710   secure             spooler-20110710
+Xorg.0.log.old     btmp               dracut.log        messages           secure-20110619    sssd
+Xorg.1.log         btmp-20110701      gdm               messages-20110619  secure-20110626    storage.log
+Xorg.9.log         cron               httpd             messages-20110626  secure-20110703    tallylog
+anaconda.log       cron-20110619      lastlog           messages-20110703  secure-20110710    wpa_supplicant.log
+apcupsd.events     cron-20110626      lighttpd          messages-20110710  setroubleshoot     wtmp
+audit              cron-20110703      mail              ntpstats           speech-dispatcher  yum.log
+boot.log           cron-20110710      maillog           pm-powersave.log   spooler            yum.log-20100101
+boot.log-20110619  cups               maillog-20110619  ppp                spooler-20110619   yum.log-20110101
+boot.log-20110626  dirmngr            maillog-20110626  prelink            spooler-20110626
+</pre>
+<p>
+連番じゃない形式もありなんだな。man logrotateしてみたらdateextらしい。
+</p>
+<pre>
+dateext
+       Archive old versions of log files adding a daily extension like YYYYMMDD instead  of  simply  adding  a
+       number. The extension may be configured using the dateformat option.
+</pre>
+<p>
+Ubuntuは連番だった。
+</p>
+<pre>
+% ls /var/log
+ConsoleKit	    auth.log.2.gz  dpkg.log	   kern.log.2.gz     pm-powersave.log.1  syslog.5.gz
+Xorg.0.log	    boot	   dpkg.log.1	   lastlog	     pm-suspend.log	 syslog.6.gz
+Xorg.0.log.old	    boot.log	   faillog	   mail.err	     pm-suspend.log.1	 syslog.7.gz
+alternatives.log    btmp	   fontconfig.log  mail.log	     pycentral.log	 udev
+alternatives.log.1  btmp.1.gz	   fsck		   mail.log.1	     samba		 ufw.log
+apparmor	    cups	   gdm		   mail.log.2.gz     speech-dispatcher	 unattended-upgrades
+apt		    dist-upgrade   installer	   mediatomb.log     syslog		 wtmp
+aptitude	    dmesg	   jockey.log	   mediatomb.log.1   syslog.1		 wtmp.1.gz
+aptitude.1.gz	    dmesg.0	   jockey.log.1    news		     syslog.2.gz
+auth.log	    dmesg.1.gz	   kern.log	   ntpstats	     syslog.3.gz
+auth.log.1	    dmesg.2.gz	   kern.log.1	   pm-powersave.log  syslog.4.gz
+</pre>
+<p>
+そういえばmessagesとsyslogと名前が違うようになったんだよなあ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2011/07/13 end -->
+
+
+
+<hr class="hide">
+<!-- 2011/07/14 start -->
+<h2><a name="20110714" href="201107b.html#20110714">2011-07-14 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="201107141" title="201107141" href="201107b.html#201107141">■</a> 
+Googleの黒いナビゲーションバーを白くする</h3>
+<p>
+やっぱ白いほうがいいなというわけでuserstylesで探したらあった。<br>
+<a href="http://userstyles.org/styles/49951/google-navigation-bar-revert-to-light-theme">Google navigation bar - revert to light theme - Themes and Skins for Google</a><br>
+GmailとかG+も黒くなくなる。
+</p>
+<p>
+まあ、今さら白くなってもかえって違和感があるあたり慣れってこわい。
+</p>
+<!-- section end -->
+</div>
+<!-- 2011/07/14 end -->
+
+
+
+<hr class="hide">
+<!-- 2011/07/15 start -->
+<h2><a name="20110715" href="201107b.html#20110715">2011-07-15 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="201107151" title="201107151" href="201107b.html#201107151">■</a> 
+<a href="https://addons.mozilla.jp/firefox/details/321723">Firefox アドオン - BarTab Lite</a></h3>
+<p>
+おーとか思いながら入れてみたわけなんだけど、機能が限定されすぎだった。<br>
+つまり4とか5とかに対応するのは相当大変なんだろうな。<br>
+<a href="https://github.com/philikon/BarTab/">本家BarTabのgithub</a>は3月以来更新されてないし。
+</p>
+<!-- section end -->
+</div>
+<!-- 2011/07/15 end -->
+
+
+
+<hr class="hide">
+<!-- 2011/07/16 start -->
+<h2><a name="20110716" href="201107b.html#20110716">2011-07-16 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="201107161" title="201107161" href="201107b.html#201107161">■</a> 
+RubyKaigi 2011 1日目</h3>
+<p>
+大ホールのあとずっと小ホール。大ホールのネットワークは午後不調。<br>
+小ホールは快調。やはり人の数に左右される。
+</p>
+<p>
+それにしても最後に闇に持ってかれた。その前のセッションが全部ふっとんだ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2011/07/16 end -->
+
+
+
+<hr class="hide">
+<!-- 2011/07/17 start -->
+<h2><a name="20110717" href="201107b.html#20110717">2011-07-17 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="201107171" title="201107171" href="201107b.html#201107171">■</a> 
+RubyKaigi 2011 2日目</h3>
+<p>
+今日はあちこち回った。昼休みに3Fで休憩してたらねこ丸君に初めて会ったよ。<br>
+hemgeさんにもらったNaCl10周年まんじゅうを完食。<br>
+その後いつのまにか!RubyKaigiになだれこんでいた。<br>
+<a href="http://www.fluxflex.com/">FluxFlex</a>は後で登録してみよう。
+</p>
+<p>
+LTはちゃんとわかってるドラ娘だった。時間内でも鳴らす気前のよさ。<br>
+ドラを鳴らすまでがLTだということは忘れずに。
+</p>
+<p>
+懇親会へ行く途中の電車でNaHiさんからgem化の話を聞いた。<br>
+じゃあTkもはずせる？と言った途端、<br>
+日本語がわからないはずのdrbrainがはははと笑い出した。<br>
+Tkという単語だけですべてを悟ったようだ。<br>
+やはりそういうことなんだろう。<br>
+みんなそう思ってるんだな。
+</p>
+<p>
+懇親会は旧交を温めたり。
+</p>
+<!-- section end -->
+</div>
+<!-- 2011/07/17 end -->
+
+
+
+<hr class="hide">
+<!-- 2011/07/18 start -->
+<h2><a name="20110718" href="201107b.html#20110718">2011-07-18 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="201107181" title="201107181" href="201107b.html#201107181">■</a> 
+RubyKaigi 2011 3日目</h3>
+<p>
+今日もあちこち回った。<br>
+DNAの塩基配列とかなんでそんなセッション見に行ったんだか、<br>
+今となってはまったくよくわからない。<br>
+昼は和室でまったり。奇妙本あるかと見に行ったら入荷してた。即ゲット。<br>
+無線LAN環境は大ホールだと午後はもうだめ。<br>
+ほとんど使えない。残念。<br>
+毎度桑田さんのプレゼン力はすごい。
+</p>
+<p>
+まあ、そういうわけで、またいつか。
+</p>
+<!-- section end -->
+</div>
+<!-- 2011/07/18 end -->
+
+
+
+<hr class="hide">
+<!-- 2011/07/19 start -->
+<h2><a name="20110719" href="201107b.html#20110719">2011-07-19 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="201107191" title="201107191" href="201107b.html#201107191">■</a> 
+<a href="http://journal.mycom.co.jp/news/2011/07/15/050/index.html">GmailにZIP/RARプレビュー機能 - ダウンロードせずに中身を確認</a></h3>
+<p>
+なかなか面白い機能だが、Google Docsを経由するのでちょっとまどろっこしい。<br>
+中身がCSVファイルのzipを作って試してみたら、<br>
+まずviewでGoogle Docsを起動、ActionsでGoogle Docs形式でsave、<br>
+あとはGoogle Docs側で見ないといけない。対応してるファイルならいいのかな。<br>
+しかしテキストファイルをviewするのもあってもいいと思うんだけど。
+</p>
+<!-- section end -->
+</div>
+<!-- 2011/07/19 end -->
+
+
+
+<hr class="hide">
+<!-- 2011/07/20 start -->
+<h2><a name="20110720" href="201107b.html#20110720">2011-07-20 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="201107201" title="201107201" href="201107b.html#201107201">■</a> 
+Ruby Golfではendは禁句</h3>
+<p>
+ennndで盛り上がっているが、ゴルフではendを使わないので関係ない。<br>
+まずdo endは{}だし、if end等は||や&amp;&amp;か後置、def endもprocになる。<br>
+begin endは長すぎて候補にも出てこない。forも使わない。
+</p>
+<!-- section end -->
+</div>
+<!-- 2011/07/20 end -->
+
+<hr>
+<div>
+<a href="201107a.html">&lt;Prev(,)</a> | 
+<a href="201107c.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

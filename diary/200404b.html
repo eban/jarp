@@ -1,0 +1,416 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2004-4-b</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="200404a.html">
+<link rel="next" href="200404c.html">
+
+<link rel="stylesheet" type="text/css" href="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.css">
+<script async type="text/javascript" src="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.js"></script>
+<script type="text/javascript">
+<!--       
+$(document).ready(function() {
+  prettyPrint();
+});
+-->
+</script>
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2004年4月中旬〜</p>
+<hr>
+<div>
+<a href="200404a.html" accesskey=",">&lt;Older(,)</a> | 
+<a href="200404c.html" accesskey=".">Newer(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2004/04/11 start -->
+<h2><a name="20040411" href="200404b.html#20040411">2004-04-11 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="200404111" title="200404111" href="200404b.html#200404111">■</a> 
+[Firefox] FirefoxのサイドバーにBloglinesを入れてみる</h3>
+<p>
+サイドバーに入れてみるものとして一番最初に思い浮かぶのはBloglinesの左側の部分だ。
+右クリックすると「このページをサイドバーに追加(T)」とあるので、
+実際に追加してみる。でもこのまま普通にクリックしても使えない。
+あらかじめmyblogsを表示しておけばそこに表示されるが、それだとちょっと使いにくい。
+パネル内も変化しないし。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200404112" title="200404112" href="200404b.html#200404112">■</a> 
+[Firefox] Firefoxのサイドバーに五月雨を入れてみる</h3>
+<p>
+ええと、全くだめっす。そうか。折り返さないようにしないとだめなんだな。
+別にcssを用意すれば解決するのかどうかよくわかんないけど、
+あとで試してみよう。
+</p>
+<!-- section end -->
+</div>
+<!-- 2004/04/11 end -->
+
+
+
+<hr class="hide">
+<!-- 2004/04/12 start -->
+<h2><a name="20040412" href="200404b.html#20040412">2004-04-12 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="200404121" title="200404121" href="200404b.html#200404121">■</a> 
+<a href="http://ltp.sourceforge.net/coverage/lcov.php">[Soft] The LTP GCOV extension (lcov)</a></h3>
+<p>
+gcovした結果をまとめて表示してくれるものを探していたら
+<a href="http://ltp.sourceforge.net/coverage/lcov.php">lcov</a> を発見した。
+今日のRubyのCVS 1.9版をmake test test-allした結果が
+<a href="http://jarp.jin.gr.jp/ruby-gcov/">これ</a> 。
+</p>
+
+<p>
+手順としては
+</p><ol>
+<li>% ./configure CFLAGS='-fprofile-arcs -ftest-coverage'
+<li>% make all test test-all
+<li>% lcov -d . -c -o app.info
+<li>% vi app.info #ここでsyckとbison関係を削除
+<li>% genhtml -o ../ruby-gcov -p $PWD:h app.info
+</ol><p>
+という感じでいける。
+syckは*.reがソースに存在しないのとbisonは関係ないので削除。
+#lineに書いてあるソースファイル名も認識しちゃうから、ちょっと面倒。
+--no-sourceじゃちょっと物足りないし、
+lcovの-rオプションとか上手く使えば除外できるのかもしれない。
+</p>
+
+<p>
+make test-allの途中
+</p>
+<pre>
+arc profiling: Can't open output file (null).
+</pre>
+<p>
+と表示されるのが気になる。なんだろこれ？要調査。
+</p>
+<!-- section end -->
+</div>
+<!-- 2004/04/12 end -->
+
+
+
+<hr class="hide">
+<!-- 2004/04/13 start -->
+<h2><a name="20040413" href="200404b.html#20040413">2004-04-13 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="200404131" title="200404131" href="200404b.html#200404131">■</a> 
+[Soft] lcovの-rオプション</h3>
+<p>
+lcovの-rオプションは全く別のコマンドと思ったほうがいいようだ。
+</p>
+<pre>
+% lcov -r app.info &quot;*$PWD:t*&quot; -o app1.info
+</pre>
+<p>
+とすれば作ったapp.infoから要らない情報を削除できる。
+parse.cとか。$PWD:tは$(basename $PWD)と同じ(cshやzshの場合)。
+だからわざと他のファイル等と重ならないディレクトリ名にして削除しやすいようにしている。
+</p>
+
+<p>
+それにしても、lcovもgenhtmlも標準入力が使えないのはなぜだ？
+</p>
+<!-- section end -->
+</div>
+<!-- 2004/04/13 end -->
+
+
+
+<hr class="hide">
+<!-- 2004/04/14 start -->
+<h2><a name="20040414" href="200404b.html#20040414">2004-04-14 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="200404141" title="200404141" href="200404b.html#200404141">■</a> 
+[Ruby] RedCloth, BlueCloth</h3>
+<p>
+とりあえずキーワードは
+<a href="http://textism.com/tools/textile/">Textile</a> と
+<a href="http://daringfireball.net/projects/markdown/">Markdown</a> だ。
+なんか似たようなもんをみんな考えるねえ。
+</p>
+
+<p>
+<a href="http://whytheluckystiff.net/ruby/redcloth/">http://whytheluckystiff.net/ruby/redcloth/</a><br>
+<a href="http://bluecloth.rubyforge.org/">http://bluecloth.rubyforge.org/</a></p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200404142" title="200404142" href="200404b.html#200404142">■</a> 
+[TV] スイスペ・うんちく王</h3>
+<p>
+ゴールデン進出ってことでまるで台本が用意されてたかのように、いつもより切れがよかった。
+本当に台本があったとしても常人にはまねできない芸だ。
+それにしても、うんちくターミネーター山田五郎が出なかったのが残念。
+</p>
+<!-- section end -->
+</div>
+<!-- 2004/04/14 end -->
+
+
+
+<hr class="hide">
+<!-- 2004/04/15 start -->
+<h2><a name="20040415" href="200404b.html#20040415">2004-04-15 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="200404151" title="200404151" href="200404b.html#200404151">■</a> 
+<a href="http://arena.nikkeibp.co.jp/news/20040413/108399/">[Mail] 噂のGoogleの1GBメールサービス「Gmail」を最速レビュー！</a></h3>
+<p>
+ラベルでメールを分類するのかあ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200404152" title="200404152" href="200404b.html#200404152">■</a> 
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-talk/97219">[Ruby] RAAのRSS配信</a></h3>
+<p>
+というわけで、
+<a href="http://raa.ruby-lang.org/index.rdf">RAAのRSS配信</a> がはじまった。
+cotent:encodedは&lt;br&gt;を入れるべきだったなあ。失敗。
+なひさんが寝ちゃったから、そのあたりはおいおい。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200404153" title="200404153" href="200404b.html#200404153">■</a> 
+地震雲？</h3>
+<p>
+今日はなんか変な形の雲を3回ほど見た。地震雲じゃなければいいんだけど。
+</p>
+<!-- section end -->
+</div>
+<!-- 2004/04/15 end -->
+
+
+
+<hr class="hide">
+<!-- 2004/04/16 start -->
+<h2><a name="20040416" href="200404b.html#20040416">2004-04-16 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="200404161" title="200404161" href="200404b.html#200404161">■</a> 
+<a href="http://lftp.yar.ru/">[Soft] lftp 3.0.2</a></h3>
+<p>
+Changes:
+</p><blockquote><p>
+Support has been added for the CLNT, HOST, and OPTS MLST
+FTP commands. MLSD is disabled by default. Several bugs
+have been fixed.
+</p></blockquote>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200404162" title="200404162" href="200404b.html#200404162">■</a> 
+<a href="http://www.nongnu.org/cvs/">[Soft] CVS 1.12.7</a></h3>
+<p>
+セキュリティアップデート。クライアント側もやばいらしい。
+</p><blockquote><p>
+Feature CVS 1.12.7 has been released. Feature releases
+contain new features as well as all the bug fixes from the
+stable releases. This release fixes serious security
+issues in both the client and server executables. It also
+contains many bug fixes and support for accessing CVS
+pservers via intervening HTTP proxies. We recommend this
+upgrade for all CVS clients and servers already running
+the feature release and for those who simply like to stay
+on the cutting edge!
+</p></blockquote>
+<!-- section end -->
+</div>
+<!-- 2004/04/16 end -->
+
+
+
+<hr class="hide">
+<!-- 2004/04/17 start -->
+<h2><a name="20040417" href="200404b.html#20040417">2004-04-17 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="200404171" title="200404171" href="200404b.html#200404171">■</a> 
+<a href="http://kernel.org/">[Linux] Linux 2.4.26</a></h3>
+<p>
+2.6はとりあえず置いといて、2.4.26に上げてみた。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200404172" title="200404172" href="200404b.html#200404172">■</a> 
+<a href="http://raa.ruby-lang.org/">[Ruby] RAA</a></h3>
+<p>
+RSSのcontent:encodedはgsubで改行を&lt;br&gt;へ置換するようにしたので、見易くなった。
+</p>
+<!-- section end -->
+</div>
+<!-- 2004/04/17 end -->
+
+
+
+<hr class="hide">
+<!-- 2004/04/18 start -->
+<h2><a name="20040418" href="200404b.html#20040418">2004-04-18 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="200404181" title="200404181" href="200404b.html#200404181">■</a> 
+<a href="http://msdn.microsoft.com/visualc/vctoolkit2003/">[Windows] Microsoft Visual C++ Toolkit 2003</a></h3>
+<p>
+巷で話題になってるので早速インストールした。最適化できるのがうれしい。Rubyもmakeできた。
+例によってwindows.hとかそれに関するライブラリは
+<a href="http://www.microsoft.com/msdownload/platformsdk/sdkupdate/">Microsoft Windows Platform SDK</a>のCore SDKをインストールする必要あり。
+</p>
+<!-- section end -->
+</div>
+<!-- 2004/04/18 end -->
+
+
+
+<hr class="hide">
+<!-- 2004/04/19 start -->
+<h2><a name="20040419" href="200404b.html#20040419">2004-04-19 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="200404191" title="200404191" href="200404b.html#200404191">■</a> 
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-talk/97565">[Ruby] ruby-talk ML news gateway</a></h3>
+<p>
+またトラブってるらしい。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200404192" title="200404192" href="200404b.html#200404192">■</a> 
+[Worm] 月曜日</h3>
+<p>
+どうも月曜日はWormが増える。時差の関係か火曜日も多い。
+やっぱ企業のPC?
+</p>
+<!-- section end -->
+</div>
+<!-- 2004/04/19 end -->
+
+
+
+<hr class="hide">
+<!-- 2004/04/20 start -->
+<h2><a name="20040420" href="200404b.html#20040420">2004-04-20 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="200404201" title="200404201" href="200404b.html#200404201">■</a> 
+<a href="http://www.openssh.org/">[Soft] OpenSSH 3.8.1p1</a></h3>
+<p>
+今回はセキュリティアップデートではないようだ。
+</p>
+<pre>
+This release is a bug-fix release for the portable version. There
+are no feature additions and no corresponding OpenBSD-only release.
+</pre>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200404202" title="200404202" href="200404b.html#200404202">■</a> 
+[Soft] dnsmasqとLinux 2.4.26</h3>
+<p>
+なんかLinux 2.4.26に上げてから、dnsmasqの調子が悪い。
+よくわからないので、コンパイルし直して再インストールしたら、
+まったく動かなくなった。
+</p>
+
+<p>
+Linux 2.4.25のheaderを使えばとりあえず動く。
+でも、いつ動かなくなるかわからないしなあ。
+うーむ。どうなってるんだろう？
+</p>
+
+<p>
+あ、単にDNSサーバが調子悪かっただけのようだ。
+たまたまタイミングが合ってしまったのか。
+</p>
+<!-- section end -->
+</div>
+<!-- 2004/04/20 end -->
+
+<hr>
+<div>
+<a href="200404a.html">&lt;Older(,)</a> | 
+<a href="200404c.html">Newer(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

@@ -1,0 +1,373 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2013-5-c</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="201305b.html">
+<link rel="next" href="201306a.html">
+
+<link rel="stylesheet" type="text/css" href="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.css">
+<script type="text/javascript" src="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.js"></script>
+<script type="text/javascript">
+<!--       
+$(document).ready(function() {
+  prettyPrint();
+});
+-->
+</script>
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2013年5月下旬〜</p>
+<hr>
+<div>
+<a href="201305b.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="201306a.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2013/05/21 start -->
+<h2><a name="20130521" href="201305c.html#20130521">2013-05-21 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="201305211" title="201305211" href="201305c.html#201305211">■</a> 
+dnsmasqというかmdnsのせいだった</h3>
+<p>
+/etc/nsswitch.confからmdns4を削除すると
+</p>
+<pre>
+% ruby -rsocket -e 'IPSocket.getaddress(&quot;example&quot;)'
+-e:1:in `getaddress': getaddrinfo: Name or service not known (SocketError)
+	from -e:1:in `&lt;main&gt;'
+</pre>
+<p>
+のようにちゃんとSocketErrorになる。でもなんか釈然としないのでもうちょっと調べる。
+</p>
+<!-- section end -->
+</div>
+<!-- 2013/05/21 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/05/22 start -->
+<h2><a name="20130522" href="201305c.html#20130522">2013-05-22 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="201305221" title="201305221" href="201305c.html#201305221">■</a> 
+Hototを最新に</h3>
+<p>
+blackout testで410頻発してることがわかったので、Hototを最新に。<br>
+<a href="https://launchpad.net/~hotot-team/+archive/ppa">PPA for Hotot</a>を追加。念の為一旦hototを消してからinstallした。<br>
+これで0.9.8.14に上がった。日本語化があちこち進んでた。
+</p>
+<!-- section end -->
+</div>
+<!-- 2013/05/22 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/05/23 start -->
+<h2><a name="20130523" href="201305c.html#20130523">2013-05-23 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="201305231" title="201305231" href="201305c.html#201305231">■</a> 
+Hototの再設定</h3>
+<p>
+ふと本当にAPI 1.1を使ってるのか気になった。どうすれば確認できるのか？<br>
+設定をデフォルトに戻せばたぶん1.1を使ってくれるだろうとやってみたら、<br>
+認証失敗してそのメッセージから1.1を使ってることが判明。<br>
+まあ、これでいつ1.0が廃止されても問題ないだろう。
+</p>
+<!-- section end -->
+</div>
+<!-- 2013/05/23 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/05/24 start -->
+<h2><a name="20130524" href="201305c.html#20130524">2013-05-24 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="201305241" title="201305241" href="201305c.html#201305241">■</a> 
+スクリーンセーバーを無効にしたい</h3>
+<p>
+Ubuntu 13.04に上げてからどういうわけかブランクのスクリーンセーバーが有効になった。<br>
+xscreensaverを入れてるわけでもないがどういうことか？<br>
+そういえば先日aptitudeを調べてて~i(インストール済み)なんてのも覚えたので早速使ってみた。
+</p>
+<pre>
+% aptitude search '~iscreensaver'
+i   gnome-screensaver                                   - GNOME スクリーンセーバおよび画面ロック                        
+i   screensaver-default-images                          - Wallpapers for image processing screensavers                  
+i   xscreensaver-data                                   - data files to be shared among screensaver frontends           
+i   xscreensaver-gl                                     - GL(Mesa) screen hacks for xscreensaver                        
+</pre>
+<p>
+gnome-screensaverが入っているのか。
+</p>
+<pre>
+% ps auxww|awk '!i++;/[g]nome-screensaver/'
+USER       PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
+eban     30592  0.0  0.1 346896 10008 ?        Sl   19:12   0:00 /usr/bin/gnome-screensaver --no-daemon
+</pre>
+<p>
+確かに動いているが、Xfce4のメニューには出てこない。<br>
+これ一体どこで起動しているんだ？
+</p>
+<p>
+面倒なので消した。
+</p>
+<!-- section end -->
+</div>
+<!-- 2013/05/24 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/05/25 start -->
+<h2><a name="20130525" href="201305c.html#20130525">2013-05-25 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="201305251" title="201305251" href="201305c.html#201305251">■</a> 
+libnss-mdnsは削除し、avahi-daemonは止めた</h3>
+<p>
+mdnsをいろいろ調べてみたら、ホスト名.localでアクセスできるような仕組みということで、<br>
+そんなの使ったことないしやたらとトラブるしで消すことにした。<br>
+その関連でavahi-daemonも不要なのでaptitudeで消そうとしたが、<br>
+依存がいっぱいあって却って面倒なことに。<br>
+とりあえず登録から消してみたが消えない。
+</p>
+<pre>
+% sudo update-rc.d avahi-daemon remove 
+update-rc.d: /etc/init.d/avahi-daemon exists during rc.d purge (use -f to force)
+zsh: exit 1     sudo update-rc.d avahi-daemon remove
+% ls -l /etc/init.d/avahi-daemon
+lrwxrwxrwx 1 root root 21 2013-03-22 20:47:51 /etc/init.d/avahi-daemon -&gt; /lib/init/upstart-job
+% sudo update-rc.d -f avahi-daemon remove
+ Removing any system startup links for /etc/init.d/avahi-daemon ...
+% ls -l /etc/init.d/avahi-daemon
+lrwxrwxrwx 1 root root 21 2013-03-22 20:47:51 /etc/init.d/avahi-daemon -&gt; /lib/init/upstart-job
+</pre>
+<p>
+ぐぐって調べたら/etc/init/avahi-daemon.overrideにmanualと書けば起動されないらしいので。
+</p>
+<pre>
+% echo manual | sudo tee -a /etc/init/avahi-daemon.override
+manual
+</pre>
+<p>
+とした。ちょこっと付け足すときはechoしてsudo tee -aするといい。&gt;&gt;を使うには
+</p>
+<pre>
+sudo sh -c 'echo manual &gt;&gt; /etc/init/avahi-daemon.override'
+</pre>
+<p>
+とせざるを得ない。まあsudo vi /etc/init/avahi-daemon.overrideでいいんだが。<br>
+あ、今なら-iがあるからsedを使ってもいいか。
+</p>
+<pre>
+% sudo sed -i amanual /etc/init/avahi-daemon.override
+</pre>
+<p>
+いやでもavahi-daemon.overrideは普通存在しないからなあ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2013/05/25 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/05/26 start -->
+<h2><a name="20130526" href="201305c.html#20130526">2013-05-26 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="201305261" title="201305261" href="201305c.html#201305261">■</a> 
+Ubuntu Tweakが起動しない</h3>
+<p>
+古いカーネルを消すんならUbuntu Tweakにあったよなと起動してみたらエラーになる。<br>
+ぐぐってみるとやはりバグっているようで、最新取ってこいよということらしい。<br>
+<a href="http://askubuntu.com/questions/285985/ubuntu-tweak-crashes-on-launch-ubuntu-13-04">python - Ubuntu Tweak crashes on launch Ubuntu 13.04 - Ask Ubuntu</a></p>
+<p>
+sudo add-apt-repository ppa:tualatrix/ppaしてupgradeで使えるようになった。<br>
+他の要らないキャッシュだのも消せるので、こっちのほうがいいな。
+</p>
+<!-- section end -->
+</div>
+<!-- 2013/05/26 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/05/27 start -->
+<h2><a name="20130527" href="201305c.html#20130527">2013-05-27 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="201305271" title="201305271" href="201305c.html#201305271">■</a> 
+CygwinのVimを上げたら.vimrcがエラーだらけに</h3>
+<p>
+Cygwinを更新したらviを立ち上げるごとに~/.vimrcのsyntax onとかletとかが<br>
+どういうわけかエラーになるようになってしまった。
+</p>
+<pre>
+E319: Sorry, the command is not available in this version:   syntax on
+</pre>
+<p>
+調べてみると
+<a href="http://cygwin.com/ml/cygwin-announce/2013-05/msg00007.html">vim-7.3.943-1</a>ではviはminimalでvimで起動しないとrichなvimにならないらしい。<br>
+一応~/.vimrcはminimalでエラーになる機能はif has(&quot;autocmd&quot;),endifで囲んどいた。<br>
+でもminimalで使うことはないだろうから、~/bin/viにexec vim &quot;$@&quot;でもいいかもしれない。
+</p>
+<!-- section end -->
+</div>
+<!-- 2013/05/27 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/05/28 start -->
+<h2><a name="20130528" href="201305c.html#20130528">2013-05-28 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="201305281" title="201305281" href="201305c.html#201305281">■</a> 
+gnome-screensaverをuninstallしてもスクリーンセーバーが機能する</h3>
+<p>
+そうだよなあ。前から動いていた記憶はある。でも機能はしてなかった。<br>
+いったいどこでスクリーンをブラックにしてるんだ？
+</p>
+<!-- section end -->
+</div>
+<!-- 2013/05/28 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/05/29 start -->
+<h2><a name="20130529" href="201305c.html#20130529">2013-05-29 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="201305291" title="201305291" href="201305c.html#201305291">■</a> 
+結局xscreensaverを入れて無効にすることに</h3>
+<p>
+いったいどういうことなのかよくわからんけど、<br>
+xscreensaverを入れてdaemonを動かしたらスクリーンセーバーが無効になった。<br>
+一応無効にできたがものすごい矛盾を感じる。
+</p>
+<!-- section end -->
+</div>
+<!-- 2013/05/29 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/05/30 start -->
+<h2><a name="20130530" href="201305c.html#20130530">2013-05-30 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="201305301" title="201305301" href="201305c.html#201305301">■</a> 
+RubyKaigi 2013 1日目</h3>
+<p>
+東京テレポートから前を歩いてる人についていったら、迷わずに会場へ着いた。画期的。<br>
+なんか今日はまじめに聞いてなかったな。っていつもか。<br>
+無線LANはまあまあの質。<br>
+sdbmは消しちゃだめらしい。でもあっちは消そうぜいう話はまた出た。お約束。<br>
+</p>
+<p>
+逆逆ポーランド記法に全部持ってかれた1日目だった。
+
+</p>
+<!-- section end -->
+</div>
+<!-- 2013/05/30 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/05/31 start -->
+<h2><a name="20130531" href="201305c.html#20130531">2013-05-31 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="201305311" title="201305311" href="201305c.html#201305311">■</a> 
+RubyKaigi 2013 2日目</h3>
+<p>
+午前中のセッションをまじめに聞いた。いい話だった。特にHigh何とかという話。<br>
+空調の設定が部屋によってばらばらで寒すぎるところもあった。<br>
+無線LANは比較的安定。ustは相変わらずぶちぶち切れる。<br>
+</p>
+<p>
+LTはいったいどうしたことか。英語縛りだったの？<br>
+それはそれとして、ドラを鳴らさないでどうする。<br>
+なんのためのドラ娘か。<br>
+ドラを鳴らすまでがLTだとあれほど(ry。
+</p>
+<p>
+gitになるのかねえ。git describeは連番としてちゃんと使えるのかどうか。
+</p>
+<p>
+さすがに疲れた。宿取っといてよかった。
+</p>
+<!-- section end -->
+</div>
+<!-- 2013/05/31 end -->
+
+<hr>
+<div>
+<a href="201305b.html">&lt;Prev(,)</a> | 
+<a href="201306a.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

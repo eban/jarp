@@ -1,0 +1,405 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2007-6-b</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="200706a.html">
+<link rel="next" href="200706c.html">
+
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2007年6月中旬〜</p>
+<hr>
+<div>
+<a href="200706a.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="200706c.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2007/06/11 start -->
+<h2><a name="20070611" href="200706b.html#20070611">2007-06-11 (Mon)</a></h2>
+<!-- 2007-06-13 02:13:09 -->
+
+<div class="entry1">
+<h3><a name="200706111" title="200706111" href="200706b.html#200706111">■</a> 
+[Linux] yumが動かない理由</h3>
+<p>
+よくわからないときはstraceだ。というわけでstrace -o yum.log yumしてみたら
+</p>
+
+<pre>
+open(&quot;/usr/local/lib/libsqlite3.so.0&quot;, O_RDONLY) = 7
+</pre>
+
+<p>
+というログを発見。そうか。古いsqlite3がそんなとこに残っていたか。<br>
+削除したらあっさりusageが表示された。拍子抜けした。
+</p>
+
+<p>
+試しにthunderbirdをインストール。成功。でも1.0.2だったのアンインストール。<br>
+なんでそんなに古いんだ？
+</p>
+<!-- section end -->
+</div>
+<!-- 2007/06/11 end -->
+
+
+
+<hr class="hide">
+<!-- 2007/06/12 start -->
+<h2><a name="20070612" href="200706b.html#20070612">2007-06-12 (Tue)</a></h2>
+<!-- 2007-06-13 02:12:24 -->
+
+<div class="entry1">
+<h3><a name="200706121" title="200706121" href="200706b.html#200706121">■</a> 
+[Linux] Fedora 7の設定が一通り完了</h3>
+<p>
+/etc/yum.repos.d/やら/var/cache/yum/やらいじってるうちに
+</p>
+
+<pre>
+% sudo yum search thunderbird
+</pre>
+<p>
+でthunderbird-2.0.0.0-1.fc7が現われるようになった。<br>
+とりあえずこれでFedora 7のままで使えるようだ。
+</p>
+
+<p>
+毎回なにか問題は起こるが辛うじて解決できてるな。<br>
+運がいいんだか悪いんだか。
+</p>
+<!-- section end -->
+</div>
+<!-- 2007/06/12 end -->
+
+
+
+<hr class="hide">
+<!-- 2007/06/13 start -->
+<h2><a name="20070613" href="200706b.html#20070613">2007-06-13 (Wed)</a></h2>
+<!-- 2007-06-14 02:08:42 -->
+
+<div class="entry1">
+<h3><a name="200706131" title="200706131" href="200706b.html#200706131">■</a> 
+<a href="http://svn.collab.net/repos/svn/trunk/tools/hook-scripts/commit-email.rb">[SVN] commit-email.rb</a></h3>
+<p>
+RubyKaigiでkouさんに追加してもらった機能を試すべくruby-cvsへ仕込む。<br>
+なぜかメールが届かなくて悩むが、<br>
+ログを取ってみたら--from必須だったようでエラーになっていたようだ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200706132" title="200706132" href="200706b.html#200706132">■</a> 
+<a href="https://addons.mozilla.org/ja/thunderbird/addon/1339">[Thunderbird] GmailUI</a></h3>
+<p>
+Gmailのshortcutであるj/k/yが使える。j/kだけでも便利だ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2007/06/13 end -->
+
+
+
+<hr class="hide">
+<!-- 2007/06/14 start -->
+<h2><a name="20070614" href="200706b.html#20070614">2007-06-14 (Thu)</a></h2>
+<!-- 2007-06-15 19:39:28 -->
+
+<div class="entry1">
+<h3><a name="200706141" title="200706141" href="200706b.html#200706141">■</a> 
+[Emacs] Emacs 22の気になる点</h3>
+<p>
+どうもEmacs 22にしてからSKKの調子が悪い。<br>
+いちおうCVSの最新を使っているんだけど、なんかもっさり感があって変だよなあ。
+</p>
+
+<p>
+あとterm/bobcat.elが効いてないような？ソースを見てみる。
+</p>
+
+<pre>
+(defun terminal-init-bobcat ()
+  &quot;Terminal initialization function for bobcat.&quot;  
+  ;; HP terminals usually encourage using ^H as the rubout character
+  (keyboard-translate ?\177 ?\^h)
+  (keyboard-translate ?\^h ?\177))
+</pre>
+<p>
+え？定義だけになったの？(terminal-init-bobcat)しないといけないのか。<br>
+~/.emacs追加しとかないと。
+</p>
+
+<p>
+そうそう。補完のときにスペースバーが使えなくなったも痛いな。<br>
+タブより多用してただけに。
+</p>
+<!-- section end -->
+</div>
+<!-- 2007/06/14 end -->
+
+
+
+<hr class="hide">
+<!-- 2007/06/15 start -->
+<h2><a name="20070615" href="200706b.html#20070615">2007-06-15 (Fri)</a></h2>
+<!-- 2007-06-16 02:42:28 -->
+
+<div class="entry1">
+<h3><a name="200706151" title="200706151" href="200706b.html#200706151">■</a> 
+[Thunderbird] ThunderbirdでEmacsキーバインド</h3>
+<p>
+ThunderbirdでついついC-nとかC-pを押しっ放しにするとひどい目にあう。<br>
+とくにC-nの場合は最悪でひとりブラクラ攻撃を喰らってしまう。<br>
+Windowsの場合はXkeymacsを使ってたので気にならなかったけど、<br>
+Linuxだとどうすればいいのか。
+</p>
+
+<p>
+実は
+<a href="http://extensionroom.mozdev.org/more-info/keyconfig">keyconfig</a>はFirefoxだけでなくThunderbirdでも使える。<br>
+というわけでEmacsキーバインドにするにはC-n,C-p,C-f,C-b等の割り当てを削除すればok。<br>
+その前に~/.gtkrc-2.0にgtk-key-theme-name = &quot;Emacs&quot;を追加するとか、<br>
+gconfで/desktop/gnome/interface/gtk_key_themeをEmacsにするとか細かい事情はあるようだが。
+</p>
+<!-- section end -->
+</div>
+<!-- 2007/06/15 end -->
+
+
+
+<hr class="hide">
+<!-- 2007/06/16 start -->
+<h2><a name="20070616" href="200706b.html#20070616">2007-06-16 (Sat)</a></h2>
+<!-- 2007-06-17 01:52:02 -->
+
+<div class="entry1">
+<h3><a name="200706161" title="200706161" href="200706b.html#200706161">■</a> 
+ビデオをどんどん観る</h3>
+<p>
+2週間分もあると消化しきれない。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200706162" title="200706162" href="200706b.html#200706162">■</a> 
+<a href="https://addons.mozilla.org/ja/thunderbird/addon/1339">[Thunderbird] GmailUI</a></h3>
+<p>
+やっぱyが便利だ。Inboxが常に空の状態にできるしねえ。<br>
+結局フォルダを作るのはやめて検索フォルダで対応。<br>
+どれだけの数に耐えられるのか？
+</p>
+<!-- section end -->
+</div>
+<!-- 2007/06/16 end -->
+
+
+
+<hr class="hide">
+<!-- 2007/06/17 start -->
+<h2><a name="20070617" href="200706b.html#20070617">2007-06-17 (Sun)</a></h2>
+<!-- 2007-06-18 01:37:16 -->
+
+<div class="entry1">
+<h3><a name="200706171" title="200706171" href="200706b.html#200706171">■</a> 
+<a href="http://freshmeat.net/projects/linkchecker/">[Soft] LinkChecker 4.7 (Stable)</a></h3>
+<blockquote><dl>
+<dt>
+About:
+<dd>
+With LinkChecker, you can check HTML documents for broken links. It
+features recursion, robots.txt exclusion protocol support, HTTP proxy
+support, i18n support, multithreading, regular expression filtering rules
+for links, and user/password checking for authorized pages. Output can be
+colored or normal text, HTML, SQL, CSV, or a sitemap graph in DOT, GML, or
+XML format. Supported link types are HTTP/1.1 and 1.0, HTTPS, FTP, mailto:,
+news:, nntp:, Gopher, Telnet, and local files.
+</dl></blockquote>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200706172" title="200706172" href="200706b.html#200706172">■</a> 
+<a href="http://freshmeat.net/projects/ruby_ircd/">[Soft] ruby-ircd 0.04</a></h3>
+<blockquote><dl>
+<dt>
+About:
+<dd>
+ruby-ircd is a pure Ruby IRC daemon implementation. It extends the
+webrick generic server. It is currently a stand alone daemon. It does not
+support linking with other IRC servers. 
+</dl></blockquote>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200706173" title="200706173" href="200706b.html#200706173">■</a> 
+<a href="http://www.rubyinside.com/lazibi-python-style-indenting-for-ruby-532.html">[Ruby] Lazibi: Python-style indenting for Ruby</a></h3>
+<p>
+最近ruby-talkでよく出てくるPython-styleで書けるプリプロセッサ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2007/06/17 end -->
+
+
+
+<hr class="hide">
+<!-- 2007/06/18 start -->
+<h2><a name="20070618" href="200706b.html#20070618">2007-06-18 (Mon)</a></h2>
+<!-- 2007-06-19 01:13:38 -->
+
+<div class="entry1">
+<h3><a name="200706181" title="200706181" href="200706b.html#200706181">■</a> 
+[Mail] つい開いちゃうspam</h3>
+<p>
+こんなSubjectでメールが来たんじゃさすがに開いてしまう。
+</p><blockquote><p>
+The feed reader you are using does not support standard HTTP
+mechanisms for announcing that a feed has been discontinued so you
+will receive this message until you manually unsubscribe.
+</p></blockquote><p>
+中見てがっかりなわけだが、長い時点で気づかないといけないようだ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2007/06/18 end -->
+
+
+
+<hr class="hide">
+<!-- 2007/06/19 start -->
+<h2><a name="20070619" href="200706b.html#20070619">2007-06-19 (Tue)</a></h2>
+<!-- 2007-06-20 02:04:37 -->
+
+<div class="entry1">
+<h3><a name="200706191" title="200706191" href="200706b.html#200706191">■</a> 
+[Ruby] Quine</h3>
+<p>
+DATAをrewindするとどうなるのか。ちゃんとファイルの最初へseekする。<br>
+つまりこんなQuineも成立する。
+</p>
+
+<pre>
+DATA.rewind
+$&gt;&lt;&lt;DATA.read
+__END__
+</pre>
+
+<!-- section end -->
+</div>
+<!-- 2007/06/19 end -->
+
+
+
+<hr class="hide">
+<!-- 2007/06/20 start -->
+<h2><a name="20070620" href="200706b.html#20070620">2007-06-20 (Wed)</a></h2>
+<!-- 2007-06-21 02:07:49 -->
+
+<div class="entry1">
+<h3><a name="200706201" title="200706201" href="200706b.html#200706201">■</a> 
+[AWK] mawkのprintfのバグ</h3>
+<p>
+Quineの有名なC版をawkに移植していて気づいたmawkのバグ。
+</p>
+
+<pre>
+BEGIN {
+  f = &quot;%c%s%c\n&quot;
+  printf(f, 34, f, 34)
+}
+</pre>
+<p>
+これをmawkで実行するとなにか足りない。
+</p>
+
+<pre>
+% mawk -f x.awk
+&quot;%c%s&quot;
+</pre>
+<p>
+ほんとはこうならないといけない。
+</p>
+
+<pre>
+% gawk -f x.awk
+&quot;%c%s%c
+&quot;
+</pre>
+<p>
+このせいで
+<a href="http://golf.shinh.org/p.rb?Quine">Quine</a>のAWK版がまだなかったりする。<br>
+別解を考えるか。
+</p>
+<!-- section end -->
+</div>
+<!-- 2007/06/20 end -->
+
+<hr>
+<div>
+<a href="200706a.html">&lt;Prev(,)</a> | 
+<a href="200706c.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

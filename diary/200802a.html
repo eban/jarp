@@ -1,0 +1,372 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2008-2-a</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="200801c.html">
+<link rel="next" href="200802b.html">
+
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2008年2月上旬〜</p>
+<hr>
+<div>
+<a href="200801c.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="200802b.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2008/02/01 start -->
+<h2><a name="20080201" href="200802a.html#20080201">2008-02-01 (Fri)</a></h2>
+<!-- 2008-02-02 02:39:05 -->
+
+<div class="entry1">
+<h3><a name="200802011" title="200802011" href="200802a.html#200802011">■</a> 
+1月のspam</h3>
+<p>
+3900通ほど。どういうわけか先月に比べると1000通ほど減っている。
+</p>
+<!-- section end -->
+</div>
+<!-- 2008/02/01 end -->
+
+
+
+<hr class="hide">
+<!-- 2008/02/02 start -->
+<h2><a name="20080202" href="200802a.html#20080202">2008-02-02 (Sat)</a></h2>
+<!-- 2008-02-03 02:27:14 -->
+
+<div class="entry1">
+<h3><a name="200802021" title="200802021" href="200802a.html#200802021">■</a> 
+[Firefox3] Firefox3のURL自動補完</h3>
+<p>
+最初は便利かと思っていたFirefox3のURL自動補完も、<br>
+ブックマークで短いキーワードを設定してると使いものにならない。<br>
+だんだんうっとうしくなってきたのでabout:configで無効にすることにした。<br>
+browser.urlbar.richResultsがその設定だと思うけど、falseしても効かないな。<br>
+うーむ。
+</p>
+
+<p>
+あれ。再起動したら効いた。ふむ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2008/02/02 end -->
+
+
+
+<hr class="hide">
+<!-- 2008/02/03 start -->
+<h2><a name="20080203" href="200802a.html#20080203">2008-02-03 (Sun)</a></h2>
+<!-- 2008-02-04 01:51:22 -->
+
+<div class="entry1">
+<h3><a name="200802031" title="200802031" href="200802a.html#200802031">■</a> 
+<a href="http://www.floodgap.com/software/ttytter/">[Twitter] TTYtter</a></h3>
+<p>
+昨日から使ってる。<br>
+ファイルは1個だけであとはcurlかlynxがあればokなのでインストールは簡単。<br>
+ktermラヴなのでscreenでUTF-8な端末を1個用意した。<br>
+rlwrapは必須。これがないと編集がつらい。<br>
+-daemonで動かして-statusでシェルの編集機能を使う手もあるかもしれないが。
+</p>
+
+<p>
+自分でプラグインみたいなものを書くこともできて、<br>
+それを使えばログを取ることも可能。<br>
+各APIに対するURLを細かく指定できるようになっているのは、<br>
+互換APIが提供されてればtwitterクローンでも使えるってことなんだろうな。
+</p>
+<!-- section end -->
+</div>
+<!-- 2008/02/03 end -->
+
+
+
+<hr class="hide">
+<!-- 2008/02/04 start -->
+<h2><a name="20080204" href="200802a.html#20080204">2008-02-04 (Mon)</a></h2>
+<!-- 2008-02-05 01:52:35 -->
+
+<div class="entry1">
+<h3><a name="200802041" title="200802041" href="200802a.html#200802041">■</a> 
+[Perl] DateTimeとTimeDate</h3>
+<p>
+TTYtterの-timestampオプションを使えば、<br>
+strftime形式でタイムスタンプを指定できると書いてあったので、<br>
+早速TimeDateを入れたのはいいがなぜかDateTimeを入れてしまい、<br>
+しばらく気づかずに悩む。
+</p>
+
+<p>
+yum list|lessしてDateで検索してしまったのが敗因。
+</p>
+<!-- section end -->
+</div>
+<!-- 2008/02/04 end -->
+
+
+
+<hr class="hide">
+<!-- 2008/02/05 start -->
+<h2><a name="20080205" href="200802a.html#20080205">2008-02-05 (Tue)</a></h2>
+<!-- 2008-02-06 02:48:33 -->
+
+<div class="entry1">
+<h3><a name="200802051" title="200802051" href="200802a.html#200802051">■</a> 
+<a href="http://golf.shinh.org/p.rb?simple+language">[Golf] 短い出力</a></h3>
+<p>
+もう短い出力はパターン化されちゃってるので解く人も少ない。<br>
+そろそろ行シリーズを復活させようかな。
+</p>
+<!-- section end -->
+</div>
+<!-- 2008/02/05 end -->
+
+
+
+<hr class="hide">
+<!-- 2008/02/06 start -->
+<h2><a name="20080206" href="200802a.html#20080206">2008-02-06 (Wed)</a></h2>
+<!-- 2008-02-07 01:14:44 -->
+
+<div class="entry1">
+<h3><a name="200802061" title="200802061" href="200802a.html#200802061">■</a> 
+[Linux] HAL daemon</h3>
+<p>
+最近
+</p>
+
+<pre>
+/etc/cron.daily/0anacron:
+
+Could not initialise connection to hald.
+Normally this means the HAL daemon (hald) is not running or not ready.
+</pre>
+<p>
+というメールが毎日来てて気にせずに放置してたんだけど、<br>
+CD-ROMも入れてもアイコンが出てこないのがこれのせいだとわかったので、<br>
+やっと重い腰を上げるした。<br>
+/var/log/messagesを見ると
+</p>
+
+<pre>
+Feb  4 02:36:27 cow kernel: hald[2072]: segfault at b7e79000 eip 080571b6 esp bfce0500 error 4
+</pre>
+<p>
+SEGVで死んでたようだ。
+</p>
+
+<pre>
+% sudo service haldaemon start
+</pre>
+<p>
+したら生き返った。まあ、そういうこともあるよな。
+</p>
+<!-- section end -->
+</div>
+<!-- 2008/02/06 end -->
+
+
+
+<hr class="hide">
+<!-- 2008/02/07 start -->
+<h2><a name="20080207" href="200802a.html#20080207">2008-02-07 (Thu)</a></h2>
+<!-- 2008-02-08 01:35:02 -->
+
+<div class="entry1">
+<h3><a name="200802071" title="200802071" href="200802a.html#200802071">■</a> 
+<a href="http://www.oreilly.co.jp/books/9784873113562/">[Ruby] oreilly.co.jp -- Online Catalog: Rubyスクリプティングテクニック</a></h3>
+<p>
+へえ、こんな本が出るのか。ねこの日だな。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200802072" title="200802072" href="200802a.html#200802072">■</a> 
+<a href="http://golf.shinh.org/p.rb?rot13">[Golf] rot13</a></h3>
+<p>
+この
+<a href="http://golf.shinh.org/reveal.rb?rot13/ais523/1201185509&amp;sh">trの使い方</a>
+はかしこい。
+</p>
+
+<pre>
+% tr A-za-m N-ZA-z
+</pre>
+<p>
+最初はやはり有名な
+</p>
+
+<pre>
+% tr A-Za-z N-ZA-Mn-za-m
+</pre>
+<p>
+あたりから始まって
+</p>
+
+<pre>
+% tr A-z N-ZA-Sn-za-m
+</pre>
+<p>
+までは行きつくが、そこからa-mを重ねて使うあたりがなかなか思いつかない。
+</p>
+
+<p>
+不思議なのはPerlが
+</p>
+
+<pre>
+y/N-ZA-z/A-za-m/
+</pre>
+<p>
+でtrが
+</p>
+
+<pre>
+tr A-za-m N-ZA-z
+</pre>
+<p>
+なんだよねえ。実際逆だと駄目だったりするわけで。
+</p>
+<!-- section end -->
+</div>
+<!-- 2008/02/07 end -->
+
+
+
+<hr class="hide">
+<!-- 2008/02/08 start -->
+<h2><a name="20080208" href="200802a.html#20080208">2008-02-08 (Fri)</a></h2>
+<!-- 2008-02-10 02:39:58 -->
+
+<div class="entry1">
+<h3><a name="200802081" title="200802081" href="200802a.html#200802081">■</a> 
+<a href="http://golf.shinh.org/p.rb?Permutations">[Golf] Permutations</a></h3>
+<p>
+Bash版はタイムアウト。
+</p>
+
+<pre>
+a={0..5}
+eval echo $a$a$a$a$a$a|tr \  \\n|sed '/\(.\).*\1/d;s/\B/ /g'
+</pre>
+
+<!-- section end -->
+</div>
+<!-- 2008/02/08 end -->
+
+
+
+<hr class="hide">
+<!-- 2008/02/09 start -->
+<h2><a name="20080209" href="200802a.html#20080209">2008-02-09 (Sat)</a></h2>
+<!-- 2008-02-10 02:38:27 -->
+
+<div class="entry1">
+<h3><a name="200802091" title="200802091" href="200802a.html#200802091">■</a> 
+[RSS] 未読が3000</h3>
+<p>
+RSSの未読が3000を越えた。<br>
+ニュース系が大半をしめてるので見なくてもいいはずだが、<br>
+どうしたもんか。
+</p>
+
+<p>
+なんとか2000ぐらいまで減らした。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200802092" title="200802092" href="200802a.html#200802092">■</a> 
+<a href="http://golf.shinh.org/p.rb?cut+string">[Golf] cut string</a></h3>
+<p>
+1行目の数字の意味を教えてもらった。<br>
+その通りに解くよりは決め打ちのほうが短くなるのが切ない。
+</p>
+<!-- section end -->
+</div>
+<!-- 2008/02/09 end -->
+
+
+
+<hr class="hide">
+<!-- 2008/02/10 start -->
+<h2><a name="20080210" href="200802a.html#20080210">2008-02-10 (Sun)</a></h2>
+<!-- 2008-02-11 03:06:07 -->
+
+<div class="entry1">
+<h3><a name="200802101" title="200802101" href="200802a.html#200802101">■</a> 
+[Video] ビデオ消化</h3>
+<p>
+まったりと正月あたりから録りためた映画を消化。
+</p>
+<!-- section end -->
+</div>
+<!-- 2008/02/10 end -->
+
+<hr>
+<div>
+<a href="200801c.html">&lt;Prev(,)</a> | 
+<a href="200802b.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

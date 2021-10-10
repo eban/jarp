@@ -1,0 +1,534 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2015-5-c</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="201505b.html">
+<link rel="next" href="201506a.html">
+
+<link rel="stylesheet" type="text/css" href="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.css">
+<script async type="text/javascript" src="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.js"></script>
+<script type="text/javascript">
+<!--       
+$(document).ready(function() {
+  prettyPrint();
+});
+-->
+</script>
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2015年5月下旬〜</p>
+<hr>
+<div>
+<a href="201505b.html" accesskey=",">&lt;Older(,)</a> | 
+<a href="201506a.html" accesskey=".">Newer(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2015/05/21 start -->
+<h2><a name="20150521" href="201505c.html#20150521">2015-05-21 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="201505211" title="201505211" href="201505c.html#201505211">■</a> 
+SynergyとVirtualBoxとLock</h3>
+<p>
+この組み合わせでコピペがなぜかできなくなる。
+</p>
+<p>
+デスクトップPCのWindows7をSynergyのサーバにする。<br>
+VirtualBox上のUbuntuを立ち上げる。
+ノートPCのWinodws7をSynergyのクライアントにする。<br>
+ここまでは全然問題ない。<br>
+会議にノートPCを持ってくついでにデスクトップPCをLockする。<br>
+するとノートPCでなぜかコピペできなくなる。
+</p>
+<p>
+いやあ、この組み合わせを特定するのに2ヶ月かかった。<br>
+解決してないがコピペできないと仕事にならないことがよくわかった。
+</p>
+<!-- section end -->
+</div>
+<!-- 2015/05/21 end -->
+
+
+
+<hr class="hide">
+<!-- 2015/05/22 start -->
+<h2><a name="20150522" href="201505c.html#20150522">2015-05-22 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="201505221" title="201505221" href="201505c.html#201505221">■</a> 
+Smart J:COM Boxの字幕</h3>
+<p>
+torneで字幕を出してるとJ:COMでも出したくなるわけだが仕様が違う。<br>
+torneだと一度字幕ONにするとその後はずっとONになるが、<br>
+J:COMではその再生中だけで停止したら解除される。<br>
+あとなぜか一時停止中もある程度時間が経つとOFFになる。<br>
+これはいったい何の意味があるのか。<br>
+再生するとONになるので特に問題ないが、<br>
+わざわざOFFにする機能を入れた理由が気になる。
+</p>
+<p>
+M-ONで字幕出すと歌詞が見られるのですげー便利なのだ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2015/05/22 end -->
+
+
+
+<hr class="hide">
+<!-- 2015/05/23 start -->
+<h2><a name="20150523" href="201505c.html#20150523">2015-05-23 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="201505231" title="201505231" href="201505c.html#201505231">■</a> 
+awkで最初のフィールドを削除</h3>
+<p>
+よく$1=&quot;&quot;でお茶を濁しがちだが、それだと先頭に区切りが残ってしまいちょっと具合が悪い。
+</p>
+<pre>
+% echo 'a b c' | awk '{$1=&quot;&quot;}1'
+ b c
+</pre>
+<p>
+そこでsubで消す手が考えられるが、$1にメタな文字があると破綻する。
+</p>
+<pre>
+% echo 'a b c' | awk '{sub(&quot;^&quot; $1 &quot; &quot;, &quot;&quot;)}1'
+b c
+% echo '.* b c' | awk '{sub(&quot;^&quot; $1 &quot; &quot;, &quot;&quot;)}1'
+c
+</pre>
+<p>
+エスケープさせるのも面倒。<br>
+長さを求めるのは簡単なのでsubstrしちゃう手はある。
+</p>
+<pre>
+% echo '.* b c' | awk '{$0=substr($0,length($1 &quot; &quot;)+1)}1'
+b c
+</pre>
+<p>
+それよりはNFを再構築させるという方法が簡単。
+</p>
+<pre>
+% echo '.* b c' | awk '{$1=&quot;&quot;;$0=$0;$1=$1}1'
+b c
+</pre>
+<p>
+$0=$0でNFが再構築されて3から2になり、$1=$1で$0が再構築される。<br>
+$1=$1だけでは変化しない。
+</p>
+<pre>
+% echo '.* b c' | awk '{$1=&quot;&quot;}1' 
+ b c
+% echo '.* b c' | awk '{$1=&quot;&quot;;$0=$0}1'
+ b c
+% echo '.* b c' | awk '{$1=&quot;&quot;;$1=$1}1'
+ b c
+% echo '.* b c' | awk '{$1=&quot;&quot;;$0=$0;$1=$1}1'
+b c
+</pre>
+<!-- section end -->
+</div>
+<!-- 2015/05/23 end -->
+
+
+
+<hr class="hide">
+<!-- 2015/05/24 start -->
+<h2><a name="20150524" href="201505c.html#20150524">2015-05-24 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="201505241" title="201505241" href="201505c.html#201505241">■</a> 
+きっちり10秒間隔でコマンドを実行 #シェル芸</h3>
+<p>
+ループ組んでsleep 10だけではコマンド実行の時間分だけ加算されてどんどん遅れてしまう。<br>
+そこで小数点まで考えてsleepさせる。<br>
+GNU coreutilsのdateなら%Nでnano secまで得られるので、<br>
+これを組み合わせればいける。
+</p>
+<pre>
+% bash -c 'for i in {1..6};do s=($(date +%S\ %3N));n=$[9-s[0]%10].$[(1000-s[1])%1000];sleep $n;date &quot;+%F %T.%3N&quot;;done'
+2015-05-25 01:55:00.003
+2015-05-25 01:55:10.002
+2015-05-25 01:55:20.003
+2015-05-25 01:55:30.002
+2015-05-25 01:55:40.004
+2015-05-25 01:55:50.003
+</pre>
+<p>
+%3Nにすればmsecになる。<br>
+ただこれ%3Nが9XXだと小数点が2桁になっちゃうからそのあたりを考慮しないと本当はいけない。<br>
+まあ、1回目だけなので気にしない。
+</p>
+<pre>
+% bash -c 'for i in {1..6};do s=($(date +%S\ %3N));n=$[9-s[0]%10].$[(1000-s[1])%1000];sleep $n;date &quot;+%F %T.%3N,$n,${s[1]}&quot;;done'
+2015-05-25 02:02:10.363,3.40,960
+2015-05-25 02:02:20.003,9.636,364
+2015-05-25 02:02:30.003,9.995,005
+2015-05-25 02:02:40.003,9.996,004
+2015-05-25 02:02:50.002,9.995,005
+2015-05-25 02:03:00.003,9.996,004
+</pre>
+<!-- section end -->
+</div>
+<!-- 2015/05/24 end -->
+
+
+
+<hr class="hide">
+<!-- 2015/05/25 start -->
+<h2><a name="20150525" href="201505c.html#20150525">2015-05-25 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="201505251" title="201505251" href="201505c.html#201505251">■</a> 
+今日もきっちり10秒</h3>
+<p>
+やっぱ気になったので%3Nが9XXの場合も考慮する。<br>
+整数部と小数部を分けて処理するから変なことになるわけで、<br>
+msec単位で最初から扱って後から1000で割ればいい。<br>
+という方針でzshでやってみた。
+</p>
+<pre>
+% zsh -c 'repeat 6 {a=$[10000-$(date +%S%3N)%10000];a[-3,-4]=.;sleep $a;date +%S.%3N}'
+40.002
+50.004
+00.003
+10.005
+20.003
+30.004
+</pre>
+<p>
+いい感じだ。1000で割るってことは&quot;.&quot;を挿入することなので、実際に割らなくてもいい。<br>
+しかしこれだとbashでは別の処理が必要になる。そこでbusyboxのusleepだ。<br>
+ってほどでもないが、micro sec単位でsleepできる。
+</p>
+<pre>
+% zsh -c 'repeat 6 { busybox usleep $[10000000-$(date +%s%6N)%10000000];date +%S.%3N }'
+10.002
+20.002
+30.002
+40.002
+50.002
+00.002
+</pre>
+<p>
+micro secなので%6Nになる。かなりすっきりした。
+</p>
+<!-- section end -->
+</div>
+<!-- 2015/05/25 end -->
+
+
+
+<hr class="hide">
+<!-- 2015/05/26 start -->
+<h2><a name="20150526" href="201505c.html#20150526">2015-05-26 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="201505261" title="201505261" href="201505c.html#201505261">■</a> 
+Cygwinのkeychainが毎回パスフレーズを聞いてきてうっとうしい</h3>
+<p>
+先日Cygwinを更新してからkeychainがなんかおかしい。<br>
+警告吐いて毎回パスフレーズを要求する。
+</p>
+<pre>
+ * keychain 2.7.1 ~ http://www.funtoo.org
+ * Found existing ssh-agent: 6284
+ * Warning: Can't determine fingerprint from the following line, falling back to filename
+&lt;中略&gt;
+Enter passphrase for /home/eban/.ssh/id_dsa:
+</pre>
+<p>
+こうなるとkeychainを使ってる意味がないので調べてみた。<br>
+<a href="http://www.openssh.com/txt/release-6.8">OpenSSH 6.8のリリースノート</a>によるとfingerprintの仕様が変更されていた。
+</p>
+<pre>
+ * Add FingerprintHash option to ssh(1) and sshd(8), and equivalent
+   command-line flags to the other tools to control algorithm used
+   for key fingerprints. The default changes from MD5 to SHA256 and
+   format from hex to base64.
+
+   Fingerprints now have the hash algorithm prepended. An example of
+   the new format: SHA256:mVPwvezndPv/ARoIadVY98vAC0g+P/5633yTC4d/wXE
+   Please note that visual host keys will also be different.
+</pre>
+<p>
+この影響でfingerprintが認識できなくなったようで。<br>
+<a href="https://bbs.archlinux.org/viewtopic.php?id=194978">[Solved] OpenSSH 6.8p1-1 and keychain: can't determine fingerprint</a><br>
+<a href="https://github.com/funtoo/keychain/pull/26/files">このパッチ</a>を入れるか、最新版を取ってくればよさげ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2015/05/26 end -->
+
+
+
+<hr class="hide">
+<!-- 2015/05/27 start -->
+<h2><a name="20150527" href="201505c.html#20150527">2015-05-27 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="201505271" title="201505271" href="201505c.html#201505271">■</a> 
+Windows Updateの再起動の途中で止まる</h3>
+<p>
+2時間ぐらい待っても
+</p>
+<pre>
+ステージ 3/3
+Windowsを構成するための準備中
+コンピュータの電源を切らないでください。
+</pre>
+<p>
+と表示されたまま進まないので、<br>
+このメッセージでぐぐってみたらそのものずばりのページにヒットした。<br>
+<a href="https://support.microsoft.com/ja-jp/kb/2618153/ja">KB2533552 の修正プログラムと...</a><br>
+すでに完了してるので、CTRL+ALT+DELでログオンすればokとのこと。<br>
+2時間も待たなくても。
+</p>
+<!-- section end -->
+</div>
+<!-- 2015/05/27 end -->
+
+
+
+<hr class="hide">
+<!-- 2015/05/28 start -->
+<h2><a name="20150528" href="201505c.html#20150528">2015-05-28 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="201505281" title="201505281" href="201505c.html#201505281">■</a> 
+きっちり(ry</h3>
+<p>
+あんなに凝らなくても、バックグラウンドで動かせば結構正確に起動できるのであった。<br>
+待つのが面倒なので2秒で。
+</p>
+<pre>
+% repeat 10 (date +&quot;%F %T.%3N&quot;&amp;sleep 2) 2&gt; /dev/null
+2015-05-29 00:01:11.890
+2015-05-29 00:01:13.895
+2015-05-29 00:01:15.900
+2015-05-29 00:01:17.905
+2015-05-29 00:01:19.910
+2015-05-29 00:01:21.915
+2015-05-29 00:01:23.920
+2015-05-29 00:01:25.925
+2015-05-29 00:01:27.931
+2015-05-29 00:01:29.936
+</pre>
+<p>
+なんだかんだで5msecぐらいオーバーヘッドがあるようで1.995にすると完璧だ。
+</p>
+<pre>
+% repeat 10 (date +&quot;%F %T.%3N&quot;&amp;sleep 1.995) 2&gt; /dev/null
+2015-05-29 00:04:30.114
+2015-05-29 00:04:32.115
+2015-05-29 00:04:34.114
+2015-05-29 00:04:36.115
+2015-05-29 00:04:38.115
+2015-05-29 00:04:40.115
+2015-05-29 00:04:42.115
+2015-05-29 00:04:44.115
+2015-05-29 00:04:46.115
+2015-05-29 00:04:48.115
+</pre>
+<p>
+まあ、これは他に重い処理が走ったらすぐ破綻するが。
+</p>
+<!-- section end -->
+</div>
+<!-- 2015/05/28 end -->
+
+
+
+<hr class="hide">
+<!-- 2015/05/29 start -->
+<h2><a name="20150529" href="201505c.html#20150529">2015-05-29 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="201505291" title="201505291" href="201505c.html#201505291">■</a> 
+DNF</h3>
+<p>
+久し振りにFedoraをインストールしたらすでにDNFな世界だった。
+</p>
+<pre>
+[eban@fedora ~]$ sudo yum install nawk
+[sudo] password for eban: 
+Yum command has been deprecated, redirecting to '/usr/bin/dnf install nawk'.
+See 'man dnf' and 'man yum2dnf' for more information.
+To transfer transaction metadata from yum to DNF, run:
+'dnf install python-dnf-plugins-extras-migrate &amp;&amp; dnf-2 migrate'
+
+エラー: Failed to synchronize cache for repo 'fedora' from &lt;以下略&gt;
+</pre>
+<p>
+yum自身はすでにwrapperになっていてメッセージを吐いてdnfを起動するようになっている。<br>
+だから/etc/yum.confでproxy設定をしても意味がなく/etc/dnf/dnf.confを書き換えないといけない。
+</p>
+<!-- section end -->
+</div>
+<!-- 2015/05/29 end -->
+
+
+
+<hr class="hide">
+<!-- 2015/05/30 start -->
+<h2><a name="20150530" href="201505c.html#20150530">2015-05-30 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="201505301" title="201505301" href="201505c.html#201505301">■</a> 
+問題5</h3>
+<p>
+最初はRubyとかで考えていたのをそのまま忠実に置き換えていたもんだから、長い上に非常に遅かった。
+</p>
+<pre>
+% for i in {+,-,.}{+,-,.}{+,-,.}{+,-,.}{+,-,.}{+,-,.}{+,-,.}{+,-,.}; do a=$(echo $i|grep -o .|paste &lt;(seq 9) - |\
+  sed &quot;:;s/[.\t\n]//g;N;b&quot;);echo &quot;$a = $[$a]&quot;;done|grep &quot;= 100&quot;
+1+2+3-4+5+6+78+9 = 100
+1+2+34-5+67-8+9 = 100
+1+23-4+5+6+78-9 = 100
+1+23-4+56+7+8+9 = 100
+12+3+4+5-6-7+89 = 100
+12+3-4+5+67+8+9 = 100
+12-3-4+5-6+7+89 = 100
+123+4-5+67-89 = 100
+123+45-67+8-9 = 100
+123-4-5-6-7+8-9 = 100
+123-45-67+89 = 100
+for i in {+,-,.}{+,-,.}{+,-,.}{+,-,.}{+,-,.}{+,-,.}{+,-,.}{+,-,.}; do; a= ;    0.67s user 2.55s system 11% cpu 27.990 total
+grep &quot;= 100&quot;  0.00s user 0.28s system 1% cpu 27.989 total
+</pre>
+<p>
+それを1から9の間に自分で挟むことで対応。短いし一瞬で終わるのであった。
+</p>
+<pre>
+% for i in 1{+,-,}2{+,-,}3{+,-,}4{+,-,}5{+,-,}6{+,-,}7{+,-,}8{+,-,}9; do echo &quot;$i = $[$i]&quot;;done | grep &quot;= 100&quot;
+1+2+3-4+5+6+78+9 = 100
+1+2+34-5+67-8+9 = 100
+1+23-4+5+6+78-9 = 100
+1+23-4+56+7+8+9 = 100
+12+3+4+5-6-7+89 = 100
+12+3-4+5+67+8+9 = 100
+12-3-4+5-6+7+89 = 100
+123+4-5+67-89 = 100
+123+45-67+8-9 = 100
+123-4-5-6-7+8-9 = 100
+123-45-67+89 = 100
+</pre>
+<p>
+ゴルフするとこんな感じだ。
+</p>
+<pre>
+% bash -c 'for i in '$(seq -s &quot;{+,-,}&quot; 9)';{ echo &quot;$i = $[$i]&quot;;}|grep \ 100'
+1+2+3-4+5+6+78+9 = 100
+1+2+34-5+67-8+9 = 100
+1+23-4+5+6+78-9 = 100
+1+23-4+56+7+8+9 = 100
+12+3+4+5-6-7+89 = 100
+12+3-4+5+67+8+9 = 100
+12-3-4+5-6+7+89 = 100
+123+4-5+67-89 = 100
+123+45-67+8-9 = 100
+123-4-5-6-7+8-9 = 100
+123-45-67+89 = 100
+</pre>
+<p>
+seq -sでのパターン生成がうまくはまっている。
+</p>
+<pre>
+% seq -s &quot;{+,-,}&quot; 9
+1{+,-,}2{+,-,}3{+,-,}4{+,-,}5{+,-,}6{+,-,}7{+,-,}8{+,-,}9
+</pre>
+<!-- section end -->
+</div>
+<!-- 2015/05/30 end -->
+
+
+
+<hr class="hide">
+<!-- 2015/05/31 start -->
+<h2><a name="20150531" href="201505c.html#20150531">2015-05-31 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="201505311" title="201505311" href="201505c.html#201505311">■</a> 
+スキャンした結果をGoogle Photosへ</h3>
+<p>
+200枚ほどスキャンした画像が置いてあるディレクトリD&amp;Dしてみたら10分ほどかかった。<br>
+APIもないしちょっとこれは時間がかかりすぎ。<br>
+試しにzipだのpdfだのを試してみたが、ちゃんとスキップされた。<br>
+foo.pdfをfoo.gifと名前を変えたらアップロードは成功するが、最終的に中身を見てスキップされる。<br>
+つまり複数枚を1つファイルで上げるにはもうGIFアニメぐらいしかない。<br>
+というわけでconvertで200ページほどのGIFアニメを作ったら15分もかかった。実に本末転倒だ。<br>
+もっと速く作る方法を探ろう。
+</p>
+<p>
+それはそれとして10ページほどで作ったら全然問題なかったので、<br>
+保存するだけなら方向性は間違ってない。いや間違ってるかも。<br>
+とりあえずがんがんGoogle Photosへ上げたい。<br>
+あっ、mp4へ変換すれば一時停止できるようになるし、読めるか。<br>
+いや1080pじゃなあ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2015/05/31 end -->
+
+<hr>
+<div>
+<a href="201505b.html">&lt;Older(,)</a> | 
+<a href="201506a.html">Newer(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

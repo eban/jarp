@@ -1,0 +1,790 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2002-2-b</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="200202a.html">
+<link rel="next" href="200202c.html">
+
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2002年2月中旬〜</p>
+<hr>
+<div>
+<a href="200202a.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="200202c.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2002/02/11 start -->
+<h2><a name="20020211" href="200202b.html#20020211">2002-02-11 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="200202111" title="200202111" href="200202b.html#200202111">■</a> 
+今日の略語</h3>
+<p>
+RWN - Ruby Weekly News
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200202112" title="200202112" href="200202b.html#200202112">■</a> 
+Cygwin 1.3.9-1</h3>
+<p>
+Ruby binariesのcygwin1.dllをCygwin 1.3.9-1にした。
+いや実際は金曜日の話なんだが。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200202113" title="200202113" href="200202b.html#200202113">■</a> 
+<a href="200201c.html#200201261">$'...'</a></h3>
+<p>
+で、結局config.cacheの中身になぜ$がつくかというとbash 2.05だと
+</p>
+<pre>
+% bash -c 'foo=&quot;a b&quot;;set |grep foo'
+foo=$'a b'
+</pre>
+<p>
+となるから。bash 2.04は
+</p>
+<pre>
+% bash -c 'foo=&quot;a b&quot;;set |grep foo'
+foo='a b'
+</pre>
+<p>
+と、なるので2.05からみたい。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200202114" title="200202114" href="200202b.html#200202114">■</a> 
+&quot;Masashi Suzuki&quot;</h3>
+<p>
+久し振りにSirCamだ。230KBもあるなんだかわからんファイルを送って来ないように。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200202115" title="200202115" href="200202b.html#200202115">■</a> 
+<a href="http://www.jvcmusic.co.jp/19/news/index.html">19</a></h3>
+<p>
+3月で解散するらしい。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/02/11 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/02/12 start -->
+<h2><a name="20020212" href="200202b.html#20020212">2002-02-12 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="200202121" title="200202121" href="200202b.html#200202121">■</a> 
+&quot;Masashi Suzuki&quot;</h3>
+<p>
+だからSirCamを2日連続で送ってくるなよ。ベルギー在住らしい。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200202122" title="200202122" href="200202b.html#200202122">■</a> 
+emacs -nw</h3>
+<p>
+screen内でemacs -nwってのは寂しいよねえ。
+と思ってたらEmacs21なら色がつくじゃん
+<a href="#20020212F1"><sup><small>*1</small></sup></a>。
+cmailは
+</p>
+<pre>
+(cmail-i18n-defcustom cmail-highlight-mode window-system
+</pre>
+<p>
+てな感じなので、cmail-highlight-modeを強制的にtにする。あと、
+</p>
+<pre>
+(set-face-foreground 'modeline &quot;gray&quot;)
+(set-face-background 'modeline &quot;black&quot;)
+</pre>
+<p>
+とするとなんかEmacs21ぽくていい。
+てゆかなぜ-nwのときはfgとbgが逆なのだ？
+</p>
+
+<hr align="left" width="40%">
+<div>
+<a name="20020212F1" href="200202b.html#20020212F1"><small>*1</small></a>:
+Emacs20はたぶんだめだよね？
+</div>
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200202123" title="200202123" href="200202b.html#200202123">■</a> 
+uconv 0.4.9</h3>
+<p>
+更新。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200202124" title="200202124" href="200202b.html#200202124">■</a> 
+Win32OLE 0.3.7a</h3>
+<p>
+とりあえず[test]のほうに入れとこう。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/02/12 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/02/13 start -->
+<h2><a name="20020213" href="200202b.html#20020213">2002-02-13 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="200202131" title="200202131" href="200202b.html#200202131">■</a> 
+<a href="http://www.ruby-lang.org/en/raa-list.rhtml?name=REXML">REXML 1.2.6</a></h3>
+<p>
+更新。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200202132" title="200202132" href="200202b.html#200202132">■</a> 
+&quot;Masashi Suzuki&quot;</h3>
+<p>
+3日目だ。いい加減SirCamに感染してるって教えてやるべきか？
+毎回200KBほど送られてもかなり迷惑だしなあ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2002/02/13 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/02/14 start -->
+<h2><a name="20020214" href="200202b.html#20020214">2002-02-14 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="200202141" title="200202141" href="200202b.html#200202141">■</a> 
+<a href="http://www.gnu.org/software/grub/grub.ja.html">GNU GRUB</a></h3>
+<p>
+久し振りにバージョンアップしてみた。
+ここに書いてるということは、そう、またbootしなかったのである。
+</p>
+
+<p>
+まずDOS用のフロッピーをあらかじめ用意して
+</p>
+<pre>
+% sudo mount /dev/fd0 /mnt
+% sudo /usr/local/sbin/grub-install --root-directory=/mnt '(fd0)'
+</pre>
+<p>
+てな感じでrescue diskを作り、これでちゃんとbootするかどうか確認した。
+GRUBはFATにインストールできるから、
+いざってときにmenu.lstをWindowsからいじれて便利なのだ。
+その後
+</p>
+<pre>
+% sudo /usr/local/sbin/grub-install '(hd0)'
+</pre>
+<p>
+としてるので、それほど心配はしてなかったんだけど、
+結局のところ元に戻してもbootしないのであった。
+正確なエラーメッセージはもう覚えてないけど、
+stage1.5がloadできないとかそんな感じの内容だった。
+</p>
+
+<p>
+元に戻らないとしたら物理的な位置が原因としか考えられない。
+とするとstage1.5がきっと8GBの壁を越えてしまったのだろう。
+8GBを越えない別のパーティションを用意しgrub-installし直したらbootできた。
+ビンゴのようだ。
+</p>
+
+<p>
+ひょっとしてstage1.5がloadできればkernelの位置はどこでもいいんだろうか？
+実験してみるとそんな感じだ。
+いずれにせよ/bootを別に用意しとくべきだったな。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200202142" title="200202142" href="200202b.html#200202142">■</a> 
+$'...'とbash 2.05a</h3>
+<p>
+autoconf方面でもbash 2.05の$'...'に関してはいろいろあったようで、
+さがみさんというかたから情報をもらった。ありがとうございます。
+で、bash 2.05aでは\nのようなものを含まなければ$がつかなくなった。
+</p>
+<pre>
+% bash -c 'foo=&quot;a b&quot;;set |grep foo'
+foo='a b'
+% bash --version
+GNU bash, version 2.05a.0(1)-release (i586-pc-linux-gnu)
+Copyright 2001 Free Software Foundation, Inc.
+</pre>
+<p>
+$がつく典型的な例はIFS。
+</p>
+<pre>
+% bash -c 'set |grep IFS'
+IFS=$' \t\n'
+</pre>
+<p>
+これが生のままだと確かにわかりにくい。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/02/14 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/02/15 start -->
+<h2><a name="20020215" href="200202b.html#20020215">2002-02-15 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="200202151" title="200202151" href="200202b.html#200202151">■</a> 
+<a href="http://www.gedanken.demon.co.uk/wwwoffle/">wwwoffle 2.7</a></h3>
+<p>
+なんかすごく速くなったような気がする。
+off-line時にRAAぐらい大きいとかなり待たされてたんだけど、あ、
+ModifyHTMLのenable-modify-htmlがnoになってるからだ。
+2.7は/etc/wwwoffle.confを見るのか。
+でもこれをyesにするとno dataになってしまうなあ。うーむ。
+これじゃadd-cache-infoが使えない。
+http://localhost:8080/control/もno dataだ。
+なんかバグっぽいな。とりあえず2.6dに戻そう。
+</p>
+
+<p>
+それはそれとしてwwwoffle-namazuも同梱されてる。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200202152" title="200202152" href="200202b.html#200202152">■</a> 
+Linux 2.4.18-rc1</h3>
+<p>
+更新した。
+-acもなぜか最近はactiveだったりするけど、これはどういう位置付け？
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/02/15 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/02/16 start -->
+<h2><a name="20020216" href="200202b.html#20020216">2002-02-16 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="200202161" title="200202161" href="200202b.html#200202161">■</a> 
+ruby-talk</h3>
+<p>
+
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-talk/33941">[ruby-talk:33941]</a> で追い付かれて
+
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-talk/33942">[ruby-talk:33942]</a> で抜かれた。
+</p>
+
+<p>
+その後Hybrisの登場だよ。ったく。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200202162" title="200202162" href="200202b.html#200202162">■</a> 
+<a href="http://www.ruby-lang.org/en/raa-list.rhtml?name=WEBrick">WEBrick 1.1.5</a></h3>
+<p>
+更新。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200202163" title="200202163" href="200202b.html#200202163">■</a> 
+<a href="200202b.html#200202151">WWWOFFLE 2.7</a></h3>
+<p>
+これを無視してたらしい。
+</p>
+<pre>
+WWWOFFLE: There is already a directory /var/spool/wwwoffle/html.old.
+WWWOFFLE: Remove it and re-run make.
+WWWOFFLE: 
+</pre>
+<p>
+消してmake installしなおしたらちゃんとうまくいった。疑ってごめん。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200202164" title="200202164" href="200202b.html#200202164">■</a> 
+これマジ!?</h3>
+<p>
+ミステリーサークルって人間が3人で3時間程度で作れるのか。
+イギリスにはミステリーサークルを作る団体が8ぐらいあるらしい。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/02/16 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/02/17 start -->
+<h2><a name="20020217" href="200202b.html#20020217">2002-02-17 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="200202171" title="200202171" href="200202b.html#200202171">■</a> 
+<a href="http://www.ruby-lang.org/en/raa-list.rhtml?name=RubyUnit">RubyUnit 0.5.4-02</a></h3>
+<pre>
+% i386-cygwin-ruby install.rb
+%
+</pre>
+<p>
+えっ？と思いdiffを取ってみるとChangeLogとmakehtml.rbだけの違いだった。なるほど。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200202172" title="200202172" href="200202b.html#200202172">■</a> 
+<a href="http://www.ruby-lang.org/en/raa-list.rhtml?name=Win32OLE">Win32OLE 0.3.9</a></h3>
+<p>
+更新。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200202173" title="200202173" href="200202b.html#200202173">■</a> 
+<a href="http://www.ruby-lang.org/en/raa-list.rhtml?name=REXML">REXML 1.2.7</a></h3>
+<p>
+なんか急にサイズが大きくなったと思ったら新しいRDocを使っているのか。
+これからこんな感じでみんな大きくなるのかな。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200202174" title="200202174" href="200202b.html#200202174">■</a> 
+RDoc alpha-a</h3>
+<p>
+CVSでupdateしてるんだけどNEW_FEATURESを見ると2/10にalpha-aが出てるようだ。
+アナウンスを見落としたか？ruby-talkをgrepしても出てこない。
+それにしてもalpha-9の次はalpha-aってのは意表を突かれた。
+そういうバージョンを作られるとsetup.ini的には非常に困るなあ。
+</p>
+
+<p>
+いずれ正式にリリースされればalphaは外れるから
+rdoc-alphaというパッケージ名にしてしまう手もあるか。
+</p>
+
+<p>
+rubyのソースごと試してみたら1時間経っても終わらない。
+</p>
+<pre>
+watanabe  1003 41.6 77.5 141640 98756 pts/2  D    15:31  25:23 \
+  /usr/local/bin/ruby /usr/local/bin/rdoc ...
+</pre>
+<p>
+ああ、これじゃ時間かかるわけだ。メモリが足りないな。
+killしたらなにも残らなかった。ぐふっ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200202175" title="200202175" href="200202b.html#200202175">■</a> 
+<a href="http://znz.s1.xrea.com/t/?date=20020217#p01">さがみさん</a></h3>
+<p>
+最初はそんな気がしたけど、
+biglobeからのメールだったことと芸風があまりにも違うので別人と判断しました。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/02/17 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/02/18 start -->
+<h2><a name="20020218" href="200202b.html#20020218">2002-02-18 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="200202181" title="200202181" href="200202b.html#200202181">■</a> 
+[Linux] iptablesでNAT</h3>
+<p>
+いままではPPxPのIPマスカレード機能を使って
+</p>
+<pre>
+filter ip +mO -S 192.168.1.0/24
+</pre>
+<p>
+てな感じで使ってたが、Linux 2.4.xのiptablesを試した。
+
+<a href="http://www.iptables.org/">iptables</a> はmakeして普通にインストールしただけ。
+kernelは既にreconfig済みなので、
+後はダイアルアップして実際に実行してみる。
+</p>
+<pre>
+% sudo iptables -t nat -A POSTROUTING -o tun0 -j MASQUERADE
+</pre>
+<p>
+でokだな。tun0はifconfigして実際のdevice名を使う。
+あ、もちろんあらかじめ
+</p>
+<pre>
+% grep ip_forward /etc/sysctl.conf
+net.ipv4.ip_forward = 1
+</pre>
+<p>
+としてある。
+</p>
+
+<p>
+デバイス名は$PPXP_IFでわかるのでこうしとくか。
+</p>
+<pre>
+% cat ~/.ppxp/rc/nat.rc
+#!/bin/sh
+
+export PATH=&quot;/usr/local/bin:/usr/bin:/bin:/sbin:/usr/sbin&quot;
+IPTABLES=/usr/local/sbin/iptables
+
+case &quot;$1&quot; in
+up)
+  case &quot;$PPXP_PHASE&quot; in
+  Dead) ;;
+  *)
+    sudo $IPTABLES -t nat -A POSTROUTING -o &quot;$PPXP_IF&quot; -j MASQUERADE ;;
+  esac ;;
+down)
+  sudo $IPTABLES -t nat -F POSTROUTING ;;
+esac
+
+exit 0
+</pre>
+<p>
+ftpに関してはlftpが勝手にpassive modeにしてくれるので気にしない。
+ip_conntrack_ftpもip_nat_ftpも作ってあるのでmodprobeしてもいいんだけど。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200202182" title="200202182" href="200202b.html#200202182">■</a> 
+[Linux] iptablesでパケットフィルタリング</h3>
+<p>
+次はパケットフィルタリングだが、
+iptablesを並べるのはよくありがちだよね。
+それだとつまらないので、
+一度iptablesで設定してiptables-saveして、
+その結果をiptables-restoreするようにしてみよう。
+こんな感じ。NATの設定も入っている。
+</p>
+<pre>
+% sudo iptables -A POSTROUTING -o tun0 -j MASQUERADE 
+% sudo iptables -N ppxp-in
+% sudo iptables -A INPUT -i tun0 -j ppxp-in
+% sudo iptables -A FORWARD -i tun0 -j ppxp-in
+% sudo iptables -A ppxp-in -p tcp -m tcp --dport ssh -j ACCEPT
+% sudo iptables -A ppxp-in -j LOG
+% sudo iptables -A ppxp-in -j DROP
+% sudo iptables-save
+# Generated by iptables-save v1.2.5 on Mon Feb 18 01:24:42 2002
+*nat
+:PREROUTING ACCEPT [0:0]
+:POSTROUTING ACCEPT [0:0]
+:OUTPUT ACCEPT [0:0]
+-A POSTROUTING -o tun0 -j MASQUERADE 
+COMMIT
+# Completed on Mon Feb 18 01:24:42 2002
+# Generated by iptables-save v1.2.5 on Mon Feb 18 01:24:42 2002
+*filter
+:INPUT ACCEPT [0:0]
+:FORWARD ACCEPT [0:0]
+:OUTPUT ACCEPT [0:0]
+:ppxp-in - [0:0]
+-A INPUT -i tun0 -j ppxp-in
+-A FORWARD -i tun0 -j ppxp-in
+-A ppxp-in -p tcp -m tcp --dport 22 -j ACCEPT
+-A ppxp-in -m state --state ESTABLISHED,RELATED -j ACCEPT
+-A ppxp-in -j LOG
+-A ppxp-in -j DROP
+COMMIT
+# Completed on Mon Feb 18 01:24:42 2002
+</pre>
+<p>
+sshだけ開けた
+<a href="#20020218F1"><sup><small>*1</small></sup></a>。
+これを~/.ppxp/nat.upとでも名前をつけて保存しとこう。逆に
+</p>
+<pre>
+*nat
+:PREROUTING ACCEPT [0:0]
+:POSTROUTING ACCEPT [0:0]
+:OUTPUT ACCEPT [0:0]
+COMMIT
+*filter
+:INPUT ACCEPT [0:0]
+:FORWARD ACCEPT [0:0]
+:OUTPUT ACCEPT [0:0]
+COMMIT
+</pre>
+<p>
+を、たとえば~/.ppxp/nat.downという名前で作っておけば
+</p>
+<pre>
+% sudo iptables-restore ~/.ppxp/nat.down
+</pre>
+<p>
+で後かたづけも簡単。最終的にはこうなった。
+</p>
+<pre>
+% cat ~/.ppxp/rc/nat.rc
+#!/bin/sh
+
+export PATH=&quot;/usr/local/bin:/usr/bin:/bin:/sbin:/usr/sbin&quot;
+RESTORE=/usr/local/sbin/iptables-restore
+
+case &quot;$1&quot; in
+up)
+  case &quot;$PPXP_PHASE&quot; in
+  Dead) ;;
+  *)
+    sudo $RESTORE $HOME/.ppxp/nat.up ;;
+  esac ;;
+down)
+  sudo $RESTORE $HOME/.ppxp/nat.down ;;
+esac
+
+exit 0
+</pre>
+<p>
+
+<a href="http://www.linux.or.jp/JF/JFdocs/NAT-HOWTO-6.html#ss6.1">NAT HOWTO</a>
+を見ると後かたづけはしなくてもというか、
+そもそもup時に動的に設定しなくても、
+最初から設定しておいてそのままの状態でもいいんじゃないかという気もする。
+</p>
+
+<p>
+ppxp-outもいずれ考えよう。
+</p>
+
+
+<hr align="left" width="40%">
+<div>
+<a name="20020218F1" href="200202b.html#20020218F1"><small>*1</small></a>:
+誰も外からsshする人はいないのであまり意味はない。
+</div>
+<!-- section end -->
+</div>
+<!-- 2002/02/18 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/02/19 start -->
+<h2><a name="20020219" href="200202b.html#20020219">2002-02-19 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="200202191" title="200202191" href="200202b.html#200202191">■</a> 
+[Ruby] 関数プロトタイプ</h3>
+<p>
+regex.cのxmalloc関連のプロトタイプはlongにするんじゃなくて消すべきだったか。
+defines.hに追加されたわけだし。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200202192" title="200202192" href="200202b.html#200202192">■</a> 
+<a href="http://ex-vi.berlios.de/">A port of BSD ex/vi</a></h3>
+<p>
+READMEには一番最初にLinuxが挙げられてるから問題ないと思ってたら、
+いきなりSEGVだ。やっぱmallocがらみのようで、
+もう面倒だから自前のmallocを使わないようにquick hackしたら立ち上がった。
+とはいうもののktermだとtermcap的に何か足りなくてopen modeになる。
+いやあ、open modeなんてなつかしすぎるよ。vimではお目にかかれないもんなあ。
+</p>
+<pre>
+% TERM=xterm ./vi README
+</pre>
+<p>
+ではちゃんと立ち上がる。調べるのも面倒なのでncursesを使うようにしてみる。
+いいみたい。:verしてみると渋いね。
+</p>
+<pre>
+Version 3.7, 6/7/85 (gritter) 2/17/02
+</pre>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200202193" title="200202193" href="200202b.html#200202193">■</a> 
+1.6.7</h3>
+<p>
+あと10日ほどで3月になってしまうわけで、
+このままだと例の法則がまた活きてきたり。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/02/19 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/02/20 start -->
+<h2><a name="20020220" href="200202b.html#20020220">2002-02-20 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="200202201" title="200202201" href="200202b.html#200202201">■</a> 
+<a href="http://www.dm4lab.to/~usa/dekigoto/200202b.html#id20020220_P1_1">regex.c</a></h3>
+<p>
+さて消そうと思ったらすでにないのであった。
+おいらがcommitして1時間もしないうちにまつもとさんが消していた。
+そういう点では
+<a href="200202b.html#200202191">昨日の日記</a> はかなりまぬけだ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200202202" title="200202202" href="200202b.html#200202202">■</a> 
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby/34162">Epic4/Ruby</a></h3>
+<p>
+使ってみたいけど、Epic4の日本語対応パッチってあったっけ？
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200202203" title="200202203" href="200202b.html#200202203">■</a> 
+&quot;Noriko Sugisawa&quot;</h3>
+<p>
+久し振りのBadtrans.Bだ。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/02/20 end -->
+
+<hr>
+<div>
+<a href="200202a.html">&lt;Prev(,)</a> | 
+<a href="200202c.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

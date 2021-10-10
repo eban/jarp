@@ -1,0 +1,819 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2002-3-b</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="200203a.html">
+<link rel="next" href="200203c.html">
+
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2002年3月中旬〜</p>
+<hr>
+<div>
+<a href="200203a.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="200203c.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2002/03/11 start -->
+<h2><a name="20020311" href="200203b.html#20020311">2002-03-11 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="200203111" title="200203111" href="200203b.html#200203111">■</a> 
+<a href="http://www.cbook24.com/bm_detail.asp?sku=4756140580">Perlを256倍使うための本</a></h3>
+<p>
+勢いで注文してみたが、DBIはほとんどというか全く縁がないのであった。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200203112" title="200203112" href="200203b.html#200203112">■</a> 
+<a href="http://user-mode-linux.sourceforge.net/">User-mode Linux</a></h3>
+<p>
+次はネットワークの設定だ。ホスト側ではPPxPを使ってるのでTUN/TAPはある。
+なんか/dev/net/tunを使うようなので、あらかじめ
+</p>
+<pre>
+% sudo mkdir /dev/net
+% sudo mknod /dev/net/tun c 10 200
+</pre>
+<p>
+とした。あとは
+
+<a href="http://user-mode-linux.sourceforge.net/networking.html">Setting up the network</a>
+の通り。
+</p>
+<pre>
+% sudo tunctl uid
+% sudo ifconfig tap0 192.168.0.254
+% linux eth0=tuntap,tap0,,192.168.0.254
+&lt;snip&gt;
+# ifconfig lo 127.0.0.1
+# ifconfig eth0 192.168.0.1
+# route add default gw 192.168.0.254
+</pre>
+<p>
+でつながった。ちゃんとwww.ruby-lang.orgにもアクセスできてるなあ。
+</p>
+
+<p>
+ftpで転送速度を計ってみようと思ったらtomrtbtにはftpはない。
+というわけでdebian2.2のroot_fsで試す。
+あ、VCが別xtermが立ち上がった。これ、ちょっと欝陶しいかも。
+</p>
+<pre>
+ftp&gt; mget linux-2.4.18.tar.bz2
+local: linux-2.4.18.tar.bz2 remote: linux-2.4.18.tar.bz2
+200 PORT command successful.
+150 Opening BINARY mode data connection for linux-2.4.18.tar.bz2 (24161675 bytes).
+226 Transfer complete.
+24161675 bytes received in 49.61 secs (475.7 kB/s)
+</pre>
+<p>
+あ、やっぱ/dev/nullに書かないといけないか。
+</p>
+<pre>
+ftp&gt; get linux-2.4.18.tar.bz2 /dev/null
+local: /dev/null remote: linux-2.4.18.tar.bz2
+200 PORT command successful.
+150 Opening BINARY mode data connection for linux-2.4.18.tar.bz2 (24161675 bytes).
+226 Transfer complete.
+24161675 bytes received in 49.77 secs (474.1 kB/s)
+</pre>
+<p>
+なんと変わらない。getしたファイルをcpしてみる。
+</p>
+<pre>
+usermode:/tmp# time cp linux-2.4.18.tar.bz2 dummy
+
+real    1m0.494s
+user    0m0.150s
+sys     0m10.700s
+</pre>
+<p>
+なんとftpより遅い。一体どういうこと？
+</p>
+
+<p>
+ホスト側でftp localhostだとこんなもん。
+</p>
+<pre>
+24161675 bytes received in 17.7 secs (1.3e+03 Kbytes/sec)
+</pre>
+<p>
+1/3ぐらいの速度。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/03/11 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/03/12 start -->
+<h2><a name="20020312" href="200203b.html#20020312">2002-03-12 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="200203121" title="200203121" href="200203b.html#200203121">■</a> 
+<a href="http://www.zlib.org/advisory-2002-03-11.txt">zlib 1.1.4</a></h3>
+<p>
+ま、shared libraryを入れ換えるだけなので簡単だ。
+</p>
+<pre>
+% ./configure --prefix=/usr -s
+% sudo make install
+</pre>
+<p>
+てな感じ。
+</p>
+
+<p>
+
+<a href="http://www.ruby-lang.org/~eban/ruby/binaries/">Ruby Binaries</a>
+方面は結構staticにlinkされてるのがあるので、更新しないとまずいな。
+Ruby/zlibとRuby/GDと、あ、xdeltaもそうだな。
+あと何だろう？
+</p>
+
+<p>
+double freeの脆弱性に関しては今月号のUNIX USERにも載っている。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200203122" title="200203122" href="200203b.html#200203122">■</a> 
+<a href="http://rsync.samba.org/rsync/">rsync</a></h3>
+<p>
+こういう時のためにrsyncは
+<a href="200201a.html#200201101">こう</a> していたのさ。
+というのは嘘で、
+単に同梱されてるzlib 1.1.2よりも新しいのを使いたかっただけなんだが。
+それにしてもrsync-2.5.3-compression-broken.tar.gzってなぜそんな名前？
+あ、まだzlib 1.1.3ベースでパッチをあてただけだからか。じゃ、すぐに次が出るか？
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200203123" title="200203123" href="200203b.html#200203123">■</a> 
+<a href="http://www.ruby-lang.org/en/raa-list.rhtml?name=ERb+-+Tiny+eRuby">erb 1.4.0</a></h3>
+<p>
+更新。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/03/12 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/03/13 start -->
+<h2><a name="20020313" href="200203b.html#20020313">2002-03-13 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="200203131" title="200203131" href="200203b.html#200203131">■</a> 
+zlib 1.1.4-1</h3>
+<p>
+自分で作る必要もないので、Cygwinのパッケージをそのままコピーした。
+MinGWも
+<a href="http://gnuwin32.sf.net/">GnuWin32</a> から取ってこよう。
+このGnuWin32は昔Cygwinが名乗ってたのとは関係なくて、
+単に誰もが思いつく名前をそのまま使っている感じだ。
+ベースはMinGWでErnieさんが作ったsupplement packageを充実させてlibcとして作り上げ、
+いろんなものをmakeしているようだ。このlibcもほとんどがdummy。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200203132" title="200203132" href="200203b.html#200203132">■</a> 
+<a href="http://rsync.samba.org/rsync/">rsync 2.5.4</a></h3>
+<p>
+やはりすぐ出た。makeするとwarningだらけなんだけど、
+-Wallはいったい何のため？
+</p>
+<pre>
+% make ZLIBOBJ= LIBS='-lz -lpopt -lresolv'
+</pre>
+<p>
+どうも最近poptが人気だね。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/03/13 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/03/14 start -->
+<h2><a name="20020314" href="200203b.html#20020314">2002-03-14 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="200203141" title="200203141" href="200203b.html#200203141">■</a> 
+<a href="http://www.ruby-lang.org/en/raa-list.rhtml?name=Ruby%2FGTK">gtk 0.27 </a></h3>
+<p>
+更新。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200203142" title="200203142" href="200203b.html#200203142">■</a> 
+AC_PREREQ(2.50)</h3>
+<p>
+
+<a href="http://homepage1.nifty.com/markey/memo/200203.html#mar1401">2.50が必要になった</a>
+原因はAC_SYS_LARGEFILEです。でかいファイル対応。
+autoconf 2.53では直にLIBOBJSを使うとエラーになるので、
+メッセージに従いAC_LIBOBJを使うようにしました。
+autoconf 2.13にはAC_LIBOBJはないけど、
+2.50が必須になったので丁度いいというか。
+</p>
+
+<p>
+あ、肝心のlarge file対応についてはChangeLogに書いてないのか。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200203143" title="200203143" href="200203b.html#200203143">■</a> 
+<a href="http://www.ruby-lang.org/en/raa-list.rhtml?name=Ruby%2Fzlib">Ruby/zlib 0.51</a></h3>
+<p>
+こういうタイミングで出るのは都合がいい。
+</p>
+<pre>
+checking for rb_io_print()... no
+checking for rb_io_printf()... no
+checking for rb_io_puts()... no
+checking for rb_io_addstr()... no
+</pre>
+<p>
+む？mkfm.logを見ると-lrubyになってる。extconf.rbに'ruby'が埋まってるなあ。
+なんでCONFIG[&quot;LIBRUBYARG&quot;]を使わないんだろう？
+</p>
+
+
+
+
+<!-- section end -->
+</div>
+<!-- 2002/03/14 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/03/15 start -->
+<h2><a name="20020315" href="200203b.html#20020315">2002-03-15 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="200203151" title="200203151" href="200203b.html#200203151">■</a> 
+Linux 2.4.19-pre3-lkpc-2</h3>
+<p>
+こっちも中途半端なSCHED_YIELDが残ってる。
+CONFIG_BLK_DEV_INITRDをyesにするとそこが活きるわけで、
+たぶんinitrdを使ってないんだろうなあ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200203152" title="200203152" href="200203b.html#200203152">■</a> 
+FBound</h3>
+<p>
+残念ながらImportantだった。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200203153" title="200203153" href="200203b.html#200203153">■</a> 
+BoA/Every Heart</h3>
+<p>
+例のあれを借りた。xmmsでそのままプレイする分には全く問題ない。
+オーディオケーブル経由だからか？
+Rippingしてみると所々ノイズが入るwavファイルになった。その程度か。
+</p>
+<pre>
+このCDはコピーコントロールCDです。
+</pre>
+<p>
+COMPACT disc DIGITAL AUDIOのマークはないからCDじゃないんだけど。
+</p>
+<pre>
+ただし、CD-ROMドライブを使ったCDプレイヤーでは再生できません。
+</pre>
+<p>
+と一応書いてある。
+</p>
+
+<p>
+BoAとはBeat of Angelの略らしい。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200203154" title="200203154" href="200203b.html#200203154">■</a> 
+TestUnit</h3>
+<p>
+そろそろTestUnitも用意すべきか？
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/03/15 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/03/16 start -->
+<h2><a name="20020316" href="200203b.html#20020316">2002-03-16 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="200203161" title="200203161" href="200203b.html#200203161">■</a> 
+GNU grep 2.5</h3>
+<p>
+NEWSを読むといろいろ追加機能がある。気になった機能を挙げる。
+</p>
+
+<p>
+--only-matching (-o)<br>
+マッチした部分だけ表示する。これでsedを使わなくてもいい場面が増える。
+</p>
+
+<p>
+--perl-regexp (-P)<br>
+え？そんなのあり？と思ったらpcreを使っているのか。
+</p>
+
+<p>
+--color<br>
+色がつく。defaultでは赤く表示される。
+変えたいときは環境変数GREP_COLORで指定する。
+強調して緑なら'1;32'のように。LS_COLORSと同じ感じなので、数字の意味は
+</p>
+<pre>
+% dircolors --print-database
+</pre>
+<p>
+を参考にするといい。
+</p>
+
+<p>
+例: ifconfigの結果からIPアドレスらしきものを抜き出す
+</p>
+<pre>
+% ifconfig |grep -P -o '\d+\.\d+\.\d+\.\d+'
+192.168.1.1
+192.168.1.255
+255.255.255.0
+192.168.1.2
+192.168.1.255
+255.255.255.0
+127.0.0.1
+255.0.0.0
+</pre>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200203162" title="200203162" href="200203b.html#200203162">■</a> 
+autoconf 2.53</h3>
+<p>
+perl 5.005_03以上が必須になった。
+autom4te-2.53.cacheというディレクトリも勝手に作るし。
+要らないよね？後始末してよ。grep 2.5もそのまま配布ファイルに含まれてる。
+</p>
+
+<p>
+例のAC_LIBOBJ vs. LIBOBJSというnodeが見つからないのはなぜ？
+早速覚えたgrep 2.5の技を使い
+</p>
+<pre>
+% grep -o -P  'Node:.*?, ' /usr/local/info/autoconf.info
+</pre>
+<p>
+としてみたが、特に悪いとも思えない。
+あ、Emacsからならちゃんと読める。infoが何か変なのか。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200203163" title="200203163" href="200203b.html#200203163">■</a> 
+日本ゴールドディスク大賞</h3>
+<p>
+小沢征爾ノリノリだな。オザケンも復活するわけだよ。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/03/16 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/03/17 start -->
+<h2><a name="20020317" href="200203b.html#20020317">2002-03-17 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="200203171" title="200203171" href="200203b.html#200203171">■</a> 
+GNU grep 2.5</h3>
+<p>
+ChangeLogを見ると
+</p>
+<pre>
+2001-02-16  Alain Magloire
+
+        Patch from Isamu Hasegawa, for multibyte support.
+</pre>
+<p>
+とある。ほぉ。そうなのか。では早速実験。
+/usr/bin/grepはgrep 2.1で/usr/local/bin/grepがgrep 2.5。
+</p>
+<pre>
+% echo 'スト' | od -tx1 
+0000000 a5 b9 a5 c8 0a
+0000005
+% echo '好' | od -tx1 
+0000000 b9 a5 0a
+0000003
+% echo 'スト' | /usr/local/bin/grep '好'
+% echo 'スト' | /usr/bin/grep '好'
+スト
+</pre>
+<p>
+確かにいけてるようだ。いや好きじゃないんだけどね。
+ChangeLogに例として載っていたのだよ。
+ということはもちろん'.'も1文字になるわけだ。
+</p>
+<pre>
+% echo 'あいうえお' | /usr/local/bin/grep -o .
+あ
+い
+う
+え
+お
+</pre>
+<p>
+ふむ。LANGをCにすればmultibyte supportはoffになる。
+</p>
+<pre>
+% echo 'スト' | LANG=C /usr/local/bin/grep '好'
+スト
+</pre>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200203172" title="200203172" href="200203b.html#200203172">■</a> 
+diff</h3>
+<pre>
+% diff a b
+diff: % 
+</pre>
+<p>
+となんか変だ。これもglibcの影響か？diffutils-2.7をmakeしてみる。
+</p>
+<pre>
+% ./diff a b
+./diff: a: No such file or directory
+./diff: b: No such file or directory
+</pre>
+<p>
+ちゃんと表示された。やはりそうか。
+とかなんとやってると全部入れ換えることになったりして。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200203173" title="200203173" href="200203b.html#200203173">■</a> 
+<a href="http://www.ruby-lang.org/en/raa-list.rhtml?name=bdb">bdb 0.3.1</a></h3>
+<p>
+更新。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200203174" title="200203174" href="200203b.html#200203174">■</a> 
+<a href="http://www.ruby-lang.org/en/raa-list.rhtml?name=Import+-+Dynamic+library+from+others+universe">Import - Dynamic library from other universe</a></h3>
+<p>
+って
+<a href="http://www.ruby-lang.org/en/raa-list.rhtml?name=Ruby%2FDL">Ruby/DL</a>
+じゃないのかな？
+</p>
+<pre>
+You don't have permission to access /~auroux_l/ on this server.
+</pre>
+<p>
+の403 Forbiddenなので確認できないんだけど、ex:の例を見るかぎりそんな感じだ。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/03/17 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/03/18 start -->
+<h2><a name="20020318" href="200203b.html#20020318">2002-03-18 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="200203181" title="200203181" href="200203b.html#200203181">■</a> 
+<a href="http://namazu.org/~satoru/diary/?200203b&amp;to=200203151#200203151">[Ruby] attr_readerをたくさん書かない方法</a></h3>
+<p>
+見直してみると
+</p>
+<pre>
+Foo.class_eval { attr_reader name.delete '@' }
+</pre>
+<p>
+じゃなくて
+</p>
+<pre>
+type.class_eval { attr_reader name.delete '@' }
+</pre>
+<p>
+のほうがいい気がしてきました。Fooという名前を変えたくなるかもしれないので。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200203182" title="200203182" href="200203b.html#200203182">■</a> 
+rubyzip 0.3.1</h3>
+<p>
+ruby-zlib-0.5.1が出たので更新。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200203183" title="200203183" href="200203b.html#200203183">■</a> 
+a catch up thanks.</h3>
+<p>
+お礼のメールが突然来た。
+英語のメールはまずspamだと思うので危うく捨てるとこだった。
+</p>
+<pre>
+I was reviewing my posting on Ruby and
+realized that I fogot to tahnk you
+on the &quot;installation errors on win2000&quot;
+</pre>
+<p>
+なんかtypoだらけだが、全く身に覚えがない。
+Rubyと書いてあるからbladeで&quot;installation errors on win2000&quot;を検索してみたら、
+なんと
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-talk/19472">去年の8月の話</a> だった。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200203184" title="200203184" href="200203b.html#200203184">■</a> 
+履歴書</h3>
+<p>
+おれに履歴書を送ってどうする？てゆかフランス語だし。.docだけどvirusではなさそう。
+spamでもないよなあ。就職活動？
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/03/18 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/03/19 start -->
+<h2><a name="20020319" href="200203b.html#20020319">2002-03-19 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="200203191" title="200203191" href="200203b.html#200203191">■</a> 
+Ruby 1.6.7のautoconf 2.53対応</h3>
+<p>
+AC_LIBOBJを使うとautoconf 2.13ではundefinedになる。
+AC_DEFUNでRUBY_LIBOBJを定義してこっちを使うようにしても、
+LIBOBJSを直接参照することになるのでautconf 2.53でエラーになる。
+</p>
+<pre>
+Q. どっちも満足させるにはどうしたらいい？
+A. Ruby 1.8が出れば解決します。
+</pre>
+<p>
+ってわけにはいかないよなあ。
+</p>
+
+<p>
+autoconf 2.53のautoconf/general.m4では
+</p>
+<pre>
+LIB@&amp;t@OBJS
+</pre>
+<p>
+を使ってる。なんだそれ？@&amp;t@が最終的には消えるってことか？
+他にはどこにも使ってないし、よくわからん。
+</p>
+
+<p>
+general.m4を眺めたら
+</p>
+<pre>
+m4_pattern_forbid([^LIBOBJS$],
+</pre>
+<p>
+を発見。これで禁止してるわけだ。この後に
+</p>
+<pre>
+m4_pattern_allow([^AS_FLAGS$])
+</pre>
+<p>
+というのがある。じゃ
+</p>
+<pre>
+m4_pattern_allow([^LIBOBJS$])
+</pre>
+<p>
+で強制的に許可できる？あ、LIBOBJSが出てきてしまうからだめだ。
+でも正規表現が使えるようだから
+</p>
+<pre>
+m4_pattern_allow([^[L]IBOBJS$])
+</pre>
+<p>
+でどうだろう？字面だけならこれでいける気がする。あ、いけた。
+よくあるpsの出力をgrepするときに、grepは除くという技と同じだ。
+</p>
+<pre>
+% ps aux |grep screen 
+watanabe   234  0.0  0.5  2708  720 ttyp3    S    Mar19   0:00 screen
+watanabe  6770  0.0  0.5  2060  764 pts/1    S    00:24   0:00 grep screen
+% ps aux |grep '[s]creen'
+watanabe   234  0.0  0.5  2708  720 ttyp3    S    Mar19   0:00 screen
+</pre>
+<p>
+あれ？でもautoconf的には[]はquoteじゃなかったっけ？
+general.m4の他の例を見ると、どうもここではそのままの意味になるようだ。不思議。
+</p>
+
+<p>
+で、autoconf 2.13でこれを通すと、今度はそのまま
+</p>
+<pre>
+m4_pattern_allow([^[L]IBOBJS$])
+</pre>
+<p>
+が残るという問題が。うーむ。
+</p>
+<pre>
+: '
+m4_pattern_allow([^[L]IBOBJS$])
+'
+</pre>
+<p>
+というのはどうだろう？一応どっちもいけるようになった。
+残り少ない命の1.6.xだし、これでいいか。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200203192" title="200203192" href="200203b.html#200203192">■</a> 
+Emacs 21.2</h3>
+<p>
+更新。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/03/19 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/03/20 start -->
+<h2><a name="20020320" href="200203b.html#20020320">2002-03-20 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="200203201" title="200203201" href="200203b.html#200203201">■</a> 
+<a href="http://cygwin.com/ml/cygwin-announce/2002/msg00077.html">[Cygwin] Setup.exe update</a></h3>
+<pre>
+* Can download from multiple mirrors - use CTRL-Click or Shift-Click
+  in the mirror site dialog.
+</pre>
+<p>
+というわけで複数のミラーサイトが指定可能になった。
+もちろんその情報は保存される。
+つまり
+<a href="../ruby/binaries/cygwin/">この場所</a> の情報も保存できるようになったわけだ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200203202" title="200203202" href="200203b.html#200203202">■</a> 
+<a href="http://www.ruby-lang.org/en/raa-list.rhtml?name=REXML">REXML 2.0</a></h3>
+<p>
+更新。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/03/20 end -->
+
+<hr>
+<div>
+<a href="200203a.html">&lt;Prev(,)</a> | 
+<a href="200203c.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

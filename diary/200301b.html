@@ -1,0 +1,792 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2003-1-b</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="200301a.html">
+<link rel="next" href="200301c.html">
+
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2003年1月中旬〜</p>
+<hr>
+<div>
+<a href="200301a.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="200301c.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2003/01/11 start -->
+<h2><a name="20030111" href="200301b.html#20030111">2003-01-11 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="200301111" title="200301111" href="200301b.html#200301111">■</a> 
+<a href="http://ccache.samba.org/">[Linux] ccache 2.0</a></h3>
+<p>
+1/7に入手したccacheをインストール。
+symlink経由でしかも-cだとSEGVになる。-oまでつければok。
+</p>
+<pre>
+% cp ccache gcc
+% echo 'main(){}' &gt;x.c
+% ./gcc -c x.c
+zsh: segmentation fault  ./gcc -c x.c
+% ./gcc -c x.c -o x.o 
+% 
+</pre>
+<p>
+あ、ccache経由でも同じか。
+</p>
+<pre>
+% ./ccache gcc -c x.c
+zsh: segmentation fault  ./ccache gcc -c x.c
+% gdb ccache
+...
+(gdb) run gcc -c x.c
+Program received signal SIGSEGV, Segmentation fault.
+0x0804a0a8 in process_args (argc=3, argv=0xbffff8a8) at ccache.c:741
+741             if (strcmp(output_file, &quot;-&quot;) == 0) {
+(gdb) p output_file 
+$1 = 0x0
+</pre>
+<p>
+というわけで原因が判明。この部分が2.0で追加されたからだな。
+</p>
+<pre>
+if (outputfile &amp;&amp; strcmp(output_file, &quot;-&quot;) == 0) {
+</pre>
+<p>
+としとこう。
+てゆか、こんな単純なバグはすでに直ってる気がするから見に行ってみると、
+もうとっくに2.1.1になっていた。ぐはぁ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200301112" title="200301112" href="200301b.html#200301112">■</a> 
+<a href="http://www.ruby-lang.org/raa/list.rhtml?name=rubywin">[Ruby] RubyWin 0.0.4.2</a></h3>
+<p>
+更新。
+</p>
+<!-- section end -->
+</div>
+<!-- 2003/01/11 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/01/12 start -->
+<h2><a name="20030112" href="200301b.html#20030112">2003-01-12 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="200301121" title="200301121" href="200301b.html#200301121">■</a> 
+[Ruby][Cygwin] dlerror(3)</h3>
+<p>
+vrubyのtests/sample.rbを使って
+<a href="../files/Win32API.rb">Win32API.rb</a>をテストしてみると、いきなり
+</p>
+<pre>
+./Win32API.rb:10:in `initialize': dlsym: Win32 error 127 (RuntimeError)
+        from ./Win32API.rb:10:in `new'
+        from ./Win32API.rb:10:in `initialize'
+        from /usr/local/lib/ruby/site_ruby/1.8/vr/sysmod.rb:150:in `new'
+        from /usr/local/lib/ruby/site_ruby/1.8/vr/sysmod.rb:150
+        from /usr/local/lib/ruby/site_ruby/1.8/vr/vrcontrol.rb:14:in `require'
+        from /usr/local/lib/ruby/site_ruby/1.8/vr/vrcontrol.rb:14
+        from sample.rb:2:in `require'
+        from sample.rb:2
+</pre>
+<p>
+を喰らう。どうもCygwinのdlsymがなんかまずいらしい。
+127は
+</p>
+<pre>
+% /c/winnt/system32/net helpmsg 127
+
+The specified procedure could not be found.
+</pre>
+<p>
+だからやはりdlsym()だよね。でもWin32API.rbの10行目は
+</p>
+<pre>
+handle = DLL[dllname] ||= DL::Handle.new(dllname)
+</pre>
+<p>
+だからまだdlsym()に辿りついてないはずだ。
+ということはdlerror()自体なにか変だ。
+ext/dl/handle.cでは
+</p>
+<pre>
+ptr = dlopen(clib, cflag);
+#if defined(HAVE_DLERROR)
+  if( (err = dlerror()) ){
+    rb_raise(rb_eRuntimeError, err);
+  }
+#else
+  if( !ptr ){
+    err = dlerror();
+    rb_raise(rb_eRuntimeError, err);
+  }
+#endif
+</pre>
+<p>
+となっていて、HAVE_DLERRORは存在するので定義されている。
+ということはdlopen()が成功してもその状態をクリアしていない可能性がある。
+dlsym()は&quot;A&quot;のあるなしで失敗することもあるから、
+以前に一度でも失敗するとまずそうだ。
+試しに#else側を活かしてみる。うまくいった。
+</p>
+
+<p>
+dlsym()が0を返したらdlerror()を見る必要はあるが、
+dlopen()が0を返したら絶対に失敗だからdlerror()を見る必要はない。
+表示するときは必要だけど。
+</p>
+
+<p>
+handle.cを見てたら&quot;A&quot;の処理も入ってたのか。
+Win32API.rbでやる必要はないな。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200301122" title="200301122" href="200301b.html#200301122">■</a> 
+[Ruby] uconv 0.4.11</h3>
+<p>
+なぜuconv 0.4.11に上げないかというと
+<a href="http://www.yoshidam.net/diary/200210.html#03_t2_3">この理由</a>によりアップデート不要だからです。実際
+<a href="200209a.html#200209042">uconv 0.4.10</a>は--enable-win32apiつきでextconf.rbを実行してます。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200301123" title="200301123" href="200301b.html#200301123">■</a> 
+[Ruby] news gateway</h3>
+<p>
+ruby-talkの流量が急に増えた。news gatewayが3日ほど止まっていたようだ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200301124" title="200301124" href="200301b.html#200301124">■</a> 
+<a href="http://www.ruby-lang.org/raa/list.rhtml?name=csv">[Ruby] csv 1.2.1</a></h3>
+<p>
+更新。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200301125" title="200301125" href="200301b.html#200301125">■</a> 
+<a href="http://www.ruby-lang.org/raa/list.rhtml?name=devel-logger">[Ruby] devel-logger 1.0.1</a></h3>
+<p>
+更新。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200301126" title="200301126" href="200301b.html#200301126">■</a> 
+<a href="http://www.ruby-lang.org/raa/list.rhtml?name=http-access2">[Ruby] http-acces2 j</a></h3>
+<p>
+更新。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200301127" title="200301127" href="200301b.html#200301127">■</a> 
+<a href="http://www.ruby-lang.org/raa/list.rhtml?name=xmlscan">[Ruby] xmlscan 0.1.3</a></h3>
+<p>
+更新。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200301128" title="200301128" href="200301b.html#200301128">■</a> 
+<a href="http://www.ruby-lang.org/raa/list.rhtml?name=rubymail">[Ruby] rubymail 0.11</a></h3>
+<p>
+更新。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200301129" title="200301129" href="200301b.html#200301129">■</a> 
+<a href="http://www.ruby-lang.org/raa/list.rhtml?name=win32serial">[Ruby] Win32Serial 0.1</a></h3>
+<p>
+更新。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="2003011210" title="2003011210" href="200301b.html#2003011210">■</a> 
+<a href="http://www.ruby-lang.org/raa/list.rhtml?name=racc">[Ruby] Racc 1.4.3</a></h3>
+<p>
+更新。
+</p>
+<!-- section end -->
+</div>
+<!-- 2003/01/12 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/01/13 start -->
+<h2><a name="20030113" href="200301b.html#20030113">2003-01-13 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="200301131" title="200301131" href="200301b.html#200301131">■</a> 
+[Linux] Linux 2.5.56 ARCH=um</h3>
+<p>
+User Modeを試すがまだだめだ。
+</p>
+<pre>
+arch/um/kernel/ptrace.c:12: linux/proc_mm.h: No such file or directory
+</pre>
+<p>
+2.5では一度もmakeに成功したためしがない。途中で気になるメッセージがあった。
+</p>
+<pre>
+arch/um/include/uml-config.h:58: warning: `CONFIG_UNIX98_PTY_COUNT' redefined
+/usr/include/linux/autoconf.h:534: warning: this is the location of the previous definition
+</pre>
+<p>
+なぜ/usr/include/linuxを見てるんだろう？
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200301132" title="200301132" href="200301b.html#200301132">■</a> 
+<a href="http://www.ruby-lang.org/raa/list.rhtml?name=rubywin">[Ruby] RubyWin 0.0.4.3</a></h3>
+<p>
+更新。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200301133" title="200301133" href="200301b.html#200301133">■</a> 
+<a href="http://www.ruby-lang.org/raa/list.rhtml?name=yamlrb">[Ruby] YAML.rb 0.49.1</a></h3>
+<p>
+更新。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200301134" title="200301134" href="200301b.html#200301134">■</a> 
+<a href="http://www.gnu.org/software/bison/bison.html">[Linux] Bison 1.875</a></h3>
+<p>
+更新。version番号のつけかたがBisonだけ独特なのがちょっと気になる。
+</p>
+<!-- section end -->
+</div>
+<!-- 2003/01/13 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/01/14 start -->
+<h2><a name="20030114" href="200301b.html#20030114">2003-01-14 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="200301141" title="200301141" href="200301b.html#200301141">■</a> 
+<a href="http://www.ruby-lang.org/cgi-bin/cvsweb.cgi/ruby/io.c?cvsroot=src&amp;r1=1.180&amp;r2=1.181">[Ruby] fptr-&gt;mode | FMODE_BINMODE</a></h3>
+<p>
+うむ。かなり恥ずかしいバグだ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200301142" title="200301142" href="200301b.html#200301142">■</a> 
+<a href="http://www.ruby-lang.org/raa/list.rhtml?name=win32serial">[Ruby] Win32Serial 0.3</a></h3>
+<p>
+更新。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200301143" title="200301143" href="200301b.html#200301143">■</a> 
+<a href="http://www.ruby-lang.org/raa/list.rhtml?name=amrita">[Ruby] amrita 1.0.2</a></h3>
+<p>
+更新。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200301144" title="200301144" href="200301b.html#200301144">■</a> 
+<a href="http://www.ruby-lang.org/raa/list.rhtml?name=misen">[Ruby] misen 0.10</a></h3>
+<p>
+更新。あ、適当にMakefileを作ったが、dpklibがないのか。消しとこう。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200301145" title="200301145" href="200301b.html#200301145">■</a> 
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-dev/19358">[Ruby] goto</a></h3>
+<p>
+これだけgotoだらけになるなら、
+not_found, load_dyna, load_rbあたりを関数にしたほうがよさそうだ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2003/01/14 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/01/15 start -->
+<h2><a name="20030115" href="200301b.html#20030115">2003-01-15 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="200301151" title="200301151" href="200301b.html#200301151">■</a> 
+<a href="http://www.ruby-lang.org/raa/list.rhtml?name=dpklib">[Ruby] dpklib 0.92</a></h3>
+<p>
+更新。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200301152" title="200301152" href="200301b.html#200301152">■</a> 
+<a href="http://www.ruby-lang.org/raa/list.rhtml?name=misen">[Ruby] misen 0.10</a></h3>
+<p>
+というわけで更新。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200301153" title="200301153" href="200301b.html#200301153">■</a> 
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-talk/61490">[Ruby] 16KB制限</a></h3>
+<p>
+27KBあるけど通ってるねえ。
+これを通さないってわけにはいかないとは思うけど、
+そんな柔軟な判断ができるとは思えないし。
+それとも32KBになったんだろうか？
+</p>
+<!-- section end -->
+</div>
+<!-- 2003/01/15 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/01/16 start -->
+<h2><a name="20030116" href="200301b.html#20030116">2003-01-16 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="200301161" title="200301161" href="200301b.html#200301161">■</a> 
+[Ruby] &lt;&lt;-|EOS</h3>
+<p>
+ってあまり乗り気じゃないんだけど、でもあったら使うかなあ。
+やはりruby mode次第かも。
+</p>
+
+<p>
+といいつつもこんなのを考えてみたり。
+</p>
+<pre>
+class String
+  def heredoc(bar = nil)
+    case bar
+    when String
+      reg = /^\s*#{Regexp.quote(bar)}/
+    when Integer
+      reg = /^\s{#{bar}}/
+    else
+      reg = /^\s{#{self.index(/[\S\n]/)}}/
+    end
+    gsub(reg, '')
+  end
+end
+
+if __FILE__ == $0
+  print &lt;&lt;-EOS.heredoc('|')
+    |Hello
+    |  Hello
+    | Hello
+  EOS
+
+  print &lt;&lt;-EOS.heredoc(4)
+    Hello
+      Hello
+     Hello
+  EOS
+
+  print &lt;&lt;-EOS.heredoc
+    Hello
+      Hello
+     Hello
+  EOS
+end
+</pre>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200301162" title="200301162" href="200301b.html#200301162">■</a> 
+[Shell] &lt;&lt;-EOS</h3>
+<p>
+man bashして&lt;&lt;-を検索してみると
+</p>
+<pre>
+リダイレクション演算子が &lt;&lt;- ならば、行頭にあるタブ文字 は
+全 て入力行および delimiter を含む行から取り除かれます。こ
+れにより、シェルスクリプト中のヒアドキュメントを自然な形で
+インデントさせることができます。
+</pre>
+<p>
+とある。使えるのはタブだけなんだよね。
+</p>
+<pre>
+% printf &quot;cat &lt;&lt;-EOS\n\tHello\n\tEOS\n&quot; |bash
+Hello
+% printf &quot;cat &lt;&lt;-EOS\n  Hello\n  EOS\n&quot; |bash
+  Hello
+  EOS
+</pre>
+
+<!-- section end -->
+</div>
+<!-- 2003/01/16 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/01/17 start -->
+<h2><a name="20030117" href="200301b.html#20030117">2003-01-17 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="200301171" title="200301171" href="200301b.html#200301171">■</a> 
+<a href="http://www.ruby-lang.org/raa/list.rhtml?name=eruby">[Ruby] eruby 1.0.1</a></h3>
+<p>
+しまったなあ。確認が全然足りなかった。考えなおそう。
+</p>
+<!-- section end -->
+</div>
+<!-- 2003/01/17 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/01/18 start -->
+<h2><a name="20030118" href="200301b.html#20030118">2003-01-18 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="200301181" title="200301181" href="200301b.html#200301181">■</a> 
+<a href="http://www.ruby-lang.org/raa/list.rhtml?name=soap4r">[Ruby] SOAP4R 1.4.8.1</a></h3>
+<p>
+更新。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200301182" title="200301182" href="200301b.html#200301182">■</a> 
+<a href="http://www.ruby-lang.org/raa/list.rhtml?name=ruby-google">[Ruby] Ruby/Google 0.5.0</a></h3>
+<p>
+更新。
+</p>
+<!-- section end -->
+</div>
+<!-- 2003/01/18 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/01/19 start -->
+<h2><a name="20030119" href="200301b.html#20030119">2003-01-19 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="200301191" title="200301191" href="200301b.html#200301191">■</a> 
+[Ruby] ERBで__END__</h3>
+<pre>
+print &lt;&lt;'EOS'
+hoge
+EOS
+
+while line = DATA.gets
+  print &quot;%s = %s\n&quot; % line.chomp.split(',')
+end
+
+__END__
+foo,2
+bar,1
+</pre>
+<p>
+のようなスクリプトをERBで書き直してみたら、
+<a href="http://www.ruby-lang.org/raa/list.rhtml?name=erb">erb</a>も
+<a href="http://www.ruby-lang.org/raa/list.rhtml?name=eruby">eruby</a>も__END__をサポートしてないことに気づいた。
+ま、それも当然か。
+</p>
+<pre>
+unless defined? DATA
+  DATA = open($0)
+  DATA.gets(&quot;__END__\n&quot;)
+end
+</pre>
+<p>
+でお茶を濁そうと思ったが、
+__END__以降も普通の文字として処理されることには変わりなし。
+それ以前に$0には&quot;/usr/local/bin/erb&quot;が入ってた。
+erubyも&quot;eruby&quot;が入ってる。
+スクリプト名にして欲しいな。あ、でもそうするにはerbのほうは
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-dev/19309">$0問題</a>が浮上するか。実は設定するだけなら
+</p>
+<pre>
+% irb
+irb(main):001:0&gt; $0
+=&gt; &quot;irb&quot;
+irb(main):002:0&gt; $0 = &quot;012345&quot;
+=&gt; &quot;012345&quot;
+irb(main):003:0&gt; $0
+=&gt; &quot;0123&quot;
+irb(main):004:0&gt; $0.replace &quot;012345&quot;
+=&gt; &quot;012345&quot;
+irb(main):005:0&gt; $0
+=&gt; &quot;012345&quot;
+</pre>
+<p>
+のようにString#replaceを使うという方法もないこともないんだけど。
+</p>
+<pre>
+&lt;%#
+__END__
+foo,2
+bar,1
+%&gt;
+</pre>
+<p>
+として%&gt;を無視するようにすればだいたい期待通りだが、
+そこまでして__END__を使いたいわけでもない。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200301192" title="200301192" href="200301b.html#200301192">■</a> 
+[Ruby] 1.8の起動時間</h3>
+<p>
+なぜかerubyよりもerbのほうが速い。ldd =erubyしてみると1.7.3がリンクされてた。
+1.8と1.7の起動時間を計ってみよう。
+</p>
+<pre>
+% time ruby -v
+ruby 1.8.0 (2003-01-18) [i386-linux]
+ruby -v  0.12s user 0.02s system 115% cpu 0.121 total
+% time ruby-1.7.3 -v
+ruby 1.7.3 (2002-12-20) [i386-linux]
+ruby-1.7.3 -v  0.46s user 0.03s system 101% cpu 0.483 total
+</pre>
+<p>
+やはり最近速くなったようだ。
+</p>
+<pre>
+% time ruby-1.6.8 -v
+ruby 1.6.8 (2003-01-17) [i586-linux]
+ruby-1.6.8 -v  0.41s user 0.03s system 104% cpu 0.421 total
+</pre>
+<p>
+なので、1.8だけだ。
+ま、このくらいの違いは非常に遅いマシンでないと体感できないと思うけど。
+</p>
+
+<p>
+一体どの変更が効いたのか調べてみよう。
+まずは2003-01-10あたりから。
+</p>
+<pre>
+% cvs -d /src co -D2003-01-10 -dtmp ruby
+% cd tmp
+% autoconf-2.57
+% cp ../linux/config.cache .
+% ./configure --enable-shared --cache=config.cache
+% make miniruby
+% time ./miniruby -v
+</pre>
+<p>
+まだ2003-01-10は遅かった。
+本当にここ一週間ぐらいの変更ということになる。
+ChangeLogを見ると
+</p>
+<pre>
+Mon Jan 13 20:45:19 2003  Guy Decoux  &lt;ts@moulon.inra.fr&gt;
+
+        * parse.y (list_append): avoid O(n) search using node-&gt;nd_next-&gt;nd_end.
+
+        * parse.y (list_append): ditto.
+
+        * eval.c (rb_eval): NODE_ARRY nd_end adoption.
+</pre>
+<p>
+これしかない。このchange setを戻してみると確かに遅くなる。
+でもlist_append()って-vには何も関係ないよね？
+これが速くなった原因とは思えない。
+とするとeval.cのほうか？
+eval.cを見てみるとruby_runningという変数が増えてる。
+ruby_runningが0のときはcacheをいじらなくなったようだ。これか。
+試しにruby_runningを常に1にしてみたら、やはり遅くなった。なるほど。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200301193" title="200301193" href="200301b.html#200301193">■</a> 
+[Virus] WORM_SOBIG.A</h3>
+<p>
+気づいてみるとbig@boss.comから8個来てる。
+見た感じ添付ファイルを実行しない限り動かないタイプだけど、
+だからなぜサルのようにクリックする？
+</p>
+
+<p>
+EVECTRAというホストからは2個来てる。
+その間2日空いている。感染にまだ気づいてないのか？
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200301194" title="200301194" href="200301b.html#200301194">■</a> 
+16人かよ</h3>
+<p>
+田中麗奈ってやっぱ田中麗奈にちょっと似てるあたりが田中麗奈なんだなと思ったり。
+てゆか藤本美貴は別人だ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2003/01/19 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/01/20 start -->
+<h2><a name="20030120" href="200301b.html#20030120">2003-01-20 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="200301201" title="200301201" href="200301b.html#200301201">■</a> 
+<a href="http://www.ruby-lang.org/raa/list.rhtml?name=rubyunit">[Ruby] RubyUnit 0.5.6</a></h3>
+<p>
+更新。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200301202" title="200301202" href="200301b.html#200301202">■</a> 
+[Cygwin] gcc -shared</h3>
+<p>
+いつのまにかgcc -sharedですべてのsymbolをexportしてることに気づいた。
+</p>
+<pre>
+% echo 'foo(){}' &gt;foo.c
+% i686-pc-cygwin-gcc -shared foo.c -o foo.dll
+% ruby impgen.rb foo.dll
+EXPORTS
+foo
+</pre>
+<p>
+<a href="../files/impgen.rb">impgen.rb</a>は
+<a href="200204c.html#200204281">以前</a>作ったもの。役に立たなかったんだけど。
+</p>
+<!-- section end -->
+</div>
+<!-- 2003/01/20 end -->
+
+<hr>
+<div>
+<a href="200301a.html">&lt;Prev(,)</a> | 
+<a href="200301c.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

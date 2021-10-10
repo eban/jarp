@@ -1,0 +1,372 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2012-2-b</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="201202a.html">
+<link rel="next" href="201202c.html">
+
+<link rel="stylesheet" type="text/css" href="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.css">
+<script type="text/javascript" src="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.js"></script>
+<script type="text/javascript">
+<!--       
+$(document).ready(function() {
+  prettyPrint();
+});
+-->
+</script>
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2012年2月中旬〜</p>
+<hr>
+<div>
+<a href="201202a.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="201202c.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2012/02/11 start -->
+<h2><a name="20120211" href="201202b.html#20120211">2012-02-11 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="201202111" title="201202111" href="201202b.html#201202111">■</a> 
+Cygwinを更新したらえらく速くなったような気がした</h3>
+<p>
+昨日会社のPCのCygwinを更新したら、ものすごく速くなった気がしたが、<br>
+再起動したらそれほどでもないなと感じたまま帰宅時間になった。<br>
+というわけで、家でノートPCを立ち上げて確認しようと思ってあのざまになったわけで、<br>
+肝心の確認を今日してみた。
+</p>
+<p>
+10年ぐらい前のPCなのでかなりスペック的にはひどいわけだが、<br>
+Pen4 1.8GHz、メモリ256MBでも休止状態からの復帰はびっくりするくらい速い。<br>
+会社のCore2Duo、2GBより速い。メモリが少ないから保存するデータも少ないってのもあるんだろうけど。<br>
+</p>
+<p>
+それはそれとしてCygwinはどうなんだと、<br>
+まずはバージョンを確認してみると1.7.5と2年ぐらい更新してない状態。<br>
+これがなぜか速い。どういうことだ。
+会社のPCより速いって、会社のPCがなんかおかしいんじゃないか、これって。
+</p>
+<p>
+遅いというはlsする程度でもなんかもっさりと待たされる感じ。<br>
+またstraceでログ取ってみたほうがいいのかもしれないな。<br>
+というより、一時的になぜ速くなったのかを調べるべきか。<br>
+また、/etc/groupあたりの情報だったりするかも。
+</p>
+<p>
+結局家のPCのCygwinの更新はまた後で。その前にWindows Update始めたら4時間経っても終わらない。<br>
+それとなぜかWi-Fiが使えくなってるだけど、これも地味に痛いな。
+</p>
+<!-- section end -->
+</div>
+<!-- 2012/02/11 end -->
+
+
+
+<hr class="hide">
+<!-- 2012/02/12 start -->
+<h2><a name="20120212" href="201202b.html#20120212">2012-02-12 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="201202121" title="201202121" href="201202b.html#201202121">■</a> 
+ruby-talk MLのspam</h3>
+<p>
+<a href="http://www.ruby-forum.com/forum/ruby">ruby-forum</a>からのspamがすごいことになってるので、全部ブロック。<br>
+ruby-talk MLはmembers onlyになったのでよろしく。
+</p>
+<!-- section end -->
+</div>
+<!-- 2012/02/12 end -->
+
+
+
+<hr class="hide">
+<!-- 2012/02/13 start -->
+<h2><a name="20120213" href="201202b.html#20120213">2012-02-13 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="201202131" title="201202131" href="201202b.html#201202131">■</a> 
+なぜか10秒ほど真っ暗なニュース7</h3>
+<p>
+NHKのニュース7をケーブルTVのチューナー使って録ってるんだけど、<br>
+なぜか最初の10秒ほど真っ暗になってしまう。<br>
+ちゃんとチューナーのほうも19:00に設定してるのにと不思議に思っていたが、<br>
+原因は本当に12秒遅れて設定されていたからだった。<br>
+19:00-20:00で予約していたが、たまたま20:00からの別番組を予約したら
+</p>
+<pre>
+  予約できません。
+  この番組(20:00:00~20:30:00)は、すでに予約している
+  番組(19:00:12~20:00:12)と重複しています。
+</pre>
+<p>
+というメッセージが。なんだ12て。そもそも分単位でしか設定できないのに。<br>
+どこからそんな値が設定されたんだ。
+</p>
+<p>
+消して新たに予約したら直った。
+
+</p>
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="201202132" title="201202132" href="201202b.html#201202132">■</a> 
+ruby-talk流量激減</h3>
+<p>
+ひょっとしてruby-forumはネタふり係だった？
+</p>
+<!-- section end -->
+</div>
+<!-- 2012/02/13 end -->
+
+
+
+<hr class="hide">
+<!-- 2012/02/14 start -->
+<h2><a name="20120214" href="201202b.html#20120214">2012-02-14 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="201202141" title="201202141" href="201202b.html#201202141">■</a> 
+freenodeのNickServ</h3>
+<p>
+最近
+<a href="http://www.weechat.org/">WeeChat</a>を試してる。マルチサーバ対応だし、それぞれサーバ毎に文字コードを設定できるし、<br>
+プラグインはRubyでも書けるしで、かなり申し分ない。
+</p>
+<p>
+それはそれとしてfreenodeのサーババッファを見るとなんか警告が出てることに気づいた。
+</p>
+<pre>
+20:33:08 freenode  -- | NNickServ (NickServ@services.): This nickname is registered. Please choose a different nickname,
+                      | or identify via /msg NickServ identify &lt;password&gt;.
+</pre>
+<p>
+まじで？取られちゃったかと思ったが、/msgしてpassword入れてみたら取ってたのは俺だった。
+</p>
+<!-- section end -->
+</div>
+<!-- 2012/02/14 end -->
+
+
+
+<hr class="hide">
+<!-- 2012/02/15 start -->
+<h2><a name="20120215" href="201202b.html#20120215">2012-02-15 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="201202151" title="201202151" href="201202b.html#201202151">■</a> 
+earthquake.gemで補完時にエラーになる件</h3>
+<p>
+ここ数ヶ月earthquake.gemで補完すると[ERROR] invalid byte sequence in UTF-8と言われてしまって困っていた。
+ずっとearthquake.gemのせいだと思っていたら全然違った。ごめん。<br>
+historyファイルに&quot;\x80\n&quot;というゴミが混入していた。ほんとにinvalidだったんだな。<br>
+vimで開いてみたら見事に文字化けしてたよ。<br>
+391行目以降がだめだとvimが言ってるので
+</p>
+<pre>
+% sed -i '391d' ~/.earthquake/history
+</pre>
+<p>
+で解決した。
+</p>
+<!-- section end -->
+</div>
+<!-- 2012/02/15 end -->
+
+
+
+<hr class="hide">
+<!-- 2012/02/16 start -->
+<h2><a name="20120216" href="201202b.html#20120216">2012-02-16 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="201202161" title="201202161" href="201202b.html#201202161">■</a> 
+commandlinefuのAPIの不思議</h3>
+<p>
+commandlinefuの
+<a href="http://www.commandlinefu.com/site/api">search API</a>はなんでこうなってんだろうね。<br>
+sshを検索したければmatching/ssh/c3Noとする。<br>
+このc3Noはsshをbase64 encodingしたもの。<br>
+つまり同じ内容を別表記で並べないといけない。省略できない。<br>
+省略できないわりには、最初のsshは無視されてc3Noしか有効ではない。<br>
+実際にmatching/aaa/c3Noとしてみるとsshが検索される。<br>
+なんだろねえ。
+
+</p>
+<!-- section end -->
+</div>
+<!-- 2012/02/16 end -->
+
+
+
+<hr class="hide">
+<!-- 2012/02/17 start -->
+<h2><a name="20120217" href="201202b.html#20120217">2012-02-17 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="201202171" title="201202171" href="201202b.html#201202171">■</a> 
+tenki.jpからの情報を得る</h3>
+<p>
+いままではmechanizeで
+<a href="http://tenki.jp/amedas/detail-516.html">さいたま市の気温</a>を毎時11分に得ていた。<br>
+ふとトップページ見てたら
+<a href="http://tenki.jp/webservice/rss/">tenki RSS</a>を発見してしまったので、どうしようかと思案。<br>
+RSSは毎時32,3分に更新される。情報としてはそのときの時刻のみ。<br>
+htmlだと構造が変わったときに追従する必要があるし。<br>
+とはいうもののもう3年ぐらいそのままなので、追従したこともないし。<br>
+まあ、そんなに即時性が求められるわけでもないので、RSSにするか。
+</p>
+<!-- section end -->
+</div>
+<!-- 2012/02/17 end -->
+
+
+
+<hr class="hide">
+<!-- 2012/02/18 start -->
+<h2><a name="20120218" href="201202b.html#20120218">2012-02-18 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="201202181" title="201202181" href="201202b.html#201202181">■</a> 
+CygwinのclangでRuby trunkをmakeしようとして失敗</h3>
+<p>
+configureに2時間かかったとかはいいとして、<br>
+問題はtrunkだと信じていたソースが、2年前のものだったことだ。<br>
+コマンドラインが隠されないから変だとは思った。<br>
+まあ、そこは後で調べるかと先に進めて、<br>
+なんとかminirubyができたなあと眺めてたら微妙に違和感が。<br>
+CTRL+Cで止めて./miniruby -vしてみるとなんと
+</p>
+<pre>
+ruby 1.9.2dev (2010-04-29) [i386-cygwin]
+</pre>
+<p>
+と表示されるではないか。直前にsvn upgradeしたつもりが全然別のディレクトリだったとは。<br>
+すごすごと作業ディレクトリごと消した。また2時間configureからやり直しだよ。<br>
+って、config.cacheを残しておけば数分で済んだはずだ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2012/02/18 end -->
+
+
+
+<hr class="hide">
+<!-- 2012/02/19 start -->
+<h2><a name="20120219" href="201202b.html#20120219">2012-02-19 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="201202191" title="201202191" href="201202b.html#201202191">■</a> 
+<a href="http://www.commandlinefu.com/commands/view/10265/resolution-of-a-image">Resolution of a image</a></h3>
+<p>
+identifyには%形式でいろいろなプロパティを表示するオプションがあるので、
+</p>
+<pre>
+% identify -format %G image.jpg
+</pre>
+<p>
+だけでok。%Gは%wx%hと同じ。
+</p>
+<p>
+参考:
+<a href="http://www.imagemagick.org/script/escape.php">ImageMagick: Format and Print Image Properties</a></p>
+<!-- section end -->
+</div>
+<!-- 2012/02/19 end -->
+
+
+
+<hr class="hide">
+<!-- 2012/02/20 start -->
+<h2><a name="20120220" href="201202b.html#20120220">2012-02-20 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="201202201" title="201202201" href="201202b.html#201202201">■</a> 
+CygwinのclangでRubyをmakeしてみた</h3>
+<p>
+&lt;limits.h&gt;関連は強制的にCygwinのものを読み込ませてやればなんとかなった。
+</p>
+<pre>
+% CFLAGS='-include /usr/include/limits.h' ./configure --with-gcc=clang
+</pre>
+<p>
+ただ、gnu_dev_major等がなぜかundefined symbolになるので
+</p>
+<pre>
+-D__inline__=&quot;static __inline__&quot;
+</pre>
+<p>
+をMakefileのCFLAGSに追加。でもこれをconfigureで渡す方法がわからんかった。
+</p>
+<pre>
+% CFLAGS='-include /usr/include/limits.h -D__inline__=&quot;static __inline__&quot;' ./configure --with-gcc=clang
+</pre>
+<p>
+ではだめなようで。&quot;じゃなくて\をいっぱいつけて空白をquoteしたりもしたが、何個つけてもだめだった。<br>
+いやまじで、どう指定すれば伝わるんだろう？
+</p>
+<!-- section end -->
+</div>
+<!-- 2012/02/20 end -->
+
+<hr>
+<div>
+<a href="201202a.html">&lt;Prev(,)</a> | 
+<a href="201202c.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

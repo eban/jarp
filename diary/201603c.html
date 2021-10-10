@@ -1,0 +1,318 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2016-3-c</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="201603b.html">
+<link rel="next" href="201604a.html">
+
+<link rel="stylesheet" type="text/css" href="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.css">
+<script async type="text/javascript" src="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.js"></script>
+<script type="text/javascript">
+<!--       
+$(document).ready(function() {
+  prettyPrint();
+});
+-->
+</script>
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2016年3月下旬〜</p>
+<hr>
+<div>
+<a href="201603b.html" accesskey=",">&lt;Older(,)</a> | 
+<a href="201604a.html" accesskey=".">Newer(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2016/03/21 start -->
+<h2><a name="20160321" href="201603c.html#20160321">2016-03-21 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="201603211" title="201603211" href="201603c.html#201603211">■</a> 
+jqじゃなくJMESPathで</h3>
+<p>
+awscliは--queryでJMESPathが使えるのでそれで表現してみた。
+</p>
+<pre>
+% aws --region us-east-1 ecr list-images --repository-name repository \
+  --query 'imageIds[?imageTag==null].[join(`=`,[`imageDigest`,imageDigest])][]' --output text
+</pre>
+<p>
+これをxargsに渡してあげればいい。<br>
+でもjoinのところは3日もすれば何やってんだかわからなくなるので、<br>
+sedを使ったほうがまし。
+</p>
+<pre>
+% aws --region us-east-1 ecr list-images --repository-name repository \
+  --query 'imageIds[?imageTag==null]' --output text | \
+  sed 's/^/imageDigest=/'
+</pre>
+<p>
+JMESPathって文字列加工に関してはかゆいところに手が届かない。<br>
+単に値を参照するぐらいに留めるべきか。
+</p>
+<!-- section end -->
+</div>
+<!-- 2016/03/21 end -->
+
+
+
+<hr class="hide">
+<!-- 2016/03/22 start -->
+<h2><a name="20160322" href="201603c.html#20160322">2016-03-22 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="201603221" title="201603221" href="201603c.html#201603221">■</a> 
+Firefoxでピン留めしたタブを起動時に遅延読み込みさせる</h3>
+<p>
+なぜピン留めしたタブだけは読み込まれるのか不明だが、about:configで無効にできるようだ。<br>
+browser.sessionstore.restore_pinned_tabs_on_demandをtrueにすればok。
+</p>
+<!-- section end -->
+</div>
+<!-- 2016/03/22 end -->
+
+
+
+<hr class="hide">
+<!-- 2016/03/23 start -->
+<h2><a name="20160323" href="201603c.html#20160323">2016-03-23 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="201603231" title="201603231" href="201603c.html#201603231">■</a> 
+<a href="https://www.scriptr.io/">scriptr;</a></h3>
+<p>
+Backend for IoTということらしいが、
+<a href="https://www.scriptr.io/documentation">ドキュメント</a>を読んでみると、<br>
+スケジュール実行もできそうだし、botを作れそうな雰囲気。<br>
+でもなぜかアカウントが作れない。<br>
+twitterでもgithubでも以下のようなエラーになるし。
+</p>
+<pre>
+Oops! we encountered an error while processing your request.
+</pre>
+<p>
+アカウント名とパスワードでやってみてもどんなアカウント名でも不正になってしまう。<br>
+うーむ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2016/03/23 end -->
+
+
+
+<hr class="hide">
+<!-- 2016/03/24 start -->
+<h2><a name="20160324" href="201603c.html#20160324">2016-03-24 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="201603241" title="201603241" href="201603c.html#201603241">■</a> 
+<a href="https://hook.io/">hook.io</a></h3>
+<p>
+というわけでhook.ioだ。こっちは問題なくアカウント作れた。<br>
+<a href="https://hook.io/docs">ドキュメント</a>を見るといろんな言語が使えるようだが、<br>
+フルサポートはJavaScriptというかNodeだけ。<br>
+<a href="https://hook.io/packages/npm/installed">結構インストールされている。</a><br>
+つまりwebからrequestで取ってきてhtmlparserで情報を抜き出してrssを吐く、なんてこともできそう。<br>
+cron機能もあるのでbotもできそうだ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2016/03/24 end -->
+
+
+
+<hr class="hide">
+<!-- 2016/03/25 start -->
+<h2><a name="20160325" href="201603c.html#20160325">2016-03-25 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="201603251" title="201603251" href="201603c.html#201603251">■</a> 
+IFTTTのDiigoチャンネルがなぜか終わらない</h3>
+<p>
+23日で終了とメールが来たが全然終わる様子がない。<br>
+元気にPocketからの連携でアイテムが増えてるわけだけどどういうことだ。<br>
+今月中はおまけ？
+</p>
+<!-- section end -->
+</div>
+<!-- 2016/03/25 end -->
+
+
+
+<hr class="hide">
+<!-- 2016/03/26 start -->
+<h2><a name="20160326" href="201603c.html#20160326">2016-03-26 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="201603261" title="201603261" href="201603c.html#201603261">■</a> 
+nodeじゃないnpm package</h3>
+<p>
+というものが存在していて驚いた。<br>
+じゃあ何で書かれているかというとシェルスクリプトでsedやらperlやら呼んでたりする。<br>
+こんなのもありなんだな。
+</p>
+<p>
+<a href="https://github.com/so-fancy/diff-so-fancy">diff-so-fancy</a></p>
+<!-- section end -->
+</div>
+<!-- 2016/03/26 end -->
+
+
+
+<hr class="hide">
+<!-- 2016/03/27 start -->
+<h2><a name="20160327" href="201603c.html#20160327">2016-03-27 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="201603271" title="201603271" href="201603c.html#201603271">■</a> 
+Firefoxのtab unload系</h3>
+<p>
+最近再起動すると以前のタブを忘れてどんどん新しいタブになってしまって困っていたが、<br>
+原因がUnloadTabだとわかり使うのをやめた。<br>
+代替拡張はいろいろあるのでとりあえずAuto Unload Tabを試している。<br>
+バックグラウンドで新たなタグを開くときはunload状態になるのがいい。
+</p>
+<!-- section end -->
+</div>
+<!-- 2016/03/27 end -->
+
+
+
+<hr class="hide">
+<!-- 2016/03/28 start -->
+<h2><a name="20160328" href="201603c.html#20160328">2016-03-28 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="201603281" title="201603281" href="201603c.html#201603281">■</a> 
+<a href="http://mybrowseraddon.com/tab-memory.html">Tab Memory Usage</a></h3>
+<p>
+タブ毎にメモリ使用量がわかる。<br>
+何が一番食うかというとgmailで破格だ。開いた直後だと100MB近く食っている。<br>
+意外なのはLDRで5MBも食ってない。
+</p>
+<!-- section end -->
+</div>
+<!-- 2016/03/28 end -->
+
+
+
+<hr class="hide">
+<!-- 2016/03/29 start -->
+<h2><a name="20160329" href="201603c.html#20160329">2016-03-29 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="201603291" title="201603291" href="201603c.html#201603291">■</a> 
+EeePC 1000HにSolydxをインストール</h3>
+<p>
+EeePCはWindows XPのままなのでちょっと外で使うのは気が引ける。<br>
+というわけでSolydxを入れてみた。<br>
+たまたま手元に32GBのSDがあったので、これにインストールしたがえらく時間がかかった。<br>
+寝て起きても終わってなかったくらい。<br>
+その後zshのインストールに20分かかったりするのでちょっと実用には無理。
+</p>
+<!-- section end -->
+</div>
+<!-- 2016/03/29 end -->
+
+
+
+<hr class="hide">
+<!-- 2016/03/30 start -->
+<h2><a name="20160330" href="201603c.html#20160330">2016-03-30 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="201603301" title="201603301" href="201603c.html#201603301">■</a> 
+EeePC 1000HにLinuxBeanをインストール</h3>
+<p>
+凝りずにSDへ入れてみた。今度は1時間ほどでインストールも完了。<br>
+zshのインストールも2分ぐらいといい感じ。<br>
+でもなんか微妙におかしい。SDに拘る必要はないな。
+</p>
+<!-- section end -->
+</div>
+<!-- 2016/03/30 end -->
+
+
+
+<hr class="hide">
+<!-- 2016/03/31 start -->
+<h2><a name="20160331" href="201603c.html#20160331">2016-03-31 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="201603311" title="201603311" href="201603c.html#201603311">■</a> 
+EeePC 1000HのHDDへLinuxBeanをインストール</h3>
+<p>
+CとDドライブに分かれていたのでDをつぶすことにした。<br>
+インストーラは使用してる分だけ残してパーティションを切り直すという芸当を発揮してくれて、<br>
+微妙に残ることになった。まあいいか。<br>
+やっぱちゃんとHDDにインストールすると全然違うな。<br>
+zshのインストールも15秒で終わるし、<br>
+特にハイバネートからの復帰が速くて驚いた。<br>
+だったらSSDにしてみようかな。<br>
+これで一応勉強会の準備できたか。
+</p>
+<!-- section end -->
+</div>
+<!-- 2016/03/31 end -->
+
+<hr>
+<div>
+<a href="201603b.html">&lt;Older(,)</a> | 
+<a href="201604a.html">Newer(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

@@ -1,0 +1,966 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2002-11-c</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="200211b.html">
+<link rel="next" href="200212a.html">
+
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2002年11月下旬〜</p>
+<hr>
+<div>
+<a href="200211b.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="200212a.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2002/11/21 start -->
+<h2><a name="20021121" href="200211c.html#20021121">2002-11-21 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="200211211" title="200211211" href="200211c.html#200211211">■</a> 
+[GnuPG] idea.c</h3>
+<p>
+IDEAを組み込む。
+ftp://ftp.gnupg.org/pub/gcrypt/contrib/idea.cにあると、
+あちこちに書いてあるが存在しない。じゃあ今はどこにあるかというと
+<a href="http://www.gnupg.org/why-not-idea.html">http://www.gnupg.org/why-not-idea.html</a>を見ると
+<a href="ftp://ftp.gnupg.dk/pub/contrib-dk/idea.c.gz">ここ</a>にある。と思ったら周りにはPGP 2.xを使ってる人はいなかった。
+とりあえず今のところは必要ないな。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200211212" title="200211212" href="200211c.html#200211212">■</a> 
+[GnuPG] keyringを作る</h3>
+<p>
+keyringを使い分けたかったのは
+署名つきの配布ファイルのverifyをしたいんだけどkeyはなんとなく別にした
+いなどと考えたから。
+</p>
+<pre>
+% cd ~/.gnupg
+% echo no-secmem-warning &gt;null.conf
+% gpg --options ~/.gnupg/null.conf --no-default-keyring \
+  --keyring ~/.gnupg/soft.gpg --import gnupg-sigkey.html
+gpg: keyring `/home/watanabe/.gnupg/soft.gpg' created
+gpg: key 57548DCD: public key &quot;Werner Koch (gnupg sig) &lt;dd9jn@gnu.org&gt;&quot; imported
+gpg: Total number processed: 1
+gpg:               imported: 1
+</pre>
+<p>
+てな感じでsoft.gpgを作ってgpg.confのほうに
+</p>
+<pre>
+keyring soft.gpg
+</pre>
+<p>
+を加えれば区別しないで使える。実際にさっき取ってきたidea.c.gz.sigで試すと
+</p>
+<pre>
+% gpg --verify idea.c.gz.sig
+gpg: Signature made Mon Aug  5 18:21:54 2002 JST using DSA key ID 621CC013
+gpg: Can't check signature: public key not found
+</pre>
+<p>
+ってあれ？IDが違うじゃん。もう。
+<a href="http://www.openpksd.org/findkey/index.html">OpenPKSD</a>でIDを入力して検索したら出てきた。soft.gpgにimportしてverifyしてみると
+</p>
+<pre>
+% gpg --verify idea.c.gz.sig
+gpg: Signature made Mon Aug  5 18:21:54 2002 JST using DSA key ID 621CC013
+gpg: Good signature from &quot;Werner Koch &lt;wk@g10code.com&gt;&quot;
+gpg:                 aka &quot;Werner Koch &lt;wk@gnupg.org&gt;&quot;
+gpg: checking the trustdb
+gpg: checking at depth 0 signed=0 ot(-/q/n/m/f/u)=0/0/0/0/0/1
+gpg: WARNING: This key is not certified with a trusted signature!
+gpg:          There is no indication that the signature belongs to the owner.
+Primary key fingerprint: ECAF 7590 EB34 43B5 C7CF  3ACB 6C7E E1B8 621C C013
+</pre>
+<p>
+となった。よさげだ。後でlsignしとこう。
+</p>
+
+<p>
+こういうものだったら一時的にkeyringを作って、
+それを使ってverifyすればいいのかもしれない。
+こんな感じで。
+</p>
+<pre>
+% gpg --options ~/.gnupg/null.conf --no-default-keyring \
+  --keyring ./idea.c.gz.gpg --import wk.key
+gpg: keyring `./idea.c.gz.gpg' created
+gpg: key 621CC013: no subkey for key revocation
+gpg: key 621CC013: invalid subkey binding
+gpg: key 621CC013: public key &quot;Werner Koch &lt;wk@g10code.com&gt;&quot; imported
+gpg: Total number processed: 1
+gpg:               imported: 1
+% gpg --keyring ./idea.c.gz.gpg --verify idea.c.gz.sig
+gpg: Signature made Mon Aug  5 18:21:54 2002 JST using DSA key ID 621CC013
+gpg: Good signature from &quot;Werner Koch &lt;wk@g10code.com&gt;&quot;
+gpg:                 aka &quot;Werner Koch &lt;wk@gnupg.org&gt;&quot;
+gpg: checking the trustdb
+gpg: checking at depth 0 signed=0 ot(-/q/n/m/f/u)=0/0/0/0/0/1
+gpg: WARNING: This key is not certified with a trusted signature!
+gpg:          There is no indication that the signature belongs to the owner.
+Primary key fingerprint: ECAF 7590 EB34 43B5 C7CF  3ACB 6C7E E1B8 621C C013
+</pre>
+<p>
+使い終わったidea.c.gz.gpgは捨ててもいいので気にする必要もない。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/11/21 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/11/22 start -->
+<h2><a name="20021122" href="200211c.html#20021122">2002-11-22 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="200211221" title="200211221" href="200211c.html#200211221">■</a> 
+[GNU] GCC 3.2.1</h3>
+<p>
+オプションは
+<a href="200208b.html#200208163">3.2</a>のときと同じ。
+</p>
+<pre>
+% mkdir linux; cd linux
+% CFLAGS=-Os CXXFLAGS=-Os ../configure --enable-languages=c,c++ \
+  --with-system-zlib --enable-sjlj-exceptions --enable-threads \
+  --disable-version-specific-runtime-libs --disable-nls \
+  --without-included-gettext --without-catgets
+% make BOOT_CFLAGS=-Os STAGE1_CFLAGS=-Os CFLAGS=-Os \
+  DEBUG_FLAGS= CONFIG_CXXFLAGS='-ffunction-sections -fdata-sections' \
+  bootstrap
+</pre>
+<p>
+Rubyで試したが問題なし。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200211222" title="200211222" href="200211c.html#200211222">■</a> 
+<a href="http://www.ruby-lang.org/en/raa-list.rhtml?name=ERB">[Ruby] ERB 2.0.1</a></h3>
+<p>
+更新。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/11/22 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/11/23 start -->
+<h2><a name="20021123" href="200211c.html#20021123">2002-11-23 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="200211231" title="200211231" href="200211c.html#200211231">■</a> 
+<a href="http://kernel.org/">[Linux] Linux 2.4.20-rc3</a></h3>
+<p>
+久し振りに上げてみた。特に問題ない。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200211232" title="200211232" href="200211c.html#200211232">■</a> 
+<a href="http://www.ruby-lang.org/en/raa-list.rhtml?name=yaml.rb">[Ruby] yaml.rb 0.47</a></h3>
+<p>
+更新。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/11/23 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/11/24 start -->
+<h2><a name="20021124" href="200211c.html#20021124">2002-11-24 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="200211241" title="200211241" href="200211c.html#200211241">■</a> 
+<a href="http://www.cqpub.co.jp/e-unix/">[雑誌] Embedded UNIX Vol.1</a></h3>
+<p>
+第1特集に「Linuxクロス開発環境構築入門」とある。
+これがまた近年まれに見るツッコミどころ満載の内容だ。
+</p>
+
+<h4><a name="200211241S1" href="200211c.html#200211241S1">_</a> <strong>なぜLinux？</strong>: </h4>
+<div class="sub">
+<p>
+まず3章に分かれているが、そのうちの2章分がCygwinに関する記事。
+看板に偽りあり。
+</p>
+
+</div>
+<h4><a name="200211241S2" href="200211c.html#200211241S2">_</a> <strong>パスワードを空に？(6, 7ページ)</strong>: </h4>
+<div class="sub">
+<p>
+Cygwinのmkpasswdで作った/etc/passwdだとシステムと整合が取れなくなることがあるという。
+そんな経験は今まで一度もないが、
+筆者はなんと/etc/passwdのパスワードフィールドを空にし、
+更にwindowsのパスワードも空にしろと言う。
+いちおうセキュリティに注意しろと但し書きはあるが、
+解決法としては全くもって話にならない。
+あ、ここではNT系を使用する場合について書かれている。
+</p>
+
+</div>
+<h4><a name="200211241S3" href="200211c.html#200211241S3">_</a> <strong>ドットファイル(8ページ)</strong>: </h4>
+<div class="sub">
+<p>
+windows上ではドットファイルを作成できないと言い切っているが、
+それはexplorerの仕様なだけ。コマンドプロンプトでいくらでも作れる。
+ひょっとしてコマンドプロンプトはwindowsではないとでも？
+</p>
+
+</div>
+<h4><a name="200211241S4" href="200211c.html#200211241S4">_</a> <strong>.bashrc(8, 9ページ)</strong>: </h4>
+<div class="sub">
+<p>
+bashが.bashrcをログイン時に読んでくれないので/etc/profileに
+</p>
+<pre>
+source .bashrc
+</pre>
+<p>
+を追加したとある。
+マニュアルを読んだことがないらしい。.bash_profile。
+</p>
+
+</div>
+<h4><a name="200211241S5" href="200211c.html#200211241S5">_</a> <strong>tar --help(9, 10, 11ページ)</strong>: </h4>
+<div class="sub">
+<p>
+ここで突然tar --helpの全内容が2ページ丸々使って掲載されてる。
+そんなものは実行すればいつでも見られる。
+</p>
+
+</div>
+<h4><a name="200211241S6" href="200211c.html#200211241S6">_</a> <strong>symlink(12ページ)</strong>: </h4>
+<div class="sub">
+<p>
+日本語を扱うためにjvim3を自分でmakeする話。
+iconvもあるしvim6をmakeし直せばいいじゃんともいえるけど、
+ま、それは置いといて、viという名前で呼べるように
+</p>
+<pre>
+$ ln -s -f /usr/local/bin/vim.exe /bin/vi.exe
+</pre>
+<p>
+とするあった。ということはvimという名前で呼んだときにはどうするんだろう？
+というかPATHの設定で/usr/local/binのほうが先になってないのか？
+</p>
+
+</div>
+<h4><a name="200211241S7" href="200211c.html#200211241S7">_</a> <strong>jvim3のMakefileの修正(13, 14, 15, 16ページ)</strong>: </h4>
+<div class="sub">
+<p>
+たった5行の修正個所を示すために3ページ半を費やす。diffを知らないらしい。
+</p>
+
+</div>
+<h4><a name="200211241S8" href="200211c.html#200211241S8">_</a> <strong>grep(18ページ)</strong>: </h4>
+<div class="sub">
+<p>
+「-eオプション, -fオプションを使用すると正規表現が使用できます.」
+まるで指定しなきゃ使えないような書き方だ。
+</p>
+
+</div>
+<h4><a name="200211241S9" href="200211c.html#200211241S9">_</a> <strong>sed(19ページ)</strong>: </h4>
+<div class="sub">
+<p>
+sedを使う例。
+</p>
+<pre>
+sed 's/^int/long/g' test.c | sed 's/iTestcnt/lTestcnt/g' &gt;hoge.c
+</pre>
+<p>
+まあ、ここをツッコむのはちょっと可哀想ではあるが、^を使うならgは要らないし、
+sedを2回呼ぶ必要もない。
+</p>
+<pre>
+sed -e 's/^int/long/' -e 's/iTestcnt/lTestcnt/g' test.c &gt;hoge.c
+</pre>
+<p>
+か
+</p>
+<pre>
+sed -e 's/^int/long/;s/iTestcnt/lTestcnt/g' test.c &gt;hoge.c
+</pre>
+<p>
+で十分だ。
+</p>
+
+</div>
+<h4><a name="200211241S10" href="200211c.html#200211241S10">_</a> <strong>sort(20ページ)</strong>: </h4>
+<div class="sub">
+<p>
+ls -Alの結果を作成日順に並べる例。
+</p>
+<pre>
+ls -Al /usr/include/*.h | sort +5
+</pre>
+<p>
+誌面でもソートされていないのが一目でわかる。
+</p>
+<pre>
+Apr 26  2001
+Apr 26  2001
+Dec  5  2000
+...
+</pre>
+<p>
+英語の月の名前でソートしてどうする？
+サイズでソートにしとけばよかったのにねえ。
+</p>
+
+</div>
+<h4><a name="200211241S11" href="200211c.html#200211241S11">_</a> <strong>prefix(26ページ)</strong>: </h4>
+<div class="sub">
+<p>
+クロスbinutilsを作る話。
+configureに--prefix=/usr/localとわざわざ指定してるのに、
+できあがったMakefileを書き換えてprefix = /opt/shにしろと言う。
+だったらなぜ最初から--prefix=/opt/shと指定しない？
+</p>
+
+</div>
+<h4><a name="200211241S12" href="200211c.html#200211241S12">_</a> <strong>移植の話(3章)</strong>: </h4>
+<div class="sub">
+<p>
+「autoconfはクロスコンパイルに完全対応できていないので, configureの際にコンパイラを変更しない」
+autoconfが対応してないのではなく、
+各アプリケーションのconfigure.ac(in)が対応していないというべき。
+このあとで--prefix=/hogeとして一度ホスト上の環境でconfigureを実行し、
+できあがったMakefileのgccやarなどを書き換えろと言う。
+そういえば一度も--targetや--hostや--buildといったオプションについて書かれていない。
+autoconfのマニュアルも読んだことがないらしい。
+</p>
+
+<p>
+結局ApacheはnativeのMakefileを参考にshell scriptを作ったようだ。
+その内容が3ページほど。
+</p>
+
+</div>
+<h4><a name="200211241S13" href="200211c.html#200211241S13">_</a> <strong>tarball(40ページ)</strong>: </h4>
+<div class="sub">
+<pre>
+# tar cvxf httpd.tgz *
+</pre>
+<p>
+は単なるtypoだと思うけど、xとzはキーボード上で並んでるしね。
+こうすると2度目は困るからhttpd.tgzは別の場所に作ったほうがいい。
+そういえばたまにtarballの中にtarballが入っていたりすることがあるけど、
+こうやって作ってる人が結構いるってことか。
+</p>
+
+</div>
+<h4><a name="200211241S14" href="200211c.html#200211241S14">_</a> <strong>apachectl(41, 42, 43, 44ページ)</strong>: </h4>
+<div class="sub">
+<p>
+--prefix=/hogeで作ったから正しいpathに変更しろということだが、
+変更後しかないのでどこを変更したんだかわからない。
+見た目だと2つしかない。なんのためにsedを紹介したのだ。
+</p>
+
+<p>
+その後も無駄と思えるようなリスト満載。
+このへんで勘弁してやろう。というか勘弁してよ。疲れた。
+</p>
+
+<p>
+西田さんのBusyBoxの記事はいつもながらいいねえ。
+先が楽しみ。
+</p>
+
+</div>
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200211242" title="200211242" href="200211c.html#200211242">■</a> 
+<a href="http://cygwin.com/ml/cygwin-announce/2002-11/msg00034.html">[Cygwin] Updated: cygwin-1.3.16-1</a></h3>
+<p>
+Changesを見ると
+</p>
+<pre>
+- Export fseeko and ftello.  (Jason Tishler)
+</pre>
+<p>
+ということなのでRuby 1.7のconfig.cacheを消してIO#seekを試す。
+large fileではないが普通の小さいファイルで問題なしなのでとりあえずok。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200211243" title="200211243" href="200211c.html#200211243">■</a> 
+<a href="200211c.html#200211241S1">なぜLinux?</a></h3>
+<p>
+あ、SH-Linuxのクロス環境を作る話だからホストがCygwinでいいわけか。
+もうしわけない。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/11/24 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/11/25 start -->
+<h2><a name="20021125" href="200211c.html#20021125">2002-11-25 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="200211251" title="200211251" href="200211c.html#200211251">■</a> 
+[Ruby] MAXPATHLEN</h3>
+<p>
+1.7をmingw32でmakeしたらdln.cでエラー。MAXPATHLENが定義されてないという。
+なぜか#ifdef USE_DLN_A_OUTの中にMAXPATHLENの定義が移動している。
+で、前に移動したわけだけだが、結局は
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-dev/18939">[ruby-dev:18939]</a>となった。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200211252" title="200211252" href="200211c.html#200211252">■</a> 
+[Ruby] make -nとmake -k</h3>
+<p>
+ext/extmk.rbで
+</p>
+<pre>
+$continue = mflags.include?(?k)
+$dryrun = mflags.include?(?n)
+</pre>
+<p>
+で判断してるが、長いオプションを指定したときまずいねえ。
+たとえばCygwinではMAKE_MODE=--unixを必ず指定することになるけど、
+これにはnが含まれているから常にdryrunフラグがonになってしまう。
+現在は
+</p>
+<pre>
+    $mflags.unshift(&quot;INSTALL_PROG=install -m 0755&quot;,
+                    &quot;INSTALL_DATA=install -m 0644&quot;) if $dryrun
+</pre>
+<p>
+となっていてこの2つのマクロが置き換わるだけなので特に問題はないが。
+いや、installコマンドでインストールすることになるのはやはり問題か。
+</p>
+<pre>
+$continue = mflags[/-k\b/]
+$dryrun = mflags[/-n\b/]
+</pre>
+<p>
+とするか。
+</p>
+
+<p>
+上記のよう変更してmake -nしてみたが、$dryrunは真にならない。
+調べてみると環境変数MAKEFLAGSが&quot; --unix -n&quot;になり、
+</p>
+<pre>
+&quot; --unix -n&quot;.split(nil, 2)
+</pre>
+<p>
+の結果が
+</p>
+<pre>
+[&quot;--unix&quot;, &quot;-n&quot;]
+</pre>
+<p>
+なので
+</p>
+<pre>
+mflags, = mflags.split(nil, 2)
+</pre>
+<p>
+を実行するとmflagsは&quot;--unix&quot;になってしまうからだ。
+位置を決め打ちしてるのはまずいなあ。ここは
+</p>
+<pre>
+if mflags = ENV[&quot;MAKEFLAGS&quot;]
+  mflags, = mflags.split(nil, 2)
+else
+  mflags = ENV[&quot;MFLAGS&quot;] || &quot;&quot;
+end
+$continue = mflags.include?(?k)
+$dryrun = mflags.include?(?n)
+</pre>
+<p>
+を
+</p>
+<pre>
+mflags = ENV[&quot;MAKEFLAGS&quot;] || ENV[&quot;MFLAGS&quot;] || &quot;&quot;
+$continue = mflags[/-k\b/]
+$dryrun = mflags[/-n\b/]
+</pre>
+<p>
+とすればよさそう。
+</p>
+
+<p>
+てゆかdryrunのときになぜ置き換える必要があるんだろう？
+単に
+</p>
+<pre>
+install -m 0755 curses.so /usr/local/lib/ruby/1.7/i386-cygwin
+</pre>
+<p>
+のように表示させたかったから？たしかに
+</p>
+<pre>
+/home/watanabe/ruby/cygwin/miniruby.exe -I/home/watanabe/ruby/cygwin \
+  -I/home/watanabe/ruby/ruby/lib -r ftools -e \
+  'File::install(ARGV[0],  ARGV[1], 0555, true)' \
+  curses.so /usr/local/lib/ruby/1.7/i386-cygwin
+</pre>
+<p>
+と表示されたら欝陶しいとは思うけど。
+あ、0755と0555と違いがある。というか0755で十分だな。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200211253" title="200211253" href="200211c.html#200211253">■</a> 
+<a href="http://homepage1.nifty.com/markey/memo/200211.html#112402">sort</a></h3>
+<p>
+sortが使えるというよりもsortコマンドの紹介なので、
+lsで解決してしまっては意味がないのは全くもっておっしゃる通りです。
+どっちにしろ例が悪かったと言えます。
+ここでは順番に
+</p>
+<pre>
+grep, sed, awk, perl, ruby, uniq, tr, sort
+</pre>
+<p>
+の各コマンドを説明してます。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200211254" title="200211254" href="200211c.html#200211254">■</a> 
+<a href="http://www.osk.3web.ne.jp/~nyasu/diary/200211.html#20021121_1">[Ruby] mswin32版ruby 1.6</a></h3>
+<p>
+mswin32版1.6が非常に遅いという話題はすでに何度か出てます。1.7では速くなってます。
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-list/27694">[ruby-list:27694]</a>や
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-dev/12224">[ruby-dev:12224]</a>あたりを参照してください。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200211255" title="200211255" href="200211c.html#200211255">■</a> 
+<a href="http://www.ruby-lang.org/en/raa-list.rhtml?name=BZ2">[Ruby] BZ2 0.1.2</a></h3>
+<p>
+更新。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/11/25 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/11/26 start -->
+<h2><a name="20021126" href="200211c.html#20021126">2002-11-26 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="200211261" title="200211261" href="200211c.html#200211261">■</a> 
+<a href="http://www.ruby-lang.org/en/raa-list.rhtml?name=ncurses-ruby">[Ruby] ncurses-ruby 0.6</a></h3>
+<p>
+MinGWは
+<a href="http://gnuwin32.sourceforge.net/packages/pdcurses.htm">pdcurses</a>でいけるかと思ったらlibpanel.aの作りがまずいらしく、dllを参照してしまうようだ。
+自分でmakeするか。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200211262" title="200211262" href="200211c.html#200211262">■</a> 
+[今日のトリビア] 「けんじ」と「けいご」</h3>
+<p>
+19は岡平健治、岩瀬敬吾で、フリッパーズギターは小沢健二、小山田圭吾。
+どっちも「けんじ」と「けいご」だったことに気づく。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/11/26 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/11/27 start -->
+<h2><a name="20021127" href="200211c.html#20021127">2002-11-27 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="200211271" title="200211271" href="200211c.html#200211271">■</a> 
+[GCC] -I/usr/local/include</h3>
+<p>
+GCC 3.2.1では例の警告が出なくなったようだ。
+</p>
+<pre>
+% gcc -V 3.2 -I/usr/local/include -c hoge.c
+cc1: warning: changing search order for system directory &quot;/usr/local/include&quot;
+cc1: warning:   as it has already been specified as a non-system directory
+% gcc -V 3.2.1 -I/usr/local/include -c hoge.c
+</pre>
+<p>
+まあ、意味のある警告とも思えないしね。かなり不評だったんだろう。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200211272" title="200211272" href="200211c.html#200211272">■</a> 
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-dev/18950">[Ruby] MAXPATHLEN</a></h3>
+<p>
+そろそろpushしようかと思ったら、そのまま採用されていた。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200211273" title="200211273" href="200211c.html#200211273">■</a> 
+<a href="http://www.tux.org/pub/knaff/mtools/">[Linux] mtools 3.9.8</a></h3>
+<p>
+640MBのMOをmtoolsでアクセスしようと思ったら
+</p>
+<pre>
+% mdir m:
+Total number of sectors not a multiple of sectors per track!
+</pre>
+<p>
+と言われた。~/.mtoolsrcに
+</p>
+<pre>
+drive m: file=&quot;/dev/sda&quot;
+</pre>
+<p>
+と書いただけじゃだめみたいだ。230MBはこれでいいんだけどなあ。
+とりあえず今使ってるmtools 3.8というのはあまりにも古すぎるので最新を試す。
+<a href="http://www.tux.org/pub/knaff/mtools/">ここ</a>がmtoolsのweb pageらしい。
+</p>
+<pre>
+% CFLAGS=-Os ./configure --prefix=/usr --sysconfdir=/etc
+% make
+% sudo make install
+</pre>
+<p>
+早速試すと
+</p>
+<pre>
+% mdir m:
+Total number of sectors not a multiple of sectors per track!
+Add mtools_skip_check=1 to your .mtoolsrc file to skip this test
+</pre>
+<p>
+とヒントが出た。
+仰せの通りmtools_skip_check=1を追加したらアクセスできるようになった。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/11/27 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/11/28 start -->
+<h2><a name="20021128" href="200211c.html#20021128">2002-11-28 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="200211281" title="200211281" href="200211c.html#200211281">■</a> 
+[PC] ハードディスク</h3>
+<p>
+<a href="200109c.html#200109291">Clip-Onのハードディスクを換装した時に、</a>40GBのハードディスクが余ったわけだが、
+一年以上経った今頃になって活用することを思い立つ。
+てゆか忘れていた。大掃除してたら出てきたのだ。
+/dev/hdcの8GBにある旧環境はすでにアクセスしてないので、
+外してそこにつなげることにする。
+とりあえずSoftwareDesignの11月号についてきたPlamo 3.0をインストールすることにした。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200211282" title="200211282" href="200211c.html#200211282">■</a> 
+<a href="http://plamo-linux.jp/">[Linux] Plamo 3.0</a></h3>
+<p>
+例によって普通じゃない方法でインストールする。
+/cdrom/AT/FD/initrdの中身を取り出してコピー。
+</p>
+<pre>
+% sudo mount -r -o loop /cdrom/AT/FD/initrd /mnt
+% mkdir /tmp/plamo-3.0
+% cd /mnt
+% sudo cp -av . /tmp/plamo-3.0
+</pre>
+<p>
+chrootしてsetupを起動。
+</p>
+<pre>
+% sudo chroot /tmp/plamo-3.0 /bin/sh --login
+# setup
+</pre>
+<p>
+あとは普通に進める。と思ったが、proc fsがないから失敗。
+</p>
+<pre>
+# mount -t proc proc /proc
+</pre>
+<p>
+してからもう一度setup。
+進めるうちにext3fsやreiserfsが選べるようになってることがわかり、
+ext3fsにしたくなる。が、今のカーネルはモジュールを作ってない。
+というわけで、ext3を作る。
+てゆかフロッピー2枚(bootdsk, rootdsk)用意すればいいだけの話ではあるが。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200211283" title="200211283" href="200211c.html#200211283">■</a> 
+<a href="http://kernel.org/">[Linux] Linux 2.4.20-rc4</a></h3>
+<p>
+ただext3モジュールを作るだけじゃつまらないので、
+ついでに2.4.20-rc4に上げる。
+などと本筋とは関係ないことばかりしてるから時間がなくなる。
+Plamo 3.0のインストールはまた明日。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/11/28 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/11/29 start -->
+<h2><a name="20021129" href="200211c.html#20021129">2002-11-29 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="200211291" title="200211291" href="200211c.html#200211291">■</a> 
+<a href="http://plamo-linux.jp/">[Linux] Plamo 3.0</a></h3>
+<p>
+昨日のつづき。同じように進めて
+/bootは別のパーティションにしてhdc1として用意。
+あとは適当にスワップパーティションを切って、残りを/へ。
+ext3を選んでフォーマット。
+</p>
+
+<p>
+実際にインストールするとこで
+</p>
+<pre>
+BusyBox v0.61.pre (2002.08.04-11:05+0000) multi-call binary
+
+Usage: sort [-n] [FILE]...
+</pre>
+<p>
+とBusyBoxのsortが文句を言う。
+</p>
+<pre>
+# grep sort /usr/lib/setup/*
+</pre>
+<p>
+してみると-uオプションを使っているのがまずいようだ。
+メッセージにも-nオプションしか対応してない様が現われているし。
+気持ち悪いので中断し現環境のsortをコピーして使うことにした。
+sortはつい
+<a href="200209c.html#200209213">この間</a>uClibcでstatic版を作ってあるからそのままどこでも動くようになっている。
+というかPlamoのインストールディスクはuClibcで作ってあるので、
+staticじゃなくても大丈夫か。
+</p>
+
+<p>
+あとは全く問題なし。
+</p>
+
+<p>
+で、なんでこんな変な方法でインストールしてるかというと、
+普通にインストールディスクから立ち上げると、
+その間は他のことができないから。
+それに今回のsortのように何かあったときも簡単に対応できる。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200211292" title="200211292" href="200211c.html#200211292">■</a> 
+<a href="http://kernel.org/">[Linux] Linux 2.4.20</a></h3>
+<p>
+<a href="http://www.kernel.org/pub/linux/kernel/v2.4/ChangeLog-2.4.20">ChangeLog</a>を見ると、結局2.4.20-rc4がそのまま2.4.20としてリリースされた模様。
+</p>
+
+
+
+
+<!-- section end -->
+</div>
+<!-- 2002/11/29 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/11/30 start -->
+<h2><a name="20021130" href="200211c.html#20021130">2002-11-30 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="200211301" title="200211301" href="200211c.html#200211301">■</a> 
+[Linux] XFree86 4.2.0</h3>
+<p>
+xf86configなんて久し振りに起動した。
+が、できあがったXF86ConfigはいまいちのようでちゃんとXが立ち上がらない。
+X -configureの結果とミックスさせてみる。よさそうだ。記念に
+<a href="../files/XF86Config">XF86Config</a>を置いとく。
+</p>
+
+<p>
+Plamo 3.0は東雲フォントがdefaultで入ってるようだ。
+cmailはボールド体が結構使われているんだということに気づく。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200211302" title="200211302" href="200211c.html#200211302">■</a> 
+[Linux] 新環境</h3>
+<p>
+今までの環境の/usr/local,/home/watanabeをそのままコピー。
+glibc 2.3.1はtarballを残しておいたのでそのまま展開。
+これでほとんど移行完了。
+</p>
+
+<p>
+ppxpでダイアルアップしてみるとアクセス権限がないという。
+/etc/groupのttyにwatanabeを追加。もう一度。
+今度はシリアルが初期化できないという。そういえばirqの設定をしていない。
+</p>
+<pre>
+% sudo setserial /dev/modem port 0x3e8 irq 5 spd_vhi
+</pre>
+<p>
+でいいはず。と思ったら、/etc/sudoersに登録してない。
+suしてvisudoを実行しwatanabeを登録。再度setserialを実行。
+これでppxpはok。sshでheliumにloginしようしたら、
+heliumなど知らんという。dnsmasqを入れてなかった。あ、dhcpdも入れてない。
+こいつらを立ち上げてやっとheliumに入れた。wwwoffleも忘れてた。これは後にしよう。
+fetchmailでメールを取ってくる。okだ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200211303" title="200211303" href="200211c.html#200211303">■</a> 
+[今日のトリビア] 甲本ヒロト</h3>
+<p>
+おいらと同い歳らしい。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/11/30 end -->
+
+<hr>
+<div>
+<a href="200211b.html">&lt;Prev(,)</a> | 
+<a href="200212a.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

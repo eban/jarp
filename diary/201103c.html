@@ -1,0 +1,358 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2011-3-c</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="201103b.html">
+<link rel="next" href="201104a.html">
+
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2011年3月下旬〜</p>
+<hr>
+<div>
+<a href="201103b.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="201104a.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2011/03/21 start -->
+<h2><a name="20110321" href="201103c.html#20110321">2011-03-21 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="201103211" title="201103211" href="201103c.html#201103211">■</a> 
+RD-H1を久し振りに起動</h3>
+<p>
+もう撮るものと言えば黒田なんとかと重なっていたブラタモリとBS2のまぐねっとぐらいだったので、<br>
+コンセントから抜いといたRD-H1を起動してみたら、なぜか3/25の金曜日以降のデータがない。<br>
+inetもだめになったか？<br>
+考えてみるとontvjapanからメールで録画予約できるのでそれほど困らないわけだが。
+</p>
+<!-- section end -->
+</div>
+<!-- 2011/03/21 end -->
+
+
+
+<hr class="hide">
+<!-- 2011/03/22 start -->
+<h2><a name="20110322" href="201103c.html#20110322">2011-03-22 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="201103221" title="201103221" href="201103c.html#201103221">■</a> 
+この日記は第3グループ</h3>
+<p>
+もうすでにたびたび落ちてるのでご承知の通り、この日記のサーバが置かれてる地域は第3グループ。<br>
+つながらないときは停電してると思ってね。<br>
+あ、VPSへ移行すべきか。
+</p>
+<!-- section end -->
+</div>
+<!-- 2011/03/22 end -->
+
+
+
+<hr class="hide">
+<!-- 2011/03/23 start -->
+<h2><a name="20110323" href="201103c.html#20110323">2011-03-23 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="201103231" title="201103231" href="201103c.html#201103231">■</a> 
+<a href="http://mozilla.jp/firefox/4.0/releasenotes/">Firefox 4.0</a></h3>
+<p>
+Windows版を入れた。早速extensions.checkCompatibility.4.0をfalseにしたが、<br>
+BarTabの挙動がなんかおかしい。タブが待機されるとなんかゴーストタブが出現するらしく、<br>
+そいつはクリックしても無反応。まあ近いうちに正式にFx4対応版が出るでしょう。
+</p>
+<!-- section end -->
+</div>
+<!-- 2011/03/23 end -->
+
+
+
+<hr class="hide">
+<!-- 2011/03/24 start -->
+<h2><a name="20110324" href="201103c.html#20110324">2011-03-24 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="201103241" title="201103241" href="201103c.html#201103241">■</a> 
+earthquake.gem</h3>
+<p>
+とりあえず全部保存だ。
+</p>
+<pre>
+# -*- coding: utf-8 -*-
+
+require &quot;fileutils&quot;
+require &quot;time&quot;
+
+Earthquake.init do
+  logdir = config[:logdir] || File.expand_path(&quot;~/.earthquake/log&quot;)
+  FileUtils.mkdir_p logdir
+  output do |item|
+    created_at = Time.parse(item[&quot;created_at&quot;]).strftime(&quot;%X&quot;)
+    open(File.join(logdir, Time.now.strftime(&quot;%F.log&quot;)), &quot;a&quot;) do |f|
+      case item[&quot;event&quot;]
+      when &quot;favorite&quot;
+        f.puts &quot;#{created_at} [favorite] #{item[&quot;source&quot;][&quot;screen_name&quot;]} =&gt; #{item[&quot;target&quot;][&quot;screen_name&quot;]}: #{item[&quot;target_object&quot;][&quot;text&quot;]}&quot;
+      else
+        f.puts &quot;#{created_at} #{item[&quot;user&quot;][&quot;screen_name&quot;]}: #{item[&quot;text&quot;]}&quot;
+      end
+    end
+  end
+end
+</pre>
+<p>
+<a href="https://gist.github.com/884743">~/.earthquake/plugin/save-tweets.rb</a></p>
+<!-- section end -->
+</div>
+<!-- 2011/03/24 end -->
+
+
+
+<hr class="hide">
+<!-- 2011/03/25 start -->
+<h2><a name="20110325" href="201103c.html#20110325">2011-03-25 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="201103251" title="201103251" href="201103c.html#201103251">■</a> 
+ドロリッチなうをearthquake.gemで</h3>
+<p>
+twitter.updateでポストできると。
+</p>
+<pre>
+# -*- coding: utf-8 -*-
+
+Earthquake.init do
+  command :d do
+    mess = &quot;ドロリッチなう&quot;
+    async { twitter.update(mess) } if confirm(&quot;update '#{mess}'&quot;)
+  end
+end
+</pre>
+<p>
+:dでドロリッチなう。
+</p>
+<!-- section end -->
+</div>
+<!-- 2011/03/25 end -->
+
+
+
+<hr class="hide">
+<!-- 2011/03/26 start -->
+<h2><a name="20110326" href="201103c.html#20110326">2011-03-26 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="201103261" title="201103261" href="201103c.html#201103261">■</a> 
+父入院</h3>
+<p>
+今病院から帰ってきた。<br>
+日記書いてる場合でもないのでこの日記は休止するかも。
+</p>
+<!-- section end -->
+</div>
+<!-- 2011/03/26 end -->
+
+
+
+<hr class="hide">
+<!-- 2011/03/27 start -->
+<h2><a name="20110327" href="201103c.html#20110327">2011-03-27 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="201103271" title="201103271" href="201103c.html#201103271">■</a> 
+ひとまず安定</h3>
+<p>
+余談は許さないがリハビリの話が出てくるようになり一安心。
+</p>
+<!-- section end -->
+</div>
+<!-- 2011/03/27 end -->
+
+
+
+<hr class="hide">
+<!-- 2011/03/28 start -->
+<h2><a name="20110328" href="201103c.html#20110328">2011-03-28 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="201103281" title="201103281" href="201103c.html#201103281">■</a> 
+病院の手続き</h3>
+<p>
+入院手続きは平日しかやらないから今日した→いやもう今日は転院の時間です→<br>
+今入院手続きしたばかりなのに退院手続き→転院先に急病人が入ったので明日に延期→<br>
+退院の払い戻しして明日やりなおせ→やっぱり今日受け入れられるよ→払い戻し中にキャンセル→<br>
+転院先病院で入院手続き。<br>
+疲れた。何回住所と名前書いたことやら。
+</p>
+<!-- section end -->
+</div>
+<!-- 2011/03/28 end -->
+
+
+
+<hr class="hide">
+<!-- 2011/03/29 start -->
+<h2><a name="20110329" href="201103c.html#20110329">2011-03-29 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="201103291" title="201103291" href="201103c.html#201103291">■</a> 
+<a href="https://github.com/philikon/BarTab/wiki/FAQ">BarTab FAQ</a></h3>
+<p>
+まずは
+<a href="http://blog.zpao.com/post/1140456188/cascaded-session-restore-a-hidden-bonus">Paul O’Shannessy - blah. blah. blah. - Cascaded Session Restore + a Hidden Bonus</a>を読む。<br>
+これはやっといたほうがよさげ。<br>
+FAQを読んだが、とりあえずBarTabはdisabledの状態に。
+</p>
+<!-- section end -->
+</div>
+<!-- 2011/03/29 end -->
+
+
+
+<hr class="hide">
+<!-- 2011/03/30 start -->
+<h2><a name="20110330" href="201103c.html#20110330">2011-03-30 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="201103301" title="201103301" href="201103c.html#201103301">■</a> 
+vimのバックアップファイル名</h3>
+<p>
+ふと今日vimのバックアップファイル名を
+</p>
+<pre>
+au BufWritePre * let &amp;bex = '-' . strftime(&quot;%s&quot;) . '~'
+</pre>
+<p>
+という設定にしてみたが、どうだろう。<br>
+</p>
+<pre>
+% ls -l bar*
+-rw-r--r-- 1 eban eban 0 2011-03-31 02:17:27 bar
+-rw-r--r-- 1 eban eban 5 2011-03-31 02:17:06 bar-1301506647~ 
+</pre>
+<p>
+GNUみたいに単純に数字をインクリメントでもいい気もするが。
+</p>
+<pre>
+% rm bar*
+% touch foo
+% cp --backup=numbered foo bar
+% cp --backup=numbered foo bar
+% cp --backup=numbered foo bar
+% ls -l bar*
+-rw-r--r-- 1 eban eban 0 2011-03-31 02:32:13 bar
+-rw-r--r-- 1 eban eban 0 2011-03-31 02:32:10 bar.~1~ 
+-rw-r--r-- 1 eban eban 0 2011-03-31 02:32:12 bar.~2~ 
+</pre>
+<p>
+でもこれをvim scriptで実現するのは面倒だな。
+</p>
+<!-- section end -->
+</div>
+<!-- 2011/03/30 end -->
+
+
+
+<hr class="hide">
+<!-- 2011/03/31 start -->
+<h2><a name="20110331" href="201103c.html#20110331">2011-03-31 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="201103311" title="201103311" href="201103c.html#201103311">■</a> 
+NHKラジオ番組ストリーミングをダウンロード</h3>
+<p>
+明日から4月ということで。まず
+<a href="http://www.nhk.or.jp/gogaku/streaming.html">ここ</a>から聴きたい番組に行って(まいにちスペイン語とする)、<br>
+URLは
+<a href="http://www.nhk.or.jp/gogaku/spanish/kouza/index.html">http://www.nhk.or.jp/gogaku/spanish/kouza/index.html</a>なので<br>
+index.htmlをlistdataflv.xmlに置き換えて、そいつをダウンロード。<br>
+xmlファイルにファイル名のリストがあるのでrtmpdumpでflvファイルをダウンロード。<br>
+ffmpegでmp3へ変換。これだけ。
+</p>
+<pre>
+% curl -s http://www.nhk.or.jp/gogaku/spanish/kouza/listdataflv.xml
+&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;musicdata&gt;
+&lt;music title=&quot;まいにちスペイン語&quot; hdate=&quot;3月21日放送分&quot; kouza=&quot;まいにちスペイン語&quot; file=&quot;10-spa-4242-516.flv&quot;&gt;&lt;/music&gt;
+&lt;music title=&quot;まいにちスペイン語&quot; hdate=&quot;3月22日放送分&quot; kouza=&quot;まいにちスペイン語&quot; file=&quot;10-spa-4242-517.flv&quot;&gt;&lt;/music&gt;
+&lt;music title=&quot;まいにちスペイン語&quot; hdate=&quot;3月23日放送分&quot; kouza=&quot;まいにちスペイン語&quot; file=&quot;10-spa-4242-518.flv&quot;&gt;&lt;/music&gt;
+&lt;music title=&quot;まいにちスペイン語&quot; hdate=&quot;3月24日放送分&quot; kouza=&quot;まいにちスペイン語&quot; file=&quot;10-spa-4242-519.flv&quot;&gt;&lt;/music&gt;
+&lt;music title=&quot;まいにちスペイン語&quot; hdate=&quot;3月25日放送分&quot; kouza=&quot;まいにちスペイン語&quot; file=&quot;10-spa-4242-520.flv&quot;&gt;&lt;/music&gt;
+&lt;/musicdata&gt;
+% rtmpdump -q -r rtmp://flv9.nhk.or.jp/flv9/_definst_/gogaku/streaming/flv/10-spa-4242-516.flv -o まいにちスペイン語-3月21日放送分.flv
+% ffmpeg -i まいにちスペイン語-3月21日放送分.flv -acodec copy まいにちスペイン語-3月21日放送分.mp3
+</pre>
+<p>
+rtmpdumpはUbuntuならパッケージがあるのでインストールも簡単。<br>
+</p>
+<pre>
+rtmp://flv9.nhk.or.jp/flv9/_definst_/gogaku/streaming/flv/
+</pre>
+<p>
+の部分は全講座で共通みたい。
+</p>
+<!-- section end -->
+</div>
+<!-- 2011/03/31 end -->
+
+<hr>
+<div>
+<a href="201103b.html">&lt;Prev(,)</a> | 
+<a href="201104a.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

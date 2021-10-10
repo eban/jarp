@@ -1,0 +1,997 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2001-2-b</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="200102a.html">
+<link rel="next" href="200102c.html">
+
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2001年2月中旬〜</p>
+<hr>
+<div>
+<a href="200102a.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="200102c.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2001/02/11 start -->
+<h2><a name="20010211" href="200102b.html#20010211">2001-02-11 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="200102111" title="200102111" href="200102b.html#200102111">■</a> 
+消費期限</h3>
+「かすてらサンド」とかいう菓子パンに「消費期限13.2.14」と書いてあった。
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200102112" title="200102112" href="200102b.html#200102112">■</a> 
+オープンソースまつり</h3>
+今日は行こうと思ったけど風邪で行けそうもない。
+おとなしくRubyをhackすることにしよう。
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200102113" title="200102113" href="200102b.html#200102113">■</a> 
+__builtin_frame_address</h3>
+まつもとさんはかなり忙しそうなので、
+defined(__GNUC__) &amp;&amp; defined(__i386__)でcommitした。
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200102114" title="200102114" href="200102b.html#200102114">■</a> 
+DJGPP</h3>
+<h4><a name="200102114S1" href="200102b.html#200102114S1">_</a> <strong>ac_cv_func_getpgrp_void=yes</strong>: </h4>
+<div class="sub">
+結局これでcommitした。
+
+</div>
+<h4><a name="200102114S2" href="200102b.html#200102114S2">_</a> <strong>y_tab.c</strong>: </h4>
+<div class="sub">
+djgpp用のbisonは-yオプションをつけるとy.tab.cではなくy_tab.cを作る。
+djgpp/configure.batを使う場合はdjgpp/config.sedで変換されるから問題な
+いが、autoconfで作ったconfigureには通用しない。どうしようかな。<br>
+Cygwinみたいにdjgpp/GNUmakefile.inを用意して
+<pre>
+include Makefile
+parse.c: parse.y
+        $(YACC) $&lt; -o parse.c
+</pre>
+でいいかなと思ったが、
+<pre>
+GNUmakefile:3: warning: overriding commands for target `parse.c'
+Makefile:157: warning: ignoring old commands for target `parse.c'
+</pre>
+を喰らってしまう。
+<pre>
+include Makefile
+YACC := $(YACC) -o y.tab.c
+</pre>
+でいいか。なんか変だけど。<br>
+あ、configure時にYACC='bison -y -o y.tab.c'で十分という気がしてきた。
+
+</div>
+<h4><a name="200102114S3" href="200102b.html#200102114S3">_</a> <strong>VPATHの区切り</strong>: </h4>
+<div class="sub">
+じつはVPATHの区切りのほうがやっかいで、
+colonだったりsemi-colonだったりで、
+どうせなら空白にしてしまいたいところである。
+って古いmakeでも空白はありなのか？<br>
+あ、これこそ
+<pre>
+include Makefile
+VPATH = $(srcdir) $(srcdir)/missing
+</pre>
+というdjgpp/GNUmakefile.inを用意すればいいのか。
+
+</div>
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200102115" title="200102115" href="200102b.html#200102115">■</a> 
+gtk+</h3>
+Cygwin用にstaticなlibraryを作ろうとするが、
+なんかとてつもなく大変なことになりそう。
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200102116" title="200102116" href="200102b.html#200102116">■</a> 
+CREA</h3>
+CREAは犬の名前。
+<!-- section end -->
+</div>
+<!-- 2001/02/11 end -->
+
+
+
+<hr class="hide">
+<!-- 2001/02/12 start -->
+<h2><a name="20010212" href="200102b.html#20010212">2001-02-12 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="200102121" title="200102121" href="200102b.html#200102121">■</a> 
+配送の乱れ</h3>
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-list/27729">[ruby-list:27729]</a>がなぜか3通届く。そのうちの1通の本文は
+<pre>
+&lt;&lt;&lt; No Message Collected &gt;&gt;&gt;
+</pre>
+しかない。
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200102122" title="200102122" href="200102b.html#200102122">■</a> 
+mingw32版rubyのgetsが遅い</h3>
+<h4><a name="200102122S1" href="200102b.html#200102122S1">_</a> <strong>signalを考えない改造</strong>: </h4>
+<div class="sub">
+<a href="200102a.html#200102037">rubyの-rが遅い</a>というよりgets自体が遅かったわけだけど、かなり致命的な遅さだ。
+mswin32版を使ってる人は困ってないのだろうか？<br>
+mingw32とmswin32版と二つ同じようなものがあっても面白くないし、
+mingw32版はCtrl-Cで落ちようが, sleepがCtrl-Cで止まらないと文句を言われても、
+速さを取ることにしようかな。
+<pre>
+--- rubysig.h.orig      Mon Feb 12 19:27:26 2001
++++ rubysig.h   Mon Feb 12 20:17:00 2001
+@@ -15,3 +15,3 @@
+ 
+-#ifdef NT
++#if defined NT &amp;&amp; !defined __MINGW32__
+ typedef LONG rb_atomic_t;
+</pre>
+で作ってみた。
+<pre>
+C:\usr\local\bin&gt;ruby irb --noreadline
+</pre>
+で確かめたがmingw32版はCtrl-Cで落ちることはないようだ。
+<pre>
+C:\usr\local\bin&gt;ruby -e 'sleep 10'
+はやはりkillできないが。
+
+</pre>
+</div>
+<h4><a name="200102122S2" href="200102b.html#200102122S2">_</a> <strong>オリジナルのmingw32版</strong>: </h4>
+<div class="sub">
+じゃ、計ってみよう。
+用意したファイルは例によってruby-talkの1月分。
+<pre>
+% ls -l ruby-talk.0101
+-rw-r--r--   1 watanabe ruby      5663931 Feb 11 00:22 ruby-talk.0101
+</pre>
+まずはオリジナル。
+<pre>
+C:\usr\local\bin&gt;ruby -rwatch -vne '' ruby-talk.0101
+ruby 1.6.2 (2001-02-11) [i386-mingw32]
+98.76s elasped
+<a href="#20010212F1"><sup><small>*1</small></sup></a></pre>
+あれ？
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-list/27694">[ruby-list:27694]</a>よりもちょっと増えてるなあ。まあいいや。要するにものすごく時間がかかる。
+</div>
+<h4><a name="200102122S3" href="200102b.html#200102122S3">_</a> <strong>パッチをあてたmingw32版</strong>: </h4>
+<div class="sub">
+続いて先のパッチをあてた場合。
+<pre>
+C:\usr\local\bin&gt;ruby -rwatch -vne '' ruby-talk.0101
+ruby 1.6.2 (2001-02-11) [i386-mingw32]
+6.75s elasped
+</pre>
+</div>
+<h4><a name="200102122S4" href="200102b.html#200102122S4">_</a> <strong>Cygwin版</strong>: </h4>
+<div class="sub">
+Cygwin版だと
+<pre>
+% ruby -rwatch -vne '' ruby-talk.0101
+ruby 1.6.2 (2001-02-11) [i386-cygwin]
+2.85s elasped
+</pre>
+で、もっと速い。<br>
+エミュレーションのかたまりとも言えるCygwin版より遅いというのは、
+にわかには信じ難いのだが。<br>
+</div>
+<h4><a name="200102122S5" href="200102b.html#200102122S5">_</a> <strong>DJGPP版</strong>: </h4>
+<div class="sub">
+ついでにDJGPP版の結果。
+<pre>
+C:\usr\local\bin&gt;djgpp-ruby -rwatch -vne '' ruby-talk.0101
+ruby 1.6.2 (2001-02-11) [i386-msdosdjgpp]
+1.98s elasped
+</pre>
+やっぱ、Win98ではdjgpp版が一番速いか。NTだと遅かったりするんだけど。
+</div>
+<hr align="left" width="40%">
+<div>
+<a name="20010212F1" href="200102b.html#20010212F1"><small>*1</small></a>:
+<pre>
+module Watch
+  def self.start
+    @start = Time.now
+  end
+  def self.stop
+    @stop = Time.now
+  end
+  def self.interval
+    @stop - @start
+  end
+  at_exit do
+    Watch::stop
+    print Watch::interval, &quot;s elasped\n&quot;
+  end
+end
+Watch::start
+</pre>
+というwatch.rbを用意した。
+</div>
+<!-- section end -->
+</div>
+<!-- 2001/02/12 end -->
+
+
+
+<hr class="hide">
+<!-- 2001/02/13 start -->
+<h2><a name="20010213" href="200102b.html#20010213">2001-02-13 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="200102131" title="200102131" href="200102b.html#200102131">■</a> 
+<a href="http://member.nifty.ne.jp/take_tk/ruby/diary.htm">たけ(tk)印の Ruby 日記</a></h3>
+w3mで見ようとするとSEGVる。見るなってことか。
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200102132" title="200102132" href="200102b.html#200102132">■</a> 
+lstat</h3>
+今日の変更でdir.cにlstatが入った。例によって
+<pre>
+#ifndef HAVE_LSTAT
+#define lstat rb_sys_stat
+#endif
+</pre>
+を追加した。
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200102133" title="200102133" href="200102b.html#200102133">■</a> 
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-dev/12224">lazy mswin32/mingw32</a></h3>
+このパッチをあてると
+<pre>
+C:\usr\local\bin&gt;ruby -rwatch -vne '' ruby-talk.0101
+ruby 1.6.2 (2001-02-13) [i386-mingw32]
+6.7s elasped
+</pre>
+と
+<a href="200102b.html#200102122S3">昨日のいんちきパッチの結果</a>と同じぐらいの処理時間になる。
+<!-- section end -->
+</div>
+<!-- 2001/02/13 end -->
+
+
+
+<hr class="hide">
+<!-- 2001/02/14 start -->
+<h2><a name="20010214" href="200102b.html#20010214">2001-02-14 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="200102141" title="200102141" href="200102b.html#200102141">■</a> 
+風邪</h3>
+調子悪し。
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200102142" title="200102142" href="200102b.html#200102142">■</a> 
+RubyWin 0.0.2.6</h3>
+RAAでは新しくなったようだけど、見に行くと0.0.2.6のままだった。
+0.0.2.7の間違いかと思い探りを入れてみたがNot Foundだった。
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200102143" title="200102143" href="200102b.html#200102143">■</a> 
+青木ぷろだくつ</h3>
+ごっそり更新されているので少しずつ作っていこう。
+
+<!-- section end -->
+</div>
+<!-- 2001/02/14 end -->
+
+
+
+<hr class="hide">
+<!-- 2001/02/15 start -->
+<h2><a name="20010215" href="200102b.html#20010215">2001-02-15 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="200102151" title="200102151" href="200102b.html#200102151">■</a> 
+<a href="http://www.freeml.com/ml_info.php?ml=rubyist">rubyist ML</a></h3>
+一昨日入ったはずなんだけど、全然メールが来ない。
+Rubyな人が二日もメールを出さないなんてありえないわけで、
+<a href="http://www.freeml.com/my_page.php">MyPage</a>で確認したら、赤信号の隣に
+</p><blockquote><p>
+現在のML配信状況：停止中
+</p></blockquote><p>
+とある。あれ？まだ始まってないのかと納得。
+がいくらなんでも遅いよなと、よーく見ると
+</p><blockquote><p>
+*配信状況の変更は、「個人設定の変更」で行えます。
+</p></blockquote><p>
+とある。え、じゃこの停止中はおいらの現在の状況なの？
+がーん。配信しないがデフォルトなのか。
+<a href="http://www.freeml.com/ml_mess.php?ml=rubyist">rubyist ML</a>にはすでに20通ほどあった。
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200102152" title="200102152" href="200102b.html#200102152">■</a> 
+Ruby/GD</h3>
+なんとなく次はRuby/GDにしたくなった。
+というわけでまずはlibraryをmakeだ。
+
+gd-1.8.4のreadme.txtを見ると
+</p><blockquote><p>
+libpng, zlib, jpeg-6b, FreeType 2.x
+</p></blockquote><p>
+あたりがあればいいようだ。
+CygwinだとFreeTypeを除けばcontribにあるような気がする。
+MinGWへ移植しよう。
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200102153" title="200102153" href="200102b.html#200102153">■</a> 
+<a href="http://www.libpng.org/pub/png/libpng.html">libpng</a></h3>
+1.0.9が最新。これはconfigureを使わない。
+scripts/にどっさりMakefileが用意されている。
+scripts/makefile.cygwinがあるのでこれをベースにbmingw用に書き換えよう。
+<a href="../files/libpng-1.0.9-bmingw.diff">これ</a>がその差分。
+おもむろにmakeするとpngtest*.exeができるので、
+pngtest.pngと共にWin98にscpして実行してみる。
+<pre>
+./pngtest
+Testing libpng version 1.0.9
+   with zlib   version 1.1.3
+
+ libpng version 1.0.9 - January 31, 2001
+   Copyright (c) 1998-2001 Glenn Randers-Pehrson
+   Copyright (c) 1996, 1997 Andreas Dilger
+   Copyright (c) 1995, 1996 Guy Eric Schalnat, Group 42, Inc.
+ library (10009): libpng version 1.0.9 - January 31, 2001 (header)
+ pngtest (10009): libpng version 1.0.9 - January 31, 2001 (header)
+ sizeof(png_struct)=572, sizeof(png_info)=288
+Testing pngtest.png:
+ Pass 0: rwrwrwrwrwrwrwrwrw
+ Pass 1: rwrwrwrwrwrwrwrwrw
+ Pass 2: rwrwrwrwrwrwrwrw
+ Pass 3: rwrwrwrwrwrwrwrwrwrwrwrwrwrwrwrwrwrw
+ Pass 4: rwrwrwrwrwrwrwrwrwrwrwrwrwrwrwrwrwrw
+ Pass 5: rwrwrwrwrwrwrwrwrwrwrwrwrwrwrwrwrwrwrwrwrwrwrwrwrwrwrwrwrwrw
+         rwrwrwrw
+ Pass 6: rwrwrwrwrwrwrwrwrwrwrwrwrwrwrwrwrwrwrwrwrwrwrwrwrwrwrwrwrwrw
+         rwrwrwrwrw
+ PASS (9782 zero samples)
+ Filter 0 was used 21 times
+ Filter 1 was used 15 times
+ Filter 2 was used 52 times
+ Filter 3 was used 10 times
+ Filter 4 was used 33 times
+ tIME = 7 Jun 1996 17:58:08 +0000
+libpng passes test
+</pre>
+いけてるようだ。sudo make installする。
+libpng.dll.aもインストールされるがDLLが必要になるのでrenameしとく。
+今日はここまで。
+<!-- section end -->
+</div>
+<!-- 2001/02/15 end -->
+
+
+
+<hr class="hide">
+<!-- 2001/02/16 start -->
+<h2><a name="20010216" href="200102b.html#20010216">2001-02-16 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="200102161" title="200102161" href="200102b.html#200102161">■</a> 
+x</h3>
+たとえば
+ruby-1.6.2-20010216-i386-cygwin.xdeltaは
+<pre>
+ruby-1.6.2-i386-cygwin.tar.gz
+ruby-1.6.2-20010216-i386-cygwin.tar.gz
+</pre>
+の差分だが、一番近々である
+<pre>
+ruby-1.6.2-20010215-i386-cygwin.tar.gz
+ruby-1.6.2-20010216-i386-cygwin.tar.gz
+</pre>
+の差分は
+<pre>
+x
+</pre>
+という名前で置いてある。
+というか実際はxをrsyncしてheliumへ転送し、
+helium上でxdelta delta -9して更新している。
+置いてあるというより消してないと言うべきだが、
+もし毎回追っかけてる奇特な人がいるなら活用できるかも。
+あ、xはIndexIgnoreで見えないようにしているので、
+そのあたりはよろしく。
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200102162" title="200102162" href="200102b.html#200102162">■</a> 
+<a href="http://www.spc.gr.jp/sho/norika/200102.html#15">zsh</a></h3>
+わたしも最近はzsh使いなので区別しなくて全く問題ないっつーか、
+元々はtcsh使いなのでC-uで全部消えたほうがいいんだけど、
+bashのような挙動にしたければ
+<pre>
+% bindkey &quot;^U&quot; backward-kill-line
+</pre>
+でokです。
+<!-- section end -->
+</div>
+<!-- 2001/02/16 end -->
+
+
+
+<hr class="hide">
+<!-- 2001/02/17 start -->
+<h2><a name="20010217" href="200102b.html#20010217">2001-02-17 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="200102171" title="200102171" href="200102b.html#200102171">■</a> 
+ncurses</h3>
+<h4><a name="200102171S1" href="200102b.html#200102171S1">_</a> <strong>Andyさんからのメール</strong>: </h4>
+<div class="sub">
+昨日PragmaticなAndyさんからメールが来た。
+irbでカーソルキーが動かないという。
+時差の関係上寝てる間にもう一通メールが来てて、
+ncursesのcygncurses5.dllがないのが原因だったらしい。
+なるほど。
+Cygwinのパッケージを全部インストールしてる環境では再現しないわけだ。
+あ、curses拡張ライブラリも含めるために、
+ncurses関係をクロスの環境へコピーしたんだけど、
+readlineはtermcapじゃなくてncursesがリンクされるようになったわけか。
+そのときにlibncurses.dll.aを残していたのが敗因だ。
+
+</div>
+<h4><a name="200102171S2" href="200102b.html#200102171S2">_</a> <strong>libncurses.dll.aとlibncurses.a</strong>: </h4>
+<div class="sub">
+<a href="200102b.html#200102153">一昨日</a>にもちょっと書いたけど
+<pre>
+libncurses.dll.a
+libncurses.a
+</pre>
+の両方が存在する場合、
+リンク時に-lncursesと指定するとlibncurses.dll.aが優先してリンクされる。
+libncurses.aをリンクしたければ-staticが必要になる。
+-staticを追加してもいいんけど、単純に
+<pre>
+% sudo mv /usr/local/cygwin-local/lib/libncurses.dll.a{,.orig}
+</pre>
+しておくことにした。
+
+</div>
+<h4><a name="200102171S3" href="200102b.html#200102171S3">_</a> <strong>readline拡張ライブラリ</strong>: </h4>
+<div class="sub">
+readline的にはtermcapで十分という気もするが、
+<pre>
+have_library(&quot;ncurses&quot;, &quot;tgetnum&quot;) or
+  have_library(&quot;termcap&quot;, &quot;tgetnum&quot;) or
+  have_library(&quot;curses&quot;, &quot;tgetnum&quot;)
+</pre>
+という順番だからncursesが先に見つかってしまう。
+
+</div>
+<h4><a name="200102171S4" href="200102b.html#200102171S4">_</a> <strong>curses拡張ライブラリ</strong>: </h4>
+<div class="sub">
+いっそのことncursesは見つからないとこに置いといて
+--with-ncurses-dirで指定することにしようかな。
+<pre>
+% cd /usr/local/cygwin-local
+% sudo mkdir -p ncurses/{include,lib}
+% sudo mv lib/libncurs* ncurses/lib
+% sudo mv include/*curs* ncurses/include
+</pre>
+として
+<pre>
+--with-ncurses-dir=/usr/local/cygwin-local/ncurses
+</pre>
+でどうだろう？と思ったがext/curses/extconf.rbには
+<pre>
+dir_config('ncurses')
+</pre>
+がない。追加しよう。
+
+</div>
+<h4><a name="200102171S5" href="200102b.html#200102171S5">_</a> <strong>NCURSES_STATIC</strong>: </h4>
+<div class="sub">
+configureしてmakeすると
+<pre>
+curses.o(.text+0x45):curses.c: undefined reference to `_imp__stdscr'
+</pre>
+を喰らう。ncurses_dll.hを見るとNCURSES_STATICをdefineしないと
+__declspec(dllimport)するのがデフォルトになってる。
+これだと-staticをつけたところで何も変わらないわけで、
+相変わらずCygwinってやつはやることが中途半端だ。<br>
+ncurses_dll.hを書き換えてあらかじめdefineすることにした。
+
+</div>
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200102172" title="200102172" href="200102b.html#200102172">■</a> 
+<a href="http://www.freecom.ne.jp/">freecom</a></h3>
+<a href="http://www.livedoor.com">livedoor</a>は専用の接続ソフトが必要で、
+Linuxじゃ使えないというのが実は最大の難点だった。
+やっと
+<a href="http://www.freecom.ne.jp/">freecom</a>のアクセスポイントに大宮が追加されたので加入した。
+これでLinuxからもokさ。
+が、sshとかしてみるとすごく遅い。
+どうもDNSのタイムアウトまで待たされてるような感じ。逆引きだな。
+新しすぎてまだ更新されてないんだろう。あと一週間ぐらいの辛抱かな。
+てゆうかxDSLが使えないとこがすでに負けてる。
+<!-- section end -->
+</div>
+<!-- 2001/02/17 end -->
+
+
+
+<hr class="hide">
+<!-- 2001/02/18 start -->
+<h2><a name="20010218" href="200102b.html#20010218">2001-02-18 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="200102181" title="200102181" href="200102b.html#200102181">■</a> 
+jpeg-6b</h3>
+<h4><a name="200102181S1" href="200102b.html#200102181S1">_</a> <strong>configure</strong>: </h4>
+<div class="sub">
+毎度お馴染のオプションだ。
+<pre>
+% CC='i686-pc-cygwin-gcc -bmingw' \
+  CFLAGS=-Os \
+  AR=i686-pc-cygwin-ar \
+  RANLIB=i686-pc-cygwin-ranlib \
+  NM=i686-pc-cygwin-nm \
+  LD=i686-pc-cygwin-ld \
+  ./configure \
+  --prefix=/usr/local/mingw \
+  --target=i386-mingw32 \
+  --host=i686-pc-cygwin \
+  --build=i586-pc-linux
+</pre>
+できあがったMakefileを見ると
+<pre>
+AR= ar rc
+</pre>
+となってる。
+makefile.cfg
+<a href="#20010218F1"><sup><small>*1</small></sup></a>に直接埋まっているから、
+configure時にAR=i686-pc-cygwin-arしても無駄だった。
+しょうがないからmake時に指定する。
+<pre>
+% make AR='i686-pc-cygwin-ar rc'
+% sudo make install-lib
+</pre>
+
+</div>
+<hr align="left" width="40%">
+<div>
+<a name="20010218F1" href="200102b.html#20010218F1"><small>*1</small></a>:
+なぜかMakefile.inという名前ではない。
+</div>
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200102182" title="200102182" href="200102b.html#200102182">■</a> 
+FreeType</h3>
+<h4><a name="200102182S1" href="200102b.html#200102182S1">_</a> <strong>freetype-1.3.1</strong>: </h4>
+<div class="sub">
+<pre>
+% CC='i686-pc-cygwin-gcc -bmingw' \
+  CFLAGS=-Os \
+  AR=i686-pc-cygwin-ar \
+  RANLIB=i686-pc-cygwin-ranlib \
+  NM=i686-pc-cygwin-nm \
+  LD=i686-pc-cygwin-ld \
+  ./configure \
+  --prefix=/usr/local/mingw \
+  --target=i386-mingw32 \
+  --host=i686-pc-cygwin \
+  --build=i586-pc-linux
+...
+checking size of int... configure: \
+  error: can not run test program while cross compiling
+</pre>
+longも同じなので例によって
+<pre>
+ac_cv_sizeof_int=4 ac_cv_sizeof_long=4
+</pre>
+も追加。
+<pre>
+% make
+</pre>
+テストプログラムを作るところでぼろぼろとXをリンクしようするエラーが。
+うーむ。libだけあればいいから
+<pre>
+% make ttlib
+% cd lib; sudo make -f arch/unix/Makefile install
+</pre>
+する。
+
+</div>
+<h4><a name="200102182S2" href="200102b.html#200102182S2">_</a> <strong>freetype-2.0.1</strong>: </h4>
+<div class="sub">
+<pre>
+% cd builds/unix
+% CC='i686-pc-cygwin-gcc -bmingw' \
+  CFLAGS=-Os \
+  AR=i686-pc-cygwin-ar \
+  RANLIB=i686-pc-cygwin-ranlib \
+  NM=i686-pc-cygwin-nm \
+  LD=i686-pc-cygwin-ld \
+  ./configure \
+  --prefix=/usr/local/mingw \
+  --target=i386-mingw32 \
+  --host=i686-pc-cygwin \
+  --build=i586-pc-linux
+% cd -
+% make
+% sudo make install
+</pre>
+本来ならまず
+<pre>
+% make setup
+</pre>
+するところだが、これでうまくいくようだ。
+
+</div>
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200102183" title="200102183" href="200102b.html#200102183">■</a> 
+gd-1.8.4</h3>
+じゃ、いよいよgdだ。これにはconfigureがなくMakefileがあるのみ。
+ranlibも直に埋まってるなあ。その辺をマクロ化しとく。
+てゆうか*.oだのlibgd.aが既にあるのはなぜだ？
+make cleanしてから配布してくれ。
+<pre>
+% make \
+  COMPILER='i686-pc-cygwin-gcc -bmingw' \
+  AR=i686-pc-cygwin-ar \
+  RANLIB=i686-pc-cygwin-ranlib \
+  INCLUDEDIRS='-I. -I/usr/local/mingw/include/freetype2 \
+  -I/usr/local/mingw/include/freetype' \
+  LIBDIRS='-L. -L/usr/local/mingw/lib' \
+  CFLAGS='-Os -DHAVE_LIBPNG -DHAVE_LIBJPEG -DHAVE_LIBFREETYPE -DHAVE_LIBTTF'
+% su make INSTALL_LIB=/usr/local/mingw/lib \
+  INSTALL_INCLUDE=/usr/local/mingw/include \
+  INSTALL_BIN=/usr/local/mingw/bin install
+</pre>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200102184" title="200102184" href="200102b.html#200102184">■</a> 
+ruby-GD-0.7.2</h3>
+<pre>
+% i386-mingw32-ruby extconf.rb \
+  --with-ttf \
+  --with-freetype \
+  --with-jpeg \
+  --with-gd-dir=/usr/local/mingw
+</pre>
+doc/INSTALL.jaを見ると--with-xpmもある。しまったな。libxpmも後で作ろう。
+まいいや。
+<pre>
+% make
+% upx GD.so
+% make site-install
+% cat &gt;../ruby-GD.contents
+DOC= Changes TODO doc readme.* readme.ja sample
+CONTENTS=usr/local/lib/ruby/site_ruby/$(RUBYVER)/$(TARGET)/GD.so
+% make -f ../Makefile.pack PACKAGE=ruby-GD VERSION=0.7.2 TARGET=i386-mingw32
+</pre>
+できあがったGD.soをWin98で試す。
+sample/gdtestttf.rbのfontpathを&quot;c:/windows/FONTS/times.ttf&quot;にして
+<pre>
+C:\cygwin\home\watanabe&gt;ruby gdtestttf.rb &gt;hoge.png
+
+C:\cygwin\home\watanabe&gt;start hoge.png
+</pre>
+すると
+<pre>
+Ruby/GD version 0.7.2
+</pre>
+とななめにTrueTypeで表示された。成功だ。
+<!-- section end -->
+</div>
+<!-- 2001/02/18 end -->
+
+
+
+<hr class="hide">
+<!-- 2001/02/19 start -->
+<h2><a name="20010219" href="200102b.html#20010219">2001-02-19 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="200102191" title="200102191" href="200102b.html#200102191">■</a> 
+FreeType 1.3.1</h3>
+<h4><a name="200102191S1" href="200102b.html#200102191S1">_</a> <strong>Cygwin</strong>: </h4>
+<div class="sub">
+<pre>
+% CC='i686-pc-cygwin-gcc' \
+  CFLAGS=-Os \
+  AR=i686-pc-cygwin-ar \
+  RANLIB=i686-pc-cygwin-ranlib \
+  NM=i686-pc-cygwin-nm \
+  LD=i686-pc-cygwin-ld \
+  ac_cv_sizeof_int=4 \
+  ac_cv_sizeof_long=4 \
+  ./configure \
+  --prefix=/usr/local/cygwin-local \
+  --target=i686-pc-cygwin \
+  --host=i686-pc-cygwin \
+  --build=i586-pc-linux \
+  --without-x
+% make ttlib
+% cd lib; sudo make -f arch/unix/Makefile install
+</pre>
+
+</div>
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200102192" title="200102192" href="200102b.html#200102192">■</a> 
+FreeType 2.0.1</h3>
+<h4><a name="200102192S1" href="200102b.html#200102192S1">_</a> <strong>Cygwin</strong>: </h4>
+<div class="sub">
+<pre>
+% cd builds/unix
+% CC='i686-pc-cygwin-gcc' \
+  CFLAGS=-Os \
+  AR=i686-pc-cygwin-ar \
+  RANLIB=i686-pc-cygwin-ranlib \
+  NM=i686-pc-cygwin-nm \
+  LD=i686-pc-cygwin-ld ac_cv_sizeof_int=4 ac_cv_sizeof_long=4 \
+  ./configure \
+  --prefix=/usr/local/cygwin-local \
+  --target=i686-pc-cygwin \
+  --host=i686-pc-cygwin \
+  --build=i586-pc-linux \
+--without-x
+% cd -
+% make
+% sudo make install
+</pre>
+
+</div>
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200102193" title="200102193" href="200102b.html#200102193">■</a> 
+gd-1.8.4</h3>
+<h4><a name="200102193S1" href="200102b.html#200102193S1">_</a> <strong>Cygwin</strong>: </h4>
+<div class="sub">
+<pre>
+% make \
+  COMPILER='i686-pc-cygwin-gcc' \        
+  AR=i686-pc-cygwin-ar \
+  RANLIB=i686-pc-cygwin-ranlib \
+  INCLUDEDIRS='-I. -I/usr/local/cygwin-local/include/freetype2 \
+  -I/usr/local/cygwin-local/include/freetype \
+  -I/usr/local/cygwin-local/include' \
+  LIBDIRS='-L. -L/usr/local/cygwin-local/lib' \
+  CFLAGS='-Os -DHAVE_LIBPNG -DHAVE_LIBJPEG -DHAVE_LIBFREETYPE -DHAVE_LIBTTF'
+...
+gd_jpeg.c: In function `gdImageCreateFromJpegCtx':
+gd_jpeg.c:348: structure has no member named `progressive_mode'
+</pre>
+うーむ。
+エラーになってしまった。
+原因をつきとめるのも面倒なのでjpegは自分でmakeすることにする。
+
+</div>
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200102194" title="200102194" href="200102b.html#200102194">■</a> 
+jpeg-6b</h3>
+<h4><a name="200102194S1" href="200102b.html#200102194S1">_</a> <strong>Cygwin</strong>: </h4>
+<div class="sub">
+MakefileはMinGWのときと同じように書き換えた。
+<pre>
+% CC='i686-pc-cygwin-gcc' \
+  CFLAGS=-Os \
+  AR=i686-pc-cygwin-ar \
+  RANLIB=i686-pc-cygwin-ranlib \
+  NM=i686-pc-cygwin-nm \
+  LD=i686-pc-cygwin-ld \
+  ./configure \
+  --prefix=/usr/local/cygwin-local \
+  --target=i386-cygwin \
+  --host=i686-pc-cygwin \
+  --build=i586-pc-linux 
+% make AR='i686-pc-cygwin-ar rc'
+% sudo make install-lib
+</pre>
+
+</div>
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200102195" title="200102195" href="200102b.html#200102195">■</a> 
+ふたたびgd-1.8.4</h3>
+<pre>
+% make \
+  COMPILER='i686-pc-cygwin-gcc' \
+  AR=i686-pc-cygwin-ar \
+  RANLIB=i686-pc-cygwin-ranlib \
+  INCLUDEDIRS='-I. -I/usr/local/cygwin-local/include/freetype2 \
+  -I/usr/local/cygwin-local/include/freetype \
+  -I/usr/local/cygwin-local/include' \
+  LIBDIRS='-L. -L/usr/local/cygwin-local/lib' \
+  CFLAGS='-Os -DHAVE_LIBPNG -DHAVE_LIBJPEG -DHAVE_LIBFREETYPE -DHAVE_LIBTTF'
+% sudo make INSTALL_LIB=/usr/local/cygwin-local/lib \
+  INSTALL_INCLUDE=/usr/local/cygwin-local/include \
+  INSTALL_BIN=/usr/local/cygwin-local/bin install
+</pre>
+すんなり通る。
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200102196" title="200102196" href="200102b.html#200102196">■</a> 
+ruby-GD-0.7.2</h3>
+<h4><a name="200102196S1" href="200102b.html#200102196S1">_</a> <strong>Cygwin</strong>: </h4>
+<div class="sub">
+<pre>
+% mkdir cygwin; cd cygwin
+% i386-mingw32-ruby ../extconf.rb \
+  --with-ttf \
+  --with-freetype \
+  --with-jpeg \
+  --with-gd-dir=/usr/local/cygwin-local
+% make
+% upx GD.so
+% make site-install
+% cd ..
+% make -f ../Makefile.pack PACKAGE=ruby-GD VERSION=0.7.2 TARGET=i386-cygwin 
+</pre>
+同じようにgdtestttf.rbで試したらokだった。
+</div>
+<!-- section end -->
+</div>
+<!-- 2001/02/19 end -->
+
+
+
+<hr class="hide">
+<!-- 2001/02/20 start -->
+<h2><a name="20010220" href="200102b.html#20010220">2001-02-20 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="200102201" title="200102201" href="200102b.html#200102201">■</a> 
+<a href="http://my.dreamwiz.com/jbdoll/">GNOME on Cygwin</a></h3>
+ただしWindows上のX Serverが必要だ。
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200102202" title="200102202" href="200102b.html#200102202">■</a> 
+Meadowをgcc -mno-cygwinで</h3>
+こっそりMeadowを
+<pre>
+% CC='gcc -mno-cygwin -mwin32' ./configure i386-mingw32
+</pre>
+てな感じで試してたりするのだが、残念なことに
+<pre>
+...
+./temacs -batch -l loadup dump
+</pre>
+で
+<pre>
+このプログラムは不正な処理を行ったので強制終了されます。
+</pre>
+を喰らってしまう。というよりどのファイルをリンクすればいいのか、
+いまいちわかってないあたりで既に負けてる。
+やはりemacs-20.7-gcc-tar.gzを参考にしたほうがいいんだろう。
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200102203" title="200102203" href="200102b.html#200102203">■</a> 
+win32ole 0.2.4, rubywin 0.0.2.7</h3>
+更新。
+<!-- section end -->
+</div>
+<!-- 2001/02/20 end -->
+
+<hr>
+<div>
+<a href="200102a.html">&lt;Prev(,)</a> | 
+<a href="200102c.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

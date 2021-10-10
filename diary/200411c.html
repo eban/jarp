@@ -1,0 +1,629 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2004-11-c</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="200411b.html">
+<link rel="next" href="200412a.html">
+
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2004年11月下旬〜</p>
+<hr>
+<div>
+<a href="200411b.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="200412a.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2004/11/21 start -->
+<h2><a name="20041121" href="200411c.html#20041121">2004-11-21 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="200411211" title="200411211" href="200411c.html#200411211">■</a> 
+[Ruby] msvcrt.dllとmsvcr71.dll</h3>
+<p>
+思いつき。たとえばmsvcrt.dllからmsvcr71.dllへのforwarding DLLを作ればmsvcrt.dll用に作られた拡張ライブラリは救済できるのか？
+</p>
+<pre>
+% gcc -E -P -xc-header msvcrt.def.in |\
+  sed '/^\(EXPORT\|^;\)/!s/\([^ ]*\)/\1=msvcr71.\1/' &gt;msvcrt-fwd.def
+% i686-pc-cygwin-dllwrap --driver-name=i686-pc-cygwin-gcc -mno-cygwin \
+  --target=i386-mingw32 --def=msvcrt-fwd.def \
+  --dlltool-name=i686-pc-cygwin-dlltool -o msvcrt.dll
+</pre>
+<p>
+てな感じで。でも、
+</p>
+<pre>
+% i686-pc-cygwin-objdump -p msvcrt.dll |grep 'DLL Name'
+        DLL Name: KERNEL32.dll
+        DLL Name: msvcrt.dll
+</pre>
+<p>
+という結果を見ると、ここでも
+<a href="200411b.html#200411171">specs.msvcr71</a>は必要な気もする。
+今日は時間切れ。
+</p>
+
+<p>
+msvcrt.def.inはmingw-runtime-3.5-1-src.tar.bz2の中にある。
+
+<a href="http://cygwin.com/mirrors.html">ミラーサイト</a>を参照。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200411212" title="200411212" href="200411c.html#200411212">■</a> 
+[天気] 雨</h3>
+<p>
+最近ForecastFoxでLight Rain Showerとか表示されてるのを見て雨に気づくことが多い。
+今日なんかは特に雨が降るとは思ってなかっただけに、間違っているとばかり。
+</p>
+<!-- section end -->
+</div>
+<!-- 2004/11/21 end -->
+
+
+
+<hr class="hide">
+<!-- 2004/11/22 start -->
+<h2><a name="20041122" href="200411c.html#20041122">2004-11-22 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="200411221" title="200411221" href="200411c.html#200411221">■</a> 
+<a href="200411c.html#200411211">[Ruby] 続msvcrt.dllとmsvcr71.dll</a></h3>
+<p>
+forwarding DLLを試しみた。全然だめっぽい。こりゃ一本取られたね。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200411222" title="200411222" href="200411c.html#200411222">■</a> 
+<a href="http://www.thekelleys.org.uk/dnsmasq/doc.html">[Soft] Dnsmasq 2.18</a></h3>
+<p>
+Changes:
+</p><blockquote><p>
+This release fixes a couple of minor bugs. One is associated with
+the use of IPv6 on Linux, and the other with multiple ranges of addresses
+for DHCP allocation on a single subnet. There's no reason to upgrade
+unless you've hit either of these bugs.
+</p></blockquote>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200411223" title="200411223" href="200411c.html#200411223">■</a> 
+<a href="http://www.rim.or.jp/support/announce/041007.html">[Mail] rimnet</a></h3>
+<p>
+遅延が全然解消されない。むしろ悪くなってる。何を改善したのか？
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200411224" title="200411224" href="200411c.html#200411224">■</a> 
+<a href="http://www.itmedia.co.jp/news/articles/0411/22/news022.html">大人気のCoQ10、供給難でケンコーコムが6000人分キャンセル</a></h3>
+<p>
+恐るべしあるある効果。
+</p>
+<!-- section end -->
+</div>
+<!-- 2004/11/22 end -->
+
+
+
+<hr class="hide">
+<!-- 2004/11/23 start -->
+<h2><a name="20041123" href="200411c.html#20041123">2004-11-23 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="200411231" title="200411231" href="200411c.html#200411231">■</a> 
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-core/03789">[Ruby] ruby -y</a></h3>
+<p>
+-yオプションなんてあったのか。
+</p>
+<pre>
+   -y
+   --yydebug      Turns on compiler debug mode.  Ruby will print a bunch of
+                  internal state messages during compiling scripts.  You
+                  don't have to specify this switch, unless you are going to
+                  debug the Ruby interpreter.
+</pre>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200411232" title="200411232" href="200411c.html#200411232">■</a> 
+[Soft] CVS 1.11と1.12のloginfoの違い</h3>
+<p>
+CVS 1.11から1.12へバージョンアップするときに注意しないといけないのが、loginfoの引数の扱い。
+</p>
+<pre>
+% tail -1 loginfo
+DEFAULT echo %s &gt;&gt; $CVSROOT/CVSROOT/commitlog
+</pre>
+<p>
+という内容のloginfoを用意して実際にcommitしてみるとわかる。
+</p>
+<pre>
+% tail -2 $CVSROOT/CVSROOT/commitlog
+CVSROOT loginfo
+loginfo
+</pre>
+<p>
+上が1.11で下が1.12での結果。
+1.11ではmoduleに相当するものがあるが1.12にはない。
+その代わり
+</p>
+<pre>
+%p = path relative to repository
+%r = repository (path portion of $CVSROOT)
+</pre>
+<p>
+が使える。さらに%{sVv}とした場合はカンマ区切りかどうかという違いもある。
+</p>
+<pre>
+% tail -2 $CVSROOT/CVSROOT/commitlog
+CVSROOT loginfo,1.24,1.25 commitinfo,1.3,1.4
+loginfo 1.25 1.26 commitinfo 1.4 1.5
+</pre>
+
+<p>
+Rubyの場合は単に%sとして使っているので、スクリプトの中でmoduleが取り出せればいい。
+
+<a href="http://cvs.m17n.org/~akr/diary/d2004_06.html#a2004_06_23_3">天泣記</a>
+に書かれてるように
+</p><blockquote><p>
+そっか。Update of ... のにところには %r/%p が書いてあって、環境変数 CVSROOT
+には %r が入っているから、その差から %p 相当の情報が得られるではないか。
+</p></blockquote><p>
+ということらしいので、loginfo_ruby.rbを確認してみると
+</p>
+<pre>
+case l
+when /^Update of (.*)/
+  modulename = $1.strip.sub(/^#{Regexp.quote($cvsroot)}\//, &quot;&quot;)
+  append_line($modulesfile, modulename)
+  next
+</pre>
+<p>
+のようにそれらしいことはやってる。
+でもその前に
+</p>
+<pre>
+$cvsroot, $cvsuser, $cvsarg, $mailaddr = ARGV.slice!(0, 4)
+...
+cvsargtk = $cvsarg.split(/ /)
+modulename = cvsargtk.shift
+</pre>
+<p>
+のように引数を処理するコードもあって一筋縄ではいかないようだ。
+Update ofの処理を前に移動できるか？
+</p>
+<!-- section end -->
+</div>
+<!-- 2004/11/23 end -->
+
+
+
+<hr class="hide">
+<!-- 2004/11/24 start -->
+<h2><a name="20041124" href="200411c.html#20041124">2004-11-24 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="200411241" title="200411241" href="200411c.html#200411241">■</a> 
+<a href="http://spamassassin.apache.org/">[Mail] SpamAssassin 3.0.1</a></h3>
+<p>
+古いままだったので上げてみた。
+</p>
+<pre>
+% cpan Mail::SpamAssassin
+</pre>
+<p>
+と実行して、適当にリターンキーを押してればインストール完。
+</p>
+<pre>
+% spamassassin --lint
+</pre>
+<p>
+してみるとなんかfailed to parse lineが結構多い。
+report_headerもREADMEを見ると
+</p><blockquote><p>
+The &quot;report_header&quot; and &quot;defang_mime&quot; options are also deprecated as a
+result.  Read the docs for &quot;report_safe&quot; for details.
+</p></blockquote><p>
+ということらしい。しかも2.4での変更だよこりゃ。
+user_prefsを見直さないといけないな。
+</p>
+<pre>
+body IMAGE_JPEG /^\337\330/
+describe IMAGE_JPEG Image file
+score IMAGE_JPEG 5
+</pre>
+<p>
+というのを入れてみたが、うまくヒットしないようだ。
+なかなか難しい。
+</p>
+<!-- section end -->
+</div>
+<!-- 2004/11/24 end -->
+
+
+
+<hr class="hide">
+<!-- 2004/11/25 start -->
+<h2><a name="20041125" href="200411c.html#20041125">2004-11-25 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="200411251" title="200411251" href="200411c.html#200411251">■</a> 
+[IRC] irciiでファンクションキー</h3>
+<p>
+6個目のchannelへjoinしたのでF6で切り替えようと思ったが、なかなかうまくいかない。
+</p>
+<pre>
+assign fk.11   parse window swap 1
+assign fk.12   parse window swap 2
+assign fk.13   parse window swap 3
+assign fk.14   parse window swap 4
+assign fk.15   parse window swap 5
+</pre>
+<p>
+がF1からF5の設定だから、F6は当然
+</p>
+<pre>
+assign fk.16   parse window swap 6
+</pre>
+<p>
+になると思うよね、ふつうは。ところが正解は
+</p>
+<pre>
+assign fk.17   parse window swap 6
+</pre>
+<p>
+なのだ。ここからなぜか1個ずれる。
+</p>
+
+<p>
+link: 
+<a href="200409b.html#200409201">fkeys(Bind function keys to actions)</a>
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200411252" title="200411252" href="200411c.html#200411252">■</a> 
+[Game] DQ8</h3>
+<p>
+ソフマップから発送したよとメールが来た。間違って明日配送されたらちょっとだけうれしいんだけど。
+</p>
+<!-- section end -->
+</div>
+<!-- 2004/11/25 end -->
+
+
+
+<hr class="hide">
+<!-- 2004/11/26 start -->
+<h2><a name="20041126" href="200411c.html#20041126">2004-11-26 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="200411261" title="200411261" href="200411c.html#200411261">■</a> 
+<a href="http://freshmeat.net/projects/file/">[Soft] file 4.11</a></h3>
+<p>
+Changes:
+</p><blockquote><p>
+This release fixes a few minor memory leaks, tries to support
+ucs16 strings, and adds FreeBSD version parsing code. There were also
+modifications to the file magic, most notably for MPEG animations.
+Furthermore, the copyright clauses were slightly changed.
+</p></blockquote>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200411262" title="200411262" href="200411c.html#200411262">■</a> 
+気温差</h3>
+<p>
+会社のForecastFoxでは18℃。家に帰ったら8℃。
+
+<a href="http://www.tenki.jp/amd/kantou/p00.html">アメダス</a>で確認したら本当に海沿いの気温が高い。
+</p>
+
+<p>
+いや、その後で家でも突然20℃になった。まじすか。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200411263" title="200411263" href="200411c.html#200411263">■</a> 
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-core/03824">[Ruby] CVS/CIA</a></h3>
+<p>
+誰かがどこかで動かしていたらしいんだが、それをこっちに振られても困る。
+chroot環境だからもうこれ以上perlとかsendmailを入れたくないし。
+といいつつもRubyで書くかと思ったり、Ruby Quizにでもしてくれとか。
+</p>
+
+<p>
+link: 
+<a href="http://cia.navi.cx/doc/adding-projects">Adding Projects - CIA</a>
+</p>
+<!-- section end -->
+</div>
+<!-- 2004/11/26 end -->
+
+
+
+<hr class="hide">
+<!-- 2004/11/27 start -->
+<h2><a name="20041127" href="200411c.html#20041127">2004-11-27 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="200411271" title="200411271" href="200411c.html#200411271">■</a> 
+[Game] DQ8</h3>
+<p>
+ドラクエ三昧。しかし変わらないねえ。ソフトリセットできないのはつらいけど。
+</p>
+
+<p>
+それにしても、他人の家のタンスや宝箱を開けたり壷や樽を壊したり、とても勇者のとる行動ではないな。
+そのあたりの挙動がリアルに表現されるようになってかえって気になる。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200411272" title="200411272" href="200411c.html#200411272">■</a> 
+<a href="http://www.iosart.com/foxytunes/firefox/">[Firefox] FoxyTunes 1.0</a></h3>
+<p>
+ええと、どこで見たか忘れたけど入れてみた。
+とりあえずプレーヤとして
+<a href="http://www.xmms.org/">xmms</a>を選ぶ。
+ちゃんとCharacter Encodingに日本語(Shift_JIS)も用意されてる。
+ステータスラインに化けずに表示される。すばらしい。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200411273" title="200411273" href="200411c.html#200411273">■</a> 
+<a href="http://www.musicpd.org/">[Linux] Music Player Daemon</a></h3>
+<p>
+
+<a href="http://www.iosart.com/foxytunes/firefox/">FoxyTunes</a>のプレーヤの選択枝にあった
+<a href="http://www.musicpd.org/">Music Player Daemon</a>が気になったので、これも入れてみた。
+</p>
+
+<p>
+まずは
+<a href="http://www.xiph.org/ao/">libao</a>が古かったので0.8.5へ更新。
+あとは普通にインストール。設定は~/.mpdconfに
+</p>
+<pre>
+port                    &quot;6600&quot;
+music_directory         &quot;~/mp3&quot;
+playlist_directory      &quot;~/mp3/playlists&quot;
+log_file                &quot;~/mp3/mpd.log&quot;
+error_file              &quot;~/mp3/mpd.err&quot;
+mixer_type              &quot;oss&quot;
+mixer_device            &quot;/dev/mixer&quot;
+mixer_control           &quot;PCM&quot;
+ao_driver               &quot;oss&quot;
+ao_driver_options       &quot;dsp=/dev/dsp&quot;
+audio_output_format     &quot;48000:16:2&quot;
+</pre>
+<p>
+と書いた。これでmpdと実行するだけでdaemonを起動できる。
+最初の一回だけは~/mp3/配下の音楽ファイルを全部なめてデータベースを作るので時間がかかるが、二回目以降は瞬時に立ち上がる。
+逆に言うと後から音楽ファイルを追加しても認識してくれないので、
+</p>
+<pre>
+% mpd --update-db
+</pre>
+<p>
+のようにデータベースを更新する必要がある。
+</p>
+
+<p>
+ついでにncurses clientの
+
+<a href="http://www.musicpd.org/ncmpc.shtml">ncmpc</a>をインストールして確認。
+glibが2.3.6と古かったため、こちらは日本語が化けてしまうようだが、
+ちゃんとプレーヤとして機能した。もちろん肝心のFoxyTunesは日本語もok。
+</p>
+
+<p>
+configure時に
+</p>
+<pre>
+configure: WARNING: glib-2.4 is required for NLS support!
+</pre>
+<p>
+という警告が出てたのでglib 2.4ならちゃんと日本語も出そう。
+明日試してみよう。
+</p>
+<!-- section end -->
+</div>
+<!-- 2004/11/27 end -->
+
+
+
+<hr class="hide">
+<!-- 2004/11/28 start -->
+<h2><a name="20041128" href="200411c.html#20041128">2004-11-28 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="200411281" title="200411281" href="200411c.html#200411281">■</a> 
+<a href="http://www.asahi.com/culture/update/1128/001.html">[将棋] 長嶋茂雄アマ五段</a></h3>
+<p>
+古田が三段というのはまあいいとして、長嶋が五段というのは意外だ。
+なんかいきなり怪しい段位に思えてくるから不思議だ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200411282" title="200411282" href="200411c.html#200411282">■</a> 
+[Soft] ncmpcの日本語表示</h3>
+<p>
+
+<a href="200411c.html#200411273">昨日</a>の続き。
+結局glib 2.4でも同じように化ける。IP3タグがSJISのせいかな。
+DQ8が終わったら調べよう。
+</p>
+<!-- section end -->
+</div>
+<!-- 2004/11/28 end -->
+
+
+
+<hr class="hide">
+<!-- 2004/11/29 start -->
+<h2><a name="20041129" href="200411c.html#20041129">2004-11-29 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="200411291" title="200411291" href="200411c.html#200411291">■</a> 
+<a href="http://search.cpan.org/~nwclark/perl-5.8.6/">[Perl] Perl 5.8.6</a></h3>
+<p>
+さっそくmake。いわゆる--enable-shared相当で。
+</p>
+<pre>
+% ./configure.gnu -Dccflags=-DDEBUGGING \
+  -Dusedl=true -Duseshrplib=true
+% LD_RUN_PATH=/usr/local/lib/perl5/5.8.6/i686-linux/CORE make
+</pre>
+<p>
+うーむなぜかmake testでforkが失敗する。いちおう
+</p>
+<pre>
+% export LD_LIBRARY_PATH=`pwd`:$LD_LIBRARY_PATH; cd t; ./perl harness
+</pre>
+<p>
+は全部通ったからよしとしよう。
+</p>
+<!-- section end -->
+</div>
+<!-- 2004/11/29 end -->
+
+
+
+<hr class="hide">
+<!-- 2004/11/30 start -->
+<h2><a name="20041130" href="200411c.html#20041130">2004-11-30 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="200411301" title="200411301" href="200411c.html#200411301">■</a> 
+[Soft] MPDへSIGTERM</h3>
+<p>
+なぜか今日は
+<a href="http://www.musicpd.org/">mpd</a>が立ち上がらない。
+mpd.errを見ると
+</p>
+<pre>
+error parsing state file &quot;/home/watanabe/mp3/playlists/mpdstate&quot;
+</pre>
+<p>
+とあった。実は
+<a href="200411c.html#200411273">あれ</a>から
+</p>
+<pre>
+state_file              &quot;~/mp3/playlists/mpdstate&quot;
+</pre>
+<p>
+を追加していたんだけど、こうすることで
+</p>
+<pre>
+state_file &lt;file&gt;
+       This  specifies if a state file is used and where it is located.
+       The file path should be an absolute path.  The state of mpd will
+       be saved to this file when mpd is terminated by a TERM signal or
+       by the &quot;kill&quot; command.
+</pre>
+<p>
+のようにSIGTERMを送ればそのときの状態を保存できるようになる。
+</p>
+
+<p>
+で、実際にmpdstateを確認してみるとplaylist_beginはあるが、
+最後にplaylist_endがない。
+/etc/rc.d/rc.6でkillall5 -15してるからちょうどいいやと思っていたが、
+どうやら保存処理が間に合わないこともあるようだ。
+shutdownの前に明示的にkillall mpdしよう。
+</p>
+<!-- section end -->
+</div>
+<!-- 2004/11/30 end -->
+
+<hr>
+<div>
+<a href="200411b.html">&lt;Prev(,)</a> | 
+<a href="200412a.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

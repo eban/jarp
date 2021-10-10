@@ -1,0 +1,347 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2007-2-c</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="200702b.html">
+<link rel="next" href="200703a.html">
+
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2007年2月下旬〜</p>
+<hr>
+<div>
+<a href="200702b.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="200703a.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2007/02/21 start -->
+<h2><a name="20070221" href="200702c.html#20070221">2007-02-21 (Wed)</a></h2>
+<!-- 2007-02-22 00:55:46 -->
+
+<div class="entry1">
+<h3><a name="200702211" title="200702211" href="200702c.html#200702211">■</a> 
+<a href="http://golf.shinh.org/p.rb?Card+Sharp">[穴] Card Sharpでsed golf</a></h3>
+<p>
+ループもなくs///しか使ってない。
+</p>
+<pre>
+s/^/SHDC/
+/-D/s/D//
+s/./Ace&amp;2&amp;3&amp;4&amp;5&amp;6&amp;7&amp;8&amp;9&amp;10&amp;Jack&amp;Queen&amp;King&amp;/g
+/-Q/s/Queen.//g
+s/CA.*/C/
+s/S/OSpades\n/g
+s/H/OHearts\n/g
+s/D/ODiamonds\n/g
+s/C/OClubs\n/g
+s/O/ of /g
+</pre>
+<p>
+ofの置き換えでせこく1Bかせいでいる。これで167B。<br>
+実はこの問題でs/./hoge&amp;/gを思いついて
+<a href="200702b.html#200702201">昨日の件</a>につながる。
+</p>
+<!-- section end -->
+</div>
+<!-- 2007/02/21 end -->
+
+
+
+<hr class="hide">
+<!-- 2007/02/22 start -->
+<h2><a name="20070222" href="200702c.html#20070222">2007-02-22 (Thu)</a></h2>
+<!-- 2007-02-23 00:15:10 -->
+
+<div class="entry1">
+<h3><a name="200702221" title="200702221" href="200702c.html#200702221">■</a> 
+サーバ不調</h3>
+<p>
+sshでログインできないので日記の更新ができない。<br>
+という内容で更新するのはいかがなもんか。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200702222" title="200702222" href="200702c.html#200702222">■</a> 
+<a href="http://golf.shinh.org/p.rb?exit+status">[穴] exit status</a></h3>
+<p>
+なぜかずるした後で正統な解答を思いつく。<br>
+しかしawkも奥が深い。これに気づいたうささんもすごい。<br>
+たぶん14Bでできると示されなければ15Bのままだったろうな。
+</p>
+<!-- section end -->
+</div>
+<!-- 2007/02/22 end -->
+
+
+
+<hr class="hide">
+<!-- 2007/02/23 start -->
+<h2><a name="20070223" href="200702c.html#20070223">2007-02-23 (Fri)</a></h2>
+<!-- 2007-02-24 01:01:41 -->
+
+<div class="entry1">
+<h3><a name="200702231" title="200702231" href="200702c.html#200702231">■</a> 
+サーバ復活</h3>
+<p>
+ゆぞさん、ありがとう。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200702232" title="200702232" href="200702c.html#200702232">■</a> 
+[穴] 見直し</h3>
+<p>
+過去に解いた問題を見直してみるとなぜかどんどん縮む。<br>
+prime.awkはfor loopを減らしたいんだが思いつかない。
+</p>
+<!-- section end -->
+</div>
+<!-- 2007/02/23 end -->
+
+
+
+<hr class="hide">
+<!-- 2007/02/24 start -->
+<h2><a name="20070224" href="200702c.html#20070224">2007-02-24 (Sat)</a></h2>
+<!-- 2007-02-25 03:52:13 -->
+
+<div class="entry1">
+<h3><a name="200702241" title="200702241" href="200702c.html#200702241">■</a> 
+[穴] 正規表現で3の倍数</h3>
+<p>
+あ、そうか。つまり
+</p>
+<pre>
+/^\(###\)\+$/iFizz
+</pre>
+<p>
+ってな感じなわけだな。<br>
+あとは#を数字に変換する処理を書けばsedでもいけると。<br>
+そうじゃないと200Bは切れそうもない。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200702242" title="200702242" href="200702c.html#200702242">■</a> 
+[Ruby] Ruby 1.8.6 preview2</h3>
+<p>
+djgppの環境を壊してしまっているので、早いとこ復活させないと。
+</p>
+<!-- section end -->
+</div>
+<!-- 2007/02/24 end -->
+
+
+
+<hr class="hide">
+<!-- 2007/02/25 start -->
+<h2><a name="20070225" href="200702c.html#20070225">2007-02-25 (Sun)</a></h2>
+<!-- 2007-02-26 02:10:50 -->
+
+<div class="entry1">
+<h3><a name="200702251" title="200702251" href="200702c.html#200702251">■</a> 
+<a href="http://golf.shinh.org/p.rb?Little+Endian+Calculator">[穴] Little Endian Calculator</a></h3>
+<p>
+Rubyでpack/unpackの組み合わせ。<br>
+ひょっとしたらpack/unpackを使わないほうが縮むのかな。<br>
+reverseが2つって長すぎだよな。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200702252" title="200702252" href="200702c.html#200702252">■</a> 
+<a href="http://golf.shinh.org/p.rb?FizzBuzz">[穴] FizzBuzz.sed</a></h3>
+<p>
+#を数えるのを作ってみたら300Bを越えて笑った。<br>
+これはあまり縮みそうもないのでこのままさらそう。
+</p>
+<pre>
+#n
+s/$/@/
+h
+:b
+g
+s/$/#/
+/^.\{102\}$/b
+h
+s/@\(###\)\+$/Fizz&amp;/
+s/@\(#####\)\+$/Buzz&amp;/
+s/z@.*/z/p
+/@/!bb
+s/@//
+s/#\{10\}/a/g
+/#/!s/$/0/
+s/a\{9\}/9/
+s/a\{8\}/8/
+s/a\{7\}/7/
+s/a\{6\}/6/
+s/a\{5\}/5/
+s/aaaa/4/
+s/aaa/3/
+s/aa/2/
+s/a/1/
+s/#\{9\}/9/
+s/#\{8\}/8/
+s/#\{7\}/7/
+s/#\{6\}/6/
+s/#\{5\}/5/
+s/####/4/
+s/###/3/
+s/##/2/
+s/#/1/
+p
+bb
+</pre>
+
+<!-- section end -->
+</div>
+<!-- 2007/02/25 end -->
+
+
+
+<hr class="hide">
+<!-- 2007/02/26 start -->
+<h2><a name="20070226" href="200702c.html#20070226">2007-02-26 (Mon)</a></h2>
+<!-- 2007-02-27 01:52:02 -->
+
+<div class="entry1">
+<h3><a name="200702261" title="200702261" href="200702c.html#200702261">■</a> 
+[Ruby] goruby</h3>
+<p>
+コマンド名長いよ。gで。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200702262" title="200702262" href="200702c.html#200702262">■</a> 
+[AWK] awkの裏を読む</h3>
+<p>
+おそろしいことが書いてあった。そんなテクニックが。
+</p>
+<!-- section end -->
+</div>
+<!-- 2007/02/26 end -->
+
+
+
+<hr class="hide">
+<!-- 2007/02/27 start -->
+<h2><a name="20070227" href="200702c.html#20070227">2007-02-27 (Tue)</a></h2>
+<!-- 2007-02-28 21:56:44 -->
+
+<div class="entry1">
+<h3><a name="200702271" title="200702271" href="200702c.html#200702271">■</a> 
+[SCM] subversionからgit</h3>
+<p>
+git-svnimportを使ってみるも一回も成功した試しなし。<br>
+もうタイムスタンプが壊れてもいいから
+</p>
+<pre>
+% git init-db
+% svn up -r1
+% for i in {2..414};do git add $(svn up -r$i |&amp; awk '/^A/{print$2}');\
+  git commit -a -m &quot;$(svn log -r$i |sed -n 4p)&quot;;done
+</pre>
+<p>
+でいいやと思ったり。r414とそれほど多くもないし。
+</p>
+<!-- section end -->
+</div>
+<!-- 2007/02/27 end -->
+
+
+
+<hr class="hide">
+<!-- 2007/02/28 start -->
+<h2><a name="20070228" href="200702c.html#20070228">2007-02-28 (Wed)</a></h2>
+<!-- 2007-03-02 00:05:51 -->
+
+<div class="entry1">
+<h3><a name="200702281" title="200702281" href="200702c.html#200702281">■</a> 
+<a href="http://d.hatena.ne.jp/niha/20070227#1172579159">[穴] FizzBuzz</a></h3>
+<p>
+実はほとんど同じ。
+</p>
+<pre>
+1.upto(?d){|i|f=&quot;Fizz&quot;if i%3&lt;1;puts i%5&gt;0?f||i:&quot;#{f}Buzz&quot;}
+</pre>
+<p>
+この場合もfは同じようにnilになる。<br>
+&amp;&amp;にしても同じサイズだったと勘違いしてしまい、その後試さなかったのが敗因。
+</p>
+<!-- section end -->
+</div>
+<!-- 2007/02/28 end -->
+
+<hr>
+<div>
+<a href="200702b.html">&lt;Prev(,)</a> | 
+<a href="200703a.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

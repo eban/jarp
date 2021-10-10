@@ -1,0 +1,430 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2004-2-c</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="200402b.html">
+<link rel="next" href="200403a.html">
+
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2004年2月下旬〜</p>
+<hr>
+<div>
+<a href="200402b.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="200403a.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2004/02/21 start -->
+<h2><a name="20040221" href="200402c.html#20040221">2004-02-21 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="200402211" title="200402211" href="200402c.html#200402211">■</a> 
+<a href="http://dontstopmusic.no-ip.org/diary/20040221.html#p01">[Ruby] rss で RSS 1.0 生成</a></h3>
+<p>
+ありがとうございます。
+いえいえちゃんと
+<a href="http://bloglines.com/">Bloglines</a>に登録して見てます。
+</p>
+<pre>
+% ruby -rrss/1.0 -e 'print RSS::RDF.new'
+</pre>
+<p>
+で空のRSSが作れることは番長(誰)からの助言でわかったんですが、
+中身をどうやって埋めればいいか調べるのが面倒でそのまま忘れてました。
+</p>
+
+<p>
+早速と言いたいところだけど、この日記はawkで変換してるからなあ。
+そこをなんとかしないと。
+</p>
+<!-- section end -->
+</div>
+<!-- 2004/02/21 end -->
+
+
+
+<hr class="hide">
+<!-- 2004/02/22 start -->
+<h2><a name="20040222" href="200402c.html#20040222">2004-02-22 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="200402221" title="200402221" href="200402c.html#200402221">■</a> 
+[RSS] RSSの中身</h3>
+<p>
+titleとlinkぐらいあればよさげだな。
+dc:dateはちょっと困る。
+作った日のタイムスタンプだと、
+過去5日分のタイムスタンプをどこかに覚えておかないといけないし。
+</p>
+
+<p>
+いや、5日分作るとか考えずに、rssはその日の分だけにすればいいのか。
+どうせ1日1回しか更新しないんだし。
+</p>
+
+<p>
+だとすると出来上がったhtmlをrubyでparseしたほうが楽だな。
+descriptionも何も考えずにhtmlのまま入れると、
+勝手にescapeしてくれるようだし。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200402222" title="200402222" href="200402c.html#200402222">■</a> 
+<a href="../files/jard.rb">[RSS] jard.rb</a></h3>
+<p>
+というわけで、ad hocな
+<a href="index.rdf">index.rdf</a>をでっちあげてみる。ad hocすぎていやになるくらい。
+</p>
+<!-- section end -->
+</div>
+<!-- 2004/02/22 end -->
+
+
+
+<hr class="hide">
+<!-- 2004/02/23 start -->
+<h2><a name="20040223" href="200402c.html#20040223">2004-02-23 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="200402231" title="200402231" href="200402c.html#200402231">■</a> 
+[RSS] dc:time</h3>
+<p>
+というわけで、こちらもタイムスタンプを入れた。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200402232" title="200402232" href="200402c.html#200402232">■</a> 
+[RSS] descriptionに全文</h3>
+<p>
+ぐぐってみるとdescriptionに全文入れちゃうのは邪道だという意見もある。
+まあ、当然だ。全部入れたらsummaryじゃないし、
+しかもHTMLとして入れちゃってるんだから、
+もう邪道どころか邪悪かもしれない。
+やめる気はさらさらないんだけど。
+</p>
+
+<p>
+というか、要約するほど書いてないのであった。
+一日一回なんだからそのくらいの富豪を大目に見てもらおう。
+</p>
+
+<p>
+でも、ちょっと弱気にcontent:encodedを使ってみる(
+<a href="../files/jard.rb">jard.rb</a>)。
+</p>
+<!-- section end -->
+</div>
+<!-- 2004/02/23 end -->
+
+
+
+<hr class="hide">
+<!-- 2004/02/24 start -->
+<h2><a name="20040224" href="200402c.html#20040224">2004-02-24 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="200402241" title="200402241" href="200402c.html#200402241">■</a> 
+[RSS] index.rdfに5日分の情報を残す</h3>
+<p>
+1日分だけじゃ物足りないので、前回吐き出したindex.rdfを読んでparseしようと思う。
+RSS::Parser.parseを使えばokだけど、
+どうも内部的にはutf-8で処理しているらしく、
+後から追加する場合はutf-8に変換したほうがよさげだ。
+</p>
+
+<p>
+あとは5日分だけ残して要らないitemを消す。
+rss.items, channel.items.Seq.lisの各配列を直接いじればできそう。
+dc:dateでソートするか。
+でも、別々にいじるのはちょっと面倒だな。
+それは5日たまってから考えよう。
+</p>
+<!-- section end -->
+</div>
+<!-- 2004/02/24 end -->
+
+
+
+<hr class="hide">
+<!-- 2004/02/25 start -->
+<h2><a name="20040225" href="200402c.html#20040225">2004-02-25 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="200402251" title="200402251" href="200402c.html#200402251">■</a> 
+<a href="http://www.openssh.org/">[Soft] OpenSSH 3.8p1</a></h3>
+<p>
+cygwin-announce MLでOpenSSH 3.8p1が出たことを知る(
+
+<a href="http://www.openssh.org/">OpenSSH 3.8p1</a>
+)。てゆか、
+<a href="http://cygwin.com/ml/cygwin-announce/2004-02/msg00019.html">Cygwinは用意するの早過ぎ</a>
+
+。
+それはそれとしてkeep-aliveが使えるようになったのがうれしい。
+<a href="http://marc.theaimsgroup.com/?l=openssh-unix-dev&amp;m=107764058601617&amp;w=2">http://marc.theaimsgroup.com/?l=openssh-unix-dev&amp;m=107764058601617&amp;w=2</a></p>
+<pre>
+* ssh(1) now supports sending application layer
+  keep-alive messages to the server.  See ServerAliveInterval
+  in ssh(1) for more information.
+</pre>
+<p>
+会社で試したときになぜかうまくいかなかったんだけど、
+そうか、ServerAliveIntervalだったのか。
+</p>
+<pre>
+ServerAliveInterval
+  Sets a timeout interval in seconds after which if no data has
+  been received from the server, ssh will send a message through
+  the encrypted channel to request a response from the server.  The
+  default is 0, indicating that these messages will not be sent to
+  the server.  This option applies to protocol version 2 only.
+</pre>
+<p>
+この0が原因のようだ。明日試そう。
+</p>
+<!-- section end -->
+</div>
+<!-- 2004/02/25 end -->
+
+
+
+<hr class="hide">
+<!-- 2004/02/26 start -->
+<h2><a name="20040226" href="200402c.html#20040226">2004-02-26 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="200402261" title="200402261" href="200402c.html#200402261">■</a> 
+[Soft] OpenSSH 3.8p1のTCPKeepAliveとServerAliveInterval</h3>
+<p>
+TCPKeepAliveはdefaultでyesだから、てっきりそれだけでkeep-aliveになると思うよね、普通。でもServerAliveIntervalのdefaultは0だからサーバには何も送られない。これは盲点だ。
+</p>
+
+<p>
+というわけで適当にServerAliveIntervalに60(秒)とか0以外の数値を指定してやる必要がある。
+</p>
+<!-- section end -->
+</div>
+<!-- 2004/02/26 end -->
+
+
+
+<hr class="hide">
+<!-- 2004/02/27 start -->
+<h2><a name="20040227" href="200402c.html#20040227">2004-02-27 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="200402271" title="200402271" href="200402c.html#200402271">■</a> 
+[Ruby] RSS Parserにxmlscanを使ってみる</h3>
+<p>
+なひさんが不用意な摩擦を願ってるらしい(嘘)ので、xmlscanを使ってみよう。
+xmlscanをインストールすればRSS Parserは、
+勝手にxmlscan使う(優先順位が高い)ようになるので、
+RSSを吐くところでわかる。kouさんも
+</p><blockquote><p>
+内部的にはutf-8で処理しているのはXMLパーサとしてREXMLを
+使っているからでしょう．ちなみに，RSS::RDF#encodingで内部
+エンコーディングがわかります．
+</p></blockquote><p>
+と
+<a href="http://www.cozmixng.org/~rwiki/index.rb?cmd=view;name=kou%3A%3A%A5%E1%A5%E2#kou.3a.3a.a5.e1.a5.e2">おっしゃっているので</a>、確認。
+</p>
+<pre>
+% ruby -rrss/1.0 -e 'p RSS::Parser.parse($&lt;.read).encoding' index.rdf
+&quot;euc-jp&quot;
+</pre>
+<p>
+なるほど。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200402272" title="200402272" href="200402c.html#200402272">■</a> 
+[Mail] ruby-bugsへのspam</h3>
+<p>
+しまった。最近ruby-bugsへのspamが通ってるなあ。家のbogofliterでは完全にブロックしてるから気づかなかった。学習させとこ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2004/02/27 end -->
+
+
+
+<hr class="hide">
+<!-- 2004/02/28 start -->
+<h2><a name="20040228" href="200402c.html#20040228">2004-02-28 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="200402281" title="200402281" href="200402c.html#200402281">■</a> 
+1/4517039</h3>
+<p>
+めでたく1/4517039に選ばれた。昨日来た「最終通告」のハガキもこれが原因か？タイミングがよすぎ。住所がその当時のものだし。
+今度住所を書くときは番地の後にAとかBとか、
+どこで書いたものかわかるように追加しとこう。
+</p>
+
+<p>
+金券500円ねえ。3ヶ月無料ぐらいかと思ってたんだけど。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200402282" title="200402282" href="200402c.html#200402282">■</a> 
+<a href="http://www.hotwired.co.jp/news/news/technology/story/20040227301.html">[Mail] 「市販品より高精度」を謳う、オープンソースのスパムフィルター登場</a></h3>
+<p>
+この99.97%というのはすごいな。早速
+<a href="http://crm114.sourceforge.net/">CRM114</a>から試してみよう。
+と思ったけどCRM114_Mailfilter_HOWTO.txtを読んで、インストールして終了。
+設定はまた明日にしよう。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200402283" title="200402283" href="200402c.html#200402283">■</a> 
+[Ruby] index.rdfにはすでに5日分たまった</h3>
+<p>
+すっかり忘れていたが、index.rdfにはすでに5日分たまっている。
+rss.itemsとchannel.items.Seq.lisを時刻でsortして古いものを削除すればいい。
+itemは1日1個とは限らないので、ちょっと面倒だな。
+というかsortするまでもなく古い順に並んでいるのであった。
+</p>
+
+<p>
+でも考えてみると1日1個のitemにしても全然問題ない。
+1日1回の更新なんだから6個になったらshiftするだけで済むじゃん。うーむ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2004/02/28 end -->
+
+
+
+<hr class="hide">
+<!-- 2004/02/29 start -->
+<h2><a name="20040229" href="200402c.html#20040229">2004-02-29 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="200402291" title="200402291" href="200402c.html#200402291">■</a> 
+[Mail] CRM114の設定</h3>
+<p>
+<a href="http://crm114.sourceforge.net/CRM114_Mailfilter_HOWTO.txt">CRM114_Mailfilter_HOWTO.txt</a>に従って.CSSファイルを作る。
+CSSとはCRM114 Sparse Spectraという意味らしい。
+まずは空の.CSSファイルを作る。
+</p>
+<pre>
+% mkdir ~/crm; cd ~/crm
+% cssutil -b -r spam.css
+% cssutil -b -r nonspam.css
+% ls -l
+total 24616
+-rw-r--r--    1 watanabe ruby     12582924 Feb 29 21:44 nonspam.css
+-rw-r--r--    1 watanabe ruby     12582924 Feb 29 21:44 spam.css
+</pre>
+<p>
+いきなりでかいね。
+</p>
+<pre>
+and you will have created _empty_ spam.css and nonspam.css files in
+your current directory (that is, the files are full-size, but contain
+no information.  They'll be full of binary zeroes). 
+</pre>
+<p>
+という話なので、これ以上は大きくならないらしい。
+</p>
+<pre>
+Method C - Build And Preload .CSS Files From Fresh Spam and Nonspam
+
+If you really feel you must start by preloading some sample spam, copy
+your most recent 100Kbytes or so of your freshest spam and nonspam
+into two files in the current directory.  These files MUST be named
+&quot;spamtext.txt&quot; and &quot;nonspamtext.txt&quot; They should NOT contain any
+base64 encodes or &quot;spammus interruptus&quot;, straight ASCII text is
+preferred.  If they do contain such encodes, decode them by hand
+before you execute this procedure.
+</pre>
+<p>
+この条件を満すファイルを用意するのが結構面倒だなあ。
+とりあえず、Method BのPre-LEARNedなファイルで、
+ruby-talkの2月分を試してみるとやっぱ散々な結果に。
+スクリプトが含まれているとどうしてもspamと認識されやすい。
+</p>
+
+<p>
+結論としては学習次第ということで(それは当たり前だ)。
+</p>
+<!-- section end -->
+</div>
+<!-- 2004/02/29 end -->
+
+<hr>
+<div>
+<a href="200402b.html">&lt;Prev(,)</a> | 
+<a href="200403a.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

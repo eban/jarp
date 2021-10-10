@@ -1,0 +1,446 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2014-5-c</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="201405b.html">
+<link rel="next" href="201406a.html">
+
+<link rel="stylesheet" type="text/css" href="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.css">
+<script async type="text/javascript" src="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.js"></script>
+<script type="text/javascript">
+<!--       
+$(document).ready(function() {
+  prettyPrint();
+});
+-->
+</script>
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2014年5月下旬〜</p>
+<hr>
+<div>
+<a href="201405b.html" accesskey=",">&lt;Older(,)</a> | 
+<a href="201406a.html" accesskey=".">Newer(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2014/05/21 start -->
+<h2><a name="20140521" href="201405c.html#20140521">2014-05-21 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="201405211" title="201405211" href="201405c.html#201405211">■</a> 
+zshのsubstring</h3>
+<p>
+bashと同じように
+</p>
+<pre>
+% foo=barbaz; echo ${foo:2:3}
+rba
+</pre>
+<p>
+という感じの表記も可能だが、これはまさにbash互換なので0から数える仕様になってる。<br>
+startとlengthだ。一方zsh本来の記法は
+</p>
+<pre>
+% foo=barbaz; echo $foo[3,5] 
+rba
+</pre>
+<p>
+のように1から数えてstart,endになってる。なんともすごい世界だ。<br>
+この記法だと代入もできて
+</p>
+<pre>
+% foo=barbaz; foo[3,5]=hoge; echo $foo 
+bahogez
+</pre>
+<p>
+左辺にもなれる。start,endなので
+</p>
+<pre>
+% time=1234; time[3,2]=:; echo $time
+12:34
+</pre>
+<p>
+のようにendをstart-1に指定すればその直前に挿入にすることができる。
+</p>
+<!-- section end -->
+</div>
+<!-- 2014/05/21 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/05/22 start -->
+<h2><a name="20140522" href="201405c.html#20140522">2014-05-22 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="201405221" title="201405221" href="201405c.html#201405221">■</a> 
+GMANEが更新されない</h3>
+<p>
+RSSが更新されないのが解消されたと思ったら、今度はGMANE自体が更新されなくなってしまった。<br>
+ruby-cvsだけじゃなくて全体なので、なんか非常事態が起きてるとしか。<br>
+bugsのRSSはruby-trunkとかプロジェクトごとに分かれてるので、<br>
+ちょっと扱いにくいしどうしたもんか。
+</p>
+<!-- section end -->
+</div>
+<!-- 2014/05/22 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/05/23 start -->
+<h2><a name="20140523" href="201405c.html#20140523">2014-05-23 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="201405231" title="201405231" href="201405c.html#201405231">■</a> 
+WindowsのタスクスケジューラにCygwinのシェルスクリプトを登録する</h3>
+<p>
+zshのschedもいいが、結局のところタスクスケジューラを使うことにした。<br>
+そのままだとPATHとかがWindowsのままなのでそのあたりを注意すれば特に問題はない。<br>
+うっとうしいのは実行時にコマンドプロンプトのウィンドウがちらっと表示されること。<br>
+<a href="http://serverfault.com/questions/202930/how-to-run-a-cygwin-executable-with-windows-xp-taskscheduler-without-opening-a-t">How to run a cygwin executable with Windows XP TaskScheduler without opening a terminal? - Server Fault</a><br>
+によればrun.exeを使えとあるが、これではなぜか解決されなかった。その次のVBはいけた。<br>
+</p>
+<pre>
+Set WshShell = CreateObject(&quot;WScript.Shell&quot;)
+WshShell.Run chr(34) &amp; &quot;C:\Batch Files\syncfiles.bat&quot; &amp; Chr(34), 0
+Set WshShell = Nothing
+</pre>
+<p>
+これをちょっといじって、1行で。
+</p>
+<pre>
+CreateObject(&quot;WScript.Shell&quot;).Run &quot;C:\Cygwin64\bin\sh /home/eban/bin/foo.sh&quot;, 0
+</pre>
+<p>
+0がウィンドウを出さないという指定。chr(34)は&quot;で空白を含むパスのときには必要。<br>
+VBだと
+</p>
+<pre>
+WshShell.Run &quot;&quot;&quot;C:\Batch Files\syncfiles.bat&quot;&quot;&quot;, 0
+</pre>
+<p>
+とも書けるらしいが、これはやっぱわかりにくい。
+</p>
+<!-- section end -->
+</div>
+<!-- 2014/05/23 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/05/24 start -->
+<h2><a name="20140524" href="201405c.html#20140524">2014-05-24 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="201405241" title="201405241" href="201405c.html#201405241">■</a> 
+文字を回転させて重ねるときれいな模様になる</h3>
+<p>
+というtweetを数ヶ月ほど前にどこかで見かけたのを思い出したのでconvertで試してみる。<br>
+たしか「あ」とかだった気がするがまあきっと何でもいいんだろう。<br>
+適当に「%」にしてみる。
+</p>
+<pre>
+% convert -size 200x200 xc:none -font Courier-New-Regular -pointsize 100 -gravity center \
+  -draw 'text 0,-30 &quot;%&quot;' +repage p.png
+</pre>
+<p>
+<img src="../images/p.png" alt="">
+</p>
+<p>
+中心をずらさないと重ねたときに真っ黒になるのでちょっと上にずらした。<br>
+あとはrotateしてcompositeするだけ。
+</p>
+<pre>
+% convert -size 200x200 xc:white \( p.png -gravity center \( +clone -rotate 180 \) -composite \) -composite 180.png
+</pre>
+<p>
+180度回転して重ねる。これを90,45,22.5と進める。長くなるがわかりやすいのでそのまま。
+</p>
+<pre>
+% convert -size 200x200 xc:white \( p.png -gravity center \( +clone -rotate 180 \) -composite \( +clone -rotate 90 \) -composite \) -composite 90.png
+% convert -size 200x200 xc:white \( p.png -gravity center \( +clone -rotate 180 \) -composite \( +clone -rotate 90 \) -composite \( +clone -rotate 45 \) -composite \) -composite 45.png
+% convert -size 200x200 xc:white \( p.png -gravity center \( +clone -rotate 180 \) -composite \( +clone -rotate 90 \) -composite \( +clone -rotate 45 \) -composite \( +clone -rotate 22.5 \) -composite \) -composite 22.5.png
+</pre>
+<p>
+結果。
+</p>
+<p>
+<img src="../images/180.png" alt="">
+<img src="../images/90.png" alt="">
+<img src="../images/45.png" alt="">
+<img src="../images/22.5.png" alt="">
+</p>
+<p>
+おお。なかなかいいね。もとが「%」だったとはとても思えない。
+</p>
+<!-- section end -->
+</div>
+<!-- 2014/05/24 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/05/25 start -->
+<h2><a name="20140525" href="201405c.html#20140525">2014-05-25 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="201405251" title="201405251" href="201405c.html#201405251">■</a> 
+1枚の画像でスライドショー</h3>
+<p>
+最近合成した東京アメッシュの画像をデスクトップに表示させてるんだけど、<br>
+スライドショーってやつは1枚だけだと更新しても再読み込みしてくれない。<br>
+しかたなく無駄に違う画像を置いてみるが、それはそれでなんか違う。<br>
+ふと思いついてもう1個は同じものをダミーとしてコピーすればいいんだとやってみるといけた。<br>
+symlinkでもいいようだ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2014/05/25 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/05/26 start -->
+<h2><a name="20140526" href="201405c.html#20140526">2014-05-26 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="201405261" title="201405261" href="201405c.html#201405261">■</a> 
+Exchange 2007/2010予定表と仕事プロバイダ</h3>
+<p>
+なんだかよくわからない名前だが、英語のほうは<br>
+Exchange 2007/2010 Calendar and Tasks Provider<br>
+という名前らしい。ThunderbirdのLightning拡張のアドオンになる。<br>
+最近更新されないと思ったらMozillaのadd-onサイトから消えていた。<br>
+<a href="http://www.1st-setup.nl/wordpress/?page_id=133">本家</a>を見に行ったらもう保守やめるよとの宣言が。<br>
+Exchangeサーバーのバージョンが上がってから、<br>
+アラームが死んでいるのでどうしたもんかと思ったが、<br>
+こういう事情じゃ別の方法を考えたほうがよさげだ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2014/05/26 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/05/27 start -->
+<h2><a name="20140527" href="201405c.html#20140527">2014-05-27 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="201405271" title="201405271" href="201405c.html#201405271">■</a> 
+Gmane復活</h3>
+<p>
+そろそろ@rubyciさんのためになんか代替案を考えねばと思っていた矢先、Gmaneさんが復活した。<br>
+流石に全部は復旧されなかったが、まあよかった。<br>
+それはそれとしてリンク先はどうもリダイレクトされるようなので、<br>
+その先のURLに変更しておいたほうがよさげだな。<br>
+view=revじゃなくてview=revision。
+</p>
+<!-- section end -->
+</div>
+<!-- 2014/05/27 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/05/28 start -->
+<h2><a name="20140528" href="201405c.html#20140528">2014-05-28 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="201405281" title="201405281" href="201405c.html#201405281">■</a> 
+parallel</h3>
+<p>
+なんかうちのparallelはよそとは違うなと思ったら、moreutils製だった。<br>
+機能的にはGNU parallelのほうが上のなのでこっちを入れたいが、<br>
+moreutilsをあきらめないといけない。<br>
+spongeとかchronicはcrontabで使ってるだけにuninstallはしたくないよなあ。<br>
+どっちかを野良ビルドするか。<br>
+GNU parallelはPerlなのか。だったらこっちを野良にしたほうがいいな。<br>
+ftpを見に行ったら22日リリースにこだわっているようだ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2014/05/28 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/05/29 start -->
+<h2><a name="20140529" href="201405c.html#20140529">2014-05-29 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="201405291" title="201405291" href="201405c.html#201405291">■</a> 
+このタスクは管理者特権で作成されます。</h3>
+<p>
+いつのまにかWindowsがそんな設定になっていて、<br>
+Win+Rでなにか実行しようとするとタイトルのようなお知らせが。<br>
+たしかにコマンドプロンプトを開いても、<br>
+タイトルには「管理者」がついてるし、<br>
+atコマンドもアクセスが拒否されない。<br>
+ぐぐるとセキュリティポリシーだというとで。<br>
+こんなところをいじった覚えはないし、<br>
+なにかアプリをインストールした際に変更されたんだろうか。<br>
+昔のWindowsに戻ったような気分。元に戻しておこう。
+</p>
+<p>
+[コントロールパネル]-[管理ツール]-[ローカルセキュリティポリシー]-[ローカルポリシー]-<br>
+[セキュリティ オプション]の<br>
+[ユーザー アカウント制御 : 管理者承認モードですべての管理者を実行する]<br>
+を有効に。無効にすると管理者特権で実行される。
+</p>
+<!-- section end -->
+</div>
+<!-- 2014/05/29 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/05/30 start -->
+<h2><a name="20140530" href="201405c.html#20140530">2014-05-30 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="201405301" title="201405301" href="201405c.html#201405301">■</a> 
+GNU parallelで違和感</h3>
+<p>
+manにも書かれているのでそんなもん感じる必要もないはずだが、<br>
+xargs気分のつもりでいるといろいろと嵌る。
+</p>
+<pre>
+% convert -fuzz 60% -trim foo.jpg -format &quot;%f %wx%h%X%Y&quot; info:      
+foo.jpg 854x409+16+25
+</pre>
+<p>
+これは余白を除去した結果を画像を保存せずにwxh+X+Yのような情報を表示しろという意味。<br>
+wとhが横と縦、XとYが左上からのオフセット。<br>
+これをそのままparallelに通すとエラーになってしまう。
+</p>
+<pre>
+% parallel convert -fuzz 40% -trim {} -format &quot;%f %wx%h%X%Y&quot; info: ::: foo.jpg
+foo.jpg
+convert.im6: unable to open image `%wx%h%X%Y': そのようなファイルやディレクトリはありません @ error/blob.c/OpenBlob/2638.
+convert.im6: no decode delegate for this image format `%wx%h%X%Y' @ error/constitute.c/ReadImage/544.
+
+</pre>
+<p>
+フォーマットに空白を含んでいるので&quot;&quot;で囲んでいるのになぜかばらばらになっている。<br>
+違和感とはここで、parallelはシェルを介してから実行されるので二重にクォートしあげないといけない。
+</p>
+<pre>
+% parallel convert -fuzz 60% -trim {} -format '&quot;%f %wx%h%X%Y&quot;' info: ::: foo.jpg
+foo.jpg 854x409+16+25
+</pre>
+<p>
+manにわざわざQUOTINGというセクションを設けてまで書かれているが、<br>
+そうは言ってもこれはめんどくさい。<br>
+一応そのために-qというオプションが用意されてる。
+</p>
+<pre>
+% parallel -q convert -fuzz 60% -trim {} -format &quot;%f %wx%h%X%Y&quot; info: ::: foo.jpg
+foo.jpg 854x409+16+25
+</pre>
+<p>
+-qは問答無用なのでクォートして欲しくないところもやってしまうから注意ということらしい。
+</p>
+<!-- section end -->
+</div>
+<!-- 2014/05/30 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/05/31 start -->
+<h2><a name="20140531" href="201405c.html#20140531">2014-05-31 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="201405311" title="201405311" href="201405c.html#201405311">■</a> 
+ruby-talk MLにspam bomb</h3>
+<p>
+数分間に数百通とか送られた日にゃもう対処できないわけで、最終的にはmailmanもpostfixも停止。<br>
+もう個別に対応は無理だと判断しpostsuper -d ALLしたら50000通もたまってた。<br>
+ruby-talk MLはすでに秘密の穴はなくmembers onlyになっているが、Fromを詐称されていた。<br>
+最初は気づかなかったが第2陣で見慣れたメールアドレスが出てきて気づかされた。
+</p>
+<p>
+それにしてもspamassassinの結果も
+</p>
+<pre>
+X-Spam-Flag: YES
+X-Spam-Status: Yes, score=5.8 required=5.0 tests=FREEMAIL_FROM,
+	FSL_HELO_NON_FQDN_1,HELO_NO_DOMAIN,RDNS_NONE autolearn=disabled version=3.3.1
+</pre>
+<p>
+とちゃんとspamと認識しているのに通ってしまっている。<br>
+mailmanはメンバーだと素通しなのか？<br>
+一応犯人と思われるIPアドレスもブロックしようとしているが、<br>
+この設定もメンバーには無効となるとちょっと困るな。<br>
+その時はHandler書くか。
+</p>
+<p>
+とりあえずしばらく全ML停止する予定。ruby-talk MLだけ止める設定がわからない。
+</p>
+<!-- section end -->
+</div>
+<!-- 2014/05/31 end -->
+
+<hr>
+<div>
+<a href="201405b.html">&lt;Older(,)</a> | 
+<a href="201406a.html">Newer(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

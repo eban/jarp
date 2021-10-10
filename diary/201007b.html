@@ -1,0 +1,301 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2010-7-b</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="201007a.html">
+<link rel="next" href="201007c.html">
+
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2010年7月中旬〜</p>
+<hr>
+<div>
+<a href="201007a.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="201007c.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2010/07/11 start -->
+<h2><a name="20100711" href="201007b.html#20100711">2010-07-11 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="201007111" title="201007111" href="201007b.html#201007111">■</a> 
+[Ruby] String#sub!とString#slice!</h3>
+<p>
+sub!(/re/,&quot;&quot;)の代わりにslice!(/re/)でいいということに気づいた。<br>
+辛うじて1バイト短い。
+
+</p>
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="201007112" title="201007112" href="201007b.html#201007112">■</a> 
+[Ubuntu] aptitude install uw-imapdしたら途中でハング</h3>
+<p>
+昨日の夜中にsudo aptitude install uw-imapdしたまま忘れていたが、<br>
+今朝になっても終わってなかった。さてどうしたもんか。<br>
+scanとかしたいからMHのままで使いたいんだけどなあ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2010/07/11 end -->
+
+
+
+<hr class="hide">
+<!-- 2010/07/12 start -->
+<h2><a name="20100712" href="201007b.html#20100712">2010-07-12 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="201007121" title="201007121" href="201007b.html#201007121">■</a> 
+<a href="http://www.commandlinefu.com/commands/view/6057/">[Tips] ssh host key changeと警告されたとき</a></h3>
+<p>
+ssh hostしてssh host key changeと警告されたときには
+</p>
+<pre>
+% ssh-keygen -R host
+</pre>
+<p>
+とすればいいらしい。ssh-keygenコマンドでできるとは普通思わないよなあ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2010/07/12 end -->
+
+
+
+<hr class="hide">
+<!-- 2010/07/13 start -->
+<h2><a name="20100713" href="201007b.html#20100713">2010-07-13 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="201007131" title="201007131" href="201007b.html#201007131">■</a> 
+<a href="http://golf.shinh.org/p.rb?Coasters">[Golf] Coasters</a></h3>
+<p>
+締切過ぎたのに気づかずに攻めていたら結構縮んだ。<br>
+bashだと同じ文字の繰り返しが不得意なので置換で代用。
+</p>
+<pre>
+((${#a}&gt;5))&amp;&amp;l=$l$l
+</pre>
+<p>
+の部分がまだ縮むんじゃないかなと思ってるんだけど、<br>
+なかなか縮まない。
+</p>
+<!-- section end -->
+</div>
+<!-- 2010/07/13 end -->
+
+
+
+<hr class="hide">
+<!-- 2010/07/14 start -->
+<h2><a name="20100714" href="201007b.html#20100714">2010-07-14 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="201007141" title="201007141" href="201007b.html#201007141">■</a> 
+<a href="http://sourceforge.net/apps/mediawiki/cppcheck/">[Soft] cppcheck</a></h3>
+<blockquote><p>
+Cppcheck is an analysis tool for C/C++ code. Unlike C/C++ compilers and many
+other analysis tools, we don't detect syntax errors. Cppcheck only detects the
+types of bugs that the compilers normally fail to detect. The goal is no false
+positives. 
+</p></blockquote>
+<!-- section end -->
+</div>
+<!-- 2010/07/14 end -->
+
+
+
+<hr class="hide">
+<!-- 2010/07/15 start -->
+<h2><a name="20100715" href="201007b.html#20100715">2010-07-15 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="201007151" title="201007151" href="201007b.html#201007151">■</a> 
+<a href="http://golf.shinh.org/p.rb?Roman+numeral">[Golf] Roman numeral</a></h3>
+<p>
+ぐぐってみると奥が深い。IVなどの処理が面白い。Rubyも70Bぐらいまでいくような。
+</p>
+<!-- section end -->
+</div>
+<!-- 2010/07/15 end -->
+
+
+
+<hr class="hide">
+<!-- 2010/07/16 start -->
+<h2><a name="20100716" href="201007b.html#20100716">2010-07-16 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="201007161" title="201007161" href="201007b.html#201007161">■</a> 
+[Ubuntu] motd</h3>
+<p>
+landscape-clientをインストールしたらlogin時にlandscape-sysinfoの結果も出るようになった。<br>
+そういえばあれってどうなってんだと調べてみたらupdate-motdが面倒を見てるらしい。<br>
+/etc/update-motd.dに置いとけば実行してくれるようだ。面白い。
+</p>
+<pre>
+% ls /etc/update-motd.d
+00-header     20-cpu-checker	    90-updates-available  98-reboot-required
+10-help-text  50-landscape-sysinfo  91-release-upgrade	  99-footer
+</pre>
+<p>
+90-updates-availableと98-reboot-requiredは便利だよね。
+</p>
+<!-- section end -->
+</div>
+<!-- 2010/07/16 end -->
+
+
+
+<hr class="hide">
+<!-- 2010/07/17 start -->
+<h2><a name="20100717" href="201007b.html#20100717">2010-07-17 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="201007171" title="201007171" href="201007b.html#201007171">■</a> 
+<a href="http://golf.shinh.org/p.rb?Roman+numeral">[Golf] Roman numeral</a></h3>
+<p>
+ぐぐってカンニングした結果63Bになったがトップはすでに60Bになっていた。<br>
+しかしこれはどうやって見つけたのか謎だな。
+</p>
+<!-- section end -->
+</div>
+<!-- 2010/07/17 end -->
+
+
+
+<hr class="hide">
+<!-- 2010/07/18 start -->
+<h2><a name="20100718" href="201007b.html#20100718">2010-07-18 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="201007181" title="201007181" href="201007b.html#201007181">■</a> 
+[zsh] zshで右詰め文字列</h3>
+<p>
+(l)で可能。
+</p>
+<pre>
+% a=1; echo ${(l:3:)a}
+  1
+% a=1; echo ${(l:3::0:)a}
+001
+% a=1; echo ${(r:3:)a}:   
+1  :
+% a=1; echo ${(r:3::0:)a}:
+100:
+</pre>
+<p>
+これなんで右詰めがlで左詰めがrなんだろうね。
+</p>
+<p>
+あとどういうわけか変数を省略可能。
+</p>
+<pre>
+% echo ${(l:3::x:)} 
+xxx
+</pre>
+<p>
+つまりこれで任意の文字の繰り返しが表現できるわけだ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2010/07/18 end -->
+
+
+
+<hr class="hide">
+<!-- 2010/07/19 start -->
+<h2><a name="20100719" href="201007b.html#20100719">2010-07-19 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="201007191" title="201007191" href="201007b.html#201007191">■</a> 
+<a href="http://shinh.skr.jp/wake/">[Golf] wake</a></h3>
+<p>
+wake golfを始めたわけだけど結構解ける問題が多くて善戦しそう。<br>
+char,line系ならほとんど問題なく解ける。<br>
+計算は面倒なのでやってないが。
+</p>
+<!-- section end -->
+</div>
+<!-- 2010/07/19 end -->
+
+
+
+<hr class="hide">
+<!-- 2010/07/20 start -->
+<h2><a name="20100720" href="201007b.html#20100720">2010-07-20 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="201007201" title="201007201" href="201007b.html#201007201">■</a> 
+Asakusa.rb</h3>
+<p>
+暑かったです。なんか邪魔に行っただけような。<br>
+次回が行くことがあったらなんか課題をちゃんと見つけとこう。
+</p>
+<!-- section end -->
+</div>
+<!-- 2010/07/20 end -->
+
+<hr>
+<div>
+<a href="201007a.html">&lt;Prev(,)</a> | 
+<a href="201007c.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

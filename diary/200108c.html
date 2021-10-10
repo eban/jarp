@@ -1,0 +1,831 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2001-8-c</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="200108b.html">
+<link rel="next" href="200109a.html">
+
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2001年8月下旬〜</p>
+<hr>
+<div>
+<a href="200108b.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="200109a.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2001/08/21 start -->
+<h2><a name="20010821" href="200108c.html#20010821">2001-08-21 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="200108211" title="200108211" href="200108c.html#200108211">■</a> 
+SirCam</h3>
+<p>
+また来たよ。こんどは&quot;International Sales Enterprises&quot;ってとこから
+</p>
+<pre>
+INVOIVE #1885.xls.pif
+</pre>
+<p>
+というファイル。実体は同じように実行ファイルだ。
+</p>
+
+<p>
+前回の&quot;tanakasi&quot;という人のはMUAは
+</p>
+<pre>
+X-Mailer: Microsoft Outlook Express 5.50.4133.2400
+</pre>
+<p>
+で、今回も
+</p>
+<pre>
+X-Mailer: Microsoft Outlook Express 5.50.4133.2400
+</pre>
+<p>
+だ。全く同じ。というかこれが最新なんだろうか？
+</p>
+
+<p>
+ISP側と家との間をPOP3じゃなくてscpするようになってからは、
+メール取ってくるのが速くなって(圧縮が効くから)、
+こういう変なメールが来てもあまり気にならなくなったんだけど、
+頻繁に来るようだとやっぱ考えないとねえ。
+</p>
+
+<p>
+ISP側のshell環境でmbox形式にするときにprocmailを通すようにしようかな。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200108212" title="200108212" href="200108c.html#200108212">■</a> 
+GCC 3.0.1</h3>
+<p>
+--enable-version-specific-runtime-libsはなんか欝陶しいだけなので外すことにした。
+</p>
+<pre>
+% CFLAGS=-Os CXXFLAGS=-Os ../configure --enable-languages=c,c++ \
+  --enable-shared --with-system-zlib --enable-sjlj-exceptions \
+  --enable-c-mbchar --enable-threads
+</pre>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200108213" title="200108213" href="200108c.html#200108213">■</a> 
+<a href="http://homepage2.nifty.com/zn/nnikki/200108.html#21_t1">zsh setopt cshjunkiequotes</a></h3>
+<p>
+その'はいったいどこから出てくるんでしょう？
+なんか別の設定がからんでいて、そこが\で継続してないのかな。
+</p>
+
+<p>
+それはそれとして
+</p>
+<pre>
+% ruby -e 'p $KCODE
+quote&gt; 
+</pre>
+<p>
+からBackSpaceでは戻れないけど、そこでC-cしてからC-pはできます。
+このあたりはzshは気が効いてます。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200108214" title="200108214" href="200108c.html#200108214">■</a> 
+[FFX] ミニストップ</h3>
+<p>
+リュックの声はミニストップのちっちゃい女の子(松本まりか)。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2001/08/21 end -->
+
+
+
+<hr class="hide">
+<!-- 2001/08/22 start -->
+<h2><a name="20010822" href="200108c.html#20010822">2001-08-22 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="200108221" title="200108221" href="200108c.html#200108221">■</a> 
+[GCC] gcc 3.0.x</h3>
+<p>
+
+<a href="http://gcc.gnu.org/ml/gcc/2001-07/msg01491.html">これ</a> によると、
+2ヶ月に1度のペースで出すらしい。次は10月か？
+</p>
+
+<p>
+あ、そうそう。Rubyはもちろんgcc 3.0.1でもokだ。
+今日は時間もあるのでmake bootstrapすることにした。
+</p>
+
+<p>
+configureしなおすとgcc -vに(reconfigured)と追加されるんだけど、
+それはやりすぎだよ。見辛くなるし。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200108222" title="200108222" href="200108c.html#200108222">■</a> 
+[Ruby] split</h3>
+<pre>
+&quot;x,x,&quot;.split(&quot;,&quot;)
+</pre>
+<p>
+は
+</p>
+<pre>
+[&quot;x&quot;, &quot;x&quot;]
+</pre>
+<p>
+だが、
+</p>
+<pre>
+&quot;x,,&quot;.split(&quot;,&quot;)
+</pre>
+<p>
+は
+</p>
+<pre>
+[&quot;x&quot;]
+</pre>
+<p>
+になる。さらに
+</p>
+<pre>
+&quot;x,,x&quot;.split(&quot;,&quot;)
+</pre>
+<p>
+は
+</p>
+<pre>
+[&quot;x&quot;, &quot;&quot;, &quot;x&quot;]
+</pre>
+<p>
+だ。で&quot;x,,&quot;にはならないようにしたのが、一昨日のmkrbconfig.rbの変更内容。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2001/08/22 end -->
+
+
+
+<hr class="hide">
+<!-- 2001/08/23 start -->
+<h2><a name="20010823" href="200108c.html#20010823">2001-08-23 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="200108231" title="200108231" href="200108c.html#200108231">■</a> 
+autoconf</h3>
+<p>
+バージョン間の違いが顕著になりつつあるautoconfだが、
+2.13と2.50と2.52を共存させたくなった。
+/usr/binには2.13があるのでこれはそのままにしとく。
+2.50と2.52のprefixはdefaultの/usr/localとし、
+--program-suffixでバージョンも追加することにする。
+ただしPACKAGEはautoconfのままになり、
+どちらも/usr/local/share/autoconfへインストールしてしまうので、
+できあがったconfig.statusを書き換えて
+</p>
+<pre>
+% diff -u1 config.status{.bak,}
+--- config.status.bak   Fri Aug 24 01:09:17 2001
++++ config.status       Fri Aug 24 01:11:33 2001
+@@ -256,3 +256,3 @@
+ s,@INSTALL_DATA@,${INSTALL} -m 644,;t t
+-s,@PACKAGE@,autoconf,;t t
++s,@PACKAGE@,autoconf-2.52,;t t
+ s,@VERSION@,2.52,;t t
+</pre>
+<p>
+のような小細工を施し、./config.statusしとく。
+あとはmake installでおしまい。
+これでautoconf-2.5{0,2}で呼び出せる。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200108232" title="200108232" href="200108c.html#200108232">■</a> 
+おっつー</h3>
+<p>
+って何かと思ったら「お疲れ」ってことらしい。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200108233" title="200108233" href="200108c.html#200108233">■</a> 
+[FFX] 上書き</h3>
+<p>
+一番進んでるセーブデータを上書きしてしまった。20時間がパーに。
+一度The Endも見てるわけだし、終わりにするか。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2001/08/23 end -->
+
+
+
+<hr class="hide">
+<!-- 2001/08/24 start -->
+<h2><a name="20010824" href="200108c.html#20010824">2001-08-24 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="200108241" title="200108241" href="200108c.html#200108241">■</a> 
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-talk/20181">HTML Mail</a></h3>
+<p>
+HTMLだけのメールはやめてと何度も言われてるのにねえ。
+</p>
+<pre>
+Get your FREE download of MSN Explorer at http://explorer.msn.com
+</pre>
+<p>
+と最後にあるが、MSN ExplorerってMS-IEとは違うんだろうか。
+どーでもいいか。使わないし。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200108242" title="200108242" href="200108c.html#200108242">■</a> 
+fileutils 4.1</h3>
+<p>
+すでに4月に4.1は出ていた。
+最初からNLSは使わないようにする。って
+
+<a href="http://www.linuxfromscratch.org/">LFS</a> では最初からそうなってるね。
+</p>
+<pre>
+% CFAGS=-Os CC='gcc -static' ./configure --disable-nls \
+  --prefix=/usr --libexec=/bin --bindir=/bin
+</pre>
+<p>
+autoconf 2.49eで作られてるらしく、config.cacheは作らない。
+作りたいときは--cache-file=config.cacheのよう明示的に指定する。
+</p>
+<pre>
+% make
+% sudo make install
+</pre>
+<p>
+ついでにupxで圧縮しておいた。
+</p>
+<pre>
+      File size         Ratio      Format      Name
+ --------------------   ------   -----------   -----------
+  394132 -&gt;    170774   43.32%    linux/386    chown                         
+  390836 -&gt;    169662   43.41%    linux/386    chgrp                         
+  463700 -&gt;    201511   43.45%    linux/386    cp                            
+  375892 -&gt;    163148   43.40%    linux/386    chmod                         
+  483124 -&gt;    210079   43.48%    linux/386    install                       
+  400276 -&gt;    174885   43.69%    linux/386    du                            
+  377492 -&gt;    163576   43.33%    linux/386    dircolors                     
+  384820 -&gt;    167428   43.50%    linux/386    dd                            
+  440084 -&gt;    192398   43.71%    linux/386    vdir                          
+  440084 -&gt;    192398   43.71%    linux/386    ls                            
+  447988 -&gt;    194264   43.36%    linux/386    ln                            
+  440084 -&gt;    192398   43.71%    linux/386    dir                           
+  471732 -&gt;    206355   43.74%    linux/386    mv                            
+  374068 -&gt;    161918   43.28%    linux/386    mknod                         
+  371828 -&gt;    161185   43.34%    linux/386    mkfifo                        
+  376148 -&gt;    163295   43.41%    linux/386    mkdir                         
+  368308 -&gt;    159247   43.23%    linux/386    sync                          
+  386580 -&gt;    168576   43.60%    linux/386    shred                         
+  369588 -&gt;    159865   43.25%    linux/386    rmdir                         
+  451764 -&gt;    196866   43.57%    linux/386    rm                            
+  381908 -&gt;    166753   43.66%    linux/386    touch                         
+  385652 -&gt;    168399   43.66%    linux/386    df                            
+ --------------------   ------   -----------   -----------
+ 8976088 -&gt;   3904980   43.50%                 [ 22 files ]
+</pre>
+<p>
+見事なまでに圧縮率が揃ってる。
+staticにリンクしたから大部分がlibcだという証拠だな。
+</p>
+<pre>
+% cp -v foo bar
+`foo' -&gt; `bar'
+</pre>
+<p>
+4.1からは`'で囲むようになったようだ。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2001/08/24 end -->
+
+
+
+<hr class="hide">
+<!-- 2001/08/25 start -->
+<h2><a name="20010825" href="200108c.html#20010825">2001-08-25 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="200108251" title="200108251" href="200108c.html#200108251">■</a> 
+sort</h3>
+<p>
+ruby-talkと%Rubyで昨日、
+なぜか同時多発的に複数のキーでソートしたいという話題が出た。
+ま、これも一年に一度ぐらいは話題になってるかな。
+</p>
+
+
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200108252" title="200108252" href="200108c.html#200108252">■</a> 
+<a href="http://fcron.free.fr/">fcron 2.0.0</a></h3>
+<p>
+freshmeat を見るとfcron 2.0.0が出てたので更新。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200108253" title="200108253" href="200108c.html#200108253">■</a> 
+<a href="http://www.wi.leidenuniv.nl/~wichert/strace/">strace 4.4</a></h3>
+<p>
+Plamoってstraceが入ってないんだっけ？
+これも
+<a href="http://freshmeat.net/">freshmeat</a> で新しいのが出たのを知る。
+</p>
+
+<p>
+最近はltraceを使ってるからstraceでなくてもいいんだけど。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2001/08/25 end -->
+
+
+
+<hr class="hide">
+<!-- 2001/08/26 start -->
+<h2><a name="20010826" href="200108c.html#20010826">2001-08-26 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="200108261" title="200108261" href="200108c.html#200108261">■</a> 
+New Windows InstallShield version of Ruby</h3>
+<p>
+ruby-talk MLでWindows InstallShield version of Ruby
+が動かないとかなんとかいろいろ騒いでる。
+まとめると
+</p>
+<pre>
+o InstallShield版ではCygwin 1.1.8-2を使ってる。
+o setup.exeでCygwinをインストールすると最新のCygwin 1.3.2-1になる。
+o Cygwin FAQにも書かれているが、複数のバージョンのCygwin DLLが同時に
+  loadされると問題が起こる。
+o じゃいっそのことmswin32とかmingw32にするのはどう？
+o POSIX機能が制限される(forkとか)。
+o じゃ新しいCygwin DLLを使えばいいじゃん。
+o Watanabe HirofumiというやつがCygwinの新しいバージョンは問題だらけ
+  だと言ってる。
+o Cygwinを静的にリンクするのはどう？
+</pre>
+<p>
+というこんな感じだ。おいらの名前まで出されちゃったねえ。
+たぶんmemory mapped fileで情報を共有してるから、
+バージョン間の違いに敏感なんだと思う。
+それとCygwinは静的にリンクできないようなっている。
+</p>
+
+<p>
+あ、Daveさんが
+</p>
+<pre>
+o 新しいCygwin DLLがあったらインストールしない。
+</pre>
+<p>
+という案を出してきた。
+が、Cygwinのsetup.exeはcygwin.batを作るので、
+PATHを変更しないから検出が難しそうだな。
+でもレジストリを見れば一発か。
+</p>
+
+<p>
+それはそれとしてもうCygwin 1.3.2-1でいいと思うよ。
+問題だらけだと言ったのは1.3.1なんだから。
+一応1.3.2を使おうよメールをruby-talkに出してみた。
+</p>
+
+<p>
+ちなみに
+
+<a href="http://www.pragmaticprogrammer.com/ruby/downloads/ruby-install.html">ここ</a>
+にあるらしい。
+らしいというのはおいらほどこのインストーラを必要としない人間はいないからだ。
+あ、でもFXRubyは作ってないなあ。じゃダウンロードしてみるか。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200108262" title="200108262" href="200108c.html#200108262">■</a> 
+\M-8\M-x\M-L\M-3\M-&lt;\M-9\M-9\M-T\M-K\M-8\M-3\M-2</h3>
+<p>
+Rubyだと&quot;\M-8&quot;で8ビット目が立った文字を表現できるが、
+これを作るのって結構面倒
+<a href="#20010826F1"><sup><small>*1</small></sup></a>。
+が、zsh(日本語対応してないやつ)があると簡単だ。
+</p>
+<pre>
+% 公務執行妨害
+zsh: command not found: \M-8\M-x\M-L\M-3\M-&lt;\M-9\M-9\M-T\M-K\M-8\M-3\M-2
+</pre>
+<p>
+一発で変換できる。変換とは言わないか。あとはマウスでcopy&amp;pasteだ。
+</p>
+
+<hr align="left" width="40%">
+<div>
+<a name="20010826F1" href="200108c.html#20010826F1"><small>*1</small></a>:
+というかふつうはあまり必要にならない。
+</div>
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200108263" title="200108263" href="200108c.html#200108263">■</a> 
+モーニング娘。</h3>
+<p>
+なぜ司会がみのもんた？
+高橋か小川かと思ったが、まさか4人も増えるとは。
+LOVE涙色のサビを覚えちゃったよ。歌唱指導つきだし。
+</p>
+<pre>
+小川真琴(13)
+紺野あさ美(14)
+高橋愛(14)
+新垣里沙(12)
+</pre>
+<p>
+さぁ、次は誰が抜けるんだろう？
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2001/08/26 end -->
+
+
+
+<hr class="hide">
+<!-- 2001/08/27 start -->
+<h2><a name="20010827" href="200108c.html#20010827">2001-08-27 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="200108271" title="200108271" href="200108c.html#200108271">■</a> 
+digest</h3>
+<p>
+確かにmsdosdjgpp版rubyが動かない。こんな感じだ。
+</p>
+<pre>
+% d:/usr/local/bin/ruby -ve 'puts $&quot;'
+ruby 1.6.4 (2001-08-26) [i386-msdosdjgpp]
+d:/usr/local/bin/ruby.exe: No such file to load -- digest (LoadError)
+</pre>
+<p>
+拡張ライブラリを静的にリンクしたときというか、
+digestのような構造がまずいんだろうか？
+djgppの開発環境はLinux上のクロスしかないので、
+まずはLinux上でext/Setupを
+</p>
+<pre>
+option nodynamic
+
+digest
+digest/md5
+digest/rmd160
+digest/sha1
+digest/sha2
+fcntl
+</pre>
+<p>
+として試す。fcntlはおまけ。
+</p>
+<pre>
+% ./ruby -ve 'puts $&quot;'
+ruby 1.6.4 (2001-08-26) [i386-linux]
+fcntl.so
+digest.so
+digest/md5.so
+digest/sha1.so
+digest/sha2.so
+digest/rmd160.so
+</pre>
+<p>
+動いちゃったよ。まいったね。
+いちいちdjgpp版をWindows上へ持っていかないとだめか？
+</p>
+
+<p>
+あ、ひょっとして残ってる
+</p>
+<pre>
+/usr/local/lib/ruby/1.6/i386-linux/digest*
+</pre>
+<p>
+を消さないといけない？
+</p>
+<pre>
+% rm -rf /usr/local/lib/ruby/1.6/i386-linux/digest*
+% ./ruby -ve 'puts $&quot;'
+ruby 1.6.4 (2001-08-26) [i386-linux]
+./ruby: No such file to load -- digest (LoadError)
+</pre>
+<p>
+そういうことか。
+つまりrb_provideしてるのにdigest.soを探しに行ってるのがまずい。
+それがほんとなら適当にdigest.soを作ればいけちゃうのか？
+</p>
+<pre>
+% touch digest.so
+% ./ruby -ve 'puts $&quot;' 
+ruby 1.6.4 (2001-08-26) [i386-linux]
+fcntl.so
+digest.so
+digest/md5.so
+digest/sha1.so
+digest/sha2.so
+digest/rmd160.so
+</pre>
+<p>
+いけちゃったよ。ってことは静的にリンクしたときはrequire &quot;foo&quot;は全部失敗してたのか。まずいじゃん。いつから？
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2001/08/27 end -->
+
+
+
+<hr class="hide">
+<!-- 2001/08/28 start -->
+<h2><a name="20010828" href="200108c.html#20010828">2001-08-28 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="200108281" title="200108281" href="200108c.html#200108281">■</a> 
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-talk/20439">[ruby-talk:20439] huge variations in execution times on Win32</a></h3>
+<p>
+なんかよくわからんが、以前のより2倍速くなってるらしい。
+以前のって1.6.3かな？
+gcc自体は2.95.3で変わってないし、最適化オプションは-Osのままだし、
+じゃあRuby自体の1.6.3と1.6.4の違い？そんなに速くなってるんだっけ？
+あ、cygwin1.dllをrenameしてる書いてあるから、
+Cygwin 1.1.8とCygwin 1.3.2との差か？
+だとしたら積極的に1.3.2を使う理由にもなるな。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200108282" title="200108282" href="200108c.html#200108282">■</a> 
+Pentium 4</h3>
+<p>
+2.0GHzを出すのでその下のシリーズが安くなるらしい。チャンスか？
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2001/08/28 end -->
+
+
+
+<hr class="hide">
+<!-- 2001/08/29 start -->
+<h2><a name="20010829" href="200108c.html#20010829">2001-08-29 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="200108291" title="200108291" href="200108c.html#200108291">■</a> 
+<a href="http://www.mars.org/home/rob/proj/mpeg/">MAD: MPEG Audio Decoder</a></h3>
+<p>
+100% fixed-point (integer) computationが特徴のMADだが、
+xmms-mad pluginのCPU使用率は80%とあまりいただけない。
+しかもPlaylist Editorを開くと死んでしまう。うーむ。
+日本語があるとまずいのか？
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2001/08/29 end -->
+
+
+
+<hr class="hide">
+<!-- 2001/08/30 start -->
+<h2><a name="20010830" href="200108c.html#20010830">2001-08-30 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="200108301" title="200108301" href="200108c.html#200108301">■</a> 
+String#casecmp</h3>
+<p>
+
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-list/31079">[ruby-list:31079]</a> を見て気づいたんだけど、
+</p>
+<pre>
+class FileName &lt; String
+  ...
+  if defined?(casecmp)
+    alias icasecmp casecmp
+  else
+    def icasecmp(name)
+      upcase.casecmp(name.upcase)
+    end
+  end
+</pre>
+<p>
+String#casecmpがあるかもしれないって感じになってる。
+1.7のChangeLogを見ると7/20に追加したようだ。
+</p>
+
+<p>
+PR#61のthreadで(jitterbugだとthreadは切れてしまうが)、
+</p>
+<pre>
+case insensitiveな比較関数は以前から欲しいとは思ってたんです
+が、なかなか適切な名前が思いつかなくてそのままになってました。
+これを機会にこちらも考えてみようと思います。
+</pre>
+<p>
+とまつもとさんが書いてる。早速用意したわけっすね。素早い。
+</p>
+
+<p>
+あ、ちゃんとdoc/NEWSにも書いてあるじゃん。こまめにチェックせねば。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200108302" title="200108302" href="200108c.html#200108302">■</a> 
+Enum#sort_by</h3>
+<p>
+で、チェックしたらいきなりEnum#sort_byを発見。なぬー。8/20に追加してたのか。
+つまり
+</p>
+<pre>
+map{|x| [x.key1, x.key2, x]}.sort.map{|x| x.last}
+</pre>
+<p>
+のようなSchwartzian Transformは
+</p>
+<pre>
+sort_by{|x| [x.key1, x.key2]}
+</pre>
+<p>
+で済むわけだ。
+</p>
+
+<p>
+たとえば
+</p>
+<pre>
+a = [[0, 2], [0, 3], [0, 1]]
+</pre>
+<p>
+を[0], [1]でsortしたければ
+</p>
+<pre>
+p a.map{|x| [x[0], x[1], x]}.sort.map{|x| x.last}
+p a.sort_by{|x| [x[0], x[1]}
+</pre>
+<p>
+という感じになる。でも、ちょっと例が悪いね。この場合、
+</p>
+<pre>
+p a.sort
+</pre>
+<p>
+で済んじゃうから。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2001/08/30 end -->
+
+
+
+<hr class="hide">
+<!-- 2001/08/31 start -->
+<h2><a name="20010831" href="200108c.html#20010831">2001-08-31 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="200108311" title="200108311" href="200108c.html#200108311">■</a> 
+<a href="http://www.pearsoned.co.jp/washo/prog/wa_pro44-j.html">プログラミングRuby</a></h3>
+<p>
+狙っているとしか思えない黄色。あ、買うの忘れてた。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200108312" title="200108312" href="200108c.html#200108312">■</a> 
+<a href="http://www.speednet.co.jp/">スピードネット</a></h3>
+<p>
+
+<a href="http://www.speednet.co.jp/release/010830.html">これ</a> を見てぬか喜び。
+100Mbか。12800円はちと高いな。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2001/08/31 end -->
+
+<hr>
+<div>
+<a href="200108b.html">&lt;Prev(,)</a> | 
+<a href="200109a.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

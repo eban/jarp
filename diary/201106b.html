@@ -1,0 +1,278 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2011-6-b</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="201106a.html">
+<link rel="next" href="201106c.html">
+
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2011年6月中旬〜</p>
+<hr>
+<div>
+<a href="201106a.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="201106c.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2011/06/11 start -->
+<h2><a name="20110611" href="201106b.html#20110611">2011-06-11 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="201106111" title="201106111" href="201106b.html#201106111">■</a> 
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-dev/43649">[ruby-dev:43649] 開発合宿＠秋葉原（2011/06/11-12）</a></h3>
+<p>
+行ってきた。勢いで2つほどどうでもいいコミットを。<br>
+そういえばpre-commitでChangeLogにus-ascii以外が含まれていたら<br>
+拒否するスクリプトを作ろうと思っていて忘れていた。<br>
+RubyKaigiでやるか。
+</p>
+<!-- section end -->
+</div>
+<!-- 2011/06/11 end -->
+
+
+
+<hr class="hide">
+<!-- 2011/06/12 start -->
+<h2><a name="20110612" href="201106b.html#20110612">2011-06-12 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="201106121" title="201106121" href="201106b.html#201106121">■</a> 
+<a href="http://golf.shinh.org/p.rb?Enumeration+of+divisor">Enumeration+of divisor</a></h3>
+<p>
+問題は単純なんだけど、3番目の数値が大きすぎてawkだとタイムアウトしてしまう。<br>
+なかなか奥が深いな。ちょっと思い付いた方法でいけたが、まだ縮みそうだ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2011/06/12 end -->
+
+
+
+<hr class="hide">
+<!-- 2011/06/13 start -->
+<h2><a name="20110613" href="201106b.html#20110613">2011-06-13 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="201106131" title="201106131" href="201106b.html#201106131">■</a> 
+ハイバネートが安定しないのでgpartedでswapを増やしてみた</h3>
+<p>
+たまたま日経Linux7月号の付録にUbuntu 11.04のインストール用DVDがついてきたので、<br>
+LiveDVDの機能を使ってgpartedを起動。元々sda1(/)とsda2(swap)しかないので、<br>
+sda1を1GBほど縮小し、sda2を広げた。もっと思い切って広げとけばよかったか。<br>
+これで安定するといいんだが。
+</p>
+<!-- section end -->
+</div>
+<!-- 2011/06/13 end -->
+
+
+
+<hr class="hide">
+<!-- 2011/06/14 start -->
+<h2><a name="20110614" href="201106b.html#20110614">2011-06-14 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="201106141" title="201106141" href="201106b.html#201106141">■</a> 
+引き続きswapを増やしてみた</h3>
+<p>
+まあ、ハイバネート的には全然効果なかった。それはそれとしてメモリを1GBから2GBに増やしたので、<br>
+またしてもswapを増やしてみた。
+まずsudo blkid /dev/sda{1,2}してUUIDを記録。
+GPartedでリサイズ。/dev/sda1 を縮小。/dev/sda2 スワップを無効化。<br>
+/dev/sda2 リサイズ /dev/sda1 で空けた分を全部割り当て。<br>
+実行。/dev/sda2 スワップを有効化。<br>
+一応sudo blkid /dev/sda{1,2}してUUIDが変わってないことを確認する。<br>
+変わってたら/dev/sda1をmountして/etc/fstabのUUID部分を書き換える。
+</p>
+<p>
+GPartedは一々数値を入れなくても上にあるバーをマウスでいじればいけるのでなかなか便利。
+</p>
+<!-- section end -->
+</div>
+<!-- 2011/06/14 end -->
+
+
+
+<hr class="hide">
+<!-- 2011/06/15 start -->
+<h2><a name="20110615" href="201106b.html#20110615">2011-06-15 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="201106151" title="201106151" href="201106b.html#201106151">■</a> 
+crontabでbash</h3>
+<p>
+最近Linuxだと/bin/shがbashじゃなくてdashなことが多いので、<br>
+crontabで{}のブレース展開が使えなくて困ることがある。<br>
+そんなときは先頭にSHELL=/bin/bashと書いとくといいよ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2011/06/15 end -->
+
+
+
+<hr class="hide">
+<!-- 2011/06/16 start -->
+<h2><a name="20110616" href="201106b.html#20110616">2011-06-16 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="201106161" title="201106161" href="201106b.html#201106161">■</a> 
+Firefoxのmiddlemouse.contentLoadURLの設定が再起動後に元にもどる問題</h3>
+<p>
+先日設定したFirefoxの中クリックの設定がなぜか再起動すると元にもどっていた。<br>
+何回やっても戻るのでぐぐってみたら、まさにその通りの
+<a href="https://bugs.launchpad.net/ubuntu/+source/firefox/+bug/784542">バグ報告</a>がされていた。<br>
+Ubuntuのバグなんだな。対処方法としてはUbuntu firefox modificationsが元凶なので、<br>
+これをdisableにする。middlemouse.contentLoadURLのデフォルトがtrueに戻る。<br>
+Ubuntu firefox modificationsでぐぐってみると過去にもいろいろあったようで、<br>
+まあ、説明読んでも要らないことは間違いないのでdisableでいいでしょ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2011/06/16 end -->
+
+
+
+<hr class="hide">
+<!-- 2011/06/17 start -->
+<h2><a name="20110617" href="201106b.html#20110617">2011-06-17 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="201106171" title="201106171" href="201106b.html#201106171">■</a> 
+モニター</h3>
+<p>
+会社でワイドなモニターに慣れたせいか17インチじゃ狭く感じるのでAcerの安いモニターを買った。<br>
+1920x1080だとやっぱきれいだな。
+</p>
+<!-- section end -->
+</div>
+<!-- 2011/06/17 end -->
+
+
+
+<hr class="hide">
+<!-- 2011/06/18 start -->
+<h2><a name="20110618" href="201106b.html#20110618">2011-06-18 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="201106181" title="201106181" href="201106b.html#201106181">■</a> 
+RubyのNet::HTTPでhttp proxy対応</h3>
+<p>
+http proxyが必要なひとは大抵環境変数http_proxyを設定してるので
+</p>
+<pre>
+Net::HTTP.start(host, port)
+</pre>
+<p>
+の部分を
+</p>
+<pre>
+requrie 'uri'
+proxy = URI.parse(ENV['http_proxy'] || &quot;&quot;)
+Net::HTTP.start(host, port, proxy.host, proxy.port)
+</pre>
+<p>
+にするだけで簡単に対応できる。URI.parseはURIが&quot;&quot;ときはhostもportもnilになり、<br>
+Net::HTTP.startはproxy.host以下がnilならproxyはないとみなされるので直接渡しても問題ない。<br>
+これでproxy有無に関係なく動く。
+</p>
+<!-- section end -->
+</div>
+<!-- 2011/06/18 end -->
+
+
+
+<hr class="hide">
+<!-- 2011/06/19 start -->
+<h2><a name="20110619" href="201106b.html#20110619">2011-06-19 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="201106191" title="201106191" href="201106b.html#201106191">■</a> 
+ワイヤレスマウスを使い出して半年</h3>
+<p>
+15ヶ月電池が保つというLogicool M505を使い始めて半年経ったがまったく問題なし。<br>
+おまけの電池のままでどこまで保つのか？
+</p>
+<!-- section end -->
+</div>
+<!-- 2011/06/19 end -->
+
+
+
+<hr class="hide">
+<!-- 2011/06/20 start -->
+<h2><a name="20110620" href="201106b.html#20110620">2011-06-20 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="201106201" title="201106201" href="201106b.html#201106201">■</a> 
+PS3の選択コピー</h3>
+<p>
+DLNA経由で選択コピーするとなぜか逆順に並ぶんだけど何の嫌がらせだ？<br>
+おかげで最近はちゃんと逆から選択するように飼い馴らされてしまったわけだが。
+</p>
+<!-- section end -->
+</div>
+<!-- 2011/06/20 end -->
+
+<hr>
+<div>
+<a href="201106a.html">&lt;Prev(,)</a> | 
+<a href="201106c.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

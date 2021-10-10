@@ -1,0 +1,560 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2016-5-a</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="201604c.html">
+<link rel="next" href="201605b.html">
+
+<link rel="stylesheet" type="text/css" href="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.css">
+<script async type="text/javascript" src="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.js"></script>
+<script type="text/javascript">
+<!--       
+$(document).ready(function() {
+  prettyPrint();
+});
+-->
+</script>
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2016年5月上旬〜</p>
+<hr>
+<div>
+<a href="201604c.html" accesskey=",">&lt;Older(,)</a> | 
+<a href="201605b.html" accesskey=".">Newer(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2016/05/01 start -->
+<h2><a name="20160501" href="201605a.html#20160501">2016-05-01 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="201605011" title="201605011" href="201605a.html#201605011">■</a> 
+<a href="https://blog.ueda.asia/?p=8073">第22回シェル芸勉強会 Q2 #シェル芸</a></h3>
+<p>
+というわけで2問目。
+</p>
+
+<h4><a name="201605011S1" href="201605a.html#201605011S1">_</a> <strong>Q2 カレーライス 醤油ラーメン</strong>: </h4>
+<div class="sub">
+<p>
+パイプより右側はマルチバイト文字を使わないという条件があるので注意。<br>
+どこをいじるかは決め打ちでいいので難しくはない。<br>
+等幅フォント前提と考えれば「醤油ラ」の3文字の2倍で6個の空白分だけインデントさせればいい。
+</p>
+<pre>
+% echo カレーライス 醤油ラーメン | (read a b; grep -o . &lt;&lt;&lt;$a | sed &quot;s/^/      /;3c$b&quot;)  
+      カ
+      レ
+醤油ラーメン
+      ラ
+      イ
+      ス
+</pre>
+<p>
+キモはread a bで一旦変数に入れてしまうと扱いやすい。<br>
+</p>
+<pre>
+% echo カレーライス 醤油ラーメン | (read a b; grep -o . &lt;&lt;&lt;$a | sed &quot;3\!s/^/      /;3s/./$b/&quot;)
+</pre>
+<p>
+とかやると3\!sの扱いがbashで面倒なことになるのでやめた。<br>
+そのおかげで3cを思い付いたのでよしとしよう。
+</p>
+</div>
+<!-- section end -->
+</div>
+<!-- 2016/05/01 end -->
+
+
+
+<hr class="hide">
+<!-- 2016/05/02 start -->
+<h2><a name="20160502" href="201605a.html#20160502">2016-05-02 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="201605021" title="201605021" href="201605a.html#201605021">■</a> 
+<a href="https://blog.ueda.asia/?p=8073">第22回シェル芸勉強会 Q3 #シェル芸</a></h3>
+<p>
+3問目。
+</p>
+
+<h4><a name="201605021S1" href="201605a.html#201605021S1">_</a> <strong>Q3 データの集計と復元</strong>: </h4>
+<div class="sub">
+<p>
+Q3.ansにはなぜ空白が2つあってソートされてないのかという点を考慮するとこうなる。
+</p>
+<pre>
+% cat Q3 | awk '{a[$0]=a[$0]&quot; &quot;NR}END{for(i in a)print i, a[i]}' 
+bababa  2 5
+aaabbb  1 3 4
+bbbbba  6
+</pre>
+<p>
+まったくもって模範解答と同じである。復元もやってることは同じ。
+</p>
+<pre>
+% cat Q3.ans | awk '{for(i=2;i&lt;=NF;i++)a[$i]=$1}END{for(i=1;i&lt;=length(a);i++)print a[i]}'
+aaabbb
+bababa
+aaabbb
+aaabbb
+bababa
+bbbbba
+</pre>
+<p>
+ソートする代わりに配列を使っているだけ。
+</p>
+</div>
+<!-- section end -->
+</div>
+<!-- 2016/05/02 end -->
+
+
+
+<hr class="hide">
+<!-- 2016/05/03 start -->
+<h2><a name="20160503" href="201605a.html#20160503">2016-05-03 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="201605031" title="201605031" href="201605a.html#201605031">■</a> 
+<a href="https://blog.ueda.asia/?p=8073">第22回シェル芸勉強会 Q4 #シェル芸</a></h3>
+<p>
+4問目。
+</p>
+
+<h4><a name="201605031S1" href="201605a.html#201605031S1">_</a> <strong>Q4 素数行目に存在するりんごとみかんの数</strong>: </h4>
+<div class="sub">
+<p>
+素数といえばfactorなので。
+</p>
+<pre>
+% factor {1..8} | paste - Q4 | awk 'NF==3{a[$NF]++}END{for(i in a)print i, a[i]}'
+みかん 1
+りんご 3
+</pre>
+<p>
+後半は全部awkで解いてるが基本的にはこれも模範解答と同じ。
+</p>
+<p>
+例のprimesを使うならこんな感じ。
+</p>
+<pre>
+% primes 2 8 | sed 's/$/p/' | sed -nf- Q4 | sort | uniq -c
+      1 みかん
+      3 りんご
+</pre>
+<p>
+sedでsedスクリプトを生成し、
+</p>
+<pre>
+% primes 2 8 | sed 's/$/p/'
+2p
+3p
+5p
+7p
+</pre>
+<p>
+Q4から抜き出す。
+</p>
+<pre>
+% primes 2 8 | sed 's/$/p/' | sed -nf- Q4
+りんご
+みかん
+りんご
+りんご
+</pre>
+<p>
+あとは模範解答通り。
+</p>
+</div>
+<!-- section end -->
+</div>
+<!-- 2016/05/03 end -->
+
+
+
+<hr class="hide">
+<!-- 2016/05/04 start -->
+<h2><a name="20160504" href="201605a.html#20160504">2016-05-04 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="201605041" title="201605041" href="201605a.html#201605041">■</a> 
+<a href="https://blog.ueda.asia/?p=8073">第22回シェル芸勉強会 Q5 #シェル芸</a></h3>
+<p>
+5問目。会長が15分じゃ解けないと言ってました。
+</p>
+
+<h4><a name="201605041S1" href="201605a.html#201605041S1">_</a> <strong>足して10になる並びを全て見つけてみましょう(1 3 4 4 2 3 5 6 7 9 1 4)</strong>: </h4>
+<div class="sub">
+<p>
+素直に書くと3重ループになるのでかなり面倒。<br>
+面倒なのでRubyで解いてみたが、表示がだめだめすぎる。
+</p>
+<pre>
+% cat Q5 | ruby -ane '2.upto($F.size){|i|p $F.each_cons(i).map{|a|a.map(&amp;:to_i)}.select{|x|x.inject(:+)==10}}'
+[[9, 1]]
+[[4, 4, 2], [2, 3, 5]]
+[]
+[]
+[]
+[]
+[]
+[]
+[]
+[]
+[]
+</pre>
+<p>
+とりあえずちょっと見た目を整えておこう。
+</p>
+<pre>
+% cat Q5 | ruby -ane '2.upto($F.size){|i|$F.each_cons(i).map{|a|a.map(&amp;:to_i)}.select{|x|x.reduce(:+)==10}.map{|x|p x}}'
+[9, 1]
+[4, 4, 2]
+[2, 3, 5]
+% cat Q5 | ruby -ane '2.upto($F.size){|i|$F.each_cons(i).select{|x|x.reduce(0){|r,e|r+e.to_i}==10}.map{|x|puts x*&quot; &quot;}}'
+9 1
+4 4 2
+2 3 5
+</pre>
+<p>
+awkで考えてみたが、やはり模範解答とあまり変わらない。
+</p>
+<pre>
+% cat Q5 | awk '{for(i=1;i&lt;=NF;i++){for(j=1;j&lt;=NF-i;j++){a=s=$i;for(k=i+1;k&lt;=j+i;k++){a=a&quot; &quot;$k;s+=$k};if(s==10)print a}}}'
+4 4 2
+2 3 5
+9 1
+</pre>
+</div>
+<!-- section end -->
+</div>
+<!-- 2016/05/04 end -->
+
+
+
+<hr class="hide">
+<!-- 2016/05/05 start -->
+<h2><a name="20160505" href="201605a.html#20160505">2016-05-05 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="201605051" title="201605051" href="201605a.html#201605051">■</a> 
+<a href="https://blog.ueda.asia/?p=8073">第22回シェル芸勉強会 Q6 #シェル芸</a></h3>
+<p>
+6問目。
+</p>
+<h4><a name="201605051S1" href="201605a.html#201605051S1">_</a> <strong>X,Y,Zを置き換える</strong>: </h4>
+<div class="sub">
+<p>
+これもsedスクリプトを生成させるわけだが、awkでやってみた。
+</p>
+<pre>
+% sed &quot;$(awk '{print &quot;s/&quot;$1&quot;/&quot;$2&quot;/g&quot;}' Q6_2)&quot; Q6_1
+所謂いわゆる「死相」というものにだって、
+もっと何か表情なり印象なりがあるものだろうに、
+人間のからだに駄馬の首でもくっつけたなら、
+こんな感じのものになるであろうか、
+とにかく、どこという事なく、見る者をして、
+ぞっとさせ、いやな気持にさせるのだ。
+私はこれまで、こんな不思議な男の顔を見た事が、
+やはり、いちども無かった。
+</pre>
+<p>
+もちろん-f-でもいい。
+</p>
+<pre>
+% awk '{print &quot;s/&quot;$1&quot;/&quot;$2&quot;/g&quot;}' Q6_2 | sed -f- Q6_1
+% sed 's| |/|;s|.*|s/&amp;/g|' Q6_2 | sed -f- Q6_1
+</pre>
+</div>
+<!-- section end -->
+</div>
+<!-- 2016/05/05 end -->
+
+
+
+<hr class="hide">
+<!-- 2016/05/06 start -->
+<h2><a name="20160506" href="201605a.html#20160506">2016-05-06 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="201605061" title="201605061" href="201605a.html#201605061">■</a> 
+<a href="https://blog.ueda.asia/?p=8073">第22回シェル芸勉強会 Q7, Q8 #シェル芸</a></h3>
+<p>
+今日は7問目と8問目の2問。
+</p>
+<h4><a name="201605061S1" href="201605a.html#201605061S1">_</a> <strong>shutdown, reboot, exit, logout等以外で端末を閉じる</strong>: </h4>
+<div class="sub">
+<p>
+特にひねりもないので。
+</p>
+<pre>
+% kill -9 $$
+</pre>
+<p>
+SIGTERMでは死ないのでSIGKILLで。
+</p>
+</div>
+<h4><a name="201605061S2" href="201605a.html#201605061S2">_</a> <strong>C++のコードに関数プロトタイプを</strong>: </h4>
+<div class="sub">
+<p>
+関数を定義してるところから宣言を生成し、所定の場所に挿入する。
+</p>
+<pre>
+% cat Q8.cc | sed '/void/!d;s/$/;/' | sed '/name/r/dev/stdin' Q8.cc | tee &gt;(g++ -xc++ -)
+#include &lt;iostream&gt;
+#include &lt;string&gt;
+using namespace std;
+void aho(void);
+string nazo(void);
+
+void aho(void)
+{
+	cout &lt;&lt; nazo() &lt;&lt; endl;
+}
+
+string nazo(void)
+{
+	return &quot;謎&quot;;
+}
+
+int main(int argc, char const* argv[])
+{
+	aho();
+	return 0;
+}
+% ./a.out
+謎
+</pre>
+<p>
+voidとかnameとかたまたまこの問題で使えるだけで本当ならちゃんとした正規表現でやるべき。<br>
+</p>
+<p>
+これもsedスクリプトを生成する方法が使える。
+</p>
+<pre>
+% cat Q8.cc | awk '/void/{print &quot;/name/a&quot; $0 &quot;;&quot;}' | sed -f- Q8.cc
+% cat Q8.cc | sed '/void/!d;s|.*|/name/a&amp;;|' | sed -f- Q8.cc
+</pre>
+<p>
+真ん中のawkとsedのやってることは同じ。
+</p>
+<p>
+次にawkで挿入。<br>
+awkだけで標準入力を読み込ませるには-で可能。<br>
+getlineで最初に全部読み込んでしまえばいいわけだ。
+</p>
+<pre>
+% cat Q8.cc | sed '/void/!d;s/$/;/' | awk 'BEGIN{while(getline &lt; &quot;-&quot;)p=p&quot;\n&quot;$0};1;/using/{print p}' Q8.cc
+</pre>
+<p>
+ちょっとまどろっこしいと感じるならこんな手も。<br>
+awkではファイル名を指定するところでQ8=1のように変数を初期化できる。<br>
+このQ8という変数は指定した順番通り-(標準入力)が読み終わった後で評価される。<br>
+つまりフラグとして使える。
+<pre>
+% cat Q8.cc | sed '/void/!d;s/$/;/' | awk '!Q8{p=p&quot;\n&quot;$0;next};1;/name/{print p}' - Q8=1 Q8.cc
+</pre>
+</p>
+<p>
+!Q8はFILENAME==&quot;-&quot;でいいわけだが、こんな方法もあるということで。
+</p>
+</div>
+<!-- section end -->
+</div>
+<!-- 2016/05/06 end -->
+
+
+
+<hr class="hide">
+<!-- 2016/05/07 start -->
+<h2><a name="20160507" href="201605a.html#20160507">2016-05-07 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="201605071" title="201605071" href="201605a.html#201605071">■</a> 
+killされたプロセスの終了ステータス #シェル芸</h3>
+<p>
+シェル芸勉強のLTでtrueの終了ステータスが137になった話。<br>
+なぜ137かというとこれはシェルがやってる。<br>
+Bourne shell系は137になるが、これは128+9を意味する。<br>
+9はSIGKILLだ。つまりkillされると128+そのsignalの番号となる。
+</p>
+<pre>
+% (sleep 5; echo $?) &amp; killall -9 sleep        
+[1] 20526
+137
+% (sleep 5; echo $?) &amp; killall -2 sleep
+[1] 21126
+130
+</pre>
+<p>
+内部コマンドのkillは-lで名前を教えてくれる。
+</p>
+<pre>
+% bash -c 'kill -l 2 9 130 137'           
+INT
+KILL
+INT
+KILL
+% zsh -c 'kill -l 2 9 130 137'
+INT
+KILL
+INT
+KILL
+</pre>
+<p>
+だからこうするとわかりやすい。
+</p>
+<pre>
+% (sleep 5; kill -l $?) &amp; killall -1 sleep
+[1] 23383
+HUP
+</pre>
+<p>
+128+SIGじゃないシェルも存在するらしい。
+</p>
+<!-- section end -->
+</div>
+<!-- 2016/05/07 end -->
+
+
+
+<hr class="hide">
+<!-- 2016/05/08 start -->
+<h2><a name="20160508" href="201605a.html#20160508">2016-05-08 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="201605081" title="201605081" href="201605a.html#201605081">■</a> 
+Parallelで並列処理 #シェル芸</h3>
+<p>
+xargsだとquote文字のエスケープが面倒なことになるので、<br>
+<a href="http://papiro.hatenablog.jp/entry/2016/04/09/005547">そういうとき</a>はGNU Parallelがお勧め。
+</p>
+<pre>
+% seq -w 0 99999999999 | parallel --pipe -q mawk '{c=($1*6+$2*5+$3*4+$4*3+$5*2+$6*7+$7*6+$8*5+$9*4+$10*3+$11*2)%11;d=c&lt;=1?0:(11-c);print $0 d}' FS=
+</pre>
+<p>
+--pipeで各々標準入力に入れてくれるし、適当に入力も分割してくれる。<br>
+さらにデフォルトで現在のコア数をチェックしてその数で並列処理されるし、<br>
+-qをつけると面倒なquote処理までやってくれる。至れり尽くせりだ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2016/05/08 end -->
+
+
+
+<hr class="hide">
+<!-- 2016/05/09 start -->
+<h2><a name="20160509" href="201605a.html#20160509">2016-05-09 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="201605091" title="201605091" href="201605a.html#201605091">■</a> 
+Windows10でEdyViewerを使う</h3>
+<p>
+楽天のEdyViewerはブラウザで動くわけだけど、<br>
+EdgeではだめなようでWindows10でもIEを使う必要がある。<br>
+Windows10にそんなもんあるのかというと、<br>
+ちゃんとWindowsアクセサリに存在する。<br>
+でIE11でアクセスすればあっさり使えてしまうのであった。
+</p>
+<!-- section end -->
+</div>
+<!-- 2016/05/09 end -->
+
+
+
+<hr class="hide">
+<!-- 2016/05/10 start -->
+<h2><a name="20160510" href="201605a.html#20160510">2016-05-10 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="201605101" title="201605101" href="201605a.html#201605101">■</a> 
+10000ページのPDFを分割</h3>
+<p>
+縦書きPDFでも公開してるWeb小説があるんだけど、<br>
+なぜか1つのPDFになってるもんだから10000ページを超えている。<br>
+Sony Readerに入れてみて3000ページぐらいまでジャンプしてからページ送りしてみたら、<br>
+遅くて使い物にならない。というわけで適当に分割する。
+</p>
+<p>
+とりあえず400ページで分割する。<br>
+pdftkだと
+</p>
+<pre>
+% pdftk foo.pdf cat   1-400 output foo-1.pdf
+% pdftk foo.pdf cat 401-800 output foo-2.pdf
+</pre>
+<p>
+という感じで実行できればいいので
+</p>
+<pre>
+% for i in {0..10000..400};do pdftk foo.pdf cat $[i+1]-$[i+400] output foo-$(printf %03d $[i/400+1]).pdf
+</pre>
+<p>
+としてみた。章とか無視してしまうがまあ気にしない。
+</p>
+<!-- section end -->
+</div>
+<!-- 2016/05/10 end -->
+
+<hr>
+<div>
+<a href="201604c.html">&lt;Older(,)</a> | 
+<a href="201605b.html">Newer(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

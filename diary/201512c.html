@@ -1,0 +1,501 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2015-12-c</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="201512b.html">
+<link rel="next" href="201601a.html">
+
+<link rel="stylesheet" type="text/css" href="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.css">
+<script async type="text/javascript" src="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.js"></script>
+<script type="text/javascript">
+<!--       
+$(document).ready(function() {
+  prettyPrint();
+});
+-->
+</script>
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2015年12月下旬〜</p>
+<hr>
+<div>
+<a href="201512b.html" accesskey=",">&lt;Older(,)</a> | 
+<a href="201601a.html" accesskey=".">Newer(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2015/12/21 start -->
+<h2><a name="20151221" href="201512c.html#20151221">2015-12-21 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="201512211" title="201512211" href="201512c.html#201512211">■</a> 
+プラグが抜けていたことに1ヶ月気づかず</h3>
+<p>
+なんか全然充電されないないなとUSB ACアダプタを疑っていたが、<br>
+なんとテーブルタップのプラグが抜けたままになっていた。<br>
+まさかそんな単純な理由とは。
+</p>
+<!-- section end -->
+</div>
+<!-- 2015/12/21 end -->
+
+
+
+<hr class="hide">
+<!-- 2015/12/22 start -->
+<h2><a name="20151222" href="201512c.html#20151222">2015-12-22 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="201512221" title="201512221" href="201512c.html#201512221">■</a> 
+Windows7のWindows Updateでログオンしているユーザーがいる場合には自動的に再起動しない</h3>
+<p>
+備忘録。<br>
+ローカルコンピューターポリシーの[管理用テンプレート]-[Windows コンポーネント]-[Windows Update]<br>
+スケジュールされた自動更新のインストールで、ログオンしているーザーがいる場合には自動的に再起動しない<br>
+を有効に。
+</p>
+<!-- section end -->
+</div>
+<!-- 2015/12/22 end -->
+
+
+
+<hr class="hide">
+<!-- 2015/12/23 start -->
+<h2><a name="20151223" href="201512c.html#20151223">2015-12-23 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="201512231" title="201512231" href="201512c.html#201512231">■</a> 
+FirefoxのPocket拡張</h3>
+<p>
+43で無効にされちゃったので更新を確認してみたら、新しいバージョンはないようで。<br>
+それどころかFirefoxとPocketが統合されてすぐに削除されていた。<br>
+これって全然機能が違うので残念な話だ。44になったら完全に使えなくなるな。
+</p>
+<!-- section end -->
+</div>
+<!-- 2015/12/23 end -->
+
+
+
+<hr class="hide">
+<!-- 2015/12/24 start -->
+<h2><a name="20151224" href="201512c.html#20151224">2015-12-24 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="201512241" title="201512241" href="201512c.html#201512241">■</a> 
+Did you mean?</h3>
+<p>
+明日リリース予定のRuby 2.3.0ではdid_you_meanというgem packageがdefaultで有効になる。<br>
+こんな感じだ。
+</p>
+<pre>
+% ruby -e 'ptus &quot;hoge&quot;'
+-e:1:in `&lt;main&gt;': undefined method `ptus' for main:Object (NoMethodError)
+Did you mean?  puts
+</pre>
+<p>
+なかなか賢い。
+</p>
+<!-- section end -->
+</div>
+<!-- 2015/12/24 end -->
+
+
+
+<hr class="hide">
+<!-- 2015/12/25 start -->
+<h2><a name="20151225" href="201512c.html#20151225">2015-12-25 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="201512251" title="201512251" href="201512c.html#201512251">■</a> 
+Ruby 2.4.0</h3>
+<p>
+Ruby 2.3.0がリリースされれば当然のことながらtrunkは2.4.0になるのである。
+</p>
+<pre>
+% ruby -v ruby 2.4.0dev (2015-12-25 trunk 53302) [x86_64-linux]
+</pre>
+<p>
+インストールしたら、もろもろgemを更新しないといけなくなってちょっと後悔した。
+</p>
+<!-- section end -->
+</div>
+<!-- 2015/12/25 end -->
+
+
+
+<hr class="hide">
+<!-- 2015/12/26 start -->
+<h2><a name="20151226" href="201512c.html#20151226">2015-12-26 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="201512261" title="201512261" href="201512c.html#201512261">■</a> 
+<a href="https://blog.ueda.asia/?p=7332">第20回シェル芸勉強会にUstで参加 #シェル芸</a></h3>
+<p>
+例によってUstで参戦。
+</p>
+<h4><a name="201512261S1" href="201512c.html#201512261S1">_</a> <strong>Q1 グループごとの最大数</strong>: </h4>
+<div class="sub">
+<p>
+最初はfile_{A,B}とか使ったけど、<br>
+これじゃC,Dと増えたら破綻するので、<br>
+ちゃんとグループをlsから得るようにした。
+</p>
+<pre>
+$ ls | grep -o file_. | uniq | xargs -I@ sh -c 'echo -n &quot;@ &quot;;sort @* | sort -n | tail -n1'
+file_A 233333
+file_B 9912
+</pre>
+<p>
+短くしてみたら、なんか結局解答例と変わらない結果に。
+</p>
+<pre>
+$ grep ^ * | sed 's/-.:/ /' | sort -k1,1 -k2,2nr | uniq -w6
+file_A 233333
+file_B 9912
+</pre>
+</div>
+<h4><a name="201512261S2" href="201512c.html#201512261S2">_</a> <strong>Q2 コードを抜き出して実行</strong>: </h4>
+<div class="sub">
+<p>
+普通にsedで不要な部分をけずってついでにgrep的に。
+</p>
+<pre>
+$ curl -s http://ja.uncyclopedia.info/wiki/%E3%82%B7%E3%82%A7%E3%83%AB%E8%8A%B8 | sed -n '/^\$ eval/s/\$ //p' | bash
+</pre>
+<p>
+sed -n 's///p' で置換が実行されたときだけ表示できる。
+
+</p>
+</div>
+<h4><a name="201512261S3" href="201512c.html#201512261S3">_</a> <strong>Q3 奇数を昇順、偶数を降順</strong>: </h4>
+<div class="sub">
+<p>
+これもpasteを使うこうなる。
+</p>
+<pre>
+$ paste -d ' ' &lt;(grep '[13579]$' Q3 | sort -n) &lt;(grep '[02468]$' Q3 | sort -rn)
+</pre>
+<p>
+trでやるかpasteのオプションでやるかの違い。
+</p>
+</div>
+<h4><a name="201512261S4" href="201512c.html#201512261S4">_</a> <strong>Q4 自分以外の端末をkill</strong>: </h4>
+<div class="sub">
+<p>
+これはzshだと$TTYで参照できるのでちょっと楽。<br>
+あと/dev/をけずるよりも足すほうが簡単。
+</p>
+<pre>
+% ps h | awk '&quot;/dev/&quot;$2!=tty&amp;&amp;$0=$1' tty=$TTY | xargs kill -9
+</pre>
+</div>
+<h4><a name="201512261S5" href="201512c.html#201512261S5">_</a> <strong>Q5 最大公約数</strong>: </h4>
+<div class="sub">
+<p>
+<a href="201412c.html#201412211">1年前の約分</a>をそのまま流用。
+</p>
+<pre>
+$ echo 1071 1029 | ruby -ane 'p eval$F*&quot;.gcd(&quot;+&quot;)&quot;'
+21
+$ echo 1071 1029 | awk '{while ($1 = $2 % ($2 = $1));print $2}'
+21
+$ echo 1071 1029 | (read m n; while ((n=m%(m=n)));do :;done;echo $m)
+21
+</pre>
+</div>
+<h4><a name="201512261S6" href="201512c.html#201512261S6">_</a> <strong>Q6 ファイルQ6の中の人の名前について、誰が1列目と2列目の何番めに記述されているかを求めましょう</strong>: </h4>
+<div class="sub">
+<p>
+これもひねりなし。
+</p>
+<pre>
+$ awk -F'　' '{for(i=1;i&lt;=NF;i++)a[$i]=a[$i]&quot; &quot;i}END{for(i in a)print i a[i]}' Q6
+武田 4 2
+上田 2 3
+吉田 3 1
+山田 1 4
+</pre>
+</div>
+<h4><a name="201512261S7" href="201512c.html#201512261S7">_</a> <strong>Q7 魚</strong>: </h4>
+<div class="sub">
+<p>
+どこかのサイトから拾ってくるというのはお約束なので省略。<br>
+jotを使った方法。
+</p>
+<pre>
+$ printf $(jot -s '' -w'\u%x' 395 0x9b5a)
+</pre>
+<p>
+jotは16進でも指定できるんだな。しかし回数指定が面倒。
+</p>
+</div>
+<h4><a name="201512261S8" href="201512c.html#201512261S8">_</a> <strong>Q8 漢数字</strong>: </h4>
+<div class="sub">
+<p>
+gemにはzen_to_iってのがあるので。
+</p>
+<pre>
+$ ruby -rzen_to_i -ne 'puts $_.zen_to_i' Q8
+5735
+4003
+45
+96233
+11
+112
+</pre>
+<p>
+sedで変換してbcの場合、一百とかないのでその例外処理をどうするかだけ気をつける。
+</p>
+<pre>
+$ sed 'y/一二三四五六七八九/123456789/;s/十/*10+/;s/百/*100+/;s/千/*1000+/;s/万/*10000+/;s/\(^\|+\)\*/\1/g' Q8 | bc
+5735
+4003
+45
+96233
+11
+112
+</pre>
+<p>
+GNU trはマルチバイト対応してないので、GNU sedを使うしかない。
+</p>
+<p>
+無理矢理gawkで。
+</p>
+<pre>
+$ gawk '{s=0;for(i=1;$i;i++){j=index(&quot;一二三四五六七八九十百千万&quot;,$i);if(j&gt;9)s+=k*10^(j-9);else{k=j;i==NF&amp;&amp;s+=j}}}$0=s' FS= Q8
+5735
+4003
+45
+96233
+31
+112
+</pre>
+</div>
+<!-- section end -->
+</div>
+<!-- 2015/12/26 end -->
+
+
+
+<hr class="hide">
+<!-- 2015/12/27 start -->
+<h2><a name="20151227" href="201512c.html#20151227">2015-12-27 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="201512271" title="201512271" href="201512c.html#201512271">■</a> 
+Zshで直前に実行したコマンドラインを表示する #シェル芸</h3>
+<p>
+<a href="http://kunst1080.hatenablog.com/entry/2015/12/25/215812">直前のコマンドラインにハッシュタグ「#シェル芸」をつけてツイートするためのコマンドを作りました。 - くんすとの備忘録</a><br>
+これはbashだけど、aliasの部分をzshに合わせてあげればzshでも使えるようになる。<br>
+</p>
+<pre>
+alias show-current-cmdline='history -p !!'
+</pre>
+<p>
+の部分を
+</p>
+<pre>
+alias show-current-cmdline='fc -ln -1 -1'
+</pre>
+<p>
+とすればok。
+</p>
+<!-- section end -->
+</div>
+<!-- 2015/12/27 end -->
+
+
+
+<hr class="hide">
+<!-- 2015/12/28 start -->
+<h2><a name="20151228" href="201512c.html#20151228">2015-12-28 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="201512281" title="201512281" href="201512c.html#201512281">■</a> 
+忘年会</h3>
+<p>
+馬場のシェーキーズがなんと4月に閉店していた。<br>
+事前に柴田さんが察知してなければ途方に暮れるところだった。<br>
+というわけで秋葉原のHUBで。<br>
+例によって20分ぐらい彷徨った。よく見つかった。よかった。<br>
+なんかいろいろ話した。場所が秋葉になったので新しい人も増えた。<br>
+家に着いたらヤニ臭くて参った。
+</p>
+<p>
+@_ko1,@a_matsuda,@eban,@gotoken,@gotoyuzo,@hemge,@hsbt,@nahi,@takkanm
+</p>
+<!-- section end -->
+</div>
+<!-- 2015/12/28 end -->
+
+
+
+<hr class="hide">
+<!-- 2015/12/29 start -->
+<h2><a name="20151229" href="201512c.html#20151229">2015-12-29 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="201512291" title="201512291" href="201512c.html#201512291">■</a> 
+Zsh repeatの罠</h3>
+<p>
+Zshにはrepeatという繰り返し実行できる便利な内部コマンドがある。
+でも直感に反する挙動になっている。
+</p>
+<pre>
+% repeat 2 echo a
+a
+a
+% repeat 2 echo a &gt; tmp.txt
+% cat tmp.txt
+a
+</pre>
+<p>
+なぜか1個しかない。これはつまり
+</p>
+<pre>
+echo a &gt; tmp.txt
+</pre>
+<p>
+を2回実行していることを意味する。<br>
+繰り返し実行した結果を保存するには&gt;&gt;を使うか、
+</p>
+<pre>
+% repeat 2 { echo a; } &gt; tmp.txt   
+% cat tmp.txt
+a
+a
+</pre>
+<p>
+のように{}を使う必要あり。<br>
+()だとだめ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2015/12/29 end -->
+
+
+
+<hr class="hide">
+<!-- 2015/12/30 start -->
+<h2><a name="20151230" href="201512c.html#20151230">2015-12-30 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="201512301" title="201512301" href="201512c.html#201512301">■</a> 
+cURLでダウンロードしたい複数のURLをファイルで指定する #シェル芸</h3>
+<p>
+wgetなら-iで簡単にできるが、man curlしてもそんなオプションはないように思える。<br>
+しかし、-K(--config)の設定ファイルでurlを複数指定すればいける。<br>
+-K -とすれば標準入力から設定ファイルを受けつけるので、
+</p>
+<pre>
+% curl -Ls yahoo.co.jp | grep -aPo 'img src=&quot;\K.*?\.(png|jpg|gif)(?=&quot;)' | sort -u | sed 's/^/-LO\nurl=/' | curl -sK -
+</pre>
+<p>
+とすれば画像を落とせる。<br>
+</p>
+<pre>
+-LO
+url=http://k.yimg.jp/images/clear.gif
+</pre>
+<p>
+というような文字列を生成している。<br>
+-LOは
+</p>
+<pre>
+sed 's/^/url=/;1i-LO'
+</pre>
+<p>
+のように最初に1回指定すればいいような気がするが、<br>
+なぜか毎回指定しないといけないようで。
+</p>
+<!-- section end -->
+</div>
+<!-- 2015/12/30 end -->
+
+
+
+<hr class="hide">
+<!-- 2015/12/31 start -->
+<h2><a name="20151231" href="201512c.html#20151231">2015-12-31 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="201512311" title="201512311" href="201512c.html#201512311">■</a> 
+漢数字変換バグ</h3>
+<p>
+kを初期化してないので「百」のときに0になってしまうバグがあった。
+</p>
+<pre>
+% echo 百 | gawk '{s=0;for(i=1;$i;i++){j=index(&quot;一二三四五六七八九十百千万&quot;,$i);if(j&gt;9)s+=k*10^(j-9);else{s+=(k=j)*(i==NF)}}}$0=s&quot;&quot;' FS=
+0
+% echo 百 | gawk '{s=0;for(i=k=1;$i;i++){j=index(&quot;一二三四五六七八九十百千万&quot;,$i);if(j&gt;9)s+=k*10^(j-9);else{s+=(k=j)*(i==NF)}}}$0=s&quot;&quot;' FS=
+100
+</pre>
+<p>
+なんかまだバグがありそう。十万で破綻するとか。
+</p>
+<!-- section end -->
+</div>
+<!-- 2015/12/31 end -->
+
+<hr>
+<div>
+<a href="201512b.html">&lt;Older(,)</a> | 
+<a href="201601a.html">Newer(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

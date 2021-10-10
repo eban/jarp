@@ -1,0 +1,378 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2011-6-c</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="201106b.html">
+<link rel="next" href="201107a.html">
+
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2011年6月下旬〜</p>
+<hr>
+<div>
+<a href="201106b.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="201107a.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2011/06/21 start -->
+<h2><a name="20110621" href="201106c.html#20110621">2011-06-21 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="201106211" title="201106211" href="201106c.html#201106211">■</a> 
+dovecotとIPv6</h3>
+<p>
+defaultではlisten = *, ::なのでIPv6を殺しちゃうとdovecotは立ち上がらない。<br>
+listen = *にする必要あり。/var/log/maillogとかに以下のようなメッセージを吐いている。
+</p>
+<pre>
+dovecot: master: Error: service(imap-login): listen(::, 143) failed: Address family not supported by protocol
+</pre>
+<!-- section end -->
+</div>
+<!-- 2011/06/21 end -->
+
+
+
+<hr class="hide">
+<!-- 2011/06/22 start -->
+<h2><a name="20110622" href="201106c.html#20110622">2011-06-22 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="201106221" title="201106221" href="201106c.html#201106221">■</a> 
+<a href="http://mozilla.jp/firefox/5.0/releasenotes/">Firefox 5</a></h3>
+<p>
+例によってextensions.checkCompatibility.5.0をfalseにするのはお約束として、<br>
+これFirefox 4.0.xから直接上がっちゃうので4.0.xのsecurity fixは出ないと思ったほうがいいよね、やっぱ。<br>
+Linuxのdistroとかどうすんだろう？<br>
+いままでだとmajor versionを上げるのは次回までおあずけだったけど、<br>
+そんなこと言ってられないような。<br>
+<a href="http://www.mozilla-japan.org/security/known-vulnerabilities/firefox.html#firefox5">Firefox セキュリティアドバイザリ</a>を見ると最高ランクだらけなんだけど。
+</p>
+<!-- section end -->
+</div>
+<!-- 2011/06/22 end -->
+
+
+
+<hr class="hide">
+<!-- 2011/06/23 start -->
+<h2><a name="20110623" href="201106c.html#20110623">2011-06-23 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="201106231" title="201106231" href="201106c.html#201106231">■</a> 
+<a href="https://addons.mozilla.org/ja/firefox/addon/super-start/">Super Start :: Add-ons for Firefox</a></h3>
+<p>
+なかなかよさそうなので入れてみた。
+</p><blockquote><p>
+SuperStart has two majoy features at this time:<br><br>
+- A visual bookmarks on your homepage<br>
+- A simple todo-list as well, just reminder you don't forget to do something (the todo-list can be closed)<br>
+- The bookmarks can be folded, so there could display many links in your homepage<br><br>
+To use it, just make you home page to &quot;blank&quot;, that is, &quot;about:blank&quot;.
+</p></blockquote><p>
+ちょっと気になったのはこれ。
+</p><blockquote><p>
+When you open a new tab, the cursor should be in the address bar
+</p></blockquote><p>
+そうなんだよなあ。フォーカスが外れるのでCtrl+TしてURLというかg 検索語という今までのリズムが崩れる。
+</p>
+<!-- section end -->
+</div>
+<!-- 2011/06/23 end -->
+
+
+
+<hr class="hide">
+<!-- 2011/06/24 start -->
+<h2><a name="20110624" href="201106c.html#20110624">2011-06-24 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="201106241" title="201106241" href="201106c.html#201106241">■</a> 
+CRON[32697]: Module is unknown</h3>
+<p>
+VPSでcronが動いてないなと思い/var/log/syslogを確認してみたらModule is unknownとか吐いていた。<br>
+ぐぐると
+<a href="http://gihyo.jp/admin/clip/01/ubuntu-topics/201106/03">バグ</a>だったようで。
+</p><blockquote><p>
+備考：自動アップデートを適用しているシステムにおいては，影響を受けているか確認するため，
+「egrep 'CRON.*Module is unknown' /var/log/syslog」を実行してください。
+CRON.*Module is unknownのような行が出力された場合，
+usn-1140-1に含まれたバグの問題でcronが正常に機能しなくなっている可能性があります。
+「sudo service cron restart」を実行してcronを再起動することでこの問題を解決できます。
+</p></blockquote>
+<!-- section end -->
+</div>
+<!-- 2011/06/24 end -->
+
+
+
+<hr class="hide">
+<!-- 2011/06/25 start -->
+<h2><a name="20110625" href="201106c.html#20110625">2011-06-25 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="201106251" title="201106251" href="201106c.html#201106251">■</a> 
+Ubuntu 11.04を新規に</h3>
+<p>
+ハイバネートがどうにもうまくいかないので新規にUbuntu 11.04をインストールすることにした。<br>
+ついでにバックアップも面倒なのでHDDごと交換。1TBから2TBへ。玄履があるから後からコピーできる。<br>
+</p>
+<p>
+ふつうのインストーラだとなぜか途中でハングしてしまってだめなので、またminiで。<br>
+これもなぜか途中でネットワークの設定がおかしくなるが再設定でいけた。
+</p>
+<p>
+パーティションはお任せにしてみたらGPTとかいうのになった。<br>
+fdisk -lでは見れない。partedとかじゃないとだめらしい。
+</p>
+<pre>
+% sudo parted /dev/sda print
+Model: ATA WDC WD20EARS-00M (scsi)
+Disk /dev/sda: 2000GB
+Sector size (logical/physical): 512B/512B
+Partition Table: gpt
+
+Number  Start   End     Size    File system     Name  Flags
+ 1      17.4kB  1018kB  1000kB                        bios_grub
+ 2      1018kB  1992GB  1992GB  ext4
+ 3      1992GB  2000GB  8548MB  linux-swap(v1)
+</pre>
+<p>
+あ、そうそう。肝心のハイバネートのほうは順調。結局swapのサイズだけの問題じゃないようで、<br>
+以前の半分になったが全然問題ない。
+</p>
+<!-- section end -->
+</div>
+<!-- 2011/06/25 end -->
+
+
+
+<hr class="hide">
+<!-- 2011/06/26 start -->
+<h2><a name="20110626" href="201106c.html#20110626">2011-06-26 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="201106261" title="201106261" href="201106c.html#201106261">■</a> 
+AにあってBにないものを消す</h3>
+<p>
+iriverでファイルリストをいじっていると実際にファイルを消したくなるわけだけど、<br>
+消したいファイルを得るにはどうすればいいか。Rubyとかでscriptを書いてもいいが、<br>
+commコマンドで一発でわかる。
+</p>
+<pre>
+% printf &quot;%02d\n&quot; {1..10} &gt;10 
+% cat 10
+01
+02
+03
+04
+05
+06
+07
+08
+09
+10
+% sed '2~2d' 10 &gt;odd
+% cat odd
+01
+03
+05
+07
+09
+% comm 10 odd
+		01
+02
+		03
+04
+		05
+06
+		07
+08
+		09
+10
+% comm -3 10 odd
+02
+04
+06
+08
+10
+</pre>
+<p>
+oddが編集されたファイルリストだと思えばcomm -3で消すべきファイルがわかる。
+</p>
+<!-- section end -->
+</div>
+<!-- 2011/06/26 end -->
+
+
+
+<hr class="hide">
+<!-- 2011/06/27 start -->
+<h2><a name="20110627" href="201106c.html#20110627">2011-06-27 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="201106271" title="201106271" href="201106c.html#201106271">■</a> 
+ssh先のvimの起動がなぜか遅い</h3>
+<p>
+ssh先でvimを起動するとなんか遅いなと常々思っていたので原因を探ってみた。<br>
+--startuptimeつきで起動してみたら
+</p>
+<pre>
+% sort -nr -k2,2 x.txt | head
+924.626  901.718: setup clipboard
+018.758  015.985  000.144: sourcing $VIM/vimrc
+018.730  015.559  000.156: sourcing /usr/share/vim/vim73/syntax/syntax.vim
+018.683  015.045  015.045: sourcing /usr/share/vim/vim73/filetype.vim
+002.593  002.072: Termcap init
+020.652  001.857  000.901: sourcing $HOME/.vimrc
+925.450  000.763: opening buffers
+019.688  000.632  000.131: sourcing /usr/share/vim/vim73/syntax/syntax.vim
+021.834  000.571  000.571: sourcing /usr/share/vim/vim73/plugin/netrwPlugin.vim
+022.647  000.498: loading plugins
+</pre>
+<p>
+setup clipboardが原因であることがわかった。<br>
+ssh -Xとかつけてるからか。これをやめたら瞬時に立ち上がるようになった。
+</p>
+<!-- section end -->
+</div>
+<!-- 2011/06/27 end -->
+
+
+
+<hr class="hide">
+<!-- 2011/06/28 start -->
+<h2><a name="20110628" href="201106c.html#20110628">2011-06-28 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="201106281" title="201106281" href="201106c.html#201106281">■</a> 
+<a href="http://www.commandlinefu.com/commands/view/8724/sum-file-sizes">Sum file sizes | commandlinefu.com</a></h3>
+<p>
+numsumってなに？見た感じだと各行の数値を足し合わせるんだと思うんだが。<br>
+ぐぐってみたらnum-utilsというパッケージに入ってるらしい。<br>
+早速インストールしてみたらPerlで書かれたスクリプトだった。<br>
+確かに合計を求めるのってたまにやるよね、awkで。<br>
+たとえばls -lでファイルのサイズの合計とか。
+</p>
+<pre>
+% ls -l *(.) | awk '{sum += $5}END{print sum}'
+11610560
+% ls -l *(.) | numsum -c -x 5
+11610560
+</pre>
+<p>
+まあ、この場合はwcでいいんだけど。zshだとこう書ける。
+</p>
+<pre>
+% wc -c &lt; *(.)
+11610560
+</pre>
+<!-- section end -->
+</div>
+<!-- 2011/06/28 end -->
+
+
+
+<hr class="hide">
+<!-- 2011/06/29 start -->
+<h2><a name="20110629" href="201106c.html#20110629">2011-06-29 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="201106291" title="201106291" href="201106c.html#201106291">■</a> 
+<a href="http://mozilla.jp/thunderbird/5.0/releasenotes/">Thunderbird 5.0</a></h3>
+<p>
+さっそく使ってみたが、
+<a href="http://gitorious.org/lightning-exchange-provider/pages/Home">Microsoft Exchange data provider for Thunderbird Lightning</a>が使えなくなったのでTb 3.1.1に戻した。<br>
+about:configで無理矢理動かしてるんだから、まあ、しょうがない。<br>
+が、Lightningも1.0b4に上げちゃったもんだから、設定が読めなくなってしまった。<br>
+このときはわけもわからず英語版のTb 3.1.1を入れたりもしたが、<br>
+Lightning 1.0b4がTb 3.1.1に対応してないことに気づき、<br>
+Lightning 1.0b2へダウングレードしてやっと設定も生き返った。
+</p>
+<p>
+今サイトを確認してみたらTb 3.3b4用のがあるみたいだな。<br>
+でもkeysnailもTb 5.0対応してくれないとやっぱ厳しい。
+</p>
+<!-- section end -->
+</div>
+<!-- 2011/06/29 end -->
+
+
+
+<hr class="hide">
+<!-- 2011/06/30 start -->
+<h2><a name="20110630" href="201106c.html#20110630">2011-06-30 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="201106301" title="201106301" href="201106c.html#201106301">■</a> 
+This message may not have been sent by: ...</h3>
+<p>
+gmailの警告がうっとうしいんだけど、これはどうしたもんかな。<br>
+<a href="http://mail.google.com/support/bin/answer.py?answer=185812">これ</a>を見ると、SPFレコードを用意しろって話のようだが、<br>
+となるとshugoさんの手を借りる必要あり？
+</p>
+<!-- section end -->
+</div>
+<!-- 2011/06/30 end -->
+
+<hr>
+<div>
+<a href="201106b.html">&lt;Prev(,)</a> | 
+<a href="201107a.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

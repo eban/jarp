@@ -1,0 +1,897 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2002-9-a</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="200208c.html">
+<link rel="next" href="200209b.html">
+
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2002年9月上旬〜</p>
+<hr>
+<div>
+<a href="200208c.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="200209b.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2002/09/01 start -->
+<h2><a name="20020901" href="200209a.html#20020901">2002-09-01 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="200209011" title="200209011" href="200209a.html#200209011">■</a> 
+8月のspam</h3>
+<p>
+318通。とうとう300を越えたか。全然
+<a href="200208a.html#200208011">ピーク</a>ではなかった。
+そのうち韓国からは104通って、増えた分のほとんどは韓国からかよ。
+最近ドイツ語のspamも定期的に来る。
+必ずjpegの画像ファイルもつけてくるから非常に欝陶しい。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200209012" title="200209012" href="200209a.html#200209012">■</a> 
+<a href="http://www.uclibc.org/">[Linux] uClibc 0.9.15</a></h3>
+<p>
+0.9.14以下とはバイナリ互換がない。
+</p>
+<pre>
+% cmp Makefile{~,}
+cmp: can't resolve symbol '__fxstat'
+</pre>
+<p>
+
+<a href="200204b.html#200204112">折角なので</a> があだになったか。
+くやしいので、diffutils 2.8.1を-staticで作っておく。
+</p>
+<pre>
+% CFLAGS=-Os CC='/usr/i386-linux-uclibc/usr/bin/gcc -static' \
+  ./configure --prefix=/usr --disalble-nls
+</pre>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200209013" title="200209013" href="200209a.html#200209013">■</a> 
+[Linux] BitKeeper</h3>
+<pre>
+% bk clone http://linux.bkbits.net:8080/linux-2.5 linus-2.5
+</pre>
+<p>
+でcloneを作ってみたが、
+</p>
+<pre>
+ChangeSet@1.134, 2002-02-05 15:57:59-08:00, torvalds@athlon.transmeta.com
+  v2.4.15 -&gt; v2.5.0
+  
+  - fork off 2.5.0, change version numbers
+  TAG: v2.5.0
+</pre>
+<p>
+なので、2.4.16以降はcloneできない。
+2.4.15以前もtagを打ってないからcloneできないか。
+素直にlinux-2.4をcloneするしかないな。
+repositoryごとcloneするんだから、どっちにも入っていて欲しい。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200209014" title="200209014" href="200209a.html#200209014">■</a> 
+<a href="http://www.sqlite.org/">SQLite 2.7.1</a></h3>
+<p>
+sqliteコマンドでreadlineが効いてない。config.logを見てみると
+</p>
+<pre>
+configure:13365: gcc -o conftest -Os   conftest.c -lreadline   &gt;&amp;5
+/usr/lib/libreadline.so: undefined reference to `tgetnum'
+/usr/lib/libreadline.so: undefined reference to `tgoto'
+省略
+</pre>
+<p>
+とtermcap相当のlibraryをlinkしてないのが原因らしい。
+AC_CHECK_LIB(termcap, tgetent)をconfigure.acに
+<a href="../files/sqlite-2.7.1-configure.ac.diff">追加</a>してみた。
+</p>
+<pre>
+% ldd =sqlite
+        libsqlite.so.0 =&gt; /usr/local/lib/libsqlite.so.0 (0x40015000)
+        libreadline.so.4 =&gt; /usr/lib/libreadline.so.4 (0x40057000)
+        libncurses.so.5 =&gt; /lib/libncurses.so.5 (0x4007b000)
+        libc.so.6 =&gt; /lib/libc.so.6 (0x400bc000)
+        libgcc_s.so.1 =&gt; /usr/local/lib/libgcc_s.so.1 (0x401d7000)
+        /lib/ld-linux.so.2 =&gt; /lib/ld-linux.so.2 (0x40000000)
+</pre>
+<p>
+あ、libtermcap.so.2はlibncurses.so.5へのsymlinkだったのか。
+</p>
+<pre>
+% ls -l /lib/libtermcap.so.2
+lrwxrwxrwx    1 root     root           15 Jul  7  2001 /lib/libtermcap.so.2 -&gt; libncurses.so.5
+</pre>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200209015" title="200209015" href="200209a.html#200209015">■</a> 
+<a href="http://www.ruby-lang.org/en/raa-list.rhtml?name=Win32OLE">[Ruby] Win32OLE 0.5.1</a></h3>
+<p>
+更新。
+</p>
+<!-- section end -->
+</div>
+<!-- 2002/09/01 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/09/02 start -->
+<h2><a name="20020902" href="200209a.html#20020902">2002-09-02 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="200209021" title="200209021" href="200209a.html#200209021">■</a> 
+[Ruby] mkmf.rb and extmk.rb</h3>
+<p>
+extmk.rb.inでmkmf.rbをrequireするということは、
+Config::CONFIGを使うことになってしまう。
+</p>
+
+<p>
+rbconfig.rbの位置はext/extmk.rbから相対で&quot;..&quot;と決め打ちしないといけないことに気づく。
+</p>
+
+<p>
+mkmf.rbのCPPに
+</p>
+<pre>
+CPP = &quot;#{CONFIG['CPP']} -E ...&quot;
+</pre>
+<p>
+と-Eが埋まっているのは変だ。これは間違いだな。CPPFLAGSも使ってない。
+一方extmk.rb.inは
+</p>
+<pre>
+CPP = &quot;@CPP@ @CPPFLAGS@ ...&quot;
+</pre>
+<p>
+と問題なし。たぶんmkmf.rbをいじるのを忘れたんだろう。
+</p>
+
+<p>
+extmk.rb.inの頭に
+</p>
+<pre>
+$force_static = nil
+$install = nil
+$destdir = nil
+$clean = nil
+</pre>
+<p>
+を入れよう。
+</p>
+
+<p>
+extmk.rbの$topdirは実際にmakeを起動しているディレクトリ。
+mkmf.rbの$topdirはruby.hがあるディレクトリ。
+</p>
+
+<p>
+mkmf.rbのCONFIGはConfig::MAKEFILE_CONFIGであって、Config::CONFIGではない。
+MAKEFILE_CONFIGは$(FOO)を展開しない。
+</p>
+
+<p>
+今日はここまで。とりあえず@FOO@を退治したので、extmk.rb.inとextmk.rbは全く同じものになる。
+</p>
+<pre>
+rm_f, try_link*, try_cpp, egrep_cpp, try_run, install_rb,
+append_library, have_library, find_library, have_func, have_header,
+find_executable, arg_config, with_config, create_header, dir_config
+</pre>
+<p>
+これだけの関数をmkmf.rbに追い出した。残る大物はcreate_makefileだが、これはちょっと無理そう。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200209022" title="200209022" href="200209a.html#200209022">■</a> 
+カロリーメイト</h3>
+<p>
+なんかどこかで見たことある顔だと思っていたんだが、
+そうか、ワカゾーはチビノリダーだ。あぁ、すっきりした。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/09/02 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/09/03 start -->
+<h2><a name="20020903" href="200209a.html#20020903">2002-09-03 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="200209031" title="200209031" href="200209a.html#200209031">■</a> 
+[Ruby] mkmf.rb and extmk.rb</h3>
+<p>
+というわけで、commitしたわけだが、-Eの件はすっかり忘れてた。
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-dev/18162">なかださんのパッチ</a>がコミットされてからいじろう。
+</p>
+
+<p>
+さて、extmk.rbはどこに置くのがいいのだろう？
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200209032" title="200209032" href="200209a.html#200209032">■</a> 
+<a href="http://www.ruby-lang.org/en/raa-list.rhtml?name=druby+-+distributed+ruby">[Ruby] druby 1.3.7</a></h3>
+<p>
+更新。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/09/03 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/09/04 start -->
+<h2><a name="20020904" href="200209a.html#20020904">2002-09-04 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="200209041" title="200209041" href="200209a.html#200209041">■</a> 
+[Ruby] mkmf.rb and extmk.rb</h3>
+<p>
+xsystemも$0にextmk.rbが含まれているかどうかを判断すればいいだけだった。
+$extmkを新設しよう。
+</p>
+
+<p>
+ぐはぁ。source directoryでもちゃんとmake installまでできるかちゃんとチェックしないと。
+あ、元々install_rbの引数も違うのであった。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200209042" title="200209042" href="200209a.html#200209042">■</a> 
+<a href="http://www.ruby-lang.org/en/raa-list.rhtml?name=Uconv">[Ruby] Uconv 0.4.10</a></h3>
+<p>
+--enable-eucとかが指定できるようになった。
+</p>
+<pre>
+% i386-cygwin-ruby ../extconf.rb --enable-euc --enable-sjis \
+  --enable-win32api
+</pre>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200209043" title="200209043" href="200209a.html#200209043">■</a> 
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-talk/48917">[Ruby] New list: ruby-modules - for module developers...</a></h3>
+<p>
+新しいメーリングリスト。ruby-ext MLの英語版といった感じか？
+結局
+</p>
+<pre>
+ruby-list と ruby-talk
+ruby-dev と ruby-core
+ruby-ext と ruby-modules
+</pre>
+<p>
+と全部名前が違うじゃん。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/09/04 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/09/05 start -->
+<h2><a name="20020905" href="200209a.html#20020905">2002-09-05 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="200209051" title="200209051" href="200209a.html#200209051">■</a> 
+<a href="200209a.html#200209043">[Ruby] ruby-developers</a></h3>
+<p>
+ruby-modulesじゃなくてruby-developerという名前のMLだった。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200209052" title="200209052" href="200209a.html#200209052">■</a> 
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-talk/49043">[Ruby] 起動時間</a></h3>
+<p>
+確かmethod cacheの高速化のための初期化に時間がかかってるいるはず。
+未だにP5 133MHzのLinux boxだとこんな感じだ。
+</p>
+<pre>
+% time ruby-1.6.6 -v
+ruby 1.6.6 (2001-12-26) [i386-linux]
+ruby-1.6.6 -v  0.10s user 0.04s system 113% cpu 0.124 total
+% time ruby-1.6.7 -v
+ruby 1.6.7 (2002-09-05) [i386-linux]
+ruby-1.6.7 -v  0.46s user 0.04s system 107% cpu 0.464 total
+</pre>
+<p>
+と1.6.7だと遅い。
+でもP5 200MHzのWindows 98よりは倍以上速いようだ。
+PC UNIXを勧めたほうがよかったりして。
+</p>
+
+<p>
+ついでにpythonとperlも計ってみる。
+</p>
+<pre>
+% time python -V
+Python 2.2
+python -V  0.01s user 0.01s system 1204% cpu 0.002 total
+% time perl -v           
+
+This is perl, v5.8.0 built for i586-linux
+
+Copyright 1987-2002, Larry Wall
+
+Perl may be copied only under the terms of either the Artistic License or the
+GNU General Public License, which may be found in the Perl 5 source kit.
+
+Complete documentation for Perl, including FAQ lists, should be found on
+this system using `man perl' or `perldoc perl'.  If you have access to the
+Internet, point your browser at http://www.perl.com/, the Perl Home Page.
+
+perl -v  0.10s user 0.02s system 134% cpu 0.089 total
+</pre>
+<p>
+まぁ、なにもしないわけだしこんなもんだよね。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200209053" title="200209053" href="200209a.html#200209053">■</a> 
+KLEZ</h3>
+<p>
+奇数月6日にKLEZは破壊活動を開始するらしい。つまり明日は注意。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/09/05 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/09/06 start -->
+<h2><a name="20020906" href="200209a.html#20020906">2002-09-06 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="200209061" title="200209061" href="200209a.html#200209061">■</a> 
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-core/00447">[Ruby] Re: [RFC] mkmf.rb: dependencies</a></h3>
+<p>
+確かに
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-core/00439">あのパッチ</a>ではdependがなければ作るというMakefileになるが、
+それじゃdependが更新されないからやっぱ駄目じゃん。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200209062" title="200209062" href="200209a.html#200209062">■</a> 
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-talk/49233">[Ruby] ruby-doc ML</a></h3>
+<p>
+さらに新しいMLが誕生。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200209063" title="200209063" href="200209a.html#200209063">■</a> 
+nullmailer problem in your diary</h3>
+<p>
+ドイツから突然メールがくる。
+googleでnullmailerについて調べてたら、なんかよくわからんが解決してるようじゃん。
+日本語じゃなくて英語で説明してくれという内容だ。
+
+<a href="200110b.html#200110152">2001年10月15日</a> と
+<a href="200110b.html#200110161">その翌日</a> なんだけど、
+ま、日本語が読めなくてもあのコマンド実行例で理解してくれないなら、
+英語で説明しても無駄だと思う。といいつつも返事は書いた。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/09/06 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/09/07 start -->
+<h2><a name="20020907" href="200209a.html#20020907">2002-09-07 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="200209071" title="200209071" href="200209a.html#200209071">■</a> 
+[Ruby] --targetとprogram_prefix</h3>
+<p>
+autoconf 2.5xだと--targetを指定すると、program_prefixが設定される。
+</p>
+<pre>
+test -n &quot;$target_alias&quot; &amp;&amp;
+  test &quot;$program_prefix$program_suffix$program_transform_name&quot; = \
+    NONENONEs,x,x, &amp;&amp;
+  program_prefix=${target_alias}-
+</pre>
+<p>
+この直前でprogram_prefixがNONEだったら''にしちゃえばいいか。
+configure.in的にはこんな感じで。
+</p>
+<pre>
++if test &quot;$program_prefix&quot; = NONE; then
++  program_prefix=
++fi
+ AC_CANONICAL_TARGET
+</pre>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200209072" title="200209072" href="200209a.html#200209072">■</a> 
+[Ruby] Judy</h3>
+<p>
+Time to retire st_* and replace it with Judy?というSubjectのスレッドもあるけど、
+移植性に問題ありのような。makeすると
+</p>
+<pre>
+if [[ ! -d &quot;src/linux_ia32/product/intermed&quot;        ]]; then
+</pre>
+<p>
+てな感じで、ashじゃだめだし、ソースのコメントもCだけど//だし。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200209073" title="200209073" href="200209a.html#200209073">■</a> 
+<a href="200209a.html#200209063">nullmailer problem in your diary</a></h3>
+<p>
+何の役にも立たなかったようで、結局qmailをインストールしたらうまくいったらしい。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/09/07 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/09/08 start -->
+<h2><a name="20020908" href="200209a.html#20020908">2002-09-08 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="200209081" title="200209081" href="200209a.html#200209081">■</a> 
+[Ruby] mkmf.rbのlog</h3>
+<p>
+loggingが別になったし、$logとかがグローバルになってるのもなんだし、moduleにしよう。
+</p>
+<pre>
+module Logging
+  @log = nil
+  @logfile = 'mkmf.log'
+  @orgerr = $stderr.dup
+  @orgout = $stdout.dup
+
+  def self::open
+    @log ||= File::open(@logfile, 'w')
+    $stderr.reopen(@log)
+    $stdout.reopen(@log)
+    yield
+  ensure
+    $stderr.reopen(@orgerr)
+    $stdout.reopen(@orgout)
+  end
+
+  def self::logfile file
+    @logfile = file
+    if @log
+      @log.close
+      @log = nil
+    end
+  end
+end
+</pre>
+<p>
+extmk.rb側でextconf.rbをloadする直前に
+</p>
+<pre>
+Logging::logfile 'mkmf.log'
+</pre>
+<p>
+とすれば、ext/*/mkmf.logとなる。
+</p>
+
+<p>
+log fileを残すようになった今、$DEBUG対応は外してもよさそう。
+その代わりに$VERBOSE時にmessageを表示するようにした。
+ついでに
+</p>
+<pre>
+% RUBYOPT=-v make
+</pre>
+<p>
+したときのwarningをすべて取り除いた。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200209082" title="200209082" href="200209a.html#200209082">■</a> 
+[Ruby] -Cext</h3>
+<p>
+extmk.rbの実行はMakefileにはこう書かれている。
+</p>
+<pre>
+@./miniruby$(EXEEXT) -Cext extmk.rb
+</pre>
+<p>
+その昔は
+</p>
+<pre>
+@cd ext; ../miniruby$(EXEEXT) extmk.rb 
+</pre>
+<p>
+となっていたわけだが、これはcommand.comと非常に相性が悪い。
+で、
+</p>
+<pre>
+@./miniruby$(EXEEXT) -Xext extmk.rb
+</pre>
+<p>
+となって、現在の-Cextに至る。
+</p>
+
+<p>
+さてsource tree側にあるext/extmk.rbを実行するには
+</p>
+<pre>
+@./miniruby$(EXEEXT) -Cext $(srcdir)/ext/extmk.rb 
+</pre>
+<p>
+で良さそうだが、srcdirは相対pathのままだったりするので使えない。
+autoconf 2.5からはabs_srcdirがあるのでこれを使えばいいが、
+そもそも-Cextじゃなくてextmk.rb内でDir::chdir('ext')すればいいとも言える。
+なにしろextmk.rbを実行するときは必ず-Cextしてるんだから。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200209083" title="200209083" href="200209a.html#200209083">■</a> 
+[Ruby] CPPの出力結果</h3>
+<p>
+現在のlogはこんな感じだ。
+</p>
+<pre>
+ 601531 Win32API/mkmf.log
+  30451 curses/mkmf.log
+   5729 dbm/mkmf.log
+   2077 dl/mkmf.log
+   1391 etc/mkmf.log
+   1279 gdbm/mkmf.log
+   5271 iconv/mkmf.log
+   2932 pty/mkmf.log
+  28707 readline/mkmf.log
+  15908 socket/mkmf.log
+    866 syslog/mkmf.log
+ 114236 tcltklib/mkmf.log
+    939 win32ole/mkmf.log
+ 811317 total
+</pre>
+<p>
+try_cppするとheaderのサイズ分だけ増える。
+エラーメッセージだけわかればいいので、conftest.iへ捨てることにする。
+</p>
+<pre>
+    255 Win32API/mkmf.log
+   2346 curses/mkmf.log
+   4940 dbm/mkmf.log
+   1765 dl/mkmf.log
+   1391 etc/mkmf.log
+    251 gdbm/mkmf.log
+    252 iconv/mkmf.log
+   1321 pty/mkmf.log
+   1242 readline/mkmf.log
+   6521 socket/mkmf.log
+    388 syslog/mkmf.log
+    299 tcltklib/mkmf.log
+    939 win32ole/mkmf.log
+  21910 total
+</pre>
+<p>
+かなりすっきりした。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200209084" title="200209084" href="200209a.html#200209084">■</a> 
+<a href="http://www.ruby-lang.org/en/raa-list.rhtml?name=bdb">[Ruby] bdb 0.3.4</a></h3>
+<p>
+更新。mingw32だとtests/marshal.rbが失敗するのでcloseするようにした。
+</p>
+<pre>
+--- tests/marshal.rb~	2002-08-13 13:17:08.000000000 +0000
++++ tests/marshal.rb	2002-09-08 05:21:29.000000000 +0000
+@@ -275,2 +275,3 @@
+       assert_equal(nil, $bdb.close, &quot;&lt;close&gt;&quot;)
++      assert_equal(true, $env.close, &quot;&lt;close&gt;&quot;)
+       assert_kind_of(BDB::Btree, $bdb = BDB::AZ.open(&quot;tmp/aa&quot;, nil, &quot;w&quot;), &quot;&lt;sh&gt;&quot;)
+</pre>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200209085" title="200209085" href="200209a.html#200209085">■</a> 
+[Ruby] have_struct_member</h3>
+<p>
+そのまま、ext/socket/extconf.rbからlib/mkmf.rbへ移動。
+try_linkの代わりにtry_compileを使う。
+ext/etc/extconf.rbでegrep_cppの代わりにhave_struct_memberを使う。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200209086" title="200209086" href="200209a.html#200209086">■</a> 
+[Ruby] macro_defined?</h3>
+<p>
+新たに作った。
+</p>
+<pre>
+def macro_defined?(macro, src, opt=&quot;&quot;)
+  try_cpp(src + &lt;&lt;EOP, opt)
+#ifndef #{macro}
+# error
+#endif
+EOP
+end
+</pre>
+<p>
+ext/socket/extconf.rbではegrep_cppじゃなくてこれを使う。
+これでegrep_cppを使ってるとこはない。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200209087" title="200209087" href="200209a.html#200209087">■</a> 
+<a href="http://www.dm4lab.to/~usa/ruby/d/200209a.html#id20020908_P1_2">[Ruby]time.c</a></h3>
+<p>
+GCC 3.2だとwarningになります。
+</p>
+<pre>
+time.c: In function `rb_time_timeval':
+time.c:191: warning: comparison of distinct pointer types lacks a cast
+</pre>
+<p>
+dfreeとtime_freeの型が違うので。と思ったらGCC 2.95.3でも同じですね。
+</p>
+<pre>
+% cat foo.c
+foo()
+{
+    void (*vv)(void *) = 0;
+    void (*vi)(int *) = 0;
+
+    vv == vi;
+}
+% gcc -dumpversion
+3.2
+% gcc -c foo.c        
+foo.c: In function `foo':
+foo.c:6: warning: comparison of distinct pointer types lacks a cast
+% /usr/bin/gcc -dumpversion
+2.95.3
+% /usr/bin/gcc -c foo.c    
+foo.c: In function `foo':
+foo.c:6: warning: comparison of distinct pointer types lacks a cast
+</pre>
+<p>
+とするとNetBSDではHAVE_PROTOTYPESがdefineされないのかな？
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/09/08 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/09/09 start -->
+<h2><a name="20020909" href="200209a.html#20020909">2002-09-09 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="200209091" title="200209091" href="200209a.html#200209091">■</a> 
+<a href="http://www.ruby-lang.org/en/raa-list.rhtml?name=WEBrick">[Ruby] WEBRick 1.2.2</a></h3>
+<p>
+更新。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200209092" title="200209092" href="200209a.html#200209092">■</a> 
+[Ruby] S_IRUSR, S_IWUSR, S_IXUSR</h3>
+<p>
+mingw32だと&lt;sys/stat.h&gt;でS_I?USRが定義されてるので、
+</p>
+<pre>
+#include &quot;ruby.h&quot;
+#include &lt;sys/stat.h&gt;
+</pre>
+<p>
+という順番ではredefineになってしまうんだけど、mswin32だと問題ないんだろうか？
+あ、
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-dev/18222">S_IWRITE</a>なのか。#if !defined S_I?USR &amp;&amp; !defined __MINGW32__ しとこう。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200209093" title="200209093" href="200209a.html#200209093">■</a> 
+<a href="http://tamura.tdiary.net/20020906.html#p02">[Ruby] Ruby/lv</a></h3>
+<p>
+web.archive.orgしてみると
+<a href="http://web.archive.org/web/20001207080500/http://www.ueda.info.waseda.ac.jp/~igarashi/ruby/ruby-lv-0.12.tar.gz">ここ</a>に残ってました。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/09/09 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/09/10 start -->
+<h2><a name="20020910" href="200209a.html#20020910">2002-09-10 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="200209101" title="200209101" href="200209a.html#200209101">■</a> 
+<a href="http://www.moonwolf.com/~arcml/cgi-bin/arcml/arcml.cgi?rm=view&amp;list_id=1&amp;ml_count=322">[Ruby] compile_dir</a></h3>
+<p>
+compile_dirは削除すべきか？
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200209102" title="200209102" href="200209a.html#200209102">■</a> 
+<a href="http://znz.s1.xrea.com/t/?date=20020910#p03">[cygwin][ruby] package</a></h3>
+<p>
+というよりversionがbeta-1-1となっているのがきっとまずいんだと思うけど、
+rdocのこの変なversionのつけかたを止めるかなあ。
+もっと変にして00beta-1-1にしてみるのはどうだろう？
+ついでに余計な-1をつけなくてもいいようにしたいなあ。
+</p>
+
+<p>
+<a href="../ruby/binaries/cygwin/setup.ini">setup.ini</a>の順番は自分でも笑ってしまった。
+生成スクリプトを見ると/\d+/が/d+/になってるし。それじゃソートされないよ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200209103" title="200209103" href="200209a.html#200209103">■</a> 
+上戸彩 Pureness</h3>
+<p>
+一瞬浜崎あゆみのTrustかと思う。Trustって木村貴志だったのか。
+木村貴志と言えば最近はmoveばっかりでFavorite Blueはどうなってるんだ？
+と思ったらとっくに解散してたか。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/09/10 end -->
+
+<hr>
+<div>
+<a href="200208c.html">&lt;Prev(,)</a> | 
+<a href="200209b.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

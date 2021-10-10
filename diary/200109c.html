@@ -1,0 +1,513 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2001-9-c</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="200109b.html">
+<link rel="next" href="200110a.html">
+
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2001年9月下旬〜</p>
+<hr>
+<div>
+<a href="200109b.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="200110a.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2001/09/21 start -->
+<h2><a name="20010921" href="200109c.html#20010921">2001-09-21 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="200109211" title="200109211" href="200109c.html#200109211">■</a> 
+<a href="http://cygwin.com/ml/cygwin-developers/2001-09/msg00408.html">new 'temp' directory in CVS cinstall contains dependency</a></h3>
+<p>
+すでにcygwin-developers MLには説明済みだった。
+依存関係とかをdebianやRed Hatのデータを使うのか。
+</p>
+<!-- section end -->
+</div>
+<!-- 2001/09/21 end -->
+
+
+
+<hr class="hide">
+<!-- 2001/09/22 start -->
+<h2><a name="20010922" href="200109c.html#20010922">2001-09-22 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="200109221" title="200109221" href="200109c.html#200109221">■</a> 
+寒い</h3>
+<p>
+11月上旬の気温て…。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200109222" title="200109222" href="200109c.html#200109222">■</a> 
+xmmsとglibc 2.2.x</h3>
+<p>
+ひょっとしたら音が途切れる原因はglibc 2.2.xにあるような気がして古い環境で実験。
+linux 2.2.19、glibc 2.1.3では途切れない。
+linux 2.4.6、glibc 2.1.3でも途切れない。
+やはりそうか。linux 2.4が原因だとばっかり思ってたけど、
+linux 2.4.xに上げると同時にglibc 2.2.xになってたもんなあ。
+というかそれ以前にPlamo 2.2にしたらxmmsが動かなくて困ってたんだった。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2001/09/22 end -->
+
+
+
+<hr class="hide">
+<!-- 2001/09/23 start -->
+<h2><a name="20010923" href="200109c.html#20010923">2001-09-23 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="200109231" title="200109231" href="200109c.html#200109231">■</a> 
+<a href="http://www.dm4lab.to/~usa/dekigoto/200109c.html#id20010921_P2_1">PR#186</a></h3>
+<p>
+そうそう。diff取ると100行もないし。
+そもそもruby-bugsに送る内容じゃないよね。
+
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-talk/21202">[ruby-talk:21202]</a> も閉口気味だったけど、
+こういう人達ってdiffの存在を知らないとしか思えない。
+Cygwinのヘッダに文句あるならCygwin projectへ送れよ。
+</p>
+
+<p>
+結局どこを変更したか探すためにdiffを取らなきゃいけないんだから、
+そこんとこを考えてよ。
+とこんなとこに書いても伝わらないとこがだめだめではあるが。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200109232" title="200109232" href="200109c.html#200109232">■</a> 
+<a href="200109b.html#200109193">[Cygwin] 表示が遅い</a></h3>
+<p>
+statというよりもWin9xでは表示が遅いというのもあった。
+たぶんこっちが主原因だな。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200109233" title="200109233" href="200109c.html#200109233">■</a> 
+whois -h whois.internic.net microsoft.com</h3>
+<p>
+まだそのままだ。直す気なし？
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200109234" title="200109234" href="200109c.html#200109234">■</a> 
+The X-Files</h3>
+<p>
+どうするんだろうと思って見てたが、
+さすがにビル爆破テロのシーンはカットされた。
+だったらなぜニュース番組ではまだあのシーンを繰り返し流すんだろう？
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2001/09/23 end -->
+
+
+
+<hr class="hide">
+<!-- 2001/09/24 start -->
+<h2><a name="20010924" href="200109c.html#20010924">2001-09-24 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="200109241" title="200109241" href="200109c.html#200109241">■</a> 
+<a href="https://www.netsecurity.ne.jp/article/8/2875.html">マイクロソフト社の Nimda 関連情報 IE6も安全ではない</a></h3>
+<p>
+ふーん。とりあえずIE6に上げとくかと言ってた人もいたが注意したほうがいい。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200109242" title="200109242" href="200109c.html#200109242">■</a> 
+Linux 2.4.10</h3>
+<p>
+最近月刊化してる。
+そういえば2.5.xってまだ始まってないよね？
+その分実験的なものが2.4.xへ入ってきてるのか。
+</p>
+
+<p>
+今回はきれいさっぱりmake mrproperしてからmake oldconfigだ。
+</p>
+<pre>
+% bzip2 -dc ../patch-2.4.10.bz2 | patch -p1
+% cp .config ..
+% make mrproper
+% cp ../.config .
+% make oldconfig
+% make dep bzImage modules
+</pre>
+<p>
+問題なくmake終了。
+</p>
+
+<p>
+ついでにalsa-driverも忘れずに。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2001/09/24 end -->
+
+
+
+<hr class="hide">
+<!-- 2001/09/25 start -->
+<h2><a name="20010925" href="200109c.html#20010925">2001-09-25 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="200109251" title="200109251" href="200109c.html#200109251">■</a> 
+Clip-On</h3>
+<p>
+今このマシンには8GB,13GB,20GBのハードディスクがついてるが、
+実はその当時それぞれ2万円ぐらいで買ってる(たぶん)。
+で、今日
+<a href="http://www.sony.co.jp/sd/ProductsPark/Consumer/HDR/">Clip-On</a> のために80GBのハードディスクを買ってみたが、また2万だ。
+つまりSVR-515を買ってしまったわけだが、
+そりゃもう2,3年同じテープで重ね録りしてるおいらにはぴったりと言えよう。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200109252" title="200109252" href="200109c.html#200109252">■</a> 
+<a href="http://www.ohmsha.co.jp/data/books/contents/4-274-06437-9.htm">Linkers &amp; Loaders</a></h3>
+<p>
+帯を見ると
+</p>
+<pre>
+・サイズを削減し性能を向上させるテクニックを紹介
+・Windows DLLにまつわる落し穴を避ける
+・UNIX ELFライブラリ形式のを最大限に活用する方法を解説
+</pre>
+<p>
+あたりが気になる。ここの「のを」は別の意味で気になる。
+「の」が要らないのか、「の」と「を」の間に何かあったのか？
+</p>
+
+<p>
+実は
+</p>
+<pre>
+・各章末に実践的な演習および課題(Perlによるリンカ作成)が付属
+</pre>
+<p>
+が一番気になってる。Perlのサンプルコードは
+<a href="http://linker.iecc.com">ここ</a>
+にあるらしい。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2001/09/25 end -->
+
+
+
+<hr class="hide">
+<!-- 2001/09/26 start -->
+<h2><a name="20010926" href="200109c.html#20010926">2001-09-26 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="200109261" title="200109261" href="200109c.html#200109261">■</a> 
+Clip-On</h3>
+<p>
+今日来るかなあと待ってたが、まだ入荷待ちだよメールが来てがっくり。
+土曜日ぐらいになるらしい。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200109262" title="200109262" href="200109c.html#200109262">■</a> 
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-talk/21713">main.c</a></h3>
+<p>
+たまたまmain.cではglobal変数を参照してないから、うまくいってるんだなと再認識。
+ってことは本来ならMakefile.inとかcygwin/GNUmakefileとか
+win32/Makefile.subあたりで、ちゃんと定義しなきゃいけないわけか。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200109263" title="200109263" href="200109c.html#200109263">■</a> 
+Linux 2.4.10</h3>
+<p>
+/usr/src/linux/Documentation/Changesを見ると、
+recommended compilerがgcc 2.95.3になってる。
+てゆかおいらは恐いもの知らずなのでとっくにgcc 3.0.1でmakeしてるって。
+考えてみると主たるもののほとんどを最新で固めてあるなあ。
+PC自体はこの9月で丸々6周年を向かえた代物ではあるが。
+</p>
+
+
+
+<p>
+<!-- http://www.iamp.tohoku.ac.jp/~anti/ebisu/w2koe.html -->
+</p>
+<!-- section end -->
+</div>
+<!-- 2001/09/26 end -->
+
+
+
+<hr class="hide">
+<!-- 2001/09/27 start -->
+<h2><a name="20010927" href="200109c.html#20010927">2001-09-27 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="200109271" title="200109271" href="200109c.html#200109271">■</a> 
+MinGW版</h3>
+<p>
+なぜかMinGW版を宣伝する人がruby-talk MLに出現。
+ほとんど使ったことがないだけに、そんなにいいのかと使ってみたくなった。っておい。
+</p>
+
+<p>
+そういえばクロスの環境はまだmingw-runtimeへ移行してなかった。
+そろそろ考えないと。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200109272" title="200109272" href="200109c.html#200109272">■</a> 
+gtk dlls</h3>
+<p>
+20001226版のGTK+ for Win32のDLLも用意しないとだめか？
+というよりjarh.hoops.livedoor.comをcloseしないと。
+浦和のアクセスポイントがいつのまにか使えなくなってるし。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200109273" title="200109273" href="200109c.html#200109273">■</a> 
+vrswin 010913, vruby 010917</h3>
+<p>
+更新。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200109274" title="200109274" href="200109c.html#200109274">■</a> 
+<a href="http://www.jaist.ac.jp/~fujieda/cygwin/#news">Cygwin 1.3.4?</a></h3>
+<p>
+もう出るの？やっぱ1.3.3はかなりまずいんだな。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2001/09/27 end -->
+
+
+
+<hr class="hide">
+<!-- 2001/09/28 start -->
+<h2><a name="20010928" href="200109c.html#20010928">2001-09-28 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="200109281" title="200109281" href="200109c.html#200109281">■</a> 
+vim 6.0</h3>
+<p>
+Cygwinのvimが6.0になったことで6.0がリリースされたことを知る。
+今年は出ないと思ってたんだけどなあ。
+</p>
+
+<p>
+全然ftp://ftp.vim.org/につながらないのはまあいいとして、
+List of Mirrorsが
+</p>
+<pre>
+ftp://ftp.vim.org/pub/vim/MIRRORS
+</pre>
+<p>
+に置いてあるのはどういうことだ？意味ないじゃん。
+</p>
+
+<p>
+cvs updateしてるんだから取ってくる必要もないと気づく。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200109282" title="200109282" href="200109c.html#200109282">■</a> 
+Clip-On</h3>
+<p>
+来た。LPで十分だな。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2001/09/28 end -->
+
+
+
+<hr class="hide">
+<!-- 2001/09/29 start -->
+<h2><a name="20010929" href="200109c.html#20010929">2001-09-29 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="200109291" title="200109291" href="200109c.html#200109291">■</a> 
+Clip-On 80GBハードディスク換装</h3>
+<p>
+ネジが1本余るとかいうのはよくある話だが、
+1本足りなくなるというのはどういうことだ？
+ま、いいか。
+</p>
+<pre>
+ディスクの異常を検出しました
+このままではお使いになれません
+このままサービスにお持ちいただくか
+ディスクのフォーマットを行ってください
+決定を押すと自動的にフォーマットを
+行いますが、全てのタイトル、番組表、
+予約内容は消去されます
+</pre>
+<p>
+と出て、「決定」を押すとフォーマットが始まり、十数秒程度で終了。
+ちゃんと倍になった。
+</p>
+
+<p>
+前面のパネルを外すのに手間取った以外はすんなりいった。
+あのフレキのフィルム状のコネクタに直接つながるやつだけはびびったよ。
+切れたと思ったもんなあ。
+</p>
+
+<p>
+そうそう。封印シールがあるので換装するとばれる。
+</p>
+
+<p>
+録画中に再生できるのは思いの他便利だ。
+いや逆に再生中に裏で録画してくれるのは便利だと言ったほうがいいか。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2001/09/29 end -->
+
+
+
+<hr class="hide">
+<!-- 2001/09/30 start -->
+<h2><a name="20010930" href="200109c.html#20010930">2001-09-30 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="200109301" title="200109301" href="200109c.html#200109301">■</a> 
+EPG</h3>
+<p>
+これがあったらG-CODEは要らないねえ。
+TV Bros.に載ってるG-CODEってたまに間違ってたり、
+深夜なんか3番組ぐらいまとめたコードになってたりで、
+ほとんど使ったことないんだけど。
+</p>
+
+<p>
+つーわけでTV三昧の週末だった。
+</p>
+
+
+
+
+<!-- section end -->
+</div>
+<!-- 2001/09/30 end -->
+
+<hr>
+<div>
+<a href="200109b.html">&lt;Prev(,)</a> | 
+<a href="200110a.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

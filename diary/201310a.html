@@ -1,0 +1,435 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2013-10-a</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="201309c.html">
+<link rel="next" href="201310b.html">
+
+<link rel="stylesheet" type="text/css" href="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.css">
+<script type="text/javascript" src="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.js"></script>
+<script type="text/javascript">
+<!--       
+$(document).ready(function() {
+  prettyPrint();
+});
+-->
+</script>
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2013年10月上旬〜</p>
+<hr>
+<div>
+<a href="201309c.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="201310b.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2013/10/01 start -->
+<h2><a name="20131001" href="201310a.html#20131001">2013-10-01 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="201310011" title="201310011" href="201310a.html#201310011">■</a> 
+せっかくなのでボタンのアイコンを作った</h3>
+<p>
+はんこを作る過程でできた星をちょっといじってボタンアイコンに。
+</p>
+<pre>
+% ruby -e 'include Math;
+r=100;
+puts &quot;path \&quot;M&quot;+11.times.map{|i|
+s=i%2==0?0.4:1;
+th=(126+i*36)*PI/180.0;&quot;%s%d,%d&quot; % [i==1 ? &quot;Q&quot; : &quot;&quot;, 100.5+r*s*cos(th), 100.5-r*s*sin(th)]
+}.join(&quot; &quot;)+&quot; Z\&quot;&quot;' |\
+convert -size 300x300 xc:none -fill none -stroke red -strokewidth 10 -draw @- -trim -resize 30x30 star.png
+</pre>
+<p>
+現在はこんな感じ。<br>
+<img src="../images/genmon1.png" alt="">
+</p>
+<!-- section end -->
+</div>
+<!-- 2013/10/01 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/10/02 start -->
+<h2><a name="20131002" href="201310a.html#20131002">2013-10-02 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="201310021" title="201310021" href="201310a.html#201310021">■</a> 
+<a href="http://www.commandlinefu.com/commands/view/12766/found-how-how-much-memory-in-kb-pid-is-occupying-in-linux">Found how how much memory in kB $PID is occupying in Linux</a></h3>
+<p>
+なぜawk使っているのにbcなのか？
+</p>
+<pre>
+% awk '/Pss/{sum += $2}END{print sum}' /proc/$PID/smaps
+</pre>
+<p>
+ぐらいでいいんじゃない？
+</p>
+<!-- section end -->
+</div>
+<!-- 2013/10/02 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/10/03 start -->
+<h2><a name="20131003" href="201310a.html#20131003">2013-10-03 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="201310031" title="201310031" href="201310a.html#201310031">■</a> 
+イヤホンの右側の音が小さい</h3>
+<p>
+なんか左しか聞こえないので断線したかと思って、<br>
+右だけで試したらかすかに聞こえていた。<br>
+耳が不調かと左耳で聞いてもやっぱり差がある。<br>
+他のイヤホンだと問題ないのでプレーヤーの故障でもない。<br>
+ということでイヤホンが原因か。<br>
+しかし音が小さくなるというのは今までなかったな。<br>
+必ず断線で終了だったし。
+</p>
+<!-- section end -->
+</div>
+<!-- 2013/10/03 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/10/04 start -->
+<h2><a name="20131004" href="201310a.html#20131004">2013-10-04 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="201310041" title="201310041" href="201310a.html#201310041">■</a> 
+クリックが間に合わない</h3>
+<p>
+xfce4-genmon-pluginにボタンをつけたはいいが、間に合わない事案が。<br>
+詳しく見るかとマウスに手を伸ばしてボタンを押す頃には、<br>
+15秒毎にランダムに表示してるもんだから、<br>
+次のアイテムに移ってしまっていることが多々ある。<br>
+これを長くしたところでタイミングの問題なので、<br>
+どうしても間に合わないときもでてくる。<br>
+どうしたもんかな。<br>
+exo-openは2つURLを受け付けてくれるので、前回のも覚えておけばいいか。<br>
+でも毎回2つ開くのもどうかな。<br>
+クッションページを作って2つ表示して間接的にという手もあるな。<br>
+まあ、それならlivedoorへ飛んじゃったほうがいいとも言えるが、記事を探すのが面倒だし。<br>
+履歴のページを用意しとくか。
+</p>
+<!-- section end -->
+</div>
+<!-- 2013/10/04 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/10/05 start -->
+<h2><a name="20131005" href="201310a.html#20131005">2013-10-05 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="201310051" title="201310051" href="201310a.html#201310051">■</a> 
+ファイル名がないダウンロード</h3>
+<p>
+URLにファイル名が表れない場合、curlでダウンロードするときに困るが、<br>
+Content-Dispositionで指定されているなら-J(--remote-header-name)を使えばいいようだ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2013/10/05 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/10/06 start -->
+<h2><a name="20131006" href="201310a.html#20131006">2013-10-06 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="201310061" title="201310061" href="201310a.html#201310061">■</a> 
+loopでsleep</h3>
+<p>
+loop処理をしていて負荷対策とかで間にsleepを入れるというのはよくある話。<br>
+でもそのまま入れてしまうと無駄にsleepしてしまう。
+</p>
+<pre>
+% for i in foo/*; do bar &quot;$i&quot;; sleep 1m; done
+</pre>
+<p>
+最後はsleep不要。これをどう回避するか。最後を検知する必要がある。<br>
+iにはパス名が入るので何が最後になるかは不明。<br>
+ならば確実に最後になるものを追加しておけばいい。<br>
+いわゆる番兵ってやつだ。
+</p>
+<pre>
+% for i in foo/* END; do bar &quot;$i&quot;; if [ x&quot;$i&quot; != xEND ]; sleep 1m; fi; done
+</pre>
+<p>
+とまあ、ここまで書いたけど、これは全然だめ。<br>
+bar ENDを実行してしまうこともあるが、<br>
+それより余計なENDを追加してそのsleepをなくしてるだけで、<br>
+その前のsleepは残っているので何の解決にもなってない。
+</p>
+<p>
+しかたなく今はsedで印をつけている。
+</p>
+<pre>
+% for i in $(ls foo/*|sed '$s/^/./'); do bar &quot;${i#.}&quot;; case &quot;$i&quot; in foo*) sleep 1m;; esac; done 
+</pre>
+<p>
+最後のパス名の最初だけにdotをつけて判断。目的のパス名はfoo/で始まるのでdotはつかない。<br>
+case文をone linerで書くときはinの後ろに;を置きたくなるがsyntax errorになるので注意。<br>
+zshはそのあたりはなんでも受け付けるが。
+</p>
+<!-- section end -->
+</div>
+<!-- 2013/10/06 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/10/07 start -->
+<h2><a name="20131007" href="201310a.html#20131007">2013-10-07 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="201310071" title="201310071" href="201310a.html#201310071">■</a> 
+loopでsleepのつづき</h3>
+<p>
+なかださんからsleepを前に持ってきて最初だけ別にすればいいとの指摘があった。<br>
+まったくもってその通りだ。bashならこんな感じで。
+</p>
+<pre>
+$ for i in foo/*; do ((n++)) &amp;&amp; sleep 1m; bar &quot;$i&quot;; done
+</pre>
+<p>
+dashだと(())は使えない。
+</p>
+<pre>
+$ for i in foo/*; do [ -n $n ] &amp;&amp; sleep 1m; bar &quot;$i&quot;; n=1; done
+</pre>
+<!-- section end -->
+</div>
+<!-- 2013/10/07 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/10/08 start -->
+<h2><a name="20131008" href="201310a.html#20131008">2013-10-08 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="201310081" title="201310081" href="201310a.html#201310081">■</a> 
+zsh: bad floating point constant</h3>
+<p>
+見慣れないエラーが出てきた。
+</p>
+<pre>
+% ls
+001.jpg  002.jpg  003.jpg  004.jpg  005.jpg  006.jpg  007.jpg  008.jpg  009.jpg  010.jpg  011.jpg  012.jpg
+% for i in *;echo $i
+zsh: bad floating point constant
+</pre>
+<p>
+なんだかよくわからないが、001.jpgとかを数値として扱おうとしてるようだ。<br>
+zshを立ち上げなおしても変わらず。<br>
+</p>
+<pre>
+% exec zsh
+% for i in 001.jpg;echo $i
+zsh: bad floating point constant
+% i=001.jpg
+zsh: bad floating point constant
+</pre>
+<p>
+ぐぐってみると~/.zcompdumpを消せばokということなので、とりあえずmvしてみる。
+</p>
+<pre>
+% mv ~/.zcompdump ~/1310/zcompdump
+% exec zsh
+% i=001.jpg
+%
+</pre>
+<p>
+なおった。zmodload -i zsh/mathfuncを試した影響か？
+</p>
+<pre>
+% zmodload -i zsh/mathfunc
+% i=001.jpg               
+</pre>
+<p>
+そうでもないようで。まあ、~/.zcompdumpは覚えておこう。
+</p>
+<!-- section end -->
+</div>
+<!-- 2013/10/08 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/10/09 start -->
+<h2><a name="20131009" href="201310a.html#20131009">2013-10-09 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="201310091" title="201310091" href="201310a.html#201310091">■</a> 
+Groovyのバグ</h3>
+<p>
+ちょっと驚いた。最初に誰でも試すだろうと思うコードがいきなりエラーになってしまった。
+</p>
+<pre>
+% groovy -v
+Groovy Version: 1.8.6 JVM: 1.7.0_25 Vendor: Oracle Corporation OS: Linux
+% groovy -e 'println &quot;Hello, World!&quot;'
+org.codehaus.groovy.control.MultipleCompilationErrorsException: startup failed:
+script_from_command_line: 1: unexpected char: 0xFFFF @ line 1, column 23.
+   println &quot;Hello, World!
+                         ^
+
+1 error
+</pre>
+<p>
+script_from_command_line: 1: unexpected char: 0xFFFF @ line 1, column 23.でぐぐってみると、<br>
+2009年からあるバグのようで、未だに直ってないというのはどういうことなのか。<br>
+one linerでは使わないってこと？
+</p>
+<!-- section end -->
+</div>
+<!-- 2013/10/09 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/10/10 start -->
+<h2><a name="20131010" href="201310a.html#20131010">2013-10-10 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="201310101" title="201310101" href="201310a.html#201310101">■</a> 
+Android版rubyを作るために</h3>
+<p>
+コンパイラはAndroid NDKを使う。
+<a href="http://developer.android.com/tools/sdk/ndk/index.html#Downloads">Android NDK | Android Developers</a></p>
+<pre>
+% ls -oh android-ndk-r9-linux-x86_64*
+-rw-rw-r-- 1 eban 234M 2013-10-08 22:30:44 android-ndk-r9-linux-x86_64-legacy-toolchains.tar.bz2
+-rw-rw-r-- 1 eban 406M 2013-10-08 22:33:30 android-ndk-r9-linux-x86_64.tar.bz2
+</pre>
+<p>
+2つとも展開する。
+</p>
+<pre>
+% du -sh android-ndk-r9
+2.0G	android-ndk-r9
+</pre>
+<p>
+いろんなバージョンを含んでいるので結構でかい。<br>
+sampleのどれかでndk-build -Bnとかすればコンパイラに渡すオプションがわかるのでそれを参考に。
+</p>
+<pre>
+% NDK_ROOT=$HOME/android/android-ndk-r9
+% PATH=$PATH:$NDK_ROOT
+% mkdir -p $NDK_ROOT/samples/main/jni   
+% echo 'main(){}' &gt; $NDK_ROOT/samples/main/jni/main.c
+% cat &gt; $NDK_ROOT/samples/main/jni/Android.mk
+LOCAL_PATH := $(call my-dir)
+
+include $(CLEAR_VARS)
+LOCAL_MODULE    := main 
+LOCAL_SRC_FILES := main.c
+
+include $(BUILD_EXECUTABLE)
+% cd $NDK_ROOT/samples/main
+% ndk-build -Bn
+rm -f ./libs/armeabi/lib*.so ./libs/armeabi-v7a/lib*.so ./libs/mips/lib*.so ./libs/x86/lib*.so
+rm -f ./libs/armeabi/gdbserver ./libs/armeabi-v7a/gdbserver ./libs/mips/gdbserver ./libs/x86/gdbserver
+rm -f ./libs/armeabi/gdb.setup ./libs/armeabi-v7a/gdb.setup ./libs/mips/gdb.setup ./libs/x86/gdb.setup
+mkdir -p obj/local/armeabi/objs/main
+echo &quot;&quot;&quot;Compile thumb&quot;&quot;  : main &lt;= main.c&quot;
+/home/eban/android/android-ndk-r9/toolchains/arm-linux-androideabi-4.6/prebuilt/linux-x86_64/bin/arm-linux-androideabi-gcc -MMD -MP -MF ./obj/local/armeabi/objs/main/main.o.d -fpic -ffunction-sections -funwind-tables -fstack-protector -no-canonical-prefixes -march=armv5te -mtune=xscale -msoft-float -mthumb -Os -g -DNDEBUG -fomit-frame-pointer -fno-strict-aliasing -finline-limit=64 -Ijni -DANDROID  -Wa,--noexecstack -Wformat -Werror=format-security  -I/home/eban/android/android-ndk-r9/platforms/android-3/arch-arm/usr/include -c  jni/main.c -o ./obj/local/armeabi/objs/main/main.o 
+mkdir -p obj/local/armeabi
+echo &quot;Executable     : main&quot;
+/home/eban/android/android-ndk-r9/toolchains/arm-linux-androideabi-4.6/prebuilt/linux-x86_64/bin/arm-linux-androideabi-g++ -Wl,--gc-sections -Wl,-z,nocopyreloc --sysroot=/home/eban/android/android-ndk-r9/platforms/android-3/arch-arm ./obj/local/armeabi/objs/main/main.o -lgcc -no-canonical-prefixes  -Wl,--no-undefined -Wl,-z,noexecstack -Wl,-z,relro -Wl,-z,now   -lc -lm -o ./obj/local/armeabi/main
+mkdir -p libs/armeabi
+echo &quot;Install        : main =&gt; libs/armeabi/main&quot;
+install -p ./obj/local/armeabi/main ./libs/armeabi/main
+/home/eban/android/android-ndk-r9/toolchains/arm-linux-androideabi-4.6/prebuilt/linux-x86_64/bin/arm-linux-androideabi-strip --strip-unneeded  ./libs/armeabi/main
+</pre>
+<p>
+たぶん必須なのは--sysrootの部分。つまり
+</p>
+<pre>
+--sysroot=$NDK_ROOT/platforms/android-3/arch-arm
+</pre>
+<p>
+という感じ。まあ、バージョンは適当に。実際にコンパイルしてみると
+</p>
+<pre>
+% ndk-build    
+Compile thumb  : main &lt;= main.c
+Executable     : main
+Install        : main =&gt; libs/armeabi/main
+</pre>
+<p>
+となる。が、ndk-buildだと面倒なので直接arm-linux-androideabi-gccを使う。
+</p>
+<!-- section end -->
+</div>
+<!-- 2013/10/10 end -->
+
+<hr>
+<div>
+<a href="201309c.html">&lt;Prev(,)</a> | 
+<a href="201310b.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

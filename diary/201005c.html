@@ -1,0 +1,346 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2010-5-c</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="201005b.html">
+<link rel="next" href="201006a.html">
+
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2010年5月下旬〜</p>
+<hr>
+<div>
+<a href="201005b.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="201006a.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2010/05/21 start -->
+<h2><a name="20100521" href="201005c.html#20100521">2010-05-21 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="201005211" title="201005211" href="201005c.html#201005211">■</a> 
+<a href="http://tdash.org/">[Twitter] tDash - Twitter Dashboard</a></h3>
+<p>
+また最近tDashを使いだしてる。<br>
+立ち上げ時の重さがいやでやめた。<br>
+PCを速くなったしどんなもんかなと思ったが、やはり重かった。<br>
+Firefoxがスクリプトの実行を中止するかどうか尋いてくるぐらい。<br>
+Ubuntuだとなんか太鼓の音が鳴るんだが、あれはなんだ？<br>
+これが軽くなってsmooth scrollがなくなれば最高なんだけど。
+</p>
+<p>
+新しいプロファイル作ってみたらそれほど重くないな。<br>
+でもセーフモードで拡張を無効にしてデフォルトの設定にしても重い。<br>
+1個1個入れて確認してみるか。
+</p>
+<!-- section end -->
+</div>
+<!-- 2010/05/21 end -->
+
+
+
+<hr class="hide">
+<!-- 2010/05/22 start -->
+<h2><a name="20100522" href="201005c.html#20100522">2010-05-22 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="201005221" title="201005221" href="201005c.html#201005221">■</a> 
+[Net] プロバイダーを変更</h3>
+<p>
+そうそう。Y!BBやめてejworksにすることにした。<br>
+無駄にrimnetのダイアルアップコースのままだったりしたんだが、<br>
+そっちを50MのADSLへ。なんか今はrimnetじゃなくてejworksって名前なんだな。<br>
+</p>
+<!-- section end -->
+</div>
+<!-- 2010/05/22 end -->
+
+
+
+<hr class="hide">
+<!-- 2010/05/23 start -->
+<h2><a name="20100523" href="201005c.html#20100523">2010-05-23 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="201005231" title="201005231" href="201005c.html#201005231">■</a> 
+[Twitter] bit.lyでtwitterへポスト</h3>
+<p>
+bit.lyに登録するとbookmarkletでtwitterにポストできるが、<br>
+ここを経由すると貼ったリンクが踏まれるとカウントしてくれるので結構楽しい。<br>
+意外なものが大くクリックされてたり。
+
+</p>
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="201005232" title="201005232" href="201005c.html#201005232">■</a> 
+[Twitter] dlvr.itで日記のrssをtwitterへポスト</h3>
+<p>
+<a href="http://gigazine.net/index.php?/news/comments/20100523_dlvrit/">GIGAZINE</a>を参考に
+<a href="http://dlvr.it/">dlvr.it</a>を使ってみることにした。短縮URLは折角登録したのでbit.lyで。<br>
+さてうまいことこの日記がポストされるかな。
+</p>
+<p>
+でもよく考えてみると手動でアップロードしてるんだから、<br>
+このタイミングで自前でtwitterにポストするスクリプトを起動すればいいんだよな。
+</p>
+<!-- section end -->
+</div>
+<!-- 2010/05/23 end -->
+
+
+
+<hr class="hide">
+<!-- 2010/05/24 start -->
+<h2><a name="20100524" href="201005c.html#20100524">2010-05-24 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="201005241" title="201005241" href="201005c.html#201005241">■</a> 
+[Ubuntu] VirtualBoxのインストール</h3>
+<p>
+Ubuntu 10.04へVirtualBox 3.2.0をインストールした。<br>
+まず/etc/apt/sources.listに
+</p>
+<pre>
+deb http://download.virtualbox.org/virtualbox/debian lucid non-free
+</pre>
+<p>
+を追加し、次にパッケージのキーを取得する。
+</p>
+<pre>
+% wget -q http://download.virtualbox.org/virtualbox/debian/oracle_vbox.asc -O- | sudo apt-key add -
+</pre>
+<p>
+sun_vbox.ascからoracle_vbox.ascに変わっているので注意。あとは普通にインストール。
+</p>
+<pre>
+% sudo aptitude update
+% sudo aptitude install virtualbox-3.2
+</pre>
+<!-- section end -->
+</div>
+<!-- 2010/05/24 end -->
+
+
+
+<hr class="hide">
+<!-- 2010/05/25 start -->
+<h2><a name="20100525" href="201005c.html#20100525">2010-05-25 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="201005251" title="201005251" href="201005c.html#201005251">■</a> 
+<a href="http://docs.fedoraproject.org/ja-JP/Fedora/13/html/Release_Notes/index.html">[Fedora] Fedora 13</a></h3>
+<p>
+とりあえず様子見ということでVirtualBoxへインストール。5分ほどで終了。<br>
+再起動したらなんかkernelがクラッシュとか報告されるが、なぜか動き続けている。<br>
+yum updateしたらSEGV。
+</p>
+<pre>
+  整理中         : papyon-0.4.5-1.fc13.noarch                           209/219 
+  整理中         : vlgothic-fonts-common-20100126-2.fc13.noarch         210/219 
+  整理中         : gnome-doc-utils-stylesheets-0.20.0-1.fc13.noarch     211/219 
+  整理中         : xkeyboard-config-1.8-4.fc13.noarch                   212/219 
+  整理中         : fedora-logos-13.0.1-1.fc13.noarch                    213/219 
+  整理中         : orca-2.29.92-1.fc13.x86_64                           214/219 
+  整理中         : python-urlgrabber-3.9.1-6.fc13.noarch                215/219 
+  整理中         : poppler-data-0.4.0-1.fc13.noarch                     216/219 
+  整理中         : perf-2.6.33.3-85.fc13.noarch                         217/219 
+  整理中         : yum-utils-1.1.26-1.fc13.noarch                       218/219 
+  整理中         : fedora-release-notes-13-3.fc13.noarch                219/219 
+セグメンテーション違反です (コアダンプ)
+</pre>
+<p>
+さてどうしたもんか。
+</p>
+<!-- section end -->
+</div>
+<!-- 2010/05/25 end -->
+
+
+
+<hr class="hide">
+<!-- 2010/05/26 start -->
+<h2><a name="20100526" href="201005c.html#20100526">2010-05-26 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="201005261" title="201005261" href="201005c.html#201005261">■</a> 
+[Fedora] Fedora 12からFedora 13へyum upgradeで更新</h3>
+<p>
+今回は何の問題もなくすんなりいけたかというと途中ちょっとあせった。<br>
+ssh経由のremoteで操作していたがなぜか途中でタイムアウトになりセッションが切れた。<br>
+これってまた最初からと思ったら、yum-complete-transactionというコマンドあった。<br>
+ちゃんと続きからupgradeしてくれた。
+</p>
+<p>
+<a href="http://fedoraproject.org/wiki/Upgrading_Fedora_using_yum#Fedora_12_-.3E_Fedora_13">Upgrading Fedora using yum - FedoraProject</a>を見たらshutdownもinitも機能しないと書いてあったので、<br>
+どうなのかと恐る恐るrebootしてみたが、ちゃんとrebootできた。<br>
+って今見たらその記述が消えてるよ！まぼろし？
+</p>
+<!-- section end -->
+</div>
+<!-- 2010/05/26 end -->
+
+
+
+<hr class="hide">
+<!-- 2010/05/27 start -->
+<h2><a name="20100527" href="201005c.html#20100527">2010-05-27 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="201005271" title="201005271" href="201005c.html#201005271">■</a> 
+[Vim] skk.vimのemacs key bind</h3>
+<p>
+skk.vimが有効なところでなにげなくCtrl-Bとかやってみたら、なんと左に動いた。<br>
+って、Ctrl-F,A,Eもいけてる。わらった。Ctrl-P,Nは補完なので残したようだ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2010/05/27 end -->
+
+
+
+<hr class="hide">
+<!-- 2010/05/28 start -->
+<h2><a name="20100528" href="201005c.html#20100528">2010-05-28 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="201005281" title="201005281" href="201005c.html#201005281">■</a> 
+[Linux] lesskeyでlessのline editをemacs key bindに</h3>
+<p>
+lessで検索しようとして数文字入力した後に^Bして残念な思いをすることがあるが、<br>
+このあたりはlesskeyで設定できる。~/.lesskeyに
+</p>
+<pre>
+#line-edit
+^B left
+^F right
+^A home
+^E end
+^D delete
+^P up
+^N down
+</pre>
+<p>
+と書いてlesskeyを実行すると~/.lessができる。これで準備OK。あとは定義したキーが使えるようになる。
+</p>
+<!-- section end -->
+</div>
+<!-- 2010/05/28 end -->
+
+
+
+<hr class="hide">
+<!-- 2010/05/29 start -->
+<h2><a name="20100529" href="201005c.html#20100529">2010-05-29 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="201005291" title="201005291" href="201005c.html#201005291">■</a> 
+<a href="http://stackoverflow.com/questions/2933251/code-golf-1x1-black-pixel">[Image] Code Golf: 1x1 black pixel - Stack Overflow</a></h3>
+<p>
+なぜかPBMやPGMのバイナリ形式(P4, P5)が出ているが、この場合はアスキー形式で十分。<br>
+&quot;P1 1 1 0&quot;のPBM形式でいける。8バイト。これならecho -nで簡単に作れる。
+</p>
+<!-- section end -->
+</div>
+<!-- 2010/05/29 end -->
+
+
+
+<hr class="hide">
+<!-- 2010/05/30 start -->
+<h2><a name="20100530" href="201005c.html#20100530">2010-05-30 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="201005301" title="201005301" href="201005c.html#201005301">■</a> 
+[Fedora] Fedora 13を入れたが、nvidiaドライバーが不安定</h3>
+<p>
+さてどうしたもんか。kmod-nvidiaを入れたらログイン画面まで行かなくなってしまった。<br>
+3回ほどF13をインストールしなおしたがやっぱ同じ症状。<br>
+不思議なことにベータ版をインストールしたほうは問題ない。<br>
+こっちを使うかな。
+</p>
+<!-- section end -->
+</div>
+<!-- 2010/05/30 end -->
+
+
+
+<hr class="hide">
+<!-- 2010/05/31 start -->
+<h2><a name="20100531" href="201005c.html#20100531">2010-05-31 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="201005311" title="201005311" href="201005c.html#201005311">■</a> 
+[twitter] twitterのリスト</h3>
+<p>
+先週までtwitterのリスト機能を使ってなかったんだけど、<br>
+これってfollowしてなくてもリストに登録できるんだと気づいて、<br>
+情報系bot等は全部unfollowしてリストにした。なんかTLがすっきりした。<br>
+RTも普通にできるし向こうはこっちをfollowしてるわけでもないし、特に問題ないかな。
+</p>
+<!-- section end -->
+</div>
+<!-- 2010/05/31 end -->
+
+<hr>
+<div>
+<a href="201005b.html">&lt;Prev(,)</a> | 
+<a href="201006a.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

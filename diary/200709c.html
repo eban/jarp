@@ -1,0 +1,371 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2007-9-c</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="200709b.html">
+<link rel="next" href="200710a.html">
+
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2007年9月下旬〜</p>
+<hr>
+<div>
+<a href="200709b.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="200710a.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2007/09/21 start -->
+<h2><a name="20070921" href="200709c.html#20070921">2007-09-21 (Fri)</a></h2>
+<!-- 2007-09-22 02:48:09 -->
+
+<div class="entry1">
+<h3><a name="200709211" title="200709211" href="200709c.html#200709211">■</a> 
+[Wellness] 歩数計</h3>
+<p>
+10年程使ってきた歩数計のボタンの接触が悪くなって、<br>
+カウンタがリセットしにくくなった。<br>
+そろそろ新しいのを買おうと思ってた矢先、<br>
+100円ショップで見つけたので買ってしまった。<br>
+表には「STEP COUNTER」の文字と5桁の液晶表示板と<br>
+カウンタのリセットボタンのみ。<br>
+裏にはQ.C PASSEDのシールが一応張ってある。
+</p>
+
+<p>
+どんなもんかと1週間ほど試してみてるんだけど、<br>
+以前に比べるとやけに歩数が多い。<br>
+今日思い立って300歩自分で数えながら歩いてみたら、<br>
+歩数計は400歩も進んでいた。本当に多目なんだなって多すぎるよ!<br>
+古いのは309歩だった。やっぱちゃんとしたのを買おう。
+</p>
+<!-- section end -->
+</div>
+<!-- 2007/09/21 end -->
+
+
+
+<hr class="hide">
+<!-- 2007/09/22 start -->
+<h2><a name="20070922" href="200709c.html#20070922">2007-09-22 (Sat)</a></h2>
+<!-- 2007-09-23 03:44:58 -->
+
+<div class="entry1">
+<h3><a name="200709221" title="200709221" href="200709c.html#200709221">■</a> 
+<a href="http://vwm.sf.net/">[Soft] VWM 1.1.5</a></h3>
+<blockquote><dl>
+<dt>
+About:
+<dd>
+VWM is an extensible window manager for the console. Built on top
+of libpseudo and libviper, VWM is more visual alternative to Screen.
+Mozilla-style plugins allow for simple expandability: follow a few simple
+API rules and drop your shared object into a directory to have it added to
+the main menu.
+</dl></blockquote>
+<!-- section end -->
+</div>
+<!-- 2007/09/22 end -->
+
+
+
+<hr class="hide">
+<!-- 2007/09/23 start -->
+<h2><a name="20070923" href="200709c.html#20070923">2007-09-23 (Sun)</a></h2>
+<!-- 2007-09-24 02:02:27 -->
+
+<div class="entry1">
+<h3><a name="200709231" title="200709231" href="200709c.html#200709231">■</a> 
+[Net] 新総裁誕生をニコニコ動画のコメントで知った</h3>
+<p>
+いや最初から決まってたんだからどうでもいいんだけど、<br>
+まさかそんなところから知らされるとは思ってもみなかった。
+</p>
+<!-- section end -->
+</div>
+<!-- 2007/09/23 end -->
+
+
+
+<hr class="hide">
+<!-- 2007/09/24 start -->
+<h2><a name="20070924" href="200709c.html#20070924">2007-09-24 (Mon)</a></h2>
+<!-- 2007-09-25 01:45:27 -->
+
+<div class="entry1">
+<h3><a name="200709241" title="200709241" href="200709c.html#200709241">■</a> 
+[Command] printf(1)</h3>
+<p>
+今日たまたま発見したprintf(1)の挙動。
+</p>
+
+<pre>
+% printf '%d\n' \'A
+65
+% printf '%d\n' \&quot;A
+65
+</pre>
+<p>
+'や&quot;で始まると文字コードに変換するらしい。<br>
+
+<a href="http://www.opengroup.org/onlinepubs/009695399/utilities/printf.html">調べてみたら</a>
+</p><blockquote><p>
+If the leading character is a single-quote or double-quote, the value
+shall be the numeric value in the underlying codeset of the character
+following the single-quote or double-quote.
+</p></blockquote><p>
+という記述が見つかった。ちゃんと決まってんだな。
+</p>
+
+<p>
+それはそれとして逆に%cが使いもんにならないのが残念。
+</p>
+
+<pre>
+% printf '%c\n' 65
+6
+</pre>
+
+<!-- section end -->
+</div>
+<!-- 2007/09/24 end -->
+
+
+
+<hr class="hide">
+<!-- 2007/09/25 start -->
+<h2><a name="20070925" href="200709c.html#20070925">2007-09-25 (Tue)</a></h2>
+<!-- 2007-09-26 02:18:23 -->
+
+<div class="entry1">
+<h3><a name="200709251" title="200709251" href="200709c.html#200709251">■</a> 
+[Firefox] TwitterFoxが調子悪い</h3>
+<p>
+うささんの情報によると1.1.2かららしいので、1.1.1に戻して様子見。<br>
+普通にTwitterFox-1.1.1.xpiという名前で置いてあった。
+</p>
+<!-- section end -->
+</div>
+<!-- 2007/09/25 end -->
+
+
+
+<hr class="hide">
+<!-- 2007/09/26 start -->
+<h2><a name="20070926" href="200709c.html#20070926">2007-09-26 (Wed)</a></h2>
+<!-- 2007-09-28 22:44:54 -->
+
+<div class="entry1">
+<h3><a name="200709261" title="200709261" href="200709c.html#200709261">■</a> 
+[Video] ffmpegでFLVファイルからmp3を取り出す</h3>
+<p>
+ffmpegを使えば意外と簡単だった。
+</p>
+
+<pre>
+% ffmpeg -i foo.flv -acodec copy foo.mp3
+</pre>
+<p>
+これだけ。-acodec copyがないとデフォルトの64k bit/sで再圧縮してしまう。<br>
+id3tagはつかないのでその辺は適当に。
+</p>
+<!-- section end -->
+</div>
+<!-- 2007/09/26 end -->
+
+
+
+<hr class="hide">
+<!-- 2007/09/27 start -->
+<h2><a name="20070927" href="200709c.html#20070927">2007-09-27 (Thu)</a></h2>
+<!-- 2007-09-28 01:58:42 -->
+
+<div class="entry1">
+<h3><a name="200709271" title="200709271" href="200709c.html#200709271">■</a> 
+<a href="http://golf.shinh.org/p.rb?Inverse+problem">[Golf] Inverse problem</a></h3>
+<p>
+解いてみて初めて出力データはこれくらいしかないんだと気づいた。
+</p>
+<!-- section end -->
+</div>
+<!-- 2007/09/27 end -->
+
+
+
+<hr class="hide">
+<!-- 2007/09/28 start -->
+<h2><a name="20070928" href="200709c.html#20070928">2007-09-28 (Fri)</a></h2>
+<!-- 2007-09-29 01:46:58 -->
+
+<div class="entry1">
+<h3><a name="200709281" title="200709281" href="200709c.html#200709281">■</a> 
+[Music] エレクトロ・ワールドと戸川純</h3>
+<p>
+ここ2,3日ずっとPerfumeのエレクトロ・ワールドばかり聴いてるけど、<br>
+戸川純のレーダーマンを思い出すのはなぜ？
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200709282" title="200709282" href="200709c.html#200709282">■</a> 
+[Firefox] /と'</h3>
+<p>
+Firefoxだと/でクイック検索というのは有名だが'でもいいんだな。<br>
+Gmailに/が食われちゃうというか検索窓に飛ばされるのがちょっといやだったが、<br>
+それも解消。そのうちやろうと思っていたkeyconfigでの対処も必要なくなった。
+</p>
+<!-- section end -->
+</div>
+<!-- 2007/09/28 end -->
+
+
+
+<hr class="hide">
+<!-- 2007/09/29 start -->
+<h2><a name="20070929" href="200709c.html#20070929">2007-09-29 (Sat)</a></h2>
+<!-- 2007-09-30 02:26:28 -->
+
+<div class="entry1">
+<h3><a name="200709291" title="200709291" href="200709c.html#200709291">■</a> 
+[Ruby] Ruby/DL2でuname(2)を呼んでみる(Ruby 1.9)</h3>
+<p>
+
+<a href="200606c.html#200606301">「dl/win32.rbをLinuxで使ってみる」</a>のつづき。って今頃!<br>
+DL::Importerを使うと
+</p>
+
+<pre>
+require 'dl/import'
+require 'dl/types'
+
+module Libc
+  extend DL::Importer
+  dlload &quot;libc.so.6&quot;
+
+  extern &quot;int uname(void*)&quot;
+end
+
+utsname = &quot;\0&quot; * 65 * 5
+Libc::uname(utsname)
+p utsname.unpack(&quot;A65&quot; * 5)
+</pre>
+<p>
+と書けるが、終了時にSEGVしてしまう。
+</p>
+
+<pre>
+[&quot;Linux&quot;, &quot;cow.localdomain&quot;, &quot;2.6.22.5-76.fc7&quot;, &quot;#1 SMP Thu Aug 30 13:47:21 EDT 2007&quot;, &quot;i686&quot;]
+-- control frame ----------
+c:0001 p:---- s:0001 b:-001 l:000000 d:000000 ------ 
+---------------------------
+-- backtrace of native function call (Use addr2line) --
+0xb7f4b861
+0xb7ec7d16
+0xb7ec7dc2
+0xb7f1b29f
+0xb7f9b420
+0xc7d430
+0xb7ed614b
+0xb7f416ea
+0xb7ed6429
+0xb7ecad34
+0xb7ece232
+0xb7ece334
+0x80486b2
+0xc27f70
+0x80485b1
+-------------------------------------------------------
+[BUG] Segmentation fault
+ruby 1.9.0 (2007-09-30) [i386-linux]
+</pre>
+
+<!-- section end -->
+</div>
+<!-- 2007/09/29 end -->
+
+
+
+<hr class="hide">
+<!-- 2007/09/30 start -->
+<h2><a name="20070930" href="200709c.html#20070930">2007-09-30 (Sun)</a></h2>
+<!-- 2007-10-01 01:23:33 -->
+
+<div class="entry1">
+<h3><a name="200709301" title="200709301" href="200709c.html#200709301">■</a> 
+<a href="http://www.naan.net/trac/wiki/TwitterFox">[Twitter] TwitterFox 1.1.4</a></h3>
+<blockquote><dl>
+<dt>
+version 1.1.4
+<dd>
+When Twitter API returns error code, TwitterFox can't open own window. Fixed this problem. 
+</dl></blockquote><p>
+ということで放置してると開けなくなる不具合は解消。<br>
+ついでにDiigo Toolbarとの衝突もいつのまにか解消していた。<br>
+1.1.3の&quot;Avoid conflict some of extension&quot;かな。
+</p>
+<!-- section end -->
+</div>
+<!-- 2007/09/30 end -->
+
+<hr>
+<div>
+<a href="200709b.html">&lt;Prev(,)</a> | 
+<a href="200710a.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

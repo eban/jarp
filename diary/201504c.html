@@ -1,0 +1,347 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2015-4-c</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="201504b.html">
+<link rel="next" href="201505a.html">
+
+<link rel="stylesheet" type="text/css" href="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.css">
+<script async type="text/javascript" src="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.js"></script>
+<script type="text/javascript">
+<!--       
+$(document).ready(function() {
+  prettyPrint();
+});
+-->
+</script>
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2015年4月下旬〜</p>
+<hr>
+<div>
+<a href="201504b.html" accesskey=",">&lt;Older(,)</a> | 
+<a href="201505a.html" accesskey=".">Newer(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2015/04/21 start -->
+<h2><a name="20150421" href="201504c.html#20150421">2015-04-21 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="201504211" title="201504211" href="201504c.html#201504211">■</a> 
+準備1 もう一度Ruby編</h3>
+<p>
+sedと同じ方針でRubyも書き直してみると意外にもちょっと速くなった。<br>
+sed版とほとんど同じというのも面白い。
+</p>
+<pre>
+% time zcat access_log.nasa.gz| ruby -EASCII-8BIT -pe 'sub(%r|(.*\[(..)/(...)/(....):(..):(..):(..).*)|){$4+{&quot;Jul&quot;=&gt;&quot;07&quot;,&quot;Aug&quot;=&gt;&quot;08&quot;}[$3]+$2+&quot; &quot;+$5+$6+$7+&quot; &quot;+$1}' &gt; access-ruby3.log
+zcat access_log.nasa.gz  3.57s user 0.18s system 5% cpu 1:09.17 total
+</pre>
+<p>
+月の変換だけsedにやらせるとさらに速くなる。
+</p>
+<pre>
+% time zcat access_log.nasa.gz| ruby -EASCII-8BIT -pe 'sub(%r|(.*\[(..)/(...)/(....):(..):(..):(..).*)|){$4+$3+$2+&quot; &quot;+$5+$6+$7+&quot; &quot;+$1}' |sed -r 's/^(....)Jul/\107/;s/^(....)Aug/\108/'&gt; access-ruby3.log 
+zcat access_log.nasa.gz  3.58s user 0.14s system 6% cpu 58.947 total
+ruby -EASCII-8BIT -pe   56.28s user 0.74s system 96% cpu 58.960 total
+sed -r 's/^(....)Jul/\107/;s/^(....)Aug/\108/' &gt; access-ruby3.log  6.98s user 1.56s system 14% cpu 59.217 total
+</pre>
+<p>
+このあたりはマルチコアのおかげのようで、いい具合に分割できると高速化も期待できる。
+</p>
+<!-- section end -->
+</div>
+<!-- 2015/04/21 end -->
+
+
+
+<hr class="hide">
+<!-- 2015/04/22 start -->
+<h2><a name="20150422" href="201504c.html#20150422">2015-04-22 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="201504221" title="201504221" href="201504c.html#201504221">■</a> 
+準備1 awk高速化編</h3>
+<p>
+いつまでやるんだという話だが、今日はawk高速化。<br>
+splitでやらなくても固定長なのでsubstrで十分。<br>
+というわけで比較してみる。
+</p>
+<pre>
+#! /bin/sh
+script1='BEGIN{h[&quot;Jul&quot;]=&quot;07&quot;;h[&quot;Aug&quot;]=&quot;08&quot;}{split(substr($4,2,21),a,/[:\/]/);print a[3]h[a[2]]a[1],a[4]a[5]a[6],$0}'
+script2='BEGIN{h[&quot;Jul&quot;]=&quot;07&quot;;h[&quot;Aug&quot;]=&quot;08&quot;}{print substr($4,9,4)h[substr($4,5,3)]substr($4,2,2),substr($4,14,2)substr($4,17,2)substr($4,20,2),$0}'
+
+x() {
+  printf &quot;%.4s %.5s: &quot; &quot;$1&quot; &quot;$3&quot;
+  zcat access_log.nasa.gz | 
+    /usr/bin/time -f '%E' $1 &quot;$2&quot; &gt; out.log 2&gt; time.log
+  cat time.log
+}
+
+x gawk &quot;$script1&quot; split
+IFS=: read x time1 &lt; time.log
+x gawk &quot;$script2&quot; substr
+IFS=: read x time2 &lt; time.log
+echo &quot;scale=2;$time1/$time2&quot; | bc
+x mawk &quot;$script1&quot; split
+IFS=: read x time1 &lt; time.log
+x mawk &quot;$script2&quot; substr
+IFS=: read x time2 &lt; time.log
+echo &quot;scale=2;$time1/$time2&quot; | bc
+x &quot;busybox awk&quot; &quot;$script1&quot; split
+IFS=: read x time1 &lt; time.log
+x &quot;busybox awk&quot; &quot;$script2&quot; substr
+IFS=: read x time2 &lt; time.log
+echo &quot;scale=2;$time1/$time2&quot; | bc
+</pre>
+<p>
+これを実行するとやはりsubstrだけのほうが速い。
+</p>
+<pre>
+gawk split: 0:12.70
+gawk subst: 0:07.19
+1.76
+mawk split: 0:05.68
+mawk subst: 0:04.89
+1.16
+busy split: 0:23.64
+busy subst: 0:18.95
+1.24
+</pre>
+<p>
+gawkは1.76倍となぜかかなり高速化される。<br>
+速くても位置を指定するのが面倒なのが欠点。
+</p>
+<!-- section end -->
+</div>
+<!-- 2015/04/22 end -->
+
+
+
+<hr class="hide">
+<!-- 2015/04/23 start -->
+<h2><a name="20150423" href="201504c.html#20150423">2015-04-23 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="201504231" title="201504231" href="201504c.html#201504231">■</a> 
+クイズドレミファドン！</h3>
+<p>
+もう1ヶ月も前に放送されたドレミファドン！を見た。<br>
+イントロクイズしか見てないが、誰も答えられないハレ晴れユカイが印象的だった。<br>
+アニメはアニメでも深夜アニメは別口なんだな。<br>
+紅蓮の弓矢も勘で答えて当たっちゃったって言ってたし。
+</p>
+<!-- section end -->
+</div>
+<!-- 2015/04/23 end -->
+
+
+
+<hr class="hide">
+<!-- 2015/04/24 start -->
+<h2><a name="20150424" href="201504c.html#20150424">2015-04-24 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="201504241" title="201504241" href="201504c.html#201504241">■</a> 
+Ubuntu 15.04</h3>
+<p>
+例によってさくらのVPSのUbuntuを15.04に上げた。<br>
+サーバ版なのでいつものようにdo-release-upgradeで。<br>
+何事もなく完了。
+
+</p>
+<!-- section end -->
+</div>
+<!-- 2015/04/24 end -->
+
+
+
+<hr class="hide">
+<!-- 2015/04/25 start -->
+<h2><a name="20150425" href="201504c.html#20150425">2015-04-25 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="201504251" title="201504251" href="201504c.html#201504251">■</a> 
+大使たち</h3>
+<p>
+世界一受けたい授業で斜めから覗き込むとドクロが見えるという絵画があると言ってたので、<br>
+さっそくぐぐって
+<a href="http://ja.wikipedia.org/wiki/%E3%83%8F%E3%83%B3%E3%82%B9%E3%83%BB%E3%83%9B%E3%83%AB%E3%83%90%E3%82%A4%E3%83%B3">ハンス・ホルバイン - Wikipedia</a>を発見。<br>
+大使たちというタイトルらしい。<br>
+というわけでconvertで実際に変換してみる。<br>
+大元の画像は30000x29560で、200MB以上あるので注意。<br>
+そんなに要らないので800pxで。まあ、これでも大きいので適当に縮小する。<br>
+convertのdistortにAffineProjectionがあるのでこれを試す。<br>
+適当にパラメータを設定して、いい感じなところを探した結果がこれ。
+</p>
+<pre>
+% convert 800px-Hans_Holbein_the_Younger_-_The_Ambassadors_-_Google_Art_Project.jpg \
+  -resize 40% -matte -virtual-pixel Transparent \
+  +distort AffineProjection &quot;0.5,1,0,2,0,0&quot; +repage amb.jpg
+</pre>
+<p>
+やたらと縦長だけど一応出てきた。
+</p>
+<p>
+<img src="../images/amb.jpg" alt="">
+</p>
+<!-- section end -->
+</div>
+<!-- 2015/04/25 end -->
+
+
+
+<hr class="hide">
+<!-- 2015/04/26 start -->
+<h2><a name="20150426" href="201504c.html#20150426">2015-04-26 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="201504261" title="201504261" href="201504c.html#201504261">■</a> 
+家のPCもUbuntu 15.04へ</h3>
+<p>
+サーバ版じゃなくてもdo-release-upgradeは可能なのでやらせてみた。<br>
+アップグレード自体はまったく問題なし。<br>
+再起動すると何かFailedと出て先に進まない。<br>
+これはどうしたもんかと、そろそろSolydXに移行しようと思っていたし、<br>
+別のNote PCでインストール用DVDを焼くことにした。<br>
+ISOイメージのダウンロードも時間がかかるよなあとか思ってるうちに、<br>
+なんとUbuntuのブートプロセスが先に進み出した。<br>
+すでに10分20分ぐらい経ってたと思うがいったい何をしていたのか？<br>
+まあ、結局問題なく立ち上がったようでよかった。
+</p>
+<p>
+で、あまり変化ないんだろうなと思ってたら、微妙なところが変わっていた。<br>
+今まではフォーカスされたウィンドウのタイトルバーは色が変わってわかりやすかったが、<br>
+なぜかタイトルの文字とツールアイコンだけ色が変わる仕様になった。<br>
+これは非常にわかりにくい。Xubuntuだけ？
+</p>
+<p>
+会社ではすでにSolydXにしちゃってるし、そんなことにはなってないし、<br>
+というわけでSolydXをダウンロード中。連休にでも試そう。
+</p>
+<!-- section end -->
+</div>
+<!-- 2015/04/26 end -->
+
+
+
+<hr class="hide">
+<!-- 2015/04/27 start -->
+<h2><a name="20150427" href="201504c.html#20150427">2015-04-27 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="201504271" title="201504271" href="201504c.html#201504271">■</a> 
+<a href="https://cygwin.com/ml/cygwin-announce/2015-04/msg00046.html">Updated: Cygwin 2.0.0-1</a></h3>
+<p>
+Cygwinもとうとうメジャーバージョンが2へ上がった。ちょっと感慨深い。<br>
+その割にはあまり目立った変化がないような？<br>
+ああ、テストリリースをやめてマイナーバージョンが奇数だったらテストリリースってことにしたのか。<br>
+そのためにメジャーを2に上げたという感じだな。
+</p>
+<!-- section end -->
+</div>
+<!-- 2015/04/27 end -->
+
+
+
+<hr class="hide">
+<!-- 2015/04/28 start -->
+<h2><a name="20150428" href="201504c.html#20150428">2015-04-28 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="201504281" title="201504281" href="201504c.html#201504281">■</a> 
+タイトルの色</h3>
+<p>
+例の気になっていた選ばれたウィンドウのタイトルの色は、<br>
+SolydXでも同じように目立たない感じになっていて、<br>
+Ubuntuとか関係なく最新のXfce4の変更のようで。<br>
+じゃあ、Windows 7はどうだっけと確認してみると、<br>
+ちょっと色が濃くなるぐらいでこれもまたまったく目立たない。<br>
+Windows XPは無粋なほど色が濃くなっていた。<br>
+あれ、じゃこれって最近の潮流？<br>
+というか気づいてなかった時点でどうでもいいのかもしれない。
+</p>
+<!-- section end -->
+</div>
+<!-- 2015/04/28 end -->
+
+
+
+<hr class="hide">
+<!-- 2015/04/29 start -->
+<h2><a name="20150429" href="201504c.html#20150429">2015-04-29 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="201504291" title="201504291" href="201504c.html#201504291">■</a> 
+MediatombがPS3で認識されない</h3>
+<p>
+Ubuntu 15.04にしてからどうもだめなようで。<br>
+原因がさっぱりわからない。<br>
+とりあえずUMSでもいいか。
+</p>
+<!-- section end -->
+</div>
+<!-- 2015/04/29 end -->
+
+<hr>
+<div>
+<a href="201504b.html">&lt;Older(,)</a> | 
+<a href="201505a.html">Newer(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

@@ -1,0 +1,402 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2009-5-b</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="200905a.html">
+<link rel="next" href="200905c.html">
+
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2009年5月中旬〜</p>
+<hr>
+<div>
+<a href="200905a.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="200905c.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2009/05/11 start -->
+<h2><a name="20090511" href="200905b.html#20090511">2009-05-11 (Mon)</a></h2>
+<!-- 2009-05-12 01:20:39 -->
+
+<div class="entry1">
+<h3><a name="200905111" title="200905111" href="200905b.html#200905111">■</a> 
+[Soft] gripとsound-juicer</h3>
+<p>
+最近gripでrippingするときにflacにしてるんだけど、<br>
+タグがついてないことに気づいた。<br>
+sound-juicerならちゃんとつく。<br>
+まあ、どっちでもいいんだけどgripも設定してみる。<br>
+~/.grip-flacを見るとやる気のない設定になってた。
+</p>
+
+<pre>
+cmdline -V -o %m %w
+</pre>
+<p>
+これを
+</p>
+
+<pre>
+cmdline -V -o %m -T TITLE=%n -T ARTIST=%a -T TRACKNUMBER=%t -T ALBUM=%d -T GENRE=%G -T YEAR=%y %w
+</pre>
+<p>
+に変更。flacはmplayerでは何もメタ情報が表示されないけど、<br>
+vlcではタイトル、アーティスト名が表示されるので一応これでよさげ。
+</p>
+
+<p>
+メタな情報を表示したりあとからタグ情報を入れるにはmetaflacコマンドを使う。
+</p>
+
+<pre>
+% metaflac --list 03-あなたが離れない.flac|grep comment
+  comments: 6
+    comment[0]: TITLE=あなたが離れない
+    comment[1]: ARTIST=PAMELAH
+    comment[2]: TRACKNUMBER=03
+    comment[3]: ALBUM=Pure
+    comment[4]: GENRE=Other
+    comment[5]: YEAR=1996
+</pre>
+
+
+<!-- section end -->
+</div>
+<!-- 2009/05/11 end -->
+
+
+
+<hr class="hide">
+<!-- 2009/05/12 start -->
+<h2><a name="20090512" href="200905b.html#20090512">2009-05-12 (Tue)</a></h2>
+<!-- 2009-05-13 02:01:41 -->
+
+<div class="entry1">
+<h3><a name="200905121" title="200905121" href="200905b.html#200905121">■</a> 
+[Linux] ext4でハング2回</h3>
+<p>
+どうもext4の調子が悪い。ささる感じでその領域だけが反応せず、<br>
+umountもできないのでシャットダウンも途中でだんまり。<br>
+2回起きたのでext3に戻すことにした。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200905122" title="200905122" href="200905b.html#200905122">■</a> 
+[Ubuntu] ハイバネート失敗もext4が原因か？</h3>
+<p>
+会社のPCにインストールしたUbuntu 9.04もハイバネートが失敗するが、<br>
+これもext4が原因かと思いext3で再インストールしてみた。<br>
+で、結果はちゃんと復帰するようになった。うーむ。<br>
+ext4はもうちょっと様子見たほうがよさげだな。
+</p>
+<!-- section end -->
+</div>
+<!-- 2009/05/12 end -->
+
+
+
+<hr class="hide">
+<!-- 2009/05/13 start -->
+<h2><a name="20090513" href="200905b.html#20090513">2009-05-13 (Wed)</a></h2>
+<!-- 2009-05-14 01:11:37 -->
+
+<div class="entry1">
+<h3><a name="200905131" title="200905131" href="200905b.html#200905131">■</a> 
+[Soft] rdesktop</h3>
+<p>
+Ubuntuをインストールしてもろもろ設定していると、<br>
+こんなときにしか見ないマニュアルなんてのがあって、<br>
+rdesktopもその一つ。<br>
+ランチャに一度登録しちゃえばオプションはもうどうでもいいしね。
+</p>
+
+<p>
+ここで-g 80%という記述を発見。<br>
+いままでは-g 1024x768とか指定してたけど、%でいけるんだな。<br>
+早速使ってみるとなぜか立ち上がらない。ターミナル上では問題ないのに。<br>
+しばらく悩んでランチャでは%がメタ文字だと気づいた。<br>
+2つ重ねて-g 80%%としないとだめなようだ。
+</p>
+
+<p>
+あと-r disk:home=/home/ebanてな具合で指定すれば、<br>
+windows側から\tsclienthomeで/home/ebanがアクセスできるようになる。<br>
+これはめちゃくちゃ便利。sambaも要らない。
+</p>
+<!-- section end -->
+</div>
+<!-- 2009/05/13 end -->
+
+
+
+<hr class="hide">
+<!-- 2009/05/14 start -->
+<h2><a name="20090514" href="200905b.html#20090514">2009-05-14 (Thu)</a></h2>
+<!-- 2009-05-15 01:32:21 -->
+
+<div class="entry1">
+<h3><a name="200905141" title="200905141" href="200905b.html#200905141">■</a> 
+[GNOME] GNOMEのキーバインドをEmacsに</h3>
+<p>
+いつも忘れるので書いとく。
+</p>
+
+<pre>
+% gconftool-2 -s -t string /desktop/gnome/interface/gtk_key_theme Emacs
+</pre>
+
+<!-- section end -->
+</div>
+<!-- 2009/05/14 end -->
+
+
+
+<hr class="hide">
+<!-- 2009/05/15 start -->
+<h2><a name="20090515" href="200905b.html#20090515">2009-05-15 (Fri)</a></h2>
+<!-- 2009-05-16 02:55:53 -->
+
+<div class="entry1">
+<h3><a name="200905151" title="200905151" href="200905b.html#200905151">■</a> 
+[Movie] mencoderでインターレース解除</h3>
+<p>
+man mencoderしてinterlaceで検索してもどれを使えばいいのかよくわからない。<br>
+ぐぐってみると-vfでフィルタを指定するらしい。<br>
+とりあえず-vf pp=lbってので試してみる。<br>
+確かに縞模様は消えるが思ったほどきれいではない。<br>
+しかもフィルタは書いた通りに適用されるので順番が重要。
+</p>
+
+<p>
+ImageMagickのconvert同様、mencoderもミニ言語と化してるな。<br>
+BKのかたまりだ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2009/05/15 end -->
+
+
+
+<hr class="hide">
+<!-- 2009/05/16 start -->
+<h2><a name="20090516" href="200905b.html#20090516">2009-05-16 (Sat)</a></h2>
+<!-- 2009-05-17 03:15:11 -->
+
+<div class="entry1">
+<h3><a name="200905161" title="200905161" href="200905b.html#200905161">■</a> 
+[Fedora] vesaとかNoAccelとか</h3>
+<p>
+Xの表示が乱れる件は全然改善されないわけだが、<br>
+vesaとかNoAccelとかにすれば遅いなりにきちんと表示されるようにはなる。<br>
+ただし、smplayerが使えないとかmplayerが全画面表示できないとかいろいろ問題あり。<br>
+だったら乱れるほうがましという状況。<br>
+F11って今月出るんかな。
+</p>
+<!-- section end -->
+</div>
+<!-- 2009/05/16 end -->
+
+
+
+<hr class="hide">
+<!-- 2009/05/17 start -->
+<h2><a name="20090517" href="200905b.html#20090517">2009-05-17 (Sun)</a></h2>
+<!-- 2009-05-18 02:34:48 -->
+
+<div class="entry1">
+<h3><a name="200905171" title="200905171" href="200905b.html#200905171">■</a> 
+[Fedora] /etc/xorg.confにXAA追加で表示乱れ解消</h3>
+<p>
+
+<a href="http://twitter.com/hi_saito/status/1823193803">斉藤さんからの指摘</a>でXAAを追加したら表示乱れが解消した。素晴らしい。<br>
+半年振りにすっきりした。ありがとうございます。
+</p>
+
+<pre>
+Section &quot;Device&quot;
+  Identifier &quot;Videocard0&quot;
+  Driver &quot;intel&quot;
+  Option &quot;AccelMethod&quot; &quot;XAA&quot;
+EndSection
+</pre>
+
+
+<!-- section end -->
+</div>
+<!-- 2009/05/17 end -->
+
+
+
+<hr class="hide">
+<!-- 2009/05/18 start -->
+<h2><a name="20090518" href="200905b.html#20090518">2009-05-18 (Mon)</a></h2>
+<!-- 2009-05-19 02:15:20 -->
+
+<div class="entry1">
+<h3><a name="200905181" title="200905181" href="200905b.html#200905181">■</a> 
+<a href="http://prism.mozilla.com/">[Prism] Prism 1.0 Beta 1</a></h3>
+<p>
+Prism 1.0 Beta 1が出たのでGmailで試した。<br>
+適当に展開してprism/prismを実行。<br>
+URLにhttps://mail.google.com/mail/、<br>
+NameにGmailと入れてDesktopにショートカットを作るようにした。<br>
+たしかに起動は速い。Flashを使うガジェットも動いてる。
+</p>
+
+<p>
+右下の歯車からStylishはインストールできたが、<br>
+userstyleはどうやってインストールすればいいんだろう。
+</p>
+<!-- section end -->
+</div>
+<!-- 2009/05/18 end -->
+
+
+
+<hr class="hide">
+<!-- 2009/05/19 start -->
+<h2><a name="20090519" href="200905b.html#20090519">2009-05-19 (Tue)</a></h2>
+<!-- 2009-05-20 01:32:02 -->
+
+<div class="entry1">
+<h3><a name="200905191" title="200905191" href="200905b.html#200905191">■</a> 
+[Prism] PrismでStylish拡張を使う</h3>
+<p>
+結局userstyleをコピペして無理矢理解決させた。ちょっと面倒だな。<br>
+物はstylish.sqliteに入ってるので手軽にファイルコピーってなわけにもいかない。<br>
+ああ、userstyles.orgにはグリモン版があるからそっちを使う手もあるか。
+</p>
+<!-- section end -->
+</div>
+<!-- 2009/05/19 end -->
+
+
+
+<hr class="hide">
+<!-- 2009/05/20 start -->
+<h2><a name="20090520" href="200905b.html#20090520">2009-05-20 (Wed)</a></h2>
+<!-- 2009-05-21 01:28:00 -->
+
+<div class="entry1">
+<h3><a name="200905201" title="200905201" href="200905b.html#200905201">■</a> 
+[Fedora] automountのマウントポイントの名前</h3>
+<p>
+USBストレージをつなぐと自動でマウントしてくれるのはいいんだけど、
+</p>
+
+<pre>
+% mount | grep media
+/dev/sda1 on /media/disk type fuseblk (rw,nosuid,nodev,allow_other,blksize=4096)
+/dev/sda4 on /media/disk-1 type ext4 (rw,nosuid,nodev,uhelper=hal)
+/dev/sda2 on /media/disk-2 type ext3 (rw,nosuid,nodev,uhelper=hal)
+/dev/sdd1 on /media/disk-3 type ext3 (rw,nosuid,nodev,uhelper=hal)
+</pre>
+<p>
+みたいにdisk, disk-1,...じゃわかりにくい。わかりにくいだけならまだいい。<br>
+つなぐたびに別の名前になるので非常に扱いにくい。<br>
+調べてみるとこの名前はe2labelでつけた名前がそのまま使われるという話。<br>
+やってみよう。
+</p>
+
+<pre>
+% ls -l /dev/sdd1
+brw-rw---- 1 root disk 8, 49 2009-05-11 22:27 /dev/sdd1
+% umount /dev/sdd1
+% e2label /dev/sdd1
+
+% e2label /dev/sdd1 hdcn
+</pre>
+<p>
+USBのケーブルを抜き差し。
+</p>
+
+<pre>
+% mount|grep sdd1 
+/dev/sdd1 on /media/hdcn type ext3 (rw,nosuid,nodev,uhelper=hal)
+</pre>
+<p>
+うまくいったようだ。
+</p>
+
+<p>
+disk-1のext4はUbuntu 9.04が入ってるんだけど、e2labelでいいんかな。<br>
+ま、そのうちext3にして入れ直すつもりだし壊れてもいいからやってみるか。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200905202" title="200905202" href="200905b.html#200905202">■</a> 
+[Linux] ext4からext3へ変換？</h3>
+<p>
+ext3からext4へは変換できるようだけど、逆はどうなんだろう？
+</p>
+<!-- section end -->
+</div>
+<!-- 2009/05/20 end -->
+
+<hr>
+<div>
+<a href="200905a.html">&lt;Prev(,)</a> | 
+<a href="200905c.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

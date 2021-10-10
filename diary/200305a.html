@@ -1,0 +1,614 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2003-5-a</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="200304c.html">
+<link rel="next" href="200305b.html">
+
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2003年5月上旬〜</p>
+<hr>
+<div>
+<a href="200304c.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="200305b.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2003/05/01 start -->
+<h2><a name="20030501" href="200305a.html#20030501">2003-05-01 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="200305011" title="200305011" href="200305a.html#200305011">■</a> 
+4月のspam</h3>
+<p>
+776通。また急に増えた。海外と新年度は関係ないと思うんだけど、なぜだ？
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200305012" title="200305012" href="200305a.html#200305012">■</a> 
+<a href="http://raa.ruby-lang.org/project/devel-logger/">[Ruby] devel-logger 1.0.2</a></h3>
+<p>
+更新。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200305013" title="200305013" href="200305a.html#200305013">■</a> 
+<a href="http://raa.ruby-lang.org/project/import_module/">[Ruby] import_module 0.78</a></h3>
+<p>
+更新。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200305014" title="200305014" href="200305a.html#200305014">■</a> 
+<a href="http://www.iptables.org/">[Linux] iptables 1.2.8</a></h3>
+<p>
+更新。
+</p>
+<pre>
+% make PREFIX=/usr COPT_FLAGS=-Os
+% sudo make PREFIX=/usr install
+</pre>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200305015" title="200305015" href="200305a.html#200305015">■</a> 
+[Ruby] /\n$/</h3>
+<p>
+今日からまたマッチするようになった。
+</p>
+<pre>
+% ruby -ve 'p &quot;\n&quot; =~ /\n$/'
+ruby 1.8.0 (2003-05-01) [i386-linux]
+0
+</pre>
+
+<!-- section end -->
+</div>
+<!-- 2003/05/01 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/05/02 start -->
+<h2><a name="20030502" href="200305a.html#20030502">2003-05-02 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="200305021" title="200305021" href="200305a.html#200305021">■</a> 
+<a href="http://www.openssh.org/">[Linux] OpenSSH 3.6.1p2</a></h3>
+<p>
+更新。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200305022" title="200305022" href="200305a.html#200305022">■</a> 
+[Ruby] ljust, rjust, center</h3>
+<p>
+2つ目の引数でpad文字列も指定できるようになった。
+</p>
+<pre>
+% ruby -ve 'p &quot;foo&quot;.ljust(10, &quot;#&quot;)'
+ruby 1.8.0 (2003-05-02) [i386-linux]
+&quot;foo#######&quot;
+% ruby -ve 'p &quot;foo&quot;.rjust(10, &quot;#&quot;)'
+ruby 1.8.0 (2003-05-02) [i386-linux]
+&quot;#######foo&quot;
+% ruby -ve 'p &quot;foo&quot;.center(10, &quot;#&quot;)'
+ruby 1.8.0 (2003-05-02) [i386-linux]
+&quot;###foo####&quot;
+</pre>
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200305023" title="200305023" href="200305a.html#200305023">■</a> 
+[Ruby] JARH</h3>
+<pre>
+print &quot;Just another Ruby hacker,&quot;.center(10000).strip
+</pre>
+
+<!-- section end -->
+</div>
+<!-- 2003/05/02 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/05/03 start -->
+<h2><a name="20030503" href="200305a.html#20030503">2003-05-03 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="200305031" title="200305031" href="200305a.html#200305031">■</a> 
+<a href="http://raa.ruby-lang.org/project/win32ole/">[Ruby] Win32OLE 0.5.3</a></h3>
+<p>
+更新。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200305032" title="200305032" href="200305a.html#200305032">■</a> 
+<a href="http://www.mozilla.org/projects/phoenix/">[Linux] Phoenix 0.5</a></h3>
+<p>
+結局名前はどうなるのかわからんが、Phoenix 0.5を使ってみた。
+いやー、これなら全く問題ないなあ。
+しばらく使ってみよう。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200305033" title="200305033" href="200305a.html#200305033">■</a> 
+[Video] The RING</h3>
+<p>
+原作とは違い、映画版リングだった。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200305034" title="200305034" href="200305a.html#200305034">■</a> 
+[Video] X Files 終章 1, 2, 3</h3>
+<p>
+終章というからにはこれで終わりだと思うんだけど、
+とうとうというよりやっと終わるかという感じだ。
+やはり、モルダーとスカリーが中心じゃないとX Filesという気がしないというか、
+T1000型ターミネータじゃなあ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2003/05/03 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/05/04 start -->
+<h2><a name="20030504" href="200305a.html#20030504">2003-05-04 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="200305041" title="200305041" href="200305a.html#200305041">■</a> 
+[spam?] what's happening ?</h3>
+<p>
+一行置きにwhat's happening ?と5行だけのメールが来た。
+いや、こっちが聞きたいんだが。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200305042" title="200305042" href="200305a.html#200305042">■</a> 
+<a href="http://raa.ruby-lang.org/project/xmlscan/">[Ruby] xmlscan 0.2.3</a></h3>
+<p>
+更新。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200305043" title="200305043" href="200305a.html#200305043">■</a> 
+[Ruby] JARH</h3>
+<pre>
+print &quot;Just &quot; or print &quot;another &quot; or print &quot;Ruby &quot; or print &quot;hacker,&quot;
+</pre>
+
+<!-- section end -->
+</div>
+<!-- 2003/05/04 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/05/05 start -->
+<h2><a name="20030505" href="200305a.html#20030505">2003-05-05 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="200305051" title="200305051" href="200305a.html#200305051">■</a> 
+[Ruby] Array#values_at, Hash#values_at</h3>
+<p>
+今日からはvalues_atという名前に。
+</p>
+<pre>
+% ruby -e '[].select(0)'
+-e:1: warning: Array#select(index..) is deprecated; use Array#values_at
+% ruby -e '{}.select(0)'
+-e:1: warning: Hash#select(key..) is deprecated; use Hash#values_at
+</pre>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200305052" title="200305052" href="200305a.html#200305052">■</a> 
+<a href="http://raa.ruby-lang.org/project/bz2/">[Ruby] bz2 0.1.7</a></h3>
+<p>
+更新。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200305053" title="200305053" href="200305a.html#200305053">■</a> 
+<a href="http://www.rpm.org/">[Linux] RPM 4.1</a></h3>
+<p>
+<a href="http://developer.intel.com/software/products/compilers/clin/">icc 7.1</a>を取ってきたら、rpmが必要だということになり、
+<a href="200203c.html#200203281">また</a>makeした。
+</p>
+<pre>
+% CFLAGS=-Os CXXFLAGS=-Os ./configure --prefix=/usr
+</pre>
+<p>
+なぜか/usr/include/python2.2を見に行ってしまい失敗。
+うちの場合は/usr/local/include/python2.2なんだけどなあ。
+面倒だからpythonは外そう。
+</p>
+<pre>
+% CFLAGS=-Os CXXFLAGS=-Os ./configure --prefix=/usr --without-python
+% make
+% sudo make install
+% sudo rpm --initdb
+</pre>
+<p>
+これで準備ok。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200305054" title="200305054" href="200305a.html#200305054">■</a> 
+<a href="http://developer.intel.com/software/products/compilers/clin/">[Linux] Intel C++ Compiler 7.1 for Linux</a></h3>
+<p>
+というわけで、
+</p>
+<pre>
+% sudo ./install
+</pre>
+<p>
+で、適当に答えてインストール完。
+rpmのオプションは念のため--nodepsを追加した。
+あとはメールで送られてきたライセンスを/opt/intel/licensesへコピーして、
+</p>
+<pre>
+% source /opt/intel/compiler70/ia32/bin/iccvars.sh
+</pre>
+<p>
+すればiccが使えるようになる。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200305055" title="200305055" href="200305a.html#200305055">■</a> 
+[Ruby] Ruby 1.8をiccでmake</h3>
+<p>
+warningがいっぱい出るのはまあいいとして、拡張ライブラリをmakeするとこで
+</p>
+<pre>
+../ruby/ext/extmk.rb:102: warning: Insecure world writable dir \
+  /opt/intel/compiler70/ia32/bin, mode 040777
+</pre>
+<p>
+と出るのが気になった。
+</p>
+<pre>
+% ls -l /opt/intel/compiler70/ia32 
+total 16
+drwxrwxrwx    2 root     root         4096 May  5 18:21 bin
+drwxrwxrwx    3 root     root         4096 May  5 18:05 include
+drwxrwxrwx    2 root     root         4096 May  5 18:05 lib
+drwxrwxrwx    5 root     root         4096 May  5 18:04 substitute_headers
+</pre>
+<p>
+なんでこんなパーミッションにするかな。
+</p>
+
+<p>
+その後ext/pty/pty.cをコンパイルするところで
+</p>
+<pre>
+/usr/include/bits/xtitypes.h(30): error: identifier &quot;__SLONGWORD_TYPE&quot; is undefined
+  typedef __SLONGWORD_TYPE __t_scalar_t;
+</pre>
+<p>
+となりエラーに。iccの&lt;bits/types.h&gt;が微妙に対応できてなさそうだ。
+</p>
+<pre>
+#define __SLONGWORD_TYPE        long int
+#define __ULONGWORD_TYPE        unsigned long int
+</pre>
+<p>
+を/opt/intel/compiler70/ia32/substitute_headers/bits/types.hに追加しとこう。
+</p>
+
+<p>
+make testも無事通った。
+</p>
+<!-- section end -->
+</div>
+<!-- 2003/05/05 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/05/06 start -->
+<h2><a name="20030506" href="200305a.html#20030506">2003-05-06 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="200305061" title="200305061" href="200305a.html#200305061">■</a> 
+[PC] リカバリCD</h3>
+<p>
+リカバリCDで立ち上げてみたら、フォーマットと削除しかない。
+せめて上書き再インストールぐらいあればなあ。
+KNOPPIXってNTFSはサポートしてるんだろうか？
+明日試してみよう。
+</p>
+<!-- section end -->
+</div>
+<!-- 2003/05/06 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/05/07 start -->
+<h2><a name="20030507" href="200305a.html#20030507">2003-05-07 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="200305071" title="200305071" href="200305a.html#200305071">■</a> 
+[Linux] KNOPPIX ゴールデンウィーク版</h3>
+<p>
+vaio nopcmciaで起動。ちゃんとNTFSを読めた。
+ネットワークも使えるので早速rsyncでコピー。
+これで準備okだ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200305072" title="200305072" href="200305a.html#200305072">■</a> 
+[Cygwin][Linux] wineでsetup.exeを実行</h3>
+<p>
+なぜかだんだん遅くなる。
+最終的にはtextutilsのtextutils.moを書くとこででかいファイルを作って止まらなくなった。
+textutilsを外したら最後までいけた。いや、
+</p>
+<pre>
+Created not existing system directory 'C:\WINNT\Desktop'
+</pre>
+<p>
+だった。あるんだけどなあ。
+とりあえず、もう一度setup.exeを起動してtextutilsをインストールしてみる。
+いけた。
+</p>
+
+<p>
+でもwine bashするとsegvに。惜しい。
+</p>
+<!-- section end -->
+</div>
+<!-- 2003/05/07 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/05/08 start -->
+<h2><a name="20030508" href="200305a.html#20030508">2003-05-08 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="200305081" title="200305081" href="200305a.html#200305081">■</a> 
+<a href="http://cygwin.com/ml/cygwin-announce/2003-05/msg00004.html">[Cygwin] New package: ruby-1.6.8-1</a></h3>
+<p>
+setup.ini的にはパッケージ名がrubyだから、たぶん変なことになりそうだ。
+mingw32とかあるしsetup.exeとは別にネットワークインストーラがあったほうがいいのかもしれない。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200305082" title="200305082" href="200305a.html#200305082">■</a> 
+<a href="http://www.rubyist.net/~tamura/d/?date=20030507#p03">[Linux] KNOPPIX</a></h3>
+<p>
+NTFSにあるファイルのバックアップを取るだけなので、
+とりあえずは何でもいいというか、会社で見せたら人気者に。
+</p>
+<!-- section end -->
+</div>
+<!-- 2003/05/08 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/05/09 start -->
+<h2><a name="20030509" href="200305a.html#20030509">2003-05-09 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="200305091" title="200305091" href="200305a.html#200305091">■</a> 
+<a href="http://znz.s1.xrea.com/t/?date=20030508#p01">[Ruby] File.utime</a></h3>
+<p>
+内部的にはapply2files()で、
+</p>
+<pre>
+  for (i=0; i&lt;args-&gt;len; i++) {
+      path = args-&gt;ptr[i];
+      SafeStringValue(path);
+      (*func)(RSTRING(path)-&gt;ptr, arg);
+  }
+</pre>
+<p>
+となってるだけなので、何もしないってことになりますね。
+args-&gt;lenが1以上かどうかぐらいはチェックすべきか。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200305092" title="200305092" href="200305a.html#200305092">■</a> 
+<a href="http://qdbm.sf.net/">QDBM 1.5.3</a></h3>
+<p>
+おぉ。
+</p>
+<pre>
+Changes: An API for Ruby was added. It wraps the basic API and the
+extended API of QDBM. You can use a database like a hash instance.
+</pre>
+
+<!-- section end -->
+</div>
+<!-- 2003/05/09 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/05/10 start -->
+<h2><a name="20030510" href="200305a.html#20030510">2003-05-10 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="200305101" title="200305101" href="200305a.html#200305101">■</a> 
+[Ruby] yaml(syck)</h3>
+<p>
+importされたが、yamlはエラーになる。
+</p>
+<pre>
+% ruby -ryaml -e0 
+/usr/local/lib/ruby/1.8/yaml/rubytypes.rb:26: undefined method `add_ruby_type' for YAML:Module (NoMethodError)
+        from /usr/local/lib/ruby/1.8/yaml.rb:19:in `require'
+        from /usr/local/lib/ruby/1.8/yaml.rb:19
+</pre>
+<p>
+add_ruby_typeはyamlrb-0.49.2を参考にすれば解決しそうだけど、
+他にもありそうだなあ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200305102" title="200305102" href="200305a.html#200305102">■</a> 
+[Cygwin] sshd</h3>
+<p>
+administrator権限で、ssh-host-config --yesを実行。
+~/.sshはバックアップから戻してあるので、元通りになっている。
+あとはサービスを起動すれば他からsshできるはずだけど、
+なぜかpassword認証になってしまう。
+イベントビューアで見ても
+</p>
+<pre>
+Accepted password for watanabe from 198.168.1.1 ...
+</pre>
+<p>
+てな感じだけだし、クライアント側でssh -vで見てもわからない。
+/var/log/sshd.logは0バイトのままだし。うーむ。
+ここで、~/.ssh直下のファイルのパーミッションを確認してみると、
+全部0600になっていた。これじゃSYSTEMから見えないよね。
+秘密鍵以外を+rしたらちゃんとsshできるようになった。
+にしてもなんで0600だったのだろう？よくわからん。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200305103" title="200305103" href="200305a.html#200305103">■</a> 
+[Win32] freecommandlinetools2.exe</h3>
+<p>
+いろいろ復旧作業をしているわけだが、
+bccをダウンロードしようとすると正規の手続を踏むと登録が面倒。
+電話番号がrequiredだとわかった瞬間にそのページを閉じた。
+まったくもって馬鹿げてる。
+どうせ、ftpサイトにあるだろうとftp.borland.co.jpからたどったら、
+<a href="ftp://ftp.borland.co.jp/pub/cppbuild/">ここ</a>にあった。うささんの情報によると
+<a href="http://www.borland.co.jp/cppbuilder/freecompiler/bcc55agreement.html">ここ</a>からもダウンロードできるらしい。確認してみると最終的には同じところだった。
+</p>
+
+<p>
+以前はどうしてたかというと、
+たぶんC MAGAZINEの付録か何かからインストールしたんだろうなあ。
+最近C MAGAZINEは買ってないし。
+</p>
+<!-- section end -->
+</div>
+<!-- 2003/05/10 end -->
+
+<hr>
+<div>
+<a href="200304c.html">&lt;Prev(,)</a> | 
+<a href="200305b.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

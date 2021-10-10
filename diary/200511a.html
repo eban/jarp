@@ -1,0 +1,378 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2005-11-a</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="200510c.html">
+<link rel="next" href="200511b.html">
+
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2005年11月上旬〜</p>
+<hr>
+<div>
+<a href="200510c.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="200511b.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2005/11/01 start -->
+<h2><a name="20051101" href="200511a.html#20051101">2005-11-01 (Tue)</a></h2>
+<!-- 2005-11-02 00:44:12 -->
+
+<div class="entry1">
+<h3><a name="200511011" title="200511011" href="200511a.html#200511011">■</a> 
+10月のspam</h3>
+<p>
+464通。Gmail側約6600スレッド。そういえばいつのまにか
+</p>
+<pre>
+You are currently using 509 MB (19%) of your 2660 MB.
+</pre>
+<p>
+と500MB越えてたんだな。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200511012" title="200511012" href="200511a.html#200511012">■</a> 
+[FC4] yumできず</h3>
+<p>
+
+<a href="ftp://ftp.kddilabs.jp/">ftp://ftp.kddilabs.jp/</a>の中身がなくなった。
+面倒でこれ1個だけしか登録してなかっただけに痛い。
+
+<a href="http://www.atmarkit.co.jp/flinux/rensai/linuxtips/765fejp.html">国内のミラーサイトでFedora Extrasを使うには</a>
+
+を参考に設定。ついでに
+<a href="http://fedorafaq.yanbaru.dyndns.org/#yumconf">Yumの設定</a>
+
+を参考に最新に。
+</p>
+
+<p>
+check-updateしても更新はないのがちょっと不満ではあるが。本当か？
+</p>
+<!-- section end -->
+</div>
+<!-- 2005/11/01 end -->
+
+
+
+<hr class="hide">
+<!-- 2005/11/02 start -->
+<h2><a name="20051102" href="200511a.html#20051102">2005-11-02 (Wed)</a></h2>
+<!-- 2005-11-03 14:19:08 -->
+
+<div class="entry1">
+<h3><a name="200511021" title="200511021" href="200511a.html#200511021">■</a> 
+[FC4] yum check-update</h3>
+<p>
+おお、ちゃんと出てきた。うまくいってるようだ。
+</p>
+<pre>
+cpio.i386                                2.6-8.FC4              updates-released
+selinux-policy-targeted.noarch           1.27.1-2.11            updates-released
+</pre>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200511022" title="200511022" href="200511a.html#200511022">■</a> 
+[Book] でかいプレゼン 高橋メソッドの本</h3>
+<p>
+発売予定が今月末なのにamazonで予約したら、「配送予定日： 2006/11/6 - 2006/11/8」とメールの確認がきた。かなりうそっぽい。
+</p>
+<!-- section end -->
+</div>
+<!-- 2005/11/02 end -->
+
+
+
+<hr class="hide">
+<!-- 2005/11/03 start -->
+<h2><a name="20051103" href="200511a.html#20051103">2005-11-03 (Thu)</a></h2>
+<!-- 2005-11-04 01:54:10 -->
+
+<div class="entry1">
+<h3><a name="200511031" title="200511031" href="200511a.html#200511031">■</a> 
+<a href="http://mknew.sf.net">[Soft] makenew 1-1</a></h3>
+<blockquote><dl>
+<dt>
+About:
+<dd>
+The Mknew Project is an investigation of how to build simple Unix
+shell scripts to manage common development and administrative tasks. The
+emphasis is on using languages and tools that already exist and are in
+common use. A related emphasis is on exploring the functional programming
+nature of the bash shell. This is accomplished by using the bash function
+capability, and using the bash &quot;$(&quot; &quot;)&quot;syntax to delay function execution
+in bash scripts. This allows building scripts that have a LISP-like
+function syntax that permits shell scripts to be written as a series of
+function calls with minimal syntax. The goal is to provide a way to
+specify make procedures of heterogeneous components in a bash script.
+These can include diverse source code languages, documentation text, test
+procedures, and data. In addition to the mknew function library (mklib),
+these &quot;make&quot; procedures rely only on capabilities provided by the bash
+shell, and common Unix command line utilities.
+</dl></blockquote>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200511032" title="200511032" href="200511a.html#200511032">■</a> 
+[FC4] yum updateとyum upgrade</h3>
+<p>
+そういえばcheckだけで満足してupdateしてなかった。意味なし。
+でもudpateしてもNo Packages marked for Update/Obsoletionと言われてしまう。
+なぜだ？あれupgradeだと進むな。
+違いは--obsolutesか。うーむ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2005/11/03 end -->
+
+
+
+<hr class="hide">
+<!-- 2005/11/04 start -->
+<h2><a name="20051104" href="200511a.html#20051104">2005-11-04 (Fri)</a></h2>
+<!-- 2005-11-05 02:01:22 -->
+
+<div class="entry1">
+<h3><a name="200511041" title="200511041" href="200511a.html#200511041">■</a> 
+[Comic] 銀と金</h3>
+<p>
+1,2巻を読む。おもしれー。やっぱ「ざわざわ」するんだな。
+早速続きを借りようとしたら全部貸出中だった。残念。
+とりあえず彼岸島とBECKを。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200511042" title="200511042" href="200511a.html#200511042">■</a> 
+[FC4] yum update</h3>
+<p>
+libungifとlibungif-develが更新された。ちゃんと機能してるわけだ。
+よかった。
+</p>
+<!-- section end -->
+</div>
+<!-- 2005/11/04 end -->
+
+
+
+<hr class="hide">
+<!-- 2005/11/05 start -->
+<h2><a name="20051105" href="200511a.html#20051105">2005-11-05 (Sat)</a></h2>
+<!-- 2005-11-06 19:26:30 -->
+
+<div class="entry1">
+<h3><a name="200511051" title="200511051" href="200511a.html#200511051">■</a> 
+[Comic] BECK</h3>
+<p>
+おもしれー。18巻まで一日中読んでた。
+</p>
+<!-- section end -->
+</div>
+<!-- 2005/11/05 end -->
+
+
+
+<hr class="hide">
+<!-- 2005/11/06 start -->
+<h2><a name="20051106" href="200511a.html#20051106">2005-11-06 (Sun)</a></h2>
+<!-- 2005-11-07 02:19:43 -->
+
+<div class="entry1">
+<h3><a name="200511061" title="200511061" href="200511a.html#200511061">■</a> 
+[Comic] BECK</h3>
+<p>
+今日もBECK三昧なわけで。22巻まで。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200511062" title="200511062" href="200511a.html#200511062">■</a> 
+[Cygwin] libiconv</h3>
+<p>
+なんかすげー変らしいよ。tarballの中身しか見てないけど。
+明日時間があったらちょっと詳しく調べてみよう。
+</p>
+<!-- section end -->
+</div>
+<!-- 2005/11/06 end -->
+
+
+
+<hr class="hide">
+<!-- 2005/11/07 start -->
+<h2><a name="20051107" href="200511a.html#20051107">2005-11-07 (Mon)</a></h2>
+<!-- 2005-11-08 02:04:00 -->
+
+<div class="entry1">
+<h3><a name="200511071" title="200511071" href="200511a.html#200511071">■</a> 
+[Cygwin] libiconvとlibiconv2</h3>
+<p>
+tarballを取ってきて中身を確認。
+</p>
+<pre>
+% tar tfv libiconv-1.9.2-1.tar.bz2 \*dll\* 
+-rw-r--r-- cwilson/None   2816 2004-07-07 03:11:01 usr/lib/libcharset.dll.a
+-rw-r--r-- cwilson/None   7630 2004-07-07 03:11:02 usr/lib/libiconv.dll.a
+% tar tfv libiconv2-1.9.2-1.tar.bz2       
+-rwxr-xr-x cwilson/None 1015128 2004-07-07 03:11:02 usr/bin/cygiconv-2.dll
+% tar xfO libiconv-1.9.2-1.tar.bz2 usr/lib/libiconv.dll.a |strings |grep cygiconv-
+cygiconv-2.dll
+</pre>
+<p>
+あれ？なんかよさげ。ちゃんとリンクしてみないとわかんないか。
+</p>
+<!-- section end -->
+</div>
+<!-- 2005/11/07 end -->
+
+
+
+<hr class="hide">
+<!-- 2005/11/08 start -->
+<h2><a name="20051108" href="200511a.html#20051108">2005-11-08 (Tue)</a></h2>
+<!-- 2005-11-09 02:11:43 -->
+
+<div class="entry1">
+<h3><a name="200511081" title="200511081" href="200511a.html#200511081">■</a> 
+<a href="http://allabout.co.jp/computer/windows/closeup/CU20051025B/">[Windows] システムのプロパティを簡単に開く</a></h3>
+<p>
+デスクトップのマイコンピュータをAlt+左ダブルクリックが抜けてるな。
+</p>
+<!-- section end -->
+</div>
+<!-- 2005/11/08 end -->
+
+
+
+<hr class="hide">
+<!-- 2005/11/09 start -->
+<h2><a name="20051109" href="200511a.html#20051109">2005-11-09 (Wed)</a></h2>
+<!-- 2005-11-10 01:41:50 -->
+
+<div class="entry1">
+<h3><a name="200511091" title="200511091" href="200511a.html#200511091">■</a> 
+[Comic] 銀と金</h3>
+<p>
+7,8巻を借りた。字が多くて全然進まない。ざわざわ…。
+</p>
+<!-- section end -->
+</div>
+<!-- 2005/11/09 end -->
+
+
+
+<hr class="hide">
+<!-- 2005/11/10 start -->
+<h2><a name="20051110" href="200511a.html#20051110">2005-11-10 (Thu)</a></h2>
+<!-- 2005-11-11 01:58:41 -->
+
+<div class="entry1">
+<h3><a name="200511101" title="200511101" href="200511a.html#200511101">■</a> 
+勘違い</h3>
+<p>
+
+<a href="200511a.html#200511022">1年後</a>
+だということに今頃気づいた。なんだそりゃ。で、未だにその状態は変わってない。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200511102" title="200511102" href="200511a.html#200511102">■</a> 
+[Make] 空白</h3>
+<p>
+なかださんすごいよ、その
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-dev/27670">発想</a>。
+</p>
+<pre>
+OUTFLAG_SPACE = -o.
+OUTFLAG = $(OUTFLAG_SPACE:.= )
+</pre>
+<p>
+として.を空白で置き換えるわけだ。
+</p>
+
+<p>
+で、今更ながらの疑問としては本当に空白入れたらだめなプラットフォームがあるのかどうか。
+VC++系はwin32/, wince/だからMakefile.inとは関係ないので問題なし。
+はたしてどんなもんだろう。
+</p>
+<!-- section end -->
+</div>
+<!-- 2005/11/10 end -->
+
+<hr>
+<div>
+<a href="200510c.html">&lt;Prev(,)</a> | 
+<a href="200511b.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

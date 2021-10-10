@@ -1,0 +1,361 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2015-7-b</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="201507a.html">
+<link rel="next" href="201507c.html">
+
+<link rel="stylesheet" type="text/css" href="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.css">
+<script async type="text/javascript" src="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.js"></script>
+<script type="text/javascript">
+<!--       
+$(document).ready(function() {
+  prettyPrint();
+});
+-->
+</script>
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2015年7月中旬〜</p>
+<hr>
+<div>
+<a href="201507a.html" accesskey=",">&lt;Older(,)</a> | 
+<a href="201507c.html" accesskey=".">Newer(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2015/07/11 start -->
+<h2><a name="20150711" href="201507b.html#20150711">2015-07-11 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="201507111" title="201507111" href="201507b.html#201507111">■</a> 
+ChromeとFirefox</h3>
+<p>
+Chromeが重すぎてひどいのでFirefoxに戻ってきた。<br>
+WindowsではずっとFirefoxを使ってるのでまあ特に違和感とかないが、<br>
+なんでこんなにChromeは重くなってしまったんだろう。<br>
+拡張を全部無効にしてもあまり変わらなかったしなあ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2015/07/11 end -->
+
+
+
+<hr class="hide">
+<!-- 2015/07/12 start -->
+<h2><a name="20150712" href="201507b.html#20150712">2015-07-12 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="201507121" title="201507121" href="201507b.html#201507121">■</a> 
+Google Chromeで「プロフィールを開くことができませんでした」</h3>
+<p>
+そうそう。これが5つぐらいポップアップで出てくるんだけど、うっとしくて敵わない。<br>
+しかもなぜかGoogleへのログインも失敗しているようで三本線が黄色くなっている。<br>
+あま、それもあってFirefoxに逃げたわけだが、やっぱ解決はしておこう。<br>
+ぐぐるとHistory関連のファイルを削除しろと出てきたので対処した。
+</p>
+<pre>
+% ls -l ~/.config/google-chrome/Default/History*
+-rw-r--r-- 1 eban eban 11993088 2015-07-13 01:00:18 /home/eban/.config/google-chrome/Default/History
+-rw-r----- 1 eban eban   673323 2015-07-13 01:00:18 /home/eban/.config/google-chrome/Default/History Provider Cache
+-rw-r--r-- 1 eban eban    16384 2015-07-13 01:00:18 /home/eban/.config/google-chrome/Default/History-journal
+% rm ~/.config/google-chrome/Default/History*
+</pre>
+<p>
+だめだった。なんかプロセスが残っているのかと調べると居座っていた。<br>
+ああ、ってことはHistoryというよりこいつが原因だったのかも。
+</p>
+<pre>
+% ps u -C chrome
+USER       PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
+eban      3946  0.0  0.2 840608 16620 ?        SLl  Jul08   0:09 /opt/google/chrome/chrome
+eban      4123  0.0  0.0      0     0 ?        Zs   Jul08   0:00 [chrome] &lt;defunct&gt;
+% kill 3946
+% rm ~/.config/google-chrome/Default/History*
+% ps u -C chrome                             
+USER       PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
+eban      3946  0.0  0.2 840608 16620 ?        SLl  Jul08   0:09 /opt/google/chrome/chrome
+eban      4123  0.0  0.0      0     0 ?        Zs   Jul08   0:00 [chrome] &lt;defunct&gt;
+% kill -9 3946                               
+</pre>
+<p>
+なかなかしつこかったが、これでどちらも解消したが、ヒストリーが消えたのはちょっと痛い。
+</p>
+<!-- section end -->
+</div>
+<!-- 2015/07/12 end -->
+
+
+
+<hr class="hide">
+<!-- 2015/07/13 start -->
+<h2><a name="20150713" href="201507b.html#20150713">2015-07-13 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="201507131" title="201507131" href="201507b.html#201507131">■</a> 
+npmで重複するパッケージを消す</h3>
+<p>
+npmのパッケージは依存するものを全部抱えてるもんだから、<br>
+知らないうちに重複していることがある。<br>
+そんなときはnpm dedupeでいい感じにしてくれるようだ。<br>
+ちゃんとpackage.jsonを作っておかないとだめだが。
+</p>
+<pre>
+% echo '{}' &gt;package.json 
+% npm i dynamodb-marshaler --save
+npm WARN package.json @ No description
+npm WARN package.json @ No repository field.
+npm WARN package.json @ No README data
+npm WARN engine dynamodb-marshaler@1.1.3: wanted: {&quot;node&quot;:&quot;&gt;=0.10.33&quot;} (current: {&quot;node&quot;:&quot;0.10.25&quot;,&quot;npm&quot;:&quot;1.4.21&quot;})
+dynamodb-marshaler@1.1.3 node_modules/dynamodb-marshaler
+├── lodash@3.10.0
+└── babel-runtime@5.6.18 (core-js@0.9.18)
+% npm i lodash --save            
+npm WARN package.json @ No description
+npm WARN package.json @ No repository field.
+npm WARN package.json @ No README data
+lodash@3.10.0 node_modules/lodash
+% npm ls
+@ /home/eban/w/1507/tmp
+├─┬ dynamodb-marshaler@1.1.3
+│ ├─┬ babel-runtime@5.6.18
+│ │ └── core-js@0.9.18
+│ └── lodash@3.10.0
+└── lodash@3.10.0
+
+% npm dedupe
+% npm ls    
+@ /home/eban/w/1507/tmp
+├─┬ dynamodb-marshaler@1.1.3
+│ └─┬ babel-runtime@5.6.18
+│   └── core-js@0.9.18
+└── lodash@3.10.0
+</pre>
+<p>
+xfceの端末だと罫線がずれるが、treeコマンドみたいにASCIIにできるんかな。
+</p>
+<!-- section end -->
+</div>
+<!-- 2015/07/13 end -->
+
+
+
+<hr class="hide">
+<!-- 2015/07/14 start -->
+<h2><a name="20150714" href="201507b.html#20150714">2015-07-14 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="201507141" title="201507141" href="201507b.html#201507141">■</a> 
+FirefoxでLDR見ようとしたらGreasemonkeyに阻まれる</h3>
+<p>
+Firefoxに戻ったはいいが、LDRがだめだめだった。<br>
+原因はGreasemonkey2.0以降セキュリティ的に厳しくなっていて、<br>
+昔からのuserscriptがほぼ全滅ということらしい。<br>
+<a href="http://efcl.info/2014/07/21/Greasemonkey-v2/">Greasemonkey2.0対応 - LDRFullFeed、LDR NG、ldr_keyhack_jkc+n | Web Scratch</a><br>
+周回遅れで知った。<br>
+とりあえずはGreasemonkeyを無効にしておくしかないな。
+</p>
+<!-- section end -->
+</div>
+<!-- 2015/07/14 end -->
+
+
+
+<hr class="hide">
+<!-- 2015/07/15 start -->
+<h2><a name="20150715" href="201507b.html#20150715">2015-07-15 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="201507151" title="201507151" href="201507b.html#201507151">■</a> 
+Flashblock</h3>
+<p>
+Firefoxには昔からFlashblockという拡張を入れていたが、<br>
+最近Firefox自身が余計なお世話的に勝手にブロックしてくれるもんだから、<br>
+もう二重苦になっている。何の修行だ。無効にしとこう。
+</p>
+<!-- section end -->
+</div>
+<!-- 2015/07/15 end -->
+
+
+
+<hr class="hide">
+<!-- 2015/07/16 start -->
+<h2><a name="20150716" href="201507b.html#20150716">2015-07-16 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="201507161" title="201507161" href="201507b.html#201507161">■</a> 
+Evernote アカウントへのメール転送は、有料機能になりました。</h3>
+<p>
+え、そうなの？と過去のメールを確認してみるとそれとなくさりげなく通知してた。<br>
+「Evernote プレミアムでメールを簡単整理」ってタイトルじゃ気づかないって。<br>
+とはいうものの諸般の事情で使ってなかったというか使えなかったのでもはやどうでもいいが。
+</p>
+<p>
+cf:
+<a href="https://evernote.com/intl/jp/contact/support/kb/?spMailingID=11867726&amp;spUserID=MzMwMjcyNjYzODUS1&amp;spJobID=580929315&amp;spReportId=NTgwOTI5MzE1S0#!/article/94691268">Evernote へのメール転送はプラス版・プレミアム版限定の機能になりました</a></p>
+<!-- section end -->
+</div>
+<!-- 2015/07/16 end -->
+
+
+
+<hr class="hide">
+<!-- 2015/07/17 start -->
+<h2><a name="20150717" href="201507b.html#20150717">2015-07-17 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="201507171" title="201507171" href="201507b.html#201507171">■</a> 
+minidlna</h3>
+<p>
+Ubuntu 15.04からMediaTombがまったく反応しなくなったので代替を探した。<br>
+minidlnaがほとんど設定もなくあっさりPS3も認識してくれて肩透かしを喰らう。<br>
+これで全然問題ないな。
+</p>
+<!-- section end -->
+</div>
+<!-- 2015/07/17 end -->
+
+
+
+<hr class="hide">
+<!-- 2015/07/18 start -->
+<h2><a name="20150718" href="201507b.html#20150718">2015-07-18 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="201507181" title="201507181" href="201507b.html#201507181">■</a> 
+lolcat</h3>
+<p>
+以前一度使ってスクリーンショット撮って満足したlolcatの画像が出てきたので貼ってみる。
+</p>
+<p>
+<img src="../images/lolcat.png" alt="">
+</p>
+<p>
+Ubuntuでは普通にパッケージが存在してるようで。
+</p>
+<!-- section end -->
+</div>
+<!-- 2015/07/18 end -->
+
+
+
+<hr class="hide">
+<!-- 2015/07/19 start -->
+<h2><a name="20150719" href="201507b.html#20150719">2015-07-19 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="201507191" title="201507191" href="201507b.html#201507191">■</a> 
+AWS LambdaのLambda functionをNode.jsで動かす</h3>
+<p>
+index.jsをrequireしてハンドラを呼び出せばok。<br>
+ただしevent sourceやcontextのような引数を用意する必要あり。<br>
+こんな感じのlambda.jsを作ればnode lambda.jsでいける。
+</p>
+<pre>
+var event;
+try {
+  event = require('./event.json');
+} catch (ex) {
+  event = {};
+}
+
+var index = require('./index.js');
+
+index.handler(event, {
+  done: function(err, data){
+    console.log(err, data);
+  }
+});
+</pre>
+<p>
+done以外failだのsucceedだの必要なら追加する。
+</p>
+<!-- section end -->
+</div>
+<!-- 2015/07/19 end -->
+
+
+
+<hr class="hide">
+<!-- 2015/07/20 start -->
+<h2><a name="20150720" href="201507b.html#20150720">2015-07-20 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="201507201" title="201507201" href="201507b.html#201507201">■</a> 
+縦長な画像を見つける</h3>
+<p>
+なんか以前もそんなことやってたような気がするが見つからないので考えた。<br>
+convertかidentifyで縦と横のサイズを表示してawkで比較すればよさげ。<br>
+</p>
+<pre>
+% convert *.jpg -format '%h %w %f\n' info: | awk '$1&gt;$2{print $3}'
+</pre>
+<p>
+fxを使えばconvert側で判断できるが、最終的にはsedやawkを使うことになりそう。
+</p>
+<!-- section end -->
+</div>
+<!-- 2015/07/20 end -->
+
+<hr>
+<div>
+<a href="201507a.html">&lt;Older(,)</a> | 
+<a href="201507c.html">Newer(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

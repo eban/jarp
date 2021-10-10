@@ -1,0 +1,860 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2001-12-a</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="200111c.html">
+<link rel="next" href="200112b.html">
+
+<link rel="stylesheet" type="text/css" href="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.css">
+<script type="text/javascript" src="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.js"></script>
+<script type="text/javascript">
+<!--       
+$(document).ready(function() {
+  prettyPrint();
+});
+-->
+</script>
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2001年12月上旬〜</p>
+<hr>
+<div>
+<a href="200111c.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="200112b.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2001/12/01 start -->
+<h2><a name="20011201" href="200112a.html#20011201">2001-12-01 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="200112011" title="200112011" href="200112a.html#200112011">■</a> 
+<a href="http://cygwin.com/packages/">Cygwin Package List</a></h3>
+<p>
+パッケージのリスト。
+中身が見られるようになってると期待したが、単にtarの出力結果でしかない。
+cygwin1.dllだけでも取り出せるようにして欲しいんだけどなあ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200112012" title="200112012" href="200112a.html#200112012">■</a> 
+--enable-enable-shared</h3>
+<p>
+実は昨日のconfigure.inの変更で別に直したとこがある。
+</p>
+<pre>
+AC_ARG_ENABLE(shared,
+       [--enable-shared           build a shared library for Ruby. ],
+       [enable_shared=$enableval])
+</pre>
+<p>
+が
+</p>
+<pre>
+AC_ARG_ENABLE(enable-shared,
+       [--enable-shared           build a shared library for Ruby. ],
+       [enable_shared=$enableval])
+</pre>
+<p>
+となっていたのだ。
+本来なら--enable-fooは自動的にenable_foo=yes/noになるので、
+わざわざAC_ARG_ENABLEする必要はない。
+だから間違っているんだけど問題なく動いているわけだ。
+たぶんこれはhelp stringに加えるためだけに存在するものと思われる。
+</p>
+
+<p>
+1.6ではまだ直してないので--enable-enable-sharedも可能だ。
+ということは--disable-enable-sharedも可能だが、これじゃなんだかわからん。
+って何れ機を見て直しとこ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200112013" title="200112013" href="200112a.html#200112013">■</a> 
+Linux 2.4.17-pre2</h3>
+<p>
+-pre1を入れようと思ったら-pre2が出てたので、とりあえず両方取ってきた。
+どっちもMakefileの中は2.4.16のままだ。
+どうも今度のメンテナはそういうところの配慮が足りないようだ。
+自分で書き換えてからmakeした。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200112014" title="200112014" href="200112a.html#200112014">■</a> 
+rsync 2.5.0</h3>
+<p>
+同梱のzlibがまだ1.1.2だったので-lzを使うようにしてみた。
+</p>
+
+
+
+
+<!-- section end -->
+</div>
+<!-- 2001/12/01 end -->
+
+
+
+<hr class="hide">
+<!-- 2001/12/02 start -->
+<h2><a name="20011202" href="200112a.html#20011202">2001-12-02 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="200112021" title="200112021" href="200112a.html#200112021">■</a> 
+ruby-talk ML</h3>
+<p>
+いつruby-talkがruby-listを抜くかと原さんも言ってたが、
+最近の状況を。
+</p>
+<pre>
+  1750: ruby-talk.0101
+  1608: ruby-talk.0102
+  1609: ruby-talk.0103
+  1048: ruby-talk.0104
+  1629: ruby-talk.0105
+  1026: ruby-talk.0106
+  1776: ruby-talk.0107
+  1737: ruby-talk.0108
+  1208: ruby-talk.0109
+  2117: ruby-talk.0110
+  3118: ruby-talk.0111
+</pre>
+<p>
+それまでも十分多かったわけだが、11月はかなり異常だ。
+12/1も1日で100通以上来てるわけで、勢いはまったく衰えてない。
+</p>
+
+<p>
+一方ruby-listのほうはこんなもん。
+</p>
+<pre>
+   463: ruby-list.0101
+   958: ruby-list.0102
+   665: ruby-list.0103
+   419: ruby-list.0104
+   504: ruby-list.0105
+   455: ruby-list.0106
+   376: ruby-list.0107
+   379: ruby-list.0108
+   488: ruby-list.0109
+   481: ruby-list.0110
+   527: ruby-list.0111
+</pre>
+<p>
+今現在(00:47)ruby-lisは32666でtruby-talkは27193。
+このまま先月と同じと仮定すると
+</p>
+<pre>
+% echo $(( (32666.-27193) / (3118-527) * 30 ))
+63.369355461211889
+</pre>
+<p>
+2月の上旬あたりか。
+でもこれから年末年始にかけてイベントがあるから流量は増えると考えられる。
+どちらも20%増しだとすると
+</p>
+<pre>
+% echo $(( (32666.-27193) / (3118*1.2-527*1.2) * 30 ))
+52.807796217676575
+</pre>
+<p>
+1月下旬か。じゃおいらは1/20にしよう。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200112022" title="200112022" href="200112a.html#200112022">■</a> 
+11月のspam</h3>
+<p>
+46通。そのうち5通がks_c_5601-1987な韓国からのspam。読めんちゅうに。
+あとonlinesurveysjapan2001@yahoo.comというのも気になる。
+中身は
+</p>
+<pre>
+&lt;html xmlns:o=&quot;urn:schemas-microsoft-com:office:office&quot;
+xmlns:w=&quot;urn:schemas-microsoft-com:office:word&quot;
+xmlns=&quot;http://www.w3.org/TR/REC-html40&quot;&gt;
+</pre>
+<p>
+なのでさっぱりわからんのだが。週一回のペースで来てるなあ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200112023" title="200112023" href="200112a.html#200112023">■</a> 
+ccだけしかない場合</h3>
+<p>
+現在の状況:
+</p>
+<pre>
+ruby:ruby/cc % sudo mv /usr/bin/gcc{,.orig}
+ruby:ruby/cc % PATH=/usr/bin:/bin
+ruby:ruby/cc % which gcc           
+gcc not found
+ruby:ruby/cc % which cc
+/usr/bin/cc
+ruby:ruby/cc % cc -v
+Reading specs from /usr/lib/gcc-lib/i386-pc-linux/2.95.3/specs
+gcc version 2.95.3 20010315 (release)
+ruby:ruby/cc % ../ruby/configure
+creating cache ./config.cache
+checking host system type... i586-pc-linux
+checking target system type... i586-pc-linux
+checking build system type... i586-pc-linux
+checking for gcc... gcc
+checking whether the C compiler (gcc  ) works... no
+configure: error: installation or configuration problem: \
+  C compiler cannot create executables.
+</pre>
+<p>
+gccはないのにも関わらずchecking for gccがgccになってしまう。
+これがruby-1.6.5だと
+</p>
+<pre>
+ruby:ruby/cc % ../ruby-1.6.5/configure 
+checking build system type... i586-pc-linux
+checking host system type... i586-pc-linux
+checking target system type... i586-pc-linux
+checking for gcc... no
+checking for cc... cc
+(snip)
+</pre>
+<p>
+とnoになる。これは
+</p>
+<pre>
+AC_ARG_WITH(gcc, [--without-gcc             never use gcc], [
+        case $withval in
+        no)     : ${CC=cc}
+                without_gcc=yes;;
+        yes)    : ${CC=gcc}
+                without_gcc=no;;
+        *)      CC=$withval
+                without_gcc=$withval;;
+        esac], [
+          : ${CC=gcc}
+          without_gcc=no])
+</pre>
+<p>
+のように--with-gccを指定しないと強制的にCC=gccになるから。
+この時点ではgccかどうかはわからないんだから、
+AC_PROG_CCの後でCCがgccかどうか調べる必要がある。
+それと*)のときの
+</p>
+<pre>
+        *)      CC=$withval
+                without_gcc=$withval;;
+</pre>
+<p>
+は変だ。without_gcc=ccになっても困る。
+やはりwithout_gccはAC_PROG_CCの後で設定されるべきだろう。
+で、gccかどうかはac_cv_prog_gccを見ればわかるので、
+そもそもwithout_gccは必要ない。
+GCCにも値が設定されるのでこれを使ってもいいようだ。
+というよりすでにconfigure.inでばんばん使われている。
+</p>
+
+<p>
+つまりosfで
+</p>
+<pre>
+case &quot;$target_cpu&quot;::&quot;$without_gcc&quot;
+</pre>
+<p>
+としてしまった対応がまずかったようだ。ってそれはおれだ。ぐはぁ。
+without_gccとしたのその後のosf*)で使われていたからなんだが、
+どうもそこは1.5.xで入ったようだ。
+</p>
+<pre>
+osf*)           LIBS=&quot;-lm $LIBS&quot;
+                case &quot;$target_cpu&quot;::&quot;$GCC&quot; in
+                alpha*::yes)
+                    CFLAGS=&quot;-mieee $CFLAGS&quot; ;;
+                alpha*::no|alpha*::)
+                    CFLAGS=&quot;-ieee $CFLAGS&quot; ;;
+                esac ;;
+</pre>
+<p>
+としよう。もう一個後にあるほうも
+</p>
+<pre>
+    osf*)
+        if test &quot;$GCC&quot; != &quot;yes&quot; ; then
+</pre>
+<p>
+とする。最後にwithout_gccは削除ということで。
+without_gccとGCCは論理が逆なので注意。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200112024" title="200112024" href="200112a.html#200112024">■</a> 
+syslog</h3>
+<p>
+あ、1.6にもsyslogが追加されてる。
+まずいな。こっちのsyslogを使うように変更しないと。
+</p>
+
+
+
+
+<!-- section end -->
+</div>
+<!-- 2001/12/02 end -->
+
+
+
+<hr class="hide">
+<!-- 2001/12/03 start -->
+<h2><a name="20011203" href="200112a.html#20011203">2001-12-03 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="200112031" title="200112031" href="200112a.html#200112031">■</a> 
+optparse 0.8.5</h3>
+<p>
+更新。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200112032" title="200112032" href="200112a.html#200112032">■</a> 
+racc</h3>
+<p>
+落ち着いたかな。そろそろ更新したほうがよさそう。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200112033" title="200112033" href="200112a.html#200112033">■</a> 
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-talk/27341">Congrats to the ruby-talk list</a></h3>
+<p>
+ruby-talk MLも丸3年だそうだ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200112034" title="200112034" href="200112a.html#200112034">■</a> 
+Ruby 1.6.5 (2001-12-03)</h3>
+<p>
+うーむ。これはいいのかなあ。
+</p>
+<pre>
+% ruby -ve 'p &quot;hoge&quot; == nil'
+ruby 1.6.5 (2001-12-03) [i386-linux]
+-e:1:in `==': undefined method `to_str' for nil (NameError)
+        from -e:1
+% ruby -ve 'p &quot;hoge&quot; == true'
+ruby 1.6.5 (2001-12-03) [i386-linux]
+-e:1:in `==': undefined method `to_str' for true (NameError)
+        from -e:1
+% ruby -ve 'p &quot;hoge&quot; == false'
+ruby 1.6.5 (2001-12-03) [i386-linux]
+-e:1:in `==': undefined method `to_str' for false (NameError)
+        from -e:1
+</pre>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200112035" title="200112035" href="200112a.html#200112035">■</a> 
+Cygwin 1.3.6-1</h3>
+<p>
+
+<a href="http://www.jaist.ac.jp/~fujieda/cygwin/#news">Snapshot NEWS</a>
+に書いてあるとおり、cygdrive prefixを/に変更していると使いものにならない。
+しかたなくmount -b -c /cygdriveしなおす。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2001/12/03 end -->
+
+
+
+<hr class="hide">
+<!-- 2001/12/04 start -->
+<h2><a name="20011204" href="200112a.html#20011204">2001-12-04 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="200112041" title="200112041" href="200112a.html#200112041">■</a> 
+Ruby 1.6.6</h3>
+<p>
+version.hが1.6.6になった。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200112042" title="200112042" href="200112a.html#200112042">■</a> 
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-talk/27349">Windows Installer, the Next Generation</a></h3>
+<p>
+
+<a href="http://www.pragmaticprogrammer.com/ruby/downloads/ruby-install.html">ここ</a>
+にあるので明日取ってこよう。installerはNullSoftの
+
+<a href="http://nsis.sourceforge.net/Main_Page">NSIS</a> になったらしい。
+cygwin版はこれが最後。今後mswin32版にするんだろうか？
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200112043" title="200112043" href="200112a.html#200112043">■</a> 
+<a href="http://www.dm4lab.to/~usa/dekigoto/200112a.html#id20011203_P2_5">ダメじゃーん</a></h3>
+<p>
+いや、どう表現するかはその人の芸風なわけで、いいんじゃないでしょうか。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200112044" title="200112044" href="200112a.html#200112044">■</a> 
+<a href="http://www.dm4lab.to/~usa/dekigoto/200112a.html#id20011203_P4_1">1%</a></h3>
+<p>
+東京都の人口？
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200112045" title="200112045" href="200112a.html#200112045">■</a> 
+Ruby porter</h3>
+<p>
+Rubyのスクリプトよりも、Ruby自体のソースよりも、
+configure.inやMakefile.inやext/extmk.rb.inやlib/mkmf.rbやextconf.rbを読んでる時間が長い人。
+と定義してみた。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200112046" title="200112046" href="200112a.html#200112046">■</a> 
+<a href="http://www.ruby-lang.org/cgi-bin/ruby-bugs-ja/incoming?id=157">method_missing stack-overflow (PR#157)</a></h3>
+<p>
+ruby-listに出さなくてもいいと思いますが、
+説明してくれないと結局例のメールのようにいちいち真意を聞かなきゃいけなくなり、
+二度手間です。
+で、あの内容もRBTSに書いてくれないと尻切れとんぼだらけになって、
+本当は困るんですけど…。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200112047" title="200112047" href="200112a.html#200112047">■</a> 
+replace have_header(&quot;curses&quot;) with have_header(&quot;curses.h&quot;)</h3>
+<p>
+しまった。.hをつけ忘れてたか。立石さん、すみません。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2001/12/04 end -->
+
+
+
+<hr class="hide">
+<!-- 2001/12/05 start -->
+<h2><a name="20011205" href="200112a.html#20011205">2001-12-05 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="200112051" title="200112051" href="200112a.html#200112051">■</a> 
+しごと</h3>
+<p>
+一日中会議だった。疲れた。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200112052" title="200112052" href="200112a.html#200112052">■</a> 
+[ruby-talk:xxxxx]</h3>
+<p>
+またruby-talkで話題になってる。もう外しちゃえばいいんじゃないかな。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2001/12/05 end -->
+
+
+
+<hr class="hide">
+<!-- 2001/12/06 start -->
+<h2><a name="20011206" href="200112a.html#20011206">2001-12-06 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="200112061" title="200112061" href="200112a.html#200112061">■</a> 
+Linux 2.4.17-pre3</h3>
+<p>
+Makefileにバージョンが入るようになったのはいいが、makeでエラーになる。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200112062" title="200112062" href="200112a.html#200112062">■</a> 
+Linux 2.4.17-pre4</h3>
+<p>
+あっという間に-pre4が出た。ついでに
+
+<a href="ftp://ftp.kernel.org/pub/linux/kernel/people/rml/preempt-kernel/v2.4/">preempt patch</a>
+もあてる。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200112063" title="200112063" href="200112a.html#200112063">■</a> 
+gtk-dlls-20001226.tar.gz</h3>
+<p>
+用意してみた。
+<a href="http://www.ruby-lang.org/~eban/ruby/binaries/cygwin/ext/gtk-dlls-20001226.tar.gz">cygwin/ext/gtk-dlls-20001226.tar.gz</a>
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200112064" title="200112064" href="200112a.html#200112064">■</a> 
+www.ruby-lang.org</h3>
+<p>
+CVSは昨日の夜から使えてなかった。
+未明からなにもforkできない状況だったようで、MLも止まった。
+11時ぐらいからapacheも反応しなくなった。
+で、昼過ぎにrebootして復活。
+</p>
+
+<p>
+どうも/varが溢れたのが原因のようだが、詳しくはまだよくわからない。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2001/12/06 end -->
+
+
+
+<hr class="hide">
+<!-- 2001/12/07 start -->
+<h2><a name="20011207" href="200112a.html#20011207">2001-12-07 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="200112071" title="200112071" href="200112a.html#200112071">■</a> 
+Linux 2.4.17-pre5</h3>
+<p>
+更新。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200112072" title="200112072" href="200112a.html#200112072">■</a> 
+<a href="http://www.ruby-lang.org/~eban/ruby/binaries/cygwin/ext/gtk-dlls-20001226-1.tar.gz">gtk-dlls-20001226-1.tar.gz</a></h3>
+<p>
+しまった。iconv-1.3.dllを入れるの忘れてた。
+というわけで、-1をつけた。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200112073" title="200112073" href="200112a.html#200112073">■</a> 
+Ippei Watanabe</h3>
+<p>
+誰だが知らないが、BadTransを送ってこないように。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200112074" title="200112074" href="200112a.html#200112074">■</a> 
+pocketruby</h3>
+<p>
+どうしてそんなにaddしたがる？
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2001/12/07 end -->
+
+
+
+<hr class="hide">
+<!-- 2001/12/08 start -->
+<h2><a name="20011208" href="200112a.html#20011208">2001-12-08 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="200112081" title="200112081" href="200112a.html#200112081">■</a> 
+Cygwin 1.3.6-4</h3>
+<p>
+-2でcygdrive prefixの件が直り、-3でssh -Lの件が直り、
+-4でshellのcompletionの件が直ったということらしい。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200112082" title="200112082" href="200112a.html#200112082">■</a> 
+Linux 2.4.17-pre6</h3>
+<p>
+日刊Linuxか。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200112083" title="200112083" href="200112a.html#200112083">■</a> 
+USO!?ジャパン</h3>
+<p>
+ネタがこれマジとかぶってる。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200112084" title="200112084" href="200112a.html#200112084">■</a> 
+メールの配送遅延</h3>
+<p>
+まだ起こる。今度はGonerか？クリックするなよ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200112085" title="200112085" href="200112a.html#200112085">■</a> 
+_shimako1</h3>
+<p>
+またBadTransだよ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200112086" title="200112086" href="200112a.html#200112086">■</a> 
+<a href="http://www.oricon.co.jp/ranking/cd_single.asp?category=1&amp;amp;subcategory=1&amp;amp;term=0">ピクミン</a></h3>
+<p>
+強いなあ。
+</p>
+
+
+
+
+<!-- section end -->
+</div>
+<!-- 2001/12/08 end -->
+
+
+
+<hr class="hide">
+<!-- 2001/12/09 start -->
+<h2><a name="20011209" href="200112a.html#20011209">2001-12-09 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="200112091" title="200112091" href="200112a.html#200112091">■</a> 
+Cygwin 1.3.6-5</h3>
+<p>
+xemacsでの不具合fixということで出たようだが、
+mingwがなぜか含まれているし、
+-srcは今までの半分以下とどう考えてもサイズが小さすぎるし、
+すぐに-6が出そう。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200112092" title="200112092" href="200112a.html#200112092">■</a> 
+Cygwin 1.3.6-6</h3>
+<p>
+やっぱりすぐに-6が出た。
+
+<a href="http://cygwin.com/ml/cygwin/2001-12/msg00431.html">statの件</a> も直ってるらしい。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200112093" title="200112093" href="200112a.html#200112093">■</a> 
+Windows 2000でNTP</h3>
+<pre>
+C:\&gt; net time /setsntp:ntpserver
+</pre>
+<p>
+てな感じで設定する。
+</p>
+<pre>
+C:\&gt; net time /querysntp
+</pre>
+<p>
+で確認。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200112094" title="200112094" href="200112a.html#200112094">■</a> 
+日本人はるかな旅</h3>
+<p>
+12/23から5夜連続で再放送。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200112095" title="200112095" href="200112a.html#200112095">■</a> 
+KATOH Fumitaka</h3>
+<p>
+だーかーらー、Badtransを送ってこないように。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2001/12/09 end -->
+
+
+
+<hr class="hide">
+<!-- 2001/12/10 start -->
+<h2><a name="20011210" href="200112a.html#20011210">2001-12-10 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="200112101" title="200112101" href="200112a.html#200112101">■</a> 
+RubyUnit 0.4.9</h3>
+<p>
+更新。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200112102" title="200112102" href="200112a.html#200112102">■</a> 
+<a href="../files/Makefile.cross">Makefile.cross</a></h3>
+<p>
+--owner=ruby --group=rubyにしてみた。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200112103" title="200112103" href="200112a.html#200112103">■</a> 
+Linux 2.4.17-pre7</h3>
+<p>
+更新。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2001/12/10 end -->
+
+<hr>
+<div>
+<a href="200111c.html">&lt;Prev(,)</a> | 
+<a href="200112b.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

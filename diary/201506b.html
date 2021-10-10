@@ -1,0 +1,417 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2015-6-b</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="201506a.html">
+<link rel="next" href="201506c.html">
+
+<link rel="stylesheet" type="text/css" href="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.css">
+<script async type="text/javascript" src="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.js"></script>
+<script type="text/javascript">
+<!--       
+$(document).ready(function() {
+  prettyPrint();
+});
+-->
+</script>
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2015年6月中旬〜</p>
+<hr>
+<div>
+<a href="201506a.html" accesskey=",">&lt;Older(,)</a> | 
+<a href="201506c.html" accesskey=".">Newer(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2015/06/11 start -->
+<h2><a name="20150611" href="201506b.html#20150611">2015-06-11 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="201506111" title="201506111" href="201506b.html#201506111">■</a> 
+awscliがdata must be a byte stringと吐いて終了する</h3>
+<p>
+Debian baseのSolydXでLambdaをawscliから起動すると、<br>
+なぜかdata must be a byte stringと言われて起動しない。<br>
+ぐぐってみたらどうも
+<a href="https://github.com/aws/aws-cli/issues/1240#issuecomment-86213200">pyopenssl</a>のせいらしい。というわけでawscliが抱えているpyopensslの名前を変えてみた。
+</p>
+<pre>
+% aws lambda invoke --function-name foo --payload file://event.json out.json
+
+data must be a byte string
+% locate pyopenssl
+/usr/lib/python2.7/dist-packages/urllib3/contrib/pyopenssl.py
+/usr/lib/python2.7/dist-packages/urllib3/contrib/pyopenssl.pyc
+/usr/local/lib/python2.7/dist-packages/botocore/vendored/requests/packages/urllib3/contrib/pyopenssl.py
+/usr/local/lib/python2.7/dist-packages/botocore/vendored/requests/packages/urllib3/contrib/pyopenssl.pyc
+% cd /usr/local/lib/python2.7/dist-packages/botocore/vendored/requests/packages/urllib3/contrib/            
+% sudo mv pyopenssl.py{,.orig}
+% sudo mv pyopenssl.pyc{,.orig}
+% cd ~/git/cit_avail_measure/foo
+% aws lambda invoke --function-name foo --payload file://event.json out.json
+{
+    &quot;StatusCode&quot;: 200
+}
+</pre>
+<p>
+よさげだ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2015/06/11 end -->
+
+
+
+<hr class="hide">
+<!-- 2015/06/12 start -->
+<h2><a name="20150612" href="201506b.html#20150612">2015-06-12 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="201506121" title="201506121" href="201506b.html#201506121">■</a> 
+nasneの調子がまた悪い</h3>
+<p>
+デジタルノイズが乗ってる感じ。アンテナレベルを調べてみるとやはりかなり低い。<br>
+またMXだな。周波数が低いところがだめっぽい。<br>
+そういえばブースターの調整してなかったんでいじったらまだ上げられた。<br>
+しかしレベル低すぎるな。
+</p>
+<!-- section end -->
+</div>
+<!-- 2015/06/12 end -->
+
+
+
+<hr class="hide">
+<!-- 2015/06/13 start -->
+<h2><a name="20150613" href="201506b.html#20150613">2015-06-13 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="201506131" title="201506131" href="201506b.html#201506131">■</a> 
+awscliでLambda functionをアップロードする</h3>
+<p>
+helpを見るとbase64でencodeしろと出てくるが嘘。
+</p>
+% aws lambda update-function-code help | col -b | grep -A1 -e '--zip-file ('
+       --zip-file (blob)
+          Based64-encoded .zip file containing your packaged source code.
+% base64 upload.zip &gt; upload.zip.b64
+% aws lambda update-function-code --function-name test --zip-file fileb://upload.zip.b64
+
+--zip-file must be a file with the fileb:// prefix.
+Example usage:  --zip-file fileb://path/to/file.zip
+<p>
+このエラーメッセージが正しくて、zipファイルをそのまま指定すればok。
+</p>
+<!-- section end -->
+</div>
+<!-- 2015/06/13 end -->
+
+
+
+<hr class="hide">
+<!-- 2015/06/14 start -->
+<h2><a name="20150614" href="201506b.html#20150614">2015-06-14 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="201506141" title="201506141" href="201506b.html#201506141">■</a> 
+Open Graph Protocolに対応しようとして</h3>
+<p>
+SlackにURL貼るとぴろっと出てくる仕組みを調べてたら、<br>
+そんなprotocolがあると知った。<br>
+1記事1ページなら静的HTMLも再生成すればいけるが、<br>
+複数の記事があると全然だめだと気づいた。<br>
+JavaScriptでやったとしても、普通は単にGETしてるだけなので意味がない。<br>
+静的HTMLじゃ無理があるか。というか分割すればいいんだよな。
+</p>
+<!-- section end -->
+</div>
+<!-- 2015/06/14 end -->
+
+
+
+<hr class="hide">
+<!-- 2015/06/15 start -->
+<h2><a name="20150615" href="201506b.html#20150615">2015-06-15 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="201506151" title="201506151" href="201506b.html#201506151">■</a> 
+この日記</h3>
+<p>
+日記といいつつ後から書くことが多い。<br>
+なら日付とっぱらってblog形式にすればいい気もするが、<br>
+15年も続けてるとそれもなんだしな。
+</p>
+<p>
+それはそれとして、日記という形態を取っているので書くときは日付を指定することになる。<br>
+日曜まで書いたから月曜分を指定したいときは、日付じゃなくて'last mon'と書ける。<br>
+昨日ならyesterdayだ。<br>
+このあたりはdate -dでparseしてるだけなんだけど意外に柔軟で結構気に入っている。<br>
+去年の日記だったら'last year'で見れるし。
+</p>
+<!-- section end -->
+</div>
+<!-- 2015/06/15 end -->
+
+
+
+<hr class="hide">
+<!-- 2015/06/16 start -->
+<h2><a name="20150616" href="201506b.html#20150616">2015-06-16 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="201506161" title="201506161" href="201506b.html#201506161">■</a> 
+VimでCoffeeScript</h3>
+<p>
+月曜から急にCoffeeScriptを使い始めているが、<br>
+やはりインデントでブロックというのは慣れない。<br>
+vim-coffee-scriptを入れて=で整形しても全然変化がないことが多くて戸惑う。<br>
+地味に困るのは%押しても対応するものがないので飛べないことだ。<br>
+というわけでvim-indent-guidesが必須とも言える。<br>
+これがないとreturnをどこに置いていいやら狙いが定まらない。
+</p>
+<!-- section end -->
+</div>
+<!-- 2015/06/16 end -->
+
+
+
+<hr class="hide">
+<!-- 2015/06/17 start -->
+<h2><a name="20150617" href="201506b.html#20150617">2015-06-17 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="201506171" title="201506171" href="201506b.html#201506171">■</a> 
+CoffeeScriptでFizzBuzz</h3>
+<p>
+お約束なのでとりあえずやっとく。
+</p>
+<pre>
+% coffee -e 'console.log [[&quot;Fizz&quot;][i%3]]+[[&quot;Buzz&quot;][i%5]]||i for i in [1..15]' 
+1
+2
+Fizz
+4
+Buzz
+Fizz
+7
+8
+Fizz
+Buzz
+11
+Fizz
+13
+14
+FizzBuzz
+</pre>
+<p>
+なんかいろいろやってるうちに見つけたんだけど、[undefined]+&quot;&quot;は&quot;&quot;になる。
+</p>
+<pre>
+% coffee -e 'console.log undefined' 
+undefined
+% coffee -e 'console.log [undefined]'
+[ undefined ]
+% coffee -e 'console.log undefined+&quot;&quot;'
+undefined
+% coffee -e 'console.log [undefined]+&quot;&quot;'
+
+</pre>
+<p>
+これはCoffeeScriptというよりJavaScriptの仕様なのかも。
+</p>
+<!-- section end -->
+</div>
+<!-- 2015/06/17 end -->
+
+
+
+<hr class="hide">
+<!-- 2015/06/18 start -->
+<h2><a name="20150618" href="201506b.html#20150618">2015-06-18 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="201506181" title="201506181" href="201506b.html#201506181">■</a> 
+<a href="http://blog.ueda.asia/?p=6454">「【問題のみ】第17回ジュンク堂はシェル芸が乗っ取った勉強会」を解いてみた</a></h3>
+<p>
+Q1のjson形式にするほうをjqで。twitterに上げたやつはtonumberを忘れてた。
+</p>
+<pre>
+% jq -csrR './&quot;\n&quot;|map(./&quot; &quot;)|group_by(.[0])|map({&quot;key&quot;:.[0][0],&quot;value&quot;:map(.[1]|tonumber)})|from_entries' Q1.txt 
+{&quot;a&quot;:[1,2,3],&quot;b&quot;:[4,5]}
+</pre>
+<p>
+group_byが肝。
+</p>
+<pre>
+% jq -srR './&quot;\n&quot;|map(./&quot; &quot;)|group_by(.[0])' Q1.txt                                                
+[
+  [
+    [
+      &quot;a&quot;,
+      &quot;1&quot;
+    ],
+    [
+      &quot;a&quot;,
+      &quot;2&quot;
+    ],
+    [
+      &quot;a&quot;,
+      &quot;3&quot;
+    ]
+  ],
+  [
+    [
+      &quot;b&quot;,
+      &quot;4&quot;
+    ],
+    [
+      &quot;b&quot;,
+      &quot;5&quot;
+    ]
+  ]
+]
+</pre>
+<p>
+あとはfrom_entriesが食える形式に合わせるだけ。
+</p>
+<pre>
+% jq -srR './&quot;\n&quot;|map(./&quot; &quot;)|group_by(.[0])|map({&quot;key&quot;:.[0][0],&quot;value&quot;:map(.[1]|tonumber)})' Q1.txt
+[
+  {
+    &quot;key&quot;: &quot;a&quot;,
+    &quot;value&quot;: [
+      1,
+      2,
+      3
+    ]
+  },
+  {
+    &quot;key&quot;: &quot;b&quot;,
+    &quot;value&quot;: [
+      4,
+      5
+    ]
+  }
+]
+</pre>
+<!-- section end -->
+</div>
+<!-- 2015/06/18 end -->
+
+
+
+<hr class="hide">
+<!-- 2015/06/19 start -->
+<h2><a name="20150619" href="201506b.html#20150619">2015-06-19 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="201506191" title="201506191" href="201506b.html#201506191">■</a> 
+CoffeeScript 小ネタ</h3>
+<p>
+調べればどこかに書いてあるかと思うけど、お手軽に試せるので確認してみた。
+</p>
+<pre>
+% coffee -pe '[1..21]'
+(function() {
+  [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21];
+
+}).call(this);
+% coffee -pe '[1..22]'
+(function() {
+  var i, results;
+
+  (function() {
+    results = [];
+    for (i = 1; i &lt;= 22; i++){ results.push(i); }
+    return results;
+  }).apply(this);
+
+}).call(this);
+</pre>
+<p>
+なぜ21なのか。
+</p>
+<!-- section end -->
+</div>
+<!-- 2015/06/19 end -->
+
+
+
+<hr class="hide">
+<!-- 2015/06/20 start -->
+<h2><a name="20150620" href="201506b.html#20150620">2015-06-20 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="201506201" title="201506201" href="201506b.html#201506201">■</a> 
+Smart J:COM Boxのディスプレイ</h3>
+<p>
+Pioneerのセットトップボックスのチャンネル表示が、<br>
+再生中は再生時間を意味するとこに初めて気づいた。<br>
+なんか変化はしていたが、チャンネルのスキャンでもしてるのかと思った。<br>
+3桁じゃなくて4桁だったらまだ想像できたかもしれないが。
+</p>
+<!-- section end -->
+</div>
+<!-- 2015/06/20 end -->
+
+<hr>
+<div>
+<a href="201506a.html">&lt;Older(,)</a> | 
+<a href="201506c.html">Newer(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

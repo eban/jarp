@@ -1,0 +1,401 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2012-6-a</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="201205c.html">
+<link rel="next" href="201206b.html">
+
+<link rel="stylesheet" type="text/css" href="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.css">
+<script type="text/javascript" src="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.js"></script>
+<script type="text/javascript">
+<!--       
+$(document).ready(function() {
+  prettyPrint();
+});
+-->
+</script>
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2012年6月上旬〜</p>
+<hr>
+<div>
+<a href="201205c.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="201206b.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2012/06/01 start -->
+<h2><a name="20120601" href="201206a.html#20120601">2012-06-01 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="201206011" title="201206011" href="201206a.html#201206011">■</a> 
+Fedora 16から17へyumでupgrade</h3>
+<p>
+例によって
+<a href="http://fedoraproject.org/wiki/Upgrading_Fedora_using_yum">Upgrading Fedora using yum</a>に従って進める。
+</p>
+<pre>
+% sudo yum update yum
+% sudo yum clean all
+% sudo rpm --import https://fedoraproject.org/static/1ACA3465.txt
+% sudo yum --releasever=17 distro-sync
+</pre>
+<p>
+boost-serializationがcompizで依存エラーを起こした。使ってないので
+</p>
+<pre>
+% sudo yum remove boost-serialization
+</pre>
+<p>
+で削除。再度distro-sync
+</p>
+<pre>
+% sudo yum --releasever=17 distro-sync
+ERROR You need to update rpm to handle:
+rpmlib(X-CheckUnifiedSystemdir) is needed by setup-2.8.48-1.fc17.noarch
+rpmlib(X-CheckUnifiedSystemdir) is needed by filesystem-3-2.fc17.i686
+RPM needs to be updated
+</pre>
+<p>
+で止まった。ぐぐってみるとdracutしてないからということらしい。<br>
+<a href="http://fedoraproject.org/wiki/Upgrading_Fedora_using_yum#Fedora_16_-.3E_Fedora_17">4.3 Fedora 16 -&gt; Fedora 17</a>は読んだけど、関係ないと思って読み飛ばしてた。<br>
+なんかファイルシステムが大幅に変わるんだな。/binや/libがシンボリックリンクになるとは。
+</p>
+<pre>
+% sudo dracut -H --force --add convertfs
+% sudo vi /etc/grub.conf
+rhgb quietを削除、roをrwに、rd.info rd.convertfs enforcing=0を追加
+</pre>
+<p>
+で再起動。dmesg | grep dracutして確認。grub.confを元に戻して再度distro-sync。<br>
+これですべてうまくいった。
+</p>
+<!-- section end -->
+</div>
+<!-- 2012/06/01 end -->
+
+
+
+<hr class="hide">
+<!-- 2012/06/02 start -->
+<h2><a name="20120602" href="201206a.html#20120602">2012-06-02 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="201206021" title="201206021" href="201206a.html#201206021">■</a> 
+Fedora 17でdovecotがまたアクセスできなくなった</h3>
+<p>
+Fedoraをアップグレードしたらまず確認するのがdovecotというのがお約束になってしまった。<br>
+今回もまた設定が変わったようでThunderbirdからアクセスできないとメッセージが。<br>
+/var/log/maillogを見ると
+</p>
+<pre>
+dovecot: imap(eban): Error: user eban: Initialization failed: namespace configuration error: inbox=yes namespace missing
+</pre>
+<p>
+と出てる。namespaceか。/etc/dovecot/conf.d/*.rpmnewを確認すると10-mail.conf.rpmnewの
+</p>
+<pre>
+namespace inbox {
+  inbox = yes
+}
+</pre>
+<p>
+が非常に怪しい。これを追加したらいけた。
+</p>
+<p>
+<a href="201202a.html#201202021">前回はまったaddress = localhostという記述</a>はなくなっていた。<br>
+さすがにPOPとかIMAP serverでlocalhostだけ許すという初期値はないよな。
+</p>
+<!-- section end -->
+</div>
+<!-- 2012/06/02 end -->
+
+
+
+<hr class="hide">
+<!-- 2012/06/03 start -->
+<h2><a name="20120603" href="201206a.html#20120603">2012-06-03 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="201206031" title="201206031" href="201206a.html#201206031">■</a> 
+<a href="http://userscripts.org/scripts/show/48220">Google Reader Key Customize for Greasemonkey</a></h3>
+<p>
+Google Readerで不満なのはLDRでのsがないこと。N+OでいけるがShiftも押さなきゃいけない。<br>
+そこでsのためだけに
+<a href="http://userscripts.org/scripts/show/48220">Google Reader Key Customize</a>を入れた。<br>
+そこだけ取り出せばいいのかもしれないがまあいいか。
+</p>
+<!-- section end -->
+</div>
+<!-- 2012/06/03 end -->
+
+
+
+<hr class="hide">
+<!-- 2012/06/04 start -->
+<h2><a name="20120604" href="201206a.html#20120604">2012-06-04 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="201206041" title="201206041" href="201206a.html#201206041">■</a> 
+600dpiで白黒</h3>
+<p>
+どうせ遅いだろうとかサイズが大きくなって扱いづらいとか思って、<br>
+600dpiではほとんどスキャンしてなかったけど、<br>
+いろいろぐぐってみると白黒にするとサイズ的もリーズナブルになっていいらしい。<br>
+というわけで試してみたが、さすがに遅い。音がいつもと違う。<br>
+結果はたしかになかなかいい。閾値は0にしたんだけど、これって自動でやってくれてるんだろうな。<br>
+けっこう赤茶けた感じの本で試したが、あまりノイズもない。<br>
+サイズを150dpi相当に縮小してグレー化してみたら結構きれい。
+</p>
+<p>
+スキャン速度を考えると300dpiで白黒ってのも試してみると面白いかもしれない。
+</p>
+<!-- section end -->
+</div>
+<!-- 2012/06/04 end -->
+
+
+
+<hr class="hide">
+<!-- 2012/06/05 start -->
+<h2><a name="20120605" href="201206a.html#20120605">2012-06-05 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="201206051" title="201206051" href="201206a.html#201206051">■</a> 
+300dpi白黒が結構いい</h3>
+<p>
+昨日の続きで300dpiだとスキャンも速いのでできればこのくらいでいきたいが、<br>
+Calibreでepubに変換するとデフォルトでは8bit grayscaleになってしまうようだ。<br>
+縮小もはいるのでガタガタにはならない。というか結構きれい。<br>
+Sony Readerで見てもいい感じ。
+</p>
+<p>
+面白いことに二値データは2倍以上の差があるが、8bitグレー化すると同じようなサイズになってしまう。
+</p>
+<pre>
+% ls -o kakutoufu-sempou*/ka*
+-rw-rw-r-- 1 eban 19942244 2012-06-05 23:47:46 kakutoufu-sempou-600 (8)/kakutoufu-sempou-600 - Fumei.cbz
+-rw-rw-r-- 1 eban 15624951 2012-06-05 23:56:18 kakutoufu-sempou-600 (8)/kakutoufu-sempou-600 - Fumei.epub
+-rw-rw-r-- 1 eban  8011021 2012-06-06 00:23:32 kakutoufu-sempou-300 (9)/kakutoufu-sempou-300 - Fumei.cbz
+-rw-rw-r-- 1 eban 14406211 2012-06-06 00:24:40 kakutoufu-sempou-300 (9)/kakutoufu-sempou-300 - Fumei.epub
+</pre>
+<p>
+漫画でも試してみよう。
+</p>
+<!-- section end -->
+</div>
+<!-- 2012/06/05 end -->
+
+
+
+<hr class="hide">
+<!-- 2012/06/06 start -->
+<h2><a name="20120606" href="201206a.html#20120606">2012-06-06 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="201206061" title="201206061" href="201206a.html#201206061">■</a> 
+Firefox 13.0にしたらまた強制的にsmooth scrollをONにされた</h3>
+<p>
+以前は上げるたびにOFFにするのがうっとうしいなと思っていたsmooth scrollの設定だが、<br>
+これちゃんと保持するようになってたんだな。<br>
+今回なぜかまたONになるようになったが何のいやがらせか。<br>
+設定-詳細-一般-スムーススクロール機能を使用するをuncheck。
+</p>
+<!-- section end -->
+</div>
+<!-- 2012/06/06 end -->
+
+
+
+<hr class="hide">
+<!-- 2012/06/07 start -->
+<h2><a name="20120607" href="201206a.html#20120607">2012-06-07 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="201206071" title="201206071" href="201206a.html#201206071">■</a> 
+ニコ動がローカルストレージがどうのこうの言って再生できない</h3>
+<p>
+Flashがポップアップしてるのでボタン押せばいいんだけど、どうしても押せない。なぜか反応しない。<br>
+&quot;Ubuntu firefox flash local storage&quot;でぐぐっていろいろ辿ってみたら、<br>
+<a href="http://www.macromedia.com/support/documentation/jp/flashplayer/help/settings_manager07.html">Flashの設定マネージャー</a>でいじれるとのこと。早速res.nimg.jpを削除してみたら、<br>
+ニコ動プレーヤーの設定が全部消えたが再生できた。<br>
+まあ、大した設定じゃないので問題なし。<br>
+また増えるかもしれないので、1MBにしとく。
+</p>
+<!-- section end -->
+</div>
+<!-- 2012/06/07 end -->
+
+
+
+<hr class="hide">
+<!-- 2012/06/08 start -->
+<h2><a name="20120608" href="201206a.html#20120608">2012-06-08 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="201206081" title="201206081" href="201206a.html#201206081">■</a> 
+convertでauto threshold</h3>
+<p>
+-thresholdだと数値を指定しないといけない。<br>
+そこで-type grayscale -depth 1とすればうまいこと二値化できるんじゃないかと実験してみたが、<br>
+<a href="201205a.html#201205061">例のサイズを変えないとなぜか8-bit grayscaleになってしまう件</a>がここで問題になる。<br>
+しかたないのでpngじゃなくてpbmへ変換することにした。<br>
+こうするとオプションの-type grayscale -depth 1も必要なくなる。<br>
+つまり
+</p>
+<pre>
+% convert foo.png foo.pbm
+</pre>
+<p>
+とするだけだ。もう一回
+</p>
+<pre>
+% convert foo.pbm foo-bin.png
+</pre>
+<p>
+とでもすれば1-bit grayscaleのpngになる。まとめて
+</p>
+<pre>
+% convert foo.png PBM:- | convert - foo-bin.png
+</pre>
+<p>
+でもいいか。
+</p>
+<p>
+結構いい感じに二値化できている。
+</p>
+<p>
+<img src="../images/100.png" alt="オリジナル">
+<img src="../images/100b.png" alt="二値化">
+</p>
+<!-- section end -->
+</div>
+<!-- 2012/06/08 end -->
+
+
+
+<hr class="hide">
+<!-- 2012/06/09 start -->
+<h2><a name="20120609" href="201206a.html#20120609">2012-06-09 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="201206091" title="201206091" href="201206a.html#201206091">■</a> 
+<a href="https://addons.mozilla.org/en-US/firefox/addon/load-tabs-progressively/">Load Tabs Progressively</a></h3>
+<p>
+Firefox 13.0との相性が悪い。Gmailでリンクをふつうに左クリックすると、新たなタブで
+</p>
+<pre>
+jar:file:///usr/lib/firefox/omni.ja!/chrome/browser/content/browser/newtab/newTab.xul
+</pre>
+<p>
+というURLを開こうとするが、何も表示しない。どうしたもんかな。<br>
+左クリックじゃなくて右クリックでコンテキストメニューを出して<br>
+新たなタブで開くとすれば一応開けるので致命的ではないが、<br>
+たいていは後の祭りでメール閉じちゃった後なのでなんだっけかなとなりがち。<br>
+情報が残ってないしな。
+</p>
+<p>
+ロード済みタブ数の上限を0にしたらなぜかうまくいった。まあ、これでいいか。
+</p>
+<!-- section end -->
+</div>
+<!-- 2012/06/09 end -->
+
+
+
+<hr class="hide">
+<!-- 2012/06/10 start -->
+<h2><a name="20120610" href="201206a.html#20120610">2012-06-10 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="201206101" title="201206101" href="201206a.html#201206101">■</a> 
+ScanSnap ManagerをWindows XPへ今さらながらインストール</h3>
+<p>
+青いボタンが初めて機能した。<br>
+というかクイックメニューにしてると始めるには青いボタンを押すしかないような。<br>
+300dpiのグレー、出力PDFでやってみたけど、なんかやけに速い。びっくりした。<br>
+その後120ページぐらいになったらがくんと速度が落ちた。びっくりするぐらい。<br>
+ちゃんとスキャンはしてるようだけど、なんなのこれ？<br>
+それとスキャンが終わっても圧縮がまだ終わらないんだな。eeepcじゃ力不足か。
+</p>
+<p>
+できあがりは全体的に薄いな。そういえば輝度とかコントラストをいじってない。<br>
+あれ、どこにあったかな。
+</p>
+<p>
+総スキャン枚数は70,000を越えていた。パッドを交換しないといけない枚数50,000を軽く越えてるが、<br>
+パッドってなんだ。取説読まないと。
+</p>
+<p>
+読んでみたら輝度とかの説明がない。あれ、設定できないのか。<br>
+なんか意外だな。
+</p>
+<p>
+amazonでパッドユニットとピックローラユニットに値段を調べた。<br>
+2000円近くとか5000円以上とかこれも結構するねえ。<br>
+まだ特に変なことになってるわけでもないので、もうちょっと様子見。
+</p>
+<!-- section end -->
+</div>
+<!-- 2012/06/10 end -->
+
+<hr>
+<div>
+<a href="201205c.html">&lt;Prev(,)</a> | 
+<a href="201206b.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

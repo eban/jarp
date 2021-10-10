@@ -1,0 +1,405 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2013-4-c</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="201304b.html">
+<link rel="next" href="201305a.html">
+
+<link rel="stylesheet" type="text/css" href="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.css">
+<script async type="text/javascript" src="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.js"></script>
+<script type="text/javascript">
+<!--       
+$(document).ready(function() {
+  prettyPrint();
+});
+-->
+</script>
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2013年4月下旬〜</p>
+<hr>
+<div>
+<a href="201304b.html" accesskey=",">&lt;Older(,)</a> | 
+<a href="201305a.html" accesskey=".">Newer(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2013/04/21 start -->
+<h2><a name="20130421" href="201304c.html#20130421">2013-04-21 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="201304211" title="201304211" href="201304c.html#201304211">■</a> 
+sponge(1)</h3>
+<p>
+moreutilsパッケージにspongeという名前のコマンドがある。<br>
+これはよくあるだめな例(bar.txtが空になってしまう)の
+</p>
+<pre>
+% foo1 bar.txt | foo2 | foo3 &gt; bar.txt
+</pre>
+<p>
+のようなことをしたい場合に使える。
+</p>
+<pre>
+foo1 bar.txt | foo2 | foo3 | sponge bar.txt
+</pre>
+<p>
+とするとspongeが標準入力を読み終わってからbar.txtに書き込むのでbar.txtを壊さない。
+</p>
+<pre>
+% seq 10 &gt; seq10
+% sed '5d' seq10 | grep -v '[28]' &gt;seq10
+% ls -l seq10
+-rw-r--r-- 1 eban eban 0 2013-04-22 01:31:30 seq10
+% seq 10 &gt; seq10
+% sed '5d' seq10 | grep -v '[28]' | sponge seq10
+% cat seq10
+1
+3
+4
+6
+7
+9
+10
+</pre>
+<p>
+マニュアルより:
+<pre>
+sponge  reads standard input and writes it out to the specified file. Unlike a
+shell redirect, sponge soaks up all its input before opening the output file.
+This allows constructing pipelines that read from and  write  to the same file.<br>
+It  also  creates the output file atomically by renaming a temp file into
+place, and preserves the permissions of the output file if it already exists.
+If the output file is a special file or symlink, the  data  will  be written to it.
+</pre>
+</p>
+<p>
+<a href="http://joeyh.name/code/moreutils/">moreutils</a>なんてインストールしないと思うが他にも結構面白いコマンドがある。
+</p>
+<!-- section end -->
+</div>
+<!-- 2013/04/21 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/04/22 start -->
+<h2><a name="20130422" href="201304c.html#20130422">2013-04-22 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="201304221" title="201304221" href="201304c.html#201304221">■</a> 
+crontabの環境変数設定</h3>
+<p>
+crontab内では%を\%のようにエスケープしないと改行になってしまうが、<br>
+環境変数を設定するところではその意味はないので\つけるとそのまま\ごと設定されるので注意。<br>
+逆に言うとdateのフォーマットストリングは%だらけになるので環境変数で定義するとすっきりするかもしれない。
+</p>
+<!-- section end -->
+</div>
+<!-- 2013/04/22 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/04/23 start -->
+<h2><a name="20130423" href="201304c.html#20130423">2013-04-23 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="201304231" title="201304231" href="201304c.html#201304231">■</a> 
+chronic(1)</h3>
+<p>
+<a href="http://joeyh.name/code/moreutils/">moreutils</a>には
+</p>
+<pre>
+chronic: runs a command quietly unless it fails
+</pre>
+<p>
+とさりげなくかかれてるコマンド。<br>
+二重否定っぽい表現でわかりにくいが、要するに失敗したときだけ表示する。
+</p>
+<pre>
+% chronic ls
+% chronic ls hoge
+/bin/ls: hoge にアクセスできません: そのようなファイルやディレクトリはありません
+</pre>
+<p>
+この挙動の何がうれしいかというとcrontabで失敗したときだけメールが飛ぶようにできる。<br>
+crontabで実行してるコマンドの頭に追加するだけでいい。
+</p>
+<!-- section end -->
+</div>
+<!-- 2013/04/23 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/04/24 start -->
+<h2><a name="20130424" href="201304c.html#20130424">2013-04-24 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="201304241" title="201304241" href="201304c.html#201304241">■</a> 
+news topicsをlivedoorで</h3>
+<p>
+Yahooだと8つしか出てこないのでlivedoorにしてみた。
+</p>
+<pre>
+% curl -s news.livedoor.com | nkf -w | awk '/detail/&amp;&amp;$0=$NF' FS='&gt;' RS='&lt;/a&gt;&lt;/li&gt;|\n'
+菌がどんどん寄り付くNG行為とは
+「カリスマ介護士」が強姦容疑
+AP通信の偽ツイートで市場混乱
+ボストン爆破、動機について供述
+カルピスがFacebookで謎サービス
+香川、「80億円軍団」で存在感
+キヨシ激怒 助っ人左腕2軍降格へ
+育成降格から復活したGの苦労人
+佐藤琢磨、失意から4年目で快挙
+大島優子が芸人を断髪、丸刈りに
+佐藤健「カノ嘘」新キャスト発表
+堺雅人に興味がなかった菅野美穂
+「スター・トレック」予告編公開
+アクションが見ものの犯罪ドラマ
+最も美しい20歳に選ばれた女優
+「オス化女子」予備軍の特徴
+年中悩まされる冷え性の改善策
+「秘密にすべき」な女子の趣味
+危険な夢から読み解くメッセージ
+一途男と束縛男を見分ける方法
+人気ポテトチップスメーカーTOP5
+</pre>
+<p>
+これを30分間隔ぐらいでcronで動かして適当にshuf -n1して、<br>
+tmuxのステータスラインに表示するのはいいかもしれない。
+</p>
+<!-- section end -->
+</div>
+<!-- 2013/04/24 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/04/25 start -->
+<h2><a name="20130425" href="201304c.html#20130425">2013-04-25 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="201304251" title="201304251" href="201304c.html#201304251">■</a> 
+Ubuntu 13.04</h3>
+<p>
+今回は13.04にちなんで13:04 BSTにリリースしたらしい。
+</p>
+<pre>
+% date -d'4/25 13:04 BST'
+Thu Apr 25 21:04:00 JST 2013
+</pre>
+<p>
+Ubuntuはこういうネタをちょいちょい仕込んでくるので面白い。<br>
+それよりuim-skkが使えなくなってちょっと困ってる。<br>
+調べねば。
+</p>
+<!-- section end -->
+</div>
+<!-- 2013/04/25 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/04/26 start -->
+<h2><a name="20130426" href="201304c.html#20130426">2013-04-26 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="201304261" title="201304261" href="201304c.html#201304261">■</a> 
+Ubuntu 13.04その後</h3>
+<p>
+uim-skkが使えないと思ったのは単に言語サポートがデフォルトに戻っていただけだったらしく、<br>
+キーボード入力に使うIMシステムをuimにすればいけた。<br>
+それよりもgnome-terminalでtmuxを使っているとnew windowするたびに行数が1行減ってしまって困る。<br>
+設定で50行としてるのになぜか49行になってしまうのも困ったもんだ。
+</p>
+<p>
+あとUbuntu serverでdo-release-upgradeすると
+</p>
+<pre>
+% sudo do-release-upgrade
+Checking for a new Ubuntu release
+Traceback (most recent call last):
+  File &quot;/usr/bin/do-release-upgrade&quot;, line 145, in &lt;module&gt;
+    fetcher.run_options += [&quot;--mode=%s&quot; % options.mode,
+AttributeError: type object 'DistUpgradeFetcherCore' has no attribute 'run_options'
+</pre>
+<p>
+と言われて上げられない。<br>
+ぐぐってみると
+<a href="http://ubuntuforums.org/showthread.php?t=2082861">How to upgrade to Ringtail daily build?</a>というのが見つかったが、どうしたもんかな。<br>
+どうせVPSだからやっちゃってもいいんだよなと思いつつちょっと待とう。
+</p>
+<!-- section end -->
+</div>
+<!-- 2013/04/26 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/04/27 start -->
+<h2><a name="20130427" href="201304c.html#20130427">2013-04-27 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="201304271" title="201304271" href="201304c.html#201304271">■</a> 
+ビビッドレッド・オペレーションのあれ</h3>
+<p>
+今頃確認してたりするんだけど、第2話に出てきたやつ。
+</p>
+<pre>
+class DRbUnknownError &lt; DRbError
+super(unknown.name)
+
+end
+ttr_reader :unknown
+def self._load(s)        Marshal::Load(s)
+
+def self._load(s)  Marshal::load(s)
+end
+</pre>
+<p>
+裏返しなので読みづらい。<br>
+コピペじゃなくてコメントを除いてたりするところなんかはわかっててやってるんだろうけど、<br>
+attr_readerがttr_readerだったり、ところどころ省略されてたりでなんか中途半端。<br>
+咳さんも満足？
+</p>
+<!-- section end -->
+</div>
+<!-- 2013/04/27 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/04/28 start -->
+<h2><a name="20130428" href="201304c.html#20130428">2013-04-28 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="201304281" title="201304281" href="201304c.html#201304281">■</a> 
+Ubuntu Server 13.04</h3>
+<p>
+1日待っても状況が変わらなかったので、結局
+</p>
+<pre>
+% sudo sed -i~ 's/quantal/raring/g' /etc/apt/sources.list
+% sudo apt-get update
+% sudo apt-get dist-upgrade
+</pre>
+<p>
+したのであった。
+</p>
+<p>
+weechatのメッセージが日本語になってなんか違和感が。
+</p>
+<!-- section end -->
+</div>
+<!-- 2013/04/28 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/04/29 start -->
+<h2><a name="20130429" href="201304c.html#20130429">2013-04-29 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="201304291" title="201304291" href="201304c.html#201304291">■</a> 
+<a href="http://www.commandlinefu.com/commands/view/12236/retry-the-previous-command-until-it-exits-successfully">Retry the previous command until it exits successfully</a></h3>
+<p>
+いやいや。そんなまどろっこしいことしなくても
+</p>
+<pre>
+until !!;do :;done
+</pre>
+<p>
+でいいよね。
+</p>
+<!-- section end -->
+</div>
+<!-- 2013/04/29 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/04/30 start -->
+<h2><a name="20130430" href="201304c.html#20130430">2013-04-30 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="201304301" title="201304301" href="201304c.html#201304301">■</a> 
+WARNING: Nokogiri was built against LibXML version 2.8.0, but has dynamically loaded 2.9.0</h3>
+<p>
+なんかメールがいっぱいたまってるなと思ったらタイトルで埋まっていた。<br>
+Ubuntu 13.04に上げたのでlibxmlも上がった。<br>
+bundle使ってるとnokogiri自身は上がらないわけで適宜bundle updateが必要になるわけか。
+</p>
+<pre>
+% bundle update
+Fetching gem metadata from http://rubygems.org/.........
+Fetching gem metadata from http://rubygems.org/..
+Using bundler (1.2.3)
+Installing nokogiri (1.5.9) with native extensions
+Your bundle is updated! Use `bundle show [gemname]` to see where a bundled gem is installed.
+</pre>
+<!-- section end -->
+</div>
+<!-- 2013/04/30 end -->
+
+<hr>
+<div>
+<a href="201304b.html">&lt;Older(,)</a> | 
+<a href="201305a.html">Newer(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

@@ -1,0 +1,414 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2013-6-a</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="201305c.html">
+<link rel="next" href="201306b.html">
+
+<link rel="stylesheet" type="text/css" href="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.css">
+<script type="text/javascript" src="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.js"></script>
+<script type="text/javascript">
+<!--       
+$(document).ready(function() {
+  prettyPrint();
+});
+-->
+</script>
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2013年6月上旬〜</p>
+<hr>
+<div>
+<a href="201305c.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="201306b.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2013/06/01 start -->
+<h2><a name="20130601" href="201306a.html#20130601">2013-06-01 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="201306011" title="201306011" href="201306a.html#201306011">■</a> 
+RubyKaigi 2013 3日目</h3>
+<p>
+ホテルと会場の位置を地図で確認したら、歩いても大した距離じゃないなと散歩気分でのんびりと海辺を歩いた。<br>
+開けたロケーションなのでもはや迷いようがない。<br>
+しかも観覧車とかゆりかもめとかガンダムとかもう目印だらけなので。
+</p>
+<p>
+咳さんのネタを見てサテライトへ。<br>
+その後Hall Bへ行ったがすでに満員。<br>
+Bは定員が少なすぎて出遅れるともう入れない。<br>
+サテライトのustはぶちぶち切れてよくわからない。<br>
+今回の中継はなんだってこんなに切れるのか。<br>
+</p>
+<p>
+昼はカレー弁当。いやーHerokuさん、ありがとう。<br>
+飲み物もずっと張り付いていたMicrosoftさん、ありがとう。<br>
+</p>
+<p>
+午後は須藤芸を見て、TRICKまでサテライトで待機。<br>
+TRICKは立ち見どころかドアの向こうまでお客さんがいたような。<br>
+大盛況だった。一番笑った。<br>
+今回は審査員なので壇上に上がったわけだが、<br>
+ゴールドの作品には10点満点をつけた。あとシルバーが9点。<br>
+ああ、そういえば%がいっぱいあるやつは勘違いしてた。<br>
+3の倍数なら文字列の連結で%%% %%%てな具合でokかと思ってたが、<br>
+%%% % %%% % %%%というように解釈されるので4で割って3余る場合だけいけるわけだ。
+</p>
+<pre>
+% ruby -lne 'p $_.size%4 if /^%%/' entry.rb
+3
+3
+3
+3
+3
+3
+3
+</pre>
+<p>
+食傷気味とか評したのはおれだったりするが、実は各作品は16進のhashのような名前でエントリーされていて、<br>
+</p>
+<pre>
+17c220	1a56c5	1cdefb	240049	2d11da	3ed832	569a9d	56bf73	596f13	8c9820	9faa7c	daddcb	f903bb	f9eaad
+</pre>
+<p>
+この最後のf9eaadがその作品だったというのが原因。<br>
+順番に見ていくと最後は不利だ。<br>
+不公平にならないようになんらかのhash値にしたんだと思うけど。
+</p>
+<p>
+dbmはあんだけ苦労してるのに使ってる人がほとんどいないという皮肉な結果になってしまった。<br>
+これは古い環境は切り捨てるというのが正しいのかもしれない。<br>
+そうしないとtkのようにextconf.rbがどんどんでかくなってしまう。<br>
+ああ、tkといえば今回あらゆる面でdisられていたのが印象的だった。<br>
+しかも3日間あちこちで話題に出てきていた。
+</p>
+<p>
+帰りはまだ明るかったので、DiverCityへガンダム参りに。<br>
+昨日は暗くなってからゆりかもめから見たが、<br>
+電飾が赤かったりでとてもガンダムには見えなかった。
+</p>
+<!-- section end -->
+</div>
+<!-- 2013/06/01 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/06/02 start -->
+<h2><a name="20130602" href="201306a.html#20130602">2013-06-02 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="201306021" title="201306021" href="201306a.html#201306021">■</a> 
+(no author)って誰？</h3>
+<p>
+<a href="https://gist.github.com/kakutani/5040692">Ruby commit count until 2.0.0-p0</a>の(no author)って誰よという疑問。
+</p>
+<pre>
+% git --no-pager log --until=v2_0_0_0 --author='(no author)'
+commit 392296c12de9d7f9be03a8205250ba0844cb9d38
+Author: (no author) &lt;(no author)@b2dd03c8-39d4-4d8f-98ff-823fe69b080e&gt;
+Date:   Fri Jan 16 12:13:05 1998 +0000
+
+    New repository initialized by cvs2svn.
+    
+    git-svn-id: svn+ssh://ci.ruby-lang.org/ruby/trunk@1 b2dd03c8-39d4-4d8f-98ff-823fe69b080e
+</pre>
+<p>
+つまり、csv2svnさんなのだよ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2013/06/02 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/06/03 start -->
+<h2><a name="20130603" href="201306a.html#20130603">2013-06-03 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="201306031" title="201306031" href="201306a.html#201306031">■</a> 
+/dev/xconsole?</h3>
+<p>
+/var/syslogに妙なメッセージが。
+</p>
+<pre>
+May 29 06:27:58 m rsyslogd-2039: Could not open output pipe '/dev/xconsole' [try http://www.rsyslog.com/e/2039 ]
+</pre>
+<p>
+原因は/etc/rsyslog.d/50-default.confのこの部分のようだ。
+</p>
+<pre>
+daemon.*;mail.*;\
+	news.err;\
+	*.=debug;*.=info;\
+	*.=notice;*.=warn	|/dev/xconsole
+</pre>
+<p>
+エラーになってるんだから、コメントアウトしとこう。
+</p>
+<!-- section end -->
+</div>
+<!-- 2013/06/03 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/06/04 start -->
+<h2><a name="20130604" href="201306a.html#20130604">2013-06-04 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="201306041" title="201306041" href="201306a.html#201306041">■</a> 
+(no author)は当然のことながら、svnのほうにもいた</h3>
+<p>
+(no author)で検索する必要はなく、r1を引っ張ってくればいい。
+</p>
+<pre>
+% svn log -r1 http://svn.ruby-lang.org/repos/ruby
+------------------------------------------------------------------------
+r1 | (no author) | 1998-01-16 21:13:05 +0900 (Fri, 16 Jan 1998) | 1 line
+
+New repository initialized by cvs2svn.
+------------------------------------------------------------------------
+</pre>
+<p>
+RubyでCVSを使い始めたのが1998年なんだよねえ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2013/06/04 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/06/05 start -->
+<h2><a name="20130605" href="201306a.html#20130605">2013-06-05 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="201306051" title="201306051" href="201306a.html#201306051">■</a> 
+1時間半sleep</h3>
+<p>
+sleep 5400とぱっと出てこない。sleep 1h30mではエラーになる。
+</p>
+<pre>
+% sleep 1h30m
+sleep: `1h30m': 無効な時間間隔です
+Try 'sleep --help' for more information.
+</pre>
+<p>
+sleep 1.5hでもいいんだけど、実はマニュアルにさらっと書かれている。
+</p>
+<pre>
+Given two or more arguments, pause for the amount of time specified by the sum of their values.
+</pre>
+<p>
+くっつけなければよかっただけで、sleep 1h 30mと書けばいいだけだった。<br>
+全部加算されるらしいので順番も関係ない。
+</p>
+<!-- section end -->
+</div>
+<!-- 2013/06/05 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/06/06 start -->
+<h2><a name="20130606" href="201306a.html#20130606">2013-06-06 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="201306061" title="201306061" href="201306a.html#201306061">■</a> 
+Google Chromeで拡張機能にショートカットキーを割り当てる</h3>
+<p>
+Chrome 22から拡張機能にショートカットキーを割り当てることができるようになっている。<br>
+<a href="chrome://chrome/extensions/">chrome://chrome/extensions/</a>で最後までスクロールして右下に「コマンドを設定する」をクリックすると、<br>
+「キーボードのショートカット - 拡張機能とアプリケーション」という画面がポップアップする。<br>
+ここ並んでいるものをショートカットキーで呼び出せる。<br>
+すべての拡張が呼び出せるわけではなく、右上にボタンが表示されてる拡張だけのようだ。<br>
+つまりマウスを使わなくてもボタンを押せるという感じ。<br>
+Pocketには元々Ctrl+Shift+Pで呼び出せる設定があるが、<br>
+どういうわけか機能しなかったのとそもそも押し辛いのでちょうどいい。<br>
+まあ、今のところこれしかなかったわけなんだけど。
+</p>
+<p>
+しかしこれ逆に未設定に戻せないな。×を押して「ショートカットを入力する」になってしまう。
+</p>
+<!-- section end -->
+</div>
+<!-- 2013/06/06 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/06/07 start -->
+<h2><a name="20130607" href="201306a.html#20130607">2013-06-07 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="201306071" title="201306071" href="201306a.html#201306071">■</a> 
+svn+sshのsshに-vを渡す</h3>
+<p>
+わざわざ~/.ssh/configにそれ用のHostを用意してLogLevelを設定していたが、<br>
+<a href="http://svnbook.red-bean.com/en/1.7/svn-book.html#svn.serverconfig.svnserve.sshauth">環境変数SVN_SSHにssh -vを設定すればいいらしい。</a></p>
+<p>
+~/.subversion/configに
+</p>
+<pre>
+[tunnels]
+ssh = ssh -v
+</pre>
+<p>
+と書く手もあるんだな。
+</p>
+<!-- section end -->
+</div>
+<!-- 2013/06/07 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/06/08 start -->
+<h2><a name="20130608" href="201306a.html#20130608">2013-06-08 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="201306081" title="201306081" href="201306a.html#201306081">■</a> 
+svn+sshvにしてみた</h3>
+<p>
+昨日の続き。<br>
+SVN_SSH='ssh -v' svn ...はちょっと面倒だし、ssh = ssh -vと書いてしまうと毎回出てきてうっとうしい。<br>
+というわけで、
+</p>
+<pre>
+[tunnels]
+sshv = ssh -v
+</pre>
+<p>
+を~/.subversion/config追加した。こうしとくとsvn+sshvが使えるようになる。<br>
+好みに応じてsshvvv = ssh -vvvとかあってもいいかもしれない。
+</p>
+<!-- section end -->
+</div>
+<!-- 2013/06/08 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/06/09 start -->
+<h2><a name="20130609" href="201306a.html#20130609">2013-06-09 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="201306091" title="201306091" href="201306a.html#201306091">■</a> 
+syslogからcronを分離</h3>
+<p>
+crontabでload averageを取る処理を1分毎に動かしてたらsyslogがcronだらけになって非常にうっとうしい。<br>
+分離することにした。/etc/rsyslog.d/50-dfault.confを見ると
+</p>
+<pre>
+*.*;auth,authpriv.none		-/var/log/syslog
+</pre>
+<p>
+のように*.*でsyslogには全部出すようにしていて、.noneで除外しているようで。<br>
+最初は
+</p>
+<pre>
+*.*;auth,authpriv.none;cron.none	-/var/log/syslog
+cron.*				/var/log/cron.log
+</pre>
+<p>
+としていたが&quot;,&quot;でまとめられるんだと気づいて
+</p>
+<pre>
+*.*;auth,authpriv,cron.none	-/var/log/syslog
+cron.*				/var/log/cron.log
+</pre>
+<p>
+とした。
+</p>
+<p>
+'-'はman rsyslog.confしても出てこなかったが、ぐぐってみるとsyncしないという意味みたい。<br>
+<a href="http://www.rsyslog.com/doc/rsyslog_conf_actions.html">Actions - rsyslog.conf rsyslog</a></p><blockquote><p>
+You may prefix each entry with the minus &quot;-'' sign to omit syncing the file after every logging. Note that you might lose information if the system crashes right behind a write attempt. Nevertheless this might give you back some performance, especially if you run programs that use logging in a very verbose manner.
+</p></blockquote>
+<!-- section end -->
+</div>
+<!-- 2013/06/09 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/06/10 start -->
+<h2><a name="20130610" href="201306a.html#20130610">2013-06-10 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="201306101" title="201306101" href="201306a.html#201306101">■</a> 
+Goolge Chromeで現在のページをブックマークする</h3>
+<p>
+普通にタブを右クリックしてページを追加でいいんだけど、<br>
+FirefoxみたいにタブをブックマークバーへD&amp;Dするぐらいの簡単な操作でできないものか。<br>
+調べてみたら、アドレスバーのURLを選択してそれをD&amp;Dすればいいらしい。<br>
+まあ、できるがあまり簡単とは言えないな。トリプルクリックすれば選択はできるが。
+</p>
+<!-- section end -->
+</div>
+<!-- 2013/06/10 end -->
+
+<hr>
+<div>
+<a href="201305c.html">&lt;Prev(,)</a> | 
+<a href="201306b.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

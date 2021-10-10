@@ -1,0 +1,427 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2011-10-a</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="201109c.html">
+<link rel="next" href="201110b.html">
+
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2011年10月上旬〜</p>
+<hr>
+<div>
+<a href="201109c.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="201110b.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2011/10/01 start -->
+<h2><a name="20111001" href="201110a.html#20111001">2011-10-01 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="201110011" title="201110011" href="201110a.html#201110011">■</a> 
+Hulu解約</h3>
+<p>
+結局UbuntuのFirefoxでの文字化けが解消しなかったので先週解約した。<br>
+J:COMでもうお腹いっぱいってのもあるけど。<br>
+ナショナル・トレジャーも吹替えやってたし。<br>
+まあon demandな点はよかったんだけどねえ。<br>
+あとPS3がもうちょっと早ければ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2011/10/01 end -->
+
+
+
+<hr class="hide">
+<!-- 2011/10/02 start -->
+<h2><a name="20111002" href="201110a.html#20111002">2011-10-02 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="201110021" title="201110021" href="201110a.html#201110021">■</a> 
+9月のspam</h3>
+<p>
+1500通ほど。若干少なめ。
+
+</p>
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="201110022" title="201110022" href="201110a.html#201110022">■</a> 
+短縮URLの展開</h3>
+<p>
+telnetはさすがにコマンドラインだけで済まないので面倒。要はヘッダが表示されればいいわけで、
+</p>
+<pre>
+% curl -sI t.co/mRJEGu6T
+HTTP/1.1 301 Moved Permanently
+Date: Sun, 02 Oct 2011 13:58:42 GMT
+Server: hi
+Location: http://bit.ly/pPJzZq
+Cache-Control: private,max-age=300
+Expires: Sun, 02 Oct 2011 14:03:42 GMT
+Connection: close
+Content-Type: text/html; charset=UTF-8
+</pre>
+<p>
+みたいな感じでok。ただ、この場合のようにさらにbitlyだったりするので-Lもつけるといい。
+</p>
+<pre>
+% curl -sIL t.co/mRJEGu6T
+HTTP/1.1 301 Moved Permanently
+Date: Sun, 02 Oct 2011 13:51:42 GMT
+Server: hi
+Location: http://bit.ly/pPJzZq
+Cache-Control: private,max-age=300
+Expires: Sun, 02 Oct 2011 13:56:42 GMT
+Connection: close
+Content-Type: text/html; charset=UTF-8
+
+HTTP/1.1 301 Moved
+Server: nginx
+Date: Sun, 02 Oct 2011 13:51:44 GMT
+Content-Type: text/html; charset=utf-8
+Connection: keep-alive
+Set-Cookie: _bit=4e886c70-00289-07cfd-331cf10a;domain=.bit.ly;expires=Fri Mar 30 13:51:44 2012;path=/; HttpOnly
+Cache-control: private; max-age=90
+Location: http://support.microsoft.com/kb/2564553
+MIME-Version: 1.0
+Content-Length: 131
+
+HTTP/1.1 200 OK
+Cache-Control: private
+Content-Length: 125139
+Content-Type: text/html; charset=utf-8
+Server: Microsoft-IIS/7.5
+Set-Cookie: .ASPXANONYMOUS=WVivRJy3zAEkAAAAMDc3ZDcwYjctMWFmYS00OTEzLWE3ZmItYmY3MmY1MmU0ZWMx3vR2Kztmc7Y6MbX41zMkxbV9Z4o1; expires=Sun, 11-Dec-2011 00:31:48 GMT; path=/; HttpOnly
+X-AspNet-Version: 2.0.50727
+X-Powered-By: ASP.NET
+ServerName: T02
+PICS-Label: (pics-1.1 &quot;http://www.icra.org/pics/vocabularyv03/&quot; l r (n 0 s 0 v 0 l 0 oa 0 ob 0 oc 0 od 0 oe 0 of 0 og 0 oh 0 c 0) &quot;http://www.rsac.org/ratingsv01.html&quot; l r (n 0 s 0 v 0 l 0))
+Date: Sun, 02 Oct 2011 13:51:47 GMT
+</pre>
+<p>
+最後まで追い続ける。まあ、最後の1個余計ではあるが。最終的には
+</p>
+<pre>
+% curl -sLI t.co/mRJEGu6T | grep Location: | tail -1
+Location: http://support.microsoft.com/kb/2564553
+</pre>
+<p>
+でいいんじゃないかと。
+</p>
+<!-- section end -->
+</div>
+<!-- 2011/10/02 end -->
+
+
+
+<hr class="hide">
+<!-- 2011/10/03 start -->
+<h2><a name="20111003" href="201110a.html#20111003">2011-10-03 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="201110031" title="201110031" href="201110a.html#201110031">■</a> 
+<a href="http://golf.shinh.org/p.rb?Oyster">Oyster</a></h3>
+<p>
+Oysterといえばrだよという方針で攻めたが、そんなことする必要は全然なかった。<br>
+空白の扱いを考えるとこれはawkが有利な問題。
+</p>
+<!-- section end -->
+</div>
+<!-- 2011/10/03 end -->
+
+
+
+<hr class="hide">
+<!-- 2011/10/04 start -->
+<h2><a name="20111004" href="201110a.html#20111004">2011-10-04 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="201110041" title="201110041" href="201110a.html#201110041">■</a> 
+timeoutコマンドでmplayerをkill</h3>
+<p>
+znzさんに教えてもらった。予約録音もできるようになったねえ。
+</p>
+<pre>
+% timeout 30m mplayer -playlist http://mfile.akamai.com/129931/live/reflector:46032.asx \
+  -vo null -ao pcm:waveheader:fast:file=NHK1.wav
+</pre>
+<p>
+これで30分間録音できる。最初始まるまでちょっと時間がかかるので1分前ぐらいに設定したほうがよさそうだ。<br>
+あとはwavをファイルにしないでmp3へ変換する方法を考えよう。
+</p>
+<!-- section end -->
+</div>
+<!-- 2011/10/04 end -->
+
+
+
+<hr class="hide">
+<!-- 2011/10/05 start -->
+<h2><a name="20111005" href="201110a.html#20111005">2011-10-05 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="201110051" title="201110051" href="201110a.html#201110051">■</a> 
+sleepとechoでmplayerを終了させる</h3>
+<p>
+killしなくてもqをmplayerへ入力できればいいよなってことで、
+</p>
+<pre>
+% (sleep 60; echo -n q) | mplayer ...
+</pre>
+<p>
+で試してみたら、あっさりうまくいった。これで満足。
+
+</p>
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="201110052" title="201110052" href="201110a.html#201110052">■</a> 
+mplayerでwavファイルを作らずにmp3を作成</h3>
+<p>
+&gt;()なんてのがあったよなと思い出した。bashでもzshでもいける。<br>
+というわけでまとめると
+</p>
+<pre>
+% (sleep 60;echo -n q) | \
+  mplayer -playlist http://mfile.akamai.com/129931/live/reflector:46032.asx \
+  -vo null -ao pcm:waveheader:fast:file=&gt;(ffmpeg -y -i - NHK-R1.mp3)
+</pre>
+<p>
+となる。これで1分後にmplayerはきれいに終了しNHK-R1.mp3ができあがる。<br>
+GNU coreutils sleepならmとかhで分時指定可能。
+</p>
+<p>
+playlistのURLは実はWMP用。
+</p>
+<pre>
+NHK第1 http://mfile.akamai.com/129931/live/reflector:46032.asx
+NHK第2 http://mfile.akamai.com/129932/live/reflector:46056.asx
+NHK-FM http://mfile.akamai.com/129933/live/reflector:46051.asx
+</pre>
+<p>
+これは変わるかもしれない。
+</p>
+<pre>
+http://www3.nhk.or.jp/netradio/player/wmp_r1.html
+http://www3.nhk.or.jp/netradio/player/wmp_r2.html
+http://www3.nhk.or.jp/netradio/player/wmp_fm.html
+</pre>
+<p>
+のソースから抜き出した。
+</p>
+<!-- section end -->
+</div>
+<!-- 2011/10/05 end -->
+
+
+
+<hr class="hide">
+<!-- 2011/10/06 start -->
+<h2><a name="20111006" href="201110a.html#20111006">2011-10-06 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="201110061" title="201110061" href="201110a.html#201110061">■</a> 
+なぜmplayerで-endposが効かないのか</h3>
+<p>
+なんとなくわかった。再生位置が刻々と表示されるが、これがどうにもでかい。
+</p>
+<pre>
+A:612701.2 (170:11:41.2) of 1844674428928.0 (512409556:18:33.6)  0.1% 13% 
+</pre>
+<p>
+あまり気にしてなかったが、なんだ170時間て。<br>
+なんの数字だかわからないけど、1時間って指定してもこれじゃ意味がない。<br>
+ためしに170:13:00とかやってみたらちゃんと-endposが効いた。<br>
+しかしこれいくつになるのかわからないから、指定のしようがない。<br>
+ffmpegみたいにdurationなら相対だから気にする必要がないんだけどねえ。
+</p>
+<p>
+やっぱqを渡すしかないか。
+</p>
+<!-- section end -->
+</div>
+<!-- 2011/10/06 end -->
+
+
+
+<hr class="hide">
+<!-- 2011/10/07 start -->
+<h2><a name="20111007" href="201110a.html#20111007">2011-10-07 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="201110071" title="201110071" href="201110a.html#201110071">■</a> 
+mplayerを完全に黙らせる</h3>
+<p>
+先日&gt;()で解決した件だけど、ふつうなら標準出力に出してパイプにするよね(fifoでもいいが)。<br>
+ところがmplayerはなぜかいろんな情報を標準エラー出力だけじゃなく標準出力にも出している。<br>
+そのため単純に
+</p>
+<pre>
+% ... -ao pcm:waveheader:fast:file=/dev/stdout | ffmpeg -y -i - NHK-R1.mp3
+</pre>
+<p>
+とすると余計なものが混ざってしまい失敗してしまう。<br>
+マニュアルを見ると-quietがあるがこれでも残る。<br>
+どうしたもんかと思ったら、-really-quietなんてのもあった。これか。<br>
+というわけで、
+</p>
+<pre>
+% ... -really-quiet -ao pcm:waveheader:fast:file=/dev/stdout | ffmpeg -y -i - NHK-R1.mp3
+</pre>
+<p>
+でいけた。あと毎回
+</p>
+<pre>
+mplayer: could not connect to socket
+mplayer: No such file or directory
+Failed to open LIRC support. You will not be able to use your remote control.
+</pre>
+<p>
+とエラーがでてうざいので~/.mplayer/configにnolirc=yesを追加した。<br>
+これで完全に黙らせることに成功した。<br>
+crontabに登録するときは黙ってもらったほうがいい。
+</p>
+<!-- section end -->
+</div>
+<!-- 2011/10/07 end -->
+
+
+
+<hr class="hide">
+<!-- 2011/10/08 start -->
+<h2><a name="20111008" href="201110a.html#20111008">2011-10-08 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="201110081" title="201110081" href="201110a.html#201110081">■</a> 
+locateでUSB HDDを管理</h3>
+<p>
+USB HDDは便利だけど外しちゃうと何が入ってたかわかんないので、いちいちつながないといけない。<br>
+というわけでファイル名だけでも一覧があるいいわけだけど、<br>
+findしてとっとくのもなんだしlocatedbしてみた。<br>
+</p>
+<p>
+まず準備としてはmlocateグループに自分を加えておく。なんか最後にmlocateへchgrpするらしいので必要。
+</p>
+<pre>
+% locatedb -U /media/863abe17-48a6-43eb-b392-64f3a04695db -o 863abe17-48a6-43eb-b392-64f3a04695db
+</pre>
+<p>
+のような感じでデータベースを作れば、
+</p>
+<pre>
+% locate -d 863abe17-48a6-43eb-b392-64f3a04695db foo
+</pre>
+<p>
+で検索できる。
+</p>
+<p>
+まあ、でもfindしといてgrepで十分だよな。
+</p>
+<!-- section end -->
+</div>
+<!-- 2011/10/08 end -->
+
+
+
+<hr class="hide">
+<!-- 2011/10/09 start -->
+<h2><a name="20111009" href="201110a.html#20111009">2011-10-09 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="201110091" title="201110091" href="201110a.html#201110091">■</a> 
+Firefoxのロケーションバーの表示を以前のように戻した</h3>
+<p>
+browser.urlbar.trimURLs(http://を隠す)とbrowser.urlbar.formatting.enabled(グレーアウト)をfalseに。<br>
+あれってAutoCopyとか使ってるとちゃんとhttp://の部分までコピペできないし、<br>
+まったくもって余計なお世話的設定。
+</p>
+<!-- section end -->
+</div>
+<!-- 2011/10/09 end -->
+
+
+
+<hr class="hide">
+<!-- 2011/10/10 start -->
+<h2><a name="20111010" href="201110a.html#20111010">2011-10-10 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="201110101" title="201110101" href="201110a.html#201110101">■</a> 
+delicious APIのshared=noが復活</h3>
+<p>
+なぜかshared=noが効かなかったわけなんだけど、やっと直った。<br>
+これによりdiigoからdeliciousへの保存も復活した。<br>
+diigoのバックアップとしてしか使ってないので、<br>
+まあ現状のdelicious程度であまり不満はない。
+</p>
+<p>
+<a href="http://twitter.com/diigo/status/123334142191611905">@diigo: Diigo supports &quot;save to delicious&quot; again.</a></p>
+<!-- section end -->
+</div>
+<!-- 2011/10/10 end -->
+
+<hr>
+<div>
+<a href="201109c.html">&lt;Prev(,)</a> | 
+<a href="201110b.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

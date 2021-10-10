@@ -1,0 +1,519 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2014-7-a</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="201406c.html">
+<link rel="next" href="201407b.html">
+
+<link rel="stylesheet" type="text/css" href="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.css">
+<script async type="text/javascript" src="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.js"></script>
+<script type="text/javascript">
+<!--       
+$(document).ready(function() {
+  prettyPrint();
+});
+-->
+</script>
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2014年7月上旬〜</p>
+<hr>
+<div>
+<a href="201406c.html" accesskey=",">&lt;Older(,)</a> | 
+<a href="201407b.html" accesskey=".">Newer(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2014/07/01 start -->
+<h2><a name="20140701" href="201407a.html#20140701">2014-07-01 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="201407011" title="201407011" href="201407a.html#201407011">■</a> 
+findでサイズが0のファイルをマークする</h3>
+<p>
+-printfでサイズを表示するようにして、sedなりで変更するという方法が一般的だと思うが、<br>
+findだけで可能なのかやってみた。
+</p>
+<p>
+準備。
+</p>
+<pre>
+% mkdir tmp
+% repeat 9 echo foo &gt; tmp/$[++i].txt
+% touch tmp/0.txt
+% ls -l tmp
+合計 36
+-rw-r--r-- 1 eban eban 0 2014-07-01 23:23:59 0.txt
+-rw-r--r-- 1 eban eban 4 2014-07-01 23:23:52 1.txt
+-rw-r--r-- 1 eban eban 4 2014-07-01 23:23:52 2.txt
+-rw-r--r-- 1 eban eban 4 2014-07-01 23:23:52 3.txt
+-rw-r--r-- 1 eban eban 4 2014-07-01 23:23:52 4.txt
+-rw-r--r-- 1 eban eban 4 2014-07-01 23:23:52 5.txt
+-rw-r--r-- 1 eban eban 4 2014-07-01 23:23:52 6.txt
+-rw-r--r-- 1 eban eban 4 2014-07-01 23:23:52 7.txt
+-rw-r--r-- 1 eban eban 4 2014-07-01 23:23:52 8.txt
+-rw-r--r-- 1 eban eban 4 2014-07-01 23:23:52 9.txt
+</pre>
+<p>
+0.txtだけがサイズ0。頭に@をつけるだけなら
+</p>
+<pre>
+% find tmp -size 0 -printf @ -print
+@tmp/0.txt
+</pre>
+<p>
+でいいわけだが、これだと他のファイルが表示されない。<br>
+そこで-trueだ。なんの意味があるんだと思っていたが、こんな使い途が。
+</p>
+<pre>
+% find tmp -type f \( -size 0 -printf @ -or -true \) -print
+tmp/7.txt
+tmp/9.txt
+tmp/8.txt
+tmp/4.txt
+tmp/2.txt
+tmp/6.txt
+tmp/3.txt
+tmp/1.txt
+@tmp/0.txt
+tmp/5.txt
+</pre>
+<p>
+-or -trueで強制的に真にする。
+</p>
+<!-- section end -->
+</div>
+<!-- 2014/07/01 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/07/02 start -->
+<h2><a name="20140702" href="201407a.html#20140702">2014-07-02 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="201407021" title="201407021" href="201407a.html#201407021">■</a> 
+tmuxのsynchronize-panes</h3>
+<p>
+複数のpaneへ同時入力する設定。<br>
+これめちゃめちゃ便利なんだけど、トグル動作させたい。<br>
+showw -v synchronize-panesで現在の状態がわかるので、
+</p>
+<pre>
+bind e if 'test `tmux showw -v synchronize-panes` = on' 'setw synchronize-panes off' 'setw synchronize-panes on'
+</pre>
+<p>
+とすればPREFIX eでいけるかと思ったら、なんとon/offを指定しなければ最初からトグルだった。
+</p>
+<pre>
+bind e setw synchronize-panes
+</pre>
+<p>
+でokだ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2014/07/02 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/07/03 start -->
+<h2><a name="20140703" href="201407a.html#20140703">2014-07-03 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="201407031" title="201407031" href="201407a.html#201407031">■</a> 
+6月のspam</h3>
+<p>
+220通ほど。平和が戻った。
+
+</p>
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="201407032" title="201407032" href="201407a.html#201407032">■</a> 
+bashで62進数</h3>
+<p>
+62進数は
+<a href="http://stackoverflow.com/questions/742013/how-to-code-a-url-shortener/742047#742047">短縮URLでも使われていて</a>、マッピングさえなんとかすればいける。<br>
+一方bashでも0-9,a-z,A-Zで62進数も扱える。<br>
+man bashによると@,_と合わせて64進数まであり。<br>
+62進でe9aを10進に変換するなら簡単。ただし、短縮URLの例ではマッピングが違うので変換が必要。<br>
+a-z,A-Z,0-9という順番なので
+</p>
+<pre>
+% bash -c 'echo $[62#`tr a-zA-Z0-9 0-9a-zA-Z &lt;&lt;&lt; e9a`]'
+19158
+</pre>
+<p>
+となる。むしろ逆変換のほうが欲しいが、さすがにそれはbashにはない。<br>
+zshにはあるが大文字小文字を無視するので36進数まで。
+</p>
+<!-- section end -->
+</div>
+<!-- 2014/07/03 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/07/04 start -->
+<h2><a name="20140704" href="201407a.html#20140704">2014-07-04 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="201407041" title="201407041" href="201407a.html#201407041">■</a> 
+baseNをなんとなく作ってみた</h3>
+<p>
+base62のつもりだったが、テーブルの大きさ次第に気づき、Nになった。
+</p>
+<pre>
+#! /bin/bash
+
+tbl=({0..9} {a..z} {A..Z} + /)
+N=${#tbl[@]}
+z=${tbl[0]}
+
+base(){
+  local i=$1
+  local b=
+  while ((i &gt; 0)); do
+    b=${tbl[i % N]}$b
+    i=$[i / N]
+  done
+  result=${b:-${tbl[0]}}
+}
+
+for ((i=0; i &lt; $1; i++)); do
+  base $i
+  a=&quot;$z$z$z&quot;${result}
+  b=${a%????}
+  echo &quot;${a#$b} $i&quot;
+done
+</pre>
+<p>
+0の場合を見落としていて、とってつけたような対応になっている。<br>
+tblを差し替えればいくらでも。連続する文字は{..}が使えるので楽。
+</p>
+<!-- section end -->
+</div>
+<!-- 2014/07/04 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/07/05 start -->
+<h2><a name="20140705" href="201407a.html#20140705">2014-07-05 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="201407051" title="201407051" href="201407a.html#201407051">■</a> 
+<a href="http://golf.shinh.org/p.rb?right+time#Bash">right timeが通らない</a></h3>
+<p>
+40バイトという記録があるが、
+</p>
+<pre>
+TZ=right/UTC xargs -i date -d@{} +%F\ %T
+</pre>
+<p>
+これって
+</p>
+<pre>
+sed s/^/@/|TZ=right/UTC date -f- +%F\ %T
+</pre>
+<p>
+でもよさげだなあと試してみるも通らない。<br>
+サイズは変わらないので通っても通らなくてもいいんだが、<br>
+3番目でなぜか数秒ずれるものがある。<br>
+どういうことだと元の解でもやってみると、なんとだめだった。<br>
+Rubyのもだめだ。<br>
+2010年以降が全部ずれてる。<br>
+うるう秒の設定ってなんか変わったんだっけ？
+</p>
+<!-- section end -->
+</div>
+<!-- 2014/07/05 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/07/06 start -->
+<h2><a name="20140706" href="201407a.html#20140706">2014-07-06 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="201407061" title="201407061" href="201407a.html#201407061">■</a> 
+巨大なデータをgrepする</h3>
+<p>
+昨日作った64進と10進で1000万行ほどデータを作り、<br>
+奇数行の64進だけ抜き出したキーをファイルにしてgrepする。<br>
+遅いのでperlで書き直した。
+</p>
+<pre>
+% time perl base.pl 10000000 &gt; data.txt 
+% awk 'NR%2{print $1}' data.txt | sort &gt; key.txt
+% wc -l data.txt key.txt
+ 10000000 data.txt
+  5000000 key.txt
+ 15000000 合計
+% head data.txt key.txt
+==&gt; data.txt &lt;==
+0001 1
+0002 2
+0003 3
+0004 4
+0005 5
+0006 6
+0007 7
+0008 8
+0009 9
+000a 10
+
+==&gt; key.txt &lt;==
+0++/
+0++1
+0++3
+0++5
+0++7
+0++9
+0++B
+0++D
+0++F
+0++H
+</pre>
+<p>
+やりたいのはkey.txtの内容でgrepすることだ。<br>
+forやwhil readで1個なり数個なりでgrepするのはものすごく時間がかかる。<br>
+かといってgrep -f key.txt data.txtは入力を受け付けなくなるぐらい重くなる。<br>
+それに+を使っちゃったのでエスケープ処理も必要になる。<br>
+じゃあfgrep -f key.txt data.txtならいいかというと、<br>
+実は2番目のフィールドの余計なものにマッチする。
+</p>
+<pre>
+% time fgrep -f key.txt data.txt | wc -l
+9297500
+fgrep -f key.txt data.txt  9.59s user 0.33s system 99% cpu 9.968 total
+</pre>
+<p>
+key.txtが500万行ある割には結構速い。10秒ほどでできてしまう。
+</p>
+<pre>
+% time fgrep -f &lt;(sed 's/$/:/' key.txt) &lt;(sed 's/ /: /' data.txt) | sed 's/://' | wc -l
+5000000
+fgrep -f &lt;(sed 's/$/:/' key.txt) &lt;(sed 's/ /: /' data.txt)  8.22s user 0.30s system 77% cpu 11.045 total
+</pre>
+<p>
+まあ、こんな小細工が必要になる。
+</p>
+<p>
+それとは別にawkを使う手もある。
+</p>
+<pre>
+% time awk 'NR==FNR{map[$1];next}$1 in map' key.txt data.txt | wc -l
+5000000
+awk 'NR==FNR{map[$1];next}$1 in map' key.txt data.txt  6.96s user 0.24s system 99% cpu 7.204 total
+</pre>
+<p>
+これはkey.txtを全部連想配列のmapに入れてdata.txtの$1だけを見て判断している。<br>
+共通フィールドを抜き出すときによく使われる。<br>
+NR==FNRで最初のファイルのときだけ真になるのでkey.txtだけmapへ入れられる。<br>
+awkは参照するだけでエントリーが作られるのでmap[$1]=1とかしなくてもいい。<br>
+存在確認はinを使うのが正しい。つづく。
+</p>
+<!-- section end -->
+</div>
+<!-- 2014/07/06 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/07/07 start -->
+<h2><a name="20140707" href="201407a.html#20140707">2014-07-07 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="201407071" title="201407071" href="201407a.html#201407071">■</a> 
+grepの代わりにsort,uniqで代用</h3>
+<p>
+どういうことかというとkey.txtとdata.txtを合わせてsortする。<br>
+欲しいのはダブったところなので、uniq -dで取り出せばいい。<br>
+ただそのままだと2番目のフィールドが邪魔なので-w4をつけてkeyだけを対象にする。<br>
+-wの場合は最初に現われたものが残るので
+</p>
+<pre>
+0001 1
+0001
+</pre>
+<p>
+という具合に並べておけばいい感じにgrepと同じ結果になる。<br>
+以上まとめると
+</p>
+<pre>
+% time sort -r key.txt data.txt | uniq -d -w4 &gt; out
+sort -r key.txt data.txt  5.18s user 0.42s system 237% cpu 2.360 total
+</pre>
+<p>
+とすればいい。しかも結構速い。<br>
+これだとawkのようにkey.txtの内容をメモリに全部取り込むこともないので、<br>
+たぶんもっと巨大なデータになっても対応できるはず。
+</p>
+<p>
+一応チェック。
+</p>
+<pre>
+% grep '[02468]$' out
+% wc -l out
+5000000 out
+</pre>
+<p>
+さらにつづく。実はまだ方法はある。
+</p>
+<!-- section end -->
+</div>
+<!-- 2014/07/07 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/07/08 start -->
+<h2><a name="20140708" href="201407a.html#20140708">2014-07-08 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="201407081" title="201407081" href="201407a.html#201407081">■</a> 
+grepの代わりにjoin</h3>
+<p>
+joinというと2つのファイルを共通フィールドで結合するという目的使われる。<br>
+フィールドに差異があっても共通な部分しか表示されない。<br>
+ってことはそれってgrepだよね。
+</p>
+<pre>
+% time join key.txt &lt;(sort data.txt) &gt; out2 
+join key.txt &lt;(sort data.txt) &gt; out2  1.78s user 0.13s system 68% cpu 2.782 total
+</pre>
+<p>
+これも結構速い。アルゴリズム的にはマージソートと同じようなもんだからか。<br>
+全部読み込んでから処理するわけではないのでメモリも気にする必要はない。
+</p>
+<!-- section end -->
+</div>
+<!-- 2014/07/08 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/07/09 start -->
+<h2><a name="20140709" href="201407a.html#20140709">2014-07-09 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="201407091" title="201407091" href="201407a.html#201407091">■</a> 
+calibreを更新したらebook-convertが遅くなった</h3>
+<p>
+そもそもdot by dotで画像は変換済みなのでebook-convertを使う必要もなく、<br>
+epubへ変換できればいいんだよなあ。<br>
+htmlとか画像数だけ作ればいいだけだし自前で作るか。
+</p>
+<!-- section end -->
+</div>
+<!-- 2014/07/09 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/07/10 start -->
+<h2><a name="20140710" href="201407a.html#20140710">2014-07-10 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="201407101" title="201407101" href="201407a.html#201407101">■</a> 
+convertのresize</h3>
+<p>
+convertの-resizeにはいろんなgeometry表現で指定できるが、<br>
+後ろにつく記号の意味をすぐ忘れるので備忘録。<br>
+まずはなにもつけない場合:
+</p>
+<pre>
+% convert -size 100x100 xc: -resize 150x200 info:
+xc: XC 150x150 150x150+0+0 16-bit DirectClass 0.010u 0:00.009
+% convert -size 100x100 xc: -resize 200x150 info:
+xc: XC 150x150 150x150+0+0 16-bit DirectClass 0.010u 0:00.070
+</pre>
+<p>
+これは指定したgeometryに最大限収まる大きさになる。<br>
+150x200とか200x150になるわけではなく、縦横比は保存される。<br>
+強制的に200x150にするには!を使う。
+</p>
+<pre>
+% convert -size 100x100 xc: -resize 150x200\! info:
+xc: XC 200x150 150x200+0+0 16-bit DirectClass 0.020u 0:00.000
+</pre>
+<p>
+注意しないといけないのはwidthかheightのどちらかを省略した場合:
+</p>
+<pre>
+% convert -size 100x100 xc: -resize 200x info:
+xc: XC 200x200 200x200+0+0 16-bit DirectClass 0.020u 0:00.010
+% convert -size 100x100 xc: -resize x200 info:
+xc: XC 200x200 200x200+0+0 16-bit DirectClass 0.010u 0:00.000
+</pre>
+<p>
+のように縦横比は保存されるが、はみ出てしまうかもしれない。
+</p>
+<!-- section end -->
+</div>
+<!-- 2014/07/10 end -->
+
+<hr>
+<div>
+<a href="201406c.html">&lt;Older(,)</a> | 
+<a href="201407b.html">Newer(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

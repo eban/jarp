@@ -1,0 +1,506 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2014-8-b</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="201408a.html">
+<link rel="next" href="201408c.html">
+
+<link rel="stylesheet" type="text/css" href="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.css">
+<script async type="text/javascript" src="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.js"></script>
+<script type="text/javascript">
+<!--       
+$(document).ready(function() {
+  prettyPrint();
+});
+-->
+</script>
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2014年8月中旬〜</p>
+<hr>
+<div>
+<a href="201408a.html" accesskey=",">&lt;Older(,)</a> | 
+<a href="201408c.html" accesskey=".">Newer(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2014/08/11 start -->
+<h2><a name="20140811" href="201408b.html#20140811">2014-08-11 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="201408111" title="201408111" href="201408b.html#201408111">■</a> 
+<a href="http://blog.ueda.asia/?p=3535">Q1 画面にバッテンを描いてください</a></h3>
+<p>
+printfだけでやってみようと思ったが、<br>
+やはり真ん中で1個にする処理がどうしてもうまいこといかない。<br>
+tr -s xでごまかした。
+</p>
+<pre>
+% for i in {1..11} {10..1};do printf &quot;%*s%*s\n&quot; $i x $[22-2*i] x|tr -s x;done
+x                   x
+ x                 x
+  x               x
+   x             x
+    x           x
+     x         x
+      x       x
+       x     x
+        x   x
+         x x
+          x
+         x x
+        x   x
+       x     x
+      x       x
+     x         x
+    x           x
+   x             x
+  x               x
+ x                 x
+x                   x
+</pre>
+<p>
+%.0sにすれば消えるが、むむ、待てよ。ああ、こうすればいいのか。
+</p>
+<pre>
+for i in {1..11} {10..1};do printf &quot;%*s%*.*s\n&quot; $i x $[j=22-2*i] $j x;done    
+x                   x
+ x                 x
+  x               x
+   x             x
+    x           x
+     x         x
+      x       x
+       x     x
+        x   x
+         x x
+          x
+         x x
+        x   x
+       x     x
+      x       x
+     x         x
+    x           x
+   x             x
+  x               x
+ x                 x
+x                   x
+</pre>
+<p>
+これでbashでもzshでもokだ。とりあえず満足した。
+</p>
+<!-- section end -->
+</div>
+<!-- 2014/08/11 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/08/12 start -->
+<h2><a name="20140812" href="201408b.html#20140812">2014-08-12 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="201408121" title="201408121" href="201408b.html#201408121">■</a> 
+xzで圧縮したPBMファイルをconvertで使えるようにする</h3>
+<p>
+pbmをxzで圧縮しても
+</p>
+<pre>
+% convert 100.pbm.xz foo.png
+convert.im6: no decode delegate for this image format `100.pbm.xz' @ error/constitute.c/ReadImage/544.
+convert.im6: no images defined `foo.png' @ error/convert.c/ConvertImageCommand/3044.
+</pre>
+<p>
+てな感じで怒られてしまう。が、ここにdelegateって書いてあるのがヒントで、<br>
+~/.magick/delegates.xmlで定義してやると使えるようになる。
+</p>
+<pre>
+% cat ~/.magick/delegates.xml
+&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;delegatemap&gt;
+	&lt;delegate decode=&quot;xz&quot; command=&quot;xzcat '%i' &gt; '%o'&quot;/&gt;
+&lt;/delegatemap&gt;
+</pre>
+<p>
+こんな感じで用意してやればok。
+</p>
+<pre>
+% convert 100.pbm.xz -verbose foo.png
+100.pbm.xz=&gt;foo.png XZ 1500x2363 1500x2363+0+0 8-bit PseudoClass 2c 65.5KB 0.120u 0:00.120
+</pre>
+<p>
+これはImageMagickのコマンド全部に有効で、identifyもokだしdisplayでも表示できるようになる。
+</p>
+<pre>
+% identify 100.pbm.xz 
+100.pbm.xz XZ 1500x2363 1500x2363+0+0 1-bit Bilevel DirectClass 444KB 0.000u 0:00.000
+</pre>
+<p>
+結構便利だ。
+</p>
+<p>
+cf: 
+<a href="http://www.imagemagick.org/Usage/files/#delegates">Coders and Delegates for Image Formats</a></p>
+<!-- section end -->
+</div>
+<!-- 2014/08/12 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/08/13 start -->
+<h2><a name="20140813" href="201408b.html#20140813">2014-08-13 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="201408131" title="201408131" href="201408b.html#201408131">■</a> 
+convertで画像をPBMへ変換してxzで圧縮</h3>
+<p>
+昨日の逆。同じように~/.magick/delegates.xmlで定義する。
+</p>
+<pre>
+&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;delegatemap&gt;
+	&lt;delegate decode=&quot;xz&quot; command=&quot;xzcat '%i' &gt; '%o'&quot;/&gt;
+	&lt;delegate decode=&quot;pbm&quot; encode=&quot;xz&quot; command=&quot;xz -9 &lt; '%i' &gt; '%o'&quot;/&gt;
+&lt;/delegatemap&gt;
+</pre>
+<p>
+こちら側はあまり自由がない。pbm決め打ちになってしまう。<br>
+pgm.xzも定義しようとして
+</p>
+<pre>
+	&lt;delegate decode=&quot;pgm&quot; encode=&quot;xz&quot; command=&quot;xz -9 &lt; '%i' &gt; '%o'&quot;/&gt;
+</pre>
+<p>
+をどこかに入れても先に書いたほうしか有効にならない。<br>
+これに関してはxz *.pgmと簡単に後から実行できるしあまり気にならない。
+</p>
+<p>
+二値画像を保存するならpbm.xz形式が小さくてそこそこ速いし最適だと思う。
+</p>
+<!-- section end -->
+</div>
+<!-- 2014/08/13 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/08/14 start -->
+<h2><a name="20140814" href="201408b.html#20140814">2014-08-14 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="201408141" title="201408141" href="201408b.html#201408141">■</a> 
+Google日本語入力</h3>
+<p>
+なにげなくGoogle日本語入力でzlと打ったらちゃんと→が出てきて驚いた。<br>
+SKK使ってるとつい打ってしまうわけだけど、気が利いてるな。<br>
+zh, zj, zl, zk, z-, z/, z[, z], z,, z.といろいろ使える。
+</p>
+<!-- section end -->
+</div>
+<!-- 2014/08/14 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/08/15 start -->
+<h2><a name="20140815" href="201408b.html#20140815">2014-08-15 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="201408151" title="201408151" href="201408b.html#201408151">■</a> 
+<a href="http://golf.shinh.org/p.rb?Numbers+Cap">Numbers Cap</a></h3>
+<p>
+1**2, 11**2, 111*2,...ってことだったんだねえ。
+</p>
+<pre>
+% for i in {1..9};a+=1&amp;&amp;printf %$[8+i]s\\n $[a**2]
+        1
+       121
+      12321
+     1234321
+    123454321
+   12345654321
+  1234567654321
+ 123456787654321
+12345678987654321
+</pre>
+<!-- section end -->
+</div>
+<!-- 2014/08/15 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/08/16 start -->
+<h2><a name="20140816" href="201408b.html#20140816">2014-08-16 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="201408161" title="201408161" href="201408b.html#201408161">■</a> 
+Bashで0から始まる数を10進として扱う</h3>
+<p>
+スキャンした画像は001.pbmのような連番で名前をつけてるが、<br>
+この名前から計算するときに001の0が邪魔になるときがある。<br>
+Bashだと8進数とみなされるので。<br>
+そこで先頭の0を取り除くわけだが、むりやり10進として扱う方法もある。
+</p>
+<pre>
+$ a=009
+$ echo $[a+1]
+bash: 009: value too great for base (error token is &quot;009&quot;)
+$ echo $[10#$a+1]
+10
+</pre>
+<p>
+10#をつければ10進になる。10#aとしてしまうとaは変数じゃなくてリテラルになるので、<br>
+10#$aにする必要あり。
+</p>
+<p>
+0を取り除くならshopt -s extglobすると簡単。
+</p>
+<pre>
+$ echo ${a##+(0)}
+9
+</pre>
+<p>
++(0)で0の1個以上の繰り返しを意味することになる。
+</p>
+<pre>
+?(pattern-list)
+     Matches zero or one occurrence of the given patterns
+*(pattern-list)
+     Matches zero or more occurrences of the given patterns
++(pattern-list)
+     Matches one or more occurrences of the given patterns
+@(pattern-list)
+     Matches one of the given patterns
+!(pattern-list)
+     Matches anything except one of the given patterns
+</pre>
+<!-- section end -->
+</div>
+<!-- 2014/08/16 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/08/17 start -->
+<h2><a name="20140817" href="201408b.html#20140817">2014-08-17 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="201408171" title="201408171" href="201408b.html#201408171">■</a> 
+スキャンした画像からconvert -floodfillで黒い帯を消す</h3>
+<p>
+<a href="201407c.html#201407311">先日drawのcolorでfloodfillする技</a>について触れたが、<br>
+これを利用すれば
+<a href="201407c.html#201407271">黒い帯</a>も消せるんじゃないかと思い実験。
+</p>
+<p>
+drawだと二値化しないときついが、-floodfillオプションだと-fuzzでごまかせる。<br>
+というわけで、外側に1画素大きめのborderをgrayで書いて-floodfillで白く塗り潰す。
+</p>
+<pre>
+% convert black-belt.png -bordercolor gray -border 1x1 \
+  -fill white -fuzz 50% -floodfill +0+0 gray -shave 1x1 \
+  black-belt-floodfilled.png
+</pre>
+<p>
+こんな感じで右側の帯がきれいに消せた。
+</p>
+<p>
+<img src="../images/black-belt.png" alt="original">
+<img src="../images/black-belt-floodfilled.png" alt="floodfill">
+</p>
+<p>
+あれ、なんか色も濃くなってるけどなんでだ？まあいいか。むしろ好都合。
+</p>
+<p>
+これは偶数奇数ページによって左右に出てくるので-chopや-cropで対処するのは面倒。<br>
+その点-floodfillだとどちらに出ててもというか上下にあっても問題なく除去できるはず。
+</p>
+<!-- section end -->
+</div>
+<!-- 2014/08/17 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/08/18 start -->
+<h2><a name="20140818" href="201408b.html#20140818">2014-08-18 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="201408181" title="201408181" href="201408b.html#201408181">■</a> 
+pamtiltは速いが微妙</h3>
+<p>
+pamtiltはconvert -deskewに比べると格段に速いが結果がいまいち。<br>
+pamtiltした結果でrotateした画像をもう一度pamtiltすれば0になるはずだが、<br>
+微妙にまだ傾いてるよという結果になったりする。
+</p>
+<p>
+<pre>
+% pamtilt 020-90.pbm 
+-0.46
+% convert 020-90.pbm -rotate 0.46 pbm:- | pamtilt                                         
+-0.30
+</pre>
+</p>
+<p>
+とまあなんとも微妙な結果だ。その点convertのdeskewはちゃんと0になってくれる。
+</p>
+<pre>
+% ~/local/bin/convert 020-90.pbm -deskew 10% -format '%[deskew:angle]\n' info:
+0.671404
+% convert 020-90.pbm -rotate 0.671404 pbm:- | \
+  ~/local/bin/convert - -deskew 10% -format '%[deskew:angle]\n' info:
+-0
+</pre>
+<p>
+%[deskew:angle]が使えるのは最近のconvertなのでそこだけ~/local/binのを使ってる。
+</p>
+<!-- section end -->
+</div>
+<!-- 2014/08/18 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/08/19 start -->
+<h2><a name="20140819" href="201408b.html#20140819">2014-08-19 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="201408191" title="201408191" href="201408b.html#201408191">■</a> 
+<a href="http://www.fmwconcepts.com/imagemagick/multicrop/">multicrop</a></h3>
+<p>
+これもfloodfillを利用してるようだ。<br>
+最後に書いてあるスクリプトの概要を見ると、<br>
+縦横を格子状に分割してその各点を含む領域を求める感じかな。<br>
+これを応用してスキャンした画像のノンブルを除いた本文だけの領域が抜き出せないかな。<br>
+ただ、各文字はどう考えても分離しているのでいい感じで全部つなげないとだめだ。<br>
+やってみると確かに何文字かが抽出されただけだ。<br>
+ぼやけさせるにしても限度があるし。
+</p>
+<!-- section end -->
+</div>
+<!-- 2014/08/19 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/08/20 start -->
+<h2><a name="20140820" href="201408b.html#20140820">2014-08-20 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="201408201" title="201408201" href="201408b.html#201408201">■</a> 
+スキャンしたページを重ね合わせる</h3>
+<p>
+1ページだと文字がばらばらになるが、<br>
+数十ページも重ねてやればかたまりになるはず。<br>
+</p>
+<p>
+とりあえずサイズでソートして真ん中の30個ほどで重ねてみた。<br>
+二値画像のほうがやりやすいのでpbmにしている。
+</p>
+<pre>
+% cat foo.sh
+#! /bin/bash
+N=30
+for i in &quot;{@-.}&quot;; do
+  pages=($(ls -S &quot;$i&quot;/*))
+  n=$((${#pages[@]}/2))
+  mid=${pages[n]}
+  mid20=(${pages[@]:n-N/2:N})
+  convert &quot;${pages[n-N/2-1]}&quot; multiply.pbm
+  for j in &quot;${mid20[@]}&quot;; do
+    convert multiply.pbm $j -compose multiply -composite -verbose multiply.pbm
+  done
+done
+convert multiply.pbm -resize 30% multiply.png
+</pre>
+<p>
+<img src="../images/multiply.png" alt="">
+</p>
+<p>
+これをmulticropにかけてみると、結構いい感じで本文だけ抜き出せた。<br>
+最下部の句読点を考えてちょっとマージンを大きめに設定すれば十分使えそうだ。
+</p>
+<pre>
+% multicrop -d 100 -u 3 multiply.pbm multicrop.pbm
+
+Processing Image 0
+Size: 1360x1971
+Page Geometry: 1574x2360+114+235
+% convert multicrop-000.pbm -resize 30% multicrop.png
+</pre>
+<p>
+<img src="../images/multicrop.png" alt="">
+</p>
+<p>
+実際はXはどうでもよくて、Yだけあれば十分なので、<br>
+縦に分割してても問題ない。
+</p>
+<p>
+あとはmulticropの中を読んで最低限必要な部分を抜き出せばokだな。
+</p>
+<!-- section end -->
+</div>
+<!-- 2014/08/20 end -->
+
+<hr>
+<div>
+<a href="201408a.html">&lt;Older(,)</a> | 
+<a href="201408c.html">Newer(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

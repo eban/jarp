@@ -1,0 +1,670 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2002-10-b</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="200210a.html">
+<link rel="next" href="200210c.html">
+
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2002年10月中旬〜</p>
+<hr>
+<div>
+<a href="200210a.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="200210c.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2002/10/11 start -->
+<h2><a name="20021011" href="200210b.html#20021011">2002-10-11 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="200210111" title="200210111" href="200210b.html#200210111">■</a> 
+<a href="http://www.polstra.com/projects/freeware/ezm3/">[Linux] Ezm3</a></h3>
+<p>
+
+<a href="http://www.dm4lab.to/~kjana/memo/memo200210.html#m20021009f">おぉ、</a>
+
+<a href="http://tamura.tdiary.net/20021011.html#p01">なるほど。</a>
+最終的にはcvsupだけでいいはずなので、
+m3config/src/LINUXLIBC6を書き換えて
+</p>
+<pre>
+INSTALL_ROOT = &quot;/tmp/ezm3&quot;
+</pre>
+<p>
+として、ezm3はいつでも消せるようにしてみるかな。
+</p>
+
+<p>
+GCC 3.2だとエラーになるなあ。
+</p>
+<pre>
+INSTALL_ROOT = &quot;/tmp/ezm3&quot;
+X11ROOT = &quot;/hogehoge&quot;
+CC = [&quot;/usr/bin/gcc&quot;, &quot;-c&quot;]
+OPT_FLAG = &quot;-Os&quot;
+BOPT_FLAG = &quot;-Os&quot;
+GNU_CC = &quot;/usr/bin/gcc&quot;
+GNU_CFLAGS = &quot;-Os&quot;
+</pre>
+<p>
+としてみよう。Xは使わないのでわざと見つからないようにしてみた。
+共有ライブラリも要らないので
+</p>
+<pre>
+% PLATFORM_SUPPORTS_SHARED_LIB = &quot;T&quot;
+</pre>
+<p>
+とコメントアウト。
+</p>
+
+<p>
+あ、m3cgc1: Invalid option `-Os'と言われた。
+勢いでBOPT_FLAGまでいじったのが間違いか。
+明日にしよう。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200210112" title="200210112" href="200210b.html#200210112">■</a> 
+<a href="http://www.mingw.org/msys.shtml">[Ruby] MSYS</a></h3>
+<p>
+configure時に--prefix=c:/rubyのように指定すればいいということに気づく。
+/usrとか-I/usrのようなものだけ変換するようだ。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/10/11 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/10/12 start -->
+<h2><a name="20021012" href="200210b.html#20021012">2002-10-12 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="200210121" title="200210121" href="200210b.html#200210121">■</a> 
+<a href="http://www.polstra.com/projects/freeware/ezm3/">[Linux] Ezm3</a></h3>
+<p>
+なんだかんだで全然うまくいかず
+</p>
+<pre>
+INSTALL_ROOT = &quot;/tmp/ezm3&quot;
+X11ROOT = &quot;/usr/X11R6/lib&quot;
+OPT_FLAG = &quot;-Os&quot;
+M3CC_MAKE = [&quot;make&quot;, &quot;BISON=yacc&quot;]
+</pre>
+<p>
+で手を打つ。あとは
+</p>
+<pre>
+% PATH=/usr/bin:$PATH make CFLAGS=-Os
+</pre>
+<p>
+てな感じで。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200210122" title="200210122" href="200210b.html#200210122">■</a> 
+<a href="http://www.cvsup.org/">[Linux] CVSup</a></h3>
+<p>
+こちらは
+</p>
+<pre>
+% PATH=/tmp/ezm3/bin:/usr/bin:$PATH make M3FLAGS=&quot;-DSTATIC -DNOGUI&quot;
+% strip client/LINUXLIBC6/cvsup
+</pre>
+<p>
+と実行し、できあがったcvsupを/usr/local/binにコピー。okだ。
+/tmp/ezm3以下は消していい。
+</p>
+
+<p>
+ためしにglibc 2.2.2の環境で作るとruntime error。
+なぜか-DSTATICを外してdynamicにすると動く。全くもってglibcってやつは謎だ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200210123" title="200210123" href="200210b.html#200210123">■</a> 
+[Ruby] pstore.rb</h3>
+<p>
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-dev/18494">[ruby-dev:18494]</a>を追試。確かに起こる。openしたまま更にopenするのがまずいのか？
+いや、大丈夫だ。とするとflockか？そのようだ。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/10/12 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/10/13 start -->
+<h2><a name="20021013" href="200210b.html#20021013">2002-10-13 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="200210131" title="200210131" href="200210b.html#200210131">■</a> 
+[Linux] Linux 2.4.20-pre10</h3>
+<p>
+bisonを1.50にした所為かエラーになってしまう。
+</p>
+<pre>
+bison -y -d -b aicasm_gram aicasm_gram.y
+aicasm_gram.y:921.21: parse error, unexpected &quot;:&quot;, expecting &quot;;&quot; or &quot;|&quot;
+aicasm_gram.y:936.2-5: $$ of `critical_section_start' has no declared type
+aicasm_gram.y:938.2-5: $$ of `critical_section_start' has no declared type
+</pre>
+<p>
+byaccを使うと-pを受けつけてくれないし。
+</p>
+<pre>
+yacc -d -b aicasm_macro_gram -p mm aicasm_macro_gram.y
+usage: yacc [-dlrtv] [-b file_prefix] filename
+</pre>
+<p>
+bisonを1.35に戻そう。byaccもCygwinのパッケージになってるbyacc 1.9をインストールしとく。
+あ、byacc 1.9なら-pも-oも使えるじゃん。
+ってことはbisonを使う必要はないわけだ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200210132" title="200210132" href="200210b.html#200210132">■</a> 
+[Linux] Linux 2.5.42</h3>
+<p>
+CONFIG_INPUT_KEYBOARDなんていつの間に増えたんだ？
+キー入力を受けつけないのは同じ。根本的にconfigを間違えているんだろうか？
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200210133" title="200210133" href="200210b.html#200210133">■</a> 
+[Virus] &quot;ishiifamily&quot;</h3>
+<p>
+久し振りにBadTransだ。ruby-bugsのほうもなんだかわからないvirusが相変わらず来てるなあ。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/10/13 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/10/14 start -->
+<h2><a name="20021014" href="200210b.html#20021014">2002-10-14 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="200210141" title="200210141" href="200210b.html#200210141">■</a> 
+<a href="http://sources.redhat.com/ml/cygwin-announce/2002-10/msg00004.html">[Cygwin] cygwin-1.3.13-1</a></h3>
+<p>
+使いものにならないらしい。-2が出てる。例によってどたばたは続く。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200210142" title="200210142" href="200210b.html#200210142">■</a> 
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-talk/53114">[Ruby] Ruby no Houkatsuteki Sampu Houden</a></h3>
+<p>
+Comprehensive Ruby Program Repository. 包括的算譜宝殿？
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200210143" title="200210143" href="200210b.html#200210143">■</a> 
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-dev/18516">[Ruby] ftools.rb</a></h3>
+<p>
+もうftools.rbには隠居してもらいたいのに、余計な提案をしてしまったような。
+提案した手前書いてみたが、全然納得いかないものになり鬱。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/10/14 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/10/15 start -->
+<h2><a name="20021015" href="200210b.html#20021015">2002-10-15 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="200210151" title="200210151" href="200210b.html#200210151">■</a> 
+[Linux] GNU C library 2.3.1</h3>
+<pre>
+Changes: Critical bugs the in 2.3 release were fixed. 
+</pre>
+<p>
+ということなので早速更新。今回はw3m, cvsup, wineも問題なし。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200210152" title="200210152" href="200210b.html#200210152">■</a> 
+<a href="http://surriel.com/procps/">[Linux] procps 3.0.3</a></h3>
+<p>
+一昨日2.0.10を入れたんだけど、もう3.0.3になってる。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/10/15 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/10/16 start -->
+<h2><a name="20021016" href="200210b.html#20021016">2002-10-16 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="200210161" title="200210161" href="200210b.html#200210161">■</a> 
+<a href="http://arika.org/ruby/termios.xhtml">[Ruby] ruby-termios 0.9.4</a></h3>
+<p>
+更新。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200210162" title="200210162" href="200210b.html#200210162">■</a> 
+[Linux] Bison 1.75</h3>
+<p>
+なぜかいきなり1.50から1.75だ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200210163" title="200210163" href="200210b.html#200210163">■</a> 
+[Ruby] blksize</h3>
+<p>
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-talk/53308">[ruby-talk:53308]</a>を見てて、blksize問題を思い出した。
+1.7なら
+</p>
+<pre>
+st.blksize || 4096
+</pre>
+<p>
+で、1.6なら
+</p>
+<pre>
+st.blksize.nonzero? || 4096
+</pre>
+<p>
+とする必要がある。これは面倒だから1.6もnilを返すようにしたほうがよさそう。
+ftools.rbは面倒なので8192バイト固定にしてあったりする。2MBはやはりでかすぎた。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200210164" title="200210164" href="200210b.html#200210164">■</a> 
+<a href="http://cygwin.com/ml/cygwin-announce/2002-10/msg00006.html">[Cygwin] gcc 3.2</a></h3>
+<p>
+とうとう[test]から[curr]へ移行したようだ。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/10/16 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/10/17 start -->
+<h2><a name="20021017" href="200210b.html#20021017">2002-10-17 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="200210171" title="200210171" href="200210b.html#200210171">■</a> 
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-talk/53441">[Ruby] Buggy shebang behavior with different newline style</a></h3>
+<p>
+そのために実は&quot;--^M&quot;オプションが用意されてるわけだが、
+</p>
+<pre>
+% cat -v foo.sh
+#!/usr/local/bin/ruby --^M
+puts &quot;hello&quot;^M
+% ./foo.sh
+hello
+</pre>
+<p>
+env経由じゃだめなんだよねえ。
+</p>
+<pre>
+% cat -v bar.sh
+#!/usr/bin/env ruby --^M
+puts &quot;hello&quot;^M
+% ./bar.sh
+: No such file or directory
+</pre>
+<p>
+&quot;ruby --^M&quot;というコマンドを起動しようとするから。FreeBSDならいけるんだけど。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/10/17 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/10/18 start -->
+<h2><a name="20021018" href="200210b.html#20021018">2002-10-18 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="200210181" title="200210181" href="200210b.html#200210181">■</a> 
+<a href="http://www.ruby-lang.org/en/raa-list.rhtml?name=Win32OLE">[Ruby] WIN32OLE 0.5.2</a></h3>
+<p>
+更新。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200210182" title="200210182" href="200210b.html#200210182">■</a> 
+<a href="http://www.openssh.org/">[Linux] OpenSSH 3.5p1</a></h3>
+<p>
+10/14に出ていたらしい。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/10/18 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/10/19 start -->
+<h2><a name="20021019" href="200210b.html#20021019">2002-10-19 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="200210191" title="200210191" href="200210b.html#200210191">■</a> 
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-dev/18539">[Ruby] mkmf.rb and extmk.rb</a></h3>
+<p>
+このところ週末はのんびりビデオ観賞三昧だったもんだから、
+なかださんがしびれを切らしたようだ。もうしわけない。
+かなり変更してるのでdiffファイルを見ただけだとわからない。
+パッチをあててからじっくり見よう。
+</p>
+
+<p>
+win32/Makefile.subだけrejectしてしまうなあ。
+</p>
+<pre>
+patching file win32/Makefile.sub
+Hunk #3 FAILED at 96.
+Hunk #9 succeeded at 291 with fuzz 2.
+Hunk #18 succeeded at 487 (offset -3 lines).
+1 out of 18 hunks FAILED -- saving rejects to file win32/Makefile.sub.rej
+</pre>
+<p>
+かなり小さくなるね。パッチをあてる前:
+</p>
+<pre>
+% ls -l lib/mkmf.rb ext/extmk.rb
+-rwxr-xr-x    1 watanabe ruby        14205 Oct  4 14:18 ext/extmk.rb
+-rw-r--r--    1 watanabe ruby        21343 Sep 25 17:49 lib/mkmf.rb
+</pre>
+<p>
+パッチをあてた後:
+</p>
+<pre>
+% ls -l lib/mkmf.rb ext/extmk.rb
+-rwxr-xr-x    1 watanabe ruby         4944 Oct 19 23:10 ext/extmk.rb
+-rw-r--r--    1 watanabe ruby        19729 Oct 19 23:10 lib/mkmf.rb
+</pre>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/10/19 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/10/20 start -->
+<h2><a name="20021020" href="200210b.html#20021020">2002-10-20 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="200210201" title="200210201" href="200210b.html#200210201">■</a> 
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-dev/18539">[Ruby] 改良mkmf.rbパッチ</a></h3>
+<p>
+クロス環境を試す。configure.inの
+</p>
+<pre>
+MINIRUBY=&quot;$(RUBY) -I`pwd` -rfake&quot;
+</pre>
+<p>
+がまずい。
+</p>
+<pre>
+MINIRUBY=&quot;\$(RUBY) -I`pwd` -rfake&quot;
+</pre>
+<p>
+としよう。
+</p>
+
+<p>
+Makefile.inのこの変更もわからない。
+</p>
+<pre>
+class TOPLEVEL_CONST;
+</pre>
+<p>
+こんなクラスはないと思うんだけど。
+</p>
+
+<p>
+mkmf.rbの
+</p>
+<pre>
+for f in files
+  return true if t &lt; (mtime[f] or next)
+end
+</pre>
+<p>
+もまずいなあ。void value expression (SyntaxError)になる。
+あ、これは
+</p>
+<pre>
+ruby 1.7.3 (2002-10-16) [i386-linux]
+</pre>
+<p>
+の所為か。最新にしたら問題ない。
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-dev/18534">[ruby-dev:18534]</a>はこれのためか。
+</p>
+
+<p>
+ext/はauto-importになってるなあ。そうか。defines.hのRUBY_EXPORT対応が抜けているからだ。
+というよりこれもパッチに入れ忘れたというべき？
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200210202" title="200210202" href="200210b.html#200210202">■</a> 
+[Cygwin][Linux] Linux上にCygwin 1.3.13-2クロス環境構築</h3>
+<p>
+1.3.13も落ち着いた気がするので、そろそろLinux上のクロス環境も更新しよう。
+基本的には
+<a href="200207b.html#200207171">前回テスト的にインストールしたのと同じ手順</a>だ。今回使うのは以下のファイル。
+</p>
+<pre>
+binutils-20020706-2-src.tar.bz2
+gcc-3.2-1-src.tar.bz2
+cygwin-1.3.13-2.tar.bz2
+gcc-mingw-3.2-20020817-1.tar.bz2
+mingw-runtime-2.2-1.tar.bz2
+w32api-2.0-1.tar.bz2
+</pre>
+<p>
+ソースはbinutilsとgccだけ。
+</p>
+
+<h4><a name="200210202S1" href="200210b.html#200210202S1">_</a> <strong>準備</strong>: </h4>
+<div class="sub">
+<p>
+prefixは/usr/local/cygwinとする。
+念のため今までの環境はrenameして取っておく。
+</p>
+<pre>
+% mv /usr/local/cygwin{,-1.3.12}
+% prefix=/usr/local/cygwin
+% mkdir -p $prefix/i686-pc-cygwin
+% tar xfv cygwin-1.3.13-2.tar.bz2 --us=bzip2 usr/{include,lib}
+% tar xfv mingw-runtime-2.2-1.tar.bz2 --us=bzip2 usr/{include,lib}
+% tar xfv w32api-2.0-1.tar.bz2 --us=bzip2 usr/{include,lib}
+</pre>
+</div>
+<h4><a name="200210202S2" href="200210b.html#200210202S2">_</a> <strong>binutils</strong>: </h4>
+<div class="sub">
+<pre>
+% tar xfv binutils-20020706-2-src.tar.bz2 --us=bzip2
+% cd binutils-20020706-2
+% CFLAGS=-Os ./configure --prefix=$prefix --target=i686-pc-cygwin
+% make
+% make install
+</pre>
+</div>
+<h4><a name="200210202S3" href="200210b.html#200210202S3">_</a> <strong>gcc</strong>: </h4>
+<div class="sub">
+<pre>
+% tar xfv gcc-3.2-1-src.tar.bz2 --us=bzip2
+% cd gcc-3.2-1
+% mkdir cygwin; cd cygwin
+% CFLAGS=-Os CXXFLAGS=-Os ../configure --enable-languages=c,c++ \
+  --enable-threads=posix --with-system-zlib --disable-nls \
+  --without-included-gettext --disable-shared --enable-interpreter \
+  --disable-sjlj-exceptions --disable-version-specific-runtime-libs \
+  --target=i686-pc-cygwin --enable-haifa --prefix=$prefix
+</pre>
+<p>
+一個ディレクトリを掘っておかないと
+i586-pc-linux-gnuというディレクトリにMakefileができてたりするので注意。
+<a href="200207b.html#200207181">buffer overrun</a>は直ってないようなので、gcc/config/i386/cygwin.hは適当に
+<a href="../files/cygwin.h.diff">+10</a>しとこう。
+</p>
+<pre>
+% make 
+% make install
+</pre>
+</div>
+<h4><a name="200210202S4" href="200210b.html#200210202S4">_</a> <strong>mingw-runtime</strong>: </h4>
+<div class="sub">
+<pre>
+% mkdir -p $prefix/i686-pc-mingw32
+% cd $prefix/i686-pc-mingw32
+% ln -s ../i686-pc-cygwin/bin .
+% ln -s ../i686-pc-cygwin/include/mingw include
+% ln -s ../i686-pc-cygwin/lib/mingw lib
+% cd ~-/../..
+% tar xfO gcc-mingw-3.2-20020817-1.tar.bz2 --us=bzip2 \
+  etc/postinstall/gcc-mingw-3.2-20020817-1.tar | \
+  tar xfv - -C $prefix
+% cd $prefix/lib/gcc-lib/i686-pc-mingw32/3.2
+% ln -s ../../i686-pc-cygwin/3.2/{cc1,cc1plus,cpp0,tradcpp0,collect2} .
+% rm *.exe
+</pre>
+<p>
+以上でok。あとは/usr/local/cygwin/binにpathを通しておく。
+</p>
+
+
+</div>
+<!-- section end -->
+</div>
+<!-- 2002/10/20 end -->
+
+<hr>
+<div>
+<a href="200210a.html">&lt;Prev(,)</a> | 
+<a href="200210c.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

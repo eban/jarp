@@ -1,0 +1,356 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2006-9-b</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="200609a.html">
+<link rel="next" href="200609c.html">
+
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2006年9月中旬〜</p>
+<hr>
+<div>
+<a href="200609a.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="200609c.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2006/09/11 start -->
+<h2><a name="20060911" href="200609b.html#20060911">2006-09-11 (Mon)</a></h2>
+<!-- 2006-09-12 01:53:12 -->
+
+<div class="entry1">
+<h3><a name="200609111" title="200609111" href="200609b.html#200609111">■</a> 
+[zsh] &lt;1-10&gt;</h3>
+<p>
+zshで1から10までのワイルドカードは&lt;1-10&gt;と書けるわけなんだけど、<br>
+これと{1..10}との違いというかどっちがどっちだっけといつも間違ってしまう。<br>
+最近spamの学習時にやたらと活躍しだしてやっと覚えた。
+</p>
+
+<p>
+そうそう。たとえば500以上なんて場合は&lt;500-&gt;と書けるので、<br>
+結構楽に指定できる。
+</p>
+<pre>
+% echo &lt;500-&gt;
+500 501 502 503 504 505
+</pre>
+<p>
+うゎ、spamもう500越えてんのか。
+</p>
+<!-- section end -->
+</div>
+<!-- 2006/09/11 end -->
+
+
+
+<hr class="hide">
+<!-- 2006/09/12 start -->
+<h2><a name="20060912" href="200609b.html#20060912">2006-09-12 (Tue)</a></h2>
+<!-- 2006-09-13 01:59:16 -->
+
+<div class="entry1">
+<h3><a name="200609121" title="200609121" href="200609b.html#200609121">■</a> 
+[Web] FlickrのフレンドリーなURL</h3>
+<p>
+最近の
+<a href="http://www.flickr.com/">Flickr</a>の画像へのURLは数字だらけで可愛げがないが、<br>
+
+<a href="http://flickr.com/help/account/#90">HELP</a>を見ると
+別名をつけることができるようだ。<br>
+ただし後から名前を変えることはできないので慎重に。
+</p>
+<!-- section end -->
+</div>
+<!-- 2006/09/12 end -->
+
+
+
+<hr class="hide">
+<!-- 2006/09/13 start -->
+<h2><a name="20060913" href="200609b.html#20060913">2006-09-13 (Wed)</a></h2>
+<!-- 2006-09-14 02:14:04 -->
+
+<div class="entry1">
+<h3><a name="200609131" title="200609131" href="200609b.html#200609131">■</a> 
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-talk/214006">[YAML] yaml array of arrays</a></h3>
+<p>
+Rubyで
+</p>
+<pre>
+[['a', 'b', 'c'], ['d', 'e', 'f'], ['g', 'h', 'i']]
+</pre>
+<p>
+というデータ構造にしたいならYAMLでも
+</p>
+<pre>
+[['a', 'b', 'c'], ['d', 'e', 'f'], ['g', 'h', 'i']]
+</pre>
+<p>
+でいいんだけどねえ。この場合は記号や余計な空白もないから
+</p>
+<pre>
+[[a, b, c], [d, e, f], [g, h, i]]
+</pre>
+<p>
+でいい。
+</p>
+<!-- section end -->
+</div>
+<!-- 2006/09/13 end -->
+
+
+
+<hr class="hide">
+<!-- 2006/09/14 start -->
+<h2><a name="20060914" href="200609b.html#20060914">2006-09-14 (Thu)</a></h2>
+<!-- 2006-09-15 01:59:59 -->
+
+<div class="entry1">
+<h3><a name="200609141" title="200609141" href="200609b.html#200609141">■</a> 
+<a href="http://www.libc.org/">[Soft] Libc-X 0.3.4</a></h3>
+<blockquote><dl>
+<dt>
+About:
+<dd>
+Libc-X provides extentions to the standard C library implementing
+useful and powerful data structures and functions. It is not a template
+layer. Its made entirely with the C standard language, compatible with
+C++, and portable (currently Linux and Windows). All developed structures
+are designed to be used in stand-alone mode with limited dependencies with
+other features of Libc-X. For example, you can easily extract the header
+and the .c source of Hashtable and use it outside Libc-X.
+</dl></blockquote>
+<!-- section end -->
+</div>
+<!-- 2006/09/14 end -->
+
+
+
+<hr class="hide">
+<!-- 2006/09/15 start -->
+<h2><a name="20060915" href="200609b.html#20060915">2006-09-15 (Fri)</a></h2>
+<!-- 2006-09-16 20:49:13 -->
+
+<div class="entry1">
+<h3><a name="200609151" title="200609151" href="200609b.html#200609151">■</a> 
+[Font] ~/.fonts</h3>
+<p>
+AAがくずれるので~/.fontsだけ戻してみた。これでモナーフォントが使えるようになった。
+どうも~/.fonts.confだけ移動させとけばよかったようだ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2006/09/15 end -->
+
+
+
+<hr class="hide">
+<!-- 2006/09/16 start -->
+<h2><a name="20060916" href="200609b.html#20060916">2006-09-16 (Sat)</a></h2>
+<!-- 2006-09-17 13:22:38 -->
+
+<div class="entry1">
+<h3><a name="200609161" title="200609161" href="200609b.html#200609161">■</a> 
+[Diigo] DiigoのAPI</h3>
+<p>
+いろいろ調べまくってみたが、どうもDiigoにはdel.icio.usのようなAPIはないようだ。
+唯一
+<a href="http://www.diigo.com/tools/diigo_it_for_blogs">&quot;Add to Diigo&quot;</a>
+のTraditional Versionに
+</p>
+<pre>
+http://www.diigo.com/post?url=&amp;title=&amp;comments=
+</pre>
+<p>
+とあるのが、これだと一発ってわけにはいかない。<br>
+del.icio.usへのクロスポストはkeyconfigと組み合わせればなんとでもなるとはいえ、<br>
+もうちょっと使いやすいAPIを提供してくれないかなあ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2006/09/16 end -->
+
+
+
+<hr class="hide">
+<!-- 2006/09/17 start -->
+<h2><a name="20060917" href="200609b.html#20060917">2006-09-17 (Sun)</a></h2>
+<!-- 2006-09-17 01:07:50 -->
+
+<div class="entry1">
+<h3><a name="200609171" title="200609171" href="200609b.html#200609171">■</a> 
+[FC5] Firefoxの更新</h3>
+<p>
+突然Firefoxの拡張が見れなくなったり、
+<a href="http://jedbrown.net/1.0/mozilla/extensions/">Restart Firefox</a>が動かなくなりあせった。<br>
+と思ったら、1.5.0.7へ更新されていた。<br>
+使用中に更新されるとそうなるんだな。
+</p>
+<!-- section end -->
+</div>
+<!-- 2006/09/17 end -->
+
+
+
+<hr class="hide">
+<!-- 2006/09/18 start -->
+<h2><a name="20060918" href="200609b.html#20060918">2006-09-18 (Mon)</a></h2>
+<!-- 2006-09-18 23:01:18 -->
+
+<div class="entry1">
+<h3><a name="200609181" title="200609181" href="200609b.html#200609181">■</a> 
+<a href="http://codegolf.com/">[Web] Code Golf</a></h3>
+<blockquote><dl>
+<dt>
+What is Code Golf?
+<dd>
+Based on the original perl golf, Code Golf allows you to show off your
+code-fu by trying to solve coding problems using the least number of
+keystrokes.<br><br>
+You're not just limited to Perl either - PHP, Python and Ruby are all
+available too.
+</dl></blockquote>
+<!-- section end -->
+</div>
+<!-- 2006/09/18 end -->
+
+
+
+<hr class="hide">
+<!-- 2006/09/19 start -->
+<h2><a name="20060919" href="200609b.html#20060919">2006-09-19 (Tue)</a></h2>
+<!-- 2006-09-20 01:51:08 -->
+
+<div class="entry1">
+<h3><a name="200609191" title="200609191" href="200609b.html#200609191">■</a> 
+<a href="http://www.rubygems.org/">[Ruby] RubyGems Manuals</a></h3>
+<p>
+いつのまにか
+<a href="http://www.rubygems.org/">こんなサイト</a>ができてる。<br>
+via: 
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-talk/215142">[ruby-talk:215142]</a>
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200609192" title="200609192" href="200609b.html#200609192">■</a> 
+<a href="http://codegolf.com/1000-digits-of-pi">[Golf] 1000桁の円周率</a></h3>
+<p>
+
+<a href="http://codegolf.com/competition/output/1000-digits-of-pi">そこ</a>にあるのなら、
+そのまま表示すりゃいいじゃんと、
+</p>
+<pre>
+% ruby -ropen-uri -e 'puts open(&quot;http://codegolf.com/competition/output/1000-digits-of-pi&quot;).read'
+</pre>
+<p>
+を実行してみたら、&lt;pre&gt;&lt;/pre&gt;がついていた。惜しい。[5,1002]しないとだめだ。<br>
+ついでにURLが長いからTinyURLしてみる。
+</p>
+<p>
+ % ruby -ropen-uri -e 'puts open(&quot;http://tinyurl.com/gjxs8&quot;).read[5,1002]'
+</p>
+
+<p>
+と思ったら
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-talk/214978">open-uriネタは既出</a>だった。
+</p>
+<!-- section end -->
+</div>
+<!-- 2006/09/19 end -->
+
+
+
+<hr class="hide">
+<!-- 2006/09/20 start -->
+<h2><a name="20060920" href="200609b.html#20060920">2006-09-20 (Wed)</a></h2>
+<!-- 2006-09-21 01:09:01 -->
+
+<div class="entry1">
+<h3><a name="200609201" title="200609201" href="200609b.html#200609201">■</a> 
+[DVD-RW] 10枚499円のDVD-RW</h3>
+<p>
+ソフマップで買った。さっそく試す。DVD-RWだから気軽に試せる。<br>
+とりあえず3GBほどのoggファイルがあるディレクトリをそのまま焼いてみる。<br>
+growisofsを使えばISOイメージを作らなくても
+</p>
+<pre>
+% growisofs -Z /dev/dvd -R -J /some/where/ogg/
+</pre>
+<p>
+てな感じでok。こりゃ楽だ。
+</p>
+
+<p>
+5枚ほど試したが全部成功。
+へたに安物のDVD-Rを買ってくるとかなりの確率で失敗するだけに、
+これのほうがいいかもしれない。もう20枚ほど買っておくか。
+</p>
+<!-- section end -->
+</div>
+<!-- 2006/09/20 end -->
+
+<hr>
+<div>
+<a href="200609a.html">&lt;Prev(,)</a> | 
+<a href="200609c.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

@@ -1,0 +1,569 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2005-4-b</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="200504a.html">
+<link rel="next" href="200504c.html">
+
+<link rel="stylesheet" type="text/css" href="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.css">
+<script async type="text/javascript" src="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.js"></script>
+<script type="text/javascript">
+<!--       
+$(document).ready(function() {
+  prettyPrint();
+});
+-->
+</script>
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2005年4月中旬〜</p>
+<hr>
+<div>
+<a href="200504a.html" accesskey=",">&lt;Older(,)</a> | 
+<a href="200504c.html" accesskey=".">Newer(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2005/04/11 start -->
+<h2><a name="20050411" href="200504b.html#20050411">2005-04-11 (Mon)</a></h2>
+<!-- 2005-04-12 01:36:01 -->
+
+<div class="entry1">
+<h3><a name="200504111" title="200504111" href="200504b.html#200504111">■</a> 
+[天気] さむっ!</h3>
+<p>
+今朝は20℃ぐらいあったから、上着なしで会社にでかけたけど、帰るときには7℃に。
+そんなのありかよ!
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200504112" title="200504112" href="200504b.html#200504112">■</a> 
+[Ruby] ActiveRecordのアレ</h3>
+<p>
+どうも最近ActiveRecordを真似た実装が流行ってるような。
+</p>
+<pre>
+class Foo
+  module ClassMethods
+    def hoge(*) end
+  end
+  extend ClassMethods
+  include ClassMethods
+end
+
+class Bar &lt; Foo
+  hoge :hoge1
+  ...
+end
+</pre>
+<p>
+って感じのやつ。
+
+<a href="http://code.vernix.org/cmd/">cmd</a>の
+
+<a href="http://svn.vernix.org/main/library/cmd/trunk/lib/cmd.rb">cmd.rb</a>
+を見ててそう思ったり。
+</p>
+<!-- section end -->
+</div>
+<!-- 2005/04/11 end -->
+
+
+
+<hr class="hide">
+<!-- 2005/04/12 start -->
+<h2><a name="20050412" href="200504b.html#20050412">2005-04-12 (Tue)</a></h2>
+<!-- 2005-04-13 02:45:46 -->
+
+<div class="entry1">
+<h3><a name="200504121" title="200504121" href="200504b.html#200504121">■</a> 
+[Last.FM] 不安定</h3>
+<p>
+しかし、Last.FMよ。昨日も今日も夜だけつながるってのはどういう嫌がらせなんだ。
+昼間に聴きたいのに。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200504122" title="200504122" href="200504b.html#200504122">■</a> 
+[FC3] yum update</h3>
+<p>
+なにげなくyum updateを始めると全然終わらない。あー、kernelかー。
+もう寝ようと思ったのにあと170分とか表示してるし。
+とりあえず今晩はこのまま寝よう。
+</p>
+<!-- section end -->
+</div>
+<!-- 2005/04/12 end -->
+
+
+
+<hr class="hide">
+<!-- 2005/04/13 start -->
+<h2><a name="20050413" href="200504b.html#20050413">2005-04-13 (Wed)</a></h2>
+<!-- 2005-04-14 02:18:31 -->
+
+<div class="entry1">
+<h3><a name="200504131" title="200504131" href="200504b.html#200504131">■</a> 
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-talk/138083">[Ruby] Date.strptime</a></h3>
+<p>
+Date.strptimeってあまり知られてないのかな。
+</p>
+<pre>
+% ruby -rdate -e 'puts Date.strptime(&quot;13/04/2005&quot;, &quot;%d/%m/%Y&quot;)'  
+2005-04-13
+</pre>
+<p>
+Time.strptimeもある。
+</p>
+<pre>
+% ruby -rtime -e 'puts Time.strptime(&quot;2005/04/13 23:44:55&quot;, &quot;%Y/%m/%d %H:%M:%S&quot;)'
+Wed Apr 13 23:44:55 JST 2005
+</pre>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200504132" title="200504132" href="200504b.html#200504132">■</a> 
+[Gmail] Gmailの日本語表示と日本語メールの送信</h3>
+<p>
+やっとGmailのSettingsにLanguageが出てきた。
+日本語にしてみたけど、1年近く英語で使っていると違和感あるねえ、やっぱ。
+でもヘルプも日本語になったのでいろいろ読んでみよう。
+</p>
+
+<p>
+そういえば日本語メールの送信もいつのまにか
+
+<a href="200503c.html#200503292">quoted-printable</a>
+じゃなくて、普通の形式になってる。
+これでようやくGmailから何も考えずにメール出せるな。
+</p>
+<!-- section end -->
+</div>
+<!-- 2005/04/13 end -->
+
+
+
+<hr class="hide">
+<!-- 2005/04/14 start -->
+<h2><a name="20050414" href="200504b.html#20050414">2005-04-14 (Thu)</a></h2>
+<!-- 2005-04-15 02:56:28 -->
+
+<div class="entry1">
+<h3><a name="200504141" title="200504141" href="200504b.html#200504141">■</a> 
+[Ruby] 意外と知られてないDateの機能: 月末</h3>
+<p>
+月末の日付けは-1を指定すればいい。
+</p>
+<pre>
+% ruby -rdate -e 'puts Date.new(2005, 4, -1)'
+2005-04-30
+</pre>
+<p>
+負数は月末からの序数となる。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200504142" title="200504142" href="200504b.html#200504142">■</a> 
+<a href="http://zunda.freeshell.org/d/20050413.html#p04">[Ruby] Time.strptime</a></h3>
+<p>
+そういえばTime.strptimeは先月1.9に入ったばかりでした。
+1.8には入らないかな。
+</p>
+<!-- section end -->
+</div>
+<!-- 2005/04/14 end -->
+
+
+
+<hr class="hide">
+<!-- 2005/04/15 start -->
+<h2><a name="20050415" href="200504b.html#20050415">2005-04-15 (Fri)</a></h2>
+<!-- 2005-04-16 01:44:21 -->
+
+<div class="entry1">
+<h3><a name="200504151" title="200504151" href="200504b.html#200504151">■</a> 
+<a href="http://www.vmware.com/">[VMware] VMware Workstation 5 Upgrades</a></h3>
+<p>
+
+<a href="200312c.html#200312254">前回</a>学習したおかげか今回はspamにならなかった。
+rpmでインストールした後、vmware-config.plを実行。問題なく移行完了。
+VMもupdateできた。
+</p>
+
+<p>
+しかし、アップグレードの値段が$99据置きってのはちょっと割高感があるね。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200504152" title="200504152" href="200504b.html#200504152">■</a> 
+[Gmail] 自分の出したメールがspam扱い</h3>
+<p>
+Gmailよ。なぜruby-talkやruby-devへ俺が送ったメールをspam扱いする？
+って、あまりメール出さないからか。
+</p>
+
+<!-- section end -->
+</div>
+<!-- 2005/04/15 end -->
+
+
+
+<hr class="hide">
+<!-- 2005/04/16 start -->
+<h2><a name="20050416" href="200504b.html#20050416">2005-04-16 (Sat)</a></h2>
+<!-- 2005-04-17 01:49:54 -->
+
+<div class="entry1">
+<h3><a name="200504161" title="200504161" href="200504b.html#200504161">■</a> 
+<a href="http://lftp.yar.ru/">[Soft] lftp 3.1.3</a></h3>
+<p>
+Changes:
+</p><blockquote><p>
+A mirror --loop option has been added to re-mirror until no
+changes are found. A bug where mirror created too many children mirrors
+has been fixed. Use of cls and mirror with an HTTP backend when PROPFIND
+returns a 404 error have been fixed. mirror --use-cache with an SFTP
+backend has been fixed. A rare hang in SFTP has been fixed.
+</p></blockquote>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200504162" title="200504162" href="200504b.html#200504162">■</a> 
+[Bloglines] Bloglinesのデータベースが壊れた？</h3>
+<p>
+全然loginできない。試しに別のメールアドレスで登録してみると
+</p><blockquote><ul>
+<li>
+There is a problem with the database. Please try again later
+</ul></blockquote><p>
+と言われた。なんかやばそうだな。
+もうBloglinesなしじゃニュースも読めないだけに非常に困る。
+代替の手段を用意しとかないとまじやばいかも。
+</p>
+
+<p>
+23時頃復活。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200504163" title="200504163" href="200504b.html#200504163">■</a> 
+[Gmail] Gmailのトップページでのカウントアップ演出はやめたようだ</h3>
+<p>
+2099MBになったのでSign outして見たが、例のJavaScriptでもカウントアップは終了していた。
+2100MB以降はどうなるかな？
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200504164" title="200504164" href="200504b.html#200504164">■</a> 
+<a href="http://www.last.fm/forum/897/_/28474/1">[Last.FM] Last.fm beta test - new streaming engine</a></h3>
+<p>
+13日から新しいstreaming engineのテストが始まったようだ。
+popupのplayerを立ち上げてJavaScriptのソースを見てみるとAjaxだった。
+昨日から使ってみての感想としては、
+外観はちょっとずつ変わってきてるけど基本的には何も変わってないような。
+流行に乗ってみましたって感じか。
+</p>
+
+<p>
+止まると
+</p>
+<pre>
+This Last.fm stream has stropped. Feel free to start another stream.
+</pre>
+<p>
+のようなメッセージが出るみたい。いろいろデバッグしてるんだな。
+</p>
+<!-- section end -->
+</div>
+<!-- 2005/04/16 end -->
+
+
+
+<hr class="hide">
+<!-- 2005/04/17 start -->
+<h2><a name="20050417" href="200504b.html#20050417">2005-04-17 (Sun)</a></h2>
+<!-- 2005-04-18 01:33:48 -->
+
+<div class="entry1">
+<h3><a name="200504171" title="200504171" href="200504b.html#200504171">■</a> 
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-talk/138502">[Ruby] 最近のruby-talk</a></h3>
+<p>
+ここ数ヶ月ruby-talkの流量が減ったように見えるのは単にnews gatewayが機能していなかっただけの話で、今月なんか4000通ペースだ。
+いや、もうこれ以上増えなくていいから。
+</p>
+
+<p>
+あと、Gmailで受けるとスレッドでくくられちゃうので、実際に受けるメール数よりも少なく感じるのかもしれない。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200504172" title="200504172" href="200504b.html#200504172">■</a> 
+花粉症</h3>
+<p>
+散髪に行きたいんだけどこの時期は花粉症で躊躇してしまう。
+床屋もいつもより客が減ったりするんだろうか？
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200504173" title="200504173" href="200504b.html#200504173">■</a> 
+[Ruby] ftoolsのFile.safe_unlink</h3>
+<p>
+
+<a href="http://www.namazu.org/~satoru/">高林さん</a>からFile.safe_unlinkの件でバグ報告があった。
+なんか雰囲気的にftools.rbはobsoleteにはなりそうもないので、
+ちゃんと対応することにしよう。
+</p>
+
+<p>
+で、現象としては
+</p>
+<pre>
+% touch foo
+% ln -s foo bar
+% ls -l foo bar
+lrwxrwxrwx  1 eban eban 3 Apr 18 01:24 bar -&gt; foo
+-rw-r--r--  1 eban eban 0 Apr 18 01:24 foo
+% ruby -rftools -e 'File.safe_unlink(&quot;bar&quot;)'
+% ls -l foo bar
+ls: bar: そのようなファイルやディレクトリはありません
+-rwxrwxrwx  1 eban eban 0 Apr 18 01:24 foo
+</pre>
+<p>
+のようにbarが消えるのはいいとして、fooが777になってしまうという不具合。
+</p>
+
+<p>
+いまは問答無用で777にしてるけど、FileUtilsのように失敗したら777にすべ
+きだよね。
+いや、どうせWindows対策なのでsymlinkだったらchmodしないでもいいような気もしてきた。
+</p>
+<!-- section end -->
+</div>
+<!-- 2005/04/17 end -->
+
+
+
+<hr class="hide">
+<!-- 2005/04/18 start -->
+<h2><a name="20050418" href="200504b.html#20050418">2005-04-18 (Mon)</a></h2>
+<!-- 2005-04-19 02:55:39 -->
+
+<div class="entry1">
+<h3><a name="200504181" title="200504181" href="200504b.html#200504181">■</a> 
+[Ruby] ftoolsのFile.safe_unlink</h3>
+<p>
+fileutils.rbとcoreutilsのrm.cをつらつら眺めながら、こんなのを考えてみた。
+</p>
+<pre>
+class &lt;&lt; File
+  def safe_unlink(*files)
+    verbose = if files[-1].is_a? String then false else files.pop end
+    files.each do |file|
+      begin
+        unlink file
+        $stderr.print &quot;removing &quot;, file, &quot;\n&quot; if verbose
+      rescue Errno::EACCES # for Windows
+        begin
+          mode = stat(file).mode
+          chmod mode | 0200, file
+          unlink file
+          $stderr.print &quot;removing &quot;, file, &quot;\n&quot; if verbose
+        rescue
+          chmod mode, file rescue nil
+        end
+      rescue
+      end
+    end
+  end
+end
+</pre>
+<p>
+念のためパーミッションを元に戻すようにして、
+0777じゃなくてu+w相当の|0200にしてみたり。
+ようするに消す努力はするけど消せなくても何も文句言わないという感じ。
+だからverboseってのは変なんだよなあ。
+誰もverboseなんて使ってないと思うけど。
+なにしろこんな表示だもんなあ。
+</p>
+<pre>
+% touch bar foo
+% ruby -rftools -e 'File.safe_unlink(&quot;bar&quot;, &quot;foo&quot;, true)'
+bar foo
+</pre>
+<p>
+というわけで、ちょっとだけcoreutilsに似せてみた。
+</p>
+<!-- section end -->
+</div>
+<!-- 2005/04/18 end -->
+
+
+
+<hr class="hide">
+<!-- 2005/04/19 start -->
+<h2><a name="20050419" href="200504b.html#20050419">2005-04-19 (Tue)</a></h2>
+<!-- 2005-04-20 01:04:02 -->
+
+<div class="entry1">
+<h3><a name="200504191" title="200504191" href="200504b.html#200504191">■</a> 
+<a href="http://cygwin.com/ml/cygwin-announce/2005-04/msg00022.html">[Cygwin] Updated: cygwin-1.5.15-1</a></h3>
+<p>
+Changes:
+</p><blockquote><p>
+This release fixes crashing problems reported by some users. It
+adds true syslogd support.
+</p></blockquote><p>
+true syslogってなんだろう？
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200504192" title="200504192" href="200504b.html#200504192">■</a> 
+[Ruby] ftools.rb</h3>
+<p>
+クラスメソッドの呼び出しがFileだったりFileTestだったりどちらもなしだったり、自分で作っときながら統一感がまるでない。
+というわけで、class &lt;&lt; Fileしてるんだから全部なしということで。
+かなりすっきり。
+</p>
+<!-- section end -->
+</div>
+<!-- 2005/04/19 end -->
+
+
+
+<hr class="hide">
+<!-- 2005/04/20 start -->
+<h2><a name="20050420" href="200504b.html#20050420">2005-04-20 (Wed)</a></h2>
+<!-- 2005-04-21 01:37:58 -->
+
+<div class="entry1">
+<h3><a name="200504201" title="200504201" href="200504b.html#200504201">■</a> 
+<a href="http://www.nongnu.org/cvs/">[Soft] CVS 1.12.12</a></h3>
+<p>
+こうもsecurity fixが続くと、やっぱ他のツールに移行したくなるよねえ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200504202" title="200504202" href="200504b.html#200504202">■</a> 
+<a href="http://www.mozilla.org/firefox/">[Soft] Firefox 1.0.3</a></h3>
+<p>
+やっとFC3のFirefoxを更新。でも立ち上がらない。
+</p>
+<pre>
+% firefox -ProfileManager
+</pre>
+<p>
+で、新たにプロファイルを作って、
+いろんなもんを旧プロファイルからコピーし、拡張を追加していったら
+
+<a href="http://extensionroom.mozdev.org/more-info/sessionsaver">SessionSaver</a>
+が立ち上がらない原因だとわかった。
+うーむ。まあ、bookmarkだけ移行すればいいか。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200504203" title="200504203" href="200504b.html#200504203">■</a> 
+<a href="http://www.opera.com/">[Soft] Opera 8</a></h3>
+<p>
+ついでに入れたわけなんだけど、タブを閉じるとゴミ箱に入るとこが素敵だ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2005/04/20 end -->
+
+<hr>
+<div>
+<a href="200504a.html">&lt;Older(,)</a> | 
+<a href="200504c.html">Newer(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

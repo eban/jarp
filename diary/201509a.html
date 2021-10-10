@@ -1,0 +1,437 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2015-9-a</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="201508c.html">
+<link rel="next" href="201509b.html">
+
+<link rel="stylesheet" type="text/css" href="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.css">
+<script async type="text/javascript" src="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.js"></script>
+<script type="text/javascript">
+<!--       
+$(document).ready(function() {
+  prettyPrint();
+});
+-->
+</script>
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2015年9月上旬〜</p>
+<hr>
+<div>
+<a href="201508c.html" accesskey=",">&lt;Older(,)</a> | 
+<a href="201509b.html" accesskey=".">Newer(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2015/09/01 start -->
+<h2><a name="20150901" href="201509a.html#20150901">2015-09-01 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="201509011" title="201509011" href="201509a.html#201509011">■</a> 
+画像回転アニメ #シェル芸</h3>
+<p>
+<a href="http://mattn.kaoriya.net/software/lang/go/20150901144726.htm">nekokak</a>を見てたらconvertでいけそうだなと思いシェル芸。
+</p>
+<pre>
+% seq 0 10 350 | xargs -I@ convert bakeneko-2015-orig.png -alpha set \( +clone -rotate @ \) -gravity center -compose Src -composite ppm:- | convert -delay 10 - -loop 0 -resize 30% -colors 16 bakeneko-ani.gif
+</pre>
+<p>
+10度きざみで36枚の画像を生成しconvertで受けてGIFアニメを作る。
+</p>
+<p>
+<img src="../images/bakeneko-ani.gif" alt="">
+</p>
+<!-- section end -->
+</div>
+<!-- 2015/09/01 end -->
+
+
+
+<hr class="hide">
+<!-- 2015/09/02 start -->
+<h2><a name="20150902" href="201509a.html#20150902">2015-09-02 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="201509021" title="201509021" href="201509a.html#201509021">■</a> 
+このワークステーションとプライマリドメインとの信頼関係に失敗しました</h3>
+<p>
+ドメイン環境のノートPC Windows 7にログオンしようとしたらそんなメッセージが出て入れない。<br>
+ぐぐってみるとそのものずばりの
+<a href="https://support.microsoft.com/ja-jp/kb/2771040">ページ</a>がMSにあった。<br>
+解決方法は一旦ドメインから抜けて入り直すだけと簡単なんだけど、<br>
+そのためには管理者権限を持つローカルアカウントでログインしないといけない。<br>
+まあ、例によってパスワード忘れちゃったのでどうしようかと思ったら、<br>
+ネットから切り離してキャッシュログオンという方法があるらしい。<br>
+が、会社中無線LANが有効だし外に出るのもなんだしとか悩んでいたら、パスワード思い出した。<br>
+これでいけるかと思ったら、無線LANにつなぐにはログオンが必要でにわとりと卵の関係に。<br>
+結局有線LANにはそんな縛りがないので事なきを得た。<br>
+心臓に悪い。
+</p>
+<p>
+原因はセキュアチャネルが破損しているからということだが、なんだそりゃ。<br>
+それはともかくドメインに参加してるとローカルコンピュータのアカウントなんて忘れがちなので、<br>
+ちゃんと管理者アカウントを作ってアカウント名とパスワードは覚えておくように。
+</p>
+<!-- section end -->
+</div>
+<!-- 2015/09/02 end -->
+
+
+
+<hr class="hide">
+<!-- 2015/09/03 start -->
+<h2><a name="20150903" href="201509a.html#20150903">2015-09-03 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="201509031" title="201509031" href="201509a.html#201509031">■</a> 
+sizeof(void)</h3>
+<p>
+gccだとsizeof(void)が1になる。これはK&amp;Rの頃に
+</p>
+<pre>
+#define void char
+</pre>
+<p>
+と定義されていたプログラムが間違ってp++的な使い方しちゃってて、<br>
+そのために対応した的ななごりだと思う。<br>
+それに限らずgccは昔からある機能をなぜか捨てずに残すようで、<br>
+コードゴルフでも多用されてる。
+</p>
+<!-- section end -->
+</div>
+<!-- 2015/09/03 end -->
+
+
+
+<hr class="hide">
+<!-- 2015/09/04 start -->
+<h2><a name="20150904" href="201509a.html#20150904">2015-09-04 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="201509041" title="201509041" href="201509a.html#201509041">■</a> 
+Yahoo Pipesとpipe2py</h3>
+<p>
+Yahoo Pipesの代替としてpipe2pyを試してみた。<br>
+<a href="https://developer.yahoo.com/forums/#/discussion/7266/does-pipe2py-work">Does pipe2py work?</a>のAugust 13のrsspipe氏のコメント通りに実行すればok。<br>
+とはいうものの完璧とはいかない。
+</p>
+<pre>
+% python compile.py -p 436f0fa591b3b95fd71adbedbebd5252
+% python pipe_436f0fa591b3b95fd71adbedbebd5252.py
+location (default=さいたま市) 
+url (default=http://www.tenki.jp/amedas/3/14/43241.html) 
+/home/eban/w/1509/pipe2py/env/local/lib/python2.7/site-packages/html5lib/ihatexml.py:262: DataLossWarning: Coercing non-XML name
+  warnings.warn(&quot;Coercing non-XML name&quot;, DataLossWarning)
+{u'y:title': {'td': [{'content': u'04\u65e5', 'rowspan': '23', 'class': 'bold'}, '23:00', '23.1', '0.0', u'\u5317\u897f', '3.2', '0', {'span': {'content': '---', 'class': 'grey'}}]}, u'title': {'td': [{'content': u'04\u65e5', 'rowspan': '23', 'class': 'bold'}, '23:00', '23.1', '0.0', u'\u5317\u897f', '3.2', '0', {'span': {'content': '---', 'class': 'grey'}}]}}
+</pre>
+<p>
+とこんな感じの結果になる。元のPipesには
+</p>
+<pre>
+$1 ${td.1} ${td.2}度 降水量${td.3}mm ${td.4}の風${td.5}m
+</pre>
+<p>
+のようなテンプレートがあった無視されている。結果もPythonなので無理矢理jsonに変換してみる。
+</p>
+<pre>
+% sed 'y/\x27/&quot;/;s/u&quot;/&quot;/g' | jq .
+{
+  &quot;y:title&quot;: {
+    &quot;td&quot;: [
+      {
+        &quot;content&quot;: &quot;04日&quot;,
+        &quot;rowspan&quot;: &quot;23&quot;,
+        &quot;class&quot;: &quot;bold&quot;
+      },
+      &quot;23:00&quot;,
+      &quot;23.1&quot;,
+      &quot;0.0&quot;,
+      &quot;北西&quot;,
+      &quot;3.2&quot;,
+      &quot;0&quot;,
+      {
+        &quot;span&quot;: {
+          &quot;content&quot;: &quot;---&quot;,
+          &quot;class&quot;: &quot;grey&quot;
+        }
+      }
+    ]
+  },
+  &quot;title&quot;: {
+    &quot;td&quot;: [
+      {
+        &quot;content&quot;: &quot;04日&quot;,
+        &quot;rowspan&quot;: &quot;23&quot;,
+        &quot;class&quot;: &quot;bold&quot;
+      },
+      &quot;23:00&quot;,
+      &quot;23.1&quot;,
+      &quot;0.0&quot;,
+      &quot;北西&quot;,
+      &quot;3.2&quot;,
+      &quot;0&quot;,
+      {
+        &quot;span&quot;: {
+          &quot;content&quot;: &quot;---&quot;,
+          &quot;class&quot;: &quot;grey&quot;
+        }
+      }
+    ]
+  }
+}
+</pre>
+<p>
+一応必要な情報は取れてるので、動いてるサーバがあるならこれもありかな。
+</p>
+<!-- section end -->
+</div>
+<!-- 2015/09/04 end -->
+
+
+
+<hr class="hide">
+<!-- 2015/09/05 start -->
+<h2><a name="20150905" href="201509a.html#20150905">2015-09-05 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="201509051" title="201509051" href="201509a.html#201509051">■</a> 
+<a href="https://www.kimonolabs.com/">kimonolabs</a></h3>
+<p>
+pipe2pyもいいんだけど、サーバ用意しなきゃいけないのが難点。<br>
+そこでkimonolabsだ。<br>
+Yahoo Pipesの代替とするなら決定版とも言えるかも。<br>
+こっちのほうが簡単だ。<br>
+しかもどうにもならなくなったら、JavaScriptでいじれるのでもう何でもありだ。<br>
+ああ、でもFirefoxだとCSS Pathとかなんかおかしくなるときがあるので、<br>
+Google Chrome推奨。<br>
+</p>
+<p>
+というわけで@rubyciもまだまだ続くよ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2015/09/05 end -->
+
+
+
+<hr class="hide">
+<!-- 2015/09/06 start -->
+<h2><a name="20150906" href="201509a.html#20150906">2015-09-06 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="201509061" title="201509061" href="201509a.html#201509061">■</a> 
+画像回転アニメ化のconvertの数を減らす</h3>
+<p>
+先日の例では36+1回もconvertを呼んでいる。
+</p>
+<pre>
+% seq 0 10 350 | xargs -I@ convert bakeneko-2015-orig.png -alpha set \( +clone -rotate @ \) -gravity center -compose Src -composite ppm:- | convert -delay 10 - -loop 0 -resize 30% -colors 16 -verbose bakeneko-ani.gif
+-=&gt;bakeneko-ani.gif[0] PPM 300x300=&gt;90x90 90x90+0+0 8-bit sRGB 16c 79.1KB 36.860u 0:36.950
+</pre>
+<p>
+これを無理矢理1回にするとどうなるかというとちょっと長くなる。
+</p>
+<pre>
+% (echo convert -delay 10 bakeneko-2015-orig.png \\; seq -f '\( -clone 0 -alpha set \( +clone -rotate %g \) -gravity center -compose Src -composite \) \' 0 10 350; echo -loop 0 -resize 30% -colors 16 -verbose bakeneko-ani.gif ) | sh    
+bakeneko-2015-orig.png=&gt;bakeneko-ani.gif[0] PNG 300x300=&gt;90x90 90x90+0+0 8-bit sRGB 16c 79.1KB 30.590u 0:30.639
+</pre>
+<p>
+ちょっと速くなるが、まあ微妙だ。展開するとこんな感じ。
+</p>
+<pre>
+convert -delay 10 bakeneko-2015-orig.png \
+\( -clone 0 -alpha set \( +clone -rotate 0 \) -gravity center -compose Src -composite \) \
+\( -clone 0 -alpha set \( +clone -rotate 10 \) -gravity center -compose Src -composite \) \
+&lt;途中略&gt;
+\( -clone 0 -alpha set \( +clone -rotate 340 \) -gravity center -compose Src -composite \) \
+\( -clone 0 -alpha set \( +clone -rotate 350 \) -gravity center -compose Src -composite \) \
+-loop 0 -resize 30% -colors 16 -verbose bakeneko-ani.gif
+</pre>
+<!-- section end -->
+</div>
+<!-- 2015/09/06 end -->
+
+
+
+<hr class="hide">
+<!-- 2015/09/07 start -->
+<h2><a name="20150907" href="201509a.html#20150907">2015-09-07 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="201509071" title="201509071" href="201509a.html#201509071">■</a> 
+自分のIPアドレス</h3>
+<p>
+ifconfigがdeprecatedになりipコマンドが推奨されているが、<br>
+自分のIPアドレスを知りたいだけならhostname -Iでいけるらしい。
+</p>
+<pre>
+% hostname -I
+192.168.0.50
+</pre>
+<p>
+-iとか-Iなんて知らなかった。
+<pre>
+-i, --ip-address
+       Display the network address(es) of the host name. Note that this works only if the  host  name  can  be
+       resolved. Avoid using this option; use hostname --all-ip-addresses instead.
+
+-I, --all-ip-addresses
+       Display  all network addresses of the host. This option enumerates all configured addresses on all net‐
+       work interfaces. The loopback interface and IPv6 link-local addresses are omitted. Contrary  to  option
+       -i,  this option does not depend on name resolution. Do not make any assumptions about the order of the
+       output.
+</pre>
+</p>
+<!-- section end -->
+</div>
+<!-- 2015/09/07 end -->
+
+
+
+<hr class="hide">
+<!-- 2015/09/08 start -->
+<h2><a name="20150908" href="201509a.html#20150908">2015-09-08 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="201509081" title="201509081" href="201509a.html#201509081">■</a> 
+複数のRSSフィードを1つにまとめるサービス</h3>
+<p>
+Yahoo Pipesでやってたけど、これはkimonoじゃできないので他のサービスで。<br>
+ぐぐるとそんなまとめが見つかるのでいくつか試した。
+</p>
+<h4><a name="201509081S1" href="201509a.html#201509081S1">_</a> 
+<a href="http://www.rssmix.com/"><strong>RSS Mix</strong></a>: </h4>
+<div class="sub">
+<p>
+非常にわかりやすいUI。複数あるならあるだけコピペすればいい。1回ですむので楽。<br>
+ただ、数値文字参照をデコードしてくれないのが惜しい。
+</p>
+
+</div>
+<h4><a name="201509081S2" href="201509a.html#201509081S2">_</a> 
+<a href="http://www.chimpfeedr.com/"><strong>ChimpFeedr</strong></a>: </h4>
+<div class="sub">
+<p>
+これもわかりやすいUI。複数あってもちまちま1個ずつ入れてボタンを押す必要あり。面倒。<br>
+いきなりアクセスしても403になってしまうので気長に待つ。<br>
+数値文字参照もデコードしてくれる。<br>
+タイムスタンプがマージした時点になってしまうのはいただけないがまあ気にしない。
+</p>
+
+</div>
+<h4><a name="201509081S3" href="201509a.html#201509081S3">_</a> 
+<a href="http://feedkiller.com/"><strong>feedkiller</strong></a>: </h4>
+<div class="sub">
+<p>
+5つまでしか登録できないので除外。
+</p>
+<p>
+というわけでChimpFeedrを使ってる。
+</p>
+</div>
+<!-- section end -->
+</div>
+<!-- 2015/09/08 end -->
+
+
+
+<hr class="hide">
+<!-- 2015/09/09 start -->
+<h2><a name="20150909" href="201509a.html#20150909">2015-09-09 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="201509091" title="201509091" href="201509a.html#201509091">■</a> 
+<a href="http://www.feedrinse.com/">Feed Rinse</a></h3>
+<p>
+kimonoでもいいんだけど、簡単なフィルターなら別のサービスにしてみるかと、<br>
+Feed Rinseを使い始めた。<br>
+管理画面は日本語化け化けなのでかなり使いづらいがまあしょっちゅう使うもんでもないし。<br>
+マージ機能もあるが5個まで。<br>
+でも考えてみるとマージのマージとかすればいくつでも可能か。
+</p>
+<!-- section end -->
+</div>
+<!-- 2015/09/09 end -->
+
+
+
+<hr class="hide">
+<!-- 2015/09/10 start -->
+<h2><a name="20150910" href="201509a.html#20150910">2015-09-10 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="201509101" title="201509101" href="201509a.html#201509101">■</a> 
+AWS Lambda functionのON/OFF</h3>
+<p>
+一度イベントソースを指定してしまうともう止めることができない。<br>
+イベントソースを消せばいいが、そうすると元に戻すのが面倒。<br>
+AWSの中の人もわざとエラーを起こさせろと言ってるんで、そういうもんみたい。<br>
+<a href="https://forums.aws.amazon.com/thread.jspa?messageID=674253&amp;tstart=0">How can I make my lambda function ON/OFF?</a><br>
+ああ、だから後発のDynamoDB Streamsにはステータスでenable/disableがあるのか。<br>
+いや、全部できるようにしてくれないと意味がない。
+</p>
+<!-- section end -->
+</div>
+<!-- 2015/09/10 end -->
+
+<hr>
+<div>
+<a href="201508c.html">&lt;Older(,)</a> | 
+<a href="201509b.html">Newer(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

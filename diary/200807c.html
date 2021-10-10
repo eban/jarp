@@ -1,0 +1,324 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2008-7-c</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="200807b.html">
+<link rel="next" href="200808a.html">
+
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2008年7月下旬〜</p>
+<hr>
+<div>
+<a href="200807b.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="200808a.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2008/07/21 start -->
+<h2><a name="20080721" href="200807c.html#20080721">2008-07-21 (Mon)</a></h2>
+<!-- 2008-07-22 01:23:01 -->
+
+<div class="entry1">
+<h3><a name="200807211" title="200807211" href="200807c.html#200807211">■</a> 
+[Comic] ホーリーランド</h3>
+<p>
+最終18巻がそろそろ出るという噂を聞いていっぱい借りてきた。<br>
+店員も二度目ときは以前に借りてるよと言ってくれたが、<br>
+三度目ともなると何も言わない。<br>
+まあ、これだけ大量に間違えて借りるやつもいないだろう。
+</p>
+<!-- section end -->
+</div>
+<!-- 2008/07/21 end -->
+
+
+
+<hr class="hide">
+<!-- 2008/07/22 start -->
+<h2><a name="20080722" href="200807c.html#20080722">2008-07-22 (Tue)</a></h2>
+<!-- 2008-07-23 01:22:36 -->
+
+<div class="entry1">
+<h3><a name="200807221" title="200807221" href="200807c.html#200807221">■</a> 
+<a href="http://www.nicovideo.jp/watch/sm4004171">[ニコニコ動画] [字幕] Top Gear - GT-Rと新幹線 (1/2)</a></h3>
+<p>
+これは笑った。「海外の反応シリーズ」タグから拾ったんだけど、<br>
+なぜかそのタグは消されてるようだ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2008/07/22 end -->
+
+
+
+<hr class="hide">
+<!-- 2008/07/23 start -->
+<h2><a name="20080723" href="200807c.html#20080723">2008-07-23 (Wed)</a></h2>
+<!-- 2008-07-24 01:29:37 -->
+
+<div class="entry1">
+<h3><a name="200807231" title="200807231" href="200807c.html#200807231">■</a> 
+<a href="http://www.rubyinside.com/redcloth-4-released-962.html">[Ruby] RedCloth 4.0 Released: 40x Faster Textile Rendering</a></h3>
+<p>
+すでに_whyの手を離れているんだな。しかし40倍て。<br>
+
+<a href="http://research.cs.queensu.ca/~thurston/ragel/">Ragel</a>
+って、そんなに速いのか。
+</p><blockquote><p>
+Markdown support has been removed
+</p></blockquote><p>
+あらら。残念。Textileはあまり好きじゃないだけに。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200807232" title="200807232" href="200807c.html#200807232">■</a> 
+<a href="http://d.hatena.ne.jp/murky-satyr/20080723/1216806665">[goruby] 動的alias</a></h3>
+<p>
+だいたい同じようなこと考えてて、
+</p>
+
+<pre>
+t = matching_methods(m)[0]
+self.class.class_eval{alias_method m, t} if t
+</pre>
+<p>
+で試してました。
+</p>
+
+<pre>
+% time ruby-trunk -e '100000.times{&quot;foo&quot;.sub(/f/,&quot;F&quot;)}' 
+  0.44s user 0.01s system 89% cpu 0.499 total
+% time goruby -e '100000.times{&quot;foo&quot;.su(/f/,&quot;F&quot;)}' 
+  2.09s user 0.03s system 92% cpu 2.286 total
+% time ruby-trunk -r./golf_prelude -e '100000.times{&quot;foo&quot;.su(/f/,&quot;F&quot;)}'
+  0.52s user 0.01s system 94% cpu 0.564 total
+</pre>
+<p>
+繰り返し使うときは結構効いてくるなあ。<br>
+とりあえず速くなるのでこれは取り込もう。
+</p>
+<!-- section end -->
+</div>
+<!-- 2008/07/23 end -->
+
+
+
+<hr class="hide">
+<!-- 2008/07/24 start -->
+<h2><a name="20080724" href="200807c.html#20080724">2008-07-24 (Thu)</a></h2>
+<!-- 2008-07-25 02:18:01 -->
+
+<div class="entry1">
+<h3><a name="200807241" title="200807241" href="200807c.html#200807241">■</a> 
+[Twitter] Twitter APIのsinceがまたバグってる</h3>
+<p>
+結局のところ
+<a href="http://status.twitter.com/post/43018513/timeline-inconsistencies">Timeline inconsistencies</a>
+なんだけど、<br>
+ログが非常に見辛いことになってる。<br>
+なにがどうなってるのやら。
+</p>
+<!-- section end -->
+</div>
+<!-- 2008/07/24 end -->
+
+
+
+<hr class="hide">
+<!-- 2008/07/25 start -->
+<h2><a name="20080725" href="200807c.html#20080725">2008-07-25 (Fri)</a></h2>
+<!-- 2008-07-26 01:45:34 -->
+
+<div class="entry1">
+<h3><a name="200807251" title="200807251" href="200807c.html#200807251">■</a> 
+[Mail] online job spam頻発</h3>
+<p>
+なぜかすり抜けてくるのがonline job関連のspamばかり。<br>
+不思議。
+</p>
+<!-- section end -->
+</div>
+<!-- 2008/07/25 end -->
+
+
+
+<hr class="hide">
+<!-- 2008/07/26 start -->
+<h2><a name="20080726" href="200807c.html#20080726">2008-07-26 (Sat)</a></h2>
+<!-- 2008-07-27 02:13:39 -->
+
+<div class="entry1">
+<h3><a name="200807261" title="200807261" href="200807c.html#200807261">■</a> 
+[Comic] あんどーなつ</h3>
+<p>
+1巻を借りてきて読み直す。ドラマはやっぱいろいろと違うな。
+</p>
+<!-- section end -->
+</div>
+<!-- 2008/07/26 end -->
+
+
+
+<hr class="hide">
+<!-- 2008/07/27 start -->
+<h2><a name="20080727" href="200807c.html#20080727">2008-07-27 (Sun)</a></h2>
+<!-- 2008-07-28 01:42:00 -->
+
+<div class="entry1">
+<h3><a name="200807271" title="200807271" href="200807c.html#200807271">■</a> 
+<a href="http://www.instapaper.com/">[Web] あとで読む支援ツール</a></h3>
+<p>
+前に使ってた例のあれがどこいったのか名前すら覚えてないから探せない<br>
+という状況の今日この頃、暑いので髪を切った。<br>
+ここまで何を書いてるのかよくわからんが、<br>
+たまたまrefererにあった
+<a href="http://www.instapaper.com/">Instapaper</a>
+を使ってみることにした。<br>
+機能的にはだいたい満足。<br>
+読んだらいきなり消してくれてもいい気もするが。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2008/07/27 end -->
+
+
+
+<hr class="hide">
+<!-- 2008/07/28 start -->
+<h2><a name="20080728" href="200807c.html#20080728">2008-07-28 (Mon)</a></h2>
+<!-- 2008-07-29 01:13:05 -->
+
+<div class="entry1">
+<h3><a name="200807281" title="200807281" href="200807c.html#200807281">■</a> 
+<a href="http://www.splitbrain.org/projects/gbrain">[Firefox] gBrain Firefox extension</a></h3>
+<p>
+そろそろFx3対応してるかと思って見に行ったらディスコンになってた。<br>
+まあ、確かにものすごい負荷になるよな、やっぱ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2008/07/28 end -->
+
+
+
+<hr class="hide">
+<!-- 2008/07/29 start -->
+<h2><a name="20080729" href="200807c.html#20080729">2008-07-29 (Tue)</a></h2>
+<!-- 2008-07-30 00:33:07 -->
+
+<div class="entry1">
+<h3><a name="200807291" title="200807291" href="200807c.html#200807291">■</a> 
+<a href="http://to.tumblr.com/post/43664364">[Firefox] to - Tombloo 0.3.9.1</a></h3>
+<p>
+Linuxでも動くようになった。うれしい。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2008/07/29 end -->
+
+
+
+<hr class="hide">
+<!-- 2008/07/30 start -->
+<h2><a name="20080730" href="200807c.html#20080730">2008-07-30 (Wed)</a></h2>
+<!-- 2008-07-31 01:28:06 -->
+
+<div class="entry1">
+<h3><a name="200807301" title="200807301" href="200807c.html#200807301">■</a> 
+[夏] 夜が涼しい</h3>
+<p>
+とっても寝やすい。おやすみなさい。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2008/07/30 end -->
+
+
+
+<hr class="hide">
+<!-- 2008/07/31 start -->
+<h2><a name="20080731" href="200807c.html#20080731">2008-07-31 (Thu)</a></h2>
+<!-- 2008-08-01 00:56:13 -->
+
+<div class="entry1">
+<h3><a name="200807311" title="200807311" href="200807c.html#200807311">■</a> 
+<a href="http://golf.shinh.org/p.rb?sum+of+square+numbers">[Golf] sum of square numbers</a></h3>
+<p>
+なかなか公式を探し出せなかった。「総和」でよかったんだな。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2008/07/31 end -->
+
+<hr>
+<div>
+<a href="200807b.html">&lt;Prev(,)</a> | 
+<a href="200808a.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

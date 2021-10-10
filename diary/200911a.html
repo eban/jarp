@@ -1,0 +1,503 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2009-11-a</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="200910c.html">
+<link rel="next" href="200911b.html">
+
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2009年11月上旬〜</p>
+<hr>
+<div>
+<a href="200910c.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="200911b.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2009/11/01 start -->
+<h2><a name="20091101" href="200911a.html#20091101">2009-11-01 (Sun)</a></h2>
+<!-- 2009-11-02 00:56:20 -->
+
+<div class="entry1">
+<h3><a name="200911011" title="200911011" href="200911a.html#200911011">■</a> 
+10月のspam</h3>
+<p>
+2700通ほど。ずいぶんと減ったな。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200911012" title="200911012" href="200911a.html#200911012">■</a> 
+[GRUB2] Ubuntu 9.10にlvm2をインストールしたらFedoraのLVMを認識したのはいいが</h3>
+<p>
+結局lvm2をインストールしたらupdate-grubで/boot/grub/grub.cfgに
+</p>
+
+<pre>
+### BEGIN /etc/grub.d/30_os-prober ###
+menuentry &quot;Fedora (2.6.30.9-90.fc11.i586) (on /dev/mapper/VolGroup00-LogVol00)&quot; {
+	insmod lvm
+	insmod ext2
+	set root=(VolGroup00-LogVol00)
+	search --no-floppy --fs-uuid --set 87356c45-caf2-4fb3-97fc-ddb9cf4d3514
+	linux /boot/vmlinuz-2.6.30.9-90.fc11.i586 ro root=UUID=87356c45-caf2-4fb3-97fc-ddb9cf4d3514 quiet
+	initrd /boot/initrd-2.6.30.9-90.fc11.i586.img
+}
+menuentry &quot;Fedora (2.6.30.8-64.fc11.i586) (on /dev/mapper/VolGroup00-LogVol00)&quot; {
+	insmod lvm
+	insmod ext2
+	set root=(VolGroup00-LogVol00)
+	search --no-floppy --fs-uuid --set 87356c45-caf2-4fb3-97fc-ddb9cf4d3514
+	linux /boot/vmlinuz-2.6.30.8-64.fc11.i586 ro root=UUID=87356c45-caf2-4fb3-97fc-ddb9cf4d3514 quiet
+	initrd /boot/initrd-2.6.30.8-64.fc11.i586.img
+}
+### END /etc/grub.d/30_os-prober ###
+</pre>
+<p>
+が追加された。でもこれだと
+</p>
+
+<pre>
+error: no such disk.
+error: You need to load th kernel first.
+</pre>
+<p>
+と言われて起動しない。
+</p>
+
+<p>
+とりあえずFedoraの立ち上げ面倒なのでFedora側でgrub-install hd0した。<br>
+で、今度はUbuntu 9.10が立ち上がらなくなったわけで。ははは。つづく。
+</p>
+<!-- section end -->
+</div>
+<!-- 2009/11/01 end -->
+
+
+
+<hr class="hide">
+<!-- 2009/11/02 start -->
+<h2><a name="20091102" href="200911a.html#20091102">2009-11-02 (Mon)</a></h2>
+<!-- 2009-11-03 03:21:44 -->
+
+<div class="entry1">
+<h3><a name="200911021" title="200911021" href="200911a.html#200911021">■</a> 
+[GRUB2] UbuntuのGRUB2からLVMのFedoraを起動する</h3>
+<p>
+何度も再起動は効率が悪いのでVirtualBoxにUbuntu 9.10とFedora 11を<br>
+インストールして実験。とりあえず/etc/grub.d/40_customに
+</p>
+
+<pre>
+menuentry &quot;Fedora (2.6.30.9-90.fc11.i586) (on /dev/mapper/vg_fedora-lv_root)&quot; {
+#      insmod lvm
+      insmod ext2
+      set root=(hd1,1)
+      linux /vmlinuz-2.6.30.9-90.fc11.i586 ro root=/dev/mapper/vg_fedora-lv_root rhgb quiet
+      initrd /initrd-2.6.30.9-90.fc11.i586.img
+}
+</pre>
+<p>
+を追加。insmod lvmを入れるとなぜかno such fileとか言われる。不思議だ。
+</p>
+
+<p>
+VirtualBoxだとFedoraは完全に立ち上がるまでが非常に遅いってことがよくわかった。<br>
+メモリを512MBしか割り当ててないからかな。Ubuntuだと384MBで十分なんだけど。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2009/11/02 end -->
+
+
+
+<hr class="hide">
+<!-- 2009/11/03 start -->
+<h2><a name="20091103" href="200911a.html#20091103">2009-11-03 (Tue)</a></h2>
+<!-- 2009-11-04 00:48:14 -->
+
+<div class="entry1">
+<h3><a name="200911031" title="200911031" href="200911a.html#200911031">■</a> 
+<a href="http://help.nicovideo.jp/live/2009/10/post-35.html">[ニコニコ動画] タイムシフト機能 : ニコニコ生放送ヘルプ</a></h3>
+<p>
+世界の新着動画をタイムシフトで見るかと思って調べてみたら、<br>
+対応してないことがわかった。
+</p>
+
+<p>
+ヘルプには
+</p><blockquote><p>
+※一部の公式生放送においては、タイムシフト機能は未対応となっております。
+</p></blockquote><p>
+と書いてあるが実際は逆で
+<a href="http://live.nicovideo.jp/timetable">番組表</a>を見ると一部の放送しか対応してない。<br>
+「後で見る」ボタンを探しまくったよ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2009/11/03 end -->
+
+
+
+<hr class="hide">
+<!-- 2009/11/04 start -->
+<h2><a name="20091104" href="200911a.html#20091104">2009-11-04 (Wed)</a></h2>
+<!-- 2009-11-05 00:46:23 -->
+
+
+<div class="entry1">
+<h3><a name="200911041" title="200911041" href="200911a.html#200911041">■</a> 
+[Firefox] Firefox 3.5.4調子悪し</h3>
+<p>
+なぜかXごと巻き込んでFirefoxがお亡くなりになるケースが3回ほど。<br>
+3.5.4になってからだよなあ。どうしたもんか。しばらくUbuntuに移行するのも手だな。<br>
+それにはまずUbuntu 9.10を起動できるようにしないと。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200911042" title="200911042" href="200911a.html#200911042">■</a> 
+[GRUB] 旧GRUBとGRUB2とFedoraとUbuntu</h3>
+<p>
+Ubuntu 9.10はGRUB2に完全に依存していて/bootパーティションを作らず、<br>
+/をext4一つでまかなっている。これはつまりext4に対応してない旧GRUBからは<br>
+kernelとかbootに必要なファイルをロードできないことを意味する。<br>
+だからFedoraの/boot/grub/grub.confをいくらいじっても<br>
+Ubuntu 9.10を起動することはできない。<br>
+可能にするにはFedoraにGRUB2をインストールするしかない(はず)。
+</p>
+
+<p>
+yum install grub2すると/boot/grub/grub.confに
+</p>
+
+<pre>
+title GNU GRUB 2, (1.98)
+        kernel /grub2/core.img
+</pre>
+<p>
+というエントリが追加される。これを起動すると/boot/grub2を読み込むという仕組み。<br>
+旧GRUBをGRUB2で置き換えちゃうとか過激なことはしないので安心していい。
+</p>
+
+<p>
+/etc/grub.d/40_customに
+</p>
+
+<pre>
+menuentry &quot;Ubuntu, Linux 2.6.31-14-generic-pae (hd)&quot; {
+        insmod ext2
+        set root=(hd0,1)
+        linux   /boot/vmlinuz-2.6.31-14-generic-pae root=/dev/sda1 ro   quiet splash
+        initrd  /boot/initrd.img-2.6.31-14-generic-pae
+}
+</pre>
+<p>
+を追加したらいけた。その間update-grub2を忘れたりで紆余曲折があったが、<br>
+久し振りにUbuntuの立ち上がる姿が見れた。この日記もUbuntuで書いている。
+</p>
+
+<p>
+それにしてもいちいちupdate-grubが必要とかliloの悪夢を思い出す。
+</p>
+<!-- section end -->
+</div>
+<!-- 2009/11/04 end -->
+
+
+
+<hr class="hide">
+<!-- 2009/11/05 start -->
+<h2><a name="20091105" href="200911a.html#20091105">2009-11-05 (Thu)</a></h2>
+<!-- 2009-11-06 00:45:03 -->
+
+<div class="entry1">
+<h3><a name="200911051" title="200911051" href="200911a.html#200911051">■</a> 
+[Linux] ext4でハイバネート失敗</h3>
+<p>
+会社のPCのUbuntu 9.10もext4にしたけどやはりハイバネートが復帰時に失敗する。<br>
+試しにVirtualBoxにインストールしてやってみても同じだった。<br>
+どうにもext4とハイバネートとの相性は悪いようだ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2009/11/05 end -->
+
+
+
+<hr class="hide">
+<!-- 2009/11/06 start -->
+<h2><a name="20091106" href="200911a.html#20091106">2009-11-06 (Fri)</a></h2>
+<!-- 2009-11-07 01:10:47 -->
+
+<div class="entry1">
+<h3><a name="200911061" title="200911061" href="200911a.html#200911061">■</a> 
+[Net] ルータが久し振りに死んだ</h3>
+<p>
+FWを更新して調子いいなと思ったがやっぱだめか。<br>
+これで心置きなく新しいのと交換できる。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200911062" title="200911062" href="200911a.html#200911062">■</a> 
+<a href="http://vim-users.jp/2009/11/hack99/">[Vim] Vim-users.jp - Hack #99: 起動に時間のかかるプラグインを探す</a></h3>
+<p>
+やってみたら、twitvim.vimが凶悪だった。これが遅い原因だったのか。<br>
+試しに入れただけなのに。
+</p>
+
+<pre>
+0.691204        /home/eban/.vim/plugin/twitvim.vim
+0.196427        /home/eban/.vim/plugin/yankring.vim
+</pre>
+<p>
+yankring.vimも使ってないので.txtにrename。<br>
+すげー起動が速くなった。
+</p>
+<!-- section end -->
+</div>
+<!-- 2009/11/06 end -->
+
+
+
+<hr class="hide">
+<!-- 2009/11/07 start -->
+<h2><a name="20091107" href="200911a.html#20091107">2009-11-07 (Sat)</a></h2>
+<!-- 2009-11-08 04:31:31 -->
+
+<div class="entry1">
+<h3><a name="200911071" title="200911071" href="200911a.html#200911071">■</a> 
+[Ubuntu] メモリ256MBのノートPCにUbuntuを</h3>
+<p>
+中心に丸いアイコンがぐるぐる回るとこでCD-Rの読み込みもしなくなった。<br>
+9.10だと256MBじゃ足りないかな。<br>
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200911072" title="200911072" href="200911a.html#200911072">■</a> 
+[Net] 今日もルータが死んだ</h3>
+<p>
+まだ交換してないんだけど、ここ4ヶ月ぐらい調子よかったのにな。<br>
+なんか環境が変わったのか？<br>
+まあ、明日は交換できるだろう。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200911073" title="200911073" href="200911a.html#200911073">■</a> 
+<a href="http://vim.g.hatena.ne.jp/ka-nacht/20091107/1257557680">[Vim] --cmd &quot;profile file *&quot;</a></h3>
+<p>
+なるほど。
+</p>
+
+<pre>
+0.259975        /etc/vimrc
+0.253577        /usr/share/vim/vim72/syntax/syntax.vim
+0.185028        /home/eban/.vimrc
+0.078621        /usr/share/vim/vim72/filetype.vim
+</pre>
+<p>
+このあたりはどうしようもないねえ。/etc/vimrcが余計な気もするが。
+</p>
+<!-- section end -->
+</div>
+<!-- 2009/11/07 end -->
+
+
+
+<hr class="hide">
+<!-- 2009/11/08 start -->
+<h2><a name="20091108" href="200911a.html#20091108">2009-11-08 (Sun)</a></h2>
+<!-- 2009-11-09 01:52:05 -->
+
+<div class="entry1">
+<h3><a name="200911081" title="200911081" href="200911a.html#200911081">■</a> 
+[Net] 新しいルータに交換</h3>
+<p>
+別のポート番号へマッピングはできないようだが、まあ、それはなくてもいいので、<br>
+とくに問題なし。
+</p>
+
+<p>
+結構厚い説明書があるわりには細かいところはつづきはwebでって感じであまり役に立たない。
+</p>
+
+<p>
+どっかiobb.netの代わりを探さないとな。
+</p>
+<!-- section end -->
+</div>
+<!-- 2009/11/08 end -->
+
+
+
+<hr class="hide">
+<!-- 2009/11/09 start -->
+<h2><a name="20091109" href="200911a.html#20091109">2009-11-09 (Mon)</a></h2>
+<!-- 2009-11-10 01:39:57 -->
+
+<div class="entry1">
+<h3><a name="200911091" title="200911091" href="200911a.html#200911091">■</a> 
+[FLDR] Fastladderの未読が0のまま</h3>
+<p>
+さてどうしたもんかな。夜になってからずーっと未読が0のまま。<br>
+更新されないな。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200911092" title="200911092" href="200911a.html#200911092">■</a> 
+<a href="http://ieserver.net/">[DynamicDNS] 家サーバー・プロジェクトのダイナミックDNS</a></h3>
+<p>
+更新用のスクリプトもついているのでこれにした。<br>
+登録も驚くほど簡単だった。
+</p>
+<!-- section end -->
+</div>
+<!-- 2009/11/09 end -->
+
+
+
+<hr class="hide">
+<!-- 2009/11/10 start -->
+<h2><a name="20091110" href="200911a.html#20091110">2009-11-10 (Tue)</a></h2>
+<!-- 2009-11-11 01:00:05 -->
+
+<div class="entry1">
+<h3><a name="200911101" title="200911101" href="200911a.html#200911101">■</a> 
+[Ubuntu] 2台ともUbuntu 9.10のGNOMEが立ち上がらなくなる</h3>
+<p>
+2台ともというのがなんとも。<br>
+自分でいじってるので同じように間違えてる可能性も否定できないが、<br>
+今日aptitude safe-upgradeした中にgnome関連があるので、<br>
+やっぱこのうちのどれかがあやしい。
+</p>
+
+<pre>
+[更新] apparmor 2.3.1+1403-0ubuntu27 -&gt; 2.3.1+1403-0ubuntu27.1
+[更新] apparmor-utils 2.3.1+1403-0ubuntu27 -&gt; 2.3.1+1403-0ubuntu27.1
+[更新] apport 1.9.3-0ubuntu4 -&gt; 1.9.3-0ubuntu4.1
+[更新] apport-gtk 1.9.3-0ubuntu4 -&gt; 1.9.3-0ubuntu4.1
+[更新] checkbox 0.8.5 -&gt; 0.8.6
+[更新] checkbox-gtk 0.8.5 -&gt; 0.8.6
+[更新] evince 2.28.1-0ubuntu1 -&gt; 2.28.1-0ubuntu1.1
+[更新] gnome-about 1:2.28.1-0ubuntu2 -&gt; 1:2.28.1-0ubuntu3
+[更新] gnome-desktop-data 1:2.28.1-0ubuntu2 -&gt; 1:2.28.1-0ubuntu3
+[更新] grub-common 1.97~beta4-1ubuntu3 -&gt; 1.97~beta4-1ubuntu4
+[更新] grub-pc 1.97~beta4-1ubuntu3 -&gt; 1.97~beta4-1ubuntu4
+[更新] gtk2-engines 1:2.18.4-1ubuntu1 -&gt; 1:2.18.4-1ubuntu2
+[更新] gtk2-engines-murrine 0.90.3-1ubuntu1 -&gt; 0.90.3-1ubuntu2
+[更新] libapparmor-perl 2.3.1+1403-0ubuntu27 -&gt; 2.3.1+1403-0ubuntu27.1
+[更新] libapparmor1 2.3.1+1403-0ubuntu27 -&gt; 2.3.1+1403-0ubuntu27.1
+[更新] libclutter-gtk-0.10-0 0.10.2-0ubuntu1 -&gt; 0.10.2-0ubuntu2
+[更新] libenchant1c2a 1.5.0-0ubuntu2 -&gt; 1.5.0-0ubuntu3
+[更新] libevdocument1 2.28.1-0ubuntu1 -&gt; 2.28.1-0ubuntu1.1
+[更新] libevview1 2.28.1-0ubuntu1 -&gt; 2.28.1-0ubuntu1.1
+[更新] libgnome-desktop-2-11 1:2.28.1-0ubuntu2 -&gt; 1:2.28.1-0ubuntu3
+[更新] libgudev-1.0-0 1:147~-6 -&gt; 1:147~-6.1
+[更新] libnautilus-extension1 1:2.28.1-0ubuntu1 -&gt; 1:2.28.1-0ubuntu2
+[更新] libpython2.6 2.6.4-0ubuntu1 -&gt; 2.6.4-0ubuntu2
+[更新] libudev0 147~-6 -&gt; 147~-6.1
+[更新] nautilus 1:2.28.1-0ubuntu1 -&gt; 1:2.28.1-0ubuntu2
+[更新] nautilus-data 1:2.28.1-0ubuntu1 -&gt; 1:2.28.1-0ubuntu2
+[更新] python-apport 1.9.3-0ubuntu4 -&gt; 1.9.3-0ubuntu4.1
+[更新] python-problem-report 1.9.3-0ubuntu4 -&gt; 1.9.3-0ubuntu4.1
+[更新] python2.6 2.6.4-0ubuntu1 -&gt; 2.6.4-0ubuntu2
+[更新] python2.6-minimal 2.6.4-0ubuntu1 -&gt; 2.6.4-0ubuntu2
+[更新] rhythmbox 0.12.5-0ubuntu4 -&gt; 0.12.5-0ubuntu5
+[更新] udev 147~-6 -&gt; 147~-6.1
+[更新] update-manager 1:0.126.6.1 -&gt; 1:0.126.9
+[更新] update-manager-core 1:0.126.6.1 -&gt; 1:0.126.9
+</pre>
+
+<p>
+でも、ぐだぐだいじるよりは30分もあれば再インストールできちゃうので、<br>
+すぱっとあきらめることにした。<br>
+で、再インストール後upgradeしてみるとなんと何の問題もない。<br>
+原因はおれか？
+</p>
+
+<p>
+VirtualBox上のはこれからはupgradeする前にスナップショット取っとこう。
+</p>
+<!-- section end -->
+</div>
+<!-- 2009/11/10 end -->
+
+<hr>
+<div>
+<a href="200910c.html">&lt;Prev(,)</a> | 
+<a href="200911b.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

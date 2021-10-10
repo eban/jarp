@@ -1,0 +1,484 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2010-1-b</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="201001a.html">
+<link rel="next" href="201001c.html">
+
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2010年1月中旬〜</p>
+<hr>
+<div>
+<a href="201001a.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="201001c.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2010/01/11 start -->
+<h2><a name="20100111" href="201001b.html#20100111">2010-01-11 (Mon)</a></h2>
+<!-- 2010-01-21 13:44:36 -->
+
+<div class="entry1">
+<h3><a name="201001111" title="201001111" href="201001b.html#201001111">■</a> 
+[Fedora] NetworkManagerでdnsmasqの設定</h3>
+<p>
+DNS serversにカンマ区切りでサーバを並べられるので、127.0.0.1を先頭に置く。<br>
+/etc/resolv.confを直接いじらない。
+</p>
+
+<p>
+この設定は固定IPのときにしか使えない。DHCPだとDNS serverも配っちゃうので。<br>
+そんときは安易ではあるが、NetworkManagerをアンインストールするのが簡単。<br>
+まあ、なくても困るようなもんでもないしねえ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2010/01/11 end -->
+
+
+
+<hr class="hide">
+<!-- 2010/01/12 start -->
+<h2><a name="20100112" href="201001b.html#20100112">2010-01-12 (Tue)</a></h2>
+<!-- 2010-01-12 22:51:10 -->
+
+<div class="entry1">
+<h3><a name="201001121" title="201001121" href="201001b.html#201001121">■</a> 
+<a href="http://kramdown.rubyforge.org/syntax.html#fenced-code-block">[markdown] kramdownのfenced code block</a></h3>
+<p>
+3つ以上チルダで前後を囲めばcode blockとして扱われる。<br>
+markdownのインデントは結構面倒だったが、これはいいね。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="201001122" title="201001122" href="201001b.html#201001122">■</a> 
+[CMS] nanoc3でkramdownを使う</h3>
+<p>
+lib/kd.rb(名前は適当)に
+</p>
+
+<pre>
+Class.new(Nanoc3::Filter) do
+  identifier :kramdown
+  def run(content, params={})
+    require 'kramdown'
+    Kramdown::Document.new(content).to_html
+  end
+end
+</pre>
+<p>
+てな感じで書いて、Rulesに
+</p>
+
+<pre>
+compile '/' do
+  filter :erb
+  filter :kramdown
+  layout 'default'
+end
+</pre>
+<p>
+と書けば使える。
+</p>
+<!-- section end -->
+</div>
+<!-- 2010/01/12 end -->
+
+
+
+<hr class="hide">
+<!-- 2010/01/13 start -->
+<h2><a name="20100113" href="201001b.html#20100113">2010-01-13 (Wed)</a></h2>
+<!-- 2010-01-13 23:12:37 -->
+
+<div class="entry1">
+<h3><a name="201001131" title="201001131" href="201001b.html#201001131">■</a> 
+[Linux] ext4へ移行</h3>
+<p>
+外付けのHDDをext3からext4へ移行させた。<br>
+単にext4でmountするだけで勝手にext4になるらしい。<br>
+と言ってもつなぐと/media/*にext3で勝手にmountされちゃうので、<br>
+適当に手動でmountしていじってみることにした。<br>
+これでほんとにext4になるのか？
+</p>
+<!-- section end -->
+</div>
+<!-- 2010/01/13 end -->
+
+
+
+<hr class="hide">
+<!-- 2010/01/14 start -->
+<h2><a name="20100114" href="201001b.html#20100114">2010-01-14 (Thu)</a></h2>
+<!-- 2010-01-15 00:04:42 -->
+
+<div class="entry1">
+<h3><a name="201001141" title="201001141" href="201001b.html#201001141">■</a> 
+<a href="http://www.commandlinefu.com/commands/view/3722/more-precise-bash-debugging">[Tips] More precise BASH debugging</a></h3>
+<p>
+これはなかなか素晴しい。
+</p>
+
+<pre>
+% PS4=' ${BASH_SOURCE}:${LINENO}(${FUNCNAME[0]}) ' sh -x /etc/profile |&amp;head -n5
+ /etc/profile:22() '[' -z 500 -a -x /usr/bin/id ']'
+ /etc/profile:28() '[' 500 = 0 ']'
+ /etc/profile:33() pathmunge /usr/local/sbin after
+ /etc/profile:12(pathmunge) echo /usr/bin:/usr/local/bin:/bin:/home/eban/bin
+ /etc/profile:12(pathmunge) /bin/egrep -q '(^|:)/usr/local/sbin($|:)'
+</pre>
+
+
+<!-- section end -->
+</div>
+<!-- 2010/01/14 end -->
+
+
+
+<hr class="hide">
+<!-- 2010/01/15 start -->
+<h2><a name="20100115" href="201001b.html#20100115">2010-01-15 (Fri)</a></h2>
+<!-- 2010-01-16 01:14:01 -->
+
+<div class="entry1">
+<h3><a name="201001151" title="201001151" href="201001b.html#201001151">■</a> 
+[Fedora] Dropbox</h3>
+<p>
+すっかり忘れていたDropboxをインストール。<br>
+なぜか最新はF10用だがまあ問題なく動く。
+</p>
+
+<p>
+クライアントを動かしとけば3ヶ月ルールは大丈夫らしい。
+</p>
+<!-- section end -->
+</div>
+<!-- 2010/01/15 end -->
+
+
+
+<hr class="hide">
+<!-- 2010/01/16 start -->
+<h2><a name="20100116" href="201001b.html#20100116">2010-01-16 (Sat)</a></h2>
+<!-- 2010-01-17 12:41:13 -->
+
+<div class="entry1">
+<h3><a name="201001161" title="201001161" href="201001b.html#201001161">■</a> 
+[Fedora] Development Libraries</h3>
+<p>
+なんかいろいろmakeするたびにヘッダがないだのライブラリがないだの言われる。<br>
+LiveCDが元だしな。<br>
+もう面倒臭いのでgroupinstallでDevelopment Librariesをインストール。<br>
+これで少しはましになるか。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2010/01/16 end -->
+
+
+
+<hr class="hide">
+<!-- 2010/01/17 start -->
+<h2><a name="20100117" href="201001b.html#20100117">2010-01-17 (Sun)</a></h2>
+<!-- 2010-01-17 23:37:10 -->
+
+<div class="entry1">
+<h3><a name="201001171" title="201001171" href="201001b.html#201001171">■</a> 
+<a href="http://newsbeuter.org/">[RSS] newsbeuter</a></h3>
+<p>
+CUIなRSSリーダ。なかなかいいんだけど、日本語泣き別れ問題があってちょっと残念。<br>
+あとキーバインドもあまり好みじゃない。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="201001172" title="201001172" href="201001b.html#201001172">■</a> 
+<a href="http://codezen.org/canto/">[RSS] Canto</a></h3>
+<p>
+残念ながら何をやってもSEGV。よさげなんだけどね。
+</p>
+
+<p>
+もうちょっと探してみるか。
+</p>
+<!-- section end -->
+</div>
+<!-- 2010/01/17 end -->
+
+
+
+<hr class="hide">
+<!-- 2010/01/18 start -->
+<h2><a name="20100118" href="201001b.html#20100118">2010-01-18 (Mon)</a></h2>
+<!-- 2010-01-18 23:47:31 -->
+
+<div class="entry1">
+<h3><a name="201001181" title="201001181" href="201001b.html#201001181">■</a> 
+<a href="http://www.vanheusden.com/rsstail/">[RSS] rsstail</a></h3>
+<p>
+今日はなぜかFLDRが更新されなかったので、rsstailを使ってみた。<br>
+だいたいいいんだけど、たまにeuc-jpなfeedがあったりするのでnkfを通したほうが無難。<br>
+これくらいならRubyでも書けるか。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="201001182" title="201001182" href="201001b.html#201001182">■</a> 
+[RSS] rsstailもどき</h3>
+<p>
+かなりいいかげんではあるがこんな感じであとは新エントリだけ表示すればいいんだな。
+</p>
+
+<pre>
+require 'rss'
+require 'cgi'
+
+class String
+  def norm
+    CGI::unescapeHTML(self).
+      gsub(&quot;&amp;nbsp;&quot;, &quot; &quot;).gsub(/&lt;.+?&gt;/m,&quot;&quot;).gsub(/\n{2,}/, &quot;\n\n&quot;).strip
+  end
+end
+
+ARGV.each do |url|
+  feed = RSS::Parser.parse(url, false)
+  feed.output_encoding = &quot;utf-8&quot;
+  feed = feed.to_rss(&quot;1.0&quot;) do |maker|
+    maker.channel.about ||= maker.channel.link
+    maker.channel.description ||= &quot;No description&quot;
+    maker.items.each do |item|
+      item.title ||= &quot;No title&quot;
+      item.link ||= &quot;UNKNOWN&quot;
+    end
+  end
+
+  feed.items.each do |item|
+    puts &quot;title: &quot; + item.title.norm
+    desc = (item.content_encoded || item.description).to_s.norm
+    puts &quot;desc: &quot; + desc unless desc.empty?
+    puts &quot;date: &quot; + (item.date || item.dc_date).to_s
+    puts &quot;link: &quot; + item.link
+    puts
+  end
+end
+
+% ruby feeds.rb http://feed.natalie.mu/rss/natalie/news|tail -n5
+title: L'Arc-en-Cielテキストブック第2弾で作品への思いを語る
+desc: L'Arc-en-Cielのオフィシャルテキストブック「WORDS II」が、3月31日に刊行される。
+date: 2010-01-17T13:24:00+09:00
+link: http://natalie.mu/news/show/id/26433
+</pre>
+
+
+<!-- section end -->
+</div>
+<!-- 2010/01/18 end -->
+
+
+
+<hr class="hide">
+<!-- 2010/01/19 start -->
+<h2><a name="20100119" href="201001b.html#20100119">2010-01-19 (Tue)</a></h2>
+<!-- 2010-01-20 01:40:06 -->
+
+<div class="entry1">
+<h3><a name="201001191" title="201001191" href="201001b.html#201001191">■</a> 
+[RSS] rsstailもどきの続き</h3>
+<p>
+前回の更新から変更のあったものだけを取り出したいわけなんだけど、<br>
+item.dateやitem.dc_dateが両方ともnilになるfeedがあったりでちょっと困った。<br>
+labaqなんだけど。これだと比較できない。<br>
+しょうがないので最初のエントリのタイトルを覚えておいて、<br>
+これが前回と違ったら更新されているとみなすことにした。<br>
+あとIf-Modified-Sinceヘッダもつけてみた。
+</p>
+
+<p>
+~/.feedmon/urlsにフィードのurlを1行に1個ずつ書く。
+</p>
+
+<pre>
+require 'rss'
+require 'cgi'
+require 'digest'
+require 'fileutils'
+
+class String
+  def norm
+    CGI::unescapeHTML(self).
+      gsub(&quot;&amp;nbsp;&quot;, &quot; &quot;).gsub(/&lt;.+?&gt;/m,&quot;&quot;).gsub(/\n{2,}/, &quot;\n\n&quot;).strip
+  end
+end
+
+feedmondir = File.expand_path(&quot;~/.feedmon&quot;)
+lastdir = File.join(feedmondir, &quot;last&quot;)
+FileUtils.mkdir_p lastdir
+
+loop do
+  urls = File.readlines(File.join(feedmondir, &quot;urls&quot;)).map(&amp;:chomp) rescue []
+  begin
+    urls.each do |url|
+      urlfile = File.join(lastdir, Digest::MD5.hexdigest(url))
+      last_time, last_title = File.readlines(urlfile).map(&amp;:chomp) rescue []
+      puts Time.now.strftime(&quot;%Y-%m-%d %X&quot;) + &quot; &quot; + url
+      begin
+        string = open(url, &quot;If-Modified-Since&quot; =&gt; last_time){|f|f.read}
+      rescue =&gt; e
+        puts &quot;  &quot; + e
+        next
+      end
+      last_time = Time.parse(last_time)
+      feed = RSS::Parser.parse(string, false)
+      feed.output_encoding = &quot;utf-8&quot;
+      feed = feed.to_rss(&quot;1.0&quot;) do |maker|
+        maker.channel.about ||= maker.channel.link
+        maker.channel.description ||= &quot;No description&quot;
+        maker.items.each do |item|
+          item.title ||= &quot;No title&quot;
+          item.link ||= &quot;UNKNOWN&quot;
+        end
+      end
+
+      title0 = feed.items[0].title
+      feed.items.each do |item|
+        date = item.date || item.dc_date
+
+        if last_time and date
+          next if last_time &gt;= date
+        else
+          next if title0 == last_title
+        end
+
+        desc = (item.content_encoded || item.description).to_s.norm
+        puts &quot;title: &quot; + item.title.norm
+        puts &quot;desc: &quot; + desc unless desc.empty?
+        puts &quot;date: &quot; + date.to_s if date
+        puts &quot;link: &quot; + item.link
+        puts
+      end
+      open(urlfile, &quot;w&quot;) do |f|
+        f.puts Time.now.utc.rfc822.sub(/[-+]?0000/,&quot;GMT&quot;)
+        f.puts title0
+      end
+    end
+  rescue
+    puts $@
+  ensure
+    puts Time.now.to_s + &quot;, updated\n\n&quot;
+    $stdout.flush
+    sleep 15*60
+  end
+end
+</pre>
+
+<p>
+utc.rfc822はなんで-0000になるんだろう？
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="201001192" title="201001192" href="201001b.html#201001192">■</a> 
+<a href="http://golf.shinh.org/p.rb?369">[Golf] 369</a></h3>
+<p>
+.*?は気づかなかったなあ。それにしても
+<a href="http://golf.shinh.org/reveal.rb?369/nn_1262835862&amp;awk">nnさんのawkの解</a>
+
+にはまいった。!gsubで必ず0になるからprint $0ってことなんだよなあ。<br>
+すばらしい。
+</p>
+<!-- section end -->
+</div>
+<!-- 2010/01/19 end -->
+
+
+
+<hr class="hide">
+<!-- 2010/01/20 start -->
+<h2><a name="20100120" href="201001b.html#20100120">2010-01-20 (Wed)</a></h2>
+<!-- 2010-01-21 00:48:26 -->
+
+<div class="entry1">
+<h3><a name="201001201" title="201001201" href="201001b.html#201001201">■</a> 
+<a href="http://golf.shinh.org/p.rb?369">[Golf] 昨日の369.awkの説明の訂正</a></h3>
+<p>
+
+<a href="201001b.html#201001192">昨日の説明</a>は間違ってた。<br>
+3,6,9を含まないときは当然gsubは0を返すので、結局!gsubは0か1を返すことになる。<br>
+フィールドは1個だけなので$0でも$1でも結果は同じ。というのがミソなんだな。
+</p>
+<!-- section end -->
+</div>
+<!-- 2010/01/20 end -->
+
+<hr>
+<div>
+<a href="201001a.html">&lt;Prev(,)</a> | 
+<a href="201001c.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

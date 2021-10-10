@@ -1,0 +1,708 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2003-4-c</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="200304b.html">
+<link rel="next" href="200305a.html">
+
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2003年4月下旬〜</p>
+<hr>
+<div>
+<a href="200304b.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="200305a.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2003/04/21 start -->
+<h2><a name="20030421" href="200304c.html#20030421">2003-04-21 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="200304211" title="200304211" href="200304c.html#200304211">■</a> 
+[Ruby] JARHのwarning</h3>
+<p>
+そりゃもういっぱい
+</p>
+<pre>
+warning: parenthesize argument(s) for future version
+</pre>
+<p>
+が出てるわけなんだよね。これをなくすのは簡単で()を適当につければいい。
+ただ困ったのは
+</p>
+<pre>
+print(eval %-eval %: %|Just another Ruby hacker,| :-)
+</pre>
+<p>
+だ。これに()をつけると
+</p>
+<pre>
+print(eval(%-eval %: %|Just another Ruby hacker,| :-))
+</pre>
+<p>
+となる。これじゃ台無し。でもよく見るとprintの()はなくてもいい。
+</p>
+<pre>
+print eval(%-eval %: %|Just another Ruby hacker,| :-)
+</pre>
+<p>
+おぉ、これでいいのか。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200304212" title="200304212" href="200304c.html#200304212">■</a> 
+[Ruby] Arrary#select</h3>
+<p>
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-dev/20047">Array#selectの話</a>は実はJARHのwarningをなくす過程で見つけた問題であった。これができないと
+</p>
+<pre>
+$&gt;&lt;&lt;'RbyckJust another,'.split('').select(5..16,9,0,6,1,2,9,14,10,3,4,15..17)
+</pre>
+<p>
+は
+</p>
+<pre>
+$&gt;&lt;&lt;'RbyckJust another,'.split('').select(5,6,7,8,9,10,11,12,13,14,15,16,9,0,6,1,2,9,14,10,3,4,15,16,17)
+</pre>
+<p>
+としないといけなくなる。
+ま、元々そんなにいい出来でもないので、なくしちゃってもいいんだけど。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200304213" title="200304213" href="200304c.html#200304213">■</a> 
+[Ruby] *1..1</h3>
+<p>
+これも仕様が変わった。
+</p>
+<pre>
+% ruby-1.7.2 -e 'p *1..1' 
+1
+% ruby-1.8.0 -e 'p *1..1'
+1..1
+</pre>
+<p>
+JARHには
+</p>
+<pre>
+print *&quot;Just another Ruby hacker,&quot;..&quot;Just another Ruby hacker,&quot;
+</pre>
+<p>
+というのがある。どうしようかなあ。
+</p>
+<pre>
+print *(&quot;Just another Ruby hacker,&quot;..&quot;Just another Ruby hacker,&quot;).to_a
+</pre>
+<p>
+としてみよう。*をつけないと1.6ではprintの()とみなされる。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200304214" title="200304214" href="200304c.html#200304214">■</a> 
+[PC] キーボード</h3>
+<p>
+Happy Hacking Keyboard LiteのUS配列。
+会社では10年程前のAXキーボードのUS配列。
+根がNEWSなもんだからUS配列じゃないとだめなのだ。
+106/109でもUS配列に変更して使う。
+</p>
+<!-- section end -->
+</div>
+<!-- 2003/04/21 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/04/22 start -->
+<h2><a name="20030422" href="200304c.html#20030422">2003-04-22 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="200304221" title="200304221" href="200304c.html#200304221">■</a> 
+<a href="http://raa.ruby-lang.org/project/bz2/">[Ruby] bz2</a></h3>
+<p>
+なぜかgetできないなあ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200304222" title="200304222" href="200304c.html#200304222">■</a> 
+<a href="http://jarp.jin.gr.jp/win32/">[Win32] readlineとgdbm</a></h3>
+<p>
+うささん協力の下、MinGW, VC++, BCC32用のバイナリを用意した。
+次はzlibの予定。
+</p>
+<!-- section end -->
+</div>
+<!-- 2003/04/22 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/04/23 start -->
+<h2><a name="20030423" href="200304c.html#20030423">2003-04-23 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="200304231" title="200304231" href="200304c.html#200304231">■</a> 
+<a href="http://raa.ruby-lang.org/project/rexml-stable/">[Ruby] REXML 2.4.8</a></h3>
+<p>
+更新。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200304232" title="200304232" href="200304c.html#200304232">■</a> 
+[Win32] Zlib 1.1.4</h3>
+<p>
+Makefileを分割してみた。
+</p>
+<!-- section end -->
+</div>
+<!-- 2003/04/23 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/04/24 start -->
+<h2><a name="20030424" href="200304c.html#20030424">2003-04-24 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="200304241" title="200304241" href="200304c.html#200304241">■</a> 
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-talk/70000">[Ruby] ruby-talk 70000</a></h3>
+<p>
+70000を越えた。60000からは4ヶ月。ちょっとペースが落ちたな。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200304242" title="200304242" href="200304c.html#200304242">■</a> 
+[Cygwin] setup -5</h3>
+<p>
+md5sumのチェックって結構うっとうしい。setup -5でチェックしなくなるようだ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200304243" title="200304243" href="200304c.html#200304243">■</a> 
+<a href="http://raa.ruby-lang.org/project/erb/">[Ruby] ERB 2.0.3</a></h3>
+<p>
+更新。
+</p>
+<!-- section end -->
+</div>
+<!-- 2003/04/24 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/04/25 start -->
+<h2><a name="20030425" href="200304c.html#20030425">2003-04-25 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="200304251" title="200304251" href="200304c.html#200304251">■</a> 
+<a href="http://gcc.gnu.org/">[GNU] GCC 3.2.3</a></h3>
+<p>
+<a href="200302a.html#200302083">3.2.2</a>と全く同じオプション。
+</p>
+<pre>
+% CFLAGS=-Os CXXFLAGS=-Os CC=/usr/bin/gcc ../configure \
+  --enable-languages=c,c++ --with-system-zlib \
+  --enable-sjlj-exceptions --enable-threads \
+  --disable-version-specific-runtime-libs --disable-nls \
+  --without-included-gettext --without-catgets
+% make BOOT_CFLAGS=-Os STAGE1_CFLAGS=-Os CFLAGS=-Os \
+  DEBUG_FLAGS= CONFIG_CXXFLAGS='-ffunction-sections -fdata-sections' \
+  bootstrap
+</pre>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200304252" title="200304252" href="200304c.html#200304252">■</a> 
+[Ruby] JARH</h3>
+<pre>
+print begin &quot;Just another Ruby hacker,&quot; end
+</pre>
+
+<!-- section end -->
+</div>
+<!-- 2003/04/25 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/04/26 start -->
+<h2><a name="20030426" href="200304c.html#20030426">2003-04-26 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="200304261" title="200304261" href="200304c.html#200304261">■</a> 
+[Ruby] RubyをGCC 3.2.3でmake</h3>
+<p>
+問題なし。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200304262" title="200304262" href="200304c.html#200304262">■</a> 
+[GNU] od -tx1z</h3>
+<p>
+zオプションの存在に気づく。
+</p>
+<pre>
+% echo hogehoge | od -tx1z 
+0000000 68 6f 67 65 68 6f 67 65 0a                       &gt;hogehoge.&lt;
+0000011
+</pre>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200304263" title="200304263" href="200304c.html#200304263">■</a> 
+[GNU] GLIBCとGCC</h3>
+<p>
+Rsync 2.5.6ででGCC 3.2.3を試していたら
+</p>
+<pre>
+/usr/local/lib/libgcc_s.so.1(*IND*+0x0): multiple definition of `__divdi3@GLIBC_2.0'
+/lib/libc.so.6(.text+0x4ce): first defined here
+</pre>
+<p>
+と言われてしまった。が、これはどっちかというとGLIBCの問題のようだ。
+確認のためにCC='gcc -V 3.2.2'でconfigureしても同じ。
+つまり、いつのまにかまずいことになっていたが、気づかなかったらしい。
+</p>
+
+<p>
+あ、でも以前GCCを作ったときに--enable-version-specific-runtime-libsを指定していたつけが今頃になって回ってきたとも言えるか。
+とりあえず、rsyncはpoptが原因なので、
+poptを再インストールしよう。
+最終的には/usr/local/lib/libgcc_s.so.1を消せるところまで持って行こう。
+</p>
+<!-- section end -->
+</div>
+<!-- 2003/04/26 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/04/27 start -->
+<h2><a name="20030427" href="200304c.html#20030427">2003-04-27 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="200304271" title="200304271" href="200304c.html#200304271">■</a> 
+<a href="http://www.gnu.org/software/grep/">[GNU] grep 2.5.1</a></h3>
+<p>
+pcreも新しくしたので、grep 2.5をGCC 3.2.3でmakeする。
+じゃなくて最新はgrep 2.5.1だった。
+マルチバイト対応は
+<a href="http://www.ff.iij4u.or.jp/~nrt/lv/">lv</a>のlgrepのほうが便利なので、最初から殺しておこう。
+</p>
+<pre>
+% ac_cv_type_mbstate_t=no \
+  ac_cv_header_wchar_h=no \
+  ac_cv_header_wctype_h=no \
+  CFLAGS=-Os \
+  ./configure --disable-nls
+% make all check
+</pre>
+<p>
+だめだ。backrefのテストが返ってこない。spencer1.shもfailしてる。
+tests/backref.shの
+</p>
+<pre>
+% echo civic | \
+  grep -E -e '^(.?)(.?)(.?)(.?)(.?)(.?)(.?)(.?)(.?).?\9\8\7\6\5\4\3\2\1$'
+</pre>
+<p>
+というテストがだめのようだ。数を5個までに減らすとok。わからん。
+configure時の
+</p>
+<pre>
+configure: WARNING: Included lib/regex.c not used
+</pre>
+<p>
+が気になるので、--with-included-regexでconfigureしてmakeし直してみる。
+今度はmake checkも通った。GLIBCのregexは怪しいってことか？
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200304272" title="200304272" href="200304c.html#200304272">■</a> 
+[Cygwin] gd 1.8.4</h3>
+<p>
+gd 1.8.4をCygwinでmakeすると
+</p>
+<pre>
+gd_jpeg.c:348: structure has no member named `progressive_mode'
+</pre>
+<p>
+となるんだが、googleで検索すると
+<a href="http://jarp.jin.gr.jp/diary/200102b.html#200102193S1">ここ</a>しかヒットしない、でも日本語はわからん、助けてくれというメールが英国から。
+まったく、だれでも英語が読めると思っているところがいつも気に入らないというか、
+しかもHTMLメールだったから例によってspamフォルダに行きそうになったんだけど、
+その2年前の日記を見ても1.8.4なわけで、最新のgdを使えよとツッコんでみた。
+ツッコむ以上は裏を取っとかないといけないわけで、
+<a href="http://www.boutell.com/gd/">GDのWeb page</a>でgd-2.0.12.tar.gzを取ってきて、ふつうにconfigureしてふつうにmakeすると、
+ふつうに通るじゃん。
+この人はいったいなんだってそんな古いものをわざわざmakeしたいんだか。
+</p>
+
+<p>
+ま、原因はgd-2.0.12のソースを見るとわかるんだけど、
+</p>
+<pre>
+  /* REMOVED by TBB 2/12/01. This field of the structure is
+     documented as private, and sure enough it's gone in the
+     latest libjpeg, replaced by something else. Unfortunately
+     there is still no right way to find out if the file was
+     progressive or not; just declare your intent before you
+     write one by calling gdImageInterlace(im, 1) yourself. 
+     After all, we're not really supposed to rework JPEGs and
+     write them out again anyway. Lossy compression, remember? */
+#if 0
+  gdImageInterlace (im, cinfo.progressive_mode != 0);
+#endif
+</pre>
+<p>
+ということらしい。つまり1.8.4を使いたいなら、コメントアウトしてくれ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200304273" title="200304273" href="200304c.html#200304273">■</a> 
+[Video] 池袋ウエストゲートパーク</h3>
+<p>
+先週の木曜深夜にぼーっと見た「池袋ウエストゲートパーク」の再放送にはまり、1, 2巻を借りてきた。
+これは面白い。今季のドラマは全部つまらないのでちょうどいい。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200304274" title="200304274" href="200304c.html#200304274">■</a> 
+[Video] XXX</h3>
+<p>
+トリプルXも借りた。007だった。ま、それなりに楽しんだ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2003/04/27 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/04/28 start -->
+<h2><a name="20030428" href="200304c.html#20030428">2003-04-28 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="200304281" title="200304281" href="200304c.html#200304281">■</a> 
+<a href="http://znz.s1.xrea.com/t/?date=20030425#p01">[Ruby] etc.so</a></h3>
+<p>
+1.8ではmswin32/mingw32/bccwin32でも使えるようになってます。
+こういうのもshim化すべきなんだろうか？
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200304282" title="200304282" href="200304c.html#200304282">■</a> 
+[Win2k] Unknown Hard Error</h3>
+<p>
+VAIO noteのWin2kが突然再起動を繰り返すようになった。
+Windows 2000 Professionalのロゴを表示し、
+プログレスバーがいっぱいになり背景が青くなったところで暗転、
+なにかメッセージを表示して突然再起動。これの繰り返しだ。
+メッセージは一瞬で消えてしまう。目をこらして何度か見ることでやっと
+</p>
+<pre>
+STOP: c000021a Unknown Hard Error
+Unknown: Hard Error
+</pre>
+<p>
+と表示していることがわかった。
+とりあえずSTOP Unknown Hard Errorでぐぐると結構ヒットする。
+ま、要するに再インストールするしかないんだけど、原因は
+<a href="http://osa-s.com/omoikane/010922/010922.htm">これ</a>を見ると情けなくなる。
+</p>
+
+<p>
+さて10連休最中の今日、CD-ROMドライブは会社だし、フロッピードライブもないし、
+どうやって起動させよう。
+一応別パーティションにはNetBSD 1.5がインストールされているので、
+ただの箱にはならないんだが、
+むしろここはつぶして何か別のOSをインストールしようと思っていただけにいじる気にならない。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200304283" title="200304283" href="200304c.html#200304283">■</a> 
+[Net] ネットワークブート</h3>
+<p>
+BIOSにはネットワークブートに関する設定はなにもない。残念。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200304284" title="200304284" href="200304c.html#200304284">■</a> 
+[Ruby] Ruby 1.0</h3>
+<p>
+/\n$/の昔の挙動を確認するためにRuby 1.0をmakeしてみた。
+strdupなどの宣言を削除すれば比較的すんなりと通ったが、
+parse.yだけはbison 1.875ではbison自身がSEGVになってしまった。
+しかたなくbyaccを使う。
+</p>
+<pre>
+% ruby-1.0 -ve 'p &quot;\n&quot; =~ /\n$/'       
+ruby - version 1.0-971225 (i386-linux)
+0
+% ruby -ve 'p &quot;\n&quot; =~ /\n$/' 
+ruby 1.8.0 (2003-04-27) [i386-linux]
+nil
+</pre>
+<p>
+そういえば$:も今と違って簡単だったよなあ。
+</p>
+<pre>
+% ruby-1.0 -e 'puts $:'
+-e:1: NameError: undefined method `puts' for main(Object)
+</pre>
+<p>
+あ、putsもなかったんだ。
+</p>
+<pre>
+% ruby-1.0 -e 'p $:'
+[&quot;.&quot;, &quot;/usr/local/lib/ruby&quot;, &quot;/usr/local/lib/ruby/i386-linux&quot;]
+</pre>
+
+<!-- section end -->
+</div>
+<!-- 2003/04/28 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/04/29 start -->
+<h2><a name="20030429" href="200304c.html#20030429">2003-04-29 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="200304291" title="200304291" href="200304c.html#200304291">■</a> 
+[ドラマ] ケイゾク、IWGP、TRICK</h3>
+<p>
+どうもこの3つには同じモノを感じるというかなんというか、
+なにか共通するものがあるのか調べてみると、
+演出がすべて堤幸彦という人だった。
+IWGPには、はまるべくしてはまったわけか。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200304292" title="200304292" href="200304c.html#200304292">■</a> 
+[PC] 2倍速USB FD</h3>
+<p>
+買ってみた。ちゃんと起動するのを確認して満足した。
+</p>
+<!-- section end -->
+</div>
+<!-- 2003/04/29 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/04/30 start -->
+<h2><a name="20030430" href="200304c.html#20030430">2003-04-30 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="200304301" title="200304301" href="200304c.html#200304301">■</a> 
+[Linux] ImageMagick 5.5.6</h3>
+<p>
+makeしてたら
+</p>
+<pre>
+/usr/lib/libtiff.a(tif_print.o): In function `_TIFFprintAscii':
+tif_print.o(.text+0x135c): undefined reference to `__ctype_b'
+</pre>
+<p>
+と言われてしまったので、tiffをインストールし直そう。
+<a href="http://www.libtiff.org/">libtiff</a>から3.5.7を取ってきてふつうにインストール。問題なし。
+make installするとなぜかPerlMagickを作り始めてまた__ctype_b問題が。
+というわけで今度はPerl 5.8.0だ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200304302" title="200304302" href="200304c.html#200304302">■</a> 
+<a href="http://www.tcsh.org/">[Linux] Tcsh 6.12.00</a></h3>
+<p>
+PerlをConfigureするとcshがSEGVになることがわかった。
+結構前から気づいてたんだけど、
+まったく支障がないので放っといた。この機会にtcshも更新しよう。
+最近は/sbinと/binに入れるものは全部staticにしてしまえ主義なので、
+uClibcでmake。
+</p>
+<pre>
+% CFLAGS=-Os CC='/usr/i386-linux-uclibc/usr/bin/gcc -static' \
+  ./configure --prefix=/usr --bindir=/bin
+% vi config.h config_f.h
+</pre>
+<p>
+NLS_CATALOGSはうっとうしいだけなのでundef(SEGVの原因が実はこれ)、
+NLSも要らないのでundef、KANJIとDSPMBYTEはdefineに変更してmake。
+</p>
+<pre>
+% make
+% sudo make install
+</pre>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200304303" title="200304303" href="200304c.html#200304303">■</a> 
+<a href="http://www.perl.org/">[Linux] Perl 5.8.0</a></h3>
+<p>
+やっとPerlだ。
+</p>
+<pre>
+% ./configure.gnu -Dcc=gcc -Dccflags=-DDEBUGGING
+% make all test
+% make install
+</pre>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200304304" title="200304304" href="200304c.html#200304304">■</a> 
+<a href="http://www.rim.or.jp/support/announce/trouble/2003/apr30-1.html">[Net] メール・FTPサーバ障害発生のお知らせ</a></h3>
+<p>
+jcode.rbの件でメールを出したが、全然返って来ない。
+あれ？そういえばメールそのものがどこからも来ないなあ。
+調べてみるとトラブってるらしい。
+</p>
+
+<p>
+結局丁度死んだときにメールを出してしまったのか。
+<a href="http://www.rim.or.jp/support/announce/trouble/2003/apr30-2.html">2時間程で復旧。</a></p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200304305" title="200304305" href="200304c.html#200304305">■</a> 
+[Linux] ImageMagick ふたたび</h3>
+<pre>
+% make install
+&lt;...&gt;
+Magick.o: In function `GetList':
+Magick.o(.text+0x16e): undefined reference to `CatchException'
+&lt;...&gt;
+</pre>
+<p>
+全然だめじゃん。
+ひょっとしてインストールされてる古いライブラリが邪魔してるのかな。
+念のためrm /usr/local/lib/libMagick*してみる。いけた。そういうことか。
+つまりmake uninstallしてからmake installしたほうがよさそうだな。
+</p>
+
+<p>
+それにしてもmake installしなきゃmake checkできない仕様は変だぞ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2003/04/30 end -->
+
+<hr>
+<div>
+<a href="200304b.html">&lt;Prev(,)</a> | 
+<a href="200305a.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

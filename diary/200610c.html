@@ -1,0 +1,485 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2006-10-c</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="200610b.html">
+<link rel="next" href="200611a.html">
+
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2006年10月下旬〜</p>
+<hr>
+<div>
+<a href="200610b.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="200611a.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2006/10/21 start -->
+<h2><a name="20061021" href="200610c.html#20061021">2006-10-21 (Sat)</a></h2>
+<!-- 2006-10-22 11:40:12 -->
+
+<div class="entry1">
+<h3><a name="200610211" title="200610211" href="200610c.html#200610211">■</a> 
+<a href="http://codegolf.com/99-bottles-of-beer">[CodeGolf] 99 Bottles Of Beer</a></h3>
+<p>
+突然ひらめいていままでとはまったく違う方法で177バイトまできた。<br>
+いきなりRubyのトップだ。ヒントとしてはループは使わずに変数は1個だけ。<br>
+さすがにもう小さくなりそうもないので次の
+<a href="http://codegolf.com/numeric-diamonds">Numeric Diamonds</a>
+へ進もう。
+</p>
+<!-- section end -->
+</div>
+<!-- 2006/10/21 end -->
+
+
+
+<hr class="hide">
+<!-- 2006/10/22 start -->
+<h2><a name="20061022" href="200610c.html#20061022">2006-10-22 (Sun)</a></h2>
+<!-- 2006-10-23 01:08:24 -->
+
+<div class="entry1">
+<h3><a name="200610221" title="200610221" href="200610c.html#200610221">■</a> 
+[Ruby] rakeがエラー</h3>
+<p>
+CodeGolfのチェックが面倒なったのでMakefileでも書こうと思った。<br>
+いや、今ならRakeかと
+</p>
+<pre>
+task :default do
+  sh 'ruby 99-bottles-of-beer.rb | diff -U1 99-bottles-of-beer -'
+end
+</pre>
+<p>
+のような簡単なRakefileを作ってrakeを実行してみるも、なぜかエラー。<br>
+--traceオプションで実行してみると
+</p>
+<pre>
+wrong number of arguments (3 for 2)
+/usr/local/lib/ruby/gems/1.8/gems/rake-0.7.1/lib/rake.rb:725:in `fu_check_options'
+/usr/local/lib/ruby/gems/1.8/gems/rake-0.7.1/lib/rake.rb:725:in `sh'
+&lt;後略&gt;
+</pre>
+<p>
+ってことらしい。<br>
+そういえばfileutils.rbの変更でそんなエラーになると聞いた覚えがある。<br>
+
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-core/08971">これ</a>か。なるほど。<br>
+
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-core/08987">ベータバージョンでは直ってる</a>ので
+</p>
+<pre>
+gem update --source http://onestepback.org/betagems rake
+</pre>
+<p>
+で解決。
+</p>
+<!-- section end -->
+</div>
+<!-- 2006/10/22 end -->
+
+
+
+<hr class="hide">
+<!-- 2006/10/23 start -->
+<h2><a name="20061023" href="200610c.html#20061023">2006-10-23 (Mon)</a></h2>
+<!-- 2006-10-24 02:04:25 -->
+
+<div class="entry1">
+<h3><a name="200610231" title="200610231" href="200610c.html#200610231">■</a> 
+[Ruby] trueとfalseのto_int</h3>
+<p>
+trueとfalseのto_intが1と0を返せば
+</p>
+<pre>
+&quot;#{'s'*i&gt;1}&quot;
+</pre>
+<p>
+ができていいなと思ったら、優先順位的には
+</p>
+<pre>
+&quot;#{'s'*(i&gt;1)}&quot;
+</pre>
+<p>
+じゃないといけないようだ。それなら
+</p>
+<pre>
+&quot;#{'s'if i&gt;1}&quot;
+</pre>
+<p>
+と同じ長さなわけで意味がない。false.to_sが&quot;&quot;なら
+</p>
+<pre>
+&quot;#{i&gt;1&amp;&amp;'s'}&quot;
+</pre>
+<p>
+と書けるんだけどなあ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2006/10/23 end -->
+
+
+
+<hr class="hide">
+<!-- 2006/10/24 start -->
+<h2><a name="20061024" href="200610c.html#20061024">2006-10-24 (Tue)</a></h2>
+<!-- 2006-10-25 01:15:33 -->
+
+<div class="entry1">
+<h3><a name="200610241" title="200610241" href="200610c.html#200610241">■</a> 
+[Gmail] Gmail Macrosが動かなくなった</h3>
+<p>
+Gmail側でなにか変わったらしくGmail Macrosがいきなり動かなくなった。<br>
+会社のWindows版Firefoxと家のLinux版Firefoxのどちらも同じだったので、<br>
+やっぱGmail側だよなあ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2006/10/24 end -->
+
+
+
+<hr class="hide">
+<!-- 2006/10/25 start -->
+<h2><a name="20061025" href="200610c.html#20061025">2006-10-25 (Wed)</a></h2>
+<!-- 2006-10-26 01:38:46 -->
+
+<div class="entry1">
+<h3><a name="200610251" title="200610251" href="200610c.html#200610251">■</a> 
+[Linux] yumが調子悪い？</h3>
+<p>
+最近run-parts /etc/cron.dailyのメールが来てないことに気づいた。<br>
+ps auxww|grep yumしてみると19日に実行されたyumが止まってるようだ。<br>
+殺してyum check-updateしてみても反応ない。あれ？どうなってんの？<br>
+これじゃ、FC6にも上げられないな。FC6は来週末の連休にしよう。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200610252" title="200610252" href="200610c.html#200610252">■</a> 
+[Ruby] riが遅い</h3>
+<p>
+riって遅いよねえ。というわけで、キャッシュするシェルスクリプトを作った。
+</p>
+<pre>
+#! /bin/sh
+
+cachedir=$HOME/.fri
+mkdir -p $cachedir
+args=&quot;$@&quot;
+cachename=$cachedir/&quot;$(echo -- $args | md5sum | cut -d' ' -f1)&quot;
+if [ ! -e $cachename ]; then
+  ri -T &quot;$@&quot; &gt; $cachename
+fi
+${PAGER-less} $cachename
+</pre>
+<p>
+意外と便利だ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2006/10/25 end -->
+
+
+
+<hr class="hide">
+<!-- 2006/10/26 start -->
+<h2><a name="20061026" href="200610c.html#20061026">2006-10-26 (Thu)</a></h2>
+<!-- 2006-10-27 00:55:35 -->
+
+<div class="entry1">
+<h3><a name="200610261" title="200610261" href="200610c.html#200610261">■</a> 
+<a href="http://d.hatena.ne.jp/niha/20061025#1161786008">[Ruby] 記号ゴルフ</a></h3>
+<p>
+「非記号3Bの24B」って長いから「3H24B」って表記することを提案。<br>
+と、どうでもいいところをゴルフしてみる。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200610262" title="200610262" href="200610c.html#200610262">■</a> 
+[Linux] sudo yum -hが停止</h3>
+<p>
+昨日のyumの件を調べていたら、yum -hすら止まってしまうことが判明。<br>
+straceしてみると、
+</p>
+<pre>
+open(&quot;/var/lib/rpm/Packages&quot;, O_RDONLY|O_LARGEFILE) = 3
+fcntl64(3, F_SETFD, FD_CLOEXEC)         = 0
+fstat64(3, {st_mode=S_IFREG|0644, st_size=75460608, ...}) = 0
+futex(0xb7483ba0, FUTEX_WAIT, 2, NULL
+</pre>
+<p>
+で止まってる。futexってなに？man futexしてみると、<br>
+「futex - 高速ユーザ空間ロック機構のシステムコール」とあった。<br>
+ロックが取れないってことか。誰が握ってるのかわからないけど、<br>
+だったら再起動で解決？おお的中。
+</p>
+
+<p>
+しかし、
+</p>
+<pre>
+% sudo yum check-update
+Loading &quot;installonlyn&quot; plugin
+Loading &quot;fastestmirror&quot; plugin
+Setting up repositories
+core                                                                 [1/4]
+Cannot find a valid baseurl for repo: core
+Error: Cannot find a valid baseurl for repo: core
+</pre>
+<p>
+と言われてしまう。なんでやねん。一難去ってまた一難。単に混んでるだけ？<br>
+ぐぐってみるとミラーサーバを変更しろって話になってるげ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2006/10/26 end -->
+
+
+
+<hr class="hide">
+<!-- 2006/10/27 start -->
+<h2><a name="20061027" href="200610c.html#20061027">2006-10-27 (Fri)</a></h2>
+<!-- 2006-10-28 20:09:03 -->
+
+<div class="entry1">
+<h3><a name="200610271" title="200610271" href="200610c.html#200610271">■</a> 
+<a href="http://d.hatena.ne.jp/niha/20061026#1161869508">[Ruby] 記号ゴルフ</a></h3>
+<p>
+「標準入力から文字列を読み込んで、奇数行目の文字列だけを出力するコードを書け」<br>
+というお題。-pオプションを使えば非記号は0にできる。
+</p>
+<pre>
+% ruby -e 'puts [*1..10]' | ruby -pe '$_*=$.&amp;$./$.'
+1
+3
+5
+7
+9
+</pre>
+<p>
+かなり反則技ではあるが。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200610272" title="200610272" href="200610c.html#200610272">■</a> 
+[Firefox] Windows版Firefoxのロケーションバーで中クリック</h3>
+<p>
+about:configでmiddlemouse.pasteをtrueにすれば、<br>
+Xのように中クリックでペーストできる。<br>
+ついやっちゃうんだよねえ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2006/10/27 end -->
+
+
+
+<hr class="hide">
+<!-- 2006/10/28 start -->
+<h2><a name="20061028" href="200610c.html#20061028">2006-10-28 (Sat)</a></h2>
+<!-- 2006-10-29 01:20:07 -->
+
+<div class="entry1">
+<h3><a name="200610281" title="200610281" href="200610c.html#200610281">■</a> 
+[Linux] またyumが止まってる</h3>
+<p>
+ps auxww |grep yumしてみるとまた止まってた。straceすると
+</p>
+<pre>
+% sudo strace -p26818
+Process 26818 attached - interrupt to quit
+futex(0xb7bba160, FUTEX_WAIT, 2, NULL &lt;unfinished ...&gt;
+</pre>
+<p>
+同じか。困ったもんだな、これ。何が原因？<br>
+面倒なのでsudo killall -9 yumして殺す。<br>
+その後sudo yum search dnsmasqしてみると最後に止まる。<br>
+またstraceするとfutexで止まってる。うーむ。<br>
+そういえば、これってkernel上げてから起きてるな。<br>
+そのあたりに原因があるのか？<br>
+とりあえずazureusでFC6のdvd imageをダウンロードしておこう。
+</p>
+<!-- section end -->
+</div>
+<!-- 2006/10/28 end -->
+
+
+
+<hr class="hide">
+<!-- 2006/10/29 start -->
+<h2><a name="20061029" href="200610c.html#20061029">2006-10-29 (Sun)</a></h2>
+<!-- 2006-10-30 00:54:31 -->
+
+<div class="entry1">
+<h3><a name="200610291" title="200610291" href="200610c.html#200610291">■</a> 
+[Ruby] Hashでシンボルと文字列のキーを同一視する</h3>
+<p>
+hash[key.to_s]すればいいだけの話ではあるが、Hash.newのブロックに指定してもできることに気づいた。<br>
+大文字小文字も対処できる。
+</p>
+<pre>
+% irb h.rb
+&gt;&gt; hash = Hash.new do |h, k|
+?&gt;   h[k.to_s.downcase]
+&gt;&gt; end
+=&gt; {}
+&gt;&gt; hash.update &quot;abc&quot;=&gt;&quot;def&quot;
+=&gt; {&quot;abc&quot;=&gt;&quot;def&quot;}
+&gt;&gt; hash[:abc]
+=&gt; &quot;def&quot;
+&gt;&gt; hash[&quot;AbC&quot;]
+=&gt; &quot;def&quot;
+</pre>
+<p>
+でもnewしてupdateってのが煩わしい。
+</p>
+<pre>
+hash = Hash.new{|h,k| h[k.to_s.downcase]}.update &quot;abc&quot;=&gt;&quot;def&quot;
+</pre>
+<p>
+とするのもなあ。
+</p>
+
+<p>
+そういえばHash#default=は存在するけどHash#default_proc=が存在しないんだな。
+</p>
+<!-- section end -->
+</div>
+<!-- 2006/10/29 end -->
+
+
+
+<hr class="hide">
+<!-- 2006/10/30 start -->
+<h2><a name="20061030" href="200610c.html#20061030">2006-10-30 (Mon)</a></h2>
+<!-- 2006-10-31 22:04:12 -->
+
+<div class="entry1">
+<h3><a name="200610301" title="200610301" href="200610c.html#200610301">■</a> 
+[Linux] 原因はyumじゃなくてrpmだった</h3>
+<p>
+psして怪しいプロセスを調べてみたらrpmqが長いこと動き続けていた。<br>
+こいつが元凶か。タイミングがいいことに
+<a href="http://www.yotabanana.com/lab/20061029.html#p09">rpmのデータベースのrebuild話</a>
+が。<br>
+やってみたら復旧したようだ。ありがとうございます。
+</p>
+<!-- section end -->
+</div>
+<!-- 2006/10/30 end -->
+
+
+
+<hr class="hide">
+<!-- 2006/10/31 start -->
+<h2><a name="20061031" href="200610c.html#20061031">2006-10-31 (Tue)</a></h2>
+<!-- 2006-11-01 01:28:01 -->
+
+<div class="entry1">
+<h3><a name="200610311" title="200610311" href="200610c.html#200610311">■</a> 
+[Linux] dnsmasqふたたび</h3>
+<p>
+なんか名前を引くのに時間がかかってる気がするので、dnsmasqを入れた。<br>
+ppp接続してたときにはお世話になったわけだが、dnsmasqは設定が簡単でいいよねえ。<br>
+とりあえず今使ってるresolv.confを元に
+</p>
+<pre>
+% sudo cp /etc/resolv.conf /etc/resolv.dnsmasq
+</pre>
+<p>
+として/etc/dnsmasq.confは
+</p>
+<pre>
+resolv-file=/etc/resolv.dnsmasq
+expand-hosts
+</pre>
+<p>
+の2行だけ有効に。あとは/etc/resolv.confの最初に
+</p>
+<pre>
+nameserver 127.0.0.1
+</pre>
+<p>
+を追加しとけばok。これでキャッシュされるようになる。
+</p>
+
+<p>
+expand-hostsを有効にすると/etc/hostsに書いた内容も引けるようになる。<br>
+1台だけじゃ意味がないが。
+</p>
+<!-- section end -->
+</div>
+<!-- 2006/10/31 end -->
+
+<hr>
+<div>
+<a href="200610b.html">&lt;Prev(,)</a> | 
+<a href="200611a.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

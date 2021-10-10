@@ -1,0 +1,378 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2006-8-a</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="200607c.html">
+<link rel="next" href="200608b.html">
+
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2006年8月上旬〜</p>
+<hr>
+<div>
+<a href="200607c.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="200608b.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2006/08/01 start -->
+<h2><a name="20060801" href="200608a.html#20060801">2006-08-01 (Tue)</a></h2>
+<!-- 2006-08-02 20:40:36 -->
+
+<div class="entry1">
+<h3><a name="200608011" title="200608011" href="200608a.html#200608011">■</a> 
+7月のspam</h3>
+<p>
+549通。Gmail側約4400スレッド。
+判定が甘いというよりspam側がずる賢くなってるような気がする。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200608012" title="200608012" href="200608a.html#200608012">■</a> 
+[FC5] yum update自動化のログ</h3>
+<p>
+yum updateを自動化したはいいが何が更新されたかがわからない。<br>
+これがわからないとカーネルが更新されたときの再起動のタイミングにも困る。<br>
+/etc/cron.daily/yum.cronを見ると-d 0というオプションが指定されていたので、
+-d 1に変更。これで以下のようなメールがくるようになった。
+</p>
+<pre>
+=============================================================================
+ Package                 Arch       Version          Repository        Size 
+=============================================================================
+Updating:
+ NetworkManager          i386       0.6.4-1.fc5      updates           393 k
+ NetworkManager-glib     i386       0.6.4-1.fc5      updates            25 k
+ gnupg2                  i386       1.9.22-1.fc5     extras            565 k
+ selinux-policy          noarch     2.3.3-8.fc5      updates           499 k
+ selinux-policy-targeted  noarch     2.3.3-8.fc5      updates           512 k
+
+Transaction Summary
+=============================================================================
+Install      0 Package(s)         
+Update       5 Package(s)         
+Remove       0 Package(s)         
+Total download size: 1.9 M
+</pre>
+<p>
+defaultは-d 2らしい。
+</p>
+<!-- section end -->
+</div>
+<!-- 2006/08/01 end -->
+
+
+
+<hr class="hide">
+<!-- 2006/08/02 start -->
+<h2><a name="20060802" href="200608a.html#20060802">2006-08-02 (Wed)</a></h2>
+<!-- 2006-08-03 01:31:10 -->
+
+<div class="entry1">
+<h3><a name="200608021" title="200608021" href="200608a.html#200608021">■</a> 
+[Mail] 画像spam</h3>
+<p>
+最近サイズが30KBぐらいでテキストとHTMLの両方を含んだspamがよく来る。<br>
+HTMLのほうには画像が入っていてその内容はspamを画像化したもの。<br>
+テキストのほうはspamになりようがない内容で、これは学習してもまったく意味がない感じ。<br>
+どうしようかと思ってよく見たらその画像に対して名前name=&quot;image001.gif&quot;が必ずついていた。<br>
+ちょっとまぬけだな。そこはランダムにしとけばいいのに。<br>
+とはいってもありがちな文字列なのでもうちょっと厳密にタブ等も含めて
+</p>
+<pre>
+/^\tname=&quot;image001.gif&quot;$/
+</pre>
+<p>
+という条件でspam扱いすることにした。
+</p>
+<!-- section end -->
+</div>
+<!-- 2006/08/02 end -->
+
+
+
+<hr class="hide">
+<!-- 2006/08/03 start -->
+<h2><a name="20060803" href="200608a.html#20060803">2006-08-03 (Thu)</a></h2>
+<!-- 2006-08-04 02:29:08 -->
+
+<div class="entry1">
+<h3><a name="200608031" title="200608031" href="200608a.html#200608031">■</a> 
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-talk/205696">[Ruby] golfing Eratosthenes</a></h3>
+<p>
+エラトステネスの篩。どんどん短くなっていく過程が面白かったので集めてみた。
+</p>
+<pre>
+a=(2..100).to_a;p a.each{|c|a.map!{|d|c&amp;&amp;d&amp;&amp;c&lt;d&amp;&amp;d%c==0?nil:d}}.compact
+a=(2..100).to_a;p a.each{|c|a.reject!{|d|c&lt;d&amp;&amp;d%c==0}}
+p (2..100).inject([]){|a,n|a.any?{|i|n%i==0}?a:a&lt;&lt;n}
+p (2..100).inject([]){|a,n|a.any?{|i|n%i&lt;1}?a:a&lt;&lt;n}
+a=[*2..100];p a.each{|c|a.reject!{|d|c&lt;d&amp;&amp;d%c==0}}
+p [*2..100].reject{|d|(2..d-1).find{|c|d%c==0}}
+p (2..100).select{|d|!(2..d-1).find{|c|d%c==0}}
+p (2..100).reject{|d|(2..d-1).find{|c|d%c==0}}
+p (2..100).select{|d|(2...d).all?{|c|d%c&gt;0}}
+p (2..99).select{|d|(2...d).all?{|c|d%c&gt;0}}
+</pre>
+<p>
+なんだかんだで調べてみると最終的にはほとんど
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-list/26857">ごとけんさんの作品</a>
+に近くなってる。
+</p>
+<!-- section end -->
+</div>
+<!-- 2006/08/03 end -->
+
+
+
+<hr class="hide">
+<!-- 2006/08/04 start -->
+<h2><a name="20060804" href="200608a.html#20060804">2006-08-04 (Fri)</a></h2>
+<!-- 2006-08-06 00:08:45 -->
+
+<div class="entry1">
+<h3><a name="200608041" title="200608041" href="200608a.html#200608041">■</a> 
+<a href="http://www.kodensha.jp/hard/woodi/s1.html">[Audio] Woodi WD-S1</a></h3>
+<p>
+USBのケーブルも要らないようだし結局これの512MBを注文した。
+ちょっと古いようだけどファームウェアもアップデートされてるようだし、
+
+<a href="http://www.kodensha.jp/hard/woodi/support/dnld_manual.html">マニュアル</a>
+
+も公開されてるのが気に入った。
+</p>
+<!-- section end -->
+</div>
+<!-- 2006/08/04 end -->
+
+
+
+<hr class="hide">
+<!-- 2006/08/05 start -->
+<h2><a name="20060805" href="200608a.html#20060805">2006-08-05 (Sat)</a></h2>
+<!-- 2006-08-25 01:41:18 -->
+
+<div class="entry1">
+<h3><a name="200608051" title="200608051" href="200608a.html#200608051">■</a> 
+[w3m] w3mでdel.icio.usに一発ブックマーク</h3>
+<p>
+ついついw3mでもブックマークしたくなるので、Firefoxのbookmarkletを移植。
+</p>
+<pre>
+#! /usr/local/bin/ruby
+require 'nkf'
+require 'cgi'
+
+def esc(s)
+  CGI.escape NKF.nkf('-Ew', s || '')
+end
+title = esc ENV['W3M_TITLE']
+url = esc ENV['W3M_URL']
+posts = 'https://api.del.icio.us/v1/posts/add'
+param = &quot;?description=&quot; + title + '&amp;url=' + url + '&amp;tags=toread&amp;shared=no'
+print &lt;&lt;&quot;EOF&quot;
+w3m-control: GOTO #{posts}#{param}
+w3m-control: DELETE_PREVBUF
+w3m-control: BACK
+EOF
+</pre>
+<p>
+を~/.w3m/cgi-bin/del.icio.us.cgiへ保存して、~/.w3m/keymapに
+</p>
+<pre>
+keymap d GOTO file:///cgi-bin/del.icio.us.cgi
+</pre>
+<p>
+を追加。これでdと打てばブックマークできる。<br>
+でも、UTF-8で書かれたページだとタイトルが化けてしまう。<br>
+どうも環境変数W3M_TITLE自体がすでに化けてるような。w3mのバグか？
+</p>
+<!-- section end -->
+</div>
+<!-- 2006/08/05 end -->
+
+
+
+<hr class="hide">
+<!-- 2006/08/06 start -->
+<h2><a name="20060806" href="200608a.html#20060806">2006-08-06 (Sun)</a></h2>
+<!-- 2006-08-07 01:23:51 -->
+
+<div class="entry1">
+<h3><a name="200608061" title="200608061" href="200608a.html#200608061">■</a> 
+ビデオ三昧の一日</h3>
+<p>
+録っといたドラゴン桜の再放送を見た。<br>
+本放送のときは野球かなんかの延長で途中で見るのをやめたんだよなあ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200608062" title="200608062" href="200608a.html#200608062">■</a> 
+[TV] 巨人戦中継</h3>
+<p>
+そういえば日テレも今月から巨人戦の中継延長やめたようで。<br>
+フジは生放送をやめて深夜に録画を流すらしい。<br>
+8,9,10日がそうなんだけど、それはそれで正直迷惑だ。<br>
+今度は中止のときに以降の番組が繰り上がる。
+</p>
+<!-- section end -->
+</div>
+<!-- 2006/08/06 end -->
+
+
+
+<hr class="hide">
+<!-- 2006/08/07 start -->
+<h2><a name="20060807" href="200608a.html#20060807">2006-08-07 (Mon)</a></h2>
+<!-- 2006-08-08 01:35:27 -->
+
+<div class="entry1">
+<h3><a name="200608071" title="200608071" href="200608a.html#200608071">■</a> 
+[Audio] Woodi WD-S1の続き</h3>
+<p>
+何の音沙汰もないままちょっと不安になっていたが、
+今日ばたばたと処理が進んで明日来そうな感じになった。
+単に土日は休みだっただけらしい。
+</p>
+<!-- section end -->
+</div>
+<!-- 2006/08/07 end -->
+
+
+
+<hr class="hide">
+<!-- 2006/08/08 start -->
+<h2><a name="20060808" href="200608a.html#20060808">2006-08-08 (Tue)</a></h2>
+<!-- 2006-08-09 02:22:29 -->
+
+<div class="entry1">
+<h3><a name="200608081" title="200608081" href="200608a.html#200608081">■</a> 
+[Audio] Woodi WD-S1が来た</h3>
+<p>
+意外と大きい。Linuxから問題なくUSBストレージとして扱える。<br>
+m3uファイルが使えるとかFMラジオがついてるとか全然気にしてなかった機能なだけに結構嬉しい。<br>
+あれ？デフォルトだとソートした順番じゃないなこれ。<br>
+cp -aじゃ物理的な順でコピーしちゃうようで、ちゃんと並ぶようにコピーしないとだめか。<br>
+ファイル名はUTF-8のままでも化けない。これはちょっと驚いた。
+</p>
+<!-- section end -->
+</div>
+<!-- 2006/08/08 end -->
+
+
+
+<hr class="hide">
+<!-- 2006/08/09 start -->
+<h2><a name="20060809" href="200608a.html#20060809">2006-08-09 (Wed)</a></h2>
+<!-- 2006-08-10 01:38:46 -->
+
+<div class="entry1">
+<h3><a name="200608091" title="200608091" href="200608a.html#200608091">■</a> 
+[Linux] FDcloneでディレクトリエントリの書き換え</h3>
+<p>
+
+<a href="200608a.html#200608081">昨日の件</a>でもう一度コピーしなおすのも馬鹿らしいので、<br>
+なにか方法はないかと考えた。<br>
+以前MS-DOSでFDを使っていたときにそんな機能があったので、<br>
+FDcloneにもあるかと調べたらちゃんとあった。<br>
+さすがcloneを名乗るだけのことはある。<br>
+sでソートしてwで書き込めばok。
+</p>
+<!-- section end -->
+</div>
+<!-- 2006/08/09 end -->
+
+
+
+<hr class="hide">
+<!-- 2006/08/10 start -->
+<h2><a name="20060810" href="200608a.html#20060810">2006-08-10 (Thu)</a></h2>
+<!-- 2006-08-11 01:42:34 -->
+
+<div class="entry1">
+<h3><a name="200608101" title="200608101" href="200608a.html#200608101">■</a> 
+[Soft] GNU coreutilsのodでhexdump表示</h3>
+<p>
+で、そのodで引数に-tx1zを指定するとhexdump -Cっぽくなる。
+</p>
+<pre>
+% ruby -e 'print &quot;A&quot;*20' | od -tx1z
+0000000 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41  &gt;AAAAAAAAAAAAAAAA&lt;
+0000020 41 41 41 41                                      &gt;AAAA&lt;
+0000024
+% ruby -e 'print &quot;A&quot;*20' | hexdump -C
+00000000  41 41 41 41 41 41 41 41  41 41 41 41 41 41 41 41  |AAAAAAAAAAAAAAAA|
+00000010  41 41 41 41                                       |AAAA|
+00000014
+</pre>
+
+<!-- section end -->
+</div>
+<!-- 2006/08/10 end -->
+
+<hr>
+<div>
+<a href="200607c.html">&lt;Prev(,)</a> | 
+<a href="200608b.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

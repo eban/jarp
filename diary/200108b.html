@@ -1,0 +1,1049 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2001-8-b</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="200108a.html">
+<link rel="next" href="200108c.html">
+
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2001年8月中旬〜</p>
+<hr>
+<div>
+<a href="200108a.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="200108c.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2001/08/11 start -->
+<h2><a name="20010811" href="200108b.html#20010811">2001-08-11 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="200108111" title="200108111" href="200108b.html#200108111">■</a> 
+fileutils 4.0r</h3>
+<p>
+rm,ln,cpぐらいはstaticにリンクしたくなる。
+ls --versionしてみると3.16だったのでついでにバージョンも上げる。
+手元には4.0と4.0rがあった。
+4.0rはどこから取ってきたか記憶もないが、こちらを使うことにする。
+</p>
+<pre>
+% CC='gcc -static' CFLAGS=-Os  ./configure \
+  --prefix=/usr --libexecdir=/bin --bindir=/bin
+% make
+% sudo make install
+</pre>
+<p>
+Linuxにはslnというプログラムがあるが、
+-fオプションがないため
+</p>
+<pre>
+# sln -sf /lib/libc-2.2.3.so /lib/libc.so.6
+</pre>
+<p>
+ができない。これだけstaticにリンクしてあってもあまり意味がないねえ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200108112" title="200108112" href="200108b.html#200108112">■</a> 
+bash 2.05</h3>
+<p>
+ついでに/bin/sh用にminimalでstaticなbashを用意しとこう。
+</p>
+<pre>
+% CFLAGS=-Os  ./configure \
+  --prefix=/usr --bindir=/bin \
+  --enable-static-link --enable-minimal-config
+% make
+% sudo cp bash /bin/sbash
+% sudo ln -sf /bin/sbash /bin/sh
+% ls -l /bin/{,s}bash
+-rwxr-xr-x    1 root     root       653100 Apr  1 23:29 /bin/bash
+-rwxr-xr-x    1 root     root       561044 Aug 11 18:25 /bin/sbash
+</pre>
+<p>
+ま、こんなもんか。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200108113" title="200108113" href="200108b.html#200108113">■</a> 
+[FFX] キングベヒーモス</h3>
+<p>
+メテオをくらい1時間半がパーに。
+ああ、ユウナがものすごく弱くなった。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2001/08/11 end -->
+
+
+
+<hr class="hide">
+<!-- 2001/08/12 start -->
+<h2><a name="20010812" href="200108b.html#20010812">2001-08-12 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="200108121" title="200108121" href="200108b.html#200108121">■</a> 
+<a href="http://www.linuxfromscratch.org/">Linux From Scratch</a></h3>
+<p>
+なんか今の自分にぴったりだ。
+そうそう。ちゃんとminimalのbashでもbootできた。
+この際ちゃんと
+<a href="http://www.pathname.com/fhs/">FHS</a> を見るかと思ったが、
+全然つながらない。どこかに移動したのか？
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200108122" title="200108122" href="200108b.html#200108122">■</a> 
+linux 2.4.8</h3>
+<p>
+やっぱ残ってる。
+</p>
+<pre>
+warning: multi-line string literals are deprecated
+</pre>
+<p>
+全然直す気はないようだ。
+</p>
+<pre>
+% time make dep clean bzImage modules
+make dep clean bzImage modules  5480.79s user 634.77s system 94% cpu \
+1:48:11.47 total
+</pre>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200108123" title="200108123" href="200108b.html#200108123">■</a> 
+[FFX] バグ</h3>
+<p>
+戦闘中にバグった。なにも受け付けない。ソフトリセットも効かない。
+</p>
+
+<p>
+その後4回程親父と戦うが最終的にシュートされて全然歯が立たない。
+あ、その前に召喚すればいいのか。
+それはそれとして世界を旅することにしよう。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2001/08/12 end -->
+
+
+
+<hr class="hide">
+<!-- 2001/08/13 start -->
+<h2><a name="20010813" href="200108b.html#20010813">2001-08-13 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="200108131" title="200108131" href="200108b.html#200108131">■</a> 
+Linux 2.4.8</h3>
+<p>
+で、今日bootしなかったわけだが、
+これは2.4.8が悪いのではなく、8GBのlimitに引掛ったため。
+うーむ。GRUBなら大丈夫だと思ったんだけどなあ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200108132" title="200108132" href="200108b.html#200108132">■</a> 
+lilo 21.7-5</h3>
+<p>
+GRUBがだめならliloだよね。
+Plamo 2.2は21.4なのでReiserFSに対応してないので、
+最新のlilo 21.7-5を入れる。
+普通にmakeするとtemp2.sでエラーに。as86が古い？
+</p>
+<pre>
+% grep as86 README*
+</pre>
+<p>
+してみるとREADME.common.problemsに
+</p>
+<pre>
+Problem:  LILO won't 'make'
+==========================
+If you get errors trying to 'make all', and the errors are occurring
+during the assembly of 'temp2.s', you have encountered the most common
+problem trying to build LILO:  the lines in error all have the assembler
+directive 'near' on them.  This problem occurs when your assembler for
+the real-mode bootstrap code is out-of-date:  'as86'.  Certain current
+distributions of Linux distribute version 4 of this assembler; whereas
+the current version is 15.
+
+Two sources for an updated version are:
+
+Redhat RPM distribution:
+     site: http://www.redhat.com      (search for 'dev86')
+     pkg:  dev86-0.15.0-2.i386.rpm  
+
+or Robert de Bath's page at:
+     site: http://www.cix.co.uk/~mayday
+     link: bin86-0.15.1.tar.gz
+</pre>
+<p>
+とある。やっぱそうか。まずはbin86をバージョンアップだ。
+
+<a href="http://www.cix.co.uk/~mayday/">そのsite</a> に行くと0.16.0が最新だったので、
+これをインストール。これでliloのほうも無事にmake install完。
+</p>
+<pre>
+% cat /etc/lilo.conf
+boot = /dev/hdb1
+#compact        # faster, but won't work on all systems.
+delay = 50
+vga = normal    # force sane state
+lba32
+# ramdisk = 0     # paranoia setting
+# End LILO global section
+# Linux bootable partition config begins
+image = /vmlinuz
+  root = /dev/hdb1
+  label = Plamo2.2
+  read-only # Non-UMSDOS filesystems should be mounted read-only for checking
+# Linux bootable partition config ends
+% sudo /sbin/lilo
+Warning: /dev/hdb1 is not on the first disk
+Added Plamo2.2 *
+</pre>
+<p>
+/boot/grub/menu.lstには
+</p>
+<pre>
+title    Linux 2.4.8 (Plamo 2.2) with lilo
+root     (hd1,0)
+chainloader      +1
+</pre>
+<p>
+を追加した。これでliloが立ち上がる。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200108133" title="200108133" href="200108b.html#200108133">■</a> 
+やっぱり8GB limit</h3>
+<p>
+でもrebootすると延々と0x40を表示する。READMEには
+</p>
+<pre>
+0x40   &quot;Seek failure&quot;. This might be a media problem. Try booting again.
+</pre>
+<p>
+とあるが、全然解決しないよね。うーむ。media problemってほんとに壊れてる？
+</p>
+<pre>
+% df /
+Filesystem           1k-blocks      Used Available Use% Mounted on
+/dev/hdb1             19919956   7408252  12511704  37% /
+</pre>
+<p>
+あ、まだ8GB越えてないじゃん。ってことはほんとに読めないのか？
+</p>
+<pre>
+% su
+# mv /vmlinuz{,.bad}
+# mv /vmlinuz{.old,-2.4.7}
+# mv /System{.old,-2.4.7}
+# cp /usr/src/arch/i386/boot/bzImage /vmlinuz
+% sudo /sbin/lilo
+Warning: /dev/hdb1 is not on the first disk
+Added Plamo2.2 *
+</pre>
+<p>
+として、/vmlinuz.oldは大事に取っておく。
+もう一度reboot。
+</p>
+
+<p>
+立ち上がるじゃん。GRUBのほうも問題ない。
+</p>
+
+<p>
+でもこれだけじゃやっぱわからないなあ。
+2GBほどのファイルを作ってちゃんと越えてみるか？
+</p>
+<pre>
+% dd if=/dev/zero of=dummy bs=1024 count=$((1024*2048))
+% df /
+Filesystem           1k-blocks      Used Available Use% Mounted on
+/dev/hdb1             19919956   9508860  10411096  48% /
+</pre>
+<p>
+だから、間違えなく越えてる。
+</p>
+<pre>
+% su
+# mv /vmlinuz{,.ok}
+# cp /usr/src/arch/i386/boot/bzImage /vmlinuz
+% sudo /sbin/lilo
+Warning: /dev/hdb1 is not on the first disk
+Added Plamo2.2 *
+</pre>
+<p>
+もう一度reboot。
+</p>
+
+<p>
+だめだ。LILで止まる。GRUBのほうも
+</p>
+<pre>
+Error 18: Selected cylinder exceeds maximum supported by BIOS
+</pre>
+<p>
+って、やっぱ8GB越えたらだめなBIOSだよ。
+でも前に試したときはliloでちゃんとbootできたはずなんだけどなあ。
+</p>
+
+<p>
+とりあえずは旧環境のパーティションにkernelだけ置くことにする。
+/boot/grub/menu.lstはこんな感じ。
+</p>
+<pre>
+title    Linux 2.4.8 (Plamo 2.2)
+kernel   (hd2,4)/vmlinuz-2.4.8 root=/dev/hdb1 ro
+</pre>
+<p>
+(hd2,4)つまり/dev/hdc5にkernelを置いている
+<a href="#20010813F1"><sup><small>*1</small></sup></a>。
+</p>
+
+<p>
+結論: /bootを別パーティションに用意せよ。
+いい機会だから
+<a href="http://www.linuxfromscratch.org/">LFS</a> か？
+</p>
+
+<hr align="left" width="40%">
+<div>
+<a name="20010813F1" href="200108b.html#20010813F1"><small>*1</small></a>:
+実は最初(hd2,5)と書いて File not foundをくらったんだけど、GRUBはそれでもboot時に編集できるから素敵だ
+</div>
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200108134" title="200108134" href="200108b.html#200108134">■</a> 
+[FFX] The End</h3>
+<p>
+全然終わらせるつもりはなかったんだけど、
+心づけの先生に1ギルずつ払ってたら親父に勝ってしまった
+<a href="#20010813F2"><sup><small>*2</small></sup></a>。
+バハムートを温存して様子見のつもりだったのに。
+その後のラスボス戦はもうぬるすぎ。
+The Endを見たのは夜中の3時。最後のセーブポイントから1時間半も拘束されたよ。
+</p>
+
+<p>
+結論: ユウナにはガ系黒魔法と連続魔法と竜剣。
+</p>
+<hr align="left" width="40%">
+<div>
+<a name="20010813F2" href="200108b.html#20010813F2"><small>*2</small></a>:
+先生は30万ギルでも1ギルでも9999ダメージなんすけど、30万ギル返してよと言いたい。
+</div>
+<!-- section end -->
+</div>
+<!-- 2001/08/13 end -->
+
+
+
+<hr class="hide">
+<!-- 2001/08/14 start -->
+<h2><a name="20010814" href="200108b.html#20010814">2001-08-14 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="200108141" title="200108141" href="200108b.html#200108141">■</a> 
+vi foo.bak</h3>
+<p>
+なにげなくvi foo.bakするとなぜかINSERT MODEになる。
+modelinesにでも入っているのかと思えばそうでもない。
+全然原因がわからなかったんだけど、ふと
+</p>
+<pre>
+% ls -l ~/.jvimrc*
+</pre>
+<p>
+してみてはたと気づいた。set fexrcのせいか。
+</p>
+<pre>
+% diff -u1 ~/.jvimrc{.bak,}
+--- /home/watanabe/.jvimrc.bak  Thu Jun 28 13:03:07 2001
++++ /home/watanabe/.jvimrc      Thu Jun 28 13:03:36 2001
+@@ -1,3 +1,2 @@
+set autoindent
+-set im
+set fexrc
+</pre>
+<p>
+以前set imを試したときのbackup fileが~/.jvimrc.bakとして残っている、
+しかもset fexrcしてるから~/.jvimrc.bakも読まれる。うーむ。
+なかなかトリッキーだ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200108142" title="200108142" href="200108b.html#200108142">■</a> 
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-talk/19685">Compiling Ruby with cygwin and Tk support</a></h3>
+<p>
+なんでかな？
+特にディレクトリとか指定しなくても/usr/includeと/usr/libにあるから、
+見つかるはずなんだけど。
+</p>
+
+<p>
+あ、/usr/include/X11/X.hその他がないじゃん。
+</p>
+<pre>
+% tar tfvz tcltk-20001125-1.tar.gz |grep X11
+% tar tfvz tcltk-20001125-1-src.tar.gz |grep X11
+drwxrwxr-x cgf/group         0 2000-12-05 12:37 tcltk-20001125-1/tk/xlib/X11/
+-rw-rw-r-- cgf/group     18382 2000-02-07 09:19 tcltk-20001125-1/tk/xlib/X11/X.h
+-rw-rw-r-- cgf/group      2518 2000-02-07 09:19 tcltk-20001125-1/tk/xlib/X11/Xatom.h
+-rw-rw-r-- cgf/group      1720 2000-02-07 09:19 tcltk-20001125-1/tk/xlib/X11/Xfuncproto.h
+-rw-rw-r-- cgf/group    102687 2000-02-07 09:19 tcltk-20001125-1/tk/xlib/X11/Xlib.h
+-rw-rw-r-- cgf/group     20738 2000-02-07 09:19 tcltk-20001125-1/tk/xlib/X11/Xutil.h
+-rw-rw-r-- cgf/group      1953 2000-02-07 09:19 tcltk-20001125-1/tk/xlib/X11/cursorfont.h
+-rw-rw-r-- cgf/group      1501 2000-02-07 09:19 tcltk-20001125-1/tk/xlib/X11/keysym.h
+-rw-rw-r-- cgf/group     52429 2000-02-07 09:19 tcltk-20001125-1/tk/xlib/X11/keysymdef.h
+-rw-rw-r-- cgf/group      2209 2000-02-07 09:19 tcltk-20001125-1/tk/xlib/X11/license.terms
+</pre>
+<p>
+これってどういうつもりなんだろう。
+
+<a href="http://xfree86.cygwin.com">Cygwin/XFree86</a> があるから、&lt;X11/X.h&gt;があったらかえって邪魔ということか？
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200108143" title="200108143" href="200108b.html#200108143">■</a> 
+RubyWin 0.0.3.7</h3>
+<p>
+更新。$(exec_prefix)/bin/rubyを使うようになったので、
+RUBYOPT1, RUBYOPT2の指定はもう要らない。
+</p>
+
+<p>
+たまにはちゃんと書いとこ。
+</p>
+<pre>
+% unzip -a rubywin-0.0.3.7.zip
+% cd ruby-0.0.3.7
+% mkdir cygwin mingw
+% cd cygwin
+% i386-cygwin-ruby ../config.rb
+% make
+% i686-pc-cygwin-strip rubywin.exe
+% upx rubywin.exe
+% make install
+
+% cd ../mingw
+% i386-mingw32-ruby ../config.rb
+% make
+% i686-pc-cygwin-strip rubywin.exe
+% upx rubywin.exe
+% make install
+
+% cd ..
+% make -f ../Makefile.pack PACKAGE=rubywin VERSION=0.0.3.7 TARGET=i386-cygwin
+% make -f ../Makefile.pack PACKAGE=rubywin VERSION=0.0.3.7 TARGET=i386-mingw32
+</pre>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200108144" title="200108144" href="200108b.html#200108144">■</a> 
+[FFX] 辞書</h3>
+<p>
+2,4,6,7,23巻を見つけた。後からでも全部見つけられるのかな？
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2001/08/14 end -->
+
+
+
+<hr class="hide">
+<!-- 2001/08/15 start -->
+<h2><a name="20010815" href="200108b.html#20010815">2001-08-15 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="200108151" title="200108151" href="200108b.html#200108151">■</a> 
+<a href="http://homepage2.nifty.com/zn/nnikki/200108.html#14_t1">zsh setopt cshjunkiequotes</a></h3>
+<p>
+cshのあの仕様は許せないと常々思っているので、
+CSH_JUNKIE_QUOTESを設定してる人がいるとは思いませんでした。
+</p>
+<pre>
+% zsh --version
+zsh 4.0.2 (i586-pc-linux-gnu)
+% setopt cshjunkiequotes
+% run-help :
+No manual entry for :
+% unsetopt cshjunkiequotes
+% run-help :
+No manual entry for :
+%
+</pre>
+<p>
+4.0.2では問題ないようです。ってそういう話じゃない？
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200108152" title="200108152" href="200108b.html#200108152">■</a> 
+[FFX] 辞書</h3>
+<p>
+残りは20,22,26。20,22はもう行けないとこのような気がする。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2001/08/15 end -->
+
+
+
+<hr class="hide">
+<!-- 2001/08/16 start -->
+<h2><a name="20010816" href="200108b.html#20010816">2001-08-16 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="200108161" title="200108161" href="200108b.html#200108161">■</a> 
+[Ruby] try_run</h3>
+<p>
+digestが1.6にbackportされた。
+try_runが使われているのでクロスコンパイルできない。
+</p>
+<pre>
+if try_run(&lt;&lt;SRC, $defs.join(' '))
+#include &quot;defs.h&quot;
+int main(void) {
+#ifdef NO_UINT64_T
+    ruturn 1;
+#else
+    return 0;
+#endif
+}
+SRC
+then
+  create_makefile(&quot;digest/sha2&quot;)
+else
+  puts &quot;** Cannot find a 64bit integer type - skipping the SHA2 module.&quot;
+end
+</pre>
+<p>
+実行しなくても、
+要するにNO_UINT64_Tがdefineされてたらエラーになればいいわけで、
+try_cppで十分だろう。こんな感じ。
+</p>
+<pre>
+if try_cpp(&lt;&lt;SRC, $defs.join(' '))
+#include &quot;defs.h&quot;
+#ifdef NO_UINT64_T
+    #error ** Cannot find a 64bit integer type - skipping the SHA2 module.
+#endif
+SRC
+then
+  create_makefile(&quot;digest/sha2&quot;)
+end
+</pre>
+<p>
+メッセージは出す必要ない気がする。他の拡張ライブラリも出してないし。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200108162" title="200108162" href="200108b.html#200108162">■</a> 
+SirCam</h3>
+<p>
+&quot;tanakasi&quot;って人から「文書1.doc.bat」という名前のファイルが添付されたメールが来た。
+って誰だよ、あんた？田中氏？
+</p>
+<pre>
+Hi! How are you?
+</pre>
+<p>
+だからSirCamだな。ったく、送るならOutlook同士にしてくれ。
+</p>
+
+<p>
+扱いにくいのでhoge.batにrename。
+</p>
+<pre>
+% file hoge.bat
+hoge.bat: MS-DOS executable (EXE), OS/2 or MS Windows
+% i686-pc-cygwin-objdump -p hoge.bat |grep 'DLL Name'
+        DLL Name: kernel32.dll
+        DLL Name: user32.dll
+        DLL Name: advapi32.dll
+        DLL Name: oleaut32.dll
+        DLL Name: kernel32.dll
+        DLL Name: advapi32.dll
+        DLL Name: kernel32.dll
+        DLL Name: mpr.dll
+        DLL Name: gdi32.dll
+        DLL Name: user32.dll
+        DLL Name: shell32.dll
+        DLL Name: wsock32.dll
+        DLL Name: wininet.dll
+% strings hoge.bat |grep Microsoft
+X-Mailer: Microsoft Outlook Express 5.50.4133.2400
+X-MIMEOLE: Produced By Microsoft MimeOLE V5.50.4133.2400
+Microsoft Word 9.0
+Microsoft Word 
+</pre>
+<p>
+MZで始まってるから実行ファイルとは思ったが。その他めぼしい文字列は
+</p>
+<pre>
+SOFTWARE\Borland\Delphi\RTL
+Portions Copyright (c) 1983,99 Borland
+</pre>
+<p>
+てな感じ。Delphiで作られてるのか。って解析してどーする。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2001/08/16 end -->
+
+
+
+<hr class="hide">
+<!-- 2001/08/17 start -->
+<h2><a name="20010817" href="200108b.html#20010817">2001-08-17 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="200108171" title="200108171" href="200108b.html#200108171">■</a> 
+$OLDPWD</h3>
+<p>
+tcshの$owdはbashやzshだと$OLDPWDになる。
+なんか長くていやだなと思ったら
+</p>
+<pre>
+~-
+</pre>
+<p>
+というのがあった。ナイス。
+</p>
+
+<p>
+tcshだと
+</p>
+<pre>
+% cd ~-
+-というユーザーさんはいらっしゃいません.
+</pre>
+<p>
+となかなかとぼけたメッセージを出してくる。
+あ、ってことは-というユーザを作っちゃいけないわけか。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200108172" title="200108172" href="200108b.html#200108172">■</a> 
+Linux 2.4.9</h3>
+<p>
+ちと早いのが気になるというか、
+早く出さざるを得ない状況はやっぱやばめなんだろうとうちも早速更新だ。
+</p>
+
+<p>
+そういえばいつからかmake oldconfigしてもmake cleanしろよと言われなくなってる。
+</p>
+<pre>
+*** End of Linux kernel configuration.
+*** Check the top-level Makefile for additional configuration.
+*** Next, you must run 'make dep'.
+</pre>
+<p>
+じゃ2.4.8のオブジェクトを残したままmakeしてみよう。
+</p>
+<pre>
+% make dep bzImage modules
+&lt;途中略&gt;
+aicasm/aicasm_scan.l: In function `yylex':
+aicasm/aicasm_scan.l:115: `T_VERSION' undeclared (first use in this function)
+aicasm/aicasm_scan.l:115: (Each undeclared identifier is reported only once
+aicasm/aicasm_scan.l:115: for each function it appears in.)
+aicasm/aicasm_scan.l:132: `T_STRING' undeclared (first use in this function)
+&lt;後略&gt;
+</pre>
+<p>
+がーん。やっぱだめか。
+drivers/scsi/aic7xxx/aicasm/y.tab.hが更新されてないのが原因かな。
+</p>
+<pre>
+% cd drivers/scsi/aic7xxx/aicasm
+% make clean
+% cd -
+% make modules
+&lt;途中略&gt;
+unistr.c: In function `ntfs_collate_names':
+unistr.c:99: warning: implicit declaration of function `min'
+unistr.c:99: parse error before &quot;unsigned&quot;
+unistr.c:99: parse error before ')' token
+&lt;後略&gt;
+</pre>
+<p>
+とりあえず、aicasmのほうは解決。
+今度はfs/ntfs/unistr.cなんだけど、これは根本的に何か間違ってる気がする。
+明日make cleanしてからやりなおそう。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2001/08/17 end -->
+
+
+
+<hr class="hide">
+<!-- 2001/08/18 start -->
+<h2><a name="20010818" href="200108b.html#20010818">2001-08-18 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="200108181" title="200108181" href="200108b.html#200108181">■</a> 
+残暑お見舞いもうしあげられません</h3>
+<p>
+いやーもうすっかり秋ですね。って感じの涼しさだ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200108182" title="200108182" href="200108b.html#200108182">■</a> 
+Linux 2.4.9</h3>
+<p>
+make cleanしても結果は同じ。
+</p>
+
+<p>
+原因はminマクロだ。include/linux/kernel.hに
+</p>
+<pre>
+#define min(type,x,y) \
+        ({ type __x = (x), __y = (y); __x &lt; __y ? __x: __y; })
+</pre>
+<p>
+と定義されているが、fs/ntfs/unistr.cではkernel.hをincludeしてない。
+#include &lt;linux/kernel.h&gt;を追加した。これで全部通った。
+</p>
+
+<p>
+reboot後NTFSもちゃんとmountできた。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200108183" title="200108183" href="200108b.html#200108183">■</a> 
+ALSA</h3>
+<p>
+頻繁にkernelを上げてると、ALSAも上げなきゃいけないのがなんか面倒だな。
+その点ppxpは必然的にethertapになったので楽になった。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200108184" title="200108184" href="200108b.html#200108184">■</a> 
+xmms</h3>
+<p>
+なぜかホームディレクトリに*.wavがいっぱいある。
+mp3は作った覚えがあるけど、
+ふだんはpipeでエンコーダに渡してるからwavファイルはできないはず。
+日付もmp3を作った日よりも後。
+</p>
+
+<p>
+その日付の8月8日の日記を見るとxmmsとある。あ、Output Pluginの
+</p>
+<pre>
+Disk Writer Plugin 1.2.5j_20010621 [libdisk_writer.so]
+</pre>
+<p>
+か。ここに出てたのか。
+てゆか突然8GB近くディスクを喰ってたのはこれが原因じゃん。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2001/08/18 end -->
+
+
+
+<hr class="hide">
+<!-- 2001/08/19 start -->
+<h2><a name="20010819" href="200108b.html#20010819">2001-08-19 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="200108191" title="200108191" href="200108b.html#200108191">■</a> 
+glibc 2.2.4</h3>
+<p>
+出たみたい。
+差分のglibc-2.2.3-2.2.4.diff.gzですら4,200,722バイトってでかいね。
+</p>
+
+<p>
+もうgcc 3.0に対応してるかもしれないけど、遅すぎるので2.95.3を使う。
+</p>
+<pre>
+% tar xfvz glibc-2.2.3.tar.gz
+% mv glibc-2.2.{3,4}
+% cd glibc-2.2.4
+% gzip -dc ../glibc-2.2.3-2.2.4.diff.gz | patch -p1
+% tar xfvz ../glibc-linuxthreads-2.2.4.tar.gz
+% mkdir linux; cd linux
+% CC=/usr/bin/gcc CFLAGS=-Os ../configure \
+  --prefix=/usr --enable-add-ons
+% time make
+make  10615.67s user 1690.72s system 91% cpu 3:44:59.57 total
+% make install install_root=$HOME/glibc-2.2.4
+% mkdir ~/glibc-2.2.4/bin
+% cp /bin/bash ~/glibc-2.2.4/bin
+% cp /lib/libncurses.so.5 ~/glibc-2.2.4/lib
+% sudo chroot ~/glibc-2.2.4 /bin/bash 
+bash-2.04#
+</pre>
+<p>
+dynamic link版bashが立ち上がったからok。あらかじめ別のktermで
+</p>
+<pre>
+% sudo /bin/sbash
+</pre>
+<p>
+しておいてから本番のinstallに備える。
+</p>
+<pre>
+% sudo make install
+</pre>
+<p>
+最後に
+</p>
+<pre>
+Your new glibc installation seems to be ok.
+</pre>
+<p>
+と表示された。問題ないようだ。忘れないうちに
+</p>
+<pre>
+% sudo make localedata/install-locales
+</pre>
+<p>
+しとく。これが実はとんでもなく時間がかかる。
+1時間半経ってもまだ終わらない。
+ja_JP.EUC-JPまで行ったからもうよしとした。
+あとは後日暇なときにでも。
+</p>
+
+<p>
+そういえば最近glibc-cryptも同梱されてる。
+いつのまにかUSの輸出規制が緩和されてたのか。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200108192" title="200108192" href="200108b.html#200108192">■</a> 
+<a href="http://www.sofmap.com/shop/product/tanpin.asp?PRDT_ID=1277707">LL-T1610W</a></h3>
+<p>
+結局SHARPの液晶カラーモニタをSofmapで買った。
+</p>
+
+<p>
+ついでにPCもどーんとPentium4あたりにするつもりだ。
+一気にクロック10倍化計画。
+glibcも25分でmakeできるか？
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200108193" title="200108193" href="200108b.html#200108193">■</a> 
+cd -</h3>
+<p>
+その日の日記にもcd -を使ってるぐらいだし。
+</p>
+<pre>
+% cp ~-/foo.c .
+</pre>
+<p>
+みたいなことをしたいわけです。
+</p>
+
+<p>
+でもおいらの感覚だとtcsh,bashって十分新人類だよなあ。
+旧人類はcsh,shだと思う。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200108194" title="200108194" href="200108b.html#200108194">■</a> 
+めくれたオレンジ</h3>
+<p>
+PV見て驚いたが、田島貴男がスカパラに入ったわけじゃないよね。
+</p>
+<!-- section end -->
+</div>
+<!-- 2001/08/19 end -->
+
+
+
+<hr class="hide">
+<!-- 2001/08/20 start -->
+<h2><a name="20010820" href="200108b.html#20010820">2001-08-20 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="200108201" title="200108201" href="200108b.html#200108201">■</a> 
+FHS</h3>
+<p>
+あいかわらず全然つながらない
+<a href="http://www.pathname.com/fhs/">FHS</a> と思ったらつながるし。
+fj.unixによると 
+<a href="http://netfilter.filewatcher.org/fhs/">ここ</a> にもあるらしい。
+早速fhs-2.2-stage-II-12-Jan-2001.tar.gzを入手しmakeしてみる。
+</p>
+<pre>
+% make
+groff -p -t -mm -Wall -M./tmac -Tps draft.mm &gt; fhs.ps
+pstoedit -f pdf fhs.ps fhs.pdf
+make: pstoedit: Command not found
+make: *** [fhs.pdf] Error 127
+</pre>
+<p>
+mmマクロとはまたしぶいねえ。pstoeditはどうしようかな。
+印刷するつもりもないし、とりあえずtextだけ見られればいいので
+</p>
+<pre>
+% make fhs.txt
+</pre>
+<p>
+した。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200108202" title="200108202" href="200108b.html#200108202">■</a> 
+RubyWin 0.0.3.8</h3>
+<p>
+更新。あ、SciLexer.dllがすでにupx済みだ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200108203" title="200108203" href="200108b.html#200108203">■</a> 
+ruby-talk ML</h3>
+<p>
+20000を越えた。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2001/08/20 end -->
+
+<hr>
+<div>
+<a href="200108a.html">&lt;Prev(,)</a> | 
+<a href="200108c.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

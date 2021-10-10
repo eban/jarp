@@ -1,0 +1,777 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2002-10-a</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="200209c.html">
+<link rel="next" href="200210b.html">
+
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2002年10月上旬〜</p>
+<hr>
+<div>
+<a href="200209c.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="200210b.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2002/10/01 start -->
+<h2><a name="20021001" href="200210a.html#20021001">2002-10-01 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="200210011" title="200210011" href="200210a.html#200210011">■</a> 
+9月のspam</h3>
+<p>
+338通。やはり増えてる。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200210012" title="200210012" href="200210a.html#200210012">■</a> 
+[Ruby] ext/tcltklib/tcltklib.c</h3>
+<p>
+commitされたのでそろそろGNU ldチェックを入れよう。
+週末かな。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200210013" title="200210013" href="200210a.html#200210013">■</a> 
+VC7</h3>
+<p>
+
+<a href="http://www.microsoft.com/japan/msdn/netframework/downloads/">Microsoft .NET Framework</a>
+にVC7が入ってるという噂を聞いた。
+160MBをダウンロードするのがかなり痛いがインストールしてみると確かに
+</p>
+<pre>
+C:\Program Files\Microsoft Visual Studio .NET\Vc7
+</pre>
+<p>
+が存在する。でもincludeやlibを見るとPlatform SDK相当のファイルがない。
+windows.hとか。
+ってことは今度は
+<a href="http://www.microsoft.com/msdownload/platformsdk/sdkupdate/">Core SDK</a>
+あたりが必要か？明日ダウンロードしてみよう。って200MBかよ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200210014" title="200210014" href="200210a.html#200210014">■</a> 
+台風</h3>
+<p>
+わざわざ縦断してる最中に帰宅したらしい。30分遅らせれば傘も要らなかったのに。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/10/01 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/10/02 start -->
+<h2><a name="20021002" href="200210a.html#20021002">2002-10-02 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="200210021" title="200210021" href="200210a.html#200210021">■</a> 
+[Ruby] 1.6.8</h3>
+<p>
+version.hが1.6.8になってる。ってことは昨日作った20021001はちとまずいね。
+20021002を作ったからいいや。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200210022" title="200210022" href="200210a.html#200210022">■</a> 
+<a href="200210a.html#200210013">VC7</a></h3>
+<p>
+結局Core SDKをインストールしたら必要なものはそろった。
+あっちこっちばらばらだと環境変数の設定も面倒なので一ヶ所に集めてみた。
+たとえばd:\vcに集めるにはこんな感じ。
+</p>
+<pre>
+% cd /d/vc
+% sdk='c:/Program Files/Microsoft SDK'
+% vc7='c:/Program Files/Microsoft Visual Studio .NET/Vc7'
+% mkdir -p bin include lib
+% cp -av &quot;$vc7&quot;/bin &quot;$vc7&quot;/include &quot;$vc7&quot;/lib .
+% cp -av &quot;$sdk&quot;/bin/rc.exe bin
+% cp -av &quot;$sdk&quot;/bin/rcdll.dll bin
+% cp -av &quot;$sdk&quot;/bin/win64/cvtres.exe bin
+% cp -av &quot;$sdk&quot;/bin/win64/lib.exe bin
+% cp -av &quot;$sdk&quot;/bin/win64/nmake.exe bin
+% cp -av &quot;$sdk&quot;/bin/win64/dumpbin.exe bin
+% cp -av &quot;$sdk&quot;/bin/win64/msvcr70.dll bin
+% cp -av &quot;$sdk&quot;/bin/win64/msvcp70.dll bin
+% cp -av &quot;$sdk&quot;/bin/win64/mspdb70.dll bin
+% cp -av &quot;$sdk&quot;/bin/win64/msobj10.dll bin
+% (cd &quot;$sdk&quot;; tar cf - include lib --exclude=Win64 --exclude=IA64) | \
+  tar xfv -
+</pre>
+<p>
+あとはコマンドプロンプトで
+</p>
+<pre>
+set INCLUDE=d:\vc\include
+set LIB=d:\vc\lib
+PATH=%PATH%;d:\vc\bin
+</pre>
+<p>
+で準備完了。試しにrubyをmakeしてみる。okだ。
+最適化はしてくれないので
+</p>
+<pre>
+cl : コマンド ライン warning D4029 : 標準の編集コンパイラでは最適化は使用できません。
+cl : コマンド ライン warning D4002 : 認識不可能なオプション '-Og-' を無視しました。
+</pre>
+<p>
+となる。「標準の編集コンパイラ」とはStandard Editionということか？
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200210023" title="200210023" href="200210a.html#200210023">■</a> 
+プログラミングPerl</h3>
+<p>
+本屋で3rd edtionを見た。Volume1, 2と2冊になってる。
+どっちも分厚い。ちょっと買う気が失せた。うーむ。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/10/02 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/10/03 start -->
+<h2><a name="20021003" href="200210a.html#20021003">2002-10-03 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="200210031" title="200210031" href="200210a.html#200210031">■</a> 
+[Ruby] nmakeと環境変数TMP</h3>
+<p>
+なぜかCygwin上のzshでnmakeすると、途中で
+</p>
+<pre>
+Creating config.status
+makefile(15) : fatal error U1054: cannot create inline file ''
+Stop.
+</pre>
+<p>
+となる。早速
+<a href="http://www.microsoft.com/JAPAN/developer/library/vcug/_asug_specifying_an_inline_file.htm">例のリファレンスマニュアル</a>
+を見ると環境変数TMPがあやしい。実は~/.zshrcでunset TMPしてるのだ。
+</p>
+<pre>
+ただし、TMP 環境変数が定義されていない場合は、
+カレントディレクトリに作成されます。
+</pre>
+<p>
+とあるが、コマンドプロンプト上でset TMP=してからnmakeするとやはり同じエラーになる。
+どうもnmakeがバグってるらしい。とりあえず
+</p>
+<pre>
+% TMP=. nmake
+</pre>
+<p>
+でよさげだが、
+</p>
+<pre>
+&lt;&lt;[filename]
+</pre>
+<p>
+とあるので、win32/Makefile.subの中で明示的に名前を指定する手もあるか。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/10/03 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/10/04 start -->
+<h2><a name="20021004" href="200210a.html#20021004">2002-10-04 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="200210041" title="200210041" href="200210a.html#200210041">■</a> 
+[Ruby] -no-undefined</h3>
+<p>
+すぐにでも1.6.8が出そうな勢いなので、慌ててcommitした。
+とりあえずはLinuxだけ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200210042" title="200210042" href="200210a.html#200210042">■</a> 
+[Ruby] mkmf.rb: CLのコマンドファイル</h3>
+<p>
+cl.exeの
+<a href="http://www.microsoft.com/japan/developer/library/vccore/_core_cl_command_files.htm">リファレンスマニュアル</a>
+を見ていたら、コマンドファイルに書けば-linkは最後になくてもいいような気がしてきた。早速実験してみる。
+</p>
+<pre>
+% unset LIB INCLUDE
+% cat resp
+-link -libpath:c:/vc/lib
+-Ic:/vc/include
+% cat foo.c                          
+#include &lt;stdio.h&gt;
+main(){}
+% PATH=/c/vc/bin:$PATH cl @resp foo.c
+Microsoft(R) 32-bit C/C++ Standard Compiler Version 13.00.9466 for 80x86
+Copyright (C) Microsoft Corporation 1984-2001. All rights reserved.
+
+cl -link -libpath:c:/vc/lib
+   -Ic:/vc/include
+
+foo.c
+Microsoft (R) Incremental Linker Version 7.00.9466
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+/out:foo.exe 
+-libpath:c:/vc/lib 
+foo.obj 
+</pre>
+<p>
+okだ。2つ以上libpathを指定するときは
+</p>
+<pre>
+-link -libpath:c:/some/foo -libpath:c:/some/bar
+</pre>
+<p>
+とするより
+</p>
+<pre>
+-link -libpath:c:/some/foo
+-link -libpath:c:/some/bar
+</pre>
+<p>
+と複数行に分けるのがよさそう。
+</p>
+
+<p>
+でもENV['LIB']の代わりにコマンドファイルを使うようにしても、
+何の解決にもなっていない気が。没だ。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/10/04 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/10/05 start -->
+<h2><a name="20021005" href="200210a.html#20021005">2002-10-05 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="200210051" title="200210051" href="200210a.html#200210051">■</a> 
+[Linux] GNU C library (glibc) 2.3</h3>
+<p>
+いつものようにGCC 2.95.3でmakeしようと思ったが、
+いきなりconfigureでエラーを喰らう。
+</p>
+<pre>
+checking for gcc... /usr/bin/gcc
+checking version of /usr/bin/gcc... 2.95.3, bad
+checking for gnumake... no
+checking for gmake... no
+checking for make... make
+checking version of make... 3.79.1, ok
+configure: error: 
+*** These critical programs are missing or too old: gcc
+*** Check the INSTALL file for required versions.
+</pre>
+<p>
+じゃいくつ以上ならいいんだとconfigureを見ると
+</p>
+<pre>
+case $ac_prog_version in
+  '') ac_prog_version=&quot;v. ?.??, bad&quot;; ac_verc_fail=yes;;
+  3.[2-9]*)
+     ac_prog_version=&quot;$ac_prog_version, ok&quot;; ac_verc_fail=no;;
+  *) ac_prog_version=&quot;$ac_prog_version, bad&quot;; ac_verc_fail=yes;;
+</pre>
+<p>
+と、3.2以上じゃないとだめらしい。それは危険の2乗という感じがしないでもない。
+あ、INSTALLにちゃんと3.2以上を使えと書いてあった。
+</p>
+
+<p>
+最後の最後でctype関係がmultiple definitionになり終了。うーむ。
+このマシンのbinutilsは2.10だった。2.10.1以上じゃないとだめなのか？
+2.13をインストールしてみる。okだ。
+やはりINSTALLに書いてある推奨のものを使わないといけないらしい。
+</p>
+<pre>
+% tar xfv glibc-2.3.tar.bz2 --bzip2
+% cd glibc-2.3
+% tar xfvz ../glibc-linuxthreads-2.3.tar.gz
+% mkdir linux; cd linux
+% CFLAGS=-Os ../configure --prefix=/usr --enable-add-ons i586-pc-linux-gnu
+% make
+% mkdir ~/glibc-2.3
+% make install_root=$HOME/glibc-2.3 install localedata/install-locales
+% cd ~/glibc-2.3/etc
+% ln -sf ../usr/share/zoneinfo/Japan localtime
+% cd ..
+% tar cfv ~/glibc-2.3-bin.tar.bz2 * --bzip2 --owner=root --group=root
+</pre>
+<p>
+このtarballをメインマシンへ転送して
+</p>
+<pre>
+% sudo tar xfv glibc-2.3-bin.tar.bz2 -C / --bzip2
+% sudo ldconfig
+</pre>
+<p>
+と実行する。
+</p>
+
+<p>
+/binの主要なものは既にstatically linkedなので全く問題はないが、
+他にいろいろ試してみると動かなくなったものもある。
+</p>
+
+<p>
+w3mが
+</p>
+<pre>
+w3m: relocation error: w3m: symbol __libc_stack_end, \
+version GLIBC_2.1 not defined in file ld-linux.so.2 with link time reference
+</pre>
+<p>
+と言われて起動しない。これはBoehm GCだな。とりあえずmakeし直せばok。
+</p>
+
+<p>
+cvsupは
+</p>
+<pre>
+***
+*** runtime error:
+***    Segmentation violation - possible attempt to dereference NIL0
+***
+
+  use option @M3stackdump to get a stack trace
+</pre>
+<p>
+となる。これはバイナリをそのまま使っているだけに痛い。どうしようかな。
+sourceからだとModula-3が必要だし。うーむ。rsyncしちゃう手もあるか。
+</p>
+
+<p>
+vim, emacs, cvs, ssh, gccあたりは大丈夫。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200210052" title="200210052" href="200210a.html#200210052">■</a> 
+[Ruby] glibc 2.3</h3>
+<p>
+まっさらなRuby 1.7をmakeしてみる。念のためrm -rf ~/.ccacheしとく。
+minirubyをリンクする時に
+</p>
+<pre>
+libruby.a(error.o): In function `set_syserr':
+error.o(.text+0x9fb): `sys_nerr' is deprecated; \
+  use `strerror' or `strerror_r' instead
+</pre>
+<p>
+と警告される。いやstrerrorを使うためにsys_nerrも使ってるんだよね。
+どんどん使えるものが少なくなるなあ。
+とりあえずmake testもokだ。
+</p>
+
+<p>
+Ruby 1.6は*.oをそのままでmakeしてみる。undefined referenceだらけだ。
+というわけで、make cleanぐらいはしないとまずそう。
+なんとなくほかのライブラリもちょっと心配ではある。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200210053" title="200210053" href="200210a.html#200210053">■</a> 
+[Linux] GNU make 3.80</h3>
+<pre>
+% CFLAGS=-Os CC='/usr/i386-linux-uclibc/bin/i386-uclibc-gcc -static' \
+  ../configure --prefix=/usr --disable-nls
+</pre>
+<p>
+考えてみると、
+こうやってどんどんglibc離れしてるから大した影響がないのかもしれない。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/10/05 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/10/06 start -->
+<h2><a name="20021006" href="200210a.html#20021006">2002-10-06 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="200210061" title="200210061" href="200210a.html#200210061">■</a> 
+[Linux] cvsup</h3>
+<p>
+cvsupは
+</p>
+<pre>
+% file =cvsup
+/usr/local/bin/cvsup: ELF 32-bit LSB executable, Intel 80386, version 1,
+  statically linked, stripped
+</pre>
+<p>
+だった。うーむ。staticallyなのになぜ動かなくなる？
+ltrace -Sしてみると
+</p>
+<pre>
+SYS_open(&quot;/etc/resolv.conf&quot;, 0, 0666)             = 4
+SYS_open(&quot;/etc/nsswitch.conf&quot;, 0, 0666)           = 4
+SYS_open(&quot;/etc/ld.so.cache&quot;, 0, 00)               = 4
+SYS_open(&quot;/lib/libnss_files.so.2&quot;, 0, 00)         = 4
+SYS_open(&quot;/lib/libc.so.6&quot;, 0, 03)                 = 4
+SYS_open(&quot;/lib/ld-linux.so.2&quot;, 0, 01005737020)    = 4
+</pre>
+<p>
+と非常に怪しいopenがある。ってことはなんとなくdlopenしてる雰囲気だ。
+確認してみよう。gethostbynameあたりが適当か。
+</p>
+<pre>
+% cat x.c
+#include &lt;stdio.h&gt;
+#include &lt;netdb.h&gt;
+main()
+{
+    puts(gethostbyname(&quot;localhost&quot;)-&gt;h_name);
+}
+% gcc -static x.c
+% ltrace -S ./a.out |&amp; grep SYS_open        
+SYS_open(&quot;/etc/resolv.conf&quot;, 0, 0666)             = 3
+SYS_open(&quot;/etc/nsswitch.conf&quot;, 0, 0666)           = 3
+SYS_open(&quot;/etc/ld.so.cache&quot;, 0, 037777777777)     = 3
+SYS_open(&quot;/lib/libnss_files.so.2&quot;, 0, 06740)      = 3
+SYS_open(&quot;/lib/libc.so.6&quot;, 0, 015570)             = 3
+SYS_open(&quot;/lib/ld-linux.so.2&quot;, 0, 020430)         = 3
+SYS_open(&quot;/etc/host.conf&quot;, 0, 0666)               = 3
+SYS_open(&quot;/etc/hosts&quot;, 0, 0666)                   = 3
+% nm a.out |grep dlopen
+0806002a T __libc_dlopen
+0805ffd0 t do_dlopen
+</pre>
+<p>
+これは反則技に等しい。結局共有ライブラリが必要なんだから。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200210062" title="200210062" href="200210a.html#200210062">■</a> 
+<a href="http://www.fefe.de/dietlibc/">[Linux] diet libc 0.21</a></h3>
+<p>
+更新。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200210063" title="200210063" href="200210a.html#200210063">■</a> 
+[Linux] Linux 2.5.40</h3>
+<p>
+2.5.39もそうだけど、login promptまでは順調に立ち上がるのに、
+なぜかkey入力を一切受けつけない。リセットスィッチを押すしかない。
+そろそろfeature freezeらしいのに何がいけないんだろう？
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200210064" title="200210064" href="200210a.html#200210064">■</a> 
+[Emacs] APEL 10.4</h3>
+<p>
+APELを上げたついでに、SEMI 1.14.4, LIMIT 1.14.7に更新。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200210065" title="200210065" href="200210a.html#200210065">■</a> 
+[www.ruby-lang.org] rsync server</h3>
+<p>
+cvsupはあきらめてrsync -e sshで同期することにした。
+それはそれとしてwww.ruby-lang.orgでrsync serverが動いているか調べてみる。
+</p>
+<pre>
+% rsync www.ruby-lang.org::
+ftp             All of ftp
+ruby            ruby
+ruby-contrib    ruby/contrib
+ruby-ML         ruby/ML
+www             All of www
+</pre>
+<p>
+動いているね。cvsはなかったか。前田さんよろしく〜ってここに書いてもむだか。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200210066" title="200210066" href="200210a.html#200210066">■</a> 
+[Ruby] http-access2 H</h3>
+<p>
+Fのsampleをコピーしてパッケージング。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/10/06 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/10/07 start -->
+<h2><a name="20021007" href="200210a.html#20021007">2002-10-07 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="200210071" title="200210071" href="200210a.html#200210071">■</a> 
+[Linux] Bison 1.50</h3>
+<p>
+更新。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200210072" title="200210072" href="200210a.html#200210072">■</a> 
+[Linux] WineでCL.EXEは動くのか？</h3>
+<p>
+WineでCL.EXEは動くのか試してみる。
+</p>
+<pre>
+% wine -- cl       
+wine: relocation error: /usr/local/lib/libntdll.dll.so: \
+  symbol __libc_fork, version GLIBC_2.1.2 not defined \
+  in file libc.so.6 with link time reference
+</pre>
+<p>
+うーむ。これもglibc 2.3の影響だな。Wineもmakeし直さないと。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200210073" title="200210073" href="200210a.html#200210073">■</a> 
+[Ruby] strerror(3)</h3>
+<p>
+strerror(10000)だとどうなるのか実験。
+</p>
+<pre>
+glibc: Unknown error 10000
+diet libc: [unknown error]
+uClibc: SEGV
+Cygwin: error 10000
+msvcrt: Unknown error
+</pre>
+<p>
+見事なまでにばらばらだ。uClibcはチェックすらしてないらしい。
+やっぱsys_nerrと比較したくなるじゃん。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/10/07 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/10/08 start -->
+<h2><a name="20021008" href="200210a.html#20021008">2002-10-08 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="200210081" title="200210081" href="200210a.html#200210081">■</a> 
+[Linux] WineでCL.EXEは動くのか？</h3>
+<p>
+再度試してみる。
+</p>
+<pre>
+% wine -- cl
+Microsoft(R) 32-bit C/C++ Standard Compiler Version 13.00.9466 for 80x86
+Copyright (C) Microsoft Corporation 1984-2001. All rights reserved.
+
+使い方: cl [ オプション... ] ファイル名... [ /link リンク オプション... ]
+</pre>
+<p>
+おぉ。動いてる。実際にコンパイルしてみよう。
+</p>
+<pre>
+% echo 'main(){}' &gt;foo.c
+% wine -- cl foo.c -link -libpath:'f:\vc\lib' 
+Microsoft(R) 32-bit C/C++ Standard Compiler Version 13.00.9466 for 80x86
+Copyright (C) Microsoft Corporation 1984-2001. All rights reserved.
+
+foo.c
+Microsoft (R) Incremental Linker Version 7.00.9466
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+/out:foo.exe 
+-libpath:f:\vc\lib 
+foo.obj 
+</pre>
+<p>
+できてるね。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/10/08 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/10/09 start -->
+<h2><a name="20021009" href="200210a.html#20021009">2002-10-09 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="200210091" title="200210091" href="200210a.html#200210091">■</a> 
+[Cygwin] Unknown host anoncvs.cygnus.com.</h3>
+<p>
+いつものようにcvs upしてみるとUnknown host anoncvs.cygnus.com.と言われてしまう。
+そういえばcygnus.comはもう使えなくなると言ってた気がする。
+
+<a href="http://cygwin.com/ml/cygwin/2002-09/msg01520.html">これ</a> か。
+</p>
+<pre>
+% ruby -pi~ -e 'sub(/anoncvs\.cygnus\.com/, &quot;sources.redhat.com&quot;)' **/CVS/Root
+</pre>
+<p>
+とした。あ、~/.cvspassも書き換えないと。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/10/09 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/10/10 start -->
+<h2><a name="20021010" href="200210a.html#20021010">2002-10-10 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="200210101" title="200210101" href="200210a.html#200210101">■</a> 
+[Ruby] MSYS上shell</h3>
+<p>
+
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-talk/52507">この件</a> を調べるためにMSYS 1.0.7をインストールした。
+make installしてみるとやはりなんかおかしい。
+</p>
+<pre>
+$ ./miniruby -e 'puts ARGV[0]' /usr/local
+C:\msys\1.0\local
+</pre>
+<p>
+とても厭な仕様だ。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/10/10 end -->
+
+<hr>
+<div>
+<a href="200209c.html">&lt;Prev(,)</a> | 
+<a href="200210b.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

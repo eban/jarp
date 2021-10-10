@@ -1,0 +1,377 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2008-11-c</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="200811b.html">
+<link rel="next" href="200812a.html">
+
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2008年11月下旬〜</p>
+<hr>
+<div>
+<a href="200811b.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="200812a.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2008/11/21 start -->
+<h2><a name="20081121" href="200811c.html#20081121">2008-11-21 (Fri)</a></h2>
+<!-- 2008-11-22 02:17:44 -->
+
+<div class="entry1">
+<h3><a name="200811211" title="200811211" href="200811c.html#200811211">■</a> 
+<a href="https://addons.mozilla.org/en-US/firefox/addon/4550">[Firefox] Compact Menu 2</a></h3>
+<p>
+
+<a href="https://addons.mozilla.org/en-US/firefox/addon/1455">Tiny Menu</a>
+のshortcut keyはAlt-Mのprefixが余計。<br>
+
+<a href="https://addons.mozilla.org/en-US/firefox/addon/4550">Compact Menu 2</a>
+ならprefix不要なのでAlt-Fで今まで通りにいける。<br>
+というわけで乗り換え。
+</p>
+<!-- section end -->
+</div>
+<!-- 2008/11/21 end -->
+
+
+
+<hr class="hide">
+<!-- 2008/11/22 start -->
+<h2><a name="20081122" href="200811c.html#20081122">2008-11-22 (Sat)</a></h2>
+<!-- 2008-11-23 01:49:03 -->
+
+<div class="entry1">
+<h3><a name="200811221" title="200811221" href="200811c.html#200811221">■</a> 
+<a href="http://aligach.net/diary/20081121.html#p02">[Linux] FDcloneのmake</a></h3>
+<p>
+いや単にmakeでok。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200811222" title="200811222" href="200811c.html#200811222">■</a> 
+<a href="http://golf.shinh.org/p.rb?cal#Ruby">[Golf] cal</a></h3>
+<p>
+面白い方法というはunpack。Aなら後ろの余計な空白も消してくれる。<br>
+締め切り後にみんなのまとめるとこんな感じ。
+</p>
+
+<pre>
+#!ruby -nardate
+d=Date.parse$F*&quot;/&quot;
+puts d.strftime(&quot;%B %Y&quot;).center(20),&quot;Su Mo Tu We Th Fr Sa&quot;,(&quot;   &quot;*d.wday+(d...d&gt;&gt;1).map{|x|&quot;%2d &quot;%x.day}*&quot;&quot;).unpack(&quot;A21&quot;*6)
+</pre>
+<p>
+d...d&gt;&gt;1ってのは賢いな。
+</p>
+<!-- section end -->
+</div>
+<!-- 2008/11/22 end -->
+
+
+
+<hr class="hide">
+<!-- 2008/11/23 start -->
+<h2><a name="20081123" href="200811c.html#20081123">2008-11-23 (Sun)</a></h2>
+<!-- 2008-11-24 02:54:57 -->
+
+<div class="entry1">
+<h3><a name="200811231" title="200811231" href="200811c.html#200811231">■</a> 
+<a href="http://blog.livedoor.jp/ld_directors/archives/51127588.html">[OpenID] 10分でわかるOpenIDの概念と用語集</a></h3>
+<p>
+OpenID 2.0だと
+<pre>
+簡単に説明すると、今までは
+http://profile.livedoor.com/ld_directors/
+と長いURLを入力していたものが
+http://livedoor.com/
+と入れるだけでよくなったのです。
+</pre>
+</p>
+<p>
+ということらしい。早速FLDRで試してみたらうまくいった。これは楽だ。<br>
+URL覚えるの面倒だし。
+</p>
+<!-- section end -->
+</div>
+<!-- 2008/11/23 end -->
+
+
+
+<hr class="hide">
+<!-- 2008/11/24 start -->
+<h2><a name="20081124" href="200811c.html#20081124">2008-11-24 (Mon)</a></h2>
+<!-- 2008-11-25 01:55:39 -->
+
+<div class="entry1">
+<h3><a name="200811241" title="200811241" href="200811c.html#200811241">■</a> 
+[ニコニコ動画] バンドなMMD</h3>
+<p>
+
+<a href="http://www.nicovideo.jp/watch/sm5170819">【MikuMikuDance】有志バンド的な何か【文化祭風】</a><br>
+ギターソロがいいね。
+</p>
+
+<p>
+
+<a href="http://www.nicovideo.jp/watch/sm5329831">【MMD】那由他の彼方まで【PV】</a><br>
+かっこよすぎ。
+</p>
+
+<!-- section end -->
+</div>
+<!-- 2008/11/24 end -->
+
+
+
+<hr class="hide">
+<!-- 2008/11/25 start -->
+<h2><a name="20081125" href="200811c.html#20081125">2008-11-25 (Tue)</a></h2>
+<!-- 2008-11-26 01:27:21 -->
+
+<div class="entry1">
+<h3><a name="200811251" title="200811251" href="200811c.html#200811251">■</a> 
+[はてな] はてな API</h3>
+<p>
+結局はてぶは新しくなってAPIが変わったの？<br>
+なんかもろもろぐりもんとかの動きが変だな。
+</p>
+<!-- section end -->
+</div>
+<!-- 2008/11/25 end -->
+
+
+
+<hr class="hide">
+<!-- 2008/11/26 start -->
+<h2><a name="20081126" href="200811c.html#20081126">2008-11-26 (Wed)</a></h2>
+<!-- 2008-11-27 00:00:09 -->
+
+<div class="entry1">
+<h3><a name="200811261" title="200811261" href="200811c.html#200811261">■</a> 
+<a href="http://docs.fedoraproject.org/release-notes/f10/ja/">[Fedora] Fedora 10</a></h3>
+<p>
+会社の比較的どうでもいいマシンからアップグレード作業。<br>
+いつもと変わらない。
+</p>
+
+<pre>
+% sudo rpm -Uvh \
+  http://download.fedora.redhat.com/pub/fedora/linux/releases/10/Fedora/i386/os/Packages/fedora-release-notes-10.0.0-1.noarch.rpm
+% sudo rpm -Uvh \
+  http://download.fedora.redhat.com/pub/fedora/linux/releases/10/Fedora/i386/os/Packages/fedora-release-10-1.noarch.rpm
+% sudo yum clean all
+% sudo yum -y upgrade
+</pre>
+<p>
+ここでavahiの呪い。
+</p>
+
+<pre>
+% sudo rpm -e --noscripts avahi-0.6.17-1.fc7.i386
+</pre>
+<p>
+で強制的に削除。これで依存関係はOK。アップグレード再開。<br>
+しかし5時間経ってもダウンロードが39%状態。放っといて帰宅。<br>
+</p>
+
+<p>
+一度試してみようと家のPCでpreupgradeしてみたが、まだFedora 10は現われず。<br>
+残念。
+</p>
+<!-- section end -->
+</div>
+<!-- 2008/11/26 end -->
+
+
+
+<hr class="hide">
+<!-- 2008/11/27 start -->
+<h2><a name="20081127" href="200811c.html#20081127">2008-11-27 (Thu)</a></h2>
+<!-- 2008-11-28 00:56:46 -->
+
+<div class="entry1">
+<h3><a name="200811271" title="200811271" href="200811c.html#200811271">■</a> 
+[Fedora] preupgradeでFedora 9からFedora 10へアップグレード</h3>
+<p>
+今日試してみたら用意されてたので、preupgradeを実行。<br>
+クリックするだけなので楽か？<br>
+タスクバーに常駐するので邪魔ならウィンドウは消せる。<br>
+これもダウンロードが長いので放置。
+</p>
+
+<p>
+昨日放置しておいた会社のPCは無事再起動で立ち上がった。特に問題ない。
+</p>
+<!-- section end -->
+</div>
+<!-- 2008/11/27 end -->
+
+
+
+<hr class="hide">
+<!-- 2008/11/28 start -->
+<h2><a name="20081128" href="200811c.html#20081128">2008-11-28 (Fri)</a></h2>
+<!-- 2008-11-29 14:02:27 -->
+
+<div class="entry1">
+<h3><a name="200811281" title="200811281" href="200811c.html#200811281">■</a> 
+[Fedora] preupgrade-cli</h3>
+<p>
+昨日のつづき。<br>
+朝起きてみると/boot/upgrade/install.imgがchecksum errorで終了していた。残念。<br>
+そこで今日はCLIのほうを試した。
+</p>
+
+<pre>
+% sudo preupgrade-cli 'Fedora 10 (Cambridge)'
+</pre>
+<p>
+のように引数で指定する。一応
+</p>
+
+<pre>
+All finished. The upgrade will begin when you reboot.
+</pre>
+<p>
+と出て最後まで通ったようだけど、途中の
+</p>
+
+<pre>
+vlc-core-0.9.6-1.fc9.i386 from installed has depsolving problems
+  --&gt; Missing Dependency: libgnutls.so.13(GNUTLS_1_3) is needed by package vlc-core-0.9.6-1.fc9.i386 (installed)
+</pre>
+<p>
+が気になる。どうもrpmfusionから入ったのがまずいのかな。<br>
+一度アンインストールして再挑戦してみよう。
+</p>
+<!-- section end -->
+</div>
+<!-- 2008/11/28 end -->
+
+
+
+<hr class="hide">
+<!-- 2008/11/29 start -->
+<h2><a name="20081129" href="200811c.html#20081129">2008-11-29 (Sat)</a></h2>
+<!-- 2008-11-30 03:39:46 -->
+
+<div class="entry1">
+<h3><a name="200811291" title="200811291" href="200811c.html#200811291">■</a> 
+[Fedora] 再起動</h3>
+<p>
+念のためMissing Dependencyになるパッケージを全部削除して、<br>
+もう一度preupgrade-cliを実行してエラーを消した。<br>
+その後再起動すると勝手にインストーラが立ち上がって、<br>
+勝手にインストールが始まって勝手に終了して勝手に再起動した。<br>
+つまり放置したままでOK。その間1時間ちょっと。<br>
+</p>
+
+<p>
+Missingの件はGUIのときはどうなるんだろうな。<br>
+特にログを吐いているようには見えなかったし。<br>
+ここがクリアできればpreupgradeは初心者には楽な方法だね。
+</p>
+<!-- section end -->
+</div>
+<!-- 2008/11/29 end -->
+
+
+
+<hr class="hide">
+<!-- 2008/11/30 start -->
+<h2><a name="20081130" href="200811c.html#20081130">2008-11-30 (Sun)</a></h2>
+<!-- 2008-12-01 01:46:15 -->
+
+<div class="entry1">
+<h3><a name="200811301" title="200811301" href="200811c.html#200811301">■</a> 
+[TV] 00</h3>
+<p>
+「ところがぎっちょん」「合点承知」「南無三」って今日はなんで古臭い台詞ばかり？<br>
+「合点承知」はしょうがないか。相手がブシドーだけに。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200811302" title="200811302" href="200811c.html#200811302">■</a> 
+[Fedora] Fedora 10不調</h3>
+<p>
+ビデオドライバのせいなのかな。<br>
+ところどころ勝手にボールドになったり、<br>
+ノイズが混ったような感じになったり。
+</p>
+
+<p>
+一番困るのはネットワークが不調でNetwork is unreachableが頻発。<br>
+これはFedoraのせいかどうかよくわからないけど。
+</p>
+<!-- section end -->
+</div>
+<!-- 2008/11/30 end -->
+
+<hr>
+<div>
+<a href="200811b.html">&lt;Prev(,)</a> | 
+<a href="200812a.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

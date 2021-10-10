@@ -1,0 +1,819 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2002-4-a</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="200203c.html">
+<link rel="next" href="200204b.html">
+
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2002年4月上旬〜</p>
+<hr>
+<div>
+<a href="200203c.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="200204b.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2002/04/01 start -->
+<h2><a name="20020401" href="200204a.html#20020401">2002-04-01 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="200204011" title="200204011" href="200204a.html#200204011">■</a> 
+sendmsg, recvmsg</h3>
+<p>
+Ruby 1.7をi686-pc-cygwinでmakeすると
+</p>
+<pre>
+socket.o(.text+0x23c9):socket.c: undefined reference to `sendmsg'
+socket.o(.text+0x24f0):socket.c: undefined reference to `recvmsg'
+</pre>
+<p>
+となる。nativeのcygwinではいけてるので、
+クロスの環境が古くなってしまったようだ。
+そろそろ、新しくしないと。
+</p>
+
+<p>
+ext/socket/extconf.rbを見ると、
+headerを見てmemberがあるかどうかのcheckしかしてないので、
+こういう手抜きheaderがあるとお手上げだ。
+</p>
+
+<p>
+と書いてたら早速
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-talk/37150">指摘</a> された。
+しかたなくwinsup/cygwin/ChangeLogを覗く。書いてあった。
+その結果が
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-talk/37151">これ</a> だ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200204012" title="200204012" href="200204a.html#200204012">■</a> 
+Cygwin 1.3.10-1, mingw-runtime-1.2-1, w32api-1.2-1</h3>
+<p>
+というわけでクロスの環境を新しくした。
+</p>
+<pre>
+% tar xfv cygwin-1.3.10-1-src.tar.bz2 --us=bzip2
+% patch -p0 &lt;/some/where/cygwin-1.3.5-3.diff
+</pre>
+<p>
+
+<a href="../files/cygwin-1.3.5-3.diff">このパッチ</a>
+は以前作ったもの。ちょっとoffsetはあるけどあたる。
+</p>
+<pre>
+% cd cygwin-1.3.10-1/winsup
+% rmdir mingw
+% tar xfvz ../../mingw-runtime-1.2-1-src.tar.gz
+% ln -s mingw-runtime-1.2-1 mingw
+% rmdir w32api
+% tar xfv ../../w32api-1.2-2-src.tar.bz2 --us=bzip2
+% ln -s w32api-1.2-1 w32api
+</pre>
+<p>
+mingwとw32apiは同梱されなくなった。cinstallもない。
+</p>
+<pre>
+% cd ..
+% mkdir build; cd build
+% CFLAGS=-Os CXXFLAGS=-Os \
+  ../configure \
+  --target=i686-pc-cygwin \
+  --prefix=/usr/local/cygwin  
+% make -e tooldir=/usr/local/cygwin
+% make -e tooldir=/usr/local/cygwin install
+</pre>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200204013" title="200204013" href="200204a.html#200204013">■</a> 
+探偵物語</h3>
+<p>
+あ、再放送してる。今日からか？
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/04/01 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/04/02 start -->
+<h2><a name="20020402" href="200204a.html#20020402">2002-04-02 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="200204021" title="200204021" href="200204a.html#200204021">■</a> 
+3月のspam</h3>
+<p>
+125通。ってどんどん増えてるよ。
+</p>
+
+<p>
+韓国からのspamによく
+</p>
+<pre>
+[韻壱]
+</pre>
+<p>
+てのがSubjectについてるけど、これは広告という意味らしい。
+去年の夏にこれをつければよしとかいう法律を作って、それを日本が真似たわけだ。
+全くもって困ったもんだ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200204022" title="200204022" href="200204a.html#200204022">■</a> 
+RIMのメール配送遅延</h3>
+<p>
+相変わらずメールの配送が遅れてるようだが、
+どうも23時から1時ぐらいが一番遅れるようだ。
+未だにテレホタイムが関係してるのか？って情けないぞ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200204023" title="200204023" href="200204a.html#200204023">■</a> 
+<a href="http://znz.s1.xrea.com/t/?date=20020331#p02">Cygwin setup.exe</a></h3>
+<p>
+100バイトあたりに境界があるようだ。
+</p>
+<pre>
+% tar tfz testunit-0.1.4-1.tar.gz | \
+  awk '{print length($0),$0}' | \
+  sort -n |tail -5
+94 usr/local/doc/ruby/testunit-0.1.4/doc/classes/Test/Unit/UI/TestRunnerMediator.src/M000039.html
+94 usr/local/doc/ruby/testunit-0.1.4/doc/classes/Test/Unit/UI/TestRunnerMediator.src/M000040.html
+94 usr/local/doc/ruby/testunit-0.1.4/doc/classes/Test/Unit/UI/TestRunnerMediator.src/M000041.html
+95 usr/local/doc/ruby/testunit-0.1.4/doc/classes/Test/Unit/UI/TestRunnerUtilities.src/M000030.html
+103 usr/local/doc/ruby/testunit-0.1.4/doc/classes/Test/Unit/UI/Fox/TestRunner/from-@fault_detail_label.html
+</pre>
+<p>
+てゆか、100バイトを越えるファイル名が使えるのはGNU tarの拡張だっけ？
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/04/02 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/04/03 start -->
+<h2><a name="20020403" href="200204a.html#20020403">2002-04-03 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="200204031" title="200204031" href="200204a.html#200204031">■</a> 
+<a href="http://www.ruby-lang.org/en/raa-list.rhtml?name=Devel%3A%3ALogger">Devel::Logger 1.0.0</a></h3>
+<p>
+更新。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200204032" title="200204032" href="200204a.html#200204032">■</a> 
+http tunnelでrsync</h3>
+<p>
+Tokyo.pm MLで開発版Perlのソースは
+</p>
+<pre>
+% rsync -avz rsync://ftp.linux.activestate.com/perl-current/ .
+</pre>
+<p>
+とすれば取ってこれることを知る。なるほど。
+でもrsync serverか。会社は壁の中だしどうすればいい？
+http proxy rysncをキーでgoogleしてみると
+
+<a href="http://lists.samba.org/pipermail/rsync/1999-March/001041.html">このパッチ</a>
+が見つかった。さっそくあててみるかとsocket.cを見るとCONNECTの文字が。
+くー、すでに対応済みか。てゆか、まずman rsyncしろよ。
+</p>
+<pre>
+% RSYNC_PROXY=proxy:port rsync -avz rsync://ftp.linux.activestate.com/perl-current/ .
+</pre>
+<p>
+で解決だ。こりゃいいや。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/04/03 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/04/04 start -->
+<h2><a name="20020404" href="200204a.html#20020404">2002-04-04 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="200204041" title="200204041" href="200204a.html#200204041">■</a> 
+<a href="ftp://ftp.debian.org/debian/pool/main/l/ltrace/">ltrace 0.3.26</a></h3>
+<p>
+freshmeatで知る。更新。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200204042" title="200204042" href="200204a.html#200204042">■</a> 
+<a href="http://rsync.samba.org/">rsync 2.5.5</a></h3>
+<p>
+更新。zlib/README.rsyncを読んで、-lzはやめた。
+</p>
+<pre>
+Specific changes that have been made to zlib for rsync include:
+
+- add Z_INSERT_ONLY to allow for efficient history updating without
+  actually emitting any data. This is used to compress the matched
+  blocks that don't cross the wire, which gives better compression
+  ratios on the literal data.
+
+- fixed a number of minor compilation issues. (redefinition of MAX and
+  other such trivial things)
+
+- include rsync.h to ensure that we get a consistent set of includes
+  for all C code in rsync and to take advantage of autoconf
+
+As a result of the first item, the streams from rsync's version of
+zlib are *not compatible* with those produced by the upstream version
+of rsync.  In other words, if you link rsync against your system's
+copy, it will not be able to interoperate with any other version if
+the -z option is used.  (Sorry.  Sometimes standard is better than
+better.)
+</pre>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200204043" title="200204043" href="200204a.html#200204043">■</a> 
+<a href="http://ccache.samba.org/">ccache 1.4</a></h3>
+<pre>
+The latest release is ccache 1.4. This release adds:
+
+ ・ 2 level cache hierarchy
+ ・ added CCACHE_NOLINK environment variable
+ ・ nicer statistics formatting
+ ・ slight change to the hash function to raise cache hit rate
+</pre>
+<p>
+ということらしい。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/04/04 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/04/05 start -->
+<h2><a name="20020405" href="200204a.html#20020405">2002-04-05 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="200204051" title="200204051" href="200204a.html#200204051">■</a> 
+[Virus] W32.Klez.E@mm</h3>
+<p>
+最近流行っているのか、2日連続で来た。あ、両方共skk MLだな。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200204052" title="200204052" href="200204a.html#200204052">■</a> 
+[Ruby] defined? block_given?</h3>
+<p>
+あ、これだとblock_given?という変数があったら困るなと思ったら、
+?は変数には使えなくなって随分経つんだということに気づいた。
+</p>
+
+<p>
+?がつかない場合は、やっぱrespond_to?を使って、
+</p>
+<pre>
+Object.respond_to? :foo
+</pre>
+<p>
+のほうが無難か。
+</p>
+<pre>
+Kernel.private_methods.include? &quot;foo&quot;
+</pre>
+<p>
+はちょっと効率が悪そう。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/04/05 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/04/06 start -->
+<h2><a name="20020406" href="200204a.html#20020406">2002-04-06 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="200204061" title="200204061" href="200204a.html#200204061">■</a> 
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-talk/37626">Threading still broken in Win Ruby?</a></h3>
+<p>
+この人はどうもWindowsでも完璧に動かないと気がすまないようだ。
+
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-talk/37627">これ</a> とか以前もpipeが動かないと騒いでた。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200204062" title="200204062" href="200204a.html#200204062">■</a> 
+Invalid base64 data</h3>
+<p>
+うーむ。cmailだと
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-talk/37643">これ</a> が
+Invalid base64 dataになってしまうなあ。
+unpack(&quot;m&quot;)してみると読めるけど。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200204063" title="200204063" href="200204a.html#200204063">■</a> 
+<a href="http://www.tuxedo.org/~esr/fetchmail/index.html">fetchmail 5.9.11</a></h3>
+<p>
+更新。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200204064" title="200204064" href="200204a.html#200204064">■</a> 
+<a href="http://httpd.apache.org/">Apache 2.0正式版</a></h3>
+<p>
+どれをダウンロードするのかちょっと迷った。
+httpd-2.0.35.tar.gzなんだね。ってなぜそんなありふれた名前に？
+確かに実行ファイルは歴史的な理由によりずーっとhttpdだったが。
+defaultは/usr/local/apache2へインストールされるので、
+1.3も残しておける。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200204065" title="200204065" href="200204a.html#200204065">■</a> 
+<a href="http://www.ruby-lang.org/en/raa-list.rhtml?name=Win32OLE">Win32OLE 0.4.7</a></h3>
+<p>
+更新。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/04/06 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/04/07 start -->
+<h2><a name="20020407" href="200204a.html#20020407">2002-04-07 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="200204071" title="200204071" href="200204a.html#200204071">■</a> 
+<a href="http://ccache.samba.org/">ccache 1.5</a></h3>
+<p>
+気づいてなかったけど、CC='ccache gcc'でいいらしい。
+</p>
+<pre>
+You can either prefix your compile commands with &quot;ccache&quot; or you can
+create a symbolic link between ccache and the names of your compilers.
+</pre>
+<p>
+の前半部分を完璧に無視していた。
+symlinkを置いている~/ccacheへはふだんPATHを通してないので、それでもいいな。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200204072" title="200204072" href="200204a.html#200204072">■</a> 
+[Ruby] method_defined?</h3>
+<p>
+そうか。method_defined?を使えばいいんだ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200204073" title="200204073" href="200204a.html#200204073">■</a> 
+[Ruby] jcodeの無効化</h3>
+<p>
+jcodeがStringのtr!とかを置き換えてしまうのはいやだという話はよく聞く。
+この際動的に切り替えられる仕組みを考えてみよう。
+</p>
+
+<p>
+まずdefだけしてるtr!とかもalias original_tr! tr!として残しておく。
+さらにdef tr!ではなくdef jtr!と全部jをprefixをつけて、
+alias tr! jtr!としておく。あとは
+</p>
+<pre>
+String.class_eval do alias_method :tr!, :original_tr! end
+</pre>
+<p>
+で元に戻し
+</p>
+<pre>
+String.class_eval do alias_method :tr!, :jtr! end
+</pre>
+<p>
+でjcodeを活かすString::jcodeというクラスメソッドを用意し切り替えられるようにする。
+つまり
+</p>
+<pre>
+require 'jcode'
+</pre>
+<p>
+だと今までのjcodeで、さらに
+</p>
+<pre>
+String::jcode = false
+</pre>
+<p>
+とすると、tr!(orignal_tr!)とjtr!が使えるようになるというわけ。
+</p>
+<pre>
+  def self.jcode=(mode)
+    @@jcode = mode ? true : false
+    prefix = {true=&gt;'j', false=&gt;'original_'}[@@jcode]
+    class_eval do
+      %w(tr delete squeeze tr_s chop).each do |method|
+        alias_method method+'!', prefix+method+'!'
+        alias_method method, prefix+method
+      end
+    end
+  end
+
+  def self.jcode
+    @@jcode
+  end
+
+  self.jcode = true
+</pre>
+<p>
+てな感じ。そいうえばjlengthだけ日和ったのはなぜだっけかなあ。
+</p>
+
+<p>
+def内でaliasするにはevalを使う方法もあるけど、
+文字列を渡さなきゃいけないので面倒。
+そういえばevalはなぜブロックを受けつけないんだろう？
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200204074" title="200204074" href="200204a.html#200204074">■</a> 
+<a href="http://www.iptables.org/">iptables 1.2.6a</a></h3>
+<p>
+あれ？1.2.6はすっかり忘れていたようだ。先月出てたのか。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200204075" title="200204075" href="200204a.html#200204075">■</a> 
+<a href="http://www.linet.gr.jp/~kojima/Plamo/">Plamo 2.2.5</a></h3>
+<p>
+Plamo 2.2.5にしようかなと思い見に行ってみると
+</p>
+<pre>
+kernel-2.2.19 + glibc-2.2.2 + XFree86 3.3.6
+</pre>
+<p>
+という構成だった。これではバージョンダウンになってしまう。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200204076" title="200204076" href="200204a.html#200204076">■</a> 
+[Ruby] alias_method</h3>
+<p>
+alias_methodはModuleクラスのメソッドなのでclass_evalは要らない。
+あとsuccも追加して、privateは外そう。
+</p>
+<pre>
+  def self::jcode=(mode)
+    @@jcode = mode ? true : false
+    prefix = {true=&gt;'j', false=&gt;'original_'}[@@jcode]
+    %w(succ tr delete squeeze tr_s chop).each do |method|
+      alias_method method+'!', prefix+method+'!'
+      alias_method method, prefix+method
+    end
+  end
+
+  def self::jcode
+    @@jcode
+  end
+
+  self::jcode = true
+</pre>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200204077" title="200204077" href="200204a.html#200204077">■</a> 
+[Ruby] jcodeのjlength</h3>
+<p>
+思い出した。jlengthは後から俺が追加したからだ。やっぱ置き換えるか。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200204078" title="200204078" href="200204a.html#200204078">■</a> 
+<a href="http://www.parrotcode.org/">[Perl] parrot</a></h3>
+<p>
+CVSでもいいけどrsyncでも同期可能。
+
+<a href="http://www.parrotcode.org/">parrot</a> には
+</p>
+<pre>
+rsync -av --delete cvs.perl.org::parrot-HEAD parrot
+</pre>
+<p>
+と書かれてる。この::は
+</p>
+<pre>
+rsync -av --delete rsync://cvs.perl.org/parrot-HEAD parrot
+</pre>
+<p>
+と同じ意味。
+</p>
+
+<p>
+makeは
+</p>
+<pre>
+% perl Configure.pl
+% make
+</pre>
+<p>
+という感じ。Configure自体はPerlで書かれてるせいか速い。
+</p>
+<pre>
+% perl Configure.pl --defaults
+</pre>
+<p>
+とすればすべてdefaultで処理する。
+最適化オプションは何もつかない。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/04/07 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/04/08 start -->
+<h2><a name="20020408" href="200204a.html#20020408">2002-04-08 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="200204081" title="200204081" href="200204a.html#200204081">■</a> 
+[Cygwin] new setup.exe</h3>
+<p>
+ふと気づとくと
+</p>
+<pre>
+http%3a%2f%2fwww.ruby-lang.org%2f%7eeban%2fruby%2fbinaries%2fcygwin
+</pre>
+<p>
+という長い名前のディレクトリができてる。
+なるほど。new setup.exeは複数のミラーサイトを指定できるからね。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200204082" title="200204082" href="200204a.html#200204082">■</a> 
+[Ruby] warning: method redefined; discarding old foo</h3>
+<p>
+jcode.rbの最初と最後には謎の
+</p>
+<pre>
+$vsave, $VERBOSE = $VERBOSE, false
+$VERBOSE = $vsave
+</pre>
+<p>
+があるけど、これは
+</p>
+<pre>
+warning: method redefined; discarding old foo
+</pre>
+<p>
+というwarningを避けるためにある。
+aliasで全部originalを残すようにすればこのwarningは消えるので小細工も必要なくなる。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200204083" title="200204083" href="200204a.html#200204083">■</a> 
+探偵物語</h3>
+<p>
+今日の分を見終わって停止を押したら、
+「天国への階段」で23年後の古尾谷雅人が出てきてびっくり。
+あ、探偵物語の頃は「古老屋」雅人だったのか。
+というか原田美枝子の美少女振りもびっくりだ。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/04/08 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/04/09 start -->
+<h2><a name="20020409" href="200204a.html#20020409">2002-04-09 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="200204091" title="200204091" href="200204a.html#200204091">■</a> 
+<a href="http://www.ruby-lang.org/en/raa-list.rhtml?name=REXML">[Ruby] REXML 2.1.1</a></h3>
+<p>
+更新。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200204092" title="200204092" href="200204a.html#200204092">■</a> 
+<a href="http://ccache.samba.org/">ccache 1.6</a></h3>
+<pre>
+The latest release is ccache 1.6. This release adds:
+
+ ・ avoid 2nd call to cpp on cache miss
+ ・ added CCACHE_CPP2 option
+ ・ added explicit handling of /dev/null as an output
+ ・ added multiple source files statistic
+ ・ minor documentation updates
+</pre>
+<p>
+cache missしたときに2回cppを起動しないようになったようだ。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/04/09 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/04/10 start -->
+<h2><a name="20020410" href="200204a.html#20020410">2002-04-10 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="200204101" title="200204101" href="200204a.html#200204101">■</a> 
+<a href="http://www.ruby-lang.org/en/raa-list.rhtml?name=REXML">[Ruby] REXML 2.1.2</a></h3>
+<p>
+更新。bugfixらしい。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200204102" title="200204102" href="200204a.html#200204102">■</a> 
+<a href="http://axpoint.axkit.org/">AxPoint</a></h3>
+<p>
+XMLで記述してPDFに変換するプレゼンテーションツール。
+Perlで書かれている。
+SVGをサポートしてるので円とか線とかも書ける。
+サンプルを見て驚いたんだけど、Acrobat Readerってfull screen modeがあるんだね。
+日本語が使えないのが残念。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200204103" title="200204103" href="200204a.html#200204103">■</a> 
+<a href="http://namazu.org/~satoru/diary/?200204a&amp;to=200204091#200204091">小うるさいmake</a></h3>
+<p>
+makeの例のメッセージ「入ります」「出ます」をさまぁ〜ず三村調に
+</p>
+<pre>
+% LC_ALL=ja_JP.eucJP make
+make -C tmp
+make[1]: 入るのかよ！ ディレクトリ `/home/watanabe/0204/tmp'
+make[1]: `all' に対して行うべき事はありません。
+make[1]: 出るのかよ！ ディレクトリ `/home/watanabe/0204/tmp'
+</pre>
+<p>
+としてみるのはどうだろう？
+というかやってみたんだが、rubyのmakeが小うるさいどころかかなりうるさい。
+流石三村だ。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/04/10 end -->
+
+<hr>
+<div>
+<a href="200203c.html">&lt;Prev(,)</a> | 
+<a href="200204b.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

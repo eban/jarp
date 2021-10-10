@@ -1,0 +1,351 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2012-11-b</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="201211a.html">
+<link rel="next" href="201211c.html">
+
+<link rel="stylesheet" type="text/css" href="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.css">
+<script type="text/javascript" src="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.js"></script>
+<script type="text/javascript">
+<!--       
+$(document).ready(function() {
+  prettyPrint();
+});
+-->
+</script>
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2012年11月中旬〜</p>
+<hr>
+<div>
+<a href="201211a.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="201211c.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2012/11/11 start -->
+<h2><a name="20121111" href="201211b.html#20121111">2012-11-11 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="201211111" title="201211111" href="201211b.html#201211111">■</a> 
+<a href="http://www.reddit.com/r/commandline/comments/12g76v/how_to_automatically_source_zshrc_in_all_open/">How to automatically source zshrc in all open terminals : commandline</a></h3>
+<p>
+これは素晴らしい。
+</p>
+<pre>
+trap &quot;source ~/.zshrc&quot; USR1
+</pre>
+<p>
+とすることで開いているすべての端末へ~/.zshrcを読ませることができるわけだ。<br>
+コメントにcronでinotifywaitについて書かれているが、<br>
+それよりはincronを使ったほうがよさげ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2012/11/11 end -->
+
+
+
+<hr class="hide">
+<!-- 2012/11/12 start -->
+<h2><a name="20121112" href="201211b.html#20121112">2012-11-12 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="201211121" title="201211121" href="201211b.html#201211121">■</a> 
+convertで1ドットずらして重ね合わせる</h3>
+<p>
+X方向に1ドットずらして重ねると太くなる。
+</p>
+<pre>
+% convert foo.png \( -clone 0 -roll +1+0 \) -compose multiply -composite x:
+</pre>
+<p>
+Y方向も重ねたほうがいいか。
+</p>
+<pre>
+% convert foo.png \( -clone 0 -roll +1+0 \) \( -clone 0 -roll +0+1 \) -compose multiply -composite x:
+</pre>
+<p>
+しかしこれをやるとちょっとぼけた感じになるので-sharpen 5ぐらいあったほうがいいか。
+</p>
+<pre>
+% convert foo.png \( -clone 0 -roll +1+0 \) \( -clone 0 -roll +0+1 \) -compose multiply -composite -sharpen 5 x:
+</pre>
+<p>
+なかなか難しい。
+</p>
+<!-- section end -->
+</div>
+<!-- 2012/11/12 end -->
+
+
+
+<hr class="hide">
+<!-- 2012/11/13 start -->
+<h2><a name="20121113" href="201211b.html#20121113">2012-11-13 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="201211131" title="201211131" href="201211b.html#201211131">■</a> 
+Sony Readerでディレクトリをコレクションに</h3>
+<p>
+Sony Readerにはコレクションがあるが、これを設定するのは面倒。<br>
+そこで
+<a href="http://n.blueblack.net/articles/2012-08-05_01_sony_reader_auto_collection_hack/">Sony Readerでフォルダを自動的にコレクション登録する</a>を試してみた。<br>
+Linuxのsqlite3に食わせるには;が足りないようで、ENDの後ろにも必要。
+</p>
+<pre>
+CREATE TRIGGER auto_collection_trigger AFTER INSERT ON books
+WHEN new.file_path LIKE 'Sony_Reader/media/books/_%'
+BEGIN
+    INSERT OR IGNORE INTO collection (_id, title, source_id)
+    VALUES (
+        (SELECT _id FROM collection WHERE title = substr(new.file_path, 25, length(new.file_path) - length(new.file_name) - 25)),
+        substr(new.file_path, 25, length(new.file_path) - length(new.file_name) - 25),
+        new.source_id
+    );
+    INSERT INTO collections (collection_id, content_id)
+    VALUES (
+        (SELECT _id FROM collection WHERE title = substr(new.file_path, 25, length(new.file_path) - length(new.file_name) - 25)),
+        new._id
+    );
+END;
+</pre>
+<p>
+これをauto_collection_trigger.sqlで保存して以下のように実行すればok。
+</p>
+<pre>
+% sqlite3 books.db &lt; auto_collection_trigger.sql
+</pre>
+<p>
+これでディレクトリ名がそのままコレクションになる。
+</p>
+<!-- section end -->
+</div>
+<!-- 2012/11/13 end -->
+
+
+
+<hr class="hide">
+<!-- 2012/11/14 start -->
+<h2><a name="20121114" href="201211b.html#20121114">2012-11-14 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="201211141" title="201211141" href="201211b.html#201211141">■</a> 
+Sony Readerの「最近追加された書籍」をむりやり「最近読んだ書籍」に</h3>
+<p>
+ついでに
+<a href="http://n.blueblack.net/articles/2012-08-05_01_sony_reader_auto_collection_hack/">Sony Readerでフォルダを自動的にコレクション登録する</a>の後半部分もやってみた。
+<pre>
+CREATE TRIGGER recently_opened_trigger AFTER UPDATE OF reading_time ON books
+WHEN new.file_path NOT LIKE 'Sony_Reader/media/books/{exclude}/_%'
+BEGIN
+    UPDATE books SET added_date = 0 WHERE _id = new._id;
+    UPDATE books SET added_date = reading_time WHERE reading_time NOT NULL AND _id &lt;&gt; new._id;
+END;
+
+CREATE TRIGGER recently_opened_exclude_trigger AFTER UPDATE OF reading_time ON books
+WHEN new.file_path LIKE 'Sony_Reader/media/books/{exclude}/_%'
+BEGIN
+    UPDATE books SET reading_time = added_date WHERE _id = new._id;
+END;
+
+CREATE TRIGGER recently_added_exclude_trigger AFTER INSERT ON books
+WHEN new.file_path LIKE 'Sony_Reader/media/books/{exclude}/_%'
+BEGIN
+    UPDATE books SET added_date = 0 WHERE _id = new._id;
+END;
+</pre>
+</p>
+<p>
+こうすると「最近追加された書籍」の3冊分が「最近読んだ書籍」になる。<br>
+追加されたのは「書籍」を見れば先頭に出てくるので、それほど困らない。<br>
+やっぱ4冊ぐらいは履歴が保持されていると結構便利。
+</p>
+<!-- section end -->
+</div>
+<!-- 2012/11/14 end -->
+
+
+
+<hr class="hide">
+<!-- 2012/11/15 start -->
+<h2><a name="20121115" href="201211b.html#20121115">2012-11-15 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="201211151" title="201211151" href="201211b.html#201211151">■</a> 
+人間ドック</h3>
+<p>
+いつも申し込むのを忘れてしまう。久し振りの人間ドック。<br>
+下剤入りのバリウムの効きがすごく午後はやばかった。会社休んで正解だったよ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2012/11/15 end -->
+
+
+
+<hr class="hide">
+<!-- 2012/11/16 start -->
+<h2><a name="20121116" href="201211b.html#20121116">2012-11-16 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="201211161" title="201211161" href="201211b.html#201211161">■</a> 
+convertの-depth 4のバグが直っていた</h3>
+<p>
+<a href="201205a.html#201205061">以前</a>convertで-depth 4としても4bitならないバグがあったが、Ubuntu 12.10では直っていた。
+</p>
+<pre>
+% convert 852.gif -type grayscale -depth 4 a.png
+% file a.png
+a.png: PNG image data, 240 x 320, 4-bit grayscale, non-interlaced
+</pre>
+<p>
+一方GraphicsMagickのほうはだめみたい。
+</p>
+<pre>
+% gm convert 852.gif -type grayscale -depth 4 b.png
+% file b.png
+b.png: PNG image data, 240 x 320, 8-bit grayscale, non-interlaced
+</pre>
+<!-- section end -->
+</div>
+<!-- 2012/11/16 end -->
+
+
+
+<hr class="hide">
+<!-- 2012/11/17 start -->
+<h2><a name="20121117" href="201211b.html#20121117">2012-11-17 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="201211171" title="201211171" href="201211b.html#201211171">■</a> 
+<a href="http://gmailblog.blogspot.jp/2012/11/search-for-emails-by-size-and-more-in.html">Search for emails by size and more in Gmail</a></h3>
+<p>
+Gmailの検索でsize:5mとかolder_than:1yとか指定できるようになったらしい。<br>
+直近1ヶ月だったらnewer_than:1mでいい。
+</p>
+<p>
+詳しくは
+<a href="http://support.google.com/mail/bin/answer.py?hl=en&amp;answer=7190">Using advanced search - Gmail Help</a>へ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2012/11/17 end -->
+
+
+
+<hr class="hide">
+<!-- 2012/11/18 start -->
+<h2><a name="20121118" href="201211b.html#20121118">2012-11-18 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="201211181" title="201211181" href="201211b.html#201211181">■</a> 
+スキャンした画像をVPSへ</h3>
+<p>
+すっかり忘れていたが、さくらのVPSはスキャンした画像のバックアップも兼ねてVPS 2Gにしたんだった。<br>
+というわけで、rsyncで転送しているが54GB分だとどのくらい時間がかかるのか。<br>
+たしかアップロード方向はそんなに速くなかったよなあ。2,3日ぐらいかかるかも。
+</p>
+<!-- section end -->
+</div>
+<!-- 2012/11/18 end -->
+
+
+
+<hr class="hide">
+<!-- 2012/11/19 start -->
+<h2><a name="20121119" href="201211b.html#20121119">2012-11-19 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="201211191" title="201211191" href="201211b.html#201211191">■</a> 
+24時間で12GB</h3>
+<p>
+というわけで終わるのは勤労感謝の日あたり。<br>
+一度VPSに上げてしまえば他に転送するのは楽なはず。
+</p>
+<!-- section end -->
+</div>
+<!-- 2012/11/19 end -->
+
+
+
+<hr class="hide">
+<!-- 2012/11/20 start -->
+<h2><a name="20121120" href="201211b.html#20121120">2012-11-20 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="201211201" title="201211201" href="201211b.html#201211201">■</a> 
+TBSしか映らないテレビ</h3>
+<p>
+なんか突然テレビがTBSしか映らなくなった。<br>
+リモコンで他に変えてもすぐにTBSへ戻ってしまう。<br>
+電源切って入れ直してもだめ。<br>
+何をしたか思い出してみるに書類を本棚に置いたとたんに起こったわけで、<br>
+そのあたりを探ってみるとなんとその下に別のリモコン発見。赤く光ってるよ！<br>
+偶然6が押され放しになったわけだな。電池抜いとこう。
+</p>
+<!-- section end -->
+</div>
+<!-- 2012/11/20 end -->
+
+<hr>
+<div>
+<a href="201211a.html">&lt;Prev(,)</a> | 
+<a href="201211c.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

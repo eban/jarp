@@ -1,0 +1,638 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2006-2-a</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="200601c.html">
+<link rel="next" href="200602b.html">
+
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2006年2月上旬〜</p>
+<hr>
+<div>
+<a href="200601c.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="200602b.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2006/02/01 start -->
+<h2><a name="20060201" href="200602a.html#20060201">2006-02-01 (Wed)</a></h2>
+<!-- 2006-02-02 00:16:58 -->
+
+<div class="entry1">
+<h3><a name="200602011" title="200602011" href="200602a.html#200602011">■</a> 
+1月のspam</h3>
+<p>
+430通。Gmail側約6300スレッド。なぜか1000スレッドほど急に減ってる。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200602012" title="200602012" href="200602a.html#200602012">■</a> 
+<a href="http://blogs.msdn.com/ie/archive/2006/01/31/520812.aspx">[Windows] IE7 Beta 2 Preview Available</a></h3>
+<p>
+なぜかIE7を入れてみた。IE6とは共存できない。完全に置き換わる。RSSリーダがかっこいいと思った。
+IE Tabも動いているのでとりあえずこのままでいこう。
+</p>
+
+<p>
+うささんの調査によるとアンインストールしたいときは更新プログラムの表示をチェックがミソらしいよ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2006/02/01 end -->
+
+
+
+<hr class="hide">
+<!-- 2006/02/02 start -->
+<h2><a name="20060202" href="200602a.html#20060202">2006-02-02 (Thu)</a></h2>
+<!-- 2006-02-03 01:40:10 -->
+
+<div class="entry1">
+<h3><a name="200602021" title="200602021" href="200602a.html#200602021">■</a> 
+<a href="http://www.openssh.org/">[Soft] OpenSSH 4.3p1</a></h3>
+<blockquote><p>
+Security bugs resolved in this release:
+<dl>
+<dt>
+CVE-2006-0225:
+<dd>
+scp (as does rcp, on which it is based) invoked a
+subshell to perform local to local, and remote to remote copy
+operations. This subshell exposed filenames to shell expansion
+twice; allowing a local attacker to create filenames containing
+shell metacharacters that, if matched by a wildcard, could lead
+to execution of attacker-specified commands with the privilege of
+the user running scp (Bugzilla #1094)
+</dl>
+</p></blockquote><p>
+いつものように
+</p>
+<pre>
+% CFLAGS=-Os ./configure --prefix=/usr --with-libedit ;: openssh
+</pre>
+<p>
+てな感じで。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200602022" title="200602022" href="200602a.html#200602022">■</a> 
+<a href="http://search.cpan.org/~nwclark/perl-5.8.8/">[Perl] Perl 5.8.8</a></h3>
+<p>
+ついでにPerlも上げとこう。
+</p>
+<pre>
+% ./configure.gnu -Dccflags=-DDEBUGGING ;: perl
+% make all test install |&amp; tee make.log
+</pre>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200602023" title="200602023" href="200602a.html#200602023">■</a> 
+[FC4] 今日のyum update</h3>
+<pre>
+SDL                     i386       1.2.8-4          updates-released  206 k
+SDL-devel               i386       1.2.8-4          updates-released  623 k
+amarok                  i386       1.3.8-1.fc4      extras            8.3 M
+gnupg2                  i386       1.9.20-1.fc4     extras            896 k
+openssh                 i386       4.2p1-fc4.10     updates-released  363 k
+openssh-askpass         i386       4.2p1-fc4.10     updates-released   51 k
+openssh-askpass-gnome   i386       4.2p1-fc4.10     updates-released   32 k
+openssh-clients         i386       4.2p1-fc4.10     updates-released  380 k
+openssh-server          i386       4.2p1-fc4.10     updates-released  224 k
+system-config-soundcard  noarch     1.2.12-5.FC4     updates-released  1.0 M
+wine                    i386       0.9.6-1.fc4      extras            9.4 M
+</pre>
+
+<!-- section end -->
+</div>
+<!-- 2006/02/02 end -->
+
+
+
+<hr class="hide">
+<!-- 2006/02/03 start -->
+<h2><a name="20060203" href="200602a.html#20060203">2006-02-03 (Fri)</a></h2>
+<!-- 2006-02-04 01:19:46 -->
+
+<div class="entry1">
+<h3><a name="200602031" title="200602031" href="200602a.html#200602031">■</a> 
+<a href="http://labs.cybozu.co.jp/blog/kazuho/archives/2006/02/c-0_05.php">[Soft] C 0.05</a></h3>
+<blockquote><dl>
+<dt>
+Changes:
+<dd>
+The interpreter now accepts command line arguments to scripts
+given though standard input. It also supports the TMPDIR environment
+variable, which enables users to share a single compile cache. 
+</dl></blockquote>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200602032" title="200602032" href="200602a.html#200602032">■</a> 
+<a href="http://www710.univ-lyon1.fr/~exco/nnfs.html">[Soft] Non-Networked File System 2.1.9</a></h3>
+<blockquote><dl>
+<dt>
+About:
+<dd>
+NNFS provide a consistent file system over several non networked UNIX
+computers (or slow networked). For example on your computer at home
+and at work using only a floppy disk for the synchronisation.
+</dl></blockquote><p>
+ホームディレクトリをUSBフラッシュで持ち歩くときに便利そう。
+しかしそんな状況にはなりそうもない。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200602033" title="200602033" href="200602a.html#200602033">■</a> 
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-talk/178201">[Ruby] 過去問</a></h3>
+<p>
+なぜか過去と同じ問題を出してしまったらしい。こういうこともあるんだな。
+</p>
+<!-- section end -->
+</div>
+<!-- 2006/02/03 end -->
+
+
+
+<hr class="hide">
+<!-- 2006/02/04 start -->
+<h2><a name="20060204" href="200602a.html#20060204">2006-02-04 (Sat)</a></h2>
+<!-- 2006-02-05 03:07:34 -->
+
+<div class="entry1">
+<h3><a name="200602041" title="200602041" href="200602a.html#200602041">■</a> 
+<a href="http://www.sqlite.org/">[Soft] SQLite 3.3.3</a></h3>
+<blockquote><dl>
+<dt>
+Changes:
+<dd>
+Support has been added for CHECK constraints, DESC indices, IF
+[NOT] EXISTS clauses on CREATE and DROP statements, a more efficient
+on-disk encoding for boolean values, and the ability to share the page and
+schema cache between database connections in the same thread. This is the
+first stable release in the 3.3 series.
+</dl></blockquote>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200602042" title="200602042" href="200602a.html#200602042">■</a> 
+<a href="http://qdbm.sf.net/">[Soft] QDBM: Quick DataBase Manager 1.8.45</a></h3>
+<blockquote><dl>
+<dt>
+Changes:
+<dd>
+The page alignment algorithm was improved and a bug with mmap
+emulation on Windows was fixed.
+</dl></blockquote>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200602043" title="200602043" href="200602a.html#200602043">■</a> 
+<a href="http://japan.zdnet.com/news/software/story/0,2000052520,20095777,00.htm">[VMware] 「VMware GSX Server」を無料提供へ--来週にも発表か</a></h3>
+<p>
+ほぉ、まじで？
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200602044" title="200602044" href="200602a.html#200602044">■</a> 
+<a href="http://blog.livedoor.jp/michaelsan/archives/50345399.html">美容院に詳しい奴ちょっと来い</a></h3>
+<p>
+腹痛い。
+</p>
+<!-- section end -->
+</div>
+<!-- 2006/02/04 end -->
+
+
+
+<hr class="hide">
+<!-- 2006/02/05 start -->
+<h2><a name="20060205" href="200602a.html#20060205">2006-02-05 (Sun)</a></h2>
+<!-- 2006-02-06 01:36:09 -->
+
+<div class="entry1">
+<h3><a name="200602051" title="200602051" href="200602a.html#200602051">■</a> 
+<a href="http://redhanded.hobix.com/cult/rubyspameeting2006.html">[Ruby] YARV will be merged into Ruby 1.9 at Feb 14, Saint Valentine's Day.</a></h3>
+<p>
+いよいよYARVがマージされるらしい。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200602052" title="200602052" href="200602a.html#200602052">■</a> 
+[Vim] .vimrc</h3>
+<p>
+流行ってるので~/.vimrcを貼りつけてみる。
+こだわってるのはstatuslineとmap chだけ。
+あとはどこかで見たものの寄せ集め。
+</p>
+<pre>
+set fencs=iso-2022-jp,utf-8,ucs-2le,ucs-2,cp932,japan
+set tenc=euc-jp
+set ai si
+set viminfo='20,\&quot;50
+set backup
+set history=50
+set shm=at
+set bs=2
+set laststatus=2
+set statusline=%&lt;%f\ %m%r%h%w[%{&amp;fileformat}][%{has('multi_byte')&amp;&amp;\ &amp;fileencoding!=''?&amp;fileencoding:&amp;encoding}]\ 0x%B%=%l,%c\ %P
+cnoremap &lt;C-A&gt; &lt;Home&gt;
+cnoremap &lt;C-F&gt; &lt;Right&gt;
+cnoremap &lt;C-B&gt; &lt;Left&gt;
+if &amp;t_Co &gt; 2 || has(&quot;gui_running&quot;)
+  syntax on
+  set hlsearch
+endif
+so $VIMRUNTIME/macros/matchit.vim
+
+if has(&quot;autocmd&quot;)
+  filetype plugin indent on
+  au FileType text setlocal tw=60
+  au FileType ruby setlocal expandtab indentkeys-=0#
+  &quot; When editing a file, always jump to the last cursor position
+  autocmd BufReadPost *
+  \ if line(&quot;'\&quot;&quot;) &gt; 0 &amp;&amp; line (&quot;'\&quot;&quot;) &lt;= line(&quot;$&quot;) |
+  \   exe &quot;normal g`\&quot;&quot; |
+  \ endif
+  au FileType changelog
+  \ map ch 1Gi&lt;C-R&gt;=strftime(&quot;%a %b %e %X %Y  WATANABE Hirofumi  &lt;eban@ruby...&gt;\n\n\n\n&quot;)&lt;CR&gt;&lt;UP&gt;&lt;UP&gt;&lt;TAB&gt;* 
+endif &quot; has(&quot;autocmd&quot;)
+</pre>
+<p>
+あと~/.vim/{ft,}pluginにもいろいろ置いてるので、
+たぶん立ち上げ時に勝手に読まれてる。
+pluginは結局試しただけで全然使ってないが。
+</p>
+<!-- section end -->
+</div>
+<!-- 2006/02/05 end -->
+
+
+
+<hr class="hide">
+<!-- 2006/02/06 start -->
+<h2><a name="20060206" href="200602a.html#20060206">2006-02-06 (Mon)</a></h2>
+<!-- 2006-02-07 00:42:05 -->
+
+<div class="entry1">
+<h3><a name="200602061" title="200602061" href="200602a.html#200602061">■</a> 
+<a href="http://devlists.com/">[Mail] Devlists</a></h3>
+<p>
+ruby-talkとかruby-coreとかruby on railsとかrails coreとかのMLがsubscribeしなくても読める。
+未読管理もある。でもまだまだ使い辛い。未読だけ読むhotokeyが欲しい。
+hotkeyでpが別の意味に使われてn/pじゃないのは痛いな。
+選択してsするとsnippetできるのは面白い。消す方法はないが。
+</p><blockquote><p>
+Features of DevLists<br>
+DevLists has a wealth of features that we hope you'll find
+invaluable. Here are just a few:<br>
+</p><ol>
+<li>Powerful search of all messages allows you to quickly find what you're looking for. It will help you avoid n00b posts too!
+<li>You can flag (Flag Favorites) interesting messages &amp; threads for quick reference. You can even flag your favorite posters, like language designers, framework creators, or those members you find the most helpful.
+<li>You can receive up-to-date messages for mailing lists you haven't signed up to yet.
+<li>All messages are kept forever for easy reference.
+<li>Snippets make it incredibly easy to keep track of interesting comments and code examples.
+</ol></blockquote><p>
+Favorite Postersのためだけに登録するのはありだと思った。
+これでなかださんとかを登録しとけば簡単にパッチが取り出せるわけだよ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200602062" title="200602062" href="200602a.html#200602062">■</a> 
+[Ruby] ERROR_NOT_LOCKED</h3>
+<p>
+うささんから宿題を出される。
+</p>
+
+<p>
+Win32ではロックしないでアンロックするとERROR_NOT_LOCKEDというエラーになるようで
+</p>
+<pre>
+Thread.new{sleep}
+open(__FILE__){|f|f.flock(File::LOCK_UN)}
+</pre>
+<p>
+がbusy loopになってた。
+CygwinだとなんだかんだでerrnoはEAGAINしか返さないからなので、
+GetLastError()を呼ぶことにした。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200602063" title="200602063" href="200602a.html#200602063">■</a> 
+[Ruby] file.cとwindows.h</h3>
+<p>
+実はfile.cで#include &lt;windows.h&gt;するとOpenFileの存在のせいで非常に面倒なことになる。
+win32/win32.hの
+</p>
+<pre>
+#define OpenFile  WINAPI_OpenFile
+#include &lt;winsock2.h&gt;
+#undef OpenFile
+</pre>
+<p>
+というような小細工が必要になる。
+面倒なのでGetLastError()のプロトタイプ宣言を自前で用意。
+と思ったらすでに存在してた。
+Cygwinはrename()のerrnoもなんか変だったらしい。
+自分で追加したに違いないが覚えてない。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200602064" title="200602064" href="200602a.html#200602064">■</a> 
+[TV] 輪舞曲(ロンド)の暗号</h3>
+<p>
+まあ見た感じeuc-jpなんで暗号でもなんでもないんだけど。
+</p>
+<pre>
+〓受信Mail
+
+〓よしの食堂
+
+bfb7 bdc9 c3e6 b1fb
+43e5 b1eo 43e5 bdbo
+c5c5 cfc3
+</pre>
+<p>
+が「新宿中央公園公衆電話」ってことらしい。oは0だろう。
+</p>
+<pre>
+% echo -n '新宿中央公園公衆電話' | nkf -e | od -tx1
+0000000 bf b7 bd c9 c3 e6 b1 fb b8 f8 b1 e0 b8 f8 bd b0
+0000020 c5 c5 cf c3
+0000024
+</pre>
+<p>
+「公」だけ違うな。
+しかもたまたま2回現われてるからtypoでもなさそう。
+0x43は'C'だもんな。その暗号、バグってるよ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2006/02/06 end -->
+
+
+
+<hr class="hide">
+<!-- 2006/02/07 start -->
+<h2><a name="20060207" href="200602a.html#20060207">2006-02-07 (Tue)</a></h2>
+<!-- 2006-02-08 01:54:28 -->
+
+<div class="entry1">
+<h3><a name="200602071" title="200602071" href="200602a.html#200602071">■</a> 
+<a href="http://blog.kan.vc/1139226104.html">[Blog] バックアップ</a></h3>
+<p>
+Bloglinesに11/20からのは残ってます。たぶんkan.vcに移ってからのが全部。
+Bloglinesは200アイテムしか保存してくれないから本格的には使えないけど、
+
+<a href="http://www.suprglu.com/">SuprGlu</a>だったらバックアップとして使えそうだ。
+とりあえずこことdel.icio.usのRSSだけ登録しておいたんだけど、
+過去の日記も別のRSSにすれば完全なバックアップができるかな。
+</p>
+<!-- section end -->
+</div>
+<!-- 2006/02/07 end -->
+
+
+
+<hr class="hide">
+<!-- 2006/02/08 start -->
+<h2><a name="20060208" href="200602a.html#20060208">2006-02-08 (Wed)</a></h2>
+<!-- 2006-02-09 02:24:51 -->
+
+<div class="entry1">
+<h3><a name="200602081" title="200602081" href="200602a.html#200602081">■</a> 
+<a href="http://www.pandora.com/">[Radio] Pandora</a></h3>
+<p>
+なんとなくLast.FMを使わなくなって、Yahoo! Musicのサウンドステーションを聞いていたが、最近飽きてきた。
+あまり変わりばえしないしね。
+</p>
+
+<p>
+というわけで
+<a href="http://www.pandora.com/">Pandora</a>を試した。
+とりあえずMaroon 5でcreate。プレーヤはFlashのようだ。
+すげー簡単だ。登録しなくてもいきなり聞ける。
+その後は似た感じの他のアーティストが出てくる。
+これは気軽でいいね。
+後から他のアーティストも追加もできるんだ。やっぱ登録しよう。
+</p>
+
+<p>
+しかし
+<a href="http://blog.pandora.com/faq/index.html#userZip">FAQ</a>を見ると
+</p><blockquote><dl>
+<dt>
+Q: Why do you need to know my zip code?
+<dd>
+At this time we are only licensed to offer Pandora music services to
+residents of the United States. Audio streaming regulations differ
+from country to country, and we are working on acquiring the proper
+licenses so we can legally offer Pandora outside of the United
+States. We require your zip code to confirm that you are a resident of
+the United States. 
+</dl></blockquote><p>
+ということで、アメリカ国内にいる人限定らしい。残念。
+</p>
+<!-- section end -->
+</div>
+<!-- 2006/02/08 end -->
+
+
+
+<hr class="hide">
+<!-- 2006/02/09 start -->
+<h2><a name="20060209" href="200602a.html#20060209">2006-02-09 (Thu)</a></h2>
+<!-- 2006-02-10 02:47:38 -->
+
+<div class="entry1">
+<h3><a name="200602091" title="200602091" href="200602a.html#200602091">■</a> 
+<a href="http://sourceforge.net/projects/ajaxftp/">[Soft] AjaxFTP 0.5</a></h3>
+<blockquote><dl>
+<dt>
+About:
+<dd>
+AjaxFTP is a drop-in FTP widget that you can use in Web 2.0
+applications. It's modular, skinnable, and uses the Ruby on Rails
+Prototype JavaScript library for a seamless FTP browsing experience.
+</dl></blockquote><p>
+
+<a href="http://ajaxftp.org/">デモサイト</a>もある。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200602092" title="200602092" href="200602a.html#200602092">■</a> 
+<a href="http://weather.livedoor.com/weather_hacks/">[RSS] Weather Hacks</a></h3>
+<p>
+地震速報がいいかも。あ、アイテムにPRが混ざってる。そういう広告もたしかにありだな。
+</p>
+<!-- section end -->
+</div>
+<!-- 2006/02/09 end -->
+
+
+
+<hr class="hide">
+<!-- 2006/02/10 start -->
+<h2><a name="20060210" href="200602a.html#20060210">2006-02-10 (Fri)</a></h2>
+<!-- 2006-02-11 01:39:27 -->
+
+<div class="entry1">
+<h3><a name="200602101" title="200602101" href="200602a.html#200602101">■</a> 
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-talk/179262">[Ruby] [QUIZ] FasterGenerator (#66)</a></h3>
+<p>
+そんなに速いんなら取り込んじゃえばいいような。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200602102" title="200602102" href="200602a.html#200602102">■</a> 
+<a href="http://kooditakomo.cs.tut.fi/projects/gunit/">[Soft] GUnit 0.5 (Development)</a></h3>
+<blockquote><dl>
+<dt>
+About:
+<dd>
+GUnit is a C unit testing framework in the spirit of JUnit. The
+framework incorporates an easy-to-use GUI based on the GNOME libraries, as
+well as support for Hildon UI (maemo.org). 
+</dl></blockquote>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200602103" title="200602103" href="200602a.html#200602103">■</a> 
+<a href="[Soft]">rvi 1.1 2006/02/09</a></h3>
+<blockquote><dl>
+<dt>
+About:
+<dd>
+rvi is a wrapper script which gives you an easy way of integrating
+RCS with your existing vim/vi work environment. Simply use &quot;rvi filename&quot;
+instead of &quot;vim filename&quot;, and the file will automatically be checked into
+revision control, and the changes you made after the edit will be displayed
+each time you finish editing. 
+</dl></blockquote><p>
+毎回チェックインされるというのもなかなかすごい。20行もない。
+</p>
+
+<p>
+それはそれとして
+</p>
+<pre>
+% ls -l /bin/rvi
+lrwxrwxrwx  1 root root 2 Aug 13 02:44 /bin/rvi -&gt; vi
+</pre>
+<p>
+というsymlinkがあったりするんだけど、
+</p>
+<pre>
+     rvim rview rgvim rgview
+               Like the above, but with restrictions.  It will not be possi-
+               ble to start shell commands, or suspend Vim. Can also be done
+               with the &quot;-Z&quot; argument.
+</pre>
+<p>
+名前がぶつかるよね。
+</p>
+<!-- section end -->
+</div>
+<!-- 2006/02/10 end -->
+
+<hr>
+<div>
+<a href="200601c.html">&lt;Prev(,)</a> | 
+<a href="200602b.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

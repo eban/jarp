@@ -1,0 +1,704 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2005-2-b</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="200502a.html">
+<link rel="next" href="200502c.html">
+
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2005年2月中旬〜</p>
+<hr>
+<div>
+<a href="200502a.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="200502c.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2005/02/11 start -->
+<h2><a name="20050211" href="200502b.html#20050211">2005-02-11 (Fri)</a></h2>
+<!-- 2005-02-12 02:24:47 -->
+
+<div class="entry1">
+<h3><a name="200502111" title="200502111" href="200502b.html#200502111">■</a> 
+[IM] Jabber</h3>
+<p>
+Jabberのクライアントってなにがいいんだろうね。
+Gaimでもいいんだけど、emacs key bindingsで使いたからC-fとC-bが違う用途に割り当てられてると困る。
+C-bはショートカットの設定でなんとかなるけど、C-fだけは検索になっちゃうしねえ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200502112" title="200502112" href="200502b.html#200502112">■</a> 
+[Web] Freepanってなくなった？</h3>
+<p>
+
+<a href="http://raa.ruby-lang.org/project/ihelp/">ihelp</a>を入れようと思ったら、つながらない。
+じゃ、久し振りに
+<a href="http://www.freepan.org">Freepan</a>を使ってみるかーと試すがこれもつながらない。
+寝る。
+</p>
+<!-- section end -->
+</div>
+<!-- 2005/02/11 end -->
+
+
+
+<hr class="hide">
+<!-- 2005/02/12 start -->
+<h2><a name="20050212" href="200502b.html#20050212">2005-02-12 (Sat)</a></h2>
+<!-- 2006-01-30 21:31:24 -->
+
+<div class="entry1">
+<h3><a name="200502121" title="200502121" href="200502b.html#200502121">■</a> 
+[Ruby] イクラちゃん指向アルゴリズム</h3>
+<p>
+ソースを読むとだいたいこんなところか？
+</p>
+<pre>
+gsub(/[^\W　-◯]+/e){%w(バブ バーブ ハーイ チャン)[rand(4)]}
+</pre>
+<p>
+RubyのREADME.jaの冒頭をイクラちゃんで圧縮すると
+</p>
+<pre>
+% ruby -e 'puts ARGF.gets(&quot;\n\n\n&quot;)' README.ja
+* Rubyとは
+
+Rubyはシンプルかつ強力なオブジェクト指向スクリプト言語です．
+Rubyは最初から純粋なオブジェクト指向言語として設計されていま
+すから，オブジェクト指向プログラミングを手軽に行う事が出来ま
+す．もちろん通常の手続き型のプログラミングも可能です．
+
+Rubyはテキスト処理関係の能力などに優れ，Perlと同じくらい強力
+です．さらにシンプルな文法と，例外処理やイテレータなどの機構
+によって，より分かりやすいプログラミングが出来ます．
+
+
+% ruby -e 'print ARGF.gets(&quot;\n\n\n&quot;)'  README.ja |\
+  ruby -pe 'gsub(/[^\W　-◯]+/e){%w(バブ バーブ ハーイ チャン)[rand(4)]}'
+* バブ
+
+チャン．
+バーブ
+チャン，バブ
+バブ．ハーイ．
+
+バーブ，ハーイ
+ハーイ．チャン，バーブーバーブ
+チャン，バーブ．
+
+
+
+</pre>
+<p>
+と驚異の圧縮率だ。さすがイクラちゃんだ。元に戻んないけど。
+タラちゃんがあれば戻るという噂も。
+</p>
+
+<p>
+Link: 
+<a href="http://www.vector.co.jp/soft/dos/amuse/se003199.html">イクラちゃん</a>
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200502122" title="200502122" href="200502b.html#200502122">■</a> 
+<a href="http://www.43things.com/">[Things] なぜ43なのか？</a></h3>
+<p>
+まず疑問に思うのはなぜ43なのかってことだよねえ。ちょっと多い気がする。
+
+<a href="http://www.43things.com/about/view/faq">FAQ</a>を見ると
+</p><blockquote><dl>
+<dt>
+Why is it called 43 Things?
+<dd>
+Everything needs a name. We think 43 is the right number of things for
+a busy person to try and do. Why not more? It’s too much. Why not
+less? You can do less, but it is still called 43 Things.
+</dl></blockquote><p>
+ということでまったくもって理由になってない。適当な素数か？
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200502123" title="200502123" href="200502b.html#200502123">■</a> 
+<a href="http://tal.timot.net/livewiki/">[Wiki] LiveWiki</a></h3>
+<p>
+XMLHTTPRequestらしいが、それより
+</p><blockquote><p>
+Items are editables simply by double-clicking the ContentArea
+shape. Then a TextArea appears in place of the content. To save your
+changes, just release the TextArea by focusing it out. 
+</p></blockquote><p>
+というUIがなかなか面白いと思った。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200502124" title="200502124" href="200502b.html#200502124">■</a> 
+[Radio] ぶちぶち音が途切れるLast.FM対策</h3>
+<p>
+今日のLast.FMはやたらと音が途切れる。
+~/.mpdconfで
+</p>
+<pre>
+audio_buffer_size       &quot;4096&quot;
+</pre>
+<p>
+とバッファサイズを2倍にしてみる。
+これで途切れなくなったが、
+どうもそんなことをやってる頃にサーバがrebootした気配を感じた。
+どっちのおかげかわからん。というわけで一旦元に戻す。
+途切れない。はたしてバッファサイズを変えるのは有効かどうか。
+</p>
+
+<p>
+とかなんとか書いてるとまた途切れるようになった。
+また2倍にすると全然途切れなくなった。
+やっぱ有効らしい。しばらくこのままでいこう。
+</p>
+
+<p>
+やっぱLast.FMって便利だ。お試しはあと11日か。寄付しようかな。
+</p>
+<!-- section end -->
+</div>
+<!-- 2005/02/12 end -->
+
+
+
+<hr class="hide">
+<!-- 2005/02/13 start -->
+<h2><a name="20050213" href="200502b.html#20050213">2005-02-13 (Sun)</a></h2>
+<!-- 2005-02-18 01:43:57 -->
+
+<div class="entry1">
+<h3><a name="200502131" title="200502131" href="200502b.html#200502131">■</a> 
+[Last.FM] Broadcast</h3>
+<p>
+Last.FMを使っていて不満なのはプレーヤかな。
+まずブラウザのある仮想デスクトップを選んで、さらにプレーヤのあるタブを選ばないといけない。
+まあ、曲名がどこかに出ればいいんだけどね。
+そういうKDEのパネルかなにかがあれば文句ない。
+</p>
+
+<p>
+
+<a href="http://mylastfm.com">myLastFM</a>というプレーヤが結構人気らしい。
+Windows専用ってのはまあいいとしてMicrosoft .NETが必要となるとねえ。
+Wineでもいけるんだろうか。でもちょっとおおげさすぎる。
+</p>
+
+<p>
+とりあえず
+<a href="http://www.last.fm/broadcast/">Broadcast</a>
+でポップアップのプレーヤを作ってスティッキーにしてしみた。
+意外といい感じ。
+どうせ自分しか使わないので例によってbookmarkletにしよう。
+cssでいじれば好きなように外見も変えられるのか。
+どこかにskinがありそうだな。
+</p>
+
+<p>
+それはそれとして、footerあたりにprofile radioを置いてみる。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200502132" title="200502132" href="200502b.html#200502132">■</a> 
+<a href="http://rojo.com/">[RSS] Rojo</a></h3>
+<p>
+紹介されないと入れないと思ったら、簡単にSign Upできちゃったよ。
+最近変更になったのかな。
+</p>
+
+<p>
+しかし、euc-jpなrssはだめか。
+Thunderbirdもだめだし、やっぱこの日記のrssもutf8にしよう。
+</p>
+<!-- section end -->
+</div>
+<!-- 2005/02/13 end -->
+
+
+
+<hr class="hide">
+<!-- 2005/02/14 start -->
+<h2><a name="20050214" href="200502b.html#20050214">2005-02-14 (Mon)</a></h2>
+<!-- 2005-02-15 03:21:32 -->
+
+<div class="entry1">
+<h3><a name="200502141" title="200502141" href="200502b.html#200502141">■</a> 
+<a href="http://conkeror.mozdev.org/">[Firefox] Conkeror 0.18</a></h3>
+<p>
+むむ。これは。
+</p><blockquote><p>
+Conkeror is a mozilla based web browser designed to be completely
+keyboard driven, no compromises. It also strives to behave as much
+like Emacs as possible. This means all the keybindings and to-die-for
+features of Emacs that can be imitated by a javascript/XUL web browser
+Just Work.
+</p></blockquote><p>
+なんか謡い文句がすごいな。
+</p><blockquote><p>
+Features
+<ul>
+<li>Conkeror works with firefox.
+<li>Conkeror sports a near feature complete i-search just like
+emacs. It ignores the &quot;point&quot; which in most browsers is the selection
+or some magical, invisible point that doesn't move when you
+scroll. Conkeror always searches from the top of the visible portion
+of the document (or bottom in the case of a reverse i-search). Never
+be confused by broken browser searching again.
+<li>It contains a numbered links feature much like Hit-a-Hint.
+<li>It has emacs style bindings and prefix maps with universal argument support.
+<li>It allows limited window splitting. So you can see two web pages
+side by side.
+<li>All commands are accessible through M-x, like emacs.
+<li>There is a .conkerorrc file you can use to add customizations.
+<li>The GUI is as minimal as possible to give your focus, the web page, the most room.
+<li>I have included many emacs style movement keystrokes. Surfing is
+like cruising through an emacs buffer. If there's something I'm
+missing, please post to the mailing list.
+<li>You should never have to reach for your mouse. To make sure
+Conkeror remains pure, I do not own a mouse.
+</ul></blockquote><p>
+とりあえず恐いので新たにプロファイルを作って試してみた。
+確かにEmacsだ。
+うーむ。しかしなんだろうこの違和感は。
+ああ、そうか。微妙にw3mと違うからか。
+キーだけで操作してるとw3mの気分になってくる。
+おお、isearchがちゃんと動いてる。面白すぎ。
+C-h bだけ覚えとけばなんとかなりそう。
+Gmailに行ってみた。JavaScriptのほうが勝つようだ。
+</p>
+
+<p>
+Numbered Linkはうっとうしいだけかと最初思ったけど慣れると結構便利だ。
+久し振りに遊び甲斐のあるソフトだ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200502142" title="200502142" href="200502b.html#200502142">■</a> 
+[Mail] Gmailのspamフィルタ</h3>
+<p>
+今日以下のような内容のspamが来た。
+</p>
+<pre>
+ Bbwxxbemwt,Qsrqxyrn
+
+Cl||A1lIS &amp; l|EV1lTRA is known as V`A`G\R\A  because it acts quicker and
+1asts much longer! 
+
+we are a phar  ma ceuticaI company , 
+Offer
+  この後にURLが長々と続く
+</pre>
+<p>
+さすがにbogofilterでは無理だったが、Gmailはちゃんとspamと認識している。
+もうspamと戦うのも飽きたので全部Gmailに任せちゃおうかなと思ったり。
+Gmailへ転送してpopで取ってくればspamはなくなってるわけだもんなあ。
+それだけでも便利だ。というかもうGmailをメインに使えばいいような。
+</p>
+<!-- section end -->
+</div>
+<!-- 2005/02/14 end -->
+
+
+
+<hr class="hide">
+<!-- 2005/02/15 start -->
+<h2><a name="20050215" href="200502b.html#20050215">2005-02-15 (Tue)</a></h2>
+<!-- 2005-02-16 02:44:59 -->
+
+<div class="entry1">
+<h3><a name="200502151" title="200502151" href="200502b.html#200502151">■</a> 
+<a href="http://msmtp.sf.net/">[Soft] msmtp 1.3.7</a></h3>
+<p>
+Changes:
+</p><blockquote><p>
+New in this release are account
+specialisation (see the documentation of
+the account command), security checks
+for the user configuration file,
+configurable connection timeouts, and
+the ability to be prompted for a
+password instead of storing it in the
+configuration file.
+</p></blockquote>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200502152" title="200502152" href="200502b.html#200502152">■</a> 
+<a href="http://sourceforge.net/projects/cvsclogd/">[Soft] cvsclogd 0.5.1</a></h3>
+<p>
+About:
+</p><blockquote><p>
+cvsclogd is a script which automates the process of creating and
+updating ChangeLog files based on CVS commit comments. The script runs
+as a daemon that watches for commits on your project files and updates
+the ChangeLog accordingly. If there is no ChangeLog file, a CVS add
+command is issued. The project files to be watched can be optionally
+added in a configuration file.
+</p></blockquote><p>
+そうか。daemonにしてそっちで見張ればいいんだ。
+Rubyのversion.hもこの方法でいけるかも。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200502153" title="200502153" href="200502b.html#200502153">■</a> 
+<a href="http://amarok.kde.org/">[Music] amaroK</a></h3>
+<p>
+ちょっと試しに使ったみたがタグが文字化け。
+特にSJISのこだわってるわけでもないし、
+全部utf8に変換しちゃうのも手かなあ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2005/02/15 end -->
+
+
+
+<hr class="hide">
+<!-- 2005/02/16 start -->
+<h2><a name="20050216" href="200502b.html#20050216">2005-02-16 (Wed)</a></h2>
+<!-- 2005-02-17 01:37:52 -->
+
+<div class="entry1">
+<h3><a name="200502161" title="200502161" href="200502b.html#200502161">■</a> 
+[Mail] SpamAssassinとNet::DNS</h3>
+<p>
+spamassassinでデバッグオプションの-Dをつけてみると、Net::DNSがないからどうのこうのというのが出ていた。
+ああ、そういえばどこかにブラックリストがあるんだよね。
+というわけで、cpanでインストール。
+丸々1日ログを見張ってみたが、ひとつもすりぬけたspamはなし。
+これでwww-admin, admin宛のspamはかなり減るはずだ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200502162" title="200502162" href="200502b.html#200502162">■</a> 
+<a href="http://www.lucazappa.com/brilliantMaker/buttonImage.php">[Button] Brilliant Button Maker</a></h3>
+<p>
+80x15のボタンが簡単に作れる。
+
+<a href="http://del.icio.us/popular/">http://del.icio.us/popular/</a>から。
+さすがにみんながブックマークするものは面白いものが多い。
+</p>
+<!-- section end -->
+</div>
+<!-- 2005/02/16 end -->
+
+
+
+<hr class="hide">
+<!-- 2005/02/17 start -->
+<h2><a name="20050217" href="200502b.html#20050217">2005-02-17 (Thu)</a></h2>
+<!-- 2005-02-18 03:06:04 -->
+
+<div class="entry1">
+<h3><a name="200502171" title="200502171" href="200502b.html#200502171">■</a> 
+[RSS] Thunderbirdでの文字化け</h3>
+<p>
+さてこの日記のRSSをutf8にしたのはいいけど、肝心のThunderbirdでタイトルだけが化けてしまう。
+実験するためにfile:///でURLを指定してみたら、is not valid URLと言われてしまう。
+webrickでサーバを立てるか。
+とここまでを書いて保存。
+早速Get Mailしてみると化けない。なぜだー。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200502172" title="200502172" href="200502b.html#200502172">■</a> 
+<a href="http://www.datsi.fi.upm.es/~frosal/">[Soft] shc 3.7</a></h3>
+<p>
+About:
+</p><blockquote><p>
+Shc is a generic shell script compiler.
+It takes a script which is specified on
+the command line and produces C source
+code. The generated source code is then
+compiled and linked to produce a
+stripped binary executable.
+</p></blockquote><p>
+実際にやってるのは、
+</p><ol>
+<li>スクリプトをRC4で暗号化
+<li>shebang行を見てインタープリタを抽出
+<li>decrypt routine + encrypted script + インタープリタからCのソースを生成
+<li>コンパイル
+</ol><p>
+てな感じ。だからインタープリタは実行時に必要。
+path固定ならrubyのスクリプトもok。
+</p>
+<pre>
+% cat foo.rb
+#! /usr/local/bin/ruby
+puts &quot;Hello, World!&quot;, *ARGV
+% ruby ./foo.rb hoge
+Hello, World!
+hoge
+% shc -i -e -x 'exec &quot;%s&quot;, *ARGV' -l -- -f foo.rb
+% file foo.rb.x
+foo.rb.x: ELF 32-bit LSB executable, Intel 80386, version 1 (SYSV), \
+  for GNU/Linux 2.2.5, dynamically linked (uses shared libs), stripped
+% ./foo.rb.x hoge
+Hello, World!
+hoge
+</pre>
+<p>
+Helloの文字は見つからない。
+</p>
+<pre>
+% strings foo.rb.x | grep Hello || echo no
+no
+</pre>
+<p>
+コンパイラというかスクランブルかな。
+</p>
+<!-- section end -->
+</div>
+<!-- 2005/02/17 end -->
+
+
+
+<hr class="hide">
+<!-- 2005/02/18 start -->
+<h2><a name="20050218" href="200502b.html#20050218">2005-02-18 (Fri)</a></h2>
+<!-- 2005-02-19 15:36:56 -->
+
+<div class="entry1">
+<h3><a name="200502181" title="200502181" href="200502b.html#200502181">■</a> 
+[MP3] ID3v2</h3>
+<p>
+どうせMP3のタグをutf8に変更するならID3v2にしちまえと思い、コンバートするツールを探してみた。
+
+<a href="http://raa.ruby-lang.org/">RAA</a>を見てもあまり芳しくない。
+なんか数は多いがID3v2に対応してるものがあまりない。
+読めるだけとか。
+ID3v2はバージョンが変わるごとに仕様もころころ変わるとか聞いたことがあるので、サポートするのは面倒なんだろう。
+</p>
+
+<p>
+というわけで、まあ、Rubyである必要は全然ないので
+
+<a href="http://id3lib.sf.net/">id3lib</a>をインストール。
+これに含まれているid3convertでコンバートできるようだ。
+タグの削除もできるらしい。つまり
+</p>
+<pre>
+% id3convert -2 foo.mp3 # ID3v2タグを追加
+% id3convert -1 -s foo.mp3 # ID3v1タグを削除
+</pre>
+<p>
+でID3v1からID3v2へコンバートできる。
+しかしこれじゃutf8へ変換できないな。
+読んで変換して書くってことになると、やっぱスクリプトでやりたいよね。
+数が多いし。
+</p>
+
+<p>
+
+<a href="http://raa.ruby-lang.org/project/mp3taglib/">raa:mp3taglib</a>を使ってみるかなあ。
+
+<a href="http://raa.ruby-lang.org/project/mp3tag/">raa:mp3tag</a>と同じmp3tag.rbというファイルが重なってるのがいやで入れたくないんだけど。
+mp3taglibはid3libのバインディングなんだからid3libという名前にしてくれればよかったのに。
+</p>
+<!-- section end -->
+</div>
+<!-- 2005/02/18 end -->
+
+
+
+<hr class="hide">
+<!-- 2005/02/19 start -->
+<h2><a name="20050219" href="200502b.html#20050219">2005-02-19 (Sat)</a></h2>
+<!-- 2005-02-20 01:51:54 -->
+
+<div class="entry1">
+<h3><a name="200502191" title="200502191" href="200502b.html#200502191">■</a> 
+<a href="http://rafb.net/paste/">[Paste] Paste();</a></h3>
+<p>
+24時間で削除されるpasteサイト。
+</p><blockquote><dl>
+<dt>
+What is a 'nopaste' site?
+<dd>
+A 'nopaste' site allows people to paste chunks of code for others to
+view. This is useful for situations such as asking for programming
+help on IRC, where it is frowned upon to paste chunks of code to the
+channel or to individual. With a nopaste site, the user pastes his or
+her code to the site and is given a url to provide to others so they
+can find the code. 
+</dl></blockquote><p>
+ちゃんと色付けしてくれるところが面白い。
+そのPHPコードも
+<a href="http://rafb.net/paste/highlight.phps">公開</a>されている。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200502192" title="200502192" href="200502b.html#200502192">■</a> 
+[Mail] Gmail Update and Invitation</h3>
+<p>
+なぜかGmailから再招待された。Fromの招待者がThe Gmail Teamになってる。
+くれるっていうなら遠慮なくもらっとく。
+しかし同じブラウザだと使いわけが面倒だ。
+一方を使えば他方がsign out扱いになるしねえ。
+ここはやはりGmailFSか？
+</p>
+<!-- section end -->
+</div>
+<!-- 2005/02/19 end -->
+
+
+
+<hr class="hide">
+<!-- 2005/02/20 start -->
+<h2><a name="20050220" href="200502b.html#20050220">2005-02-20 (Sun)</a></h2>
+<!-- 2005-02-20 22:58:46 -->
+
+<div class="entry1">
+<h3><a name="200502201" title="200502201" href="200502b.html#200502201">■</a> 
+[Firefox] ロケーションバーに[ruby-talk:123456]と入力するだけで飛べるようにする</h3>
+<p>
+ブックマークのキーワードで
+<a href="200501b.html#200501112">r ruby-talk:123456</a>ができるようなったのはいいとして、ruby-talk:123456だけでいけるようにならない？という話もちらほら。
+それを実現するにはどうもXULで拡張を作らないと無理っぽい。
+まあ、近い方法としては「Firefox Help: 便利な使い方の
+<a href="http://www.mozilla-japan.org/support/firefox/tips#beh-search">ロケーションバーの検索モードを変更する</a>
+
+」を参考にして、users.jsファイルに
+</p>
+<pre>
+user_pref(&quot;keyword.URL&quot;, &quot;http://www.rubyist.net/~eban/goto/&quot;);
+</pre>
+<p>
+を追加すれば、ロケーションバーに[ruby-talk:123456]と入力するだけで飛べるようになる。
+[]がちょっと邪魔ではあるが。
+</p>
+
+<p>
+ついでに、そういう形式にマッチしない場合はgoogleに飛ばすようにした。
+これでキーワードgを打たなくてもいいわけで、やっぱ検索バーは要らないや。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200502202" title="200502202" href="200502b.html#200502202">■</a> 
+[Apache] bladeへ飛ばす設定用.htaccess</h3>
+<p>
+そういえばbladeへ飛ばす設定の.htaccessを出すのを忘れてた。
+</p>
+<pre>
+RewriteEngine on
+RewriteBase /~eban/
+RewriteRule (ruby-\w+):(\d+) http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/$1/$2 [L,QSA]
+RewriteRule ruby-(\w+)$ http://blade.nagaokaut.ac.jp/ruby/ruby-$1/index.shtml [L,QSA]
+RewriteRule ^(.*)$ http://www.google.com/search?hl=ja&amp;lr=lang_ja&amp;ie=utf-8&amp;q=$1 [L,QSA]
+</pre>
+<p>
+RewriteRuleだけで完結しているのでCGIは必要ない。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200502203" title="200502203" href="200502b.html#200502203">■</a> 
+[Last.FM] 2000曲</h3>
+<p>
+とうとう2000曲を突破。あと3日で期限が切れる。そろそろPayPalについて調べておかないと。
+</p>
+<!-- section end -->
+</div>
+<!-- 2005/02/20 end -->
+
+<hr>
+<div>
+<a href="200502a.html">&lt;Prev(,)</a> | 
+<a href="200502c.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

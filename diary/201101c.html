@@ -1,0 +1,386 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2011-1-c</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="201101b.html">
+<link rel="next" href="201102a.html">
+
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2011年1月下旬〜</p>
+<hr>
+<div>
+<a href="201101b.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="201102a.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2011/01/21 start -->
+<h2><a name="20110121" href="201101c.html#20110121">2011-01-21 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="201101211" title="201101211" href="201101c.html#201101211">■</a> 
+iriverのプレイリストを表示</h3>
+<p>
+T30ではプレイリストのエントリー削除が可能なので、<br>
+もう聴かない曲はプレイリストから消したりするわけだが、<br>
+ふと気づいてみると何を消したかわからない。<br>
+大本のファイルのほうは消してないので、<br>
+そっちと比較すればわかるがそれをT30上でやるのは面倒。<br>
+というわけでPC上でプレイリスト表示。<br>
+まあ、メンテもしたいしね。
+</p>
+<pre>
+% ruby -e '$&lt;.read(512).unpack(&quot;N&quot;)[0].times{puts $&lt;.read(512).unpack(&quot;x2A*&quot;)[0].encode(&quot;utf-8&quot;, &quot;utf-16be&quot;)}' playlist.pla
+</pre>
+<p>
+unpackはxで読み飛ばすことができ、Aで後続の不要なNUL文字を消してくれる。
+</p>
+<!-- section end -->
+</div>
+<!-- 2011/01/21 end -->
+
+
+
+<hr class="hide">
+<!-- 2011/01/22 start -->
+<h2><a name="20110122" href="201101c.html#20110122">2011-01-22 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="201101221" title="201101221" href="201101c.html#201101221">■</a> 
+<a href="https://www.dropbox.com/dropquest2011/">Dropquest 2011</a></h3>
+<p>
+1GB増やした。長すぎるので途中からはカンニングした。
+
+
+</p>
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="201101222" title="201101222" href="201101c.html#201101222">■</a> 
+まじこめ</h3>
+<p>
+<a href="http://d.hatena.ne.jp/babie/20110114/1294976877">&quot;Rubyのエンコード指定マジックコメントを##&lt;esc&gt;で挿入できるようにした - LazyLoadLife&quot;</a>を見て、
+</p>
+<pre>
+inoreabbrev &lt;buffer&gt; ## # -*- coding: utf-8 -*-
+</pre>
+<p>
+と設定してみた。
+</p>
+<!-- section end -->
+</div>
+<!-- 2011/01/22 end -->
+
+
+
+<hr class="hide">
+<!-- 2011/01/23 start -->
+<h2><a name="20110123" href="201101c.html#20110123">2011-01-23 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="201101231" title="201101231" href="201101c.html#201101231">■</a> 
+iriver ファイルリストの中にファイルリスト</h3>
+<p>
+意味があるかわかないけど、ファイルリストを自由にいじれるってことは、<br>
+ファイルリストの中にファイルリストを入れることも可能。<br>
+実際にやってみるとちゃんとPLというアイコンも出てきて認識してるっぽいが、<br>
+選択するとThe file does not exist!になってしまう。なんか惜しいな。
+</p>
+<!-- section end -->
+</div>
+<!-- 2011/01/23 end -->
+
+
+
+<hr class="hide">
+<!-- 2011/01/24 start -->
+<h2><a name="20110124" href="201101c.html#20110124">2011-01-24 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="201101241" title="201101241" href="201101c.html#201101241">■</a> 
+Firefoxのcookies.sqlite</h3>
+<p>
+Firefoxのcookies.sqliteはロックされてるので、起動中は外からはどうにもならないと思っていたが、<br>
+cpしてからsqlite3すれば普通に読めて拍子抜けした。<br>
+クッキーはそんな動的に変化するもんでもないのでこの手は使えそうだ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2011/01/24 end -->
+
+
+
+<hr class="hide">
+<!-- 2011/01/25 start -->
+<h2><a name="20110125" href="201101c.html#20110125">2011-01-25 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="201101251" title="201101251" href="201101c.html#201101251">■</a> 
+sqlite3でcookies.sqliteからcookies.txtへ変換</h3>
+<p>
+cookies.sqliteをcpしたはいいが、このままでは使えない。<br>
+Firefox 2の時代に使われていた形式にしないとwgetとかも認識してくれない。<br>
+というわけでsqlite3で変換だ。
+</p>
+<pre>
+% sqlite3 -separator $'\t' cookies.sqlite 'SELECT host,
+CASE host GLOB &quot;.*&quot; WHEN 1 THEN &quot;TRUE&quot; ELSE &quot;FALSE&quot; END, path,
+CASE isSecure WHEN 0 THEN &quot;FALSE&quot; ELSE &quot;TRUE&quot; END, expiry, name, value FROM moz_cookies' &gt; cookies.txt
+</pre>
+<p>
+長いな。
+</p>
+<!-- section end -->
+</div>
+<!-- 2011/01/25 end -->
+
+
+
+<hr class="hide">
+<!-- 2011/01/26 start -->
+<h2><a name="20110126" href="201101c.html#20110126">2011-01-26 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="201101261" title="201101261" href="201101c.html#201101261">■</a> 
+<a href="http://www.drivee.jp/private/">クラウド型の無料オンラインストレージ ドライビー</a></h3>
+<p>
+davfs2でマウントしてみたが9MB弱しかないのにコピーに55分もかかるってのはちょっと遅すぎるなあ。<br>
+エラーも頻発してるし。残念ながらちょっと使えない。
+<pre>
+rsync: mkstemp &quot;/home/eban/drivee/anagol/.a.out.V515IR&quot; failed: Invalid argument (22)
+rsync: mkstemp &quot;/home/eban/drivee/anagol/.countup-emasaka.sed.tQtwBF&quot; failed: Invalid argument (22)
+rsync: mkstemp &quot;/home/eban/drivee/anagol/.permission+list.sh.GYsMAF&quot; failed: Invalid argument (22)
+rsync: mkstemp &quot;/home/eban/drivee/anagol/.sedsed.prhGzI&quot; failed: Invalid argument (22)
+rsync: mkstemp &quot;/home/eban/drivee/anagol/.sedsed-1.0.8yTEZw&quot; failed: Invalid argument (22)
+rsync: mkstemp &quot;/home/eban/drivee/anagol/.tetris-1.in.5xGDbF&quot; failed: Resource temporarily unavailable (11)
+rsync: mkstemp &quot;/home/eban/drivee/anagol/.git/hooks/.applypatch-msg.sample.86kPUo&quot; failed: Invalid argument (22)
+rsync: mkstemp &quot;/home/eban/drivee/anagol/.git/hooks/.commit-msg.sample.XrwRdw&quot; failed: Invalid argument (22)
+rsync: mkstemp &quot;/home/eban/drivee/anagol/.git/hooks/.post-commit.sample.k4uTWE&quot; failed: Invalid argument (22)
+rsync: mkstemp &quot;/home/eban/drivee/anagol/.git/hooks/.post-receive.sample.B7fY0O&quot; failed: Invalid argument (22)
+rsync: mkstemp &quot;/home/eban/drivee/anagol/.git/hooks/.post-update.sample.EfBzE9&quot; failed: Invalid argument (22)
+rsync: mkstemp &quot;/home/eban/drivee/anagol/.git/hooks/.pre-applypatch.sample.t83u3v&quot; failed: Invalid argument (22)
+rsync: mkstemp &quot;/home/eban/drivee/anagol/.git/hooks/.pre-commit.sample.IQjxMT&quot; failed: Invalid argument (22)
+rsync: mkstemp &quot;/home/eban/drivee/anagol/.git/hooks/.pre-rebase.sample.bgyW6i&quot; failed: Invalid argument (22)
+rsync: mkstemp &quot;/home/eban/drivee/anagol/.git/hooks/.prepare-commit-msg.sample.mmtueK&quot; failed: Invalid argument (22)
+rsync: mkstemp &quot;/home/eban/drivee/anagol/.git/hooks/.update.sample.xWY0wd&quot; failed: Invalid argument (22)
+
+sent 3383524 bytes  received 27144 bytes  1022.23 bytes/sec
+total size is 3286459  speedup is 0.96
+rsync error: some files/attrs were not transferred (see previous errors) (code 23) at main.c(1060) [sender=3.0.7]
+zsh: exit 23    rsync -av ~/anagol ~/drivee
+rsync -av ~/anagol ~/drivee  0.27s user 1.41s system 0% cpu 55:36.35 total
+</pre>
+</p>
+<!-- section end -->
+</div>
+<!-- 2011/01/26 end -->
+
+
+
+<hr class="hide">
+<!-- 2011/01/27 start -->
+<h2><a name="20110127" href="201101c.html#20110127">2011-01-27 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="201101271" title="201101271" href="201101c.html#201101271">■</a> 
+<a href="http://golf.shinh.org/p.rb?toggleCASE">toggleCASE</a></h3>
+<p>
+今回は惨敗だったわけだが。<br>
+</p>
+<pre>
+#!ruby -p
+gsub(/([A-Z])([a-z]*)([A-Z]?)/){$1+($2+$3).swapcase}
+
+#!ruby -p
+gsub(/([A-Z][a-z]*)([A-Z]?)/){$1.upcase+$2.downcase}
+
+#!ruby -p
+gsub(/([A-Z])([a-z]*[A-Z]?)/){$1+$2.swapcase}
+
+#!ruby -p
+gsub(/([A-Z])([a-z]+.?)/){$1+$2.swapcase}
+
+#!ruby -nl
+m=0
+$_.bytes{|c|putc c^m;m^= ~c&amp;32}
+puts
+
+#!ruby -nl
+m=0
+$_.bytes{|c|putc c^m;m^=32&amp;~c}
+puts
+</pre>
+<p>
+^を使うというのはわかったが、計算が苦手で縮まなかったな。<br>
+\nの扱いかたがひどすぎる。
+</p>
+<!-- section end -->
+</div>
+<!-- 2011/01/27 end -->
+
+
+
+<hr class="hide">
+<!-- 2011/01/28 start -->
+<h2><a name="20110128" href="201101c.html#20110128">2011-01-28 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="201101281" title="201101281" href="201101c.html#201101281">■</a> 
+<a href="http://golf.shinh.org/p.rb?FizzBuzz#Ruby">RubyでFizzBuzzが53B</a></h3>
+<p>
+そりゃもうびっくりだよ。まさかこんなに縮むとは。<br>
+定期的に流行るFizzBuzz祭りも役に立つんだな。<br>
+たまに思い出すとまた違った視点で考えられるのかな。
+</p>
+<!-- section end -->
+</div>
+<!-- 2011/01/28 end -->
+
+
+
+<hr class="hide">
+<!-- 2011/01/29 start -->
+<h2><a name="20110129" href="201101c.html#20110129">2011-01-29 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="201101291" title="201101291" href="201101c.html#201101291">■</a> 
+Firefoxのプロファイルの位置をgit configで</h3>
+<p>
+Firefoxのプロファイルの位置は~/.mozilla/firefox/までは決め打ちでいいんだけど、<br>
+その後がランダムな文字列の組み合わせになっている。<br>
+~/.mozilla/firefox/profile.iniにその位置は書いてあるが、<br>
+これがini形式のファイルなのでshell scriptからはちょっと扱いにくい。
+</p>
+<p>
+そこでgit configだ。gitconfigファイルもini形式なので値を読むことに使える。<br>
+現在使われているセクションはDefault = 1という記述があるので、<br>
+これ見つけるには
+</p>
+<pre>
+% git config -f ~/.mozilla/firefox/profiles.ini --get-regexp 'profile.*\.default'
+profile0.default 1
+</pre>
+<p>
+でいける。git configは全部小文字で扱えばいいようだ。
+</p>
+<pre>
+% alias fx-prof='git config -f ~/.mozilla/firefox/profiles.ini'
+% prof=$(fx-prof --get-regexp 'profile.*\.default' | cut -f1 -d.)
+% echo $prof
+profile0
+% fx-prof --get $prof.path
+pusupjaq.default
+</pre>
+<!-- section end -->
+</div>
+<!-- 2011/01/29 end -->
+
+
+
+<hr class="hide">
+<!-- 2011/01/30 start -->
+<h2><a name="20110130" href="201101c.html#20110130">2011-01-30 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="201101301" title="201101301" href="201101c.html#201101301">■</a> 
+<a href="http://golf.shinh.org/p.rb?Heavy+Rotation">Heavy Rotation</a></h3>
+<p>
+さて縮めるかと思ったら終わっていた。出題者は日本人か？
+</p>
+<p>
+<a href="http://golf.shinh.org/p.rb?Heavy+Rotation#Bash">Bash版は</a>パイプの部分を分けないとだめかと思ったらゴルフ場では通ってしまった。<br>
+いろいろなフックのおかげか？手元ではqをteeで書き換えるのが早いようで通らない。
+</p>
+<!-- section end -->
+</div>
+<!-- 2011/01/30 end -->
+
+
+
+<hr class="hide">
+<!-- 2011/01/31 start -->
+<h2><a name="20110131" href="201101c.html#20110131">2011-01-31 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="201101311" title="201101311" href="201101c.html#201101311">■</a> 
+DynDNS.comからまた警告メールが届いた</h3>
+<p>
+まだ30日経ってないのになあ。もう面倒だから20日で更新するようにしよう。
+
+</p>
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="201101312" title="201101312" href="201101c.html#201101312">■</a> 
+ON Bit系</h3>
+<p>
+echo {0,1}{0,1}...で生成して必要なのだけフィルタリングする方法だと、32ビットもあると破綻する。<br>
+あと順番がよくわからないな。
+</p>
+<!-- section end -->
+</div>
+<!-- 2011/01/31 end -->
+
+<hr>
+<div>
+<a href="201101b.html">&lt;Prev(,)</a> | 
+<a href="201102a.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

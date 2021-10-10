@@ -1,0 +1,432 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2013-11-b</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="201311a.html">
+<link rel="next" href="201311c.html">
+
+<link rel="stylesheet" type="text/css" href="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.css">
+<script type="text/javascript" src="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.js"></script>
+<script type="text/javascript">
+<!--       
+$(document).ready(function() {
+  prettyPrint();
+});
+-->
+</script>
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2013年11月中旬〜</p>
+<hr>
+<div>
+<a href="201311a.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="201311c.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2013/11/11 start -->
+<h2><a name="20131111" href="201311b.html#20131111">2013-11-11 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="201311111" title="201311111" href="201311b.html#201311111">■</a> 
+<a href="201310b.html#201310121">adb devicesでno permissionsになる理由</a></h3>
+<p>
+なんか2台目がなりやすいなと思ったら、<br>
+それ/lib/udev/rules/51-android.rulesに登録してないよ。<br>
+追加したらsudoしなくてもいけるようになった。<br>
+なんと、それが原因だったんかい。<br>
+ということは/lib/udev/rulesに何も書かなくても、<br>
+sudo adb start-serverすればいけるんだな。
+</p>
+<pre>
+% adb kill-server
+% sudo mv /lib/udev/rules.d/51-android.rules<br>
+% sudo adb start-server
+* daemon not running. starting it now on port 5037 *
+* daemon started successfully *
+% adb devices
+List of devices attached 
+015d256851181c0e	device
+
+m:~/1311 % adb shell date  
+Mon Nov 11 21:25:31 JST 2013
+</pre>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="201311112" title="201311112" href="201311b.html#201311112">■</a> 
+<a href="http://d.hatena.ne.jp/zariganitosh/20131105/bash_ruby_escape_quote">問題 $ echo &quot;私は'zarigani'です。&quot; | ruby -pe</a></h3>
+<p>
+deleteとかgsubを使わない方法。
+</p>
+<pre>
+% echo &quot;私は'zarigani'です。&quot; | ruby -pe '$_=$F*&quot;&quot;' -aF\'
+私はzariganiです。
+</pre>
+<p>
+1.8ならjoinしなくても$_=$Fでいい。
+</p>
+<!-- section end -->
+</div>
+<!-- 2013/11/11 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/11/12 start -->
+<h2><a name="20131112" href="201311b.html#20131112">2013-11-12 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="201311121" title="201311121" href="201311b.html#201311121">■</a> 
+advpngはなぜかgrayscaleが未対応</h3>
+<p>
+これは困る。スキャンした画像はほとんどがグレーなので。<br>
+どうして？
+</p>
+<pre>
+% advpng -z -4 001.png 
+      391388      391388 100% 001.png (Unsupported bit depth/color type, 8/0)
+      391388      391388 100%
+</pre>
+<p>
+というわけで、zopflipngを使うわけなんだけどこっちはこっちですごく遅い。<br>
+スキャンした原画像を残すためにも少しでも小さくしたいわけだけど、<br>
+数が多いしねえ。
+</p>
+<p>
+カラーでスキャンしたUbuntu Magazineをやってみた結果。
+</p>
+<pre>
+% du -sh *
+158M	C120-UM-NO07
+154M	C120-UM-NO07-advdef
+146M	C120-UM-NO07-advpng
+146M	C120-UM-NO07-zopflipng
+</pre>
+<p>
+C120-UM-NO07が元画像。pngで134枚。<br>
+advpngは20分ぐらいでzopfilipngは90分。この差はでかい。<br>
+advdefはpng画像だけでなく、.gzもzopfliと同じ方法で再圧縮してくれるすぐれもの。<br>
+あとadvzipってのもある。そのうちrubyのソースで試してみよう。
+</p>
+<!-- section end -->
+</div>
+<!-- 2013/11/12 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/11/13 start -->
+<h2><a name="20131113" href="201311b.html#20131113">2013-11-13 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="201311131" title="201311131" href="201311b.html#201311131">■</a> 
+advdefとadvzipで再圧縮と7zの実力</h3>
+<p>
+Rubyのソースでやってみた。
+</p>
+<pre>
+% cp ruby-2.1.0-preview1.tar.gz ruby-2.1.0-preview1.tar.advdef4.gz
+% time advdef -z -4 ruby-2.1.0-preview1.tar.advdef4.gz
+    14449544    12933217  89% ruby-2.1.0-preview1.tar.advdef4.gz
+    14449544    12933217  89%
+advdef -z -4 ruby-2.1.0-preview1.tar.advdef4.gz  416.71s user 3.49s system 99% cpu 7:01.89 total
+</pre>
+<p>
+7分とか結構時間がかかるが、1割ぐらいは小さくなる。<br>
+1度だけだし普通のgzipで伸長可能なので転送量を減らすためにもやっといたほうがいいかもしれない。<br>
+zipはadvzipで。
+</p>
+<pre>
+% cp ruby-2.1.0-preview1.zip ruby-2.1.0-preview1.advzip4.zip
+% time advzip -z -4 ruby-2.1.0-preview1.advzip4.zip
+    16124069    14290333  88% ruby-2.1.0-preview1.advzip4.zip
+    16124069    14290333  88%
+advzip -z -4 ruby-2.1.0-preview1.advzip4.zip  554.12s user 7.10s system 99% cpu 9:23.66 total
+</pre>
+<p>
+こちらもおなじような感じ。時間は余計にかかっているがunzipで展開可能。
+</p>
+<p>
+-3でも試してみる。
+<pre>
+% cp ruby-2.1.0-preview1.tar.gz ruby-2.1.0-preview1.tar.advdef3.gz
+% time advdef -z -3 ruby-2.1.0-preview1.tar.advdef3.gz
+    14449544    12927303  89% ruby-2.1.0-preview1.tar.advdef3.gz
+    14449544    12927303  89%
+advdef -z -3 ruby-2.1.0-preview1.tar.advdef3.gz  124.88s user 0.07s system 99% cpu 2:05.46 total
+</pre>
+</p>
+<p>
+あれ、意外にも勝ってしまった。時間もかからないし。7zも優秀だったのか。<br>
+だったらzipも最初から7zで作るほういいか。
+</p>
+<pre>
+% unzip -q ruby-2.1.0-preview1.zip
+% time 7z a -tzip -mx=9 ruby-2.1.0-preview1.7z.zip ruby-2.1.0-preview1 &gt;/dev/null
+7z a -tzip -mx=9 ruby-2.1.0-preview1.7z.zip ruby-2.1.0-preview1 &gt; /dev/null  92.19s user 0.39s system 359% cpu 25.752 total
+% ls -o ruby-2.1.0-preview1.7z.zip
+-rw-r--r-- 1 eban 14349935 2013-11-14 02:11:22 ruby-2.1.0-preview1.7z.zip
+</pre>
+<p>
+すばらしい。zopfliを使わなくても7zで十分だったか。
+</p>
+<p>
+全部並べてみる。
+</p>
+<pre>
+% ls -oS ruby-2.1.0-preview1*.gz
+-rw-r--r-- 1 eban 14449544 2013-09-23 00:29:26 ruby-2.1.0-preview1.tar.gz
+-rw-r--r-- 1 eban 12933217 2013-11-14 01:48:59 ruby-2.1.0-preview1.tar.advdef4.gz
+-rw-r--r-- 1 eban 12927303 2013-11-14 02:06:54 ruby-2.1.0-preview1.tar.advdef3.gz
+% ls -oS ruby-2.1.0-preview1*.zip
+-rw-r--r-- 1 eban 16124069 2013-09-23 00:29:26 ruby-2.1.0-preview1.zip
+-rw-r--r-- 1 eban 14349935 2013-11-14 02:11:22 ruby-2.1.0-preview1.7z.zip
+-rw-r--r-- 1 eban 14290333 2013-11-14 02:01:43 ruby-2.1.0-preview1.advzip.zip
+</pre>
+<p>
+まとめるとgzipしてからadvdef -z -3がサイズ的時間的にもお得。<br>
+zipよりは7zのzip互換モードを使うほうがお得。
+</p>
+<!-- section end -->
+</div>
+<!-- 2013/11/13 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/11/14 start -->
+<h2><a name="20131114" href="201311b.html#20131114">2013-11-14 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="201311141" title="201311141" href="201311b.html#201311141">■</a> 
+何か変だと思ったら</h3>
+<p>
+Google Chromeを先日新しいの入れたんだけど、妙に軽かったりと不思議に思い、<br>
+ふとfileで見てみたら32ビット版だった。
+<pre>
+% file /opt/google/chrome/chrome
+/opt/google/chrome/chrome: ELF 32-bit LSB shared object, Intel 80386, version 1 (GNU/Linux), dynamically linked (uses shared libs), for GNU/Linux 2.6.24, BuildID[sha1]=0xd3fff1d61e19a0c0c1b89af18c4741111dbc787b, stripped
+</pre>
+</p>
+<p>
+まあいいか。ひょっとしてOnTabも32ビットにしたからいけたとか？
+</p>
+<!-- section end -->
+</div>
+<!-- 2013/11/14 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/11/15 start -->
+<h2><a name="20131115" href="201311b.html#20131115">2013-11-15 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="201311151" title="201311151" href="201311b.html#201311151">■</a> 
+1回クリックで3回分</h3>
+<p>
+なんか最近文字列の選択がしづらい。<br>
+なぜか途中でキャンセルされて何度もやりなおさないといけない。<br>
+あとhototのリンクをクリックするとブラウザに2個3個と同じ内容のタブがでてきて、<br>
+ああそうか、だからキャンセル扱いなんだなと納得した。<br>
+どうしたもんかと基本の電源OFFしてONしたらなおった。<br>
+こんなことがないとOFFにしないしなあ。って裏にそんなスイッチがあるなんて気づかなかったよ。<br>
+OFFにする必要ないもんなあ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2013/11/15 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/11/16 start -->
+<h2><a name="20131116" href="201311b.html#20131116">2013-11-16 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="201311161" title="201311161" href="201311b.html#201311161">■</a> 
+xargs -P0 advdefしてみたらOSごとハングした</h3>
+<p>
+調子に乗って400個ぐらいあるディレクトリで
+</p>
+<pre>
+% ls *.png | xargs -rP0 -n1 advdef -z -4
+</pre>
+<p>
+したら何も受けつけなくなった。強制的にリセットしたら全ファイル一度にやろうとしていた。<br>
+可能な限りってのはコアの数とか何も考えずにってことらしい。<br>
+というわけで/proc/cpuinfoとか見ることにした。と思ったらnprocなんてコマンドが。
+</p>
+<pre>
+% nproc
+4
+</pre>
+<p>
+やっぱそういうコマンドも必要だよな。
+</p>
+<!-- section end -->
+</div>
+<!-- 2013/11/16 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/11/17 start -->
+<h2><a name="20131117" href="201311b.html#20131117">2013-11-17 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="201311171" title="201311171" href="201311b.html#201311171">■</a> 
+GNU Parallel</h3>
+<p>
+卜部さんに教えてもらったので、parallelを使ってみる。<br>
+今回はconvertで。convertだとファイル名は途中に書かないといけないので-iオプション必須。<br>
+{}がファイル名に置き換わる。実際に実行すると
+</p>
+<pre>
+% parallel -i convert '{}' -resize x754 -type grayscale -depth 4 -verbose ../outdir/'{}' -- *.png
+004.png=&gt;../outdir/004.png PNG 1090x1600=&gt;514x754 514x754+0+0 8-bit PseudoClass 5c 0.450u 0:01.030
+002.png=&gt;../outdir/002.png PNG 1090x1600=&gt;514x754 514x754+0+0 8-bit PseudoClass 3c 0.450u 0:01.019
+001.png=&gt;../outdir/001.png PNG 1090x1600=&gt;514x754 514x754+0+0 8-bit PseudoClass 16c 4.1KB 0.450u 0:01.039
+003.png=&gt;../outdir/003.png PNG 1090x1600=&gt;514x754 514x754+0+0 8-bit PseudoClass 16c 8.19KB 0.460u 0:01.199
+006.png=&gt;../outdir/006.png PNG 1090x1600=&gt;514x754 514x754+0+0 8-bit PseudoClass 4c 0.440u 0:00.959
+005.png=&gt;../outdir/005.png PNG 1090x1600=&gt;514x754 514x754+0+0 8-bit PseudoClass 16c 0.440u 0:01.099
+007.png=&gt;../outdir/007.png PNG 1090x1600=&gt;514x754 514x754+0+0 8-bit PseudoClass 16c 0.440u 0:01.049
+008.png=&gt;../outdir/008.png PNG 1090x1600=&gt;514x754 514x754+0+0 8-bit PseudoClass 6c 0.450u 0:00.920
+009.png=&gt;../outdir/009.png PNG 1090x1600=&gt;514x754 514x754+0+0 8-bit PseudoClass 16c 41KB 0.500u 0:00.440
+</pre>
+<p>
+という感じになる。parallelはコアの数をちゃんと考慮に入れてくれるので、<br>
+この場合は最大4プロセスで処理される。<br>
+xargsの-0相当がないのでfindとの組み合わせは注意。<br>
+convert '*.png'はメモリをやたらと喰うのでforで回していたが、やっぱ並列で処理したほうが速いよな。
+</p>
+<!-- section end -->
+</div>
+<!-- 2013/11/17 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/11/18 start -->
+<h2><a name="20131118" href="201311b.html#20131118">2013-11-18 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="201311181" title="201311181" href="201311b.html#201311181">■</a> 
+convertで処理した情報をファイルに保存せずに表示する</h3>
+<p>
+convertでノンブルをcropしてtrimして目的の大きさへリサイズするなんてよくやるが、<br>
+そのときに縮小率を揃えるために何個かサンプル取るよね。<br>
+そこでどのくらいの大きさになったのか知りたくなる。<br>
+今までは
+</p>
+<pre>
+% identify 100.png                                 
+100.png PNG 1090x1600 1090x1600+0+0 8-bit PseudoClass 16c 136KB 0.000u 0:00.000
+% convert -crop +0+100 -fuzz 80% -trim 100.png x.png
+% identify x.png  
+x.png PNG 880x1349 1090x1600+105+125 8-bit PseudoClass 16c 109KB 0.000u 0:00.000
+</pre>
+<p>
+てなことをしていたが、info:で得られるようだ。
+</p>
+<pre>
+% convert -crop +0+100 -fuzz 80% -trim 100.png info:
+100.png PNG 880x1349 1090x1600+105+125 8-bit PseudoClass 16c 0.020u 0:00.080
+</pre>
+<p>
+というか不思議なことにpngって元画像の情報も残ってるんだな。
+</p>
+<p>
+高さとそのオフセットが知りたければformatで指定できる。
+</p>
+<pre>
+% convert -crop +0+100 -fuzz 80% -trim 100.png -format &quot;%h %Y&quot; info:
+1349 +125
+</pre>
+<!-- section end -->
+</div>
+<!-- 2013/11/18 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/11/19 start -->
+<h2><a name="20131119" href="201311b.html#20131119">2013-11-19 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="201311191" title="201311191" href="201311b.html#201311191">■</a> 
+マウスのバッテリーが切れた</h3>
+<p>
+<a href="201305b.html#201305201">丁度半年</a>だが、今回はなぜこんなに早いのか。<br>
+ひょっとしてちょっと前に
+<a href="201311b.html#201311151">変な挙動</a>してたが、<br>
+あれって結構電力消費してたりして？<br>
+まあ、半年も保てば全然問題ないんだけどね。
+</p>
+<!-- section end -->
+</div>
+<!-- 2013/11/19 end -->
+
+<hr>
+<div>
+<a href="201311a.html">&lt;Prev(,)</a> | 
+<a href="201311c.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

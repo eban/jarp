@@ -1,0 +1,462 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2014-8-c</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="201408b.html">
+<link rel="next" href="201409a.html">
+
+<link rel="stylesheet" type="text/css" href="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.css">
+<script async type="text/javascript" src="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.js"></script>
+<script type="text/javascript">
+<!--       
+$(document).ready(function() {
+  prettyPrint();
+});
+-->
+</script>
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2014年8月下旬〜</p>
+<hr>
+<div>
+<a href="201408b.html" accesskey=",">&lt;Older(,)</a> | 
+<a href="201409a.html" accesskey=".">Newer(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2014/08/21 start -->
+<h2><a name="20140821" href="201408c.html#20140821">2014-08-21 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="201408211" title="201408211" href="201408c.html#201408211">■</a> 
+multicropから必要なところだけを抜き出してみた</h3>
+<p>
+肝心要は-draw &quot;matte X,Y floodfill&quot;だった。<br>
+colorとは違いmatte channelつまりalpha channelを書き換える。<br>
+これで簡単にかたまりごとにマスクを作ることが可能になる。<br>
+スキャンした画像に対してはこれだけでいい。
+</p>
+<p>
+<pre>
+% convert foo.pbm -fill none -draw 'matte 500,500 floodfill' -alpha extract -trim -format '%wx%h%O' info:
+1360x1971+114+235
+</pre>
+</p>
+<p>
+-alpha extractでcurrent channelをmatte channelで置き換え、trimした結果を表示。
+</p>
+<p>
+実際はこれだと500,500と決め打ちになってるのがちょっとまずい。<br>
+黒にぶちあたればいいが、白になるかもしれない。<br>
+たまたま孤立点に当たるかもしれない。
+</p>
+<pre>
+% convert foo.pbm -fill none -draw 'matte 412,500 floodfill' -alpha extract -trim -format '%wx%h%O' info:
+1x2+412+499
+</pre>
+<p>
+そこで確実に黒にするために適当な長さで線を引く。
+</p>
+<pre>
+% convert foo.pbm -fill black -draw 'line 500,500 600,600' -fill none -draw 'matte 500,500 floodfill' -alpha extract -trim -format '%wx%h%O' info:        
+1360x1971+114+235
+</pre>
+<p>
+これで安定して本文だけの領域が求めれらた。<br>
+最終的には500,500とかじゃなくて画像の中心で。<br>
+-gravity centerで0,0にすれば中心になるかと思ったが全然ならなかったのは残念。
+</p>
+<!-- section end -->
+</div>
+<!-- 2014/08/21 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/08/22 start -->
+<h2><a name="20140822" href="201408c.html#20140822">2014-08-22 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="201408221" title="201408221" href="201408c.html#201408221">■</a> 
+findの罠</h3>
+<p>
+1024バイトのファイルを探そうとfind . -size 1024とすると全然ヒットしない。<br>
+単位が必要かとfind . -size 1024bとしてもだめ。<br>
+そこでやっとman findしてみるとなんとデフォルトは1ブロックとある。<br>
+1ブロックは512バイトだ。<br>
+じゃあなんで1024bはだめなのかというと、なんとbはblockという意味だった。<br>
+1024cにしないといけない。二重の罠にはまる。周到すぎるだろ。
+
+</p>
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="201408222" title="201408222" href="201408c.html#201408222">■</a> 
+昨日のパラメータ</h3>
+<p>
+412,500がだめだったんだから、そこに線を引かないと意味がない。
+</p>
+<pre>
+% convert foo.pbm -fill none -draw 'matte 412,500 floodfill' -alpha extract -trim -format '%wx%h%O' info: 
+1x2+412+499
+% convert foo.pbm -fill black -draw 'line 412,500 600,600' -fill none -draw 'matte 412,500 floodfill' -alpha extract -trim -format '%wx%h%O' info:  
+1360x1971+114+235
+</pre>
+<p>
+というわけでうまくいってる。
+</p>
+<p>
+<img src="../images/foo-ex.png" alt="">
+</p>
+<!-- section end -->
+</div>
+<!-- 2014/08/22 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/08/23 start -->
+<h2><a name="20140823" href="201408c.html#20140823">2014-08-23 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="201408231" title="201408231" href="201408c.html#201408231">■</a> 
+Sony Readerアプリのゴミ</h3>
+<p>
+AndoridのSony Readerアプリのストレージがやたらと食ってるので整理したが、<br>
+残したコンテンツの割には容量食いすぎだと思い、直接adb shellで見てみた。<br>
+</p>
+<pre>
+-rw-rw---- root     sdcard_r 45175551 2014-03-09 18:28 期間限定土竜の唄（１）-高橋のぼる.mnh
+-rw-rw---- root     sdcard_r 45012838 2014-03-09 18:28 期間限定土竜の唄（２）-高橋のぼる.mnh
+-rw-rw---- root     sdcard_r 39859492 2014-03-09 18:29 期間限定土竜の唄（３）-高橋のぼる.mnh
+-rw-rw---- root     sdcard_r 41817906 2014-03-09 18:29 期間限定土竜の唄（４）-高橋のぼる.mnh
+-rw-rw---- root     sdcard_r 39055619 2014-03-09 18:29 期間限定土竜の唄（５）-高橋のぼる.mnh
+-rw-rw---- root     sdcard_r 40074570 2014-03-09 18:30 期間限定土竜の唄（６）-高橋のぼる.mnh
+-rw-rw---- root     sdcard_r 84497511 2014-06-22 00:21 期間限定幽麗塔　１-乃木坂太郎.mnh
+-rw-rw---- root     sdcard_r 86866253 2014-06-22 00:23 期間限定幽麗塔　２-乃木坂太郎.mnh
+-rw-rw---- root     sdcard_r 89129212 2014-06-22 00:23 期間限定幽麗塔　３-乃木坂太郎.mnh
+-rw-rw---- root     sdcard_r 34968148 2014-03-09 18:31 期間限定弁護士のくず（１）-井浦秀夫.mnh
+-rw-rw---- root     sdcard_r 37780547 2014-03-09 18:31 期間限定弁護士のくず（２）-井浦秀夫.mnh
+-rw-rw---- root     sdcard_r 39031202 2014-03-09 18:31 期間限定弁護士のくず（３）-井浦秀夫.mnh
+-rw-rw---- root     sdcard_r 53839727 2014-03-09 20:28 期間限定龍－ＲＯＮ－（１）-村上もとか.mnh
+-rw-rw---- root     sdcard_r 55206455 2014-03-09 18:27 期間限定龍－ＲＯＮ－（２）-村上もとか.mnh
+-rw-rw---- root     sdcard_r 56818203 2014-03-09 18:27 期間限定龍－ＲＯＮ－（３）-村上もとか.mnh
+</pre>
+<p>
+こんな感じで期間限定のコンテンツを発見。これはアプリ上のどこを探しても出てこない。<br>
+マンガなので結構でかい。
+</p>
+<pre>
+% numsum -c -x 4 reader-ls.log | numfmt --grouping
+789,133,234
+</pre>
+<p>
+800MB近くあるわけで、どうしたもんかと思ったが思い切ってrm 期間限定*で消してみた。<br>
+アプリは特に問題ないようだ。他もいろいろ消してなんだかんだで5GBほど空いた。<br>
+Sony Readerだけでどんだけ食ってんだよ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2014/08/23 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/08/24 start -->
+<h2><a name="20140824" href="201408c.html#20140824">2014-08-24 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="201408241" title="201408241" href="201408c.html#201408241">■</a> 
+epubを手間いらずでさらに圧縮</h3>
+<p>
+スキャンした本をepubにするとPNGとzipで二重に圧縮することになる。<br>
+普通はoptipngとか使ってPNGをさらに圧縮することを考えるが、<br>
+これはページ数が多いとやたらと時間がかかるしあまり効率的でない。<br>
+そこでPNGは無圧縮にしてzipのほうを最大限にするとどうなるか実験してみた。<br>
+convertで1個1個PNG画像へ変換するときに
+</p>
+<pre>
+-define png:compression-level=0
+</pre>
+<p>
+をつければ圧縮されない。ま、要するに違いはこれだけだ。<br>
+で、結果は
+</p>
+<pre>
+-rw-r--r-- 1 eban 13253534 2014-08-24 18:28:27 [逢坂剛]-幻の翼.epub
+-rw-r--r-- 1 eban 14447451 2014-08-24 16:55:52 [逢坂剛]-幻の翼.epub.~1<br>
+</pre>
+<p>
+のように1割とはいかないが簡単にさらに小さくできた。<br>
+まあ、zipよりもtar.gzのほうが小さくなるのと同じ原理ではあるが。
+</p>
+<!-- section end -->
+</div>
+<!-- 2014/08/24 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/08/25 start -->
+<h2><a name="20140825" href="201408c.html#20140825">2014-08-25 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="201408251" title="201408251" href="201408c.html#201408251">■</a> 
+無圧縮PNGをもろもろ考察</h3>
+<p>
+考えてみるとzipで圧縮してるだからまとめて圧縮してるわけじゃない。<br>
+そうか。zipじゃなくて7zでzipファイルを作ってるから圧縮率が高いんだ。<br>
+</p>
+<!-- section end -->
+</div>
+<!-- 2014/08/25 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/08/26 start -->
+<h2><a name="20140826" href="201408c.html#20140826">2014-08-26 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="201408261" title="201408261" href="201408c.html#201408261">■</a> 
+本文の位置</h3>
+<p>
+スキャンした画像からノンブルを除去していると、<br>
+どうしても1つパラメータだけで対処できない本が出てくる。<br>
+先日の数十枚重ねるという方法でノンブルごと本文とひとかたまりになる場合がある。<br>
+つまりそれだけ字の位置があばれているわけで、古い本だとありがち。<br>
+しかも対処が難しい。
+</p>
+<!-- section end -->
+</div>
+<!-- 2014/08/26 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/08/27 start -->
+<h2><a name="20140827" href="201408c.html#20140827">2014-08-27 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="201408271" title="201408271" href="201408c.html#201408271">■</a> 
+あばれる本文</h3>
+<p>
+実際どんな感じかというと、隙間が完全に埋まってしまっている。
+</p>
+<p>
+<img src="../images/multi-full.png" alt="">
+</p>
+<p>
+-trimすれば正規化できそうだが、<br>
+結局ノイズの有無に左右される。<br>
+そんなに甘くはない。
+</p>
+<p>
+考えかたを変えて1ページごとに処理することにして、<br>
+横一列の黒画素を数えて山と谷を見るのはどうか。
+</p>
+<!-- section end -->
+</div>
+<!-- 2014/08/27 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/08/28 start -->
+<h2><a name="20140828" href="201408c.html#20140828">2014-08-28 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="201408281" title="201408281" href="201408c.html#201408281">■</a> 
+涼しい</h3>
+<p>
+一気に秋になったかのよう。ことしの夏は真夏しかなかったな。<br>
+向う一週間の予報を見ても30度行くか行かないかくらいで、<br>
+まじで夏は終わり？
+</p>
+<!-- section end -->
+</div>
+<!-- 2014/08/28 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/08/29 start -->
+<h2><a name="20140829" href="201408c.html#20140829">2014-08-29 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="201408291" title="201408291" href="201408c.html#201408291">■</a> 
+ABP</h3>
+<p>
+例のtwitterのanalyticsを見てみたら
+</p>
+<blockquote><p>
+A problem occurred while loading the page. To use this site, you need to disable AdBlock or any other ads-blocking extension you are using, or customize it to show ads on this site.
+</p></blockquote><p>
+とか言われて、なんで広告と関係があるんだと思った。<br>
+ああ、ひょっとしてtwitter見てるとたまに変な表示になったりするのはこれが原因だったか？
+</p>
+<!-- section end -->
+</div>
+<!-- 2014/08/29 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/08/30 start -->
+<h2><a name="20140830" href="201408c.html#20140830">2014-08-30 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="201408301" title="201408301" href="201408c.html#201408301">■</a> 
+GraphicsMagickでは無圧縮PNGは作れない</h3>
+<p>
+convertには-qualityというオプションがあるが、これが結構曲者。<br>
+PNGの場合は
+</p>
+<pre>
+For the MNG and PNG image formats, the quality value sets the zlib compression
+level (quality / 10) and filter-type (quality % 10). Compression levels range
+from 0 (fastest compression) to 100 (best but slowest). For compression level
+0, the Huffman-only strategy is used, which is fastest but not necessarily the
+worst compression.
+
+If filter-type is 4 or less, the specified filter-type is used for all scanlines:
+
+     0: none
+     1: sub
+     2: up
+     3: average
+     4: Paeth
+</pre>
+<p>
+となっている。0から100まで指定できるようなことが書いてあるが、実は100は90と同じ意味。<br>
+10の位がcompression levelということになっている。<br>
+levelがでも0でもなぜかハフマン圧縮だけは有効になってるらしく無圧縮にはできない。<br>
+そこで先日の -define png:compression-level=0 という話になる。<br>
+でもGraphicsMagickではこれに対応してないので、結局無圧縮PNGは作れないことになる。<br>
+実に残念。
+</p>
+<!-- section end -->
+</div>
+<!-- 2014/08/30 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/08/31 start -->
+<h2><a name="20140831" href="201408c.html#20140831">2014-08-31 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="201408311" title="201408311" href="201408c.html#201408311">■</a> 
+あばれる本文を何とかした</h3>
+<p>
+あばれるとは言っても本文自体の大きさは一定なので、<br>
+-trimで求めた下底を基準にすることにした。<br>
+本文の高さはまあ適当にどれか特徴的なページから手動で計測。<br>
+displayなら中クリックでクリックした座標がわかる。<br>
+だいたいこんな感じだ。
+</p>
+<pre>
+find images -name '*.pbm.xz' \
+parallel -q convert {} \
+  -chop ${LEFT}x${TOP} \
+  -gravity SouthEast -chop ${RIGHT}x${BOTTOM} -gravity NorthWest \
+  -virtual-pixel edge -blur 0x4 -fuzz 10% -trim \
+  -format &quot;xzcat {} | gm convert \
+   - -chop ${LEFT}x${TOP} \
+   -gravity SouthEast -chop ${RIGHT}x${BOTTOM} -gravity NorthWest +repage \
+   -crop '%[fx:w+10]x%[fx:H+10]+%[fx:page.x&gt;5?page.x-5:0]+%[fx:(page.y+h-H)&gt;10?(page.y+h-H-10):0]' \
+   -resize $yresize\% \
+   -gravity center \
+   -background white -extent 738x965 \
+   -type grayscale -depth 2 PGM:- | \
+   convert - \
+   -define &quot;png:compression-level=0&quot; +repage -strip \
+   -verbose '$outdir'/{/.}.png&quot; info: | ${sh-sh}
+</pre>
+<p>
+元々は
+</p>
+<pre>
+   -crop '%[fx:w+10]x%[fx:h+10]+%[fx:page.x&gt;5?page.x-5:0]+%[fx:page.y&gt;5?page.y-5:0]' \
+</pre>
+<p>
+となっていた。-trimの結果のhは捨てて先の下底基準にしている。<br>
+180度回転したほうがわかりやすいかもしれないなあ。
+</p>
+<p>
+あと-resize 738x965とはしないで全部同じ倍率にしている。<br>
+そうしないと見出しのように1行しかないようなページで-trimの結果巨大な文字が現われることになる。
+</p>
+<p>
+あとGraphicsMagickを使うと2倍ぐらい速くなる。<br>
+無圧縮にできないもんだから最終的にはまたImageMagickを使ってるところがあれだ。
+</p>
+<p>
+これはノンブルが上にある場合なので下にあるときはまずい。<br>
+そういう意味でも180度回転のほうがいいな。chopもあるし。
+</p>
+<!-- section end -->
+</div>
+<!-- 2014/08/31 end -->
+
+<hr>
+<div>
+<a href="201408b.html">&lt;Older(,)</a> | 
+<a href="201409a.html">Newer(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

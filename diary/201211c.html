@@ -1,0 +1,260 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2012-11-c</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="201211b.html">
+<link rel="next" href="201212a.html">
+
+<link rel="stylesheet" type="text/css" href="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.css">
+<script type="text/javascript" src="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.js"></script>
+<script type="text/javascript">
+<!--       
+$(document).ready(function() {
+  prettyPrint();
+});
+-->
+</script>
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2012年11月下旬〜</p>
+<hr>
+<div>
+<a href="201211b.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="201212a.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2012/11/21 start -->
+<h2><a name="20121121" href="201211c.html#20121121">2012-11-21 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="201211211" title="201211211" href="201211c.html#201211211">■</a> 
+Firefox 17</h3>
+<p>
+Windowsは勝手に更新されてしまうが互換性低すぎて動かない拡張だらけ。<br>
+タブ関連がたぶん全滅。greasemonkeyのuserscriptにもあやしいのがちらほら。<br>
+しかたないので16.0.2に戻した。自動更新も止めた。<br>
+Thunderbirdは前回自動更新止めたのでしばらく様子見。<br>
+Ubuntu側は更新されないようにfirefoxとthunderbirdはholdした。
+</p>
+<!-- section end -->
+</div>
+<!-- 2012/11/21 end -->
+
+
+
+<hr class="hide">
+<!-- 2012/11/22 start -->
+<h2><a name="20121122" href="201211c.html#20121122">2012-11-22 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="201211221" title="201211221" href="201211c.html#201211221">■</a> 
+スキャンデータの転送終了</h3>
+<p>
+明日までかかると思ったが、ぎりぎり今日中に終了した。<br>
+途中再起動フラグが立って、まあ転送中だってことはすっかり忘れてそのまま再起動してしまったが、<br>
+rsyncだと特に問題ない。このあたりは自由に中断できて便利だな。
+</p>
+<!-- section end -->
+</div>
+<!-- 2012/11/22 end -->
+
+
+
+<hr class="hide">
+<!-- 2012/11/23 start -->
+<h2><a name="20121123" href="201211c.html#20121123">2012-11-23 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="201211231" title="201211231" href="201211c.html#201211231">■</a> 
+twitterからevernoteへ</h3>
+<p>
+@myenをfollowするとDMが来るので、指定されたリンクを踏む。連携を求めれらるので許可。<br>
+あとは@myen向けに普通につぶやけばok(DMでもok)。そのtweetだけevernoteへ送られる。
+</p>
+<!-- section end -->
+</div>
+<!-- 2012/11/23 end -->
+
+
+
+<hr class="hide">
+<!-- 2012/11/24 start -->
+<h2><a name="20121124" href="201211c.html#20121124">2012-11-24 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="201211241" title="201211241" href="201211c.html#201211241">■</a> 
+Evernote APIを使って簡単なメモを登録しようと思ったが</h3>
+<p>
+twitterでDM送れば要らないよな。tw gemを使えばコマンドラインからもいけるし。<br>
+tw 'd @myen メモを送るよ' でいい。
+</p>
+<p>
+それにしてもタグをつけるとか別のノートブックにしてくれてもいいと思うが。
+</p>
+<!-- section end -->
+</div>
+<!-- 2012/11/24 end -->
+
+
+
+<hr class="hide">
+<!-- 2012/11/25 start -->
+<h2><a name="20121125" href="201211c.html#20121125">2012-11-25 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="201211251" title="201211251" href="201211c.html#201211251">■</a> 
+GNU tarではzの代わりにaを使うと便利</h3>
+<p>
+圧縮時にaを指定するとautoを意味し、拡張子から圧縮ツールが判断される。
+</p>
+<pre>
+% echo foo &gt; foo.txt
+% for i in foo.tar.{Z,gz,bz2,xz};do echo $i; tar acf $i foo.txt; done
+foo.tar.Z
+foo.tar.gz
+foo.tar.bz2
+foo.tar.xz
+% file foo.tar.*
+foo.tar.Z:    compress'd data 16 bits
+foo.tar.bz2:  bzip2 compressed data, block size = 900k
+foo.tar.gz:   gzip compressed data, from Unix, last modified: Mon Nov 26 00:12:04 2012
+foo.tar.xz:   XZ compressed data
+</pre>
+<p>
+-jとか-Jとか覚えなくてもいい。さすがにtgzとかは無理だけど。
+</p>
+<p>
+最近のGNU tarはxの展開時にzとかつけなければ自分で判断して勝手に伸長して展開してくれる。<br>
+aをつけても無視されるようなので常時つけても問題ない。<br>
+つまり今までzを書いていた位置にaを書いてもいい。
+</p>
+<!-- section end -->
+</div>
+<!-- 2012/11/25 end -->
+
+
+
+<hr class="hide">
+<!-- 2012/11/26 start -->
+<h2><a name="20121126" href="201211c.html#20121126">2012-11-26 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="201211261" title="201211261" href="201211c.html#201211261">■</a> 
+Firefoxの日本語パックをholdし忘れる</h3>
+<p>
+firefoxを再起動したらなぜかメニュー等が英語になってしまった。<br>
+そうか。firefoxとthunerbirdだけholdじゃ意味ないよなあ。<br>
+Japanese Languages Pack (17.0) disabledとか出てるわけですよ。<br>
+16.0.2とは互換性ないよって。
+</p><blockquote><p>
+Start-Date: 2012-11-22  06:39:46<br>
+Upgrade: libunity-webapps0:amd64 (2.4.1-0ubuntu3.1, 2.4.1-0ubuntu3.2), firefox-locale-ja:amd64 (16.0.2+build1-0ubuntu0.12.10.1, 17.0+build2-0ubuntu0.12.10.1), xul-ext-ubufox:amd64 (2.4.1-0ubuntu1, 2.6-0ubuntu0.12.10.1), unity-webapps-service:amd64 (2.4.1-0ubuntu3.1, 2.4.1-0ubuntu3.2), firefox-gnome-support:amd64 (16.0.2+build1-0ubuntu0.12.10.1, 17.0+build2-0ubuntu0.12.10.1)<br>
+</p></blockquote><p>
+これだな。firefox-locale-jaもholdしとかなきゃいけなかったんだ。
+</p>
+<p>
+それとは別にWindows版Firefox 17でSuper Tab Modeを試している。<br>
+しかしいろいろと機能が足りない。でもそれほど困ってない。<br>
+Greasemonkeyは上げたら問題なさげ。もうこれでいいか。
+</p>
+<!-- section end -->
+</div>
+<!-- 2012/11/26 end -->
+
+
+
+<hr class="hide">
+<!-- 2012/11/27 start -->
+<h2><a name="20121127" href="201211c.html#20121127">2012-11-27 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="201211271" title="201211271" href="201211c.html#201211271">■</a> 
+@rubyci が更新されない件</h3>
+<p>
+最近気づいた。2ヶ月も止まってたんだな。cia.vcがダウンというより
+<a href="http://shadowm.rewound.net/blog/archives/245-CIA.vc-is-dead.html">CIA.vc is dead</a>死んだようで。<br>
+というわけで、なにか別の手段を考えないと。
+</p>
+<!-- section end -->
+</div>
+<!-- 2012/11/27 end -->
+
+
+
+<hr class="hide">
+<!-- 2012/11/28 start -->
+<h2><a name="20121128" href="201211c.html#20121128">2012-11-28 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="201211281" title="201211281" href="201211c.html#201211281">■</a> 
+Firefox 17</h3>
+<p>
+Tab Utilities 15pre2が17対応してるようなので、Firefoxを17へ上げた。<br>
+holdからinstallへ。意外なほどタブを右クリック、先頭のNew Tabに依存していたようで。<br>
+これってChromeでも使えるからFirefoxも標準だと思っていた。
+</p>
+<!-- section end -->
+</div>
+<!-- 2012/11/28 end -->
+
+<hr>
+<div>
+<a href="201211b.html">&lt;Prev(,)</a> | 
+<a href="201212a.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

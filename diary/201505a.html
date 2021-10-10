@@ -1,0 +1,700 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2015-5-a</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="201504c.html">
+<link rel="next" href="201505b.html">
+
+<link rel="stylesheet" type="text/css" href="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.css">
+<script async type="text/javascript" src="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.js"></script>
+<script type="text/javascript">
+<!--       
+$(document).ready(function() {
+  prettyPrint();
+});
+-->
+</script>
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2015年5月上旬〜</p>
+<hr>
+<div>
+<a href="201504c.html" accesskey=",">&lt;Older(,)</a> | 
+<a href="201505b.html" accesskey=".">Newer(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2015/05/01 start -->
+<h2><a name="20150501" href="201505a.html#20150501">2015-05-01 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="201505011" title="201505011" href="201505a.html#201505011">■</a> 
+Amazon::SimpleDB::ClientがRecursive dependencyでインストールできない</h3>
+<p>
+まあ、そういうわけでamazon-simpledb-cliがインストールできなくて、<br>
+他の方法を探していたというのが昨日の真相。
+</p>
+<pre>
+% cpan Amazon::SimpleDB::Client
+Reading '/home/eban/.cpan/Metadata'
+  Database was generated on Sat, 02 May 2015 01:29:02 GMT
+Running install for module 'Amazon::SimpleDB::Client'
+Fetching with LWP:
+http://www.cpan.org/authors/id/D/DT/DTRISCHUK/Coro-Amazon-SimpleDB-0.04.tar.gz
+Fetching with LWP:
+http://www.cpan.org/authors/id/D/DT/DTRISCHUK/CHECKSUMS
+Checksum for /home/eban/.cpan/sources/authors/id/D/DT/DTRISCHUK/Coro-Amazon-SimpleDB-0.04.tar.gz ok
+'YAML' not installed, will not store persistent state
+Configuring D/DT/DTRISCHUK/Coro-Amazon-SimpleDB-0.04.tar.gz with Makefile.PL
+Checking if your kit is complete...
+Looks good
+Warning: prerequisite Amazon::SimpleDB::Client 0 not found.
+Warning: prerequisite AnyEvent 0 not found.
+Warning: prerequisite AnyEvent::HTTP 0 not found.
+Warning: prerequisite Coro 0 not found.
+Warning: prerequisite Coro::AnyEvent 0 not found.
+Warning: prerequisite EV 0 not found.
+Warning: prerequisite Moose 0 not found.
+Generating a Unix-style Makefile
+Writing Makefile for Coro::Amazon::SimpleDB
+Writing MYMETA.yml and MYMETA.json
+  DTRISCHUK/Coro-Amazon-SimpleDB-0.04.tar.gz
+  /usr/bin/perl Makefile.PL INSTALLDIRS=site -- OK
+Running make for D/DT/DTRISCHUK/Coro-Amazon-SimpleDB-0.04.tar.gz
+----  Unsatisfied dependencies detected during  ----
+---- DTRISCHUK/Coro-Amazon-SimpleDB-0.04.tar.gz ----
+    Coro::AnyEvent [requires]
+    EV [requires]
+    Moose [requires]
+    Amazon::SimpleDB::Client [requires]
+    AnyEvent::HTTP [requires]
+    Coro [requires]
+    AnyEvent [requires]
+
+Recursive dependency detected:
+    Amazon::SimpleDB::Client (have: N/A; want: 0.04)
+ =&gt; DTRISCHUK/Coro-Amazon-SimpleDB-0.04.tar.gz
+ =&gt; Amazon::SimpleDB::Client (have: N/A; requires: 0).
+Cannot resolve.
+  DTRISCHUK/Coro-Amazon-SimpleDB-0.04.tar.gz
+  [depend] -- NOT OK
+</pre>
+<p>
+Amazon::SimpleDB::ClientとCoro::Amazon::SimpleDBが互いに依存してしまっている。
+</p>
+<!-- section end -->
+</div>
+<!-- 2015/05/01 end -->
+
+
+
+<hr class="hide">
+<!-- 2015/05/02 start -->
+<h2><a name="20150502" href="201505a.html#20150502">2015-05-02 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="201505021" title="201505021" href="201505a.html#201505021">■</a> 
+入力ファイルへのリダイレクト問題 #シェル芸</h3>
+<p>
+cat file &gt; file こんなやつ。<br>
+リダイレクトはシェルが面倒見てるのでコマンドが実行される前に処理される。<br>
+だから&gt; fileで空になりそれを読んでも後の祭りになる。<br>
+cat file | cmd1 | cmd2 &gt; fileとした場合はバッファ次第でうまくいくこともあるが、<br>
+結局のところ&gt; fileが元凶なのでこれをなくさないといけない。<br>
+解決方法を少々。まずは全部読んでから書き込む。<br>
+sort -o fileとかsponge fileとかawk 'END{printf &quot;%s&quot;, $0 &gt; &quot;file&quot;}' RS='\0'とか。<br>
+dd bs=1G of=fileでもいけそうだが、結構早いタイミングでtruncateされるので残念ながら使えない。
+</p>
+<p>
+あとはinplace modeを備えているperl, ruby, sedとか最近のgawkとか。<br>
+このあたりの処理は内部的に一時ファイルへ書き込み、名前を戻している。<br>
+こんな感じだ。
+</p>
+<pre>
+% cat file &gt; tmp; mv tmp file
+</pre>
+<p>
+これをmvせずに実現する方法がある。<br>
+stackoverflowあたりで見た記憶があるが、一目ではちょっと理解しがたい。<br>
+見た目rmが最初に出てくるので。
+</p>
+<pre>
+% (rm file; cat &gt; file) &lt; file
+</pre>
+<p>
+これは最後の&lt; fileが一番先に評価されてfd0が切り替わる。<br>
+rm fileしてもopenしたままなのでfile自体は活きている。<br>
+この状態でcat &gt; fileすると違うi-nodeのfileに書かれるので、<br>
+元のfileが上書きされることはない。<br>
+ということは&lt; fileと&gt; fileのfileは別物として扱われる。<br>
+つまりやってることは一時ファイル作ってmvするのと大して変わらない。<br>
+でもぶつからない一時ファイル名を考えないといけないとか面倒なので、<br>
+そこそこ需要がある。
+</p>
+<!-- section end -->
+</div>
+<!-- 2015/05/02 end -->
+
+
+
+<hr class="hide">
+<!-- 2015/05/03 start -->
+<h2><a name="20150503" href="201505a.html#20150503">2015-05-03 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="201505031" title="201505031" href="201505a.html#201505031">■</a> 
+4月のspam</h3>
+<p>
+2400通ほど。ruby-talk MLへのspam bombが効いた。
+
+</p>
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="201505032" title="201505032" href="201505a.html#201505032">■</a> 
+<a href="http://www.shellcheck.net/about.html">ShellCheck</a></h3>
+<p>
+話題のShellCheck。Ubuntuもパッケージがあるのでインストールは楽だ。<br>
+</p>
+<pre>
+ShellCheck is a static analysis and linting tool for sh/bash scripts.
+</pre>
+<p>
+ということでいろいろチェックしてくれる。<br>
+先日の100本ノックの09をかけてみるとこんな感じだ。
+</p>
+<pre>
+% shellcheck 09.sh      
+
+In 09.sh line 6:
+    echo &quot;${BASH_REMATCH[1]}&quot;`echo ${BASH_REMATCH[2]} | grep -o . | shuf | paste -sd &quot;&quot;`&quot;${BASH_REMATCH[3]}&quot;
+                             ^-- SC2046: Quote this to prevent word splitting.
+                             ^-- SC2006: Use $(..) instead of deprecated `..`
+                                   ^-- SC2086: Double quote to prevent globbing and word splitting.
+
+
+In 09.sh line 8:
+    echo $s
+         ^-- SC2086: Double quote to prevent globbing and word splitting.
+
+</pre>
+<p>
+実際は色がつく。カラムまで表示してくれるのでわかりやすい。<br>
+-f gccとすればエディタが認識してくれる形式になる。
+</p>
+<pre>
+% shellcheck -f gcc 09.sh
+09.sh:6:30: warning: Quote this to prevent word splitting. [SC2046]
+09.sh:6:30: note: Use $(..) instead of deprecated `..` [SC2006]
+09.sh:6:36: note: Double quote to prevent globbing and word splitting. [SC2086]
+09.sh:8:10: note: Double quote to prevent globbing and word splitting. [SC2086]
+</pre>
+<p>
+VimならSyntasticが入っていれば勝手に使われる。
+</p>
+<p>
+<img src="../images/shellcheck.png" alt="">
+</p>
+<!-- section end -->
+</div>
+<!-- 2015/05/03 end -->
+
+
+
+<hr class="hide">
+<!-- 2015/05/04 start -->
+<h2><a name="20150504" href="201505a.html#20150504">2015-05-04 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="201505041" title="201505041" href="201505a.html#201505041">■</a> 
+TOIlet</h3>
+<p>
+TOIlet prints text using large characters made of smaller charactersということらしいが、<br>
+なんでこんな名前をつけたのか？<br>
+FIGletとletしか合ってないじゃないか。<br>
+まあ、それはいいとして、色がついたりひらがなやカタカナが使えるあたりがうれしい。<br>
+漢字が使えれば完璧だが。
+</p>
+<pre>
+% toilet -F crop あいうえお
+  m                            &quot;mm           m             m      
+mmm#m&quot;&quot;      m                 mmmm           &quot;&quot;           # m m  
+  #mm#m       #    &quot;&quot;m       &quot;&quot;    #       &quot;mm&quot;&quot;#        &quot;&quot;#&quot;   &quot;#
+ m# m&quot; &quot;m     #  m    #            #          m&quot;           #m&quot;&quot;&quot;m 
+# &quot;m&quot;   #     &quot;m#    &quot;#           #         m&quot;&quot;m        m#&quot;#  m  #
+&quot;m&quot;  mm&quot;        &quot;               m&quot;        m&quot;   &quot;mmm       &quot;#   &quot;&quot; 
+</pre>
+<p>
+フィルターにはhtmlもある。
+</p>
+<pre>
+% toilet -F crop --metal --html あいうえお | sed '/&lt;div/,$!d;s,&lt;/body&gt;&lt;/html&gt;\|&lt;br /&gt;,,g;s/^/HTML /' &gt; aioeo.txt
+<div style="font-family: monospace, fixed; font-weight: bold;">
+<span style="">&#160;&#160;</span><span style=";color:#55f">m</span><span style="">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</span><span style=";color:#00a">&quot;</span><span style=";color:#aaa">mm</span><span style="">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</span><span style=";color:#aaa">m</span><span style="">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</span><span style=";color:#555">m</span><span style="">&#160;&#160;&#160;&#160;&#160;&#160;</span>
+<span style=";color:#55f">mmm#m&quot;&quot;</span><span style="">&#160;&#160;&#160;&#160;&#160;&#160;</span><span style=";color:#00a">m</span><span style="">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</span><span style=";color:#aaa">mmmm</span><span style="">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</span><span style=";color:#555">&quot;&quot;</span><span style="">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</span><span style=";color:#55f">#</span><span style="">&#160;</span><span style=";color:#55f">m</span><span style="">&#160;</span><span style=";color:#55f">m</span><span style="">&#160;&#160;</span>
+<span style="">&#160;&#160;</span><span style=";color:#00a">#mm#m</span><span style="">&#160;&#160;&#160;&#160;&#160;&#160;&#160;</span><span style=";color:#00a">#</span><span style="">&#160;&#160;&#160;&#160;</span><span style=";color:#aaa">&quot;&quot;m</span><span style="">&#160;&#160;&#160;&#160;&#160;&#160;&#160;</span><span style=";color:#aaa">&quot;&quot;</span><span style="">&#160;&#160;&#160;&#160;</span><span style=";color:#555">#</span><span style="">&#160;&#160;&#160;&#160;&#160;&#160;&#160;</span><span style=";color:#555">&quot;mm&quot;&quot;</span><span style=";color:#55f">#</span><span style="">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</span><span style=";color:#55f">&quot;&quot;#&quot;</span><span style="">&#160;&#160;&#160;</span><span style=";color:#00a">&quot;#</span>
+<span style="">&#160;</span><span style=";color:#00a">m#</span><span style="">&#160;</span><span style=";color:#00a">m&quot;</span><span style="">&#160;</span><span style=";color:#00a">&quot;</span><span style=";color:#aaa">m</span><span style="">&#160;&#160;&#160;&#160;&#160;</span><span style=";color:#aaa">#</span><span style="">&#160;&#160;</span><span style=";color:#aaa">m</span><span style="">&#160;&#160;&#160;&#160;</span><span style=";color:#aaa">#</span><span style="">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</span><span style=";color:#555">#</span><span style="">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</span><span style=";color:#55f">m&quot;</span><span style="">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</span><span style=";color:#00a">#m&quot;&quot;&quot;m</span><span style="">&#160;</span>
+<span style=";color:#aaa">#</span><span style="">&#160;</span><span style=";color:#aaa">&quot;m&quot;</span><span style="">&#160;&#160;&#160;</span><span style=";color:#aaa">#</span><span style="">&#160;&#160;&#160;&#160;&#160;</span><span style=";color:#aaa">&quot;m</span><span style=";color:#555">#</span><span style="">&#160;&#160;&#160;&#160;</span><span style=";color:#555">&quot;#</span><span style="">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</span><span style=";color:#55f">#</span><span style="">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</span><span style=";color:#55f">m&quot;&quot;m</span><span style="">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</span><span style=";color:#00a">m#&quot;#</span><span style="">&#160;&#160;</span><span style=";color:#00a">m</span><span style="">&#160;&#160;</span><span style=";color:#aaa">#</span>
+<span style=";color:#aaa">&quot;m&quot;</span><span style="">&#160;&#160;</span><span style=";color:#aaa">mm&quot;</span><span style="">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</span><span style=";color:#555">&quot;</span><span style="">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</span><span style=";color:#55f">m&quot;</span><span style="">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</span><span style=";color:#00a">m&quot;</span><span style="">&#160;&#160;&#160;</span><span style=";color:#00a">&quot;mmm</span><span style="">&#160;&#160;&#160;&#160;&#160;&#160;&#160;</span><span style=";color:#aaa">&quot;#</span><span style="">&#160;&#160;&#160;</span><span style=";color:#aaa">&quot;&quot;</span><span style="">&#160;</span>
+</div>
+</pre>
+<p>
+HTMLはちょっと力技だな。
+</p>
+<!-- section end -->
+</div>
+<!-- 2015/05/04 end -->
+
+
+
+<hr class="hide">
+<!-- 2015/05/05 start -->
+<h2><a name="20150505" href="201505a.html#20150505">2015-05-05 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="201505051" title="201505051" href="201505a.html#201505051">■</a> 
+-iの内部処理</h3>
+<p>
+先日の-iの挙動をperlで確認してしてみたら、一時ファイルは作ってなかった。<br>
+というかrmするほうとまったく同じ方法だった。
+</p>
+<pre>
+% seq 10 &gt; file
+% strace -e trace=open,read,write,unlink,rename perl -i -pe 's/0/o/g' file
+&lt;前略&gt;
+open(&quot;file&quot;, O_RDONLY)               = 3
+unlink(&quot;file&quot;)                       = 0
+open(&quot;file&quot;, O_WRONLY|O_CREAT|O_EXCL, 0600) = 4
+read(3, &quot;1\n2\n3\n4\n5\n6\n7\n8\n9\n10\n&quot;, 8192) = 21
+read(3, &quot;&quot;, 8192)                       = 0
+write(4, &quot;1\n2\n3\n4\n5\n6\n7\n8\n9\n1o\n&quot;, 21) = 21
++++ exited with 0 +++
+</pre>
+<p>
+まさにopenしてからunlinkしている。-i~にするとunlinkの代わりにrenameになる。
+</p>
+<pre>
+% seq 10 &gt; file
+% strace -e trace=open,read,write,unlink,rename perl -i~ -pe 's/0/o/g' file
+&lt;前略&gt;
+open(&quot;file&quot;, O_RDONLY)               = 3
+rename(&quot;file&quot;, &quot;file~&quot;)           = 0
+open(&quot;file&quot;, O_WRONLY|O_CREAT|O_EXCL, 0600) = 4
+read(3, &quot;1\n2\n3\n4\n5\n6\n7\n8\n9\n10\n&quot;, 8192) = 21
+read(3, &quot;&quot;, 8192)                       = 0
+write(4, &quot;1\n2\n3\n4\n5\n6\n7\n8\n9\n1o\n&quot;, 21) = 21
++++ exited with 0 +++
+</pre>
+<p>
+それしても-pでも行ごとに書き込まないのは意外だ。
+</p>
+<p>
+unlinkする方法はrubyも同じ。というのもここら辺はperlの処理をまねているから。<br>
+Windowsではopenしたままのファイルを削除できないので、<br>
+必ずバックアップを残す-i~のような指定を強制される。
+</p>
+<pre>
+% strace -e trace=open,read,write,unlink,rename ruby -i -pe 'gsub(/0/,&quot;o&quot;)' file
+&lt;前略&gt;
+open(&quot;file&quot;, O_RDONLY|O_CLOEXEC)        = 7
+unlink(&quot;file&quot;)                          = 0
+open(&quot;file&quot;, O_WRONLY|O_CREAT|O_TRUNC|O_CLOEXEC, 0666) = 8
+read(7, &quot;1\n2\n3\n4\n5\n6\n7\n8\n9\n10\n&quot;, 8192) = 21
+write(8, &quot;1\n&quot;, 2)                      = 2
+write(8, &quot;2\n&quot;, 2)                      = 2
+write(8, &quot;3\n&quot;, 2)                      = 2
+write(8, &quot;4\n&quot;, 2)                      = 2
+write(8, &quot;5\n&quot;, 2)                      = 2
+write(8, &quot;6\n&quot;, 2)                      = 2
+write(8, &quot;7\n&quot;, 2)                      = 2
+write(8, &quot;8\n&quot;, 2)                      = 2
+write(8, &quot;9\n&quot;, 2)                      = 2
+write(8, &quot;1o\n&quot;, 3)                     = 3
+read(7, &quot;&quot;, 8192)                       = 0
+write(4, &quot;!&quot;, 1)                        = 1
++++ exited with 0 +++
+</pre>
+<p>
+-i~もperlと同じでunlinkがrenameになるだけ。
+</p>
+<p>
+一方sedは一時ファイルを使う。
+<pre>
+% seq 10 &gt; file                                                                     
+% strace -e trace=open,read,write,unlink,rename sed -i 's/0/o/g' file
+&lt;前略&gt;
+open(&quot;file&quot;, O_RDONLY)                  = 3
+open(&quot;./sedHzMdIJ&quot;, O_RDWR|O_CREAT|O_EXCL, 0600) = 4
+read(3, &quot;1\n2\n3\n4\n5\n6\n7\n8\n9\n10\n&quot;, 4096) = 21
+write(4, &quot;1\n&quot;, 2)                      = 2
+write(4, &quot;2\n&quot;, 2)                      = 2
+write(4, &quot;3\n&quot;, 2)                      = 2
+write(4, &quot;4\n&quot;, 2)                      = 2
+write(4, &quot;5\n&quot;, 2)                      = 2
+write(4, &quot;6\n&quot;, 2)                      = 2
+write(4, &quot;7\n&quot;, 2)                      = 2
+write(4, &quot;8\n&quot;, 2)                      = 2
+write(4, &quot;9\n&quot;, 2)                      = 2
+write(4, &quot;1o\n&quot;, 3)                     = 3
+read(3, &quot;&quot;, 4096)                       = 0
+rename(&quot;./sedHzMdIJ&quot;, &quot;file&quot;)           = 0
++++ exited with 0 +++
+</pre>
+</p>
+<p>
+これならopenしたまま削除にはならないのでWindowsでも-iは有効なはず。<br>
+それにしてもカレントディレクトリに作るのはちょっと意外。
+</p>
+<p>
+gawkも一時ファイルを使う。
+</p>
+<pre>
+% seq 10 &gt; file                                                                     
+% strace -e trace=open,read,write,unlink,rename gawk -i inplace '{gsub(/0/,&quot;o&quot;)}1' file
+&lt;前略&gt;
+open(&quot;file&quot;, O_RDONLY)                  = 3
+open(&quot;file.gawk.BPv947&quot;, O_RDWR|O_CREAT|O_EXCL, 0600) = 4
+read(3, &quot;1\n2\n3\n4\n5\n6\n7\n8\n9\n10\n&quot;, 21) = 21
+write(1, &quot;1\n&quot;, 2)                      = 2
+write(1, &quot;2\n&quot;, 2)                      = 2
+write(1, &quot;3\n&quot;, 2)                      = 2
+write(1, &quot;4\n&quot;, 2)                      = 2
+write(1, &quot;5\n&quot;, 2)                      = 2
+write(1, &quot;6\n&quot;, 2)                      = 2
+write(1, &quot;7\n&quot;, 2)                      = 2
+write(1, &quot;8\n&quot;, 2)                      = 2
+write(1, &quot;9\n&quot;, 2)                      = 2
+write(1, &quot;1o\n&quot;, 3)                     = 3
+read(3, &quot;&quot;, 21)                         = 0
+rename(&quot;file.gawk.BPv947&quot;, &quot;file&quot;)      = 0
++++ exited with 0 +++
+</pre>
+<p>
+これもカレントディレクトリか。<br>
+まあ、どちらもGNUだけにそのあたりは同じなのかも。
+</p>
+<!-- section end -->
+</div>
+<!-- 2015/05/05 end -->
+
+
+
+<hr class="hide">
+<!-- 2015/05/06 start -->
+<h2><a name="20150506" href="201505a.html#20150506">2015-05-06 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="201505061" title="201505061" href="201505a.html#201505061">■</a> 
+<a href="http://www.commandlinefu.com/commands/view/14209/repeat-any-string-or-char-n-times-without-spaces-between">同じ文字の繰り返し #シェル芸</a></h3>
+<p>
+\bで戻すんじゃあまり役に立たないが、<br>
+コメントにあるようにprintfでつなげればいいわけだ。<br>
+</p>
+<pre>
+$ printf %s $_{1..3}+; echo
++++
+</pre>
+<p>
+なかなか素晴しい。数字はどこに消えたかというと変数名の一部になっている。<br>
+$_{1..3}+は$_1+ $_2+ $_3+と展開されるが、_1 _2 _3という変数は存在しないので空と同じ。<br>
+よって+だけ残る。printfのformatは引数のほうが多い場合は再利用される。
+</p>
+<pre>
+$ printf %s $_1+ $_2+ $_3+; echo
+$ printf %s + + +; echo
+$ printf %s%s%s + + +; echo
+</pre>
+<p>
+こんな感じになる。とういうわけで_1等が存在してる破綻するのでちょっと具合が悪い。<br>
+さらにzshの場合はbrace展開よりも$_のほうが先に評価されるのでさらに都合が悪い。
+</p>
+<pre>
+% date
+Thu May  7 00:55:09 JST 2015
+% printf %s $_{1..3}+; echo
+date1+date2+date3+
+</pre>
+<p>
+そこで発想ちょっと変えて+を前に持ってくる。で、formatで1文字だけ表示するようにする。
+</p>
+<pre>
+% printf %.1s +{1..3}; echo 
++++
+</pre>
+<p>
+こうすればbashでもzshでもokだ。
+</p>
+<p>
+ここまでくれば3を変数にしたいところだが、なかなかうまくいかない。<br>
+zshならokだがbashだとevalしないといけない。
+</p>
+<pre>
+% zsh -c 'n=5; printf %.1s +{1..$n}; echo' 
++++++
+% bash -c 'n=5; printf %.1s +{1..$n}; echo'
++
+% bash -c 'n=5; eval printf %.1s +{1..$n}; echo'
++++++
+</pre>
+<p>
+brace展開されないので+{1..5}がprintfに渡っている。<br>
+eval使うぐらいならseqのほうがいいかもしれない。
+</p>
+<pre>
+% bash -c 'n=5; printf %.1s `seq -f +%g $n`; echo'
++++++
+</pre>
+<!-- section end -->
+</div>
+<!-- 2015/05/06 end -->
+
+
+
+<hr class="hide">
+<!-- 2015/05/07 start -->
+<h2><a name="20150507" href="201505a.html#20150507">2015-05-07 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="201505071" title="201505071" href="201505a.html#201505071">■</a> 
+GAWKのIndirect function call</h3>
+<p>
+そういえばあったなと確認する。@変数名()みたいな感じで呼び出せる。
+</p>
+<pre>
+% echo foo | gawk 'func foo(){print &quot;foo!&quot;}func bar(){print &quot;bar!&quot;}{@$0()}'
+gawk: コマンドライン:1: func foo(){print &quot;foo!&quot;}func bar(){print &quot;bar!&quot;}{@$0()}
+gawk: コマンドライン:1:                                                   ^ syntax error
+gawk: コマンドライン:1: func foo(){print &quot;foo!&quot;}func bar(){print &quot;bar!&quot;}{@$0()}
+gawk: コマンドライン:1:                                                      ^ syntax error
+gawk: コマンドライン:1: func foo(){print &quot;foo!&quot;}func bar(){print &quot;bar!&quot;}{@$0()}
+gawk: コマンドライン:1:                                                       ^ syntax error
+% echo foo | gawk 'func foo(){print &quot;foo!&quot;}func bar(){print &quot;bar!&quot;}{@($0)()}'
+gawk: コマンドライン:1: func foo(){print &quot;foo!&quot;}func bar(){print &quot;bar!&quot;}{@($0)()}
+gawk: コマンドライン:1:                                                   ^ syntax error
+gawk: コマンドライン:1: func foo(){print &quot;foo!&quot;}func bar(){print &quot;bar!&quot;}{@($0)()}
+gawk: コマンドライン:1:                                                        ^ syntax error
+gawk: コマンドライン:1: func foo(){print &quot;foo!&quot;}func bar(){print &quot;bar!&quot;}{@($0)()}
+gawk: コマンドライン:1:                                                         ^ syntax error
+</pre>
+<p>
+いきなり怒られた。組み込み変数はだめか。
+</p>
+<pre>
+% echo foo | gawk 'func foo(){print &quot;foo!&quot;}func bar(){print &quot;bar!&quot;}{f=$0;@f()}'
+foo!
+% echo bar | gawk 'func foo(){print &quot;foo!&quot;}func bar(){print &quot;bar!&quot;}{f=$0;@f()}'
+bar!
+</pre>
+<p>
+動いた。存在しないもの呼ぶとどうなるか？
+</p>
+<pre>
+% echo hoge | gawk 'func foo(){print &quot;foo!&quot;}func bar(){print &quot;bar!&quot;}{f=$0;@f()}'
+gawk: コマンドライン:1: (FILENAME=- FNR=1) 致命的エラー: 内部エラー: セグメンテーション違反
+</pre>
+<p>
+SEGVとは穏やかでないが、4.1.2では直ってるようだ。
+</p>
+<pre>
+% echo hoge | ~/local/bin/gawk-4.1.2 'func foo(){print &quot;foo!&quot;}func bar(){print &quot;bar!&quot;}{f=$0;@f()}'
+gawk-4.1.2: コマンドライン:1: (FILENAME=- FNR=1) 致命的: `hoge' is not a function, so it cannot be called indirectly
+</pre>
+
+<!-- section end -->
+</div>
+<!-- 2015/05/07 end -->
+
+
+
+<hr class="hide">
+<!-- 2015/05/08 start -->
+<h2><a name="20150508" href="201505a.html#20150508">2015-05-08 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="201505081" title="201505081" href="201505a.html#201505081">■</a> 
+w3mでぐぐると無限refreshになり使いものにならない</h3>
+<p>
+他にもそんなことになってる人がいるかとw3m gooogle refreshをchromeでぐぐったら出てきた。<br>
+<a href="https://productforums.google.com/forum/#!topic/websearch/hpzglVb9B5M">BUG: Search result HTML includes META REFRESH, causes looping until banned</a><br>
+しかし、botのような人が対応してて埒が開かないようで。<br>
+Refresh(0 sec)がunusual trafficの原因なのに、<br>
+unusual trafficだからだと答えられてもねえ。<br>
+一度CAPTCHAが表示されると連続で出てきてうっとうしい。<br>
+しかもIPアドレスでbanされるようで、他のブラウザでも出てくる。
+</p>
+<p>
+面倒なのでオプションでmeta refreshを切った。なくても困らないし。
+</p>
+<!-- section end -->
+</div>
+<!-- 2015/05/08 end -->
+
+
+
+<hr class="hide">
+<!-- 2015/05/09 start -->
+<h2><a name="20150509" href="201505a.html#20150509">2015-05-09 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="201505091" title="201505091" href="201505a.html#201505091">■</a> 
+ピタゴラ暗号棒 #シェル芸</h3>
+<p>
+秘密のやりとりいたします。
+</p>
+<pre>
+どおいうときぶうたつさいえん　んと
+</pre>
+<p>
+暗号棒に巻き付けるので、文字を何個か飛びに拾ってけばいい。<br>
+スパルタで使われたスキュタレー暗号だ。<br>
+ならgrep -o .してxargs -nでいけそう。
+</p>
+<pre>
+% grep -o . pitagora.txt | xargs -n2
+ど お
+い う
+と き
+ぶ う
+た つ
+さ い
+え ん
+　 ん
+と
+% grep -o . pitagora.txt | xargs -n3
+ど お い
+う と き
+ぶ う た
+つ さ い
+え ん 　
+ん と
+</pre>
+<p>
+おお、いけた。横書きにしよう。
+</p>
+<pre>
+% grep -o . pitagora.txt | xargs -n3 | awk '{a=a$1;b=b$2;c=c$3}END{print a&quot;\n&quot;b&quot;\n&quot;c}'   
+どうぶつえん
+おとうさんと
+いきたい　
+</pre>
+<p>
+というわけで解けました。実際は
+</p>
+<pre>
+おとうさんと
+どうぶつえん
+いきたい　
+</pre>
+<p>
+だったが、気にしない。
+</p>
+<!-- section end -->
+</div>
+<!-- 2015/05/09 end -->
+
+
+
+<hr class="hide">
+<!-- 2015/05/10 start -->
+<h2><a name="20150510" href="201505a.html#20150510">2015-05-10 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="201505101" title="201505101" href="201505a.html#201505101">■</a> 
+awkでuniq -d</h3>
+<p>
+重複してる行だけを抜き出すにはuniq -dを使う。
+</p>
+<pre>
+% (seq 10; seq 5 8) | sort | uniq -d
+5
+6
+7
+8
+</pre>
+<p>
+でかいデータのときはsortしたくないときもある。<br>
+そこでawkだ。
+</p>
+<pre>
+% (seq 10; seq 5 8) | awk '++a[$0] == 2'    
+5
+6
+7
+8
+</pre>
+<p>
+a[$0]++ == 1でもいいが、2個以上の2が表に出てきたはほうがわかりやすい。<br>
+2回目に出てきた順番に表示される。
+</p>
+<pre>
+% (seq 10; seq 5 8 | tac) | awk '++a[$0] == 2'
+8
+7
+6
+5
+</pre>
+<!-- section end -->
+</div>
+<!-- 2015/05/10 end -->
+
+<hr>
+<div>
+<a href="201504c.html">&lt;Older(,)</a> | 
+<a href="201505b.html">Newer(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

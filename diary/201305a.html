@@ -1,0 +1,502 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2013-5-a</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="201304c.html">
+<link rel="next" href="201305b.html">
+
+<link rel="stylesheet" type="text/css" href="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.css">
+<script type="text/javascript" src="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.js"></script>
+<script type="text/javascript">
+<!--       
+$(document).ready(function() {
+  prettyPrint();
+});
+-->
+</script>
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2013年5月上旬〜</p>
+<hr>
+<div>
+<a href="201304c.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="201305b.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2013/05/01 start -->
+<h2><a name="20130501" href="201305a.html#20130501">2013-05-01 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="201305011" title="201305011" href="201305a.html#201305011">■</a> 
+synergyを使うとコピペが化けるようになってしまった</h3>
+<p>
+Ubuntu内同士では全然問題ないが、WindowsからUbuntuへコピペしようとすると化ける。<br>
+</p>
+<pre>
+\Uffffffff\Uffffffff/plain
+</pre>
+<p>
+こんな感じに。それどころかWindows内同士でもばけばけに。<br>
+特にgvimではyypすらできない。ばける以前にエラーになってしまう。
+</p>
+<p>
+ひょっとしてクリップボードのあれかと思いParcelliteを終了させたら直った。<br>
+こいつかー。うーむ。選ぶならsynergyのほうだよな。
+</p>
+<!-- section end -->
+</div>
+<!-- 2013/05/01 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/05/02 start -->
+<h2><a name="20130502" href="201305a.html#20130502">2013-05-02 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="201305021" title="201305021" href="201305a.html#201305021">■</a> 
+久し振りのGWの谷間出勤</h3>
+<p>
+諸般の事情により出勤しているんだけど、電車の一旦ドア閉め乗車がなかったり、<br>
+夕食の社食がなかったりといろいろと新鮮だ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2013/05/02 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/05/03 start -->
+<h2><a name="20130503" href="201305a.html#20130503">2013-05-03 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="201305031" title="201305031" href="201305a.html#201305031">■</a> 
+Ruby 1.4の頃の-eの実装とirb</h3>
+<p>
+昨日までのirbはこんな感じになっていた(すでに変更された)。
+</p>
+<pre>
+require &quot;irb&quot;
+
+if __FILE__ == $0
+  IRB.start(__FILE__)
+else
+  # check -e option
+  if /^-e$/ =~ $0
+    IRB.start(__FILE__)
+  else
+    IRB.setup(__FILE__)
+  end
+end
+</pre>
+<p>
+この-eオプションのチェックはなんか意味不明なことになってるが、<br>
+元々Ruby 1.4の時代はsample/irb.rbでこうなっていた。
+</p>
+<pre>
+require &quot;irb/main&quot;
+
+if __FILE__ == $0
+  IRB.start(__FILE__)
+else
+  # check -e option
+  tmp = ENV[&quot;TMP&quot;] || ENV[&quot;TMPDIR&quot;] || &quot;/tmp&quot;
+  if %r|#{tmp}/rb| =~ $0
+    IRB.start(__FILE__)
+  else
+    IRB.initialize(__FILE__)
+  end
+end
+</pre>
+<p>
+-eはその内容が一時ファイルに一旦書かれてそのファイルを読むような実装になっていたのである(evalも)。
+</p>
+<pre>
+% ruby-1.4.6 -ve 'p $0'
+ruby 1.4.6 (2000-08-16) [i386-linux]
+&quot;/tmp/rbeSYKcv&quot;
+</pre>
+<p>
+ただこれちゃんと動いていたのか不明である。<br>
+if __FILE__ == $0はrequireされてるかどうかの判断で、-eオプションのチェックはrequire側になる。<br>
+ということは
+</p>
+<pre>
+% ruby -rsample/irb -e 'p $0'
+</pre>
+<p>
+のようなケースしかないわけだが、本当にこんな使い方を想定していたのか？
+</p>
+<!-- section end -->
+</div>
+<!-- 2013/05/03 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/05/04 start -->
+<h2><a name="20130504" href="201305a.html#20130504">2013-05-04 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="201305041" title="201305041" href="201305a.html#201305041">■</a> 
+4月のspam</h3>
+<p>
+226通。いやーここまで減ると全部チェックできる。
+
+</p>
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="201305042" title="201305042" href="201305a.html#201305042">■</a> 
+IDE HDDのピンを折る</h3>
+<p>
+RD-H1のHDDを300GBから500GBに換装しようと思い、HDD外してIDE-USBケーブルつないだはいいが、<br>
+ぼきっと音がしてまさかと確認してみると1本丸々根元から折れている。<br>
+しかもIDE-USBケーブル側のメスに突き刺さっている。もうどう考えても抜けない。<br>
+つまり、HDDもIDE-USBケーブルも両方とも使い物にならなくなった。<br>
+で、よく見ると500GBはIDEじゃなくてSATAだし。なんだよ、おい、ソフマップ。<br>
+半年ぐらい遊ばせただけに。買ってすぐ確認すべきだった。
+</p>
+<p>
+で、300GBのIDE HDDはまだ遊んでたので、こいつで代用。<br>
+500GBも特に使い途もないしSATA HDDをIDEへ変換する基板でも買ってくるか。
+</p>
+<!-- section end -->
+</div>
+<!-- 2013/05/04 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/05/05 start -->
+<h2><a name="20130505" href="201305a.html#20130505">2013-05-05 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="201305051" title="201305051" href="201305a.html#201305051">■</a> 
+SATA HDD用IDE変換基板を買ったはいいが、意味がなかった話</h3>
+<p>
+またソフマップ行って玄人志向のSATAD-IDEという変換基板を買って500GBつないで試したら見事に認識された。<br>
+しかし残り時間が見覚えのある113時間になっていて変だなとぐぐってみると、<br>
+やはりデフォルトの250GB分しか使えないらしい。<br>
+となると300GB IDEで十分で500GB SATAをつなぐ必要はないわけで。
+</p>
+<p>
+あ、Ubuntuで見てみるか。SATAになったのでつなげる手段はいろいろあるし。<br>
+gpartedとかで広げればいけたりして。
+</p>
+<!-- section end -->
+</div>
+<!-- 2013/05/05 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/05/06 start -->
+<h2><a name="20130506" href="201305a.html#20130506">2013-05-06 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="201305061" title="201305061" href="201305a.html#201305061">■</a> 
+RD-H1のHDDのフォーマットは何やらわからんものだった</h3>
+<p>
+パーティションすらないようで、独自フォーマットじゃpartedで広げるどころの話ではなかった。<br>
+まあ、SATAでも換装可能とわかったので次にこわれたときの保険だな。
+
+</p>
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="201305062" title="201305062" href="201305a.html#201305062">■</a> 
+PNGの最適化ツールを探して</h3>
+<p>
+有名どころのoptipngはパッケージがあるからいいとして、<br>
+<a href="http://advsys.net/ken/utils.htm">pngout</a>,
+<a href="http://entropymine.com/jason/pngrewrite/">pngrewrite</a>,
+<a href="http://bjoern.hoehrmann.de/pngwolf/">pngwolf</a>,
+<a href="http://encode.ru/threads/1214-defluff-a-deflate-huffman-optimizer">defluff</a>といろいろあることがわかった。<br>
+減色処理後はpngoutが効くような気がする。<br>
+減色処理はpngcrushとかpngquantで。convertや
+<a href="http://entropymine.com/imageworsener/">ImageWorsener</a>でもいい。
+</p>
+<!-- section end -->
+</div>
+<!-- 2013/05/06 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/05/07 start -->
+<h2><a name="20130507" href="201305a.html#20130507">2013-05-07 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="201305071" title="201305071" href="201305a.html#201305071">■</a> 
+inetdからご請求</h3>
+<p>
+今年もやはりSubjectは「[inetd] ご請求」だけだった。頑固だねえ。そんな時期になったか。<br>
+もう考えずに更新した。
+</p>
+<!-- section end -->
+</div>
+<!-- 2013/05/07 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/05/08 start -->
+<h2><a name="20130508" href="201305a.html#20130508">2013-05-08 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="201305081" title="201305081" href="201305a.html#201305081">■</a> 
+Unicode 16進文字列を表示する</h3>
+<p>
+zshだとそのままechoすれば表示できてしまう。
+</p>
+<pre>
+% echo '\u6211\u3005\u306f\u30b7\u30a7\u30eb\u82b8\u4eba\u3060\u3002'
+我々はシェル芸人だ。
+</pre>
+<p>
+しかし残念ながらbashだとそのまま表示される。
+</p>
+<pre>
+$ echo '\u6211\u3005\u306f\u30b7\u30a7\u30eb\u82b8\u4eba\u3060\u3002'
+\u6211\u3005\u306f\u30b7\u30a7\u30eb\u82b8\u4eba\u3060\u3002
+</pre>
+<p>
+どうしたもんかと思ったら、$''でいけることがわかった。
+</p>
+<pre>
+$ echo $'\u6211\u3005\u306f\u30b7\u30a7\u30eb\u82b8\u4eba\u3060\u3002'
+我々はシェル芸人だ。
+</pre>
+<p>
+これならzshでもいける。あとprintfを使う方法もある。
+</p>
+<pre>
+$ printf '\u6211\u3005\u306f\u30b7\u30a7\u30eb\u82b8\u4eba\u3060\u3002\n'
+我々はシェル芸人だ。
+% printf '\u6211\u3005\u306f\u30b7\u30a7\u30eb\u82b8\u4eba\u3060\u3002\n'
+我々はシェル芸人だ。
+$ /usr/bin/printf '\u6211\u3005\u306f\u30b7\u30a7\u30eb\u82b8\u4eba\u3060\u3002\n'
+我々はシェル芸人だ。
+</pre>
+<p>
+builtinだけでなく/usr/bin/printfでもいけるので、<br>
+変数にあらかじめ入ってるときなんかはこっちを使ったほうが楽かもしれない。
+</p>
+<!-- section end -->
+</div>
+<!-- 2013/05/08 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/05/09 start -->
+<h2><a name="20130509" href="201305a.html#20130509">2013-05-09 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="201305091" title="201305091" href="201305a.html#201305091">■</a> 
+ログファイルを2個だけ残してあとは消す</h3>
+<p>
+日付入りのファイル名でログを残すのはよくあるが、放っておくと際限なくたまってしまう。<br>
+そこで最新の2個ぐらい残してあとは消したいがどうするか？
+</p>
+<pre>
+% ls -l
+total 0
+-rw-r--r-- 1 eban eban 0 2013-05-05 12:00:00 foo.log.0
+-rw-r--r-- 1 eban eban 0 2013-05-06 12:00:00 foo.log.1
+-rw-r--r-- 1 eban eban 0 2013-05-07 12:00:00 foo.log.2
+-rw-r--r-- 1 eban eban 0 2013-05-08 12:00:00 foo.log.3
+-rw-r--r-- 1 eban eban 0 2013-05-09 12:00:00 foo.log.4
+% ls -t1
+foo.log.4
+foo.log.3
+foo.log.2
+foo.log.1
+foo.log.0
+</pre>
+<p>
+foo.log.{3,4}だけ残したい。削除するはその残りなので1行目と2行目を消す。
+</p>
+<pre>
+% ls -t1 | sed 1,2d
+foo.log.2
+foo.log.1
+foo.log.0
+</pre>
+<p>
+tailを使う場合は意味合い的には3行目以降表示する。+を使う。
+</p>
+<pre>
+% ls -t1 | tail -n +3
+foo.log.2
+foo.log.1
+foo.log.0
+</pre>
+<p>
+あとはrmで消せばいい。
+</p>
+<pre>
+% 
+% rm `ls -t1 | sed 1,2d`
+% ls -t1
+foo.log.4
+foo.log.3
+</pre>
+<p>
+しかしこれだと3個たまるまではrmの引数が空になってしまいエラーになる。
+</p>
+<pre>
+% rm `ls -t1 | sed 1,2d`
+rm: オペランドがありません
+Try 'rm --help' for more information.
+</pre>
+<p>
+rm -fにしてもいいが、xargsを使う方法がある。
+</p>
+<pre>
+% rm -f `ls -t1 | sed 1,2d`
+% ls -t1 | sed 1,2d | xargs -r rm 
+</pre>
+<p>
+-rで入力が空なら実行しない。
+</p>
+<pre>
+--no-run-if-empty
+-r     If the standard input does not contain any nonblanks, do not run the command.  Normally, the command is
+       run once even if there is no input.  This option is a GNU extension.
+</pre>
+<p>
+さらにファイル名に空白を含んでいてもデリミタを改行(-d'\n')にすればok。
+</p>
+<pre>
+% ls -t1
+foo bar.log.4
+foo bar.log.3
+foo bar.log.2
+foo bar.log.1
+foo bar.log.0
+% ls -t1 | sed 1,2d | xargs -r rm
+rm: `foo' を削除できません: そのようなファイルやディレクトリはありません
+rm: `bar.log.2' を削除できません: そのようなファイルやディレクトリはありません
+rm: `foo' を削除できません: そのようなファイルやディレクトリはありません
+rm: `bar.log.1' を削除できません: そのようなファイルやディレクトリはありません
+rm: `foo' を削除できません: そのようなファイルやディレクトリはありません
+rm: `bar.log.0' を削除できません: そのようなファイルやディレクトリはありません
+% ls -t1 | sed 1,2d | xargs -r -d'\n' rm
+% ls -t1
+foo bar.log.4
+foo bar.log.3
+</pre>
+<!-- section end -->
+</div>
+<!-- 2013/05/09 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/05/10 start -->
+<h2><a name="20130510" href="201305a.html#20130510">2013-05-10 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="201305101" title="201305101" href="201305a.html#201305101">■</a> 
+空白を含んだファイル名とIFS</h3>
+<p>
+昨日の件で空白が含まれたファイル名があるときにxargsを使わずに消すにはどうするか？<br>
+引数の区切りはシェル変数IFSで決まっていて、普通は空白、タブ、改行の3つになっている。<br>
+これを改行だけにすれば解決する。
+</p>
+<pre>
+% ls -t1
+foo bar.log.4
+foo bar.log.3
+foo bar.log.2
+foo bar.log.1
+foo bar.log.0
+% rm -f `ls -t1 | sed 1,2d`             
+% ls -t1
+foo bar.log.4
+foo bar.log.3
+foo bar.log.2
+foo bar.log.1
+foo bar.log.0
+# 消えてない
+% (IFS=$'\n'; rm -f `ls -t1 | sed 1,2d`)
+% ls -t1
+foo bar.log.4
+foo bar.log.3
+</pre>
+<p>
+IFSを元に戻すのが面倒なので()を使って子プロセスで動かしている。
+</p>
+<p>
+zshはなぜかIFSにNULも含まれている。
+</p>
+<!-- section end -->
+</div>
+<!-- 2013/05/10 end -->
+
+<hr>
+<div>
+<a href="201304c.html">&lt;Prev(,)</a> | 
+<a href="201305b.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

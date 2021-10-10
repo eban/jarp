@@ -1,0 +1,441 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2013-11-a</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="201310c.html">
+<link rel="next" href="201311b.html">
+
+<link rel="stylesheet" type="text/css" href="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.css">
+<script type="text/javascript" src="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.js"></script>
+<script type="text/javascript">
+<!--       
+$(document).ready(function() {
+  prettyPrint();
+});
+-->
+</script>
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2013年11月上旬〜</p>
+<hr>
+<div>
+<a href="201310c.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="201311b.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2013/11/01 start -->
+<h2><a name="20131101" href="201311a.html#20131101">2013-11-01 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="201311011" title="201311011" href="201311a.html#201311011">■</a> 
+Android 4.0.xでrubyがSEGV</h3>
+<p>
+trunkのrubyがAndroid 4.0.xだと起動すらせずになぜかSEGVる原因を調べた。<br>
+まずは古いので試したら1.8.7だと普通に動く。<br>
+というわけでとりあえずrubyをリンクしているgccのオプションを比較してみる。<br>
+怪しいのは-pieだがこれを外してみたらビンゴだった。<br>
+<a href="http://developer.android.com/tools/sdk/ndk/index.html">Android NDK, Revision 8c</a>のこれか？
+</p>
+<blockquote><p>
+Updated build so that executables using android-16 (Jelly Bean) or higher are compiled with the -fPIE option for position-independent executables (PIE). A new APP_PIE option allows you to control this behavior. See APPLICATION-MK.html for details.
+</p></blockquote>
+<!-- section end -->
+</div>
+<!-- 2013/11/01 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/11/02 start -->
+<h2><a name="20131102" href="201311a.html#20131102">2013-11-02 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="201311021" title="201311021" href="201311a.html#201311021">■</a> 
+Android版rubyを作るときに便利な--enable-load-relative</h3>
+<p>
+--disable-rubygemsで作ればruby自体はどこでも動くが、<br>
+ライブラリを使うときはprefix固定なので-Iで指定する必要がある。<br>
+Androidに限らないが、普通にconfigureすると/usr/localがprefixになってしまって、<br>
+インストールする場所が固定されてしまう。<br>
+Androidだと--prefix=/systemにすると都合がいいが、<br>
+ここはroot取らないと書けない。<br>
+かと言って--prefix=/data/local/tmpとするのもPATHをいじらないといけないし、<br>
+今度は/systemに置けなくなるので不自由。そこで--enable-load-relativeだ。<br>
+これはdladdr(3)を使いprefixをexpand_include_pathという関数が存在するファイル<br>
+つまりLibruby共有ライブラリか実行ファイルであるruby自身からの相対にしてくれる。<br>
+どちらの場合もその1つ上のディレクトリがprefixになる。<br>
+ライブラリがこのように配置されていればどこに移動しても問題なく動く。<br>
+</p>
+<pre>
+shell@grouper:/data/local/tmp $ bin/ruby -e 'p $:[0]'
+&quot;/data/local/tmp/lib/ruby/site_ruby/2.1.0&quot;
+shell@grouper:/data/local/tmp $ mkdir foo
+shell@grouper:/data/local/tmp $ cp -r bin foo
+shell@grouper:/data/local/tmp $ foo/bin/ruby -e 'p $:[0]'                      
+&quot;/data/local/tmp/foo/lib/ruby/site_ruby/2.1.0&quot;
+</pre>
+<p>
+このようにrubyのある位置でprefixが<br>
+/data/local/tmp/<br>
+から<br>
+/data/local/tmp/foo<br>
+へ変化しているのがわかる。
+</p>
+<p>
+自分がいるディレクトリがbinじゃないときは1つ上にはならない。
+</p>
+<pre>
+shell@grouper:/data/local/tmp $ ./ruby -e 'p $:[0]'
+&quot;/data/local/tmp/lib/ruby/site_ruby/2.1.0&quot;
+shell@grouper:/data/local/tmp $ mkdir foo
+shell@grouper:/data/local/tmp $ cp ruby foo
+shell@grouper:/data/local/tmp $ foo/ruby -e 'p $:[0]'                          
+&quot;/data/local/tmp/foo/lib/ruby/site_ruby/2.1.0&quot;
+</pre>
+<p>
+AndroidのdladdrはAndorid 4(API Level 8)から使える。<br>
+make-standalone-toolchain.shするときは--platform=android-8で。
+</p>
+<!-- section end -->
+</div>
+<!-- 2013/11/02 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/11/03 start -->
+<h2><a name="20131103" href="201311a.html#20131103">2013-11-03 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="201311031" title="201311031" href="201311a.html#201311031">■</a> 
+Android版rubyのtarballを作る</h3>
+<p>
+configureに--enable-load-relativeつければprefixはどうでもいいが、<br>
+tarballを作るには一度installする必要がある。そのときにprefixが影響する。<br>
+--prefix=&quot;&quot;とか--prefix=/のような感じで指定できればいいが、<br>
+これは今は想定外のようでビルドエラーになったり、<br>
+区切り位置がおかしくなったりするのでやめたほうがいい。<br>
+適当に--prefix=/xとかにしておくのが無難。<br>
+まとめると
+</p>
+<pre>
+--enable-load-relative --disable-rubygems --prefix=/x
+</pre>
+<p>
+をクロス用のオプションに追加する。<br>
+あとdocumentも不要だと思うので以下のようにしてインストールする。<br>
+--disable-install-doc --disable-install-rdocしてないのは<br>
+後で普通にmakeすれば作ることも可能なように。
+</p>
+<pre>
+% make main install-nodoc DESTDIR=/tmp
+</pre>
+<p>
+ここから不要なものを削除する。<br>
+lib/libruby-static.aとlib/pkgconfigはAndroid上でbuildするわけではないので不要。<br>
+あとちょっとでも小さくするためにstripしておく。
+</p>
+<pre>
+% rm -r /tmp/x/lib/{libruby-static.a,pkgconfig}
+% arm-linux-androideabi-strip --strip-unneeded /tmp/x/{bin/ruby,lib/**/*.so}
+</pre>
+<p>
+準備できたのでtarballを作る。
+</p>
+<pre>
+% tar cfvz ~/ruby-trunk-android.tar.gz bin lib -C /tmp/x
+</pre>
+<p>
+あとは~/ruby-trunk-android.tar.gzをadb pushしてadb shell上でbusybox tarして展開する。
+</p>
+<pre>
+% adb push ~/ruby-trunk-android.tar.gz /data/local/tmp
+% adb shell
+shell@grouper:/ $ cd /data/local/tmp
+shell@grouper:/data/local/tmp $ ./busybox tar xfv ruby-trunk-android.tar.gz    
+shell@grouper:/data/local/tmp $ bin/ruby -ve 'p $:[0]'                         
+ruby 2.1.0dev (2013-11-03 trunk 43521) [arm-linux-android]
+&quot;/data/local/tmp/lib/ruby/site_ruby/2.1.0&quot;
+</pre>
+<p>
+ああ、libruby-static.aとか消さなくても、tarball作るときに
+<pre>
+% tar cfvz ~/ruby-trunk-android.tar.gz bin lib/ruby -C /tmp/x
+</pre>
+</p>
+<p>
+のようにlib/rubyとすればいいか。
+</p>
+<!-- section end -->
+</div>
+<!-- 2013/11/03 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/11/04 start -->
+<h2><a name="20131104" href="201311a.html#20131104">2013-11-04 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="201311041" title="201311041" href="201311a.html#201311041">■</a> 
+adb shell input textの謎</h3>
+<p>
+Androidでメールアドレスとか入力するのが面倒で、<br>
+どうせだいたいUSBケーブルがつながってるのでadb shell input textするわけなんだけど、<br>
+US配列のキーボードのせいか記号が全然別の文字になってしまい困る。<br>
+いろいろ試してみたらどうもこんな対応になってるようだ。
+</p>
+<pre>
+!@#$%^&amp;*()-_+=\|`~[{]};:,&lt;.&gt;/?&quot;'
+!&quot;#$%&amp;'() -=~^]}  [{]};+,&lt;.&gt;/d*:
+</pre>
+<p>
+?がなんでdになるかというと/dが存在するからだ。クォート処理がおかしいな。
+</p>
+<pre>
+% adb shell input text '\\?'
+</pre>
+<p>
+と実行すると]?になるので?は?なんだろう。<br>
+なんで二重にクォートする必要があるのか。しかも\が残ってしまうし。<br>
+`と~はソフトキーボードのon/offになってる模様。<br>
+今のことろ`を送る方法がわからない。まあ、あまり困らないが。
+</p>
+<!-- section end -->
+</div>
+<!-- 2013/11/04 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/11/05 start -->
+<h2><a name="20131105" href="201311a.html#20131105">2013-11-05 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="201311051" title="201311051" href="201311a.html#201311051">■</a> 
+Tab Utilitiesを更新したら謎のボタンが5つ</h3>
+<p>
+notepadとかツールチップで出てくる。押してみると本当にメモ帳が立ち上がる。<br>
+なんだこれとぐぐってみたら単に消し忘れただけらしい。<br>
+<a href="https://addons.mozilla.org/en-us/firefox/addon/tab-utilities/reviews/508462/">Tab Utilities :: Reviews :: Add-ons for Firefox</a></p>
+<p>
+消したいときはabout:configで以下をfalseに。
+</p>
+<pre>
+extensions.tabutils.button.button_Notepad
+extensions.tabutils.button.button_TotalCommander
+extensions.tabutils.button.button_UltraCompare
+extensions.tabutils.button.button_UltraEdit
+extensions.tabutils.button.button_UltraSurf
+</pre>
+<!-- section end -->
+</div>
+<!-- 2013/11/05 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/11/06 start -->
+<h2><a name="20131106" href="201311a.html#20131106">2013-11-06 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="201311061" title="201311061" href="201311a.html#201311061">■</a> 
+uClibcのtimezone</h3>
+<p>
+Android版busyboxはuClibcが静的にリンクされてるらしく、<br>
+deviceのタイムゾーンをいじってもdateの表示はUTCのままになってしまう。<br>
+普通に環境変数TZをJST-9でもいいが、/etc/TZにJST-9と書いてもいい。<br>
+でもroot取らないとそこには書けない。
+</p>
+<!-- section end -->
+</div>
+<!-- 2013/11/06 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/11/07 start -->
+<h2><a name="20131107" href="201311a.html#20131107">2013-11-07 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="201311071" title="201311071" href="201311a.html#201311071">■</a> 
+adb shellの標準出力の改行問題</h3>
+<p>
+どういうわけかadb shellはonlcrになっていて、LFがCR+LFへ変換されてしまう。
+</p>
+<pre>
+% adb shell echo | od -c
+0000000  \r  \n
+0000002
+</pre>
+たぶんWindowsのコマンドプロンプトでも、<br>
+表示が階段状に乱れないようにするためだと思われる。<br>
+それはそれとしてこのままだとバイナリデータを、<br>
+リダイレクトやパイプでホスト側に渡したいときに困る。<br>
+sedやdos2unixを使い無理矢理CR+LFをLFに変換するのでは、<br>
+たまたまそういう値が元データあった場合に壊してしまう。<br>
+根本的に解決するためにはstty -onlcrを実行する必要がある。<br>
+sttyはAndroidにはないので例によってbusyboxを使う。
+<pre>
+% adb shell '/data/local/tmp/busybox stty -onlcr;echo' | od -c
+0000000  \n
+0000001
+</pre>
+<p>
+覚えにくいのでstty rawとかstty nlでもいい。
+</p>
+<pre>
+% adb shell '/data/local/tmp/busybox stty raw;echo' | od -c
+0000000  \n
+0000001
+% adb shell '/data/local/tmp/busybox stty nl;echo' | od -c
+0000000  \n
+0000001
+</pre>
+<p>
+これでスクリーンショットもわざわざ一度device内のSDカードとかに保存しなくてもok。
+</p>
+<pre>
+% adb shell 'screencap -p' &gt; foo.png 
+% file foo.png
+foo.png: data
+% adb shell '/data/local/tmp/busybox stty nl;screencap -p' &gt; foo.png
+% file foo.png
+foo.png: PNG image data, 800 x 1280, 8-bit/color RGBA, non-interlaced
+</pre>
+<!-- section end -->
+</div>
+<!-- 2013/11/07 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/11/08 start -->
+<h2><a name="20131108" href="201311a.html#20131108">2013-11-08 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="201311081" title="201311081" href="201311a.html#201311081">■</a> 
+diigo delicious連携チェック</h3>
+<p>
+delicious側でチェックするのやめて、素直にdiigo側でチェックするようにした。<br>
+signin処理が面倒だと思ったが、browserのcookieを使えばいいので、
+</p>
+<pre>
+curl -sLO -b ~/cookies.txt https://www.diigo.com/tools/save_to_others
+</pre>
+<p>
+の結果をgrepするだけでokだった。
+</p>
+<!-- section end -->
+</div>
+<!-- 2013/11/08 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/11/09 start -->
+<h2><a name="20131109" href="201311a.html#20131109">2013-11-09 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="201311091" title="201311091" href="201311a.html#201311091">■</a> 
+zopflipng</h3>
+<p>
+久し振りにzopfliのページへ行ってみたら
+<a href="http://code.google.com/p/zopfli/source/browse/README.zopflipng">zopflipng</a>なるものが。<br>
+これでpngもzopfliで圧縮できるわけか。最近の
+<a href="http://advancemame.sourceforge.net/doc-advpng.html">AdvanceComp</a>でもいけるらしい。
+</p>
+<!-- section end -->
+</div>
+<!-- 2013/11/09 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/11/10 start -->
+<h2><a name="20131110" href="201311a.html#20131110">2013-11-10 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="201311101" title="201311101" href="201311a.html#201311101">■</a> 
+xargs --max-procs</h3>
+<p>
+optipngとか並列にやらせたいときに
+</p>
+<pre>
+% find *.png -print0 | xargs -r0 -P4 -n1 optipng
+</pre>
+<p>
+みたいなことしていたが、man xargsしたら0を指定すれば可能な限りがんばってくれるようだ。
+</p>
+<pre>
+--max-procs=max-procs
+-P max-procs
+       Run up to max-procs processes at a time; the default is 1.  If max-procs is 0, xargs will run  as  many
+       processes  as  possible at a time.  Use the -n option with -P; otherwise chances are that only one exec
+       will be done.
+</pre>
+<!-- section end -->
+</div>
+<!-- 2013/11/10 end -->
+
+<hr>
+<div>
+<a href="201310c.html">&lt;Prev(,)</a> | 
+<a href="201311b.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

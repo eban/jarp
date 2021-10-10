@@ -1,0 +1,330 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2013-8-b</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="201308a.html">
+<link rel="next" href="201308c.html">
+
+<link rel="stylesheet" type="text/css" href="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.css">
+<script type="text/javascript" src="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.js"></script>
+<script type="text/javascript">
+<!--       
+$(document).ready(function() {
+  prettyPrint();
+});
+-->
+</script>
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2013年8月中旬〜</p>
+<hr>
+<div>
+<a href="201308a.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="201308c.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2013/08/11 start -->
+<h2><a name="20130811" href="201308b.html#20130811">2013-08-11 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="201308111" title="201308111" href="201308b.html#201308111">■</a> 
+<a href="http://userscripts.org/scripts/show/17869">Gmail Fixed Font for Greasemonkey</a></h3>
+<p>
+Greasemonkey用ではあるが、Chromeにも使える。最近は
+<a href="http://tampermonkey.net/">Tampermonkey</a>を入れて管理している。<br>
+やはりダウンロードして直接拡張機能のページへD&amp;Dするのは結構めんどくさい。
+</p>
+<!-- section end -->
+</div>
+<!-- 2013/08/11 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/08/12 start -->
+<h2><a name="20130812" href="201308b.html#20130812">2013-08-12 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="201308121" title="201308121" href="201308b.html#201308121">■</a> 
+ebook-convertで--right2leftが効かない</h3>
+<p>
+スキャンした文庫本を読むときになんか違和感があったが、右開きになってなかった。<br>
+開きでボタンの意味も変わるSony Readerもあれだが、<br>
+もうどっちがどっちだったかわからないので、<br>
+押してみて確認するみたいな無駄なことをする状況。
+</p>
+<p>
+できあがったepubの中身を確認してみるとspineタグにpage-progression-direction=&quot;rtl&quot;がなかった。<br>
+しかたないのこんな処理を入れた。
+</p>
+<pre>
+unzip -p ebook.epub content.opf | sed 's/&lt;spine/&lt;spine page-progression-direction=&quot;rtl&quot;/' &gt; content.opf
+zip ebook.epub content.opf
+</pre>
+<!-- section end -->
+</div>
+<!-- 2013/08/12 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/08/13 start -->
+<h2><a name="20130813" href="201308b.html#20130813">2013-08-13 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="201308131" title="201308131" href="201308b.html#201308131">■</a> 
+アドレスバー</h3>
+<p>
+IEはOneBoxで、FirefoxはLocation Barで、Google ChromeはOmniBarと呼ぶらしい。<br>
+まあ一般的にはアドレスバーでいいんだろうけど。
+</p>
+<!-- section end -->
+</div>
+<!-- 2013/08/13 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/08/14 start -->
+<h2><a name="20130814" href="201308b.html#20130814">2013-08-14 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="201308141" title="201308141" href="201308b.html#201308141">■</a> 
+Cygwinでrequire &quot;bundler/setup&quot;するとrequire &quot;json&quot;が失敗する</h3>
+<p>
+bundlerもrequireを置き換えるんだっけ？
+</p>
+<pre>
+% cat Gemfile
+# A sample Gemfile
+source &quot;https://rubygems.org&quot;
+
+gem &quot;faraday&quot;
+
+% bundle install --path vendor/bundle
+Fetching gem metadata from https://rubygems.org/.........
+Fetching gem metadata from https://rubygems.org/..
+Installing multipart-post (1.2.0)
+Installing faraday (0.8.8)
+Using bundler (1.3.5)
+Your bundle is complete!
+It was installed into ./vendor/bundle
+% ruby -e 'require &quot;json&quot;; require &quot;bundler/setup&quot;'
+% ruby -e 'require &quot;bundler/setup&quot;; require &quot;json&quot;'
+-e:1:in `require': cannot load such file -- json (LoadError)
+        from -e:1:in `&lt;main&gt;'
+</pre>
+<p>
+Cygwinではjsonは別のパッケージになっていて、<br>
+しかもgemなのでそのあたりの事情で見つからないようだ。<br>
+順番が大事でbundlerの前にrequireしといたほうが無難。
+</p>
+<!-- section end -->
+</div>
+<!-- 2013/08/14 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/08/15 start -->
+<h2><a name="20130815" href="201308b.html#20130815">2013-08-15 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="201308151" title="201308151" href="201308b.html#201308151">■</a> 
+<a href="http://golf.shinh.org/p.rb?Shuffle+Twice">Shuffle Twice</a></h3>
+<p>
+トランプの完全シャッフル。これはpasteでいける。
+</p>
+<pre>
+% paste &lt;(seq 9 16) &lt;(seq 8) 
+9	1
+10	2
+11	3
+12	4
+13	5
+14	6
+15	7
+16	8
+</pre>
+<p>
+pasteのデフォルトの区切りはタブなので-dで改行にすればいい。
+</p>
+<pre>
+% paste -d'\n' &lt;(seq 9 16) &lt;(seq 8)
+9
+1
+10
+2
+11
+3
+12
+4
+13
+5
+14
+6
+15
+7
+16
+8
+</pre>
+<p>
+あとは半分で分割するとか2回繰り返すとかすればok。
+</p>
+<!-- section end -->
+</div>
+<!-- 2013/08/15 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/08/16 start -->
+<h2><a name="20130816" href="201308b.html#20130816">2013-08-16 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="201308161" title="201308161" href="201308b.html#201308161">■</a> 
+半分に分割</h3>
+<p>
+実を言うと昨日の日記書いてて気づいたんだけど、splitでいいんだよねえ。<br>
+わざわざheadとtailを使っていた。
+</p>
+<!-- section end -->
+</div>
+<!-- 2013/08/16 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/08/17 start -->
+<h2><a name="20130817" href="201308b.html#20130817">2013-08-17 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="201308171" title="201308171" href="201308b.html#201308171">■</a> 
+キーボードのがたつき</h3>
+<p>
+<a href="201306c.html#201306291">足をたたんで</a>2ヶ月ほど経つが、がたつきは直ってなかった。<br>
+つまり手前のゴムのほうが高さが合ってないようで。<br>
+今度はその辺にあったサンデーのおまけのしおりをはさむことにした。<br>
+
+</p>
+<!-- section end -->
+</div>
+<!-- 2013/08/17 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/08/18 start -->
+<h2><a name="20130818" href="201308b.html#20130818">2013-08-18 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="201308181" title="201308181" href="201308b.html#201308181">■</a> 
+ビデオを見まくる</h3>
+<p>
+はやぶさの映画とかいまさらではあるが、なんか2つともどうも予想と違った。<br>
+もう3年経つんだよな。
+</p>
+<p>
+まあ、そっちよりMMD杯のほうが多かったが。
+</p>
+<!-- section end -->
+</div>
+<!-- 2013/08/18 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/08/19 start -->
+<h2><a name="20130819" href="201308b.html#20130819">2013-08-19 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="201308191" title="201308191" href="201308b.html#201308191">■</a> 
+明日で夏休み終わり</h3>
+<p>
+今年はちょうど暑い時期にぶち当たったなあ。<br>
+こんな暑い夏休みは初めてだ。<br>
+夕立ぐらいあればいいんだが。<br>
+明日はなんか降りそうとか言ってたがはたして。
+</p>
+<!-- section end -->
+</div>
+<!-- 2013/08/19 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/08/20 start -->
+<h2><a name="20130820" href="201308b.html#20130820">2013-08-20 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="201308201" title="201308201" href="201308b.html#201308201">■</a> 
+<a href="https://www.diigo.com/extension/chrome/new.html">What’s new for Diigo Chrome extension 2.2.6</a></h3>
+<p>
+Chromeを立ち上げるたびに自動クローズの設定がonになるバグがやっと直った。<br>
+デフォルトをonにするのはいいけど、ユーザーの設定を無視するのはやっぱバグだよな。
+</p>
+<!-- section end -->
+</div>
+<!-- 2013/08/20 end -->
+
+<hr>
+<div>
+<a href="201308a.html">&lt;Prev(,)</a> | 
+<a href="201308c.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

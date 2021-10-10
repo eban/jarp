@@ -1,0 +1,367 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2014-11-a</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="201410c.html">
+<link rel="next" href="201411b.html">
+
+<link rel="stylesheet" type="text/css" href="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.css">
+<script async type="text/javascript" src="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.js"></script>
+<script type="text/javascript">
+<!--       
+$(document).ready(function() {
+  prettyPrint();
+});
+-->
+</script>
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2014年11月上旬〜</p>
+<hr>
+<div>
+<a href="201410c.html" accesskey=",">&lt;Older(,)</a> | 
+<a href="201411b.html" accesskey=".">Newer(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2014/11/01 start -->
+<h2><a name="20141101" href="201411a.html#20141101">2014-11-01 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="201411011" title="201411011" href="201411a.html#201411011">■</a> 
+突然fitbitのbluetoothが認識されなくなった</h3>
+<p>
+困ったなあ。充電開始してから全然同期が取れない。<br>
+bluetoothとして認識されない。<br>
+リセットってできるんかな。あった。<br>
+<a href="http://help.fitbit.com/articles/en_US/Help_article/How-do-I-restart-my-tracker">Help article: How do I restart my tracker?</a><br>
+チャージしながら10-12秒長押しして外してまた長押ししてスタートさせてみる。<br>
+おお、見事に復活した。
+</p>
+<!-- section end -->
+</div>
+<!-- 2014/11/01 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/11/02 start -->
+<h2><a name="20141102" href="201411a.html#20141102">2014-11-02 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="201411021" title="201411021" href="201411a.html#201411021">■</a> 
+AOL Readerのフィード登録用URL</h3>
+<p>
+<a href="http://webdesign.about.com/od/rsstools/tp/rss_buttons.htm">RSS Add to Page Buttons</a>というページを発見したので、<br>
+さっそく
+</p>
+<pre>
+http://feeds.my.aol.com/add.jsp?url=%s
+</pre>
+<p>
+で試したみたがだめだった。<br>
+そもそも普通に+を押して進めてもやたらと失敗するしで困ったもんだ。<br>
+結局
+</p>
+<pre>
+https://reader.aol.com/#subscription/%s
+</pre>
+<p>
+でよさげ。失敗しても再表示でFollowボタンが出現する。<br>
+あ、
+</p>
+<pre>
+https://reader.aol.com/#quickadd/%s
+</pre>
+<p>
+がいい感じだ。Followボタンを押した状態になる。<br>
+というか最初のURLでも問題なくなってた。よくわからんけど、まあいいか。
+</p>
+<!-- section end -->
+</div>
+<!-- 2014/11/02 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/11/03 start -->
+<h2><a name="20141103" href="201411a.html#20141103">2014-11-03 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="201411031" title="201411031" href="201411a.html#201411031">■</a> 
+JBIG2でPDF</h3>
+<p>
+jbig2encのjbig2とpdf.pyでPDFファイルを作ると驚くほど小さくなる。<br>
+普通に作ると20MBが、5MBとかそういう世界。<br>
+でもSony Readerで読めないので意味がない。
+</p>
+<!-- section end -->
+</div>
+<!-- 2014/11/03 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/11/04 start -->
+<h2><a name="20141104" href="201411a.html#20141104">2014-11-04 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="201411041" title="201411041" href="201411a.html#201411041">■</a> 
+faketimeとタイムスタンプ</h3>
+<p>
+faketimeはシステムタイムだけでなくファイルのタイムスタンプにも影響する。
+</p>
+<pre>
+% ls -l myfile.txt
+-rw-r--r-- 1 eban eban 64 2014-11-01 18:08:04 myfile.txt
+% faketime 2014-01-01 ls -l myfile.txt
+-rw-r--r-- 1 eban eban 64 2013-12-28 17:51:46 myfile.txt
+</pre>
+<p>
+これは現在時との差分がそのままfaketimeの世界でも反映されてることを意味する。<br>
+これがいやなら環境変数NO_FAKE_STATを設定する。
+</p>
+<pre>
+% NO_FAKE_STAT= faketime 2014-01-01 ls -l myfile.txt
+-rw-r--r-- 1 eban eban 64 2014-11-01 18:08:04 myfile.txt
+</pre>
+<p>
+値は空でもいい。
+</p>
+<!-- section end -->
+</div>
+<!-- 2014/11/04 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/11/05 start -->
+<h2><a name="20141105" href="201411a.html#20141105">2014-11-05 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="201411051" title="201411051" href="201411a.html#201411051">■</a> 
+jbig2でPDFその後</h3>
+<p>
+jbig2で二値化するときにjpegじゃなくてpngにするとSony Readerで読めることがわかった。<br>
+しかもpngもあらかじめ二値化しておくと更に小さくなる。<br>
+400ページで3MBとかいう世界。<br>
+dot by dotにしなくても端末側の機能のzoomで問題なさげだし、<br>
+もう一々デバイスに適したサイズに変更しなくてもいいな。
+</p>
+<!-- section end -->
+</div>
+<!-- 2014/11/05 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/11/06 start -->
+<h2><a name="20141106" href="201411a.html#20141106">2014-11-06 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="201411061" title="201411061" href="201411a.html#201411061">■</a> 
+PDFにタイトルと著者名を</h3>
+<p>
+なぜかjbig2, pdf.pyで作ったPDFにpdftkでタイトルと著者名をつけようとすると
+</p>
+<pre>
+% pdftk foo.pdf update_info_utf8 info.txt output foo-new.pdf
+pdftk Error in UpdateInfo(): no Info dictionary found;
+Warning: no Info added to output PDF.
+</pre>
+<p>
+と言われてエラーになってしまう。<br>
+このためだけにAcrobatを使うのもうっとうしい。<br>
+ぐぐってみるとexiftoolでできるらしい。
+</p>
+<pre>
+% exiftool -Title='タイトル' -Author='著者名' foo.pdf
+</pre>
+<p>
+これでfoo.pdfを書き換えてくれる。<br>
+pdftkだとメタ情報を書いたファイル(info.txt)を指定しなきゃいけないのでちょっと面倒だった。<br>
+引数で指定できるのでこっちのほうがいいな。
+</p>
+<!-- section end -->
+</div>
+<!-- 2014/11/06 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/11/07 start -->
+<h2><a name="20141107" href="201411a.html#20141107">2014-11-07 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="201411071" title="201411071" href="201411a.html#201411071">■</a> 
+google chromeをunstableからstableへ戻した</h3>
+<p>
+Chromeから突然AOL Readerへのアクセスがrefusedされるようになった。<br>
+Firefoxだと何ともない。よくわからないが
+<a href="201410b.html#201410151">Gmailでも文句言われている</a>し、stableへ戻すことにした。<br>
+ここで問題が。debを取ってきてdpgk -iしたらなぜかlzmaがエラーになる。<br>
+lzmaの正体を調べたらxzになっていた。
+</p>
+<pre>
+% readlink -m =lzma
+/usr/bin/xz
+</pre>
+<p>
+これはまずい気がするので、lzmaをインストール。<br>
+これでやっとちゃんとstable版がインストールできるようになった。
+</p>
+<p>
+それにしてもunstableとの違いが気になる。<br>
+こんなに見た目が違うとは思わなかった。<br>
+まあ、AOL ReaderもGmailも解決したのでいいか。
+</p>
+<!-- section end -->
+</div>
+<!-- 2014/11/07 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/11/08 start -->
+<h2><a name="20141108" href="201411a.html#20141108">2014-11-08 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="201411081" title="201411081" href="201411a.html#201411081">■</a> 
+clever-f.vimを入れた</h3>
+<p>
+他にあまり影響しない感じがよさげ。<br>
+<a href="https://speakerdeck.com/rhysd/vimconf-2014-f?slide=14">vimconf-2014-f // Speaker Deck</a></p>
+<pre>
+let g:clever_f_use_migemo=1
+</pre>
+<p>
+でmigemoもサポート。
+</p>
+<p>
+<a href="https://github.com/rhysd/clever-f.vim">rhysd/clever-f.vim</a></p>
+<!-- section end -->
+</div>
+<!-- 2014/11/08 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/11/09 start -->
+<h2><a name="20141109" href="201411a.html#20141109">2014-11-09 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="201411091" title="201411091" href="201411a.html#201411091">■</a> 
+12345秒を時分秒へ変換</h3>
+<p>
+dateを使う。EPOCからの秒数として扱えばいい。
+</p>
+<pre>
+% date -u -d @12345 +%H:%M:%S
+03:25:45
+</pre>
+<p>
+-uでUTCを指定する。つけないと9時間ずれる。
+</p>
+<p>
+もう1個。今日の00:00:00からの秒数という扱いでもいける。
+</p>
+<pre>
+% date -d '0+12345 sec' +%H:%M:%S
+03:25:45
+</pre>
+<p>
+0は00:00:00を意味する。
+</p>
+<pre>
+% date -d 0
+Sun Nov  9 00:00:00 JST 2014
+</pre>
+<p>
+0+がないと現在から12345秒後を意味することになる。
+</p>
+<p>
+いずれもにしても60で割るとかしなくてもok。
+</p>
+<!-- section end -->
+</div>
+<!-- 2014/11/09 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/11/10 start -->
+<h2><a name="20141110" href="201411a.html#20141110">2014-11-10 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="201411101" title="201411101" href="201411a.html#201411101">■</a> 
+人間ドック</h3>
+<p>
+docじゃなくてdockだということに最近知った。<br>
+たしかにdocだと何か意味不明だ。<br>
+それはそれとして、事前に用意するものが増えすぎて、<br>
+前日に封筒を開けたんじゃすでに試合終了的なものがあったり。
+</p>
+<!-- section end -->
+</div>
+<!-- 2014/11/10 end -->
+
+<hr>
+<div>
+<a href="201410c.html">&lt;Older(,)</a> | 
+<a href="201411b.html">Newer(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

@@ -1,0 +1,370 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2017-2-b</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="201702a.html">
+<link rel="next" href="201702c.html">
+
+<link rel="stylesheet" type="text/css" href="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.css">
+<script async type="text/javascript" src="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.js"></script>
+<script type="text/javascript">
+<!--       
+$(document).ready(function() {
+  prettyPrint();
+});
+-->
+</script>
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2017年2月中旬〜</p>
+<hr>
+<div>
+<a href="201702a.html" accesskey=",">&lt;Older(,)</a> | 
+<a href="201702c.html" accesskey=".">Newer(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2017/02/11 start -->
+<h2><a name="20170211" href="201702b.html#20170211">2017-02-11 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="201702111" title="201702111" href="201702b.html#201702111">■</a> 
+<a href="https://blog.ueda.asia/?p=9309">第27回シェル芸勉強会</a></h3>
+<p>
+今回はリモート参戦。<br>
+sedのtがどーのこーのとあったので、Q6をtを使って解く。
+</p>
+<p>
+bはgotoでtはsでの置き換えが成功したら飛ぶというだけなので、<br>
+まあ、そんな難しい話でもない。<br>
+sの成功フラグはtやTで飛ぶか次のサイクルへ移行したらOFFになる。<br>
+</p>
+<p>
+まずはbを使った場合。
+</p>
+<pre>
+% echo 1 | sed ':a;p;s/./&amp;&amp;/;/.\{10\}/!b a'
+1
+11
+111
+1111
+11111
+111111
+1111111
+11111111
+111111111
+1111111111
+</pre>
+<p>
+9回繰り返すだけだ。10回じゃないのはデフォルトの出力が最後にあるため。<br>
+1と限定できればs/^/1/と短く書けるが、<br>
+echo aとか任意の文字でもいいようにしている。
+</p>
+<p>
+これを踏まえて、tを使うようにする。<br>
+sのパターンで10個以上になったらmatchしないようにしてやればいいだけ。
+</p>
+<pre>
+% echo 1 | sed -nr ':a;p;s/^(.){1,9}$/&amp;\1/;t a'   
+1
+11
+111
+1111
+11111
+111111
+1111111
+11111111
+111111111
+1111111111
+</pre>
+<p>
+\があると見辛いので-rを使った。<br>
+/^(.){1,9}$/とすることで1から9文字のときだけmatchする。<br>
+</p>
+<p>
+9回繰り返すという意味では例のブレース展開技も使える。
+</p>
+<pre>
+% echo 1 | sed -e'p;s/./&amp;&amp;/;#'{1..9} 
+1
+11
+111
+1111
+11111
+111111
+1111111
+11111111
+111111111
+1111111111
+</pre>
+<!-- section end -->
+</div>
+<!-- 2017/02/11 end -->
+
+
+
+<hr class="hide">
+<!-- 2017/02/15 start -->
+<h2><a name="20170215" href="201702b.html#20170215">2017-02-15 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="201702151" title="201702151" href="201702b.html#201702151">■</a> 
+<a href="https://blog.ueda.asia/?p=9283">第27回シェル芸勉強会を #Vimシェル芸 で</a></h3>
+<p>
+Q1 GNU sedと同じ。
+</p>
+<pre>
+% echo abcdefghijklmn | ex /dev/stdin +'s/\(.\)\(.\)/\1\u\2/g|p|q!'
+aBcDeFgHiJkLmN
+% echo abcdefghijklmn | vim -es /dev/stdin +'s/../\u&amp;/g|p|q!'  
+AbCdEfGhIjKlMn
+</pre>
+<p>
+文字単位の移動も簡単にできるので、ブレース展開との合わせ技で。
+</p>
+<pre>
+% echo abcdefghijklmn | vim -es /dev/stdin +'norm l~'{,,,,,,} +'p|q!'
+aBcDeFgHiJkLmN
+% echo abcdefghijklmn | vim -es /dev/stdin +'norm ~l'{,,,,,,} +'p|q!' 
+AbCdEfGhIjKlMn
+</pre>
+<p>
+Q2 FizzBuzz
+</p>
+<pre>
+% vim -es +$'norm 33o\nFizz\n\e' +$'let @a=&quot;ABuzz\e5k&quot;|norm 20@a' +'%s/^$/\=line(&quot;.&quot;)/|%p|q!'
+1
+2
+Fizz
+4
+Buzz
+Fizz
+7
+8
+Fizz
+Buzz
+11
+Fizz
+13
+14
+FizzBuzz
+&lt;以下略&gt;
+</pre>
+<p>
+normだとなぜかqでのマクロが保存できないので苦肉の策。直接レジスタに入れてる。<br>
+行って帰って間を埋める。生のESC等は扱い辛いので$''で表現。
+</p>
+<p>
+Q3 3move7
+</p>
+<pre>
+% seq 1 10 | vim -es /dev/stdin +'3m7|%p|q!'
+1
+2
+4
+5
+6
+7
+3
+8
+9
+10
+</pre>
+<p>
+実にvim向きの問題。
+</p>
+<p>
+Q4 aho.cc
+</p>
+<pre>
+% cat aho.cc | vim -es /dev/stdin +'/main/,/^}/m$|%p|q!' | g++ -xc++ -; ./a.out
+aho
+</pre>
+<p>
+これもmove一発。Q3と同じ。
+</p>
+<p>
+Q5 偶奇入れ替え
+</p>
+<pre>
+% seq 10 | vim -es /dev/stdin +1 +'m+1|+1'{,,,,} +'%p|q!'
+2
+1
+4
+3
+6
+5
+8
+7
+10
+9
+</pre>
+<p>
+奇数行でm+1を実行すると現在行と次行が入れ替わるので、さらに次行に移動(+1)し、<br>
+ブレース展開で5回繰り返し。
+</p>
+<p>
+Q6 階段状
+</p>
+<pre>
+% echo 1 | vim -es /dev/stdin +'for i in range(10)|p|s/./&amp;&amp;/|endfor|q!'
+1
+11
+111
+1111
+11111
+111111
+1111111
+11111111
+111111111
+1111111111
+</pre>
+<p>
+p|s/./&amp;&amp;/を10回繰り返し。ブレース展開技でもいけそうだが、<br>
+vimのわけのわからない制限により10個までしか指定できない。
+</p>
+<pre>
+% echo 1 | vim -es /dev/stdin +'p|s/./&amp;&amp;/'{1..10} +'q!'
+VIM - Vi IMproved 7.4 (2013 Aug 10, compiled Nov 24 2016 22:32:42)
+Too many &quot;+command&quot;, &quot;-c command&quot; or &quot;--cmd command&quot; arguments
+More info with: &quot;vim -h&quot;
+</pre>
+<p>
+Q7 縛り1 使うコマンドはseq、cp、vimだけ
+</p>
+<pre>
+% rm a*
+% vim -es +'wq a'
+% seq 10 | vim -es /dev/stdin +'g/^/exe &quot;!cp a a&quot; . getline(&quot;.&quot;)' +'q!'
+% ls
+a  a1  a10  a2  a3  a4  a5  a6  a7  a8  a9
+</pre>
+<p>
+Q7 縛り2 ワンライナー中で数字を使わない
+</p>
+<p>
+実はgetline(&quot;.&quot;)をline(&quot;.&quot;)に変更すれば行番号が使えるので、<br>
+なんでもいいので10行作ればいい。
+</p>
+<pre>
+% rm a*
+% vim -es +'wq a|norm Yppppppppp' +'g/^/exe &quot;!cp a a&quot; . line(&quot;.&quot;)' +'q!'
+% ls
+a  a1  a10  a2  a3  a4  a5  a6  a7  a8  a9
+</pre>
+<p>
+ついでにseq 10相当をvimで。
+</p>
+<pre>
+% vim -es +'norm Yppppppppp' +'%#|q!'
+      1  
+      2  
+      3  
+      4  
+      5  
+      6  
+      7  
+      8  
+      9  
+     10  
+</pre>
+<p>
+微妙に違うのでちょっとがんばってみた。
+</p>
+<pre>
+% vim -es +'norm Yppppppppp' +'%s/^/\=line(&quot;.&quot;)' +'%p|q!' 
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+</pre>
+<p>
+Q8 山
+</p>
+<pre>
+% echo 1 | vim -es /dev/stdin +'t.|s/./&amp;&amp;'{,,,} +'g/^/t5' +'%p|q!'
+1
+11
+111
+1111
+11111
+11111
+1111
+111
+11
+1
+</pre>
+<p>
+tはcopyの別名。cはchangeなのでcopyは短縮形でもcoと書かないといけないが、<br>
+1文字で書きたい人のためにtは用意されてるとか？
+</p>
+<!-- section end -->
+</div>
+<!-- 2017/02/15 end -->
+
+<hr>
+<div>
+<a href="201702a.html">&lt;Older(,)</a> | 
+<a href="201702c.html">Newer(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

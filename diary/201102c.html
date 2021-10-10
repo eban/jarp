@@ -1,0 +1,273 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2011-2-c</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="201102b.html">
+<link rel="next" href="201103a.html">
+
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2011年2月下旬〜</p>
+<hr>
+<div>
+<a href="201102b.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="201103a.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2011/02/21 start -->
+<h2><a name="20110221" href="201102c.html#20110221">2011-02-21 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="201102211" title="201102211" href="201102c.html#201102211">■</a> 
+<a href="http://www.commandlinefu.com/commands/view/7938/countdown-clock">Countdown Clock</a></h3>
+<p>
+これは結構いいね。
+</p>
+<pre>
+MIN=10;for ((i=$((MIN*60));i&gt;=0;i--));do echo -ne &quot;\r$(date -d&quot;0+$i sec&quot; +%H:%M:%S)&quot;;sleep 1;done
+</pre>
+<p>
+dateの-d&quot;0+$i sec&quot;の0+ってなんだと思ったら、こういうことらしい。
+</p>
+<pre>
+% date -d'0 sec'
+Tue Feb 22 01:45:29 JST 2011
+% date -d'0+1 sec'
+Tue Feb 22 00:00:01 JST 2011
+% date -d'0 1 sec'
+Tue Feb 22 00:00:01 JST 2011
+</pre>
+<p>
+最初の0は00:00:00という意味になるわけか。実は同じようなのを考えていた。zshだと{}のところで変数が使える。
+</p>
+<pre>
+MIN=10 &amp;&amp; for i in {$[MIN*60]..1}; do date --utc -d@$i +%H:%M:%S|tr &quot;\n&quot; &quot;\r&quot;; sleep 1; done 
+</pre>
+<p>
+あとEPOCからの秒数で表示してる。
+</p>
+<!-- section end -->
+</div>
+<!-- 2011/02/21 end -->
+
+
+
+<hr class="hide">
+<!-- 2011/02/22 start -->
+<h2><a name="20110222" href="201102c.html#20110222">2011-02-22 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="201102221" title="201102221" href="201102c.html#201102221">■</a> 
+ls -lの日付けの形式その後</h3>
+<p>
+export TIME_STYLE=long-isoだと秒数が出ないのが不満だったが、<br>
+man lsしたらdateと同じように+FORMATで表現できるようだ。<br>
+というわけでexport TIME_STYLE=+'%F %X'にした。
+</p>
+<pre>
+% ls --time-style=long-iso -ld /bin
+drwxr-xr-x 2 root root 4096 2011-02-16 19:38 /bin
+% ls --time-style=+'%F %X' -ld /bin
+drwxr-xr-x 2 root root 4096 2011-02-16 19:38:15 /bin
+</pre>
+<p>
+しかし最近のGNU lsってぐっと詰めて表示するようになってんだな。<br>
+以前は固定幅的にもっと余白だらけだったような。
+</p>
+<!-- section end -->
+</div>
+<!-- 2011/02/22 end -->
+
+
+
+<hr class="hide">
+<!-- 2011/02/23 start -->
+<h2><a name="20110223" href="201102c.html#20110223">2011-02-23 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="201102231" title="201102231" href="201102c.html#201102231">■</a> 
+bit.lyからj.mpへ</h3>
+<p>
+中東情勢があれなのでbit.lyからj.mpに変更。まあ、気休め程度。<br>
+@rubyciにはtwitterfeed.comを使っているが、j.mpを選べなかったのでtinyurl.comで。<br>
+この日記で使ってるdlvr.itはちゃんとj.mpも選べた。さすがだ。<br>
+あとbit.lyで使っていたbookmarkletはbit.lyをj.mpに変えるだけでok。
+</p>
+<!-- section end -->
+</div>
+<!-- 2011/02/23 end -->
+
+
+
+<hr class="hide">
+<!-- 2011/02/24 start -->
+<h2><a name="20110224" href="201102c.html#20110224">2011-02-24 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="201102241" title="201102241" href="201102c.html#201102241">■</a> 
+地デジ化</h3>
+<p>
+いよいよブラウン管テレビからデジタルテレビへ。<br>
+2000年から使っていたから10年以上だな。よく保ったもんだ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2011/02/24 end -->
+
+
+
+<hr class="hide">
+<!-- 2011/02/25 start -->
+<h2><a name="20110225" href="201102c.html#20110225">2011-02-25 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="201102251" title="201102251" href="201102c.html#201102251">■</a> 
+テレビを地デジ化してもあまり意味がなかった</h3>
+<p>
+そうなんだよ。ほとんど録画しておいたビデオしか見ないから生でテレビを見る機会がない。<br>
+先に買うべきは地デジ用のHDDレコーダーだったか。
+</p>
+<!-- section end -->
+</div>
+<!-- 2011/02/25 end -->
+
+
+
+<hr class="hide">
+<!-- 2011/02/26 start -->
+<h2><a name="20110226" href="201102c.html#20110226">2011-02-26 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="201102261" title="201102261" href="201102c.html#201102261">■</a> 
+ビデオを見まくり</h3>
+<p>
+しかし、アナログ出力のビデオの画質が悪すぎるな。D端子にしてもあまり変わらないし。
+
+</p>
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="201102262" title="201102262" href="201102c.html#201102262">■</a> 
+HDDレコーダー</h3>
+<p>
+というわけでHDDレコーダーどれにするか調べているんだけど、<br>
+BDだのDVDだの要らないもんが大抵ついてきて困る。<br>
+最低でも録画中に再生、追いかけ再生、1.5倍速の3つは欲しい。<br>
+BUFFALOのDTV-H500Rにはそれがなさげ。惜しいな。
+</p>
+<!-- section end -->
+</div>
+<!-- 2011/02/26 end -->
+
+
+
+<hr class="hide">
+<!-- 2011/02/27 start -->
+<h2><a name="20110227" href="201102c.html#20110227">2011-02-27 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="201102271" title="201102271" href="201102c.html#201102271">■</a> 
+日本語マニュアルの横幅がバイト数ではなく文字数で折り返してるらしく、とても見辛い</h3>
+<p>
+Ubuntuの不具合だよねえ、これって。アンインストールしちゃったほうがいいか。<br>
+<img src="../images/man-man.png" alt="">
+</p>
+<!-- section end -->
+</div>
+<!-- 2011/02/27 end -->
+
+
+
+<hr class="hide">
+<!-- 2011/02/28 start -->
+<h2><a name="20110228" href="201102c.html#20110228">2011-02-28 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="201102281" title="201102281" href="201102c.html#201102281">■</a> 
+<a href="http://golf.shinh.org/p.rb?terminal+colours#Ruby">terminal colours</a></h3>
+<p>
+久し振りのトップ。
+</p>
+<pre>
+125B #!ruby -n;h={?w,7,b=32,9,10,9,?x,0,?r,1,?g,2,?c,6,?b,4};(chomp+$/).bytes{|c|print&quot;^[[4#{h[c]}m&quot;if b!=c;b=c;$&gt;&lt;&lt;(c&gt;10?&quot;  &quot;:$/)}
+123B #!ruby -n;h={?w,7,b=32,9,10,9,?x,0,?r,1,?g,2,?c,6,?b,4};(chomp+$/).bytes{|c|c!=b&amp;&amp;$&gt;&lt;&lt;&quot;^[[4#{h[c]}m&quot;;b=c;$&gt;&lt;&lt;(c&gt;10?&quot;  &quot;:$/)}
+101B #!ruby -n;b=' ';(chomp+$/).chars{|c|c!=b&amp;&amp;$&gt;&lt;&lt;&quot;^[[4#{'xrg.b.cw'=~/#{c}/||9}m&quot;;b=c;$&gt;&lt;&lt;(c!=$/?&quot;  &quot;:$/)}
+100B #!ruby -n;b=32;(chomp+$/).bytes{|c|c!=b&amp;&amp;$&gt;&lt;&lt;&quot;^[[4#{&quot;xrg.b.cw&quot;.index(c)||9}m&quot;;b=c;$&gt;&lt;&lt;(c&gt;10?&quot;  &quot;:$/)}
+ 99B #!ruby -n;b=32;(chomp+$/).bytes{|c|c!=b&amp;&amp;$&gt;&lt;&lt;&quot;^[[4#{&quot;xrg.b.cw&quot;.index(c)||9}m&quot;;b=c;$&gt;.&lt;&lt;c&gt;10?&quot;  &quot;:$/}
+ 91B b=32;loop{c=getc;c!=b&amp;&amp;$&gt;&lt;&lt;&quot;^[[4#{&quot;xrg.b.cw&quot;.index(c||1)||9}m&quot;;b=c;$&gt;.&lt;&lt;c&gt;10?&quot;  &quot;:(b=32;$/)}
+ 90B b=9;loop{c=&quot;xrg.b.cw&quot;.index((a=getc)||1)||9;c!=b&amp;&amp;$&gt;&lt;&lt;&quot;^[[4#{c}m&quot;;b=c;$&gt;.&lt;&lt;a&gt;10?&quot;  &quot;:$/;~a}
+ 89B b=9;loop{a=getc;c=&quot;xrg.b.cw&quot;.index(a||1)||9;c!=b&amp;&amp;$&gt;&lt;&lt;&quot;^[[4#{c}m&quot;;b=c;$&gt;.&lt;&lt;0+a&gt;10?&quot;  &quot;:$/}
+ 87B b=9;loop{a=getc;c=&quot;xrg.b.cw&quot;.index(a||1)||9;c!=b&amp;&amp;$&gt;&lt;&lt;&quot;^[[4#{c}m&quot;;b=c;$&gt;.&lt;&lt;a&gt;10?&quot;  &quot;:$/}
+ 86B b=9;loop{a=getc;$&gt;&lt;&lt;&quot;^[[4#{C}m&quot;if b!=C=&quot;xrg.b.cw&quot;.index(a||1)||9;b=C;$&gt;.&lt;&lt;a&gt;10?&quot;  &quot;:$/}
+ 83B loop{a=getc;$&gt;&lt;&lt;&quot;^[[4#{C||9}m&quot;if$b!=C=&quot;xrg.b.cw&quot;.index(a||1);$b=C;$&gt;.&lt;&lt;a&gt;10?&quot;  &quot;:$/}
+ 83B loop{$&gt;&lt;&lt;&quot;^[[4#{C||9}m&quot;if$b!=C=&quot;xrg.b.cw&quot;.index((a=getc)||1);$b=C;$&gt;.&lt;&lt;a&gt;10?&quot;  &quot;:$/}
+</pre>
+<p>
+90Bあたりの迷走が目立つ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2011/02/28 end -->
+
+<hr>
+<div>
+<a href="201102b.html">&lt;Prev(,)</a> | 
+<a href="201103a.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

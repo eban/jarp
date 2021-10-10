@@ -1,0 +1,441 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2015-4-b</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="201504a.html">
+<link rel="next" href="201504c.html">
+
+<link rel="stylesheet" type="text/css" href="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.css">
+<script async type="text/javascript" src="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.js"></script>
+<script type="text/javascript">
+<!--       
+$(document).ready(function() {
+  prettyPrint();
+});
+-->
+</script>
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2015年4月中旬〜</p>
+<hr>
+<div>
+<a href="201504a.html" accesskey=",">&lt;Older(,)</a> | 
+<a href="201504c.html" accesskey=".">Newer(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2015/04/11 start -->
+<h2><a name="20150411" href="201504b.html#20150411">2015-04-11 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="201504111" title="201504111" href="201504b.html#201504111">■</a> 
+<a href="http://www.cl.ecei.tohoku.ac.jp/nlp100/#sec13">13. col1.txtとcol2.txtをマージ #awk</a></h3>
+<p>
+awk万能。
+</p>
+<pre>
+% awk '{getline col2 &lt; &quot;col2.txt&quot;; print $1 &quot;\t&quot; col2}' col1.txt
+</pre>
+<p>
+$2へ読み込むという方法もある。
+</p>
+<pre>
+% awk '{getline $2 &lt; &quot;col2.txt&quot;; print}' OFS='\t' col1.txt
+</pre>
+<p>
+さらにゴルフするとprintも省略できる。
+</p>
+<pre>
+% awk 'getline $2 &lt; &quot;col2.txt&quot;' OFS=\\t col1.txt
+</pre>
+<!-- section end -->
+</div>
+<!-- 2015/04/11 end -->
+
+
+
+<hr class="hide">
+<!-- 2015/04/12 start -->
+<h2><a name="20150412" href="201504b.html#20150412">2015-04-12 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="201504121" title="201504121" href="201504b.html#201504121">■</a> 
+<a href="http://www.cl.ecei.tohoku.ac.jp/nlp100/#sec14">14. 先頭からN行を出力 #シェル芸</a></h3>
+<p>
+headをsedやawkで。
+</p>
+<pre>
+% sed -n '1,10p' hightemp.txt 
+% sed '1,10!d' hightemp.txt 
+% awk 'NR==1,NR==10' hightemp.txt
+% awk 'NR&lt;=10' hightemp.txt
+</pre>
+<p>
+こんな感じが自然だが、元のファイルが非常に大きい場合は無駄に最後まで読んでしまう。<br>
+そこで発想を変えて、10行表示したら終了すると考える。
+</p>
+<pre>
+% sed '10q' hightemp.txt
+% awk '1;NR==10{exit}' hightemp.txt
+</pre>
+<p>
+こうすれば瞬時に終了する。
+</p>
+<!-- section end -->
+</div>
+<!-- 2015/04/12 end -->
+
+
+
+<hr class="hide">
+<!-- 2015/04/13 start -->
+<h2><a name="20150413" href="201504b.html#20150413">2015-04-13 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="201504131" title="201504131" href="201504b.html#201504131">■</a> 
+MailmanとSpamAssassinとの連携</h3>
+<p>
+ruby-talk MLがspam bombにまたやられてしまった。<br>
+で、SpamAssassinはどう判断してたのか確認してみると、ちゃんとspamと判断していた。
+</p>
+<pre>
+X-Spam-Flag: YES
+X-Spam-Status: Yes, score=6.3 required=5.0 tests=FSL_HELO_NON_FQDN_1,
+	HELO_NO_DOMAIN,RDNS_NONE,SUBJ_ALL_CAPS autolearn=disabled version=3.3.1
+</pre>
+<p>
+うーむ。From詐称でメンバーからのアドレスだとSpamAssassinの結果が無視されるのかと、<br>
+Mailman/Handlers/SpamAssassin.pyを読んでみたら、<br>
+無視じゃなくてMEMBER_BONUSだけ引かれてることがわかった。<br>
+MailmanではYESは見ずにscoreを自前で評価しているんだな。<br>
+MEMBER_BONUSのデフォルト値が2なのでscoreは4.3となり5よりも小さくなってしまう。<br>
+このあたりのぎりぎりの攻防ですり抜けてしまったようだ。
+</p>
+<p>
+とりあえずmm_cfg.pyでMEMBER_BONUSを0にして様子見。
+</p>
+<!-- section end -->
+</div>
+<!-- 2015/04/13 end -->
+
+
+
+<hr class="hide">
+<!-- 2015/04/14 start -->
+<h2><a name="20150414" href="201504b.html#20150414">2015-04-14 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="201504141" title="201504141" href="201504b.html#201504141">■</a> 
+今年の祝日 #シェル芸 #awk</h3>
+<p>
+今年の祝日が知りたくなったのでicalendarをいじってみた。
+</p>
+<pre>
+% curl -s https://www.google.com/calendar/ical/ja.japanese%23holiday%40group.v.calendar.google.com/public/basic.ics |\
+  awk 'sub(/^(SUMMARY|DTSTART.*DATE):/, &quot;&quot;)' |\
+  awk -F'\r' '$0~strftime(&quot;%Y&quot;)&amp;&amp;getline $2' | sort
+20150101 元日
+20150112 成人の日
+20150211 建国記念の日
+20150321 春分の日
+20150429 昭和の日
+20150503 憲法記念日
+20150504 みどりの日
+20150505 こどもの日
+20150506 憲法記念日 振替休日
+20150720 海の日
+20150921 敬老の日
+20150922 国民の休日
+20150923 秋分の日
+20151012 体育の日
+20151103 文化の日
+20151123 勤労感謝の日
+20151223 天皇誕生日
+</pre>
+<p>
+改行コードがCR+LFなのでCRを消すために-F'\r'としている。
+</p>
+<!-- section end -->
+</div>
+<!-- 2015/04/14 end -->
+
+
+
+<hr class="hide">
+<!-- 2015/04/15 start -->
+<h2><a name="20150415" href="201504b.html#20150415">2015-04-15 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="201504151" title="201504151" href="201504b.html#201504151">■</a> 
+昨日の修正</h3>
+<p>
+lessで見ると行の途中にあるCRしか目立たないので肝心の行末を処理してなかった。<br>
+というわけで、
+</p>
+<pre>
+  awk 'sub(/^(SUMMARY|DTSTART.*DATE):/, &quot;&quot;)' |\
+  awk -F'\r' '$0~strftime(&quot;%Y&quot;)&amp;&amp;getline $2' | sort
+</pre>
+<p>
+の部分は
+</p>
+<pre>
+  awk 'sub(/^(SUMMARY|DTSTART.*DATE):/, &quot;&quot;)' RS='[\r\n]+' |\
+  awk '$0~strftime(&quot;%Y&quot;)&amp;&amp;getline $2' | sort
+</pre>
+<p>
+と修正。これでLFでもCRLFでもok。dos2unixを通してもいいが。
+</p>
+<!-- section end -->
+</div>
+<!-- 2015/04/15 end -->
+
+
+
+<hr class="hide">
+<!-- 2015/04/16 start -->
+<h2><a name="20150416" href="201504b.html#20150416">2015-04-16 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="201504161" title="201504161" href="201504b.html#201504161">■</a> 
+Rubyで偶数番目を抜き出す</h3>
+<p>
+with_indexを使わない方法を考えていたら、こんなのを思い付いた。
+</p>
+<pre>
+% ruby -e 't=true;p [*1..11].select{t=!t}'
+[2, 4, 6, 8, 10]
+</pre>
+<p>
+まあ、こんどはtが気に入らないという話になるわけだが。
+</p>
+<p>
+cf:
+<a href="http://suke.cocolog-nifty.com/blog/2015/04/javaruby-b322.html">[Java][Ruby] 配列の偶数番目の要素を抜き出す: 遠回りするかな</a></p>
+<!-- section end -->
+</div>
+<!-- 2015/04/16 end -->
+
+
+
+<hr class="hide">
+<!-- 2015/04/17 start -->
+<h2><a name="20150417" href="201504b.html#20150417">2015-04-17 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="201504171" title="201504171" href="201504b.html#201504171">■</a> 
+Rubyのputsとwrite(2)</h3>
+<p>
+twitterでputs(&quot;hoge&quot;)は&quot;hoge&quot;と&quot;\n&quot;と分割されてwrite(2)されるという指摘があった。<br>
+これはputsの挙動を考えると納得する。<br>
+putsは最後に&quot;\n&quot;がないときにだけ&quot;\n&quot;を追加する。<br>
+これをそのまま実装すると&quot;hoge&quot;を出力してから最後の&quot;\n&quot;の有無を判断し出力となる。<br>
+つまりわざわざ&quot;hoge&quot;+&quot;\n&quot;にしてから出力するような処理にはならない。<br>
+出力先がttyならunbufferedなのでwriteが2回呼ばれることになり、<br>
+ファイルならbufferされるのでたぶん1回で済む。
+</p>
+<pre>
+% strace -e write -o out.log ruby -e 'puts &quot;hoge&quot;'; cat out.log
+hoge
+write(1, &quot;hoge&quot;, 4)                     = 4
+write(1, &quot;\n&quot;, 1)                       = 1
+write(4, &quot;!&quot;, 1)                        = 1
++++ exited with 0 +++
+% strace -e write -o out.log ruby -e 'STDERR.puts &quot;hoge&quot;'; cat out.log
+hoge
+write(2, &quot;hoge&quot;, 4)                     = 4
+write(2, &quot;\n&quot;, 1)                       = 1
+write(4, &quot;!&quot;, 1)                        = 1
++++ exited with 0 +++
+% strace -e write -o out.log ruby -e 'puts &quot;hoge&quot;' &gt; /dev/null; cat out.log
+write(1, &quot;hoge\n&quot;, 5)                   = 5
+write(4, &quot;!&quot;, 1)                        = 1
++++ exited with 0 +++
+% strace -e write -o out.log ruby -e 'puts &quot;hoge\n&quot;'; cat out.log
+hoge
+write(1, &quot;hoge\n&quot;, 5)                   = 5
+write(4, &quot;!&quot;, 1)                        = 1
++++ exited with 0 +++
+</pre>
+<p>
+この&quot;!&quot;はいったい？
+</p>
+<!-- section end -->
+</div>
+<!-- 2015/04/17 end -->
+
+
+
+<hr class="hide">
+<!-- 2015/04/18 start -->
+<h2><a name="20150418" href="201504b.html#20150418">2015-04-18 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="201504181" title="201504181" href="201504b.html#201504181">■</a> 
+<a href="http://blog.ueda.asia/?p=5851">第16回春だからログ解析するぞシェル芸勉強会にUstで参加</a></h3>
+<p>
+例によってUstで参加。とりあえず準備1だけ。今回一番難しい問題と言われている。
+</p>
+<pre>
+% time zcat access_log.nasa.gz|ruby -EASCII-8BIT -F' ' -ane 'a=$F[3][1..-1].split(/[:\/]/);print a[2],{&quot;Jul&quot;=&gt;&quot;07&quot;,&quot;Aug&quot;=&gt;&quot;08&quot;}[a[1]],a[0],&quot; &quot;,a[3],a[4],a[5],&quot; &quot;,$_' &gt;access-ruby.log
+zcat access_log.nasa.gz  3.89s user 0.10s system 4% cpu 1:37.52 total
+ruby -EASCII-8BIT -F' ' -ane  &gt; access-ruby.log  96.16s user 1.24s system 99% cpu 1:37.54 total
+</pre>
+<p>
+TimeとかDateオブジェクトにしてstrftimeするとものすごく遅くなるので、JulとAugしかない点を利用する。<br>
+いまいち。<br>
+perlでもやってみようと思ったら、-F' 'の挙動がよくわからない。
+</p>
+<pre>
+-Fpattern
+     specifies the pattern to split on for -a. The pattern may be surrounded by &quot;//&quot;, &quot;&quot;, or '', otherwise it
+     will be put in single quotes. You can't use literal whitespace in the pattern.
+</pre>
+<p>
+使えないと言われてもねえ。
+</p>
+<pre>
+% echo 'a b' | perl -F' ' -e 'print join(&quot;:&quot;,@F)'
+a: :b:
+</pre>
+<p>
+空文字でsplitされるようで。本当に使えないようだ。\sじゃ意味が違うし。
+</p>
+<p>
+同じことをawkで。
+</p>
+<pre>
+% time zcat access_log.nasa.gz|awk -F' ' '{split(substr($4,2,21),a,/[:\/]/);h[&quot;Jul&quot;]=&quot;07&quot;;h[&quot;Aug&quot;]=&quot;08&quot;;print a[3]h[a[2]]a[1],a[4]a[5]a[6],$0}' &gt;access-awk.log                   
+zcat access_log.nasa.gz  3.75s user 0.08s system 22% cpu 16.681 total
+awk -F' '  &gt; access-awk.log  14.53s user 0.68s system 91% cpu 16.683 total
+</pre>
+<p>
+実はgawkのほうが断然速い。この場合LANG=Cはあまり関係ない。mawkにするともっと速くなる。
+</p>
+<pre>
+% time zcat access_log.nasa.gz|mawk -F' ' '{split(substr($4,2,21),a,/[:\/]/);h[&quot;Jul&quot;]=&quot;07&quot;;h[&quot;Aug&quot;]=&quot;08&quot;;print a[3]h[a[2]]a[1],a[4]a[5]a[6],$0}' &gt;access-awk.log
+zcat access_log.nasa.gz  2.05s user 0.05s system 38% cpu 5.477 total
+mawk -F' '  &gt; access-awk.log  4.81s user 0.66s system 66% cpu 8.211 total
+</pre>
+<p>
+つづく。
+</p>
+<!-- section end -->
+</div>
+<!-- 2015/04/18 end -->
+
+
+
+<hr class="hide">
+<!-- 2015/04/19 start -->
+<h2><a name="20150419" href="201504b.html#20150419">2015-04-19 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="201504191" title="201504191" href="201504b.html#201504191">■</a> 
+引き続き準備1 sed編</h3>
+<p>
+まだ引っ張るわけで。今回はsedで。
+</p>
+<pre>
+% time zcat access_log.nasa.gz | sed -r 's,(.*\[(..)/(...)/(....):(..):(..):(..).*),\4\3\2 \5\6\7 \1,;s/^(....)Jul/\107/;s/^(....)Aug/\108/' &gt; access-sed.log
+zcat access_log.nasa.gz  4.42s user 0.08s system 6% cpu 1:09.81 total
+sed -r  &gt; access-sed.log  67.95s user 0.85s system 97% cpu 1:10.40 total
+</pre>
+<p>
+意外にawkよりも遅いというか、実は大抵GNU sedはGNU awkよりも遅い。<br>
+-rを使わなくても書けるが、速度に大した差はないのでわかりやすい例を挙げた。<br>
+\107と書くと107番目になるわけではなく、<br>
+実は1から9までの1桁しか有効ではないので、特に問題はない。<br>
+つまり()を10個以上書いても参照しようがない。
+</p>
+<!-- section end -->
+</div>
+<!-- 2015/04/19 end -->
+
+
+
+<hr class="hide">
+<!-- 2015/04/20 start -->
+<h2><a name="20150420" href="201504b.html#20150420">2015-04-20 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="201504201" title="201504201" href="201504b.html#201504201">■</a> 
+今日も準備1 perl編</h3>
+<p>
+実は昨日のsed scriptはほとんどperl scriptと言ってもいいぐらい似ている。<br>
+そのままではPerlだと\107が8進数を意味するのでまずい。<br>
+\108は8が8進数ではないので\10と8つまり\b8という意味なる。<br>
+これを回避する${1}07,${1}08を使えばいい。
+</p>
+<pre>
+% time zcat access_log.nasa.gz | perl -pe 's,(.*\[(..)/(...)/(....):(..):(..):(..).*),\4\3\2 \5\6\7 \1,;s/^(....)Jul/${1}07/;s/^(....)Aug/${1}08/' &gt; access-perl3.log
+zcat access_log.nasa.gz  2.87s user 0.07s system 15% cpu 19.598 total
+perl -pe  &gt; access-perl3.log  18.89s user 0.72s system 88% cpu 22.246 total
+</pre>
+<p>
+結構速い。sedでs///するならperlでs///したほうがまし。ほとんど同じだし。
+</p>
+<!-- section end -->
+</div>
+<!-- 2015/04/20 end -->
+
+<hr>
+<div>
+<a href="201504a.html">&lt;Older(,)</a> | 
+<a href="201504c.html">Newer(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

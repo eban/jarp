@@ -1,0 +1,756 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2004-10-c</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="200410b.html">
+<link rel="next" href="200411a.html">
+
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2004年10月下旬〜</p>
+<hr>
+<div>
+<a href="200410b.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="200411a.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2004/10/21 start -->
+<h2><a name="20041021" href="200410c.html#20041021">2004-10-21 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="200410211" title="200410211" href="200410c.html#200410211">■</a> 
+<a href="http://lftp.yar.ru/">[Soft] lftp 3.0.10</a></h3>
+<p>
+Changes:
+</p><blockquote class="cite"><p>
+Better mirror -R completion has been added. An upload retry corruption
+bug and a rare core dump in parallel mirror have been fixed.  This
+release will not retry the wrong password in the fish and SFTP
+protocols.
+</p></blockquote><p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200410212" title="200410212" href="200410c.html#200410212">■</a> 
+[Gawk] Dynamic Extensions</h3>
+<p>
+なにげなくinfo gawkを読んでたらこんなものを発見。
+</p><blockquote class="cite"><p>
+Beginning with `gawk' 3.1, it is possible to add new built-in functions
+to `gawk' using dynamically loaded libraries. This facility is
+available on systems (such as GNU/Linux) that support the `dlopen' and
+`dlsym' functions.  This minor node describes how to write and use
+dynamically loaded extensions for `gawk'.  Experience with programming
+in C or C++ is necessary when reading this minor node.
+</p></blockquote><p>
+dlloadという名前の関数を作っておいてmake_builtinで登録という感じらしい。
+<pre>
+NODE *
+dlload(tree, dl)
+NODE *tree;
+void *dl;
+{
+    make_builtin(&quot;chdir&quot;, do_chdir, 1);
+    make_builtin(&quot;stat&quot;, do_stat, 2);
+    return tmp_number((AWKNUM) 0);
+}
+</pre>
+<p>
+使うときは
+</p>
+<pre>
+extension(&quot;./filefuncs.so&quot;, &quot;dlload&quot;)
+</pre>
+<p>
+のようにロードすればchdir, statが普通の関数と同じように使える。
+なかなか面白い。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200410213" title="200410213" href="200410c.html#200410213">■</a> 
+[Ruby] Init_foo</h3>
+<p>
+Rubyの拡張ライブラリのエントリ関数名はファイル名から決められるが、Init_fooである必要はあまりない気がしてきた。
+決め打ちでInitだけで十分というか、もうちょっと長くしてInit_ruby固定にしちゃうとか。
+ユニークな名前にしなくても呼べるよね、たぶん。
+こうすればcase insensitiveなファイルシステムでも気にしなくてすむ。
+</p>
+
+<p>
+なんてことをgawkのinfoを読んでて突如思いついた。
+</p>
+<!-- section end -->
+</div>
+<!-- 2004/10/21 end -->
+
+
+
+<hr class="hide">
+<!-- 2004/10/22 start -->
+<h2><a name="20041022" href="200410c.html#20041022">2004-10-22 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="200410221" title="200410221" href="200410c.html#200410221">■</a> 
+<a href="http://www.thekelleys.org.uk/dnsmasq/doc.html">[Soft] Dnsmasq 2.16</a></h3>
+<p>
+Changes:
+</p><blockquote class="cite"><p>
+This release has some minor new features; RFC 3397 support,
+better CNAME caching, and a few more flexible options. It fixes an
+interaction with Linux kernels after 2.4.19 or so, where receiving a UDP
+packet with a bad checksum can cause dnsmasq to hang. It also fixes a bad
+interaction with the Polipo Web cache. Compilation under OpenBSD works
+again, and the NetBSD configuration has been updated.
+</p></blockquote><p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200410222" title="200410222" href="200410c.html#200410222">■</a> 
+[eRuby] &lt;%と%&lt;</h3>
+<p>
+ERBで&lt;%...%&gt;を%&lt;...%&gt;と書いてしまい勝ちなのはなぜだろう？
+そんなことをするやつはおいらだけか。
+</p>
+<!-- section end -->
+</div>
+<!-- 2004/10/22 end -->
+
+
+
+<hr class="hide">
+<!-- 2004/10/23 start -->
+<h2><a name="20041023" href="200410c.html#20041023">2004-10-23 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="200410231" title="200410231" href="200410c.html#200410231">■</a> 
+<a href="http://subversion.tigris.org/">[Soft] Subversion 1.1.1</a></h3>
+<p>
+Changes:
+</p><blockquote class="cite"><p>
+This release fixes a number of bugs, and improves performance
+when listing files in a repository.
+</p></blockquote><p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200410232" title="200410232" href="200410c.html#200410232">■</a> 
+地震</h3>
+<p>
+こんなに続く余震は初めてだ。原先生のとこは大丈夫だろうか？
+bladeがつながらないだけに心配。
+</p>
+<!-- section end -->
+</div>
+<!-- 2004/10/23 end -->
+
+
+
+<hr class="hide">
+<!-- 2004/10/24 start -->
+<h2><a name="20041024" href="200410c.html#20041024">2004-10-24 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="200410241" title="200410241" href="200410c.html#200410241">■</a> 
+[Image] screen shot movie</h3>
+<p>
+
+<a href="http://rpa-base.rubyforge.org/wiki/wiki.cgi">rpa-baseのスクリーンショット</a>が面白いとなひさんが言ってたので見に行ってみると確かに面白い。
+これってどうやって作ってるのかと今月分のruby-talkを探してみると
+
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-talk/115567">[ruby-talk:115567]</a>が見つかった。
+なるほど。ImageMagickのimportでMIFFファイルを作って、
+convertでアニメーションGIFに変換するわけか。
+</p>
+
+<p>
+これを手でやるのは大変だよねえ。
+
+<a href="http://http://namazu.org/~satoru/x11rec/">x11rec</a>
+のようにするしかないのかなあ。
+</p>
+
+<p>
+と思ったら
+<a href="http://xvidcap.sf.net/">Xvidcap</a>を使えばいいらしい。
+</p>
+<pre>
+% xvidcap --compress 5 --file 'out-%02d.png'
+赤いRECボタンを押して保存
+% convert --delay 20 *.png foo.gif # アニメーションGIF
+% convert --delay 20 *.png foo.mng # MNG
+</pre>
+<p>
+という感じかな。
+
+<a href="http://www.linuxdevcenter.com/pub/a/linux/2004/03/04/screen_capture_movies.html">Making Screen-Capture Movies</a>
+に書かれている方法やx11recのようにxwdファイルだと、
+80x24のktermでも1MBを越えるからディスクの残り容量がちょっと心配になる。
+PNGなら20KBほどだから問題なし。
+</p>
+
+<p>
+でもMNGに比較するとアニメーションGIFは大きいな。
+top d 0.2を3秒間録画したものだと
+</p>
+<pre>
+% ls -l top.*
+-rw-r--r--    1 watanabe ruby      4492947 Oct 24 23:47 top.gif
+-rw-r--r--    1 watanabe ruby       381062 Oct 24 23:48 top.mng
+</pre>
+<p>
+こんなに違う。しかし3秒(30フレーム)でこのサイズというのもちょっとなあ。
+</p>
+
+<p>
+ttyrecで録画したものをJavaScriptで再生というのはどうだろう？
+いやできるかどうかは知らないんだけど。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200410242" title="200410242" href="200410c.html#200410242">■</a> 
+[野球] 日本シリーズ</h3>
+<p>
+なぜ毎回毎回こんなに長引くんだ？うっとうしいことこの上ない。
+</p>
+<!-- section end -->
+</div>
+<!-- 2004/10/24 end -->
+
+
+
+<hr class="hide">
+<!-- 2004/10/25 start -->
+<h2><a name="20041025" href="200410c.html#20041025">2004-10-25 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="200410251" title="200410251" href="200410c.html#200410251">■</a> 
+<a href="http://devlog.moonwolf.com/">[SEO] 参加表明タグ</a></h3>
+<p>
+50位に入ったのはトップページだけど、
+参加表明タグは10/19にしかないので実際の順位は実はもっと低いという罠。
+トップページにも入れたほうがよさげです。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200410252" title="200410252" href="200410c.html#200410252">■</a> 
+<a href="http://www.rubyist.net/~akr/">[Ruby] Daily Build</a></h3>
+<p>
+おお、素晴らしい。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200410253" title="200410253" href="200410c.html#200410253">■</a> 
+[Vim] #{{{, #}}}</h3>
+<p>
+ruby-talk MLを見てるとたまに#{{{, #}}}でmarkingされたスクリプトに出逢う。
+これはvimで意味があるようで、
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-talk/114884">[ruby-talk:114884]</a>によると
+</p>
+<pre>
+set foldmethod=marker
+set commentstring=#%s
+</pre>
+<p>
+とすることで使えるらしい。たとえば
+</p>
+<pre>
+class Foo
+  def foo
+  end
+end
+</pre>
+<p>
+の4行をshift-vで選んでz-fすると
+</p>
+<pre>
+class Foo#{{{
+  def foo
+  end
+end#}}}
+</pre>
+<p>
+となり、z-cすれば
+</p>
+<pre>
++--  4 lines: class Foo-----------
+</pre>
+<p>
+とfoldされる。z-oで開く。z-dで#{{{, #}}}のmarkingの削除。
+</p>
+
+<p>
+コードを読んでてコメントがうっとうしいと感じるときは
+</p>
+<pre>
+set foldmethod=expr
+set foldexpr=getline(v:lnum)=~'^\\s*#'
+</pre>
+<p>
+あたりがよさそう。ってこれは1年前のircのログなんだけど。
+</p>
+<!-- section end -->
+</div>
+<!-- 2004/10/25 end -->
+
+
+
+<hr class="hide">
+<!-- 2004/10/26 start -->
+<h2><a name="20041026" href="200410c.html#20041026">2004-10-26 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="200410261" title="200410261" href="200410c.html#200410261">■</a> 
+<a href="http://jp.rubyist.net/?KansaiOpensource2004">[Ruby] 1.8.2リリース時期</a></h3>
+<p>
+やはりクリスマスらしい。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200410262" title="200410262" href="200410c.html#200410262">■</a> 
+<a href="http://www.rim.or.jp/support/announce/041007.html">[rimnet] リムネットメールサーバー増強のお知らせ</a></h3>
+<p>
+やっとメールサーバ増強かー。これでメールの遅延も解消されるといいんだが。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200410263" title="200410263" href="200410c.html#200410263">■</a> 
+[Auth] CAPTCHA</h3>
+<p>
+最近よく見るけどなんだかわからん単語。
+</p><blockquote class="cite"><p>
+Completely Automated Public Turing Test To Tell Computers and
+Humans Apart
+</p></blockquote><p>
+ってTが多過ぎる気がしないでもない。
+
+<a href="http://www.rubygarden.org/">RubyGarden</a>のWikiでもspamがかなり問題になってるらしい。
+なにしろruby-talkで巨大なスレッドになるくらいだから、相当なもんなんだろう。
+で、その中の話題に画像じゃなくてAscii ArtでCAPTCHAなんてのがあって、
+そういえばbannerなんてプログラムがあったよなと思い出にふける。
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200410264" title="200410264" href="200410c.html#200410264">■</a> 
+[Soft] banner</h3>
+<p>
+あ、/usr/games/bannerを発見。ちゃんとあるじゃん。
+</p>
+<pre>
+## 
+##                                        #
+##                                        ### 
+##############################################
+################################################ 
+################################################## 
+################################################### 
+######################################################
+## 
+## 
+## 
+</pre>
+<p>
+そうか。90度寝てしまうんだった。なつかしい。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2004/10/26 end -->
+
+
+
+<hr class="hide">
+<!-- 2004/10/27 start -->
+<h2><a name="20041027" href="200410c.html#20041027">2004-10-27 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="200410271" title="200410271" href="200410c.html#200410271">■</a> 
+<a href="http://www.designdetector.com/tips/3DBorderDemo2.html">[CSS] CSS House</a></h3>
+<p>
+ま、まじでCSS?
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200410272" title="200410272" href="200410c.html#200410272">■</a> 
+[rrr] rrr.jin.gr.jp</h3>
+<p>
+ネットワークトラブルかなにかよくわからないけど、pingするとwrong data byteとか言われてたりで、かなり調子悪い。
+load averageはほとんど0なので、なにかが暴走してるわけでもないようだ。
+</p>
+
+<p>
+日記を更新するのも一苦労。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200410273" title="200410273" href="200410c.html#200410273">■</a> 
+<a href="http://www.openssl.org/">[Soft] OpenSSL 0.9.7e</a></h3>
+<p>
+NEWSを見ると変更は以下の通り。
+</p><blockquote class="cite"><p>
+Major changes between OpenSSL 0.9.7d and OpenSSL 0.9.7e:
+<ul>
+<li>Fix race condition in CRL checking code.
+<li>Fixes to PKCS#7 (S/MIME) code.
+</ul></blockquote><p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200410274" title="200410274" href="200410c.html#200410274">■</a> 
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-core/03571">[Ruby] BTS</a></h3>
+<p>
+
+<a href="http://rubyforge.org">RubyForge</a>でBTSが再開。
+プロジェクト名はそのまま
+<a href="http://rubyforge.org/projects/ruby/">Ruby</a>ってことで。
+これってmailでのインタフェースはないのかな？
+だとすればRSS Feedが欲しいところだ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200410275" title="200410275" href="200410c.html#200410275">■</a> 
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-talk/117750">[Ruby] Ruby Weekly News</a></h3>
+<p>
+
+<a href="http://www.rubygarden.org">RubyGarden</a>で再開。
+最新版は 
+<a href="http://www.rubygarden.org/ruby?RubyNews/2004-10-18">http://www.rubygarden.org/ruby?RubyNews/2004-10-18</a>
+らしいけど、
+
+<a href="http://www.rubygarden.org/ruby?RubyNews">http://www.rubygarden.org/ruby?RubyNews</a>
+からどうやったらそこにたどりつく？
+</p>
+<!-- section end -->
+</div>
+<!-- 2004/10/27 end -->
+
+
+
+<hr class="hide">
+<!-- 2004/10/28 start -->
+<h2><a name="20041028" href="200410c.html#20041028">2004-10-28 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="200410281" title="200410281" href="200410c.html#200410281">■</a> 
+[Ruby] Ruby Quiz</h3>
+<p>
+あれ？そういえば先週のRuby Quizはどうしたんだろう？
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200410282" title="200410282" href="200410c.html#200410282">■</a> 
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-core/03603">[Ruby] RubyForgeへのバグ登録はruby-coreへ転送</a></h3>
+<p>
+一応設定したので、ruby-coreへそのうち流れるでしょう。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200410283" title="200410283" href="200410c.html#200410283">■</a> 
+[Mail] メールが出ていかない</h3>
+<p>
+気づくと最近メールが全然出ていってない。
+mailqしてみると25日からたまってる。
+postfixの設定を変えた覚えはないしなにが悪いんだろう？
+試しにnullmailerを使ってみるとちゃんと出て行く。
+うーむ。まあ、postfixはfmlを試すのにちょっと入れただけなので、nullmailerに戻すか。
+ちょっといいつつももう
+<a href="200311a.html#200311031">1年経つ</a>わけだが。
+</p>
+<!-- section end -->
+</div>
+<!-- 2004/10/28 end -->
+
+
+
+<hr class="hide">
+<!-- 2004/10/29 start -->
+<h2><a name="20041029" href="200410c.html#20041029">2004-10-29 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="200410291" title="200410291" href="200410c.html#200410291">■</a> 
+[Ruby] nkf2がRuby 1.9へインポート</h3>
+<p>
+これで、utf-8の扱いが楽になる。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200410292" title="200410292" href="200410c.html#200410292">■</a> 
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-talk/118153">[Mail] Subjectの*を展開する人</a></h3>
+<p>
+元々のSubjectは
+</p>
+<pre>
+Re: Rounding error, (100.0 * 9.95).to_i == 994
+</pre>
+<p>
+なんだけど、一体全体なにが起こると、*が展開されてこんなSubjectになるんだろう？
+ファイル名がばればれになるというのも、
+ちょっと恥ずかしかったりするもんだろうかと思ってみたり。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200410293" title="200410293" href="200410c.html#200410293">■</a> 
+<a href="http://kitchon.ddo.jp/~ashiya/diary/?date=20041025#p01">[Ruby] &quot;wb&quot;</a></h3>
+<p>
+いえいえ、openにも&quot;wb&quot;はあります。
+</p>
+
+<p>
+
+<a href="http://www.ruby-lang.org/ja/man/?cmd=view;name=%C1%C8%A4%DF%B9%FE%A4%DF%B4%D8%BF%F4#open">組み込み関数 open</a>
+</p><blockquote class="cite"><p>
+これらのいずれに対しても &quot;b&quot; フラグを(&quot;r+b&quot;のように)つけることができます(整
+数なら File::BINARY)。この場合、バイナリモードでオープンします(ただし、シス
+テムがテキスト／バイナリでファイルを区別する場合に限ります)
+</p></blockquote><p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200410294" title="200410294" href="200410c.html#200410294">■</a> 
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-talk/118284">[Ruby] true? &amp; false?</a></h3>
+<p>
+そんなにtrue?が好きならなぜt.true?の結果もtrue?で見ないのか？
+t.true?.true?.true?...のように延々続く。
+昔から言われてるありふれた話ではあるが。
+</p>
+<!-- section end -->
+</div>
+<!-- 2004/10/29 end -->
+
+
+
+<hr class="hide">
+<!-- 2004/10/30 start -->
+<h2><a name="20041030" href="200410c.html#20041030">2004-10-30 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="200410301" title="200410301" href="200410c.html#200410301">■</a> 
+<a href="http://bogofilter.sf.net/">[Soft] Bogofilter 0.92.8</a></h3>
+<p>
+Changes:
+</p><blockquote class="cite"><p>
+A bug that let bogofilter crash inside its RFC-2047 (MIME header)
+decoder has been fixed. A subtle buffer handling bug that could lose
+output data on some operating systems has been fixed. The exit code on
+write errors in passthrough mode has been corrected to match the
+documentation. OS/2 compatibility fixes were made. An abort in
+bogotune -D has been fixed. Several documentation and option handling
+improvements have been made.
+</p></blockquote><p>
+今回はふと思いついてC-r =qdbmしてヒストリを呼び出したので--with-database=qdbmを忘れなかった。
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200410302" title="200410302" href="200410c.html#200410302">■</a> 
+[Shell] ヒストリにコメントを残す</h3>
+<p>
+最近のBashだとコマンドラインで使っていても、デフォルトで#がコメントを意味するので結構はまる人がいるらしい。
+コマンドラインでコメントをつけて何がうれしいんだと思っていたが、
+ヒストリにコメントがつけられると考えればいいわけか。
+
+<a href="200410c.html#200410301">上記</a>のようにconfigureとかやたらと多くの引数を与えるやつにコメントを残しておくと、
+あとで探しやすくなる。
+つまり、
+</p>
+<pre>
+% CFLAGS=-Os CXXFLAGS=-Os ./configure --disable-nls \
+  --disable-dependency-tracking  --with-database=qdbm ;: bogofilter
+</pre>
+<p>
+てな感じにしておけば、C-r : bogoぐらいで呼び出せるようになる。
+zshの場合は#が別の意味(glob)を持っているので、;:で代用してみた。
+しばらく続けてみよう。
+</p>
+<!-- section end -->
+</div>
+<!-- 2004/10/30 end -->
+
+
+
+<hr class="hide">
+<!-- 2004/10/31 start -->
+<h2><a name="20041031" href="200410c.html#20041031">2004-10-31 (Sun)</a></h2>
+<!-- 2005-02-28 01:50:27 -->
+
+<div class="entry1">
+<h3><a name="200410311" title="200410311" href="200410c.html#200410311">■</a> 
+[CSS] 微妙にBloglinesに似せてみる</h3>
+<p>
+交互に背景色を変えてみた。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200410312" title="200410312" href="200410c.html#200410312">■</a> 
+[Ruby] UTF-8 Q-encoding</h3>
+<p>
+Gmailの日本語の扱いはほとんど使いものにならないくらいひどい。
+SubjectもUTF-8のQ-encodingだし。
+で、先日Rubyにインポートされたnkf2はこれがサポートされてなかったので、勝手に追加してみた。
+これで、
+<a href="http://sourceforge.net/mailarchive/forum.php?forum_id=8349">tdiary-devel ML</a>
+のたださんのメールのSubjectも読めるようになった。
+</p>
+
+<p>
+
+<a href="../files/sf.net.txt">sf.net.cgi</a>
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200410313" title="200410313" href="200410c.html#200410313">■</a> 
+[zsh] tetris</h3>
+<p>
+locate tetrisしたら、zshのfunctionsにtetrisを発見。
+</p>
+<pre>
+% autoload -U tetris; zle -N tetris
+% M-x tetris
+|                      |   Score: 0
+|          **          |   
+|          **          |   Game parameters: 11x20, 2.5Hz
+|          ****        |   
+|                      |   Keys:   left: a j
+|                      |         rotate: s k
+|                      |          right: d l
+|                      |           drop: space
+|        ()()          |           quit: q
+|          ()          |
+|      ()()()    ()    |
+|      ()  ()    ()  ()|
+|      ()()()()()()()()|
+|      ()()()()    ()()|
+|    ()()()()()      ()|
+|()()()()()()()  ()  ()|
+|()()()()()()()()()  ()|
+|()()()()()      ()  ()|
+|  ()()()()()()()()()()|
+|()()()()()()  ()  ()()|
++----------------------+
+</pre>
+<p>
+まさか本当に動くとは。
+</p>
+<!-- section end -->
+</div>
+<!-- 2004/10/31 end -->
+
+<hr>
+<div>
+<a href="200410b.html">&lt;Prev(,)</a> | 
+<a href="200411a.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

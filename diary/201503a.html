@@ -1,0 +1,328 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2015-3-a</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="201502c.html">
+<link rel="next" href="201503b.html">
+
+<link rel="stylesheet" type="text/css" href="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.css">
+<script async type="text/javascript" src="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.js"></script>
+<script type="text/javascript">
+<!--       
+$(document).ready(function() {
+  prettyPrint();
+});
+-->
+</script>
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2015年3月上旬〜</p>
+<hr>
+<div>
+<a href="201502c.html" accesskey=",">&lt;Older(,)</a> | 
+<a href="201503b.html" accesskey=".">Newer(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2015/03/01 start -->
+<h2><a name="20150301" href="201503a.html#20150301">2015-03-01 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="201503011" title="201503011" href="201503a.html#201503011">■</a> 
+fitbit oneのバッテリーが3日ぐらいで空に</h3>
+<p>
+へたってしまったのか、気づくとボタン押しても反応ない状態に。<br>
+1日使って確認してもほとんど減ってないんだけどなあ。<br>
+毎日充電するのも面倒だよな。
+</p>
+<!-- section end -->
+</div>
+<!-- 2015/03/01 end -->
+
+
+
+<hr class="hide">
+<!-- 2015/03/02 start -->
+<h2><a name="20150302" href="201503a.html#20150302">2015-03-02 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="201503021" title="201503021" href="201503a.html#201503021">■</a> 
+足つぼインソール</h3>
+<p>
+会社で履いてるサンダルに足つぼインソールを入れたら結構快適。<br>
+ただサンダルなのでどんどん後ろにずれる。<br>
+なにかいい滑り止めはないかと思ったら、でかめ輪ゴムがいい感じだ。<br>
+本の付録を挟むときに使われてるくらいの大きさ。<br>
+これをインソールの下に入れると摩擦がいい感じになってずれなくなる。<br>
+ただそうは言っても徐々にあちこち移動するので、<br>
+いつのまにか輪ゴムがはみ出ることも。
+</p>
+<!-- section end -->
+</div>
+<!-- 2015/03/02 end -->
+
+
+
+<hr class="hide">
+<!-- 2015/03/03 start -->
+<h2><a name="20150303" href="201503a.html#20150303">2015-03-03 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="201503031" title="201503031" href="201503a.html#201503031">■</a> 
+lastpipe</h3>
+<p>
+shの落とし穴としてreadをパイプで受け取ると別プロセスになるので参照できないってのがあるが、<br>
+bashだとshopt -s lastpipeで回避できるようだ。
+</p>
+<pre>
+% bash -c 'echo foo|read a;echo $a' 
+
+% bash -c 'shopt -s lastpipe;echo foo|read a;echo $a'
+foo
+</pre>
+&lt;()技を使わなくてもよくなるのはわかりやすい。
+<!-- section end -->
+</div>
+<!-- 2015/03/03 end -->
+
+
+
+<hr class="hide">
+<!-- 2015/03/04 start -->
+<h2><a name="20150304" href="201503a.html#20150304">2015-03-04 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="201503041" title="201503041" href="201503a.html#201503041">■</a> 
+pipefail</h3>
+<p>
+pipeを使うと最後に実行したコマンドの終了ステータスが$?にセットされるが、<br>
+bashだとset -o pipefailで失敗した値が設定される。
+</p>
+<pre>
+% bash -c 'false | true; echo $?'                    
+0
+% bash -c 'set -o pipefail; false | true; echo $?'
+1
+</pre>
+<p>
+1年前に知りたかった。
+</p>
+<!-- section end -->
+</div>
+<!-- 2015/03/04 end -->
+
+
+
+<hr class="hide">
+<!-- 2015/03/05 start -->
+<h2><a name="20150305" href="201503a.html#20150305">2015-03-05 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="201503051" title="201503051" href="201503a.html#201503051">■</a> 
+Google ChromeがlinkをhoverしてもURLを表示してくれない</h3>
+<p>
+なんかいつの間にそんな挙動になっていて不便極まりない。<br>
+ぐぐってみるとどういうわけか設定で<br>
+[システム]-[ハードウェア アクセラレーションが使用可能な場合は使用する]<br>
+をチェックすると起こるらしい。確かに最近これ何気なくチェックした記憶がある。<br>
+まさか、こんな設定が関係するとは。
+</p>
+<!-- section end -->
+</div>
+<!-- 2015/03/05 end -->
+
+
+
+<hr class="hide">
+<!-- 2015/03/06 start -->
+<h2><a name="20150306" href="201503a.html#20150306">2015-03-06 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="201503061" title="201503061" href="201503a.html#201503061">■</a> 
+stderrをfilterしたい #シェル芸</h3>
+<p>
+最近timeコマンドの-f &quot;%E %C&quot;を多用してる。<br>
+実行時間とコマンドラインを表示してくれるので便利だが、<br>
+ワイルドカードを使うとひどいときは何行も表示されてうっとうしい。<br>
+そこでcutでも使って適当に100文字ぐらいに切り詰めようかと思ったら、<br>
+stderrに表示されてるので困った。2&gt;&amp;1したら意味がないし。<br>
+で、bashを使ってたので以下の方法を思いついた。<br>
+とりあえず20文字で切ってみる。日本語は考えない。
+</p>
+<pre>
+$ /usr/bin/time -f &quot;%E %C&quot; ls 12345678901234567890
+ls: cannot access 12345678901234567890: No such file or directory
+Command exited with non-zero status 2
+0:00.00 ls 12345678901234567890
+$ /usr/bin/time -f &quot;%E %C&quot; ls 12345678901234567890 2&gt; &gt;(cut -c-20 &gt;&amp;2)
+ls: cannot access 12
+Command exited with 
+0:00.00 ls 123456789
+</pre>
+<p>
+だめだめである。そりゃ他にもstderrに出してるのもいるわけで当然ではある。<br>
+要するに最後の行だけ処理すればいいわけで、となるとsedなら簡単だ。
+</p>
+<pre>
+$ /usr/bin/time -f &quot;%E %C&quot; ls 12345678901234567890 2&gt; &gt;(sed '$s/\(.\{20\}\).*/\1 .../' &gt;&amp;2)
+ls: cannot access 12345678901234567890: No such file or directory
+Command exited with non-zero status 2
+0:00.00 ls 123456789 ...
+</pre>
+<p>
+ついでに省略した部分は...で表わすことにした。あとはfunctionなりスクリプトにするなり。
+</p>
+<!-- section end -->
+</div>
+<!-- 2015/03/06 end -->
+
+
+
+<hr class="hide">
+<!-- 2015/03/07 start -->
+<h2><a name="20150307" href="201503a.html#20150307">2015-03-07 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="201503071" title="201503071" href="201503a.html#201503071">■</a> 
+字幕</h3>
+<p>
+torneで録画しておいた番組に字幕がつくようになってしまった。<br>
+設定をいじった記憶もないし、そもそもどこで設定するのかわからない。<br>
+やっと再生中の△でのメニューの中に見つけたが、こんなのいじらないしなあ。<br>
+と思ったが、そういえばリモコンにまんまSUBTITLEボタンが存在していた。<br>
+これか。間違えて押した可能性が高いな。
+</p>
+<!-- section end -->
+</div>
+<!-- 2015/03/07 end -->
+
+
+
+<hr class="hide">
+<!-- 2015/03/08 start -->
+<h2><a name="20150308" href="201503a.html#20150308">2015-03-08 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="201503081" title="201503081" href="201503a.html#201503081">■</a> 
+bashとzshのAlt-.</h3>
+<p>
+CTRL-Rで過去のヒストリーを呼び出してからAlt-.すると微妙に違う。<br>
+zshは常にヒストリーとは関係なく前回のコマンドラインが対象だが、<br>
+bashだと呼び出したヒストリーの前のコマンドラインが対象になる。<br>
+このbashの仕様はすごく使いづらい。<br>
+しかたなく!$するわけだけど、<br>
+もうAlt-.するのが癖になってるのでつい打ってしまう。
+</p>
+<p>
+とりあえず無理矢理こうすればzshと同じ挙動になるようだ。
+</p>
+<pre>
+$ bind '&quot;\e.&quot;: &quot;!$\e^&quot;'
+</pre>
+<p>
+!$を\e^で展開させる。ちょっとこの設定で使ってみよう。
+</p>
+<!-- section end -->
+</div>
+<!-- 2015/03/08 end -->
+
+
+
+<hr class="hide">
+<!-- 2015/03/09 start -->
+<h2><a name="20150309" href="201503a.html#20150309">2015-03-09 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="201503091" title="201503091" href="201503a.html#201503091">■</a> 
+昨日の設定ではやっぱだめ</h3>
+<p>
+Alt-.って連続で打てば次々過去に遡れるわけで、<br>
+昨日の設定じゃそれができなくなる。<br>
+どっちを取るかだな。
+</p>
+<!-- section end -->
+</div>
+<!-- 2015/03/09 end -->
+
+
+
+<hr class="hide">
+<!-- 2015/03/10 start -->
+<h2><a name="20150310" href="201503a.html#20150310">2015-03-10 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="201503101" title="201503101" href="201503a.html#201503101">■</a> 
+<a href="http://nullpopopo.blogcube.info/2014/05/471555451541127168.html">findでファイルを削除</a></h3>
+<p>
+便乗して。find派としてはやはりfindのみで。
+</p>
+<pre>
+% find . \( -iname '*.jpg' -o -iname '*.gif' -o -iname '*.png' \) \! -name '*_thumb*' -delete
+</pre>
+<p>
+-name '*.[jJpPgG][pPnNiI][gGfF]'はちょっと強引すぎるような。
+</p>
+<!-- section end -->
+</div>
+<!-- 2015/03/10 end -->
+
+<hr>
+<div>
+<a href="201502c.html">&lt;Older(,)</a> | 
+<a href="201503b.html">Newer(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

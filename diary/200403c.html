@@ -1,0 +1,517 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2004-3-c</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="200403b.html">
+<link rel="next" href="200404a.html">
+
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2004年3月下旬〜</p>
+<hr>
+<div>
+<a href="200403b.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="200404a.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2004/03/21 start -->
+<h2><a name="20040321" href="200403c.html#20040321">2004-03-21 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="200403211" title="200403211" href="200403c.html#200403211">■</a> 
+<a href="http://kernel.org/">[Linux] Linux 2.6.4</a></h3>
+<p>
+昨日Linux 2.6.4に上げてみたが、VMware 4.5.1が動かない。
+config時に何か必要なんだっけ？
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200403212" title="200403212" href="200403c.html#200403212">■</a> 
+<a href="200312a.html#200312071">[Ruby] ruby.1</a></h3>
+<p>
+%Rubyでも指摘されたので、まじめに調査。
+古いgroff(1.15)だと
+</p>
+<pre>
+.Bl -tag
+</pre>
+<p>
+だけでは階段状にインデントしてしまうようだ。
+<a href="http://www.linux.or.jp/JM/html/LDP_man-pages/man7/mdoc.samples.7.html#lbCP">Manpage of MDOC.SAMPLES</a>を見て、
+</p>
+<pre>
+.Bl -tag -width 6n
+</pre>
+<p>
+とした。
+</p>
+<!-- section end -->
+</div>
+<!-- 2004/03/21 end -->
+
+
+
+<hr class="hide">
+<!-- 2004/03/22 start -->
+<h2><a name="20040322" href="200403c.html#20040322">2004-03-22 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="200403221" title="200403221" href="200403c.html#200403221">■</a> 
+[Ruby] VPATH += $(srcdir)/win32</h3>
+<p>
+という表記にちょっと驚く。
+いくらGNU makeでもこれじゃだめだろうと思ったら、
+</p>
+<pre>
+元のVPATH $(srcdir)/win32
+</pre>
+<p>
+のように空白が間に入るので、GNU makeならokなのでだった。
+さすがnokadaさん、結果オーライだ。
+というかそれ以前に今日のRubyのwin32系はmake全滅。
+</p>
+
+<p>
+またMANIFESTをいじるの忘れてる。明日だな。
+</p>
+<!-- section end -->
+</div>
+<!-- 2004/03/22 end -->
+
+
+
+<hr class="hide">
+<!-- 2004/03/23 start -->
+<h2><a name="20040323" href="200403c.html#20040323">2004-03-23 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="200403231" title="200403231" href="200403c.html#200403231">■</a> 
+<a href="http://w3m.sf.net/">[Soft] w3m 0.5</a></h3>
+<p>
+いままで0.4.1を使っていたことに気づいた。0.4.2はなんでインストールしなかったんだっけかな？
+</p>
+
+<p>
+なんかいろいろ変わってるなあ。
+Boehm GCをあらかじめインストールする必要があったり、
+configureがautoconf化されてたり、m17nが入ってたり。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200403232" title="200403232" href="200403c.html#200403232">■</a> 
+[Worm] 200通ほどのWorm</h3>
+<p>
+最近wormが多いねえ。例のNetskyの亜種だろうか。
+<a href="200403a.html#200403041">exeとpifを全部wormとみなす変更をしたので</a>、procmailのレシピをいじる必要がなくなったのはいいが、
+受け取るメールの2/3がspamとwormというのは困ったもんだよ、まったく。
+</p>
+
+<p>
+それはそれとして、wormは全部blockできてるようだから、
+procmailを捨てられそうだ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2004/03/23 end -->
+
+
+
+<hr class="hide">
+<!-- 2004/03/24 start -->
+<h2><a name="20040324" href="200403c.html#20040324">2004-03-24 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="200403241" title="200403241" href="200403c.html#200403241">■</a> 
+<a href="ftp://ftp.astron.com/pub/file/">[Soft] file 4.08</a></h3>
+<p>
+久し振りに上げた。
+</p>
+<pre>
+Changes:
+This release contains a lot of MIME fixes, gettext
+message catalogue support, and FreeBSD ELF version
+handling. It also provides better printout for
+unreadable files, fixes a possible memory leak,
+correctly cleans up after itself, and fixes some
+further bugs.
+</pre>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200403242" title="200403242" href="200403c.html#200403242">■</a> 
+<a href="http://bulkfeeds.net/">[RSS] Bulkfeeds</a></h3>
+<p>
+RSSの全文検索。検索結果もRSSで吐く。
+</p>
+<pre>
+http://bulkfeeds.net/app/search2.rdf?q=気になるキーワード
+</pre>
+<p>
+のようなURLをRSS Readerに登録すればすごく便利。
+</p>
+<!-- section end -->
+</div>
+<!-- 2004/03/24 end -->
+
+
+
+<hr class="hide">
+<!-- 2004/03/25 start -->
+<h2><a name="20040325" href="200403c.html#20040325">2004-03-25 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="200403251" title="200403251" href="200403c.html#200403251">■</a> 
+[Perl] perl -v</h3>
+<p>
+Perl 5.8.3も2003年のままだということが判明した。[ruby-dev:23220]
+</p>
+
+<p>
+bladeの更新が止まってしまうとruby-* MLを参照するのに困るなあ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200403252" title="200403252" href="200403c.html#200403252">■</a> 
+[TV] クイズ!スパイ2/7</h3>
+<p>
+長井秀和は声だけ聞いてると爆笑問題の太田光かと思う。間違いない。
+ぼーっと見てたけど結構面白かった。
+でも途中で「土田か、やくを落としておけばよかった」という敗者の弁はまずいっしょ。
+その時点でこのふたりはスパイじゃないことがばれてしまった。
+</p>
+
+<p>
+む、来週からはTwenty-Fourか。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200403253" title="200403253" href="200403c.html#200403253">■</a> 
+[Yahoo!BB] 郵便振替</h3>
+<p>
+早速郵便振替支払通知書が来た。てゆか手続きが面倒だよ。
+なんで500円割引きにしないかな。
+こうやって面倒がるやつをあてにしてるとしか思えない。
+</p><blockquote><p>
+「また、期限内に換金されないものにつきましては、情報社会の将来のための
+基金などに寄付させていただければと存じます。」
+</p></blockquote>
+<!-- section end -->
+</div>
+<!-- 2004/03/25 end -->
+
+
+
+<hr class="hide">
+<!-- 2004/03/26 start -->
+<h2><a name="20040326" href="200403c.html#20040326">2004-03-26 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="200403261" title="200403261" href="200403c.html#200403261">■</a> 
+[Ruby] bladeの更新</h3>
+<p>
+日記に書いたせいか気づいてもらったようで。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200403262" title="200403262" href="200403c.html#200403262">■</a> 
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-talk/95899">[Win32] readline.dll</a></h3>
+<p>
+'['と']'が入力できない人がいるらしい。
+入力できないってことは
+<a href="200308c.html#200308291">AltGr問題</a>しかないよね。
+名前を見るとイタリア人って感じだな。
+scrittoでぐぐってみるとやはりイタリア語のようだ。
+メールアカウントの_itもそういう意味か。
+</p>
+
+<p>
+最終的には
+<a href="http://www.is.kyusan-u.ac.jp/~nakano/misc.htm">Nakano's miscellaneous</a>読み耽り忘れさられていたようだ。気長に待っててくれ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2004/03/26 end -->
+
+
+
+<hr class="hide">
+<!-- 2004/03/27 start -->
+<h2><a name="20040327" href="200403c.html#20040327">2004-03-27 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="200403271" title="200403271" href="200403c.html#200403271">■</a> 
+[Mail] メール遅延</h3>
+<p>
+ここ2,3日は一部のメールが半日以上遅れて届くもんで、話が食い違ったりして困ったもんだ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200403272" title="200403272" href="200403c.html#200403272">■</a> 
+<a href="http://www.fefe.de/dietlibc/">[Soft] diet libc 0.25</a></h3>
+<p>
+Changes: Many bug and portability fixes. 
+</p>
+<!-- section end -->
+</div>
+<!-- 2004/03/27 end -->
+
+
+
+<hr class="hide">
+<!-- 2004/03/28 start -->
+<h2><a name="20040328" href="200403c.html#20040328">2004-03-28 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="200403281" title="200403281" href="200403c.html#200403281">■</a> 
+<a href="http://procps.sf.net/">[Soft] Procps 3.2.1</a></h3>
+<p>
+Changes:
+</p>
+<pre>
+This release adds the -M and Z options for display of
+security data and makes the STAT field more like that
+of modern BSD. Some build problems and slabinfo error
+handling have been fixed as well.
+</pre>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200403282" title="200403282" href="200403c.html#200403282">■</a> 
+[Soft] diff -u2</h3>
+<p>
+diffの-uオプションは引数を取らない。diff -u2と書くとdiff -u -2という意味になる。
+しかもdiff 2.8.1では-&lt;数字&gt;オプションはobsoleteだ。
+</p>
+
+<pre>
+-lines Show lines (an integer) lines of context.  This
+       option does not specify an output format by
+       itself; it has no effect unless it is combined
+       with -c or -u.  This option is obsolete.  For
+       proper operation, patch typically needs at least
+       two lines of context.
+</pre>
+
+<p>
+じゃ、どうするかというと大文字を使わないといけないらしい。
+</p>
+
+<pre>
+-U lines
+--unified[=lines]
+       Use the unified output format, showing lines (an
+       integer) lines of context, or three if lines is
+       not given.  For proper opera- tion, patch
+       typically needs at least two lines of context.
+</pre>
+
+<!-- section end -->
+</div>
+<!-- 2004/03/28 end -->
+
+
+
+<hr class="hide">
+<!-- 2004/03/29 start -->
+<h2><a name="20040329" href="200403c.html#20040329">2004-03-29 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="200403291" title="200403291" href="200403c.html#200403291">■</a> 
+[LL] LL Magazine</h3>
+<p>
+買った。LL Saturdayの内容をきれいに製本+αといった感じ。
+</p>
+
+<p>
+ところで、177ページのraa.cgiのネタは一体どういうことだろう？
+<a href="200302c.html#200302242">ここで書いた内容と全く同じ</a>なんだけど、この日記への参照がないんだよねえ。
+まあ、こんなもん誰でも思いつくとは言え、
+ひとことあってもいいんじゃないかなあ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200403292" title="200403292" href="200403c.html#200403292">■</a> 
+[w3m] raa.cgi</h3>
+<p>
+実はその後、1行増えてたりする。
+</p>
+<pre>
+#! /bin/sh
+
+url='http://raa.ruby-lang.org'
+name=${QUERY_STRING##*:}
+echo w3m-control: GOTO $url/${name:+list.rhtml?name=$name}
+echo w3m-control: DELETE_PREVBUF
+</pre>
+<p>
+BしてもNo Lineにならないってだけなので、どうでもいいかもしれない。
+w3mのdoc-jp/README.funcやPerlで書かれたBonus/*.cgi参照。
+</p>
+<!-- section end -->
+</div>
+<!-- 2004/03/29 end -->
+
+
+
+<hr class="hide">
+<!-- 2004/03/30 start -->
+<h2><a name="20040330" href="200403c.html#20040330">2004-03-30 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="200403301" title="200403301" href="200403c.html#200403301">■</a> 
+<a href="http://invisible-island.net/byacc/">[Soft] Berkeley Yacc 20040328</a></h3>
+<p>
+byaccとbisonの作者が同じ人というのはちょっと驚き。
+</p>
+<pre>
+HISTORY
+
+Byacc was written around 1990 by Robert Corbett who
+is the original author of bison. Originally written
+in K&amp;R C, I have modified it to conform to ANSI C,
+and made other improvements. See the changelog for
+details.
+</pre>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200403302" title="200403302" href="200403c.html#200403302">■</a> 
+[Perl] jperl5.005_04</h3>
+<p>
+とりあえず、make testが通った。
+</p>
+<pre>
+&lt;snip&gt;
+kanji/format.......ok
+kanji/op...........ok
+kanji/regexp.......ok
+kanji/sjis.........ok
+All tests successful.
+u=0.12  s=0.15  cu=4.48  cs=2.08  scripts=191  tests=7509
+make all test  54.58s user 5.18s system 71% cpu 1:23.81 total
+</pre>
+<p>
+お約束だし4/1に出してみるか。その前に使い方忘れた
+<a href="http://www.perl.com/CPAN/modules/04pause.html">PAUSE</a>をよく読まないと。
+</p>
+<!-- section end -->
+</div>
+<!-- 2004/03/30 end -->
+
+
+
+<hr class="hide">
+<!-- 2004/03/31 start -->
+<h2><a name="20040331" href="200403c.html#20040331">2004-03-31 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="200403311" title="200403311" href="200403c.html#200403311">■</a> 
+[Mail] 配送の乱れ</h3>
+<p>
+Netsky.Qの影響だと思うけど、もうめちゃくちゃ。
+今日のNetsky.Qも250通を越えてるしなあ。
+減るどころか増えてるってどういうこと？
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200403312" title="200403312" href="200403c.html#200403312">■</a> 
+<a href="http://pause.cpan.org/">[Perl] PAUSE: menu</a></h3>
+<p>
+ここからloginしてuploadすればいいわけだな。
+アカウントのリクエストもできるようだ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2004/03/31 end -->
+
+<hr>
+<div>
+<a href="200403b.html">&lt;Prev(,)</a> | 
+<a href="200404a.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

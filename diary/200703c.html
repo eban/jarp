@@ -1,0 +1,425 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2007-3-c</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="200703b.html">
+<link rel="next" href="200704a.html">
+
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2007年3月下旬〜</p>
+<hr>
+<div>
+<a href="200703b.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="200704a.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2007/03/21 start -->
+<h2><a name="20070321" href="200703c.html#20070321">2007-03-21 (Wed)</a></h2>
+<!-- 2007-03-22 01:49:27 -->
+
+<div class="entry1">
+<h3><a name="200703211" title="200703211" href="200703c.html#200703211">■</a> 
+[SVN] 複数branchの同時commit</h3>
+<p>
+なかださんが複数のbranchに対して同時にcommitしてるけど、どうやってんだろう？<br>
+一応自分で考えてみた。全branchをcoするなんてのは無駄なので、<br>
+たぶんそんなことはしてないと想像。必要なbranchだけが対象になるようにしよう。<br>
+まず大元をcoするときに-Nで再帰的にcoしないようにする。
+</p>
+<pre>
+% svn co -N svn+ssh://svn@ci.ruby-lang.org/ruby/
+</pre>
+<p>
+branchesも同様。
+</p>
+<pre>
+% cd ruby
+% svn up -N branches
+</pre>
+<p>
+あとは適当に欲しいbranchだけupdateする。
+</p>
+<pre>
+% svn up trunk branches/ruby_1_8{,_5,_6}
+</pre>
+<p>
+これでできあがり。ruby/でsvn upすれば全部updateできるので、<br>
+同様にここでcommitすれば複数branchの同時commitが可能になるはず(たぶん)。
+</p>
+
+<p>
+というか、commit云々よりまとめてupdateできてすげー便利だよ、こりゃ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2007/03/21 end -->
+
+
+
+<hr class="hide">
+<!-- 2007/03/22 start -->
+<h2><a name="20070322" href="200703c.html#20070322">2007-03-22 (Thu)</a></h2>
+<!-- 2007-03-23 01:16:58 -->
+
+<div class="entry1">
+<h3><a name="200703221" title="200703221" href="200703c.html#200703221">■</a> 
+<a href="http://mvertes.free.fr/">[Soft] txt2man 1.5.5</a></h3>
+<blockquote><dl>
+<dt>
+About:
+<dd>
+Txt2man converts flat ASCII text to man page format. It is a shell script using
+gnu awk, that should run on any Unix like system.
+</dl></blockquote>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200703222" title="200703222" href="200703c.html#200703222">■</a> 
+[Comic] 三国志</h3>
+<p>
+10巻まで読んだが同じ顔だらけで誰が誰だかわかんないよ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2007/03/22 end -->
+
+
+
+<hr class="hide">
+<!-- 2007/03/23 start -->
+<h2><a name="20070323" href="200703c.html#20070323">2007-03-23 (Fri)</a></h2>
+<!-- 2007-03-24 02:15:32 -->
+
+<div class="entry1">
+<h3><a name="200703231" title="200703231" href="200703c.html#200703231">■</a> 
+[Tips] dateでUnix epoch</h3>
+<p>
+GNU dateは@をつければUnix epochも解釈してくれるんだな。
+</p>
+<pre>
+% date +%s
+1174669919
+% date -d @1174669919
+Sat Mar 24 02:11:59 JST 2007
+</pre>
+<p>
+あとyesterdayとか便利。
+</p>
+<pre>
+% date -d yesterday +%m-%d
+03-23
+</pre>
+
+<!-- section end -->
+</div>
+<!-- 2007/03/23 end -->
+
+
+
+<hr class="hide">
+<!-- 2007/03/24 start -->
+<h2><a name="20070324" href="200703c.html#20070324">2007-03-24 (Sat)</a></h2>
+<!-- 2007-03-25 02:37:44 -->
+
+<div class="entry1">
+<h3><a name="200703241" title="200703241" href="200703c.html#200703241">■</a> 
+<a href="http://www.dapper.net/">[RSS] Dapper: The Data mapper</a></h3>
+<p>
+こんなのがあるなんて全然知らなかった。<br>
+手始めに
+<a href="http://www.yomiuri.co.jp">http://www.yomiuri.co.jp</a>で試してみたが、結構難しいな。<br>
+余計なアイテムがまざったり、なぜか抜けちゃったりと。
+</p>
+<!-- section end -->
+</div>
+<!-- 2007/03/24 end -->
+
+
+
+<hr class="hide">
+<!-- 2007/03/25 start -->
+<h2><a name="20070325" href="200703c.html#20070325">2007-03-25 (Sun)</a></h2>
+<!-- 2007-03-26 01:57:01 -->
+
+<div class="entry1">
+<h3><a name="200703251" title="200703251" href="200703c.html#200703251">■</a> 
+<a href="http://golf.shinh.org/p.rb?reverse+lines">[穴] reverse lines</a></h3>
+<p>
+bashならtacでいいはずなんだが、入力データの最終行は改行がないので困る。<br>
+(dd;echo)|tacなどと無駄なことをしてたが、そういえばあれならいけると思いついた。<br>
+逆にいうと
+<a href="http://golf.shinh.org/p.rb?echo">echo</a>
+の入力データは全部改行があってよかったというか。
+</p>
+<!-- section end -->
+</div>
+<!-- 2007/03/25 end -->
+
+
+
+<hr class="hide">
+<!-- 2007/03/26 start -->
+<h2><a name="20070326" href="200703c.html#20070326">2007-03-26 (Mon)</a></h2>
+<!-- 2007-03-27 21:24:44 -->
+
+<div class="entry1">
+<h3><a name="200703261" title="200703261" href="200703c.html#200703261">■</a> 
+[git] git svn multi-init</h3>
+<p>
+man git-svnを見るとsvnで推奨されてるレイアウト(trunk,brances,tags)の場合は、<br>
+multi-initしてmulti-fetchしたほうがいいようだ。<br>
+Rubyのsvnリポジトリをローカルへ持ってきて実験。
+</p>
+<pre>
+% mkdir ruby.git; cd ruby.git
+% git svn multi-init file:///some/where/svn/ruby -T trunk -b branches -t tags
+% git config svn.repack 1000
+% git config svn.repackflags '-a -d'
+% git svn multi-fetch
+</pre>
+<p>
+で4時間弱。repackしないと最終的には2GBぐらいに膨れあがるので必須設定のような気がする。
+</p>
+<pre>
+% du -sh
+45M     .
+</pre>
+<p>
+こんなに違う。ちなみに元々のsvnリポジトリは323MB。<br>
+まあfsfsだと1コミットで1ファイルだしねえ。<br>
+gitもpackして1個のファイルにしてるから小さくなってるわけで。
+</p>
+
+<p>
+switchの方法はよくわからず。
+</p>
+<pre>
+% sed -i~ 's|file:///some/where/svn/ruby|svn+ssh://svn@ci.ruby-lang.org/ruby|' .git/svn/*/info/url
+</pre>
+<p>
+でうまくいってはいるようだけど。
+</p>
+
+<p>
+あと.git/svnの要らないブランチは消すとmulti-fetchでfetchしなくなる。<br>
+ってそれはなんか間違った方法だと思うよ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2007/03/26 end -->
+
+
+
+<hr class="hide">
+<!-- 2007/03/27 start -->
+<h2><a name="20070327" href="200703c.html#20070327">2007-03-27 (Tue)</a></h2>
+<!-- 2007-03-28 01:11:41 -->
+
+<div class="entry1">
+<h3><a name="200703271" title="200703271" href="200703c.html#200703271">■</a> 
+<a href="http://fishkill.yurusanai.de/">[Soft] Fishkill</a></h3>
+<p>
+ゴルフ向き？関数型はよくわからんなあ。
+</p><blockquote><dl>
+<dt>
+About:
+<dd>
+Fishkill is a minimalist functional programming language. Some
+might call it a toy language. It is based entirely on pattern
+matching of function arguments. There are no data types (or you
+might say there is a single data type). Instead, arbitrary
+constructors can be defined by just using them in a program.
+</dl></blockquote>
+<!-- section end -->
+</div>
+<!-- 2007/03/27 end -->
+
+
+
+<hr class="hide">
+<!-- 2007/03/28 start -->
+<h2><a name="20070328" href="200703c.html#20070328">2007-03-28 (Wed)</a></h2>
+<!-- 2007-03-29 00:49:30 -->
+
+<div class="entry1">
+<h3><a name="200703281" title="200703281" href="200703c.html#200703281">■</a> 
+<a href="http://golf.shinh.org/p.rb?L+system">[穴] L system</a></h3>
+<p>
+意表をついてほとんど話題になってないL+system.rbを晒してみる。
+</p>
+<pre>
+n,$_,*h=$&lt;.read.split
+puts$_
+n.oct.times{puts gsub(/./){Hash[*h][$&amp;]||$&amp;}}
+</pre>
+<p>
+案外きれいにまとまってる。
+</p>
+<!-- section end -->
+</div>
+<!-- 2007/03/28 end -->
+
+
+
+<hr class="hide">
+<!-- 2007/03/29 start -->
+<h2><a name="20070329" href="200703c.html#20070329">2007-03-29 (Thu)</a></h2>
+<!-- 2007-03-30 02:09:44 -->
+
+<div class="entry1">
+<h3><a name="200703291" title="200703291" href="200703c.html#200703291">■</a> 
+<a href="http://shinh.skr.jp/m/?date=20070329#p04">[穴] gets nil</a></h3>
+<p>
+全部読むときには$&lt;.readかgets$_をよく使うんだけど、<br>
+nilが入ってる変数はいっぱいあるのに、なぜかgets$_を選ぶことが多い。<br>
+それはそれとして、gets($_).splitと長くなっちゃうよなあと思い込んでしまった。<br>
+そうなると中々抜け出せない。
+</p>
+
+<p>
+公開するとそういう指摘があったりで結構利点があるよね。
+</p>
+
+<p>
+ちなみに一番最初のバージョンはこんな感じだった。
+</p>
+<pre>
+n=gets.oct
+$&gt;&lt;&lt;s=gets
+h=Hash[*$&lt;.map{|$_|split}.flatten]
+n.times{puts s=s.split(&quot;&quot;).map{|i|h[i]||i}*''}
+</pre>
+<p>
+flattenなんてこんな長いのよく使うよな。
+</p>
+<!-- section end -->
+</div>
+<!-- 2007/03/29 end -->
+
+
+
+<hr class="hide">
+<!-- 2007/03/30 start -->
+<h2><a name="20070330" href="200703c.html#20070330">2007-03-30 (Fri)</a></h2>
+<!-- 2007-03-31 03:13:18 -->
+
+<div class="entry1">
+<h3><a name="200703301" title="200703301" href="200703c.html#200703301">■</a> 
+<a href="http://vicerveza.homeunix.net/~viric/soft/bug/">[Soft] bug 1.1</a></h3>
+<blockquote><dl>
+<dt>
+About:
+<dd>
+Bug is a simple todo-tracking system for the unix commandline. It's written in
+bash, and it only requires the typical Unix utilities: grep, cut, tr, ... It
+should probably work with a small busybox. The lack of dependencies was the
+biggest motivation for its development.
+</dl></blockquote>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200703302" title="200703302" href="200703c.html#200703302">■</a> 
+[TV] 似て蝶</h3>
+<p>
+今日のスポーツニュースを見て感じた。<br>
+中村紀洋と花田勝とホリエモンの区別がつかない。
+</p>
+<!-- section end -->
+</div>
+<!-- 2007/03/30 end -->
+
+
+
+<hr class="hide">
+<!-- 2007/03/31 start -->
+<h2><a name="20070331" href="200703c.html#20070331">2007-03-31 (Sat)</a></h2>
+<!-- 2007-04-01 01:08:59 -->
+
+<div class="entry1">
+<h3><a name="200703311" title="200703311" href="200703c.html#200703311">■</a> 
+6ヶ月定期券</h3>
+<p>
+今月で定期券が切れるついでに東武野田線の磁気カードもSuicaにまとめようと思って一週間、<br>
+いつ見ても窓口は行列で先延ばしにするうちに今日になってしまった。<br>
+この時期だと土曜日でも信じらんないくらい混んでいて、<br>
+もう待つのもいやなので自動販売機で新規を買った。<br>
+帰りの切符を買うのも面倒だし今日から有効にして。<br>
+というわけで、いま無駄に2つSuicaがある。<br>
+空いたらチャージ分だけでも払戻してもらおうかな。<br>
+手数料210円取られるらしいが。
+</p>
+
+<p>
+それで気づいた。4/1からでも3/31からでも6ヶ月だと9/30まで有効の定期券になる。<br>
+せこい話だがうまい具合に大の月と小の月が組み合わさったわけだ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2007/03/31 end -->
+
+<hr>
+<div>
+<a href="200703b.html">&lt;Prev(,)</a> | 
+<a href="200704a.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

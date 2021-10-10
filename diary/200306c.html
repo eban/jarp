@@ -1,0 +1,463 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2003-6-c</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="200306b.html">
+<link rel="next" href="200307a.html">
+
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2003年6月下旬〜</p>
+<hr>
+<div>
+<a href="200306b.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="200307a.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2003/06/21 start -->
+<h2><a name="20030621" href="200306c.html#20030621">2003-06-21 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="200306211" title="200306211" href="200306c.html#200306211">■</a> 
+<a href="../ruby/jarh.rb">[Ruby] jarh.rb</a></h3>
+<pre>
+jarh.rb:435: warning: multiple values for a block parameter (2 for 1)
+</pre>
+<p>
+と警告になってる。該当する行は
+</p>
+<pre>
+{'Ruby hacker,'=&gt;'Just another'}.each{|x|print x.reverse.join(' ')}
+</pre>
+<p>
+で、xがまずいわけだね。
+</p>
+<pre>
+{'Ruby hacker,'=&gt;'Just another'}.each{|*x|print x.reverse.join(' ')}
+</pre>
+<p>
+としよう。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200306212" title="200306212" href="200306c.html#200306212">■</a> 
+[Oricon] nil?</h3>
+<p>
+オリコンの
+<a href="http://www.oricon.co.jp/ranking/weekly_single.html">ウィークリーシングル30</a>を見てたら「
+<a href="http://www.oricon.co.jp/cd_detail.asp?cdno=174799&amp;k=1&amp;m=1">nil?</a>」というタイトルの曲があることがわかった。
+いや、Rubyとは関係ないんだが。
+</p>
+<!-- section end -->
+</div>
+<!-- 2003/06/21 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/06/22 start -->
+<h2><a name="20030622" href="200306c.html#20030622">2003-06-22 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="200306221" title="200306221" href="200306c.html#200306221">■</a> 
+<a href="http://www.gnu.org/software/binutils/">[Linux] binutils 2.14</a></h3>
+<p>
+2週間程前に出ていたようだ。
+</p>
+<pre>
+% CFLAGS=-Os ./configure --disable-nls
+</pre>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200306222" title="200306222" href="200306c.html#200306222">■</a> 
+[Cygwin][BrickOS] h8300-hitachi-hms-gcc</h3>
+<p>
+<a href="http://brickos.sf.net/">BrickOS</a>用のgccを作った。gcc 3.3を使ったら
+<a href="200306b.html#200306141">例のmissing terminating &quot; characterエラー</a>が出て、直すのが面倒になった。gcc 3.2.3を使うか。
+このgccの挙動って欝陶しすぎ。mulitline stringぐらい許したっていいじゃん。
+</p>
+<pre>
+% tar xfv binutils-2.14.tar.bz2 --bzip2
+% tar xfv gcc-core-3.3.tar.bz2 --bzip2
+% tar xfv gcc-g++-3.3.tar.bz2  --bzip2
+% tar xfvz newlib-1.11.0.tar.gz
+% mkdir -p BUILD/{binutils,gcc,newlib}
+% toolroot=$(pwd)
+% cd $toolroot/BUILD/binutils
+% CFLAGS=-Os ../../binutils-2.14/configure \
+  --target=h8300-hitachi-hms --disable-nls
+% make
+% make install
+% cd $toolroot/BUILD/gcc
+% CFLAGS=-Os CXXFLAGS=-Os ../../gcc-3.3/configure \
+  --target=h8300-hitachi-hms --disable-nls --with-newlib \
+  --enable-languages=c,c++
+% make LANGUAGES=c all-gcc
+% make LANGUAGES=c install-gcc
+% cd $toolroot/BUILD/newlib
+% CFLAGS=-Os ../../newlib-1.11.0/configure \
+  --target=h8300-hitachi-hms --disable-nls
+% make
+% make install
+% cd $toolroot/BUILD/gcc
+% make
+% make install
+</pre>
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200306223" title="200306223" href="200306c.html#200306223">■</a> 
+100円ショップ</h3>
+<p>
+温度計が壊れたので、100円ショップで探してみたらあった。
+無駄に時計もついてたりするんだが、温度計だけだと100円じゃ儲けすぎなんだろうか？
+どっちかというと湿度計をつけてくれたほうが嬉しいんだけど。
+他にもこれで100円なのかって品がいっぱいあって面白い。
+</p>
+<!-- section end -->
+</div>
+<!-- 2003/06/22 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/06/23 start -->
+<h2><a name="20030623" href="200306c.html#20030623">2003-06-23 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="200306231" title="200306231" href="200306c.html#200306231">■</a> 
+<a href="http://www.ruby-lang.org/">[Ruby] Ruby 1.8.0 preview3</a></h3>
+<p>
+出た。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200306232" title="200306232" href="200306c.html#200306232">■</a> 
+[Cygwin][BrickOS] gcc 3.x</h3>
+<p>
+C++で書かれたdemoがだめだ。
+</p>
+<pre>
+% cat foo.cc   
+class Foo {
+};
+
+main()
+{
+    Foo *foo = new Foo;
+}
+% gcc -dumpversion
+3.3
+% gcc foo.cc
+/tmp/ccKxtvt1.o(.text+0x16): In function `main':
+: undefined reference to `operator new(unsigned)'
+collect2: ld returned 1 exit status
+% gcc foo.cc -lstdc++
+% /usr/bin/gcc -dumpversion
+2.95.3
+% /usr/bin/gcc foo.cc      
+% 
+</pre>
+<p>
+gcc 3というかg++ 3はnewを呼ぶと-lstdc++を必要とするってことか。
+BrickOSはgcc 2.95.3で開発されてるってことだな。
+</p>
+<!-- section end -->
+</div>
+<!-- 2003/06/23 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/06/24 start -->
+<h2><a name="20030624" href="200306c.html#20030624">2003-06-24 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="200306241" title="200306241" href="200306c.html#200306241">■</a> 
+<a href="http://zsh.sunsite.dk/News/">[Linux] Zsh 4.0.7</a></h3>
+<p>
+開発版の4.1.1も出てる。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200306242" title="200306242" href="200306c.html#200306242">■</a> 
+<a href="http://raa.ruby-lang.org/project/bdb/">[Ruby] bdb 0.4.4</a></h3>
+<p>
+更新。
+</p>
+<!-- section end -->
+</div>
+<!-- 2003/06/24 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/06/25 start -->
+<h2><a name="20030625" href="200306c.html#20030625">2003-06-25 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="200306251" title="200306251" href="200306c.html#200306251">■</a> 
+[Ruby] syckとdate</h3>
+<p>
+ext/syck/rubyext.cでrb_require( &quot;date&quot; );としてるため、
+syckを静的にリンクするとdate.rbが必要となる。
+たとえばdjgpp版ruby.exeはdate.rbがrequireできないとエラーになってしまう。
+</p>
+<pre>
+% wine --debugmsg err-all -- ./ruby -e 'p RUBY_PLATFORM'
+Warning: unprotecting the first 64KB of memory to allow real-mode calls.
+         NULL pointer accesses will no longer be caught.
+g:/ruby/18/djgpp/ruby.exe: No such file to load -- date (LoadError)
+ruby 1.8.0 (2003-06-25) [i386-msdosdjgpp]
+</pre>
+<p>
+おお。wineでdjgppも実行できるのか。
+</p>
+<!-- section end -->
+</div>
+<!-- 2003/06/25 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/06/26 start -->
+<h2><a name="20030626" href="200306c.html#20030626">2003-06-26 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="200306261" title="200306261" href="200306c.html#200306261">■</a> 
+[Ruby] singleton_method_added</h3>
+<p>
+<a href="../ruby/jarh.rb">JARH</a>をRuby 1.6と1.8で動かしたときに表示される数が違うことに気づいた。
+</p>
+<pre>
+% ruby-1.8 jarh.rb |tr , '\n' |wc -l
+    206
+% ruby-1.6 jarh.rb |tr , '\n' |wc -l
+    207
+</pre>
+<p>
+調べてみるとsingleton_method_addedだった。
+</p>
+<pre>
+def $_.singleton_method_added(*) print 'Just another Ruby hacker,' end
+</pre>
+<p>
+のようにsingleton_method_added自体を定義した瞬間にhookされるのは、
+やっぱ変だよね。1.8だと直したとしてもこのJARHはあまり面白味がないな。
+</p>
+<!-- section end -->
+</div>
+<!-- 2003/06/26 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/06/27 start -->
+<h2><a name="20030627" href="200306c.html#20030627">2003-06-27 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="200306271" title="200306271" href="200306c.html#200306271">■</a> 
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-talk/74620">[Ruby] \s in regex</a></h3>
+<p>
+マニュアル見ればわかることをなぜ聞くかな。
+String#stripを勧めるのもいいが、
+\sが何を意味するのか本当に知らないんだろうか？
+</p>
+
+<p>
+あ、英語版のマニュアルがない？
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200306272" title="200306272" href="200306c.html#200306272">■</a> 
+<a href="http://dtach.sf.net/">[Soft] dtach 0.5</a></h3>
+<p>
+たしかにirc用ならscreenのdetach機能だけあれば十分だ。
+というわけで試してみよう。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200306273" title="200306273" href="200306c.html#200306273">■</a> 
+[Worm] SOBIG</h3>
+<p>
+うぜー。
+</p>
+<!-- section end -->
+</div>
+<!-- 2003/06/27 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/06/28 start -->
+<h2><a name="20030628" href="200306c.html#20030628">2003-06-28 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="200306281" title="200306281" href="200306c.html#200306281">■</a> 
+<a href="http://raa.ruby-lang.org/project/sqlite-ruby/">[Ruby] sqlite-ruby 1.0</a></h3>
+<p>
+<a href="http://raa.ruby-lang.org/project/ruby-sqlite/">ruby-sqlite</a>とは別物。別だけど、これもrequire 'sqlite'して使うわけで、
+</p>
+<pre>
+This differs from the 'ruby-sqlite' project (also on RAA)
+in that it is more complete,
+</pre>
+<p>
+と書いてることからも、喧嘩売ってるわけだ。
+やっぱ気に入らないと俺拡張モジュールを作りたくなるようで、
+まあ、ruby-sqlite自体公開形式からして変なので、
+その気持ちはわからないでもない。
+</p>
+
+<!-- section end -->
+</div>
+<!-- 2003/06/28 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/06/29 start -->
+<h2><a name="20030629" href="200306c.html#20030629">2003-06-29 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="200306291" title="200306291" href="200306c.html#200306291">■</a> 
+<a href="http://raa.ruby-lang.org/project/druby/">[Ruby] druby 2.0.4</a></h3>
+<p>
+更新。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200306292" title="200306292" href="200306c.html#200306292">■</a> 
+<a href="http://www.it.uc3m.es/~ptb/proconfig/">[Linux] The proconfig linux kernel module</a></h3>
+<p>
+<a href="http://sho.tdiary.net/20030628.html#p03">/proc/config</a>ってそういえば、
+<a href="http://freshmeat.net/">freshmeat</a>で以前見た記憶がある。たしか
+<a href="http://freshmeat.net/projects/proconfig/">proconfig</a>って名前だった。
+そのうち本家に取り込まれると思ってたんだけど、まだパッチのままらしい。
+そういえばLinux 2.2のころに一度試したような気もするなあ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2003/06/29 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/06/30 start -->
+<h2><a name="20030630" href="200306c.html#20030630">2003-06-30 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="200306301" title="200306301" href="200306c.html#200306301">■</a> 
+[Ruby] defの返り値</h3>
+<p>
+nilを返しても役に立たないのでSymbolを返すのはどうだろうなんてIRCで書いたけど、すでに前田さんが
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-dev/6391">提案</a>してた。privateの例まで同じだよ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200306302" title="200306302" href="200306c.html#200306302">■</a> 
+<a href="http://subversion.tigris.org/">[Soft] subversion</a></h3>
+<p>
+なんか必要なものが多いが、
+結局新たにインストールしたのはneon 0.23.7だけで済んだ。
+http proxyの設定は~/.subversion/serversに
+</p>
+<pre>
+http-proxy-host = proxyサーバ
+http-proxy-port = port番号
+</pre>
+<p>
+てな感じで書いておけばok。
+svn helpと実行すれば~/.subversion/以下が作られるので、
+serversのコメントを参考にすれば設定は簡単。
+</p>
+<!-- section end -->
+</div>
+<!-- 2003/06/30 end -->
+
+<hr>
+<div>
+<a href="200306b.html">&lt;Prev(,)</a> | 
+<a href="200307a.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

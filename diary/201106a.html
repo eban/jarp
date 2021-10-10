@@ -1,0 +1,322 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2011-6-a</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="201105c.html">
+<link rel="next" href="201106b.html">
+
+<link rel="stylesheet" type="text/css" href="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.css">
+<script type="text/javascript" src="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.js"></script>
+<script type="text/javascript">
+<!--       
+$(document).ready(function() {
+  prettyPrint();
+});
+-->
+</script>
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2011年6月上旬〜</p>
+<hr>
+<div>
+<a href="201105c.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="201106b.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2011/06/01 start -->
+<h2><a name="20110601" href="201106a.html#20110601">2011-06-01 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="201106011" title="201106011" href="201106a.html#201106011">■</a> 
+gnome-terminal --tabを試したが失敗</h3>
+<p>
+ハイバネートから復帰しなくなって1週間ほど経つが、もう成功する気配がない。<br>
+基本的にgnome-terminalをタブを使って複数autossh -t remote-host &quot;screen -xRR&quot;<br>
+みたいなことをしてるので、<br>
+</p>
+<pre>
+% gnome-terminal \
+  --tab -e 'autossh -t host1 &quot;screen -xRR&quot;' \
+  --tab -e 'autossh -t host2 &quot;screen -xRR&quot;' \
+  --tab -e 'autossh -t host3 &quot;screen -xRR&quot;'
+</pre>
+<p>
+という感じで立ち上げればいいかと試してみたが、なぜか2個目以降が安定して起動しない。<br>
+keyringはあらかじめ認証済みなのでそこは問題ない。
+</p>
+<pre>
+% gnome-terminal \
+  --tab -e 'autossh -t host1 &quot;screen -xRR&quot;' \
+  --tab -e 'sh -c &quot;sleep 1;exec autossh -t host2 screen\ -xRR&quot;' \
+  --tab -e 'sh -c &quot;sleep 2;exec autossh -t host2 screen\ -xRR&quot;'
+</pre>
+<p>
+にしてみたら2個まではいけるようになったが、3個目はやっぱだめだ。<br>
+これができないと--save-configしてもだめだよな。
+</p>
+<p>
+結局のところ毎朝1個1個手でセットアップしてる。
+</p>
+<!-- section end -->
+</div>
+<!-- 2011/06/01 end -->
+
+
+
+<hr class="hide">
+<!-- 2011/06/02 start -->
+<h2><a name="20110602" href="201106a.html#20110602">2011-06-02 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="201106021" title="201106021" href="201106a.html#201106021">■</a> 
+cygwinでmingw32</h3>
+<p>
+最近gcc-3の環境が変わったのでもうgcc -mno-cygwinは使えなくなった。<br>
+正確には自分で設定すれば使えるようになるが、まあ、そこまでして使う必要もないと思う。<br>
+mingw32のコンパイラ名はi686-w64-mingw32-gccなので、<br>
+Rubyをconfigureするときは--with-gcc=i686-w64-mingw32-gccという感じの指定になる。
+</p>
+<!-- section end -->
+</div>
+<!-- 2011/06/02 end -->
+
+
+
+<hr class="hide">
+<!-- 2011/06/03 start -->
+<h2><a name="20110603" href="201106a.html#20110603">2011-06-03 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="201106031" title="201106031" href="201106a.html#201106031">■</a> 
+gawk 4 public beta</h3>
+<p>
+cygwinのmingw32環境で試した。http://www.skeeve.com/gawk/gawk-3.1.84.tar.gz を使用。
+</p>
+<pre>
+% cp pc/*(.) .
+% sed -i~ '/#include &lt;windows.h&gt;/i#undef param' pc/gawkmisc.pc
+% sed '/-O2 -gd/s/CC=/CC=i686-w64-mingw32-/' pc/Makefile &gt; Makefile
+% make mingw32
+</pre>
+<p>
+これで一応最後でmakeが通った。testはcp pc/Makefile.txt test/Makefileすれば動くが、<br>
+ちゃんと動くようには考えられていない。
+</p>
+<!-- section end -->
+</div>
+<!-- 2011/06/03 end -->
+
+
+
+<hr class="hide">
+<!-- 2011/06/04 start -->
+<h2><a name="20110604" href="201106a.html#20110604">2011-06-04 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="201106041" title="201106041" href="201106a.html#201106041">■</a> 
+i686-pc-mingw32-gcc</h3>
+<p>
+久し振りに家のEeePCのCygwinを更新してみたら、<br>
+なぜかmingw32環境はi686-pc-mingw32-がprefixになっていた。<br>
+これは非常に馴染み深い表記でいいよね。<br>
+しかもgcc-3 -mno-cygwinは壊れてない。<br>
+どうなってんだろ。むしろ会社の環境が変なのか、パッケージが別なのか。
+</p>
+<!-- section end -->
+</div>
+<!-- 2011/06/04 end -->
+
+
+
+<hr class="hide">
+<!-- 2011/06/05 start -->
+<h2><a name="20110605" href="201106a.html#20110605">2011-06-05 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="201106051" title="201106051" href="201106a.html#201106051">■</a> 
+相棒見まくり</h3>
+<p>
+シーズン3を12話ほど。torneだと第何話と出てくるので抜けがすぐわかる。<br>
+いやなぜ飛ばすのか？
+</p>
+<p>
+それにしてもtorneで毎日と設定しとけば土日にそういう番組がなければ<br>
+無視してくれるって仕様はいいね。今時じゃ当たり前なのかもしれないが。
+</p>
+<!-- section end -->
+</div>
+<!-- 2011/06/05 end -->
+
+
+
+<hr class="hide">
+<!-- 2011/06/06 start -->
+<h2><a name="20110606" href="201106a.html#20110606">2011-06-06 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="201106061" title="201106061" href="201106a.html#201106061">■</a> 
+<a href="http://www.cygwin.com/ml/cygwin-announce/2011-06/msg00004.html">Charles Wilson - NEW: mingw-gcc-{core,g++,fortran,objc}-4.5.2-1</a></h3>
+<p>
+gcc-3 -mno-cygwinが使えなくなったなんて書いた当日に復活していたよ。なんという間の悪さ。<br>
+どっちにしてもdeprecatedなのでいずれなくなるんでしょう。<br>
+gcc 4.5が使えるんだからわざわざgcc 3を使う必要もない。<br>
+で、今回mingw-gccパッケージが新たに加わったのでi686-pc-mingw32-gccと<br>
+わかりやすい名前で使えるようになった。2つ要らないのでmingw64-*はアンインストールした。<br>
+EeePCではi686-pc-mingw32-gccしか入ってないから、今更新すればこっちしか入らないんかな。
+</p>
+<!-- section end -->
+</div>
+<!-- 2011/06/06 end -->
+
+
+
+<hr class="hide">
+<!-- 2011/06/07 start -->
+<h2><a name="20110607" href="201106a.html#20110607">2011-06-07 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="201106071" title="201106071" href="201106a.html#201106071">■</a> 
+awkで空行を削除</h3>
+<p>
+$0でいいかと思うけど、0だけの行があると破綻する。<br>
+じゃ文字列化して&quot;&quot;$0だ、いや_$0で3B。/./でもいい。<br>
+よくよく考えてみると空行のときはフィールド数が0なんだから、<br>
+NFだけでいい。これで2B。
+</p>
+<pre>
+% printf &quot;0\n1\n\n2\n\n3\n\n4\n&quot;       
+0
+1
+
+2
+
+3
+
+4
+% printf &quot;0\n1\n\n2\n\n3\n\n4\n&quot;|awk NF
+0
+1
+2
+3
+4
+</pre>
+<!-- section end -->
+</div>
+<!-- 2011/06/07 end -->
+
+
+
+<hr class="hide">
+<!-- 2011/06/08 start -->
+<h2><a name="20110608" href="201106a.html#20110608">2011-06-08 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="201106081" title="201106081" href="201106a.html#201106081">■</a> 
+Firefox: 中クリックでpaste&amp;go</h3>
+<p>
+middlemouse.contentLoadURLをabout:configでtrueにすれば、<br>
+リンクやボタン以外の場所で中クリックするとクリップボードの内容のURLへ飛ぶ。<br>
+まあ、Firefox4ではロケーションバーで右クリックすれば「貼り付けて移動」ってのもあるんだけどね。
+</p>
+<!-- section end -->
+</div>
+<!-- 2011/06/08 end -->
+
+
+
+<hr class="hide">
+<!-- 2011/06/09 start -->
+<h2><a name="20110609" href="201106a.html#20110609">2011-06-09 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="201106091" title="201106091" href="201106a.html#201106091">■</a> 
+<a href="http://golf.shinh.org/p.rb?Basic+Code+Golf">Basic Code Golf</a></h3>
+<p>
+<a href="http://golf.shinh.org/reveal.rb?Basic+Code+Golf/ksk_1306558873&amp;rb">この解</a>はすごいな。-042までは思い付いたけど、$Fを使うことで空白も改行も削除できてしまうわけだ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2011/06/09 end -->
+
+
+
+<hr class="hide">
+<!-- 2011/06/10 start -->
+<h2><a name="20110610" href="201106a.html#20110610">2011-06-10 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="201106101" title="201106101" href="201106a.html#201106101">■</a> 
+Firefoxボタン？</h3>
+<p>
+Firefox4にはFirefoxボタンなるものがあるらしいが、<br>
+Windows XPではメニューバーをオフにしないと出てこないらしい。<br>
+しかしこれを出してみてもタイトルが出てこなくなり不便極まりない。<br>
+タブに表示されてるけど途中で切られちゃうし。<br>
+どうせメニューはCSSで隠してるので今さらオフにする必要もないので、<br>
+結局今までどおりでいいや。
+</p>
+<!-- section end -->
+</div>
+<!-- 2011/06/10 end -->
+
+<hr>
+<div>
+<a href="201105c.html">&lt;Prev(,)</a> | 
+<a href="201106b.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

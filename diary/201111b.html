@@ -1,0 +1,341 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2011-11-b</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="201111a.html">
+<link rel="next" href="201111c.html">
+
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2011年11月中旬〜</p>
+<hr>
+<div>
+<a href="201111a.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="201111c.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2011/11/11 start -->
+<h2><a name="20111111" href="201111b.html#20111111">2011-11-11 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="201111111" title="201111111" href="201111b.html#201111111">■</a> 
+中クリックの代わりに</h3>
+<p>
+Firefoxでリンクを中クリックすると新タブで開いてくれるが、<br>
+ホイールの調子が悪いマウスだと中々反応してくれなくて困る。<br>
+たまに強くぐりぐりするとなおるが、しばらくするとまた反応悪くなる。<br>
+まあ、それはそれとして、リンクを普通にドラッグして適当に何もないとこにドロップすると<br>
+中クリックと同じ挙動になることがわかった。<br>
+これも手違いでたまたまそうなっただけなんだけど、中クリックよりは楽だ。<br>
+なにしろ何もないとこで中クリックするとPaste&amp;Goの設定にしてるから、<br>
+狙いが外れると違うとこに飛んでしまうことがあるので。<br>
+前から開いたつもりもないタブがたまにあるなと思っていたが、これが原因のだったんだな。<br>
+でもIEやChromeでは使えない。
+</p>
+<p>
+(11/12記)家のUbuntuでやってみたら全然機能してなくて調べたら、
+<a href="https://addons.mozilla.org/ja/firefox/addon/tab-utilities/">Tab Utitlities</a>の機能だった。<br>
+道理でFirefoxでしか使えないわけだ。「Drag and Goで選択したテキストやリンクを新しいタブで開く」という設定。
+</p>
+<!-- section end -->
+</div>
+<!-- 2011/11/11 end -->
+
+
+
+<hr class="hide">
+<!-- 2011/11/12 start -->
+<h2><a name="20111112" href="201111b.html#20111112">2011-11-12 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="201111121" title="201111121" href="201111b.html#201111121">■</a> 
+Gmailの&quot;This message may not have been sent by:&quot;がうっとうしいので消す</h3>
+<p>
+場所食うわうっとうしいわで、FirefoxのStylishで消した。
+</p>
+<pre>
+@namespace url(http://www.w3.org/1999/xhtml);
+
+@-moz-document domain(&quot;mail.google.com&quot;) {
+  .ac7 {display: none !important;}
+}
+</pre>
+<p>
+class名なんかすぐ変更されるだろうけど、とりあえず簡単なので。
+</p>
+<!-- section end -->
+</div>
+<!-- 2011/11/12 end -->
+
+
+
+<hr class="hide">
+<!-- 2011/11/13 start -->
+<h2><a name="20111113" href="201111b.html#20111113">2011-11-13 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="201111131" title="201111131" href="201111b.html#201111131">■</a> 
+<a href="http://userstyles.org/styles/55603/new-gmail-alternating-message-colors">New Gmail - Alternating message colors</a></h3>
+<p>
+Gmailの新デザインはどうにもメッセージの境界があいまいで好きになれない。<br>
+なんとからないかと、またuserstylesで探してみた。<br>
+で、表題のスタイルを見つけたわけだが、微妙にうまく動かない。<br>
+交互に背景が変わるはずだけど、変わったり変わらなかったり。
+</p>
+<!-- section end -->
+</div>
+<!-- 2011/11/13 end -->
+
+
+
+<hr class="hide">
+<!-- 2011/11/14 start -->
+<h2><a name="20111114" href="201111b.html#20111114">2011-11-14 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="201111141" title="201111141" href="201111b.html#201111141">■</a> 
+2012年は土曜日の祝日が4日もある</h3>
+<p>
+来年のカレンダーを見てて気づいたんだけど、なんか土曜日の祝日が多い。というわけで調べてみた。
+</p>
+<pre>
+% echo 2012/{1/1,1/9,2/11,3/20,4/29,5/3,5/4,5/5,7/16,9/17,9/22,10/8,11/3,11/23,12/23} | \
+  xargs -n1 date +&quot;%F %a&quot; -d | grep Sat
+2012-02-11 Sat
+2012-05-05 Sat
+2012-09-22 Sat
+2012-11-03 Sat
+</pre>
+<p>
+4日もあるわけです。うるう年と秋分の日が23日じゃなくて22日になってるという組み合わせでこんなことになるんだな。
+</p>
+<p>
+参考:
+<a href="http://www8.cao.go.jp/chosei/shukujitsu/gaiyou.html">国民の祝日について - 内閣府</a></p>
+<!-- section end -->
+</div>
+<!-- 2011/11/14 end -->
+
+
+
+<hr class="hide">
+<!-- 2011/11/15 start -->
+<h2><a name="20111115" href="201111b.html#20111115">2011-11-15 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="201111151" title="201111151" href="201111b.html#201111151">■</a> 
+Fedora 16のlighttpdが立ち上がらない</h3>
+<p>
+先週upgradeしてからまあ立ち上がってなかったわけで、今頃気づいたんかいってな状況。<br>
+</p>
+<pre>
+% sudo systemctl enable lighttpd.service
+</pre>
+<p>
+とりあえずこれは必要で、じゃあ、startするかと何度
+</p>
+<pre>
+% sudo systemctl start lighttpd.service
+</pre>
+<p>
+しても立ち上がらない。/var/log/messagesを見るとPIDファイルが読めないらしい。
+</p>
+<pre>
+systemd[1]: Failed to read PID file /var/run/lighttpd.pid after start. The service might be broken.
+</pre>
+<p>
+たしかにlighttpd.pidのサイズは0だった。とりあえずsystemd経由ではなく直接起動してみたらちゃんと動いた。<br>
+systemd自体がなんか悪さしてるようだ。ぐぐってみたら、
+<pre>
+lighttpd doesn't start every-time with new systemd (systemd-35-1.fc16 and
+systemd-37-2.fc16 tested on F16 in VM, although it works on systemd-26-9 on
+F15). It seems like it starts correctly only the first time after system daemon
+is reload, so it is a race condition.<br>
+It seems to me like the PID file is not created fast enough, because systemd
+reports: &quot;Failed to read PID file /var/run/lighttpd.pid after start. The
+service might be broken.&quot; If I run the daemon manually, the PID file is created
+right.
+</pre>
+</p>
+<p>
+<a href="https://bugzilla.redhat.com/show_bug.cgi?id=720210#c3">Bug 720210 – Provide native systemd unit file for lighttpd</a></p>
+<p>
+というコメントを発見。<br>
+まさにこれだ。lighttpd.serviceを書き換えてforkやめたら動いた。ってことはそのままリリースしちゃったんだな。
+</p>
+<!-- section end -->
+</div>
+<!-- 2011/11/15 end -->
+
+
+
+<hr class="hide">
+<!-- 2011/11/16 start -->
+<h2><a name="20111116" href="201111b.html#20111116">2011-11-16 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="201111161" title="201111161" href="201111b.html#201111161">■</a> 
+火車</h3>
+<p>
+原作読んでから見ようと思っていたが、まあいいかと見始めた。<br>
+20分ぐらい見て違和感。なんか聞いたことのある話だ。<br>
+で、決定的なモノが出てきて原作を読んでいたことに気づいた。<br>
+しかもこれ去年読んでるよな。まったく物忘れ激しすぎだろう。
+</p>
+<p>
+それはそれとして佐々木希の使いかたが絶妙。<br>
+当人にしてみれば屈辱だろうけど、大方はそういう風にしか見られてない。
+</p>
+<!-- section end -->
+</div>
+<!-- 2011/11/16 end -->
+
+
+
+<hr class="hide">
+<!-- 2011/11/17 start -->
+<h2><a name="20111117" href="201111b.html#20111117">2011-11-17 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="201111171" title="201111171" href="201111b.html#201111171">■</a> 
+GNU findには-olderXYがない</h3>
+<p>
+newerあるんだけど、olderがない。じゃあ、ある日時より古いファイルを探すのはどうするのか？<br>
+って特に落ちはないんだけど、! -newerXYでいいわけで。
+
+</p>
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="201111172" title="201111172" href="201111b.html#201111172">■</a> 
+mh-format</h3>
+<p>
+10数年振りにmh-formatに手を出そうとしたが無理だった。
+</p>
+<!-- section end -->
+</div>
+<!-- 2011/11/17 end -->
+
+
+
+<hr class="hide">
+<!-- 2011/11/18 start -->
+<h2><a name="20111118" href="201111b.html#20111118">2011-11-18 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="201111181" title="201111181" href="201111b.html#201111181">■</a> 
+未来のことは誰にもわからない</h3>
+<p>
+そういうわけで、200個以上もあった未来の日記は消して、.htaccessで設定したよ。
+</p>
+<pre>
+AddCharset utf-8 .html
+&lt;FilesMatch &quot;\d+[abc]\.html&quot;&gt;
+  ErrorDocument 404 /diary/404.html
+&lt;/FilesMatch&gt;
+</pre>
+<p>
+あ、404である必要はないんだよな。まあ、いいや。
+</p>
+<!-- section end -->
+</div>
+<!-- 2011/11/18 end -->
+
+
+
+<hr class="hide">
+<!-- 2011/11/19 start -->
+<h2><a name="20111119" href="201111b.html#20111119">2011-11-19 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="201111191" title="201111191" href="201111b.html#201111191">■</a> 
+<a href="http://userstyles.org/styles/55603/new-gmail-alternating-message-colors">New Gmail - Alternating message colors</a></h3>
+<p>
+アップデートしたらちゃんと交互に背景の色が変わるようになった。<br>
+これならGmailの新デザインにしてもいいかな。
+</p>
+<!-- section end -->
+</div>
+<!-- 2011/11/19 end -->
+
+
+
+<hr class="hide">
+<!-- 2011/11/20 start -->
+<h2><a name="20111120" href="201111b.html#20111120">2011-11-20 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="201111201" title="201111201" href="201111b.html#201111201">■</a> 
+免許更新</h3>
+<p>
+いつもは午前中に行ってたが、間に合わないので午後の部へ。<br>
+なんかえらい空いてる。そうか、午前中にすませて午後は有意義にすごすとかそういうことか。<br>
+それはそれとしてゲリラ豪雨が北からやってきてえらい目にあうかと思ったら、<br>
+電車の中でやりすごして結局傘も使わず仕舞いだった。
+</p>
+<!-- section end -->
+</div>
+<!-- 2011/11/20 end -->
+
+<hr>
+<div>
+<a href="201111a.html">&lt;Prev(,)</a> | 
+<a href="201111c.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

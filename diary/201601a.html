@@ -1,0 +1,471 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2016-1-a</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="201512c.html">
+<link rel="next" href="201601b.html">
+
+<link rel="stylesheet" type="text/css" href="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.css">
+<script async type="text/javascript" src="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.js"></script>
+<script type="text/javascript">
+<!--       
+$(document).ready(function() {
+  prettyPrint();
+});
+-->
+</script>
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2016年1月上旬〜</p>
+<hr>
+<div>
+<a href="201512c.html" accesskey=",">&lt;Older(,)</a> | 
+<a href="201601b.html" accesskey=".">Newer(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2016/01/01 start -->
+<h2><a name="20160101" href="201601a.html#20160101">2016-01-01 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="201601011" title="201601011" href="201601a.html#201601011">■</a> 
+curl --remote-name-all</h3>
+<p>
+man curlによると-O(--remote-name)はやはりURLごとに指定する必要があるようで、<br>
+全部まとめて指定するには--remote-name-allを使えばいいようだ。
+</p>
+<pre>
+--remote-name-all
+       This option changes the default action for all given URLs to be dealt with as if -O, --remote-name were
+       used for each one. So if you want to disable that for a specific URL after --remote-name-all  has  been
+       used, you must use &quot;-o -&quot; or --no-remote-name. (Added in 7.19.0)
+</pre>
+<!-- section end -->
+</div>
+<!-- 2016/01/01 end -->
+
+
+
+<hr class="hide">
+<!-- 2016/01/02 start -->
+<h2><a name="20160102" href="201601a.html#20160102">2016-01-02 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="201601021" title="201601021" href="201601a.html#201601021">■</a> 
+known_hostsのハッシュ化されたホスト名のチェック</h3>
+<p>
+最近のOpenSSHは~/.ssh/known_hostsのホスト名をハッシュ化してるのでわかりにくい。<br>
+エントリーを消すのはもうssh-keygenを使うしかない。<br>
+一応行番号はこうすればわかるのでエディタで消すのありだが、素直に-Rを使うべき。
+</p>
+<pre>
+% ssh-keygen -l -F ci.ruby-lang.org
+# Host ci.ruby-lang.org found: line 136 
+ci.ruby-lang.org ECDSA SHA256:RK6mb6BwHgpPEgnK7/SfuWLmQI84g9siYeHPiCvmWyE 
+</pre>
+<p>
+それはそれとして、ホスト名はこんな形式になっている。
+</p>
+<pre>
+% awk 'NR==136{print $1}' ~/.ssh/known_hosts
+|1|CZ9Wvav9493RoGNMD92NW05gpbg=|1U2ibOZxFYZIFb9aJehN2xY4T00=
+</pre>
+<p>
+順にsha1,salt,hostを意味する。こんな感じで実行するとハッシュ化されたホスト名が得られる。
+</p>
+<pre>
+% echo -n ci.ruby-lang.org | \
+  openssl sha1 -binary -hmac &quot;$(echo CZ9Wvav9493RoGNMD92NW05gpbg=|base64 -d)&quot; | base64
+1U2ibOZxFYZIFb9aJehN2xY4T00=
+</pre>
+<!-- section end -->
+</div>
+<!-- 2016/01/02 end -->
+
+
+
+<hr class="hide">
+<!-- 2016/01/03 start -->
+<h2><a name="20160103" href="201601a.html#20160103">2016-01-03 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="201601031" title="201601031" href="201601a.html#201601031">■</a> 
+Project Euler Problem 1 #シェル芸</h3>
+<p>
+<a href="http://qiita.com/gin_135/items/c0fde5686f33d947aa6c">Project Eulerをシェル芸で解いてみる(Problem 1) - Qiita</a><br>
+を見てたらふと思いついた。uniqの代わりにファイルを生成させるのはどうだろうか。<br>
+15の倍数が複数あっても問題ない。
+</p>
+<pre>
+% touch 15 15 30 30
+% ls
+15  30
+</pre>
+<p>
+zshならこれでいける。
+</p>
+<pre>
+% mkdir tmp; cd tmp
+% touch {3..999..3} {5..999..5}; set *; echo $[${*// /+}]
+233168
+</pre>
+<p>
+bashだとエラーになるので、一度文字列にしてからじゃないとだめ。
+</p>
+<pre>
+$ mkdir tmp; cd tmp
+$ touch {3..999..3} {5..999..5}; set *; a=&quot;$*&quot;; echo $[${a// /+}]
+233168
+</pre>
+<p>
+結局のところ素直にtrとbcを使っとけという話だった。
+</p>
+<pre>
+% mkdir tmp; cd tmp
+% touch {3..999..3} {5..999..5}; echo * | tr ' ' + | bc
+233168
+</pre>
+<!-- section end -->
+</div>
+<!-- 2016/01/03 end -->
+
+
+
+<hr class="hide">
+<!-- 2016/01/04 start -->
+<h2><a name="20160104" href="201601a.html#20160104">2016-01-04 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="201601041" title="201601041" href="201601a.html#201601041">■</a> 
+Project Euler Problem 1 Zsh編 #シェル芸</h3>
+<p>
+ファイルを使わずにZshだけで。(u)でuniqできる。
+</p>
+<pre>
+% set {3..999..3} {5..999..5}; set ${(u)*}; echo $[${*// /+}]
+233168
+</pre>
+<p>
+setを使わなくても同じ長さだったりする。
+</p>
+<pre>
+% a=({3..999..3} {5..999..5}); b=(${(u)a}); echo $[${b// /+}]
+233168
+</pre>
+<!-- section end -->
+</div>
+<!-- 2016/01/04 end -->
+
+
+
+<hr class="hide">
+<!-- 2016/01/05 start -->
+<h2><a name="20160105" href="201601a.html#20160105">2016-01-05 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="201601051" title="201601051" href="201601a.html#201601051">■</a> 
+Project Euler Problem 1 究極編 #シェル芸</h3>
+<p>
+Zshでなんだかんだで変数を使わなくてもいけることがわかったがおすすめしない。
+</p>
+<pre>
+% echo ${(j/+/)${(s/ /u)${:-{3..999..3} {5..999..5}}}} | bc
+233168
+</pre>
+<p>
+まあ、この問題は3でも5でも割り切れないものを削除すると考えるとGNU sedでも解ける。
+</p>
+<pre>
+% seq 999 | sed '0~3b;0~5!d' | paste -sd+ | bc                                                                      
+233168
+</pre>
+<p>
+行番号とその内容は一致しているので、行番号そのものが使える。<br>
+tr '\n' +のようなことをすると最後に余計な+がつくが、<br>
+paste -sd+ならそんなこともないのでおすすめ。
+</p>
+<p>
+それよりも昨日一昨日とタイトルがタイポだらけでもうしわけない。
+</p>
+<!-- section end -->
+</div>
+<!-- 2016/01/05 end -->
+
+
+
+<hr class="hide">
+<!-- 2016/01/06 start -->
+<h2><a name="20160106" href="201601a.html#20160106">2016-01-06 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="201601061" title="201601061" href="201601a.html#201601061">■</a> 
+<a href="https://projecteuler.net/problem=2">Project Euler Problem 2 #シェル芸</a></h3>
+<p>
+この問題は2008年に解いたときは400万じゃなくて100万だった。<br>
+特にひねりなし。bashで。
+</p>
+<pre>
+$ a=1 b=2 s=0; for ((;a&lt;=4000000;b=a+(a=b)));{ ((a%2))||((s+=a)); }; echo $s
+4613732
+</pre>
+<p>
+b=a+(a=b)はc=b;b+=a;a=cを短くしたもの。
+</p>
+<p>
+cf.
+<a href="http://qiita.com/gin_135/items/f18b9a4b7a03f46c50c3">ProjectEuler - Project Eulerをシェル芸で解いてみる(Problem 2) - Qiita</a></p>
+<!-- section end -->
+</div>
+<!-- 2016/01/06 end -->
+
+
+
+<hr class="hide">
+<!-- 2016/01/07 start -->
+<h2><a name="20160107" href="201601a.html#20160107">2016-01-07 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="201601071" title="201601071" href="201601a.html#201601071">■</a> 
+<a href="https://projecteuler.net/problem=4">Project Euler Problem 4 #シェル芸</a></h3>
+<p>
+3桁の積の最大の回文数。<br>
+999*999が998001なので6桁になる。<br>
+この問題は積から考えずに回文から考えたほうが計算量はぐんと少なくなる。<br>
+積だと100から999の900通りの2乗になるが、<br>
+回文なら100から999の900通りになる。<br>
+つまり
+</p>
+<pre>
+100001
+101101
+102201
+...
+997799
+998899
+999999
+</pre>
+<p>
+を候補にする。で、これが3桁の積になってるものを抜き出せばいい。<br>
+実際は999999から逆順で最初に見つかったものが答えになる。<br>
+本当は999*999が998001だから997799から始めればいいが、まあ気にしない。<br>
+というわけで実装。
+</p>
+<pre>
+% seq 999 -1 100 | awk '$0=$0$3$2$1{for(i=999;i&gt;=100;i--){if($0%i==0 &amp;&amp; $0/i ~ /^...$/){print;exit}}}' FS= 
+906609
+</pre>
+<p>
+$0=$0$3$2$1で回文を作っている。<br>
+あとは割り切れる3桁の数の除が3桁になってるものを見つける。
+</p>
+<p>
+<pre>
+% seq 999 -1 100 |awk '$0=$0$3$2$1{for(i=999;i&gt;=100;i--){if($0%i==0&amp;&amp; $0/i ~ /^...$/){print $0, i, $0/i}}}' FS= | head
+906609 993 913
+906609 913 993
+888888 962 924
+888888 924 962
+886688 968 916
+886688 916 968
+861168 932 924
+861168 924 932
+855558 957 894
+855558 894 957
+</pre>
+</p>
+<p>
+これを見ると2番目に大きいものはという問題でもよかった気がする。
+</p>
+<p>
+Problem 3はfactor一択なので省略。
+</p>
+<p>
+cf:
+<a href="http://qiita.com/gin_135/items/6acdce398e9d55afd7b7">ProjectEuler - Project Eulerをシェル芸で解いてみる(Problem 4) - Qiita</a></p>
+<!-- section end -->
+</div>
+<!-- 2016/01/07 end -->
+
+
+
+<hr class="hide">
+<!-- 2016/01/08 start -->
+<h2><a name="20160108" href="201601a.html#20160108">2016-01-08 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="201601081" title="201601081" href="201601a.html#201601081">■</a> 
+<a href="https://projecteuler.net/problem=5">Project Euler Problem 5 #シェル芸</a></h3>
+<p>
+1から20までのすべての数の最小公倍数(LCM)。<br>
+実際は1から10までは2倍するとそれ以降に存在するので11からでok。<br>
+LCMはたとえば4と6だったら4を1倍,2倍,3倍という感じで進めて6で割り切れるか順に調べればよさげだ。<br>
+これを11から20まで繰り返す。<br>
+つまりLCM(LCM(LCM(LCM(LCM(LCM(LCM(LCM(LCM(11,12),13),14),15),16),17),18),19),20)だ。
+そんな方針で。
+</p>
+<pre>
+% seq 12 20 | awk -v lcm=11 '{for(t=lcm; t%$0; t+=lcm);}$0=lcm=t'
+132
+1716
+12012
+60060
+240240
+4084080
+12252240
+232792560
+232792560
+</pre>
+<p>
+まあ、これを見ればわかる通り20は4*5で12(4*3)や15(5*3)がすでに出ているので、<br>
+実際は11から19までで十分。あとはtail -n1で。
+</p>
+<p>
+Rubyならこんな感じ。
+</p>
+<pre>
+% ruby -e 'p (1..20).reduce(:lcm)'  
+232792560
+</pre>
+<p>
+cf:
+<a href="http://qiita.com/gin_135/items/f633fa0e0897878fcd10">ProjectEuler - Project Eulerをシェル芸で解いてみる(Problem 5) - Qiita</a></p>
+<!-- section end -->
+</div>
+<!-- 2016/01/08 end -->
+
+
+
+<hr class="hide">
+<!-- 2016/01/09 start -->
+<h2><a name="20160109" href="201601a.html#20160109">2016-01-09 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="201601091" title="201601091" href="201601a.html#201601091">■</a> 
+<a href="https://projecteuler.net/problem=6">Project Euler Problem 6 #シェル芸</a></h3>
+<p>
+(Σn)**2 - (Σn**2)ということだが、<br>
+これって公式があるのでシェル芸でもなんでもなかったりする。<br>
+Σnはn*(n+1)/2で、Σn**2はn*(n+1)*(2n+1)/6だ。<br>
+というわけでかなりチートな解。
+</p>
+<pre>
+$ echo $[(100*101/2)**2-100*101*201/6]
+25164150
+</pre>
+<p>
+まあ、これだけじゃなんなので愚直に文字列を作る方法も。<br>
+nが3の場合ならこんな感じでブレース展開すればbcへ渡せる。
+</p>
+<pre>
+$ echo \( {1..3}+ '0)^2 - (' {1..3}^2+ '0)'
+( 1+ 2+ 3+ 0)^2 - ( 1^2+ 2^2+ 3^2+ 0)
+</pre>
+<p>
+というわけでこれが解。
+</p>
+<pre>
+$ echo \( {1..100}+ '0)^2 - (' {1..100}^2+ '0)' | bc
+25164150
+</pre>
+<p>
+最後にRuby版。
+</p>
+<pre>
+% ruby -e 'p (1..100).reduce(:+)**2-(1..100).reduce{|r,e|r+e**2}' 
+25164150
+</pre>
+<p>
+cf:
+<a href="http://qiita.com/gin_135/items/019c2bac36a744601a0e">ProjectEuler - Project Eulerをシェル芸で解いてみる(Problem 6) - Qiita</a></p>
+<!-- section end -->
+</div>
+<!-- 2016/01/09 end -->
+
+
+
+<hr class="hide">
+<!-- 2016/01/10 start -->
+<h2><a name="20160110" href="201601a.html#20160110">2016-01-10 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="201601101" title="201601101" href="201601a.html#201601101">■</a> 
+<a href="https://projecteuler.net/problem=7">Project Euler Problem 7 #シェル芸</a></h3>
+<p>
+10001番目の素数。<br>
+sedでも行番号表示はできるというか、=ってなんかまさにこのためにあるんじゃないかという機能だ。
+</p>
+<pre>
+% yes 高須クリニック | sed -n = | factor | awk 'NF==2&amp;&amp;++i==10001{print $2;exit}'
+104743
+</pre>
+<p>
+お約束を入れておいた。<br>
+1から始まるので!$3は使えない。
+</p>
+<p>
+cf:
+<a href="http://qiita.com/gin_135/items/ac796b6f81e82d20ba6a">ProjectEuler - Project Eulerをシェル芸で解いてみる(Problem 7) - Qiita</a></p>
+<!-- section end -->
+</div>
+<!-- 2016/01/10 end -->
+
+<hr>
+<div>
+<a href="201512c.html">&lt;Older(,)</a> | 
+<a href="201601b.html">Newer(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

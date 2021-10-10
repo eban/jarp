@@ -1,0 +1,528 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2014-12-b</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="201412a.html">
+<link rel="next" href="201412c.html">
+
+<link rel="stylesheet" type="text/css" href="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.css">
+<script async type="text/javascript" src="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.js"></script>
+<script type="text/javascript">
+<!--       
+$(document).ready(function() {
+  prettyPrint();
+});
+-->
+</script>
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2014年12月中旬〜</p>
+<hr>
+<div>
+<a href="201412a.html" accesskey=",">&lt;Older(,)</a> | 
+<a href="201412c.html" accesskey=".">Newer(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2014/12/11 start -->
+<h2><a name="20141211" href="201412b.html#20141211">2014-12-11 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="201412111" title="201412111" href="201412b.html#201412111">■</a> 
+Smart LockとFitbit</h3>
+<p>
+Bluetoothデバイスが必要らしい。<br>
+Fitbitがあるじゃんということで試してみるも全然認識しない。<br>
+いろいろ調べてみたが、
+<a href="http://www.reddit.com/r/Android/comments/2js68i/lollipop_feature_spotlight_smart_lock_brings/">だめっぽい。</a><br>
+顔認識はなんかあまり成功しないしなあ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2014/12/11 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/12/12 start -->
+<h2><a name="20141212" href="201412b.html#20141212">2014-12-12 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="201412121" title="201412121" href="201412b.html#201412121">■</a> 
+AOL ReaderのAPIを使って広告を既読に</h3>
+<p>
+まずは全リストを取得。トークンは
+<a href="201412a.html#20141206">こんな感じでブラウザから。</a></p>
+<pre>
+% api0=https://reader.aol.com/reader/api/0
+% curl -s -H 'Token: トークン' &quot;$api/subscription/list&quot; &gt; aol.json
+</pre>
+<p>
+とりあえず誠 Biz.ID LifeHackを例に。feed idを抜き出す。
+</p>
+<pre>
+% jq -r '.subscriptions[]|select(.title==&quot;誠 Biz.ID LifeHack 最新記事一覧&quot;).id' aol.json 
+feed/eAT9PC
+</pre>
+<p>
+コンテンツを取ってくる。
+</p>
+<pre>
+% curl -s -H 'Token: トークン' \
+  &quot;$api0/stream/contents/feed/eAT9PC?n=10000&amp;xt=user/-/state/read&quot; &gt; biz.json
+</pre>
+<p>
+タイトルが&quot;AD: &quot;から始まってるものは広告とみなす。
+</p>
+<pre>
+% jq -r '.items[]|select(.title|startswith(&quot;AD: &quot;))|.id' biz.json
+eAT9PC/1418002431931818061
+eAT9PC/1417567924582392308
+eAT9PC/1416522361738274492
+eAT9PC/1416194912121917917
+eAT9PC/1415934309109696095
+eAT9PC/1415580180852723343
+eAT9PC/1414452259583598087
+eAT9PC/1413950802051252623
+eAT9PC/1413947114822452410
+eAT9PC/1413762538219094236
+eAT9PC/1413592528310138989
+</pre>
+<p>
+これを既読にする。
+</p>
+<pre>
+% jq -r '.items[]|select(.title|startswith(&quot;AD: &quot;))|.id' biz.json | \
+  xargs -I@ -n1 curl -s -H 'Token: トークン' \
+  --data-urlencode &quot;a=user/-/state/read&quot; --data-urlencode &quot;i=@&quot; --data-urlencode ac=edit &quot;$api0/edit-tag&quot;;echo
+</pre>
+<p>
+edit-tagはPOSTじゃないとだめ。<br>
+InoreaderならGETでいいんだけど。<br>
+Google ReaderのフォロワーはAPIが互換なので楽だ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2014/12/12 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/12/13 start -->
+<h2><a name="20141213" href="201412b.html#20141213">2014-12-13 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="201412131" title="201412131" href="201412b.html#201412131">■</a> 
+<a href="http://blog.ueda.asia/?p=4671">第14回東京居残りシェル芸勉強会にUstで参加</a></h3>
+<p>
+行けなくて残念だったが、Ustで参加。一応全部解いた。
+</p>
+<pre>
+Q1 100!を計算してください。正確に。
+% seq -s \* 100 | BC_LINE_LENGTH=1000 bc
+93326215443944152681699238856266700490715968264381621468592963895217599993229915608941463976156518286253697920827223758251185210916864000000000000000000000000
+</pre>
+<p>
+GNU bcは途中で改行するが、BC_LINE_LENGTHで長さを指定できる。dcも同様。
+</p>
+<pre>
+Q2 次のseqからsed（と言ってもgsed）だけでfizzbuzzを完成させてください。
+% seq 100 | sed '5~5s/.*/Buzz/;3~3s/[^B]*/Fizz/'
+</pre>
+<p>
+なつかしい。
+</p>
+<pre>
+% seq 100 | jq -r '. as$i|[[&quot;Fizz&quot;][.%3],[&quot;Buzz&quot;][.%5]]|add//$i'
+</pre>
+<p>
+ついでにjqでも解いた。
+</p>
+<pre>
+Q3 このうち素数はどれでしょうか？
+% echo 0xaf 0x13 0x0d 0x24 0x58 | ruby -rmathn -ane 'puts $F.select{|x|Prime.prime?(x.hex)}' 
+0x13
+0x0d
+</pre>
+<p>
+Rubyにはいろいろあるしねえ。
+</p>
+<pre>
+% echo 0xaf 0x13 0x0d 0x24 0x58 | fmt -1 | sed s/..// | xargs -n1 openssl prime -hex | grep -v not
+13 is prime
+D is prime
+</pre>
+<p>
+opensslにもあるが、-hexをつけても0xは受け付けてくれない。
+</p>
+<pre>
+Q4 次の16進数（UTF-8）で書かれたメッセージを復元してください。
+% echo e89fb9e3818ce9a39fe381b9e3819fe38184|xxd -r -p                                           
+蟹が食べたい
+% echo e89fb9e3818ce9a39fe381b9e3819fe38184|ruby -e 'puts [gets.chop].pack(&quot;H*&quot;)'
+蟹が食べたい
+% echo e89fb9e3818ce9a39fe381b9e3819fe38184 | perl -lne 'print pack(&quot;H*&quot;,$_)'                   
+蟹が食べたい
+</pre>
+<p>
+16進ダンプを元に戻す。xxdはvimに付属するコマンド。
+</p>
+<pre>
+Q5 次のようなファイルを作ってください。
+（catするとahoとだけ出て、容量は1GB。）
+% echo aho &gt; hoge; truncate -s 1000000000 hoge
+% ls -l hoge                                                                 
+-rw-r--r-- 1 eban eban 1000000000 2014-12-13 15:38:30 hoge
+</pre>
+<p>
+最近だとddよりもtruncateが使われる。
+</p>
+<pre>
+% du -sh hoge
+4.0K	hoge
+</pre>
+<p>
+sparse fileになるのでサイズも小さい。
+</p>
+<pre>
+Q6 日本の山を標高の高い順から並べていってください。順位と標高も一緒に出力してください。
+% w3m -dump -cols 999 http://ja.wikipedia.org/wiki/%E6%97%A5%E6%9C%AC%E3%81%AE%E5%B1%B1%E4%B8%80%E8%A6%A7_%28%E9%AB%98%E3%81%95%E9%A0%86%29 |&amp; \
+  awk '/^([0-9]{1,2}|100) /{print $1,$2,$4}' 
+</pre>
+<p>
+w3mが面倒臭いことは全部やってくれるので便利。
+</p>
+<pre>
+Q7 分数で正確に答えを求めてください。できれば約分してください。
+% echo '1/4 + 2/5 + 7/16 - 5/9' | ruby -e 'puts eval(gets.gsub(/\S{3,}/,&quot;\\&amp;r&quot;))'
+383/720
+</pre>
+<p>
+1/4r + 2/5r + 7/16r - 5/9rという文字列に変換すればRubyは解釈してくれる。ただし、Ruby 2.1以降。
+</p>
+<pre>
+Q8 *がいっぱいある文字列をポキポキ折ってください。
+% printf &quot;%65s\n&quot; | tr ' ' '*' | fold -6 | sed '2~2s/./&amp;\n/g;s/\n$//' | sed 'x;s/./ /g;s/.//;G;s/\n//;h'
+</pre>
+<p>
+適当に長い文字列を作って、
+</p>
+<pre>
+% printf &quot;%65s\n&quot; | tr ' ' '*'          
+*****************************************************************
+</pre>
+<p>
+6文字で折り返して、
+</p>
+<pre>
+% printf &quot;%65s\n&quot; | tr ' ' '*' | fold -6
+******
+******
+******
+******
+******
+******
+******
+******
+******
+******
+*****
+</pre>
+<p>
+偶数行目だけ縦にして、
+</p>
+<pre>
+% printf &quot;%65s\n&quot; | tr ' ' '*' | fold -6 | sed '2~2s/./&amp;\n/g;s/\n$//'                                   
+******
+*
+*
+*
+*
+*
+*
+******
+*
+*
+以下略
+</pre>
+<p>
+インデントする。
+</p>
+<pre>
+% printf &quot;%65s\n&quot; | tr ' ' '*' | fold -6 | sed '2~2s/./&amp;\n/g;s/\n$//' | sed 'x;s/./ /g;s/.//;G;s/\n//;h'
+******
+     *
+     *
+     *
+     *
+     *
+     *
+     ******
+          *
+          *
+以下略
+</pre>
+<!-- section end -->
+</div>
+<!-- 2014/12/13 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/12/14 start -->
+<h2><a name="20141214" href="201412b.html#20141214">2014-12-14 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="201412141" title="201412141" href="201412b.html#201412141">■</a> 
+空行を出力する</h3>
+<p>
+なんか流行ってるので乗ってみる。100行ほど。<br>
+まずはImageMagickのconvertだ。
+</p>
+<pre>
+% convert null: -duplicate 49 -format &quot;\n&quot; info:
+</pre>
+<p>
+確認はodがいいかもしれない。実は2倍になって出ることに気づいてなかった。<br>
+つまり残念ながら奇数行だと使えない。
+</p>
+<pre>
+% convert null: -duplicate 49 -format &quot;\n&quot; info: | od -c -Ad
+0000000  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n
+*
+0000096  \n  \n  \n  \n
+0000100
+</pre>
+<p>
+次に最近熱いjqだ。短くて実に優秀だ。デフォルトの改行があるので99。
+</p>
+<pre>
+% jq -n -r '&quot;\n&quot;*99'
+</pre>
+<p>
+zshだとrepeatがあるのでforを使わなくてもいい。
+</p>
+<pre>
+% repeat 100 echo
+</pre>
+<!-- section end -->
+</div>
+<!-- 2014/12/14 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/12/15 start -->
+<h2><a name="20141215" href="201412b.html#20141215">2014-12-15 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="201412151" title="201412151" href="201412b.html#201412151">■</a> 
+分数あれこれ</h3>
+<p>
+rなんてつける必要なかった。
+</p>
+<pre>
+% echo '1/4 + 2/5 + 7/16 - 5/9' | ruby -rmathn -ne 'puts eval$_'
+383/720
+</pre>
+<p>
+irb -mという話題も出てたが、こういうことだと思う。
+</p>
+<pre>
+% echo '1/4 + 2/5 + 7/16 - 5/9' | irb -m                        
+Switch to inspect mode.
+start math mode
+1/4 + 2/5 + 7/16 - 5/9
+(383/720)
+
+</pre>
+<p>
+あとPerlにもbigratというのがあって、分数を扱える。
+</p>
+<pre>
+% echo '1/4 + 2/5 + 7/16 - 5/9' | perl -Mbigrat -nle 'print eval'
+383/720
+</pre>
+<!-- section end -->
+</div>
+<!-- 2014/12/15 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/12/16 start -->
+<h2><a name="20141216" href="201412b.html#20141216">2014-12-16 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="201412161" title="201412161" href="201412b.html#201412161">■</a> 
+awkの文字列と数値</h3>
+<p>
+まぜて比較するとどっちになるのか？
+</p>
+<pre>
+% mawk 'BEGIN{print &quot;10&quot;&lt;2}'
+1
+% mawk 'BEGIN{print 10&lt;&quot;2&quot;}'
+1
+% mawk 'BEGIN{print 10&lt;2}'  
+0
+</pre>
+<p>
+どちらかが文字列なら文字列として比較される。<br>
+$1とかは数値として扱われる。
+</p>
+<pre>
+% echo 2 | mawk '{print 10&lt;$1}'
+0
+% echo 2 | mawk '{print &quot;10&quot;&lt;$1}'
+1
+</pre>
+<!-- section end -->
+</div>
+<!-- 2014/12/16 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/12/17 start -->
+<h2><a name="20141217" href="201412b.html#20141217">2014-12-17 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="201412171" title="201412171" href="201412b.html#201412171">■</a> 
+久し振りにfitbitのバッテリーが切れる</h3>
+<p>
+メールが来るからと安心していたら、タイミングが悪かったようで。<br>
+家でしか同期しないから、そりゃそうだよな。<br>
+例によって5周させて表示を消した。
+</p>
+<!-- section end -->
+</div>
+<!-- 2014/12/17 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/12/18 start -->
+<h2><a name="20141218" href="201412b.html#20141218">2014-12-18 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="201412181" title="201412181" href="201412b.html#201412181">■</a> 
+Smart J:COM Boxが若干速くなった</h3>
+<p>
+「録画リストを取得しています。」とか見慣れないメッセージが出てあれっと思ったら、<br>
+なんかいつもより動作がきびきびしてる。<br>
+お知らせを確認してみるとやはりアップデートしていた。<br>
+特に高速化については書いてない。あ、やっとオートチャプター機能が入ったか。<br>
+初期値は切と書いてあったが、10分になってた。しかし学習型リモコンのボタンが足りない。
+</p>
+<!-- section end -->
+</div>
+<!-- 2014/12/18 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/12/19 start -->
+<h2><a name="20141219" href="201412b.html#20141219">2014-12-19 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="201412191" title="201412191" href="201412b.html#201412191">■</a> 
+<a href="http://golf.shinh.org/p.rb?checkers+pattern">checkers pattern</a></h3>
+<p>
+jqじゃ無理かと思ったが、
+<a href="http://golf.shinh.org/reveal.rb?checkers+pattern/yamaya_1288503493&amp;sh">yamayaさんのbashの解</a>を見て、これをjqに移植してみたらいけた。
+</p>
+<pre>
+bash: read a b;seq -f&quot;echo \$[({1..$b}+%g+1)%%2]&quot; $a|sh
+jq: ./&quot; &quot;|map(tonumber)|range(0;.[0])as$i|[(range(0;.[1])+$i+1)%2]|@sh
+</pre>
+<p>
+最後の|@shが奇しくも似たようになっているが、全然違う意味なのが面白い。
+</p>
+<!-- section end -->
+</div>
+<!-- 2014/12/19 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/12/20 start -->
+<h2><a name="20141220" href="201412b.html#20141220">2014-12-20 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="201412201" title="201412201" href="201412b.html#201412201">■</a> 
+jqゴルフで添削</h3>
+<p>
+jqゴルフを始めてから過去問を地味に解いてるわけだけど、<br>
+ランキングトップのteebeeさんに添削されまくっている。<br>
+まあ、そのおかげでぐんぐんjq力が上がってるわけで、<br>
+まったくもって頭が上がらない。
+</p>
+<p>
+まあだいたいはStatisticsで予想はできるけど、限界があるしねえ。<br>
+splitが/でできるなんてまさかのgorubyだよ。マニュアルにはたしかに書いてあるが。
+</p>
+<!-- section end -->
+</div>
+<!-- 2014/12/20 end -->
+
+<hr>
+<div>
+<a href="201412a.html">&lt;Older(,)</a> | 
+<a href="201412c.html">Newer(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

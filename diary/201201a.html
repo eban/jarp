@@ -1,0 +1,328 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2012-1-a</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="201112c.html">
+<link rel="next" href="201201b.html">
+
+<link rel="stylesheet" type="text/css" href="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.css">
+<script async type="text/javascript" src="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.js"></script>
+<script type="text/javascript">
+<!--       
+$(document).ready(function() {
+  prettyPrint();
+});
+-->
+</script>
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2012年1月上旬〜</p>
+<hr>
+<div>
+<a href="201112c.html" accesskey=",">&lt;Older(,)</a> | 
+<a href="201201b.html" accesskey=".">Newer(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2012/01/01 start -->
+<h2><a name="20120101" href="201201a.html#20120101">2012-01-01 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="201201011" title="201201011" href="201201a.html#201201011">■</a> 
+横向きでなぜか特定の出版社だけ傾く</h3>
+<p>
+昨日は文庫本を主にスキャンしたんだけど、<br>
+その結果を見直してみたら傾くのは特定の出版社だけだった。<br>
+相性とかあるのかな。まあ傾くといっても1度程度で気にすることもない気がしてきた。<br>
+90単位以外でrotateするとどうしてもボケが生じるので、<br>
+なんだかんだと後処理を入れてもそれほどきれいにならないし、<br>
+ちょっとサイズもでかくなる。あまり利点はない。
+</p>
+<p>
+というわけで、横向きでいこう。
+</p>
+<!-- section end -->
+</div>
+<!-- 2012/01/01 end -->
+
+
+
+<hr class="hide">
+<!-- 2012/01/02 start -->
+<h2><a name="20120102" href="201201a.html#20120102">2012-01-02 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="201201021" title="201201021" href="201201a.html#201201021">■</a> 
+<a href="http://manual.calibre-ebook.com/conversion.html#comic-book-collections">Comic Book Collections</a></h3>
+<p>
+Calibreには複数のcbzをさらにzip化することで複数の本をまとめる形式cbcも取り込めるようで。<br>
+具体的にはfoo??/というディレクトリに各巻の画像ファイルがあるとして、まずはcbzファイルを作る。
+</p>
+<pre>
+% zip -rD foo01.cbz foo01
+% zip -rD foo02.cbz foo02
+...
+% zip -rD foo10.cbz foo10
+</pre>
+<p>
+次に目次になるcomics.txtをUTF-8で作成。形式はファイル名:タイトルを1行で。
+</p>
+<pre>
+% for i in {01..10};do echo &quot;foo$i.cbz:foo第${i}巻&quot;;done &gt; comics.txt
+% cat comics.txt
+foo01.cbz:foo第01巻
+foo02.cbz:foo第02巻
+foo03.cbz:foo第03巻
+foo04.cbz:foo第04巻
+foo05.cbz:foo第05巻
+foo06.cbz:foo第06巻
+foo07.cbz:foo第07巻
+foo08.cbz:foo第08巻
+foo09.cbz:foo第09巻
+foo10.cbz:foo第10巻
+</pre>
+<p>
+全部まとめてcbcへ。
+</p>
+<pre>
+% zip foo.cbc comics.txt foo{01..10}.cbz
+</pre>
+<p>
+あとはfoo.cbcをCalibreで追加してePubへ変換する。<br>
+T1で読んでみたら、目次にちゃんと出てきた。<br>
+comics.txtという名前でテキストファイルを用意すればいいだけなので結構お手軽。
+</p>
+<!-- section end -->
+</div>
+<!-- 2012/01/02 end -->
+
+
+
+<hr class="hide">
+<!-- 2012/01/03 start -->
+<h2><a name="20120103" href="201201a.html#20120103">2012-01-03 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="201201031" title="201201031" href="201201a.html#201201031">■</a> 
+だらだらとマルモを見る</h3>
+<p>
+録っておいたマルモのおきてをだらだら見ながら、15冊ほど文庫本の解体。<br>
+マルモとはまもるのことだとわかった。あとムックは犬。
+</p>
+<!-- section end -->
+</div>
+<!-- 2012/01/03 end -->
+
+
+
+<hr class="hide">
+<!-- 2012/01/04 start -->
+<h2><a name="20120104" href="201201a.html#20120104">2012-01-04 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="201201041" title="201201041" href="201201a.html#201201041">■</a> 
+ワイヤレスマウスの電池が切れた(Logicool M505)</h3>
+<p>
+最近マウスのLEDが赤いなと思っていたら、今日ついに切れた。<br>
+15ヶ月ってのは最大だし、おまけの電池で1年以上保ったのはやっぱすごい。<br>
+</p>
+<p>
+eneloop入れたら、入れた瞬間だけは光ったがその後は光らない。<br>
+つまり電池の寿命が近づくと光る仕様だったんだな。<br>
+常に光らせてたら無駄に電力使っちゃうしね。
+</p>
+<!-- section end -->
+</div>
+<!-- 2012/01/04 end -->
+
+
+
+<hr class="hide">
+<!-- 2012/01/05 start -->
+<h2><a name="20120105" href="201201a.html#20120105">2012-01-05 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="201201051" title="201201051" href="201201a.html#201201051">■</a> 
+真冬日</h3>
+<p>
+真冬日だけ条件が厳しいような。
+</p><blockquote><dl>
+<dt>
+「猛暑日、真夏日、真冬日」とは何ですか？
+<dd>
+猛暑日、真夏日とは、一日の最高気温がそれぞれ摂氏35℃以上、30℃以上になる日のことで、<br>
+真冬日とは一日の最高気温が摂氏０℃未満の日のことをいいます。<br>
+なお、一日の最高気温が摂氏25℃以上になる日は夏日といい、<br>
+一日の最低気温が摂氏０℃未満になる日を冬日といいます。 
+</dl></blockquote><p>
+<a href="http://www.jma.go.jp/jma/kishou/know/faq/faq3.html">cf.気温について</a></p>
+<!-- section end -->
+</div>
+<!-- 2012/01/05 end -->
+
+
+
+<hr class="hide">
+<!-- 2012/01/06 start -->
+<h2><a name="20120106" href="201201a.html#20120106">2012-01-06 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="201201061" title="201201061" href="201201a.html#201201061">■</a> 
+Thunderbirdで2011フォルダへ移動フィルタを20個ぐらい作ってて2012年を迎えてどうしたもんかと</h3>
+<p>
+諸悪の根源はフィルタのアクションにアーカイブがないことなんだけど。<br>
+何も考えずに作るもんじゃないな。<br>
+というわけでちょっとでも楽になるように移動じゃなくてarchiveというタグをつけることにした。<br>
+で、新たにarchiveタグがついてたら2012フォルダへ移動とするフィルタを最後に追加。<br>
+これで来年の修正は1個だけですむはずだ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2012/01/06 end -->
+
+
+
+<hr class="hide">
+<!-- 2012/01/07 start -->
+<h2><a name="20120107" href="201201a.html#20120107">2012-01-07 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="201201071" title="201201071" href="201201a.html#201201071">■</a> 
+Firefox8の[Web 開発]-[調査]</h3>
+<p>
+Firefox8の[ツール]-[Web 開発]には[調査]というメニューが追加された。<br>
+これはclass名とか簡単にわかって非表示にしたい時にすごく便利なんだけど、<br>
+どういうわけかFirefox9ではなくなってしまっている。<br>
+ぐぐるとFirefox11の機能とか書かれてるんだけど、なんだろうね。<br>
+間違って表に出ちゃったんだろうか。
+</p>
+<p>
+UbuntuにもFirefox9のupdateが来てしまったけど、更新がためらわれる。
+</p>
+<!-- section end -->
+</div>
+<!-- 2012/01/07 end -->
+
+
+
+<hr class="hide">
+<!-- 2012/01/08 start -->
+<h2><a name="20120108" href="201201a.html#20120108">2012-01-08 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="201201081" title="201201081" href="201201a.html#201201081">■</a> 
+<a href="http://userstyles.org/styles/16842/red-mark-visited-links-as-read-on-unruly-domains">Red: Mark visited links as read on unruly domains</a></h3>
+<p>
+最近踏んだリンクが赤くならないCSSなサイトがあったりするんだけど、<br>
+あれはどういうつもりなんだろうか。<br>
+というわけで、このスタイルを入れた。<br>
+ドメインとかでフィルタできるし、好きなようにCSSも設定できる。<br>
+とりあえずはいろいろ最初から登録されてるので真似して追加するだけでok。
+</p>
+<!-- section end -->
+</div>
+<!-- 2012/01/08 end -->
+
+
+
+<hr class="hide">
+<!-- 2012/01/09 start -->
+<h2><a name="20120109" href="201201a.html#20120109">2012-01-09 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="201201091" title="201201091" href="201201a.html#201201091">■</a> 
+グイン自炊開始</h3>
+<p>
+とうとうグインに手が伸びたわけだが、ちゃんと全巻出てくるかな。<br>
+整理して置いてないので107巻とか120巻とかばらばらに見つかって、<br>
+もう面倒だからそのあたりのを適当に始めちゃってる。
+</p>
+<p>
+クリスタルの陰謀からは発売日に買ってるから初版で持ってるはずだよな。
+</p>
+<!-- section end -->
+</div>
+<!-- 2012/01/09 end -->
+
+
+
+<hr class="hide">
+<!-- 2012/01/10 start -->
+<h2><a name="20120110" href="201201a.html#20120110">2012-01-10 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="201201101" title="201201101" href="201201a.html#201201101">■</a> 
+裁断自体が結構傾く</h3>
+<p>
+何回スキャンしても傾くなと思ったら、そもそもの裁断線が傾いていた。<br>
+これで判断してたらいくらやっても真っ直ぐにならないわけだ。<br>
+文字自体はあまり傾いてないから変だと思ったよ。<br>
+あ、こういう意味でも横向きにスキャンしたほうがいいんだな。<br>
+測ってみたら上辺100mmで下辺が98mmだった。<br>
+ちょっと力入れると2mmぐらい簡単にずれてしまうんだな。<br>
+もともと範囲を広めに取ってるのがまずいとも言えるが。
+</p>
+<!-- section end -->
+</div>
+<!-- 2012/01/10 end -->
+
+<hr>
+<div>
+<a href="201112c.html">&lt;Older(,)</a> | 
+<a href="201201b.html">Newer(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

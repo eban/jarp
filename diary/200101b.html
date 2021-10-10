@@ -1,0 +1,1457 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2001-1-b</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="200101a.html">
+<link rel="next" href="200101c.html">
+
+<link rel="stylesheet" type="text/css" href="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.css">
+<script async type="text/javascript" src="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.js"></script>
+<script type="text/javascript">
+<!--       
+$(document).ready(function() {
+  prettyPrint();
+});
+-->
+</script>
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2001年1月中旬〜</p>
+<hr>
+<div>
+<a href="200101a.html" accesskey=",">&lt;Older(,)</a> | 
+<a href="200101c.html" accesskey=".">Newer(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2001/01/11 start -->
+<h2><a name="20010111" href="200101b.html#20010111">2001-01-11 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="200101111" title="200101111" href="200101b.html#200101111">■</a> 
+-mno-win32</h3>
+Cygwin MLで-mno-win32をデフォルトにすべきかという議論が始まっている。
+
+<h4><a name="200101111S1" href="200101b.html#200101111S1">_</a> <strong>-mオプション</strong>: </h4>
+<div class="sub">
+gccの-mオプションは実際はcc1, cc1plusに渡すオプションで、
+specsで勝手に増やすことはできないことは
+<a href="200101a.html#20010108">三日前</a>に書いたが、じゃあ、これはどこに定義されているのか？
+<pre>
+% cd gcc-2.95.2-6/gcc/config/i386
+% grep '&quot;no-win32&quot;' *.[ch]
+cygwin.h:{ &quot;no-win32&quot;,            -MASK_WIN32, &quot;Don't set Windows defines&quot; }, \
+</pre>
+cygwin.hにあるSUBTARGET_SWITCHESというマクロだ。
+
+</div>
+<h4><a name="200101111S2" href="200101b.html#200101111S2">_</a> <strong>-mwin32</strong>: </h4>
+<div class="sub">
+じゃ-mno-win32がデフォルトになったら今までの挙動はどうやって指定するのか？
+どうも-mwin32オプションを新設するらしい。
+
+</div>
+<h4><a name="200101111S3" href="200101b.html#200101111S3">_</a> <strong>Ruby</strong>: </h4>
+<div class="sub">
+では実際-mno-win32だとmakeは通るのか？
+やってみたところWin32APIを除いて全部通った。
+やはりCygwinのUNIX機能しか使ってないらしい。
+でも-mno-win32がデフォルトになった暁にはどうやって判断しよう。
+すべてに-mwin32をつけるのが簡単だが、
+過渡期には-mwin32が使えない古い環境も考える必要がある。
+configure.inに入れるのがいいかな。
+
+</div>
+<h4><a name="200101111S4" href="200101b.html#200101111S4">_</a> <strong>ふたたびac_cv_foo</strong>: </h4>
+<div class="sub">
+configureを見てると
+<pre>
+if test &quot;$cross_compiling&quot; = yes; then
+ac_cv_sizeof_int=4
+</pre>
+のような記述が気になる。intは4だからこのあたりはいいが
+<pre>
+if test &quot;$cross_compiling&quot; = yes; then
+ac_cv_sizeof_long_long=0
+</pre>
+これはちょっといやな感じだ。
+gccだから当然long longも使える。
+でも使えないものとして扱われてしまう。
+やっぱこういうところを手で最適化していかないとだめなんだなあ。
+<pre>
+#if sizeof(long long) == 8
+</pre>
+と書けないところが辛い。
+その他
+<ul>
+<li>ac_cv_c_stack_direction
+<li>ac_cv_func_memcmp_clean
+<li>rb_cv_bsd_signal
+<li>rb_cv_func_strtod
+<li>rb_cv_rshift_sign
+<li>rb_cv_binary_elf
+<li>rb_cv_missing__dtos18
+<li>rb_cv_missing_fconvert
+</ul>
+あたりも注意が必要だろう。
+</div>
+<!-- section end -->
+</div>
+<!-- 2001/01/11 end -->
+
+
+
+<hr class="hide">
+<!-- 2001/01/12 start -->
+<h2><a name="20010112" href="200101b.html#20010112">2001-01-12 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="200101121" title="200101121" href="200101b.html#200101121">■</a> 
+CVS</h3>
+ファイアウォールに阻まれてpserverにアクセスできない人ってどのくらいい
+るのだろう？
+
+<h4><a name="200101121S1" href="200101b.html#200101121S1">_</a> <strong>HTTP tunnel</strong>: </h4>
+<div class="sub">
+日経Linuxでsshの解説が前中後編と続いている。
+~/.ssh/configでProxyCommandを設定するというお話。
+Perlで簡単なスクリプトを書いてProxyCommandとしているのだが、
+その中にHTTP proxyに対して
+<pre>
+CONNECT host:port HTTP/1.0
+</pre>
+を送るという処理があった。
+ふーむ。そうかこれがHTTP tunnelってやつか、なるほど。
+このあとに
+<pre>
+/^HTTP\/.+[\d.]+ 200/
+</pre>
+にマッチするような文字が返ってくるのを待ち、
+リレーするような感じのスクリプトだった。
+
+</div>
+<h4><a name="200101121S2" href="200101b.html#200101121S2">_</a> <strong>telnet でテスト</strong>: </h4>
+<div class="sub">
+じゃ実験だ。
+うちの会社のproxy serverはCONNECTメソッドを理解するのか？
+<pre>
+% telnet http-proxy-host 8080
+Connected to proxy.
+Escape character is '^]'.
+<font COLOR="red">CONNECT xxx.rim.or.jp:22 HTTP/1.0</font>
+
+HTTP/1.0 200 OK
+
+SSH-1.5-1.2.27
+<font COLOR="red">quit</font>
+Protocol mismatch.
+Connection closed by foreign host.
+</pre>
+おお、いけてる。
+
+</div>
+<h4><a name="200101121S3" href="200101b.html#200101121S3">_</a> <strong>port forwarding</strong>: </h4>
+<div class="sub">
+rimnetは申請すればsshでログインできるホストを提供してくれる。
+telnetもokなんだけど、sshが使えるならふつうsshを使うでしょ。
+sshはOpenSSHの1.2が出るかどうかあたりのやつを使って、
+SOCKS5をむりやりリンクするという方法で対応してたんだけど、
+OpenSSHが新しくなってからなぜかsshではログインできるのに
+port forwardingができなくなってしまった。
+これができないとrimnet上でCVSの作業しなきゃいけなくてちょっと不便だ
+<a href="#20010112F1"><sup><small>*1</small></sup></a>。ちなみにport forwardingできてたときのsshのオプションはこんな感じ。
+<pre>
+ssh -L 2401:cvs.netlab.co.jp:2401 -f xxx.rim.or.jp exec sleep 600
+</pre>
+これでlocalhostのポート2401がcvs.netlab.co.jpのポート2401に転送される。
+つまりpserverの指定でcvs.netlab.co.jpの代わりに
+localhostを指定すればいいわけだ。
+ああ、今ならもちろんcvs.ruby-lang.orgだ。
+
+</div>
+<h4><a name="200101121S4" href="200101b.html#200101121S4">_</a> <strong>ProxyCommand</strong>: </h4>
+<div class="sub">
+ここで~/.ssh/configのProxyCommandだ。これは
+<pre>
+ProxyCommand  foo %h %p
+</pre>
+のように書けば%h,%pは実際に接続するホストとポート番号が展開されて
+fooが実行される。fooは標準入出力でやりとりをするように書く。
+つまりinetdから起動されるコマンドのように。
+日経Linuxの2000.12号にPerlのスクリプトが載っているが、やってることは
+remoteからlocalへ、localからremoteへデータを単に転送するだけ。
+あとは最初にCONNECTを送るとか、その応答を待つとかいう処理をすればいい。
+selectを使っているけど、RubyならThreadだよね。
+100行もあれば書けてしまうだろうと思ったら、
+すでにCで書かれたものがあった。
+<a href="http://www.imasy.or.jp/~gotoh/connect.c">connect.c</a>をありがたく使わせてもらう。
+ソースを見るとSOCKS5にも対応してる。
+至れり尽くせりだ。
+<pre>
+ProxyCommand  /usr/local/bin/connect -S socks5-proxy-host %h %p
+</pre>
+が現在の設定。
+
+</div>
+<h4><a name="200101121S5" href="200101b.html#200101121S5">_</a> <strong>sshなしでCVS</strong>: </h4>
+<div class="sub">
+HTTP tunnelでポート番号も指定できるならなんでもありじゃんって気がするんだけど、
+じゃあ、たとえば/usr/local/bin/connectをinetd経由で動かすのはどうだろう？
+2401番で
+<pre>
+/usr/local/bin/connect -S socks5-proxy-host cvs.ruby-lang.org 2401
+</pre>
+が動くようにすれば転送されるはずだ。
+やってみると見事に動く。なるほどねえ。
+
+</div>
+<h4><a name="200101121S6" href="200101b.html#200101121S6">_</a> <strong>CVSだけで</strong>: </h4>
+<div class="sub">
+ここまでくるとCVSにパッチをあててCONNECTメソッドの処理を入れたくなった。
+てゆうか誰かがやってるに違いない。
+<a href="../files/cvs-1.11.http.diff">cvs-1.11.http.diff</a>に対処したものを置いとく。
+<pre>
+:pserver;proxy=http-proxy-host;proxyport=8080:anonymous@cvs.ruby-lang.org:/ruby
+</pre>
+とこんな感じでリポジトリを指定できる。
+</div>
+<hr align="left" width="40%">
+<div>
+<a name="20010112F1" href="200101b.html#20010112F1"><small>*1</small></a>:
+とぼやいてたらwww.ruby-lang.orgのアカウントくれた。ありがとー。
+</div>
+<!-- section end -->
+</div>
+<!-- 2001/01/12 end -->
+
+
+
+<hr class="hide">
+<!-- 2001/01/13 start -->
+<h2><a name="20010113" href="200101b.html#20010113">2001-01-13 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="200101131" title="200101131" href="200101b.html#200101131">■</a> 
+xdeltaをWin32で動かそう</h3>
+<a href="http://www.XCF.Berkeley.EDU/~jmacd/xdelta.html">xdelta</a>はバイナリ差分を取るプログラムだ。
+<a href="../ruby">Ruby Binaries</a>にxdeltaで作った差分はあるけどcygwin版のxdelta.exeしか置いてない。
+じゃmingwへ移植しよう。
+xdeltaを作るにはglibとzlibが必要だ。
+まずはそっちの移植から。
+あ、今回はcross
+<a href="#20010113F1"><sup><small>*1</small></sup></a>じゃなくてnativeだ。
+
+<hr align="left" width="40%">
+<div>
+<a name="20010113F1" href="200101b.html#20010113F1"><small>*1</small></a>:
+以前失敗したらしい。
+</div>
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200101132" title="200101132" href="200101b.html#200101132">■</a> 
+glib 1.2.8</h3>
+<a href="ftp://ftp.gtk.org/pub/gtk/v1.2/">ここら</a>あたりからglib-1.2.8.tar.gzを取得。
+<a href="http://www.iki.fi/tml/gimp/win32/">win32版</a>を使えばいいと思ったけど、
+DLLにしたくないのでオリジナルを使うことにしよう。
+<a href="#20010113F2"><sup><small>*2</small></sup></a>
+<h4><a name="200101132S1" href="200101b.html#200101132S1">_</a> <strong>configure</strong>: </h4>
+<div class="sub">
+思考錯誤した結果configure時の環境変数、オプションはこんな感じ。
+<pre>
+% CC='gcc -specs=specs.msvcrt -Zbmingw' \
+  CFLAGS='-Os -DNATIVE_WIN32' \
+  ./configure \
+  --target=i386-mingw32 \
+  --disable-threads \
+  --with-threads=none \
+  --prefix=/usr/local/mingw
+</pre>
+<ul>
+<li>ソースを見ると-DNATIVE_WIN32は必要みたい
+<li>xdeltaにthreadsはたぶんいらない
+<li>/usr/localはcygwinに使っているので、/usr/local/mingwを指定
+</ul>
+
+</div>
+<h4><a name="200101132S2" href="200101b.html#200101132S2">_</a> <strong>make</strong>: </h4>
+<div class="sub">
+まずは一個目のエラー。
+<pre>
+gmessages.c:55: conflicting types for `write'
+</pre>
+で、該当の個所はここだ。
+<pre>
+#undef write
+
+static inline int
+write (FILE       *fd,
+       const char *buf,
+       int         len)
+{
+  fwrite (buf, len, 1, fd);
+
+  return len;
+}
+</pre>
+なんかとても変なことをしてる。
+なんの意味があるのかわからないけど、とりあえず
+<pre>
+#define write static_write
+</pre>
+して逃げた。<br>
+二個目のエラー。testglibを作るときに_imp__hogehogeがundefinedに。
+とすればどこかに__declspec(dllimport)があるはずだ。
+glib.hにあったのでコメントアウトした。make cleanしてやりなおし。<br>
+またエラー。testgthread でgettimeofdayがundefined(gmain.c)。
+<pre>
+#ifndef _MSC_VER
+</pre>
+になっていたので
+<pre>
+#if !defined _MSC_VER &amp;&amp; !defined _WIN32
+</pre>
+と変更。やっと最後まで通った。
+
+</div>
+<h4><a name="200101132S3" href="200101b.html#200101132S3">_</a> <strong>make check</strong>: </h4>
+<div class="sub">
+できあがったからには一応make checkしたいよね。
+やってみるとどうもstring-testで無限ループしてるようだ。
+tests/string-test.cを見ると
+<pre>
+#if !(defined (_MSC_VER) || defined (__LCC__))
+</pre>
+というのがありこれが怪しそう。defined __MINGW32__を追加したら通った。
+<pre>
+PASS: array-test
+PASS: dirname-test
+PASS: hash-test
+PASS: list-test
+PASS: node-test
+PASS: relation-test
+PASS: slist-test
+PASS: string-test
+PASS: strfunc-test
+PASS: tree-test
+PASS: type-test
+===================
+All 11 tests passed
+===================
+</pre>
+
+</div>
+<h4><a name="200101132S4" href="200101b.html#200101132S4">_</a> <strong>make install</strong>: </h4>
+<div class="sub">
+インストールしておしまい。
+
+</div>
+<hr align="left" width="40%">
+<div>
+<a name="20010113F2" href="200101b.html#20010113F2"><small>*2</small></a>:
+へたにDLLにするとバイナリ互換がなくなったときが面倒。
+</div>
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200101133" title="200101133" href="200101b.html#200101133">■</a> 
+zlib</h3>
+<a href="http://www.cdrom.com/pub/infozip/zlib/">ここ</a>からzlib-1.1.3.tar.gzを取ってきた。たぶん。一年前のことなので覚えてない。
+
+<h4><a name="200101133S1" href="200101b.html#200101133S1">_</a> <strong>configure</strong>: </h4>
+<div class="sub">
+autoconfを使っていないのでprefixは環境変数で与える。
+<pre>
+% CC='gcc -specs=specs.msvcrt -Zbmingw' \
+  prefix=/usr/local/mingw \
+  ./configure
+</pre>
+nt/Makefile.gcc を使うほうがいい気もする。
+
+</div>
+<h4><a name="200101133S2" href="200101b.html#200101133S2">_</a> <strong>make</strong>: </h4>
+<div class="sub">
+エラーもなく通る。
+
+</div>
+<h4><a name="200101133S3" href="200101b.html#200101133S3">_</a> <strong>make install</strong>: </h4>
+<div class="sub">
+これもok。何も修正しなくていいのは気持ちいい。
+
+</div>
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200101134" title="200101134" href="200101b.html#200101134">■</a> 
+xdelta</h3>
+準備が整ったのでxdeltaだ。
+
+<h4><a name="200101134S1" href="200101b.html#200101134S1">_</a> <strong>configure</strong>: </h4>
+<div class="sub">
+<pre>
+% PATH=/usr/local/mingw/bin:$PATH \
+  CC='gcc -specs=specs.msvcrt -Zbmingw' \
+  CFLAGS=-Os \ 
+  ./configure \          
+  --target=i386-mingw32 \  
+  --prefix=/usr/local/mingw
+</pre>
+glib-configはmingwのものを使うためにPATHに/usr/local/mingw/binを追加。
+<pre>
+checking for zlib.h... no
+configure: error: ZLIB headers not found
+</pre>
+あれ、zlib.hが見つからない。
+なるほど/usr/local/mingw/includeがspecs.msvcrtから抜けてる。
+それに/usr/local/mingw/libもない。追加しないと。
+-lzは見つかっているがcygwinのlibz.aがlinkされて成功してしまったんだろう。
+
+</div>
+<h4><a name="200101134S2" href="200101b.html#200101134S2">_</a> <strong>make</strong>: </h4>
+<div class="sub">
+<pre>
+edsio.c:296: storage size of `tv' isn't known
+</pre>
+と来たか。
+<pre>
+#if HAVE_GETTIMEOFDAY
+  省略
+#else
+
+  struct timeval tv;
+  time_t t = time (NULL);
+
+  if (t &lt; 0)
+    {
+      edsio_generate_errno_event (EC_EdsioTimeFailure);
+      goto bail;
+    }
+
+  if (setme)
+    {
+      setme-&gt;nanos = 0;
+      setme-&gt;seconds = tv.tv_sec;
+    }
+
+#endif
+</pre>
+これはあきらかにバグだ。tvはいらない。何のための
+<pre>
+time_t t = time (NULL);
+</pre>
+だ。これでできた。
+<pre>
+% ./xdelta
+xdelta.exe: usage: xdelta.exe COMMAND [OPTIONS] [ARG1 ...]
+xdelta.exe: use --help for more help
+</pre>
+.exeがつくのがちょっとやだな。というわけでquick hack。
+
+</div>
+<h4><a name="200101134S3" href="200101b.html#200101134S3">_</a> <strong>Z_BEST_COMPRESSION</strong>: </h4>
+<div class="sub">
+試してみるとなんか妙だ。
+<pre>
+% ls -l ruby* | awk '{print $5,$9}'
+672800 ruby-1.6.2-20010110-i386-cygwin.tar.gz
+114200 ruby-1.6.2-20010110-i386-cygwin.xdelta
+665323 ruby-1.6.2-i386-cygwin.tar.gz
+% mv ruby-1.6.2-20010110-i386-cygwin.tar.gz o
+% ./xdelta patch ruby-1.6.2-20010110-i386-cygwin.xdelta
+% ls -l ruby-1.6.2-20010110-i386-cygwin.tar.gz | awk '{print $5,$9}'
+675808 ruby-1.6.2-20010110-i386-cygwin.tar.gz
+% gzip -t ruby-1.6.2-20010110-i386-cygwin.tar.gz
+</pre>
+復元したらちょっと大きくなった。
+gzip的には正しいってことは圧縮率だけの問題か？
+確かにこのパッケージはgzip -9で圧縮してるし、
+xdeltaが-9相当で圧縮してるとは限らない。
+<pre>
+% cmp =(gzip -dc o) =(gzip -dc ruby-1.6.2-20010110-i386-cygwin.tar.gz)
+</pre>
+cmpが何も文句を言わない。どうやらそういうことらしい。<br>
+xdmain.cを見るとZ_DEFAULT_COMPRESSIONになってた。
+よしZ_BEST_COMPRESSIONに変更しよう。ごそごそ。
+make完了。
+また同じことを試す。すると今度は僅かに小さくなった。
+<pre>
+% ls -l o ruby-1.6.2-20010110-i386-cygwin.tar.gz | awk '{print $5,$9}'
+672800 o
+672515 ruby-1.6.2-20010110-i386-cygwin.tar.gz
+</pre>
+うーむ。まいっか。
+
+</div>
+<h4><a name="200101134S4" href="200101b.html#200101134S4">_</a> <strong>gzipしない</strong>: </h4>
+<div class="sub">
+これってつまりgzipで圧縮されてるかどうかを調べて
+伸長してから差分を取ってるってことだな。
+だから圧縮率に依らない。
+じゃ、gzipで圧縮しないものとのxdeltaはどうなるのか？
+<pre>
+% gzip -dc o &gt; o.orig
+% ./xdelta delta o.orig o o.xdelta
+% ls -l o* 
+-rw-r--r--   1 watanabe ruby       672800 Jan 13 21:21 o
+-rw-r--r--   1 watanabe ruby      2150400 Jan 13 23:24 o.orig
+-rw-r--r--   1 watanabe ruby          136 Jan 13 23:24 o.xdelta
+</pre>
+なるほど、そういうことか。<br>
+strip して upx したら意外と小さくなった。
+<pre>
+% ls -l xdelta.exe
+-rwxr-xr-x   1 watanabe ruby        70656 Jan 13 23:32 xdelta.exe
+</pre>
+
+</div>
+<h4><a name="200101134S5" href="200101b.html#200101134S5">_</a> <strong>djgpp</strong>: </h4>
+<div class="sub">
+djgppにも移植するかな。それにはglibの移植が面倒か。
+</div>
+<!-- section end -->
+</div>
+<!-- 2001/01/13 end -->
+
+
+
+<hr class="hide">
+<!-- 2001/01/14 start -->
+<h2><a name="20010114" href="200101b.html#20010114">2001-01-14 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="200101141" title="200101141" href="200101b.html#200101141">■</a> 
+Win98へssh</h3>
+
+CygwinにはinetdだのOpenSSHだのデフォルトでインストールされる。
+Win98から他のUnix系OSへsshするのはよくあるのかもしれないが、
+じゃ、その逆はどう？
+
+<h4><a name="200101141S1" href="200101b.html#200101141S1">_</a> <strong>inetd</strong>: </h4>
+<div class="sub">
+NT/2000ならinetdをサービスとして自動で実行できるから楽。
+95/98/MEならスタートアップかMS-DOSプロンプトからinetdを起動する。
+/etc/inetd.confはsetup.exeが面倒見てくれる。
+あ、ひょっとしたら自分でiu-configを実行したのかも。
+
+</div>
+<h4><a name="200101141S2" href="200101b.html#200101141S2">_</a> <strong>rsh</strong>: </h4>
+<div class="sub">
+ためしにLinuxからrsh jarh
+<a href="#20010114F1"><sup><small>*1</small></sup></a>してみるとあっけなく成功する。
+昔の苦労が嘘のようだ。
+<pre>
+% rsh jarh 
+Fanfare!!!
+You are successfully logged in to this server!!!
+</pre>
+が、~/.rhostsもなしでloginできちゃうのはあれだな。
+
+</div>
+<h4><a name="200101141S3" href="200101b.html#200101141S3">_</a> <strong>telnet</strong>: </h4>
+<div class="sub">
+もちろんtelnetもOKだ。
+<pre>
+% telnet jarh
+Trying 192.168.10.3...
+Connected to jarh.localdomain.
+Escape character is '^]'.
+
+CYGWIN_98-4.10 1.1.7(0.31/3/2) (jarh) (tty0)
+
+login: watanabe
+Fanfare!!!
+You are successfully logged in to this server!!!
+</pre>
+パスワードを聞いてこない。
+rshが成功したのは認証が全部省かれてるということか。
+Win98だからこんなもんなんだろう。
+あ、/etc/passwdに書かれてるユーザかどうかのチェックは入るようだ。
+<pre>
+% rsh jarh -l hoge
+Password:
+Login incorrect
+</pre>
+
+</div>
+<h4><a name="200101141S4" href="200101b.html#200101141S4">_</a> <strong>ssh</strong>: </h4>
+<div class="sub">
+本題のsshだ。identity.pubをauthorized_keysに登録して実行。
+が、いくら待ってもloginできない。
+<pre>
+% ssh -v jarh
+SSH Version OpenSSH_2.3.0p1, protocol versions 1.5/2.0.
+Compiled with SSL (0x0090600f).
+debug: Reading configuration data /home/watanabe/.ssh/config
+debug: Applying options for *
+debug: Reading configuration data /usr/local/etc/ssh_config
+debug: Seeding random number generator
+debug: ssh_connect: getuid 1116 geteuid 0 anon 0
+debug: Connecting to jarh [192.168.10.3] port 22.
+debug: Seeding random number generator
+debug: Allocated local port 963.
+debug: Connection established.
+</pre>
+とここで止まってしまう。inetd -d で起動し直してメッセージを見ると
+<pre>
+someone wants sshd
+accept, ctrl 3
++ Closig from 22
+249303 execl /usr/sin/in.sshd
+</pre>
+となっているのでsshdは起動されてるようなんだけど？
+一応/usr/sbin/in.sshdが存在するかどうか確認する。
+<pre>
+% ls /usr/sbin
+in.ftpd.exe     in.rshd.exe     in.tftpd.exe  makewhatis       syslogd.exe
+in.rexecd.exe   in.talkd.exe    in.uucpd.exe  sftp-server.exe
+in.rlogind.exe  in.telnetd.exe  inetd.exe     sshd.exe
+</pre>
+がーん。ないじゃん。てゆうかsshd.exeだ。
+これは/etc/inetd.confのバグかな。
+<pre>
+% diff -u1 /etc/inetd.conf{.bak,}
+--- /etc/inetd.conf.bak	Sun Dec 17 15:19:58 2000
++++ /etc/inetd.conf	Sun Jan 14 17:29:28 2001
+@@ -51,2 +51,2 @@
+ # tftp  dgram   udp     wait    nobody  /usr/sbin/in.tftpd in.tftpd
+-sshd stream tcp nowait root /usr/sbin/in.sshd sshd -i
++sshd stream tcp nowait root /usr/sbin/sshd sshd -i
+% ps
+      PID    PPID    PGID     WINPID TTY  UID    STIME COMMAND
+I  319631       1  319631 4294647665  -1  500 15:11:44 /usr/bin/BASH
+   133359       1  133359 4294833937  -1  500 17:29:35 /USR/SBIN/INETD
+   260579  133359  260579 4294732729  -1  500 17:29:48 /USR/SBIN/IN.RLOGIND
+   233087  260579  233087 4294652585   0  500 17:29:49 /USR/LOCAL/BIN/ZSH
+   187199  233087  187199 4294659929   0  500 17:29:51 /usr/bin/PS
+% kill -HUP 133359
+</pre>
+すると最後に
+<pre>
+REDO: sshd proto=tcp, wait=0, user=root builtin=0 server=/usr/sbin/sshd
+</pre>
+と出た。これでokだ。
+
+</div>
+<h4><a name="200101141S5" href="200101b.html#200101141S5">_</a> <strong>Win98とLinux</strong>: </h4>
+<div class="sub">
+実はokじゃなかった。
+今はWin98が立ち上がっているが、
+Linuxもインストールされていて、
+ホスト名は同じjarhのため
+~/.ssh/known_hostsの内容が食い違ってしまうのだ。
+<pre>
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+@    WARNING: REMOTE HOST IDENTIFICATION HAS CHANGED!     @
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+IT IS POSSIBLE THAT SOMEONE IS DOING SOMETHING NASTY!
+Someone could be eavesdropping on you right now (man-in-the-middle attack)!
+It is also possible that the RSA host key has just been changed.
+Please contact your system administrator.
+Add correct host key in /home/watanabe/.ssh/known_hosts to get rid of this message.
+RSA host key for jarh has changed and you have requested strict checking.
+debug: Calling cleanup 0x805fc20(0x0)
+</pre>
+違う名前にしとけばよかったか。
+/etc/ssh_host_*を同じものにしてやればいいのかもしれないが、
+なんか面倒なのでknown_hostsを分けた。~/.ssh/configに
+<pre>
+Host wjarh
+   HostName jarh
+   UserKnownHostsFile /home/watanabe/.ssh/wjarh
+</pre>
+を追加して、やっとssh wjarhでloginできた。
+
+</div>
+<h4><a name="200101141S6" href="200101b.html#200101141S6">_</a> <strong>/etc/inetd.confとin.sshd</strong>: </h4>
+<div class="sub">
+今回は/etc/inetd.confを書き換えたが、
+次のバージョンアップを考えると、
+<pre>
+% cd /usr/sbin
+% ln -s sshd.exe in.sshd.exe
+</pre>
+のほうがいいかも。やっぱそうした。
+</div>
+<hr align="left" width="40%">
+<div>
+<a name="20010114F1" href="200101b.html#20010114F1"><small>*1</small></a>:
+jarhがWin98のホスト名
+</div>
+<!-- section end -->
+</div>
+<!-- 2001/01/14 end -->
+
+
+
+<hr class="hide">
+<!-- 2001/01/15 start -->
+<h2><a name="20010115" href="200101b.html#20010115">2001-01-15 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="200101151" title="200101151" href="200101b.html#200101151">■</a> 
+<a href="http://homepage2.nifty.com/zn/nnikki/200101.html#14_t2">JARP</a></h3>
+たしかに
+<a href="http://www3.freeweb.ne.jp/diary/yamaya/nsmm/">nsmm</a>を使ってます。awkで書かれてます。
+なんでこれを使っているんだろう？
+「日記システム名称未定」という名前が妙に気に入ったからか、
+awkでここまでできるのかというのが逆に新鮮だったからか、
+動的な
+<a href="http://www.h14m.org/">hns</a>に移行も簡単というのに魅かれたのか、
+自分でもよくわからないけど。
+といいつつnsmm cloneをrubyで書けたらいいなあなどと思ったりもする。
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200101152" title="200101152" href="200101b.html#200101152">■</a> 
+Cygwin</h3>
+ruby-talk MLで最近Cygwin特有の機能ではまる人というか文句を言う人が増えてる。
+
+<h4><a name="200101152S1" href="200101b.html#200101152S1">_</a> <strong>Cygwin is Cygwin</strong>: </h4>
+<div class="sub">
+実は
+<a href="http://cygwin.com/ml/cygwin/">Cygwin ML</a>でも同じような質問というか文句がよく出るんだけど、
+今Cygwin Projectを管理してるChristopher Faylorという人は、
+ばりばりなWindowsユーザには
+</p><blockquote><p>
+Welcome to POSIX. Cygwin is not DOSISH.
+</p></blockquote><p>
+と言い、もともとUnixを使ってた人には
+</p><blockquote><p>
+Welcome to Windows. Hope you enjoy the ride.
+</p></blockquote><p>
+とか言う。要するに
+</p><blockquote><p>
+CygwinはWindowsでもUnixでもない。CygwinはCygwinだ。
+</p></blockquote><p>
+ってことだな。
+
+</div>
+<h4><a name="200101152S2" href="200101b.html#200101152S2">_</a> <strong>^Z</strong>: </h4>
+<div class="sub">
+ちなみに(ちなんでどうする)、Cygwin上では^ZはEOFではない。
+<pre>
+% stty -a | head -3
+speed 9600 baud; rows 24; columns 80; line = 0;
+intr = ^C; quit = ^\; erase = ^H; kill = ^U; eof = ^D; eol = &lt;undef&gt;;
+eol2 = &lt;undef&gt;; start = ^Q; stop = ^S; susp = ^Z; rprnt = ^R; werase = ^W;
+</pre>
+を見ればわかるとおり^Zはふつうsuspendでしょ、やっぱ。
+だからcommand.comから起動したrubyで^Zなんてしてはいけない。
+command.comはsuspendなんて知らないんだから。
+え？しちゃったの？だめだよ。
+そういうときはもう一個立ち上げてpsしてみる。
+<pre>
+% ps | grep -i ruby
+S  360939       1  360939 4294606357  -1  500 01:28:38 /USR/LOCAL/BIN/RUBY
+</pre>
+Sが立ってるのがsuspendしてるプログラムだ。
+Iはたぶんinteractiveという意味。
+bashが入力待ちのときなんかがそうだ。
+<pre>
+% kill -CONT 360939
+% ps | grep -i ruby 
+I  360939       1  360939 4294606357  -1  500 01:28:38 /USR/LOCAL/BIN/RUBY
+</pre>
+Iに変わった。
+これでrubyを起動したwindowで^Dすればいいはずなんだけど、
+どうもどこかでbusy waitしてるようで終わらない。
+<pre>
+% kill 360939
+</pre>
+するしかない。だったら最初から-KILLか。
+
+</div>
+<h4><a name="200101152S3" href="200101b.html#200101152S3">_</a> <strong>昔のCygwin</strong>: </h4>
+<div class="sub">
+いや、killで止まるんだから、まだましだ。
+昔はbash上で^Cしただけでハングしちゃったんだから。
+
+</div>
+<h4><a name="200101152S4" href="200101b.html#200101152S4">_</a> <strong>command.com/cmd.exe</strong>: </h4>
+<div class="sub">
+あとやたらとcommand.com/cmd.exeの内部コマンドを使いたがるのはなぜだ？
+もう、command.comには安らかに眠ってもらおうよ。
+
+</div>
+<h4><a name="200101152S5" href="200101b.html#200101152S5">_</a> <strong>ふたたび^Z</strong>: </h4>
+<div class="sub">
+<a href="http://www.jaist.ac.jp/~fujieda/cygwin/#news">Cygwin情報 Snapshot NEWS</a>によるとやはりSIGCONTがバグってたようだ。
+cygwin1-20010113.dll.bz2で試したらちゃんと^Dで終了した。
+</div>
+<!-- section end -->
+</div>
+<!-- 2001/01/15 end -->
+
+
+
+<hr class="hide">
+<!-- 2001/01/16 start -->
+<h2><a name="20010116" href="200101b.html#20010116">2001-01-16 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="200101161" title="200101161" href="200101b.html#200101161">■</a> 
+DJGPP版xdeltaを作ろう</h3>
+MinGW版をcrossで作ろうとして諦めた。
+そう今回はnativeじゃなくてcrossだ。
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200101162" title="200101162" href="200101b.html#200101162">■</a> 
+glib</h3>
+
+まずはglib。
+
+<h4><a name="200101162S1" href="200101b.html#200101162S1">_</a> <strong>とりあえずconfigure</strong>: </h4>
+<div class="sub">
+<pre>
+% CC=i586-pc-msdosdjgpp-gcc \
+  CFLAGS='-Os' \
+  ./configure \
+  --target=i386-msdosdjgpp \
+  --host=i586-pc-msdosdjgpp \
+  --build=i586-pc-linux-gnu \
+  --disable-threads \
+  --with-threads=none \
+  --prefix=/usr/local/i586-pc-msdosdjgpp
+&lt;途中略&gt;
+checking for extra flags to get ANSI library prototypes... configure: \
+  error: can not run test program while cross compiling
+</pre>
+やっぱりそこだよね。
+ここはconfigure.inでAC_TRY_RUNというマクロが使われているんだけど、
+クロスコンパイル時の引数が指定されてない。
+だからac_cv_fooの環境変数技が使えないのだ。
+MinGWのときは面倒だからとnativeへ逃げたが今回は逃げない。
+つまりconfigure.inを書き換える。
+
+</div>
+<h4><a name="200101162S2" href="200101b.html#200101162S2">_</a> <strong>autoconf</strong>: </h4>
+<div class="sub">
+AC_TRY_RUNは最後の引数を省略するとautoconfをかけたときにwarningになる。
+</p><blockquote><p>
+warning: AC_TRY_RUN called without default to allow cross compiling
+</p></blockquote><p>
+つまり一度autoconfを実行してみればどれだけ直さなきゃいけないかわかる。
+<pre>
+% autoconf |&amp; grep 'warning: AC_TRY_RUN' | wc
+     22     220    1892
+</pre>
+なぬ？22個所もあるの？
+
+</div>
+<h4><a name="200101162S3" href="200101b.html#200101162S3">_</a> <strong>AC_TRY_RUN</strong>: </h4>
+<div class="sub">
+info autoconfしてAC_TRY_RUNマクロを探す。
+</p><blockquote><p>
+ - Macro: AC_TRY_RUN (PROGRAM, [ACTION-IF-TRUE [, ACTION-IF-FALSE [,
+          ACTION-IF-CROSS-COMPILING]]])
+</p></blockquote><p>
+PROGRAMを実行し、成功したらACTION-IF-TRUE、失敗したらACTION-IF-FALSEが
+実行される。クロスコンパイル時にはPROGRAMは実行せずに、
+いきなりACTION-IF-CROSS-COMPILINGが実行される。
+glibはこれを省略してるわけだ。<br>
+対応はそれほど難しいものではなく、TRUEかFALSEのどちらかを選べばいい。
+そう。最後の引数はそのどちらかをコピーして書けばいい。
+わからなかったらFALSEを選んでおけば無難。
+また、ACTION-IF-CROSS-COMPILINGをつけとけばac_cv_fooで対処可能なので、
+それほど深く悩む必要はない。
+autoconfするとconfigureが更新される。
+
+</div>
+<h4><a name="200101162S4" href="200101b.html#200101162S4">_</a> <strong>configure</strong>: </h4>
+<div class="sub">
+<pre>
+% CC=i586-pc-msdosdjgpp-gcc \
+  CFLAGS='-Os' \
+  AR=i586-pc-msdosdjgpp-ar \
+  RANLIB=i586-pc-msdosdjgpp-ranlib \
+  NM=i586-pc-msdosdjgpp-nm \
+  LD=i586-pc-msdosdjgpp-ld \
+  ac_cv_c_bigendian=no \
+  ./configure \
+  --target=i386-msdosdjgpp \
+  --disable-threads \
+  --with-threads=none \
+  --prefix=/usr/local/i586-pc-msdosdjgpp \
+  --host=i586-pc-msdosdjgpp \
+  --build=i586-pc-linux-gnu
+</pre>
+かなりすごいことになってる。
+ar, ranlib, nm, ldもクロスのものが使われるように設定。
+make して sudo make install したら完了。
+
+</div>
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200101163" title="200101163" href="200101b.html#200101163">■</a> 
+zlib</h3>
+configureしてもいいんだけど、今回は素直にmsdos/Makefile.dj2を使う。
+例によってCC, AR, RANLIBを指定する。ARは引数も含んでいるので注意。
+
+<h4><a name="200101163S1" href="200101b.html#200101163S1">_</a> <strong>make</strong>: </h4>
+<div class="sub">
+<pre>
+% make -f msdos/Makefile.dj2 \
+  CC=i586-pc-msdosdjgpp-gcc \
+  AR='i586-pc-msdosdjgpp-ar rcs' \
+  RANLIB=i586-pc-msdosdjgpp-ranlib
+% sudo make -f msdos/Makefile.dj2 \
+  install \
+  CP=cp \
+  INCLUDE_PATH=/usr/local/i586-pc-msdosdjgpp/include \
+  LIBRARY_PATH=/usr/local/i586-pc-msdosdjgpp/lib
+</pre>
+多少文句言われるが気にしない。
+準備完了。
+
+</div>
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200101164" title="200101164" href="200101b.html#200101164">■</a> 
+xdelta</h3>
+ここもAR等のbinutils軍団を指定する。
+<h4><a name="200101164S1" href="200101b.html#200101164S1">_</a> <strong>configure</strong>: </h4>
+<div class="sub">
+<pre>
+% CC='i586-pc-msdosdjgpp-gcc' \
+  CFLAGS=-Os \
+  AR=i586-pc-msdosdjgpp-ar \
+  RANLIB=i586-pc-msdosdjgpp-ranlib \
+  NM=i586-pc-msdosdjgpp-nm \
+  LD=i586-pc-msdosdjgpp-ld \
+  ./configure \
+  --target=i386-msdosdjgpp \
+  --host=i586-pc-msdosdjgpp \
+  --build=i586-pc-linux-gnu \
+  --prefix=/usr/local/i586-pc-msdosdjgpp \
+  --with-glib-prefix=/usr/local/i586-pc-msdosdjgpp
+</pre>
+MinGWのときはPATHでglib-configの位置を教えたけど、
+--with-glib-prefixを使うのがまっとうなやりかただろう。
+
+</div>
+<h4><a name="200101164S2" href="200101b.html#200101164S2">_</a> <strong>make</strong>: </h4>
+<div class="sub">
+binary modeにするとか、そのあたりの対応は_WIN32を参考に。
+makeしてi586-pc-msdosdjgpp-stripしてupxしてできあがり。
+<pre>
+% ls -l xdelta.exe
+-rwxr-xr-x   1 watanabe ruby       108232 Jan 16 02:10 xdelta.exe
+</pre>
+DJGPPは全部staticにlinkされるのでちょっと大きくなる。
+</div>
+<!-- section end -->
+</div>
+<!-- 2001/01/16 end -->
+
+
+
+<hr class="hide">
+<!-- 2001/01/17 start -->
+<h2><a name="20010117" href="200101b.html#20010117">2001-01-17 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="200101171" title="200101171" href="200101b.html#200101171">■</a> 
+ruby binaries</h3>
+
+最近だとほとんどのhttp serverはApacheだと思うんだけど、
+www.ruby-lang.orgはApache 1.3.9みたいだ。
+
+<h4><a name="200101171S1" href="200101b.html#200101171S1">_</a> <strong>FancyIndexing</strong>: </h4>
+<div class="sub">
+で、index.htmlとかを置かないとFancyIndexingがonになってるので、
+ディレクトリの内容が表示される。
+この機能ってなかなかナイスというか昔から好きなんでそのうち
+<a href="http://www.os.rim.or.jp/~eban/">ruby binaries</a>で使おうと実は思ってた。
+
+</div>
+<h4><a name="200101171S2" href="200101b.html#200101171S2">_</a> <strong>rimnet</strong>: </h4>
+<div class="sub">
+ところが
+<a href="http://www.rim.or.jp/">rimnet</a>のマシンのrenewalとか言ってOSがSunOS4からNetBSDになり、
+NFSが不調とかなんとか言ってFreeBSDになった。一年ちょっと前の話。
+
+</div>
+<h4><a name="200101171S3" href="200101b.html#200101171S3">_</a> <strong>IndexOptions</strong>: </h4>
+<div class="sub">
+別にOSはなんでもかまわないんだけど、
+そのついでにApacheの設定がなんか厳しいほうへ移行したらしく、
+IndexOptionsがうまいこと設定できない。
+いや面倒なんで深く追及してないだけなんだけど…。あ、
+<a href="http://www.rim.or.jp/sp/rim/hp/system/index.html">こういう</a>ことか。
+
+</div>
+<h4><a name="200101171S4" href="200101b.html#200101171S4">_</a> <strong>てんこもり</strong>: </h4>
+<div class="sub">
+とかなんとか言ってるうちに
+Cygwin,DJGPP,MinGW版てんこもりパッケージを始めたもんだから、
+ディスク容量が10MBじゃ足りなくなってしまった。
+
+</div>
+<h4><a name="200101171S5" href="200101b.html#200101171S5">_</a> <strong>livedoor</strong>: </h4>
+<div class="sub">
+で、最近流行りの
+<a href="http://www.livedoor.com/">無料プロバイダ</a>に加入した。
+50MBまで使える代わりに上部にバナーがつく。
+http://jarh.hoops.livedoor.com/のようなURLになるので結構いい。
+あ、どうせならjarhじゃなくてRuby-Binariesというアカウントにしとけばよかったか。
+だれか取ったら、よろしく。
+
+</div>
+<h4><a name="200101171S6" href="200101b.html#200101171S6">_</a> <strong>tarball</strong>: </h4>
+<div class="sub">
+<a href="http://www.os.rim.or.jp/~eban/">ruby binaries</a>というか
+<a href="http://jarh.hoops.livedoor.com/">ruby binaries</a>にはtarballしか置いてない。
+これは現在全部クロスで作ってるからというのが大きいんだけど、
+中身が簡単に取り出せない形式にはしたくない。
+InstallSieldのことなんだけど。Linux上で中身を取り出せるの？
+むりだろうなあ。
+
+</div>
+<h4><a name="200101171S7" href="200101b.html#200101171S7">_</a> <strong>素材</strong>: </h4>
+<div class="sub">
+Cygwinに関してはそのうちsymlinkも含めたくなるだろうからという理由はある。
+DJGPPとMinGWはその言い訳は通用しないだろう。せめてzipにしとくか？
+ま、素材ということで。
+
+</div>
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200101172" title="200101172" href="200101b.html#200101172">■</a> 
+ロケット・ボーイ</h3>
+番組の最後に体調不良で一ヶ月休むとか言われちゃった。
+今日買ったTVBrosを見ると確かに未定になっている。
+いや、大して面白いわけでもないんだけど。
+踊る大走査線？
+
+<!-- section end -->
+</div>
+<!-- 2001/01/17 end -->
+
+
+
+<hr class="hide">
+<!-- 2001/01/18 start -->
+<h2><a name="20010118" href="200101b.html#20010118">2001-01-18 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="200101181" title="200101181" href="200101b.html#200101181">■</a> 
+ruby-* ML</h3>
+なんか最近23時過ぎあたりから配送の順番が狂う。
+一時間以上遅れてるのもあるし。
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200101182" title="200101182" href="200101b.html#200101182">■</a> 
+Perl 5.7.0</h3>
+いつのまにかPerl 5.7.0って出てたんだね。
+
+<h4><a name="200101182S1" href="200101b.html#200101182S1">_</a> <strong>microperl</strong>: </h4>
+<div class="sub">
+README.micro, Makefile.microというのが増えていてmicroperlが作れるよう
+になっている。
+<pre>
+% ls -l miniperl microperl 
+-rwxr-xr-x   1 watanabe ruby       834088 Jan 17 23:24 microperl
+-rwxr-xr-x   1 watanabe ruby       650824 Jan 17 23:15 miniperl
+</pre>
+名前はmicroだけどちっとも小さくない。
+<pre>
+% chmod +w uconfig.h
+% make -f Makefile.micro
+</pre>
+でできあがるからConfigureしなくてもokってことらしい。
+
+</div>
+<h4><a name="200101182S2" href="200101b.html#200101182S2">_</a> <strong>configure.gnu</strong>: </h4>
+<div class="sub">
+それはそれとして
+<pre>
+% ./configure.gnu -Dprefx=/usr/local -Dcc=gcc
+zsh: permission denied: ./configure.gnu
+% ls -l configure.gnu
+-r--r--r--   1 watanabe ruby         2550 Aug 14 03:33 configure.gnu
+</pre>
+って、なぜ？
+<pre>
+% sh ./configure.gnu -Dprefx=/usr/local -Dcc=gcc
+sh Configure -ds -e -Dprefx=/usr/local -Dcc=gcc
+First let's make sure your kit is complete.  Checking...
+*** WHOA THERE!!! ***
+
+    This is an UNSTABLE DEVELOPMENT release.
+    The version of this perl5 distribution is 7, that is, odd,
+    (as opposed to even) and that signifies a development release.
+    If you want a maintenance release, you want an even-numbered version.
+
+    Do ***NOT*** install this into production use.
+    Data corruption and crashes are possible.
+
+    It is most seriously suggested that you do not continue any further
+    unless you want to help in developing and debugging Perl.
+
+Do you really want to continue? [n]  
+Okay, bye.
+</pre>
+終わっちゃった。あ、なるほど。たしかにConfigureに
+<pre>
+*) case &quot;$xversion&quot; in
+   *[13579])
+</pre>
+とある。つまりPerlもminorが奇数なら開発バージョンになった。
+だから簡単に実行できないようにconfigure.gnuも0444なわけだ。
+
+</div>
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200101183" title="200101183" href="200101b.html#200101183">■</a> 
+tinyruby</h3>
+名前としてはtinyrubyがいいかな。って作るのか？
+
+<h4><a name="200101183S1" href="200101b.html#200101183S1">_</a> <strong>inits.c</strong>: </h4>
+<div class="sub">
+Rubyの場合組み込みクラスが結構ある。
+このうち疎な関係になってるクラスは簡単に外せる。
+たとえばMashalは元々ext/の下にあった拡張ライブラリだった。
+だからこれは安全に外せる。という感じでどれだけ外せるか？
+inits.cで初期化関数を呼ぶようになっているので
+Init_Foo();と呼んでるところを消し、
+同じようにMakefileのOBJSから消せば試すことができる。
+ちょっとした実験では
+<ul>
+<li>Init_pack();
+<li>Init_Dir();
+<li>Init_Random();
+<li>Init_Math();
+<li>Init_marshal();
+</ul>
+の5個は他のファイルを変更することなしに外せる。
+40KBほど小さくなる。
+
+</div>
+<h4><a name="200101183S2" href="200101b.html#200101183S2">_</a> <strong>Process</strong>: </h4>
+<div class="sub">
+試しにProcessを外してみよう。
+<ul>
+<li>inits.cのInit_process();をコメントアウト
+<li>MakefileのOBJSからprocess.oを削除
+</ul>
+してmake minirubyする。
+</p><blockquote><p>
+eval.o(.text+0x10df0): undefined reference to `rb_last_status'
+eval.o(.text+0x110ca): undefined reference to `rb_last_status'
+io.o(.text+0x1c92): undefined reference to `rb_syswait'
+io.o(.text+0x27fd): undefined reference to `rb_proc_exec'
+</p></blockquote><ul>
+<li>$!はスレッドローカルだからeval.cでも管理されている
+<li>IOの中にはpopenがあるのでrb_syswait, rb_proc_execが必要
+</ul>
+とこんな感じでその機能自体を削る必要がある。
+さらに10KB弱縮小。
+
+</div>
+<h4><a name="200101183S3" href="200101b.html#200101183S3">_</a> <strong>Thread Local</strong>: </h4>
+<div class="sub">
+あ、ってことはスレッドローカルな外部変数を拡張ライブラリでは作れないのか。
+
+</div>
+<h4><a name="200101183S4" href="200101b.html#200101183S4">_</a> <strong>coreruby</strong>: </h4>
+<div class="sub">
+Processを外しちゃうとext/extmk.rbですごく困ったことになるので、
+これ外しちゃだめだよ。そうするとcorerubyって何を実装してればいい？
+autoloadを使えばかなりぎりぎりまでいけそうな気はするんだけど。
+E-Lispみたいなautoloadがあるとpack.cなんかも対応できていいかな。
+
+</div>
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200101184" title="200101184" href="200101b.html#200101184">■</a> 
+2000-01-18</h3>
+<pre>
+% cvs ci -m 2000-01-18 version.h
+</pre>
+してしまった。30分後ぐらいに気づいて
+<pre>
+% cvs ci -m 2001-01-18 -f version.h
+</pre>
+しなおした。-f が肝だ。未だに20世紀気分が抜けないらしい。
+<pre>
+% alias civ='cvs ci -m `date +&quot;%Y-%m-%d&quot;` version.h'
+</pre>
+しとくか。
+<!-- section end -->
+</div>
+<!-- 2001/01/18 end -->
+
+
+
+<hr class="hide">
+<!-- 2001/01/19 start -->
+<h2><a name="20010119" href="200101b.html#20010119">2001-01-19 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="200101191" title="200101191" href="200101b.html#200101191">■</a> 
+GNUmakefile</h3>
+CygwinはGNU makeが標準だからばりばり依存してやるぜってな具合に
+cygwin/GNUmakefile.inを作ってしまったが、
+クロスでコンパイルできる今、ちょっとまずかったかなと反省。
+でもgmakeという名前できっとインストールされてるよね？
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200101192" title="200101192" href="200101b.html#200101192">■</a> 
+MinGW Repository</h3>
+<a href="http://sourceforge.net/projects/mingw/">MinGWのProject Info</a>に置いてあるzipファイルの中の構造はDJGPPと全く同じだ。
+PREFIXを除いた相対でアーカイブされている。参考にしたか？
+とすればMinGW版、DJGPP版共にこの形式にするのが望ましいかも。
+そういえば
+<a href="http://www.geocities.co.jp/SiliconValley-Bay/4076/">海賊版</a>もそんな構造でLHaでアーカイブされてた気も。
+てゆうかいつのまにか海賊課に。えっ、課なの？
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200101193" title="200101193" href="200101b.html#200101193">■</a> 
+拡張ライブラリ</h3>
+本体だけ更新していてすっかり忘れてたけど、
+拡張ライブラリを作らないとね。今週末にでも。
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200101194" title="200101194" href="200101b.html#200101194">■</a> 
+make CFLAGS=</h3>
+ふと気になって
+<pre>
+% make CFLAGS=
+</pre>
+してみたら、拡張ライブラリを作るときにこけた。
+extmk.rbでCFLAGSにいろいろ入れてるからだ。
+-O2 -gぐらいに留めといたほうがようさそう。
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200101195" title="200101195" href="200101b.html#200101195">■</a> 
+specs.msvcrt</h3>
+ライブラリのサーチパスがCygwinのままのため、
+Cygwin用のライブラリが見つかってしまう。
+cursesがまずい。
+specsで対応してる限りサーチパスの削除はできないから、
+<pre>
+% cd /usr/mingw/lib
+% ar rcu libcurses.a
+</pre>
+とでもしといてお茶を濁すか？
+あ、PDCursesを入れればいいんだね。なっとく。
+でも、CygwinにはあってMinGWにはないライブラリに関しては
+空のライブラリで対処しといたほうがいいだろう。
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200101196" title="200101196" href="200101b.html#200101196">■</a> 
+GNU httptunnel</h3>
+ってそのままの名前で存在するとは。
+これはhtsの仲介が必要だから外で動かせるホストが必要。
+<!-- section end -->
+</div>
+<!-- 2001/01/19 end -->
+
+
+
+<hr class="hide">
+<!-- 2001/01/20 start -->
+<h2><a name="20010120" href="200101b.html#20010120">2001-01-20 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="200101201" title="200101201" href="200101b.html#200101201">■</a> 
+拡張ライブラリをクロスでmake</h3>
+Rubyでは拡張ライブラリは
+<pre>
+% ruby extconf.rb
+% make
+% sudo make install
+</pre>
+といった手順で作る。
+
+<h4><a name="200101201S1" href="200101b.html#200101201S1">_</a> <strong>fake_TARGET.rb</strong>: </h4>
+<div class="sub">
+クロスの場合に問題なるのは$:とかRUBY_PLATFORMなので、
+これを書き換えるライブラリを用意しrequireすることにする。
+<a href="../ruby/fake_TARGET.rb">これ</a>はその一例。
+実はこのままでは使えなくて、symlinkなどで自分自身の名前を変えて使う。
+--target=i386-cygwinで作ったらならTARGETはfake_i386-cygwin.rbという具合に。
+
+</div>
+<h4><a name="200101201S2" href="200101b.html#200101201S2">_</a> <strong>make</strong>: </h4>
+<div class="sub">
+<pre>
+% ruby -r fake_i386-cygwin extconf.rb
+% make
+% make install
+</pre>
+で~/dist/i386-cygwin/usr/localがPREFIXに設定されてインストールできる(はずだ)。
+簡単なものなら。<br>
+あ、あらかじめrubyは
+<pre>
+% make install DESTDIR=$HOME/dist
+</pre>
+でインストールしてある。
+
+</div>
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200101202" title="200101202" href="200101b.html#200101202">■</a> 
+また雪</h3>
+来週も降るらしい。
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200101203" title="200101203" href="200101b.html#200101203">■</a> 
+WWWOFFLE</h3>
+どうもanchor-cached-endが入らないことがあるようだ。
+ってこの日記なんだけど。全体が緑になるのは非常に読みにくいので
+<pre>
+anchor-cached-begin     = &lt;font color=&quot;#00B000&quot;&gt;
+anchor-cached-end       = &lt;/font&gt;
+anchor-requested-begin  = &lt;font color=&quot;#B0B000&quot;&gt;
+anchor-requested-end    = &lt;/font&gt;
+anchor-not-cached-begin = &lt;font color=&quot;#B00000&quot;&gt;
+anchor-not-cached-end   = &lt;/font&gt;
+</pre>
+をコメントアウトした。そんな違いは知る必要もないし。<br>
+原因は
+</p><blockquote><p>
+次の日記 &amp;gt;
+</p></blockquote><p>
+のようなので＜＞≫にしよう。
+&amp;gt;で誤動作するのはなんとなくわからないでもないが、
+他にもあるんだけどねえ。
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200101204" title="200101204" href="200101b.html#200101204">■</a> 
+zsh</h3>
+<pre>
+% ls
+mirai.sh     track02.mp3  track04.mp3  track06.mp3  track08.mp3  track10.mp3
+track01.mp3  track03.mp3  track05.mp3  track07.mp3  track09.mp3  track11.mp3
+% echo *
+mirai.sh track03.mp3 track06.mp3 track09.mp3 track01.mp3 track04.mp3 \
+track07.mp3 track08.mp3 track05.mp3 track02.mp3 track10.mp3 track11.mp3
+</pre>
+ソートされない。なぜだ？
+<pre>
+% xmms *.mp3 &amp;
+</pre>
+とすると自然とシャッフルされた結果になるが、
+毎回同じ結果だからシャッフルでもなんでもない。
+てゆうかxmmsにもシャッフルはあるし、そもそもそんな結果は望んでない。
+Cygwin版zshではちゃんとソートされる。
+Src/glob.cを見るとnotstrcmpでstrcollを呼んでるがこれが怪しい。
+<pre>
+% setenv LC_COLLATE C
+</pre>
+してみるとちゃんとソートされるようになった。
+うーむ。そろそろglibc 2.2.1にしようかな。
+とりあえず~/.zshenvに追加しとこう。あ、
+<pre>
+% setenv() { export $1=$2 }
+</pre>
+してるんで、そこんとこよろしく。
+<!-- section end -->
+</div>
+<!-- 2001/01/20 end -->
+
+<hr>
+<div>
+<a href="200101a.html">&lt;Older(,)</a> | 
+<a href="200101c.html">Newer(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

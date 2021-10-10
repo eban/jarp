@@ -1,0 +1,500 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2006-1-b</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="200601a.html">
+<link rel="next" href="200601c.html">
+
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2006年1月中旬〜</p>
+<hr>
+<div>
+<a href="200601a.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="200601c.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2006/01/11 start -->
+<h2><a name="20060111" href="200601b.html#20060111">2006-01-11 (Wed)</a></h2>
+<!-- 2006-01-12 02:45:30 -->
+
+<div class="entry1">
+<h3><a name="200601111" title="200601111" href="200601b.html#200601111">■</a> 
+[w3m] .mime.types</h3>
+<p>
+
+<a href="200601a.html#200601093">先日の.mime.types</a>は~/.w3m/じゃなくて~/に置くのが正解。
+</p>
+
+<p>
+昨日のw3m *.datが遅い件は結局のところ全部処理しちゃうからまずいわけで、
+1行目のタイトルだけ抜き出せばいい。
+</p>
+
+<p>
+ここで実験。
+</p>
+<pre>
+% echo 'text/datlist; ~/bin/datlist; x-htmloutput' &gt;&gt; ~/.w3m/mailcap
+% printf '#! /bin/sh\npwd\n' &gt; ~/bin/datlist
+% chmod +x ~/bin/datlist
+% pwd                      
+/tmp
+% w3m -dump -T text/datlist
+/tmp
+</pre>
+<p>
+これで好きなコマンドを実行できるけど、ちょっと長いな。-T t/lぐらいにしとくか。
+</p>
+
+<p>
+眠くなったのでまたつづく。
+</p>
+<!-- section end -->
+</div>
+<!-- 2006/01/11 end -->
+
+
+
+<hr class="hide">
+<!-- 2006/01/12 start -->
+<h2><a name="20060112" href="200601b.html#20060112">2006-01-12 (Thu)</a></h2>
+<!-- 2006-01-13 03:03:08 -->
+
+<div class="entry1">
+<h3><a name="200601121" title="200601121" href="200601b.html#200601121">■</a> 
+<a href="http://www.mozillazine.org/talkback.html?article=7892">[Thunderbird] Thunderbird 1.5 Released</a></h3>
+<p>
+早速会社のPCを更新。特に問題ない。
+</p><blockquote><p>
+Deleting attachments from messages.
+</p></blockquote><p>
+ってのがうれしいかも。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200601122" title="200601122" href="200601b.html#200601122">■</a> 
+[2ch] dat list</h3>
+<p>
+
+<a href="200601121">昨日</a>の続き。適当にERBで書いてみた。
+タイトルだけ抜き出している。
+</p>
+<pre>
+#! /bin/sh
+
+erb &lt;&lt;EOF
+&lt;html&gt;
+  &lt;head&gt;
+    &lt;meta http-equiv=&quot;Content-Type&quot; content=&quot;text/html; charset=x-sjis&quot;&gt;
+    &lt;title&gt;dat list&lt;/title&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;hr&gt;
+    &lt;ol&gt;
+% pwd = Dir.pwd
+% Dir['*.dat'].sort.each do |dat|
+%   open(dat) do |f|
+      &lt;li&gt;
+        &lt;a href=&quot;&lt;%= File.join(pwd, dat) %&gt;&quot;&gt;
+          &lt;%= f.gets.split(/&lt;&gt;/).last.chomp %&gt;
+        &lt;/a&gt;
+      &lt;/li&gt;
+%   end
+% end
+    &lt;/ol&gt;
+    &lt;hr&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+EOF
+</pre>
+<p>
+普通に#! /usr/bin/env erbで行こうと思ったが、
+そのままこの行まで表示されてしまいアウト。
+いい案は思い浮かばなかったのでsh scriptにしてhere docで対処。
+</p>
+<!-- section end -->
+</div>
+<!-- 2006/01/12 end -->
+
+
+
+<hr class="hide">
+<!-- 2006/01/13 start -->
+<h2><a name="20060113" href="200601b.html#20060113">2006-01-13 (Fri)</a></h2>
+<!-- 2006-01-14 03:07:25 -->
+
+<div class="entry1">
+<h3><a name="200601131" title="200601131" href="200601b.html#200601131">■</a> 
+[Perl] perl -de0</h3>
+<p>
+perlshが巷で話題になっているが、そういえばデバッガを起動すればirbのようなことはできるよな。
+</p>
+<pre>
+% perl -de0
+
+Loading DB routines from perl5db.pl version 1.28
+Editor support available.
+
+Enter h or `h h' for help, or `man perldebug' for more help.
+
+main::(-e:1):   0
+  DB&lt;1&gt; %hash = ('a'=&gt;1, 'b'=&gt;2);
+
+  DB&lt;2&gt; x %hash
+0  'a'
+1  1
+2  'b'
+3  2
+  DB&lt;3&gt; x \%hash
+0  HASH(0x9786048)
+   'a' =&gt; 1
+   'b' =&gt; 2
+</pre>
+<p>
+hashは\をつけるのがミソらしいよ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2006/01/13 end -->
+
+
+
+<hr class="hide">
+<!-- 2006/01/14 start -->
+<h2><a name="20060114" href="200601b.html#20060114">2006-01-14 (Sat)</a></h2>
+<!-- 2006-01-15 02:03:25 -->
+
+<div class="entry1">
+<h3><a name="200601141" title="200601141" href="200601b.html#200601141">■</a> 
+<a href="http://asvcs.com/">[Soft] A Simple Version Control System 0.8.6</a></h3>
+<blockquote><dl>
+<dt>
+About:
+<dd>
+A Simple Version Control System is an easy to install and easy to
+to use version/revision control system. It differs from most other version
+control systems in that it is designed to keep track of files in place. It
+does not allow any changes to be made to files; all changes require the
+users to change files externally with FTP or SSH access. It is very easy
+to set up and use. Users do not need to work with repository, branches,
+commit, and check-out files. All a user needs to do is upload the changes
+files and click Update, or if enabled, just wait for it to be updated
+automatically.
+</dl></blockquote><p>
+PHPで書かれているというのは珍しい。SQLサーバが必要。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200601142" title="200601142" href="200601b.html#200601142">■</a> 
+[Bloglines] なぜか勝手に日本語表示に</h3>
+<p>
+どういうわけで？トップなんか見ないから英語に直すのに30分ぐらい悩んだ。
+その後日本語になったり英語になったりと不安定。よくわからん。
+</p>
+<!-- section end -->
+</div>
+<!-- 2006/01/14 end -->
+
+
+
+<hr class="hide">
+<!-- 2006/01/15 start -->
+<h2><a name="20060115" href="200601b.html#20060115">2006-01-15 (Sun)</a></h2>
+<!-- 2006-01-16 02:17:23 -->
+
+<div class="entry1">
+<h3><a name="200601151" title="200601151" href="200601b.html#200601151">■</a> 
+[Gmail] filter</h3>
+<p>
+small capとかmicro capとかのspamがどうしても通ってしまうのでGmailのfilterを作った。
+Subjectのところに
+</p>
+<pre>
+(small cap) OR (micro cap) OR smallcap OR microcap
+</pre>
+<p>
+てな感じで。()とORがミソ。最初これがわかんなくて延々同じようなフィルタを作ってた。
+あとはtrashへ直行。
+spamってラベルがつけらないのが不便だな。
+</p>
+<!-- section end -->
+</div>
+<!-- 2006/01/15 end -->
+
+
+
+<hr class="hide">
+<!-- 2006/01/16 start -->
+<h2><a name="20060116" href="200601b.html#20060116">2006-01-16 (Mon)</a></h2>
+<!-- 2006-01-17 01:26:39 -->
+
+<div class="entry1">
+<h3><a name="200601161" title="200601161" href="200601b.html#200601161">■</a> 
+[Gmail] filter</h3>
+<p>
+昨日のつづき。
+trashに直行はいいんだけど、
+-in:spamしている転送している別のfilterには効き目がない。
+ということで昨日のパターンを転送filterにも書いてみたが、同じものを2度書くのはDRYの法則に反する。
+ちょっと考えて-in:trashという条件を加えればいいんだと気づいた。
+</p>
+<pre>
+Matches: -in:spam OR -in:trash
+Do this: Forward to 転送先
+</pre>
+<p>
+としてみたら全然飛ばなくなった。そりゃそうだな。ORじゃなくてANDだ。
+</p>
+<pre>
+Matches: -in:spam AND -in:trash
+Do this: Forward to 転送先
+</pre>
+<p>
+こっちが正解。
+</p>
+<!-- section end -->
+</div>
+<!-- 2006/01/16 end -->
+
+
+
+<hr class="hide">
+<!-- 2006/01/17 start -->
+<h2><a name="20060117" href="200601b.html#20060117">2006-01-17 (Tue)</a></h2>
+<!-- 2006-01-18 00:31:35 -->
+
+<div class="entry1">
+<h3><a name="200601171" title="200601171" href="200601b.html#200601171">■</a> 
+<a href="http://cygwin.com/ml/cygwin-announce/2006-01/msg00017.html">[Cygwin] Updated: cygwin-1.5.19-2</a></h3>
+<p>
+パッケージングにミスがあったようだ。
+</p>
+<pre>
+The -1 package accidentally contained files which are usually part of
+the mingw-runtime and w32api packages.
+
+=======================================================================
+NOTE:
+
+If you have installed the mingw-runtime and w32api packages, and if
+you already installed 1.5.19-1, then you should update to 1.5.19-2,
+and then, afterwards, restart setup.exe and force a reinstall of the
+mingw-runtime and w32api packages, otherwise you will later miss files.
+
+If you didn't install 1.5.19-1, just install 1.5.19-2 and you're done.
+=======================================================================
+</pre>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200601172" title="200601172" href="200601b.html#200601172">■</a> 
+[Cygwin] /usr/include/cygwin/socket.hのss_familiy</h3>
+<p>
+それはそれとして、もっと問題なのは/usr/include/cygwin/socket.hの
+struct sockaddr_storageのメンバ名がss_familiyと間違っていること。
+Rubyをmakeしたらエラーになるのでss_familyに置換するように。
+</p>
+<!-- section end -->
+</div>
+<!-- 2006/01/17 end -->
+
+
+
+<hr class="hide">
+<!-- 2006/01/18 start -->
+<h2><a name="20060118" href="200601b.html#20060118">2006-01-18 (Wed)</a></h2>
+<!-- 2006-01-19 01:18:35 -->
+
+<div class="entry1">
+<h3><a name="200601181" title="200601181" href="200601b.html#200601181">■</a> 
+<a href="http://www.busybox.net/">[Soft] BusyBox 1.1.0</a></h3>
+<blockquote><dl>
+<dt>
+Changes:
+<dd>
+New applet options and new applets were added: nice,  nohup,
+printenv, stat, sum, setconsole, e2fsprogs  (several executables),
+bbconfig (dumps the busybox  config), eject, less, mountpoint, runlevel,
+setsid, ether- wake, fakeidentd, zcip (for zeroconf), fuser, ipcrm, ipcs, 
+switch_root (for initramfs), mdev (mini-udev),  switch_root (for
+initramfs), readprofile.
+</dl></blockquote>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200601182" title="200601182" href="200601b.html#200601182">■</a> 
+<a href="http://labs.cybozu.co.jp/blog/kazuhoatwork/2006/01/c-0_04.php">[Soft] C 0.04</a></h3>
+<blockquote><dl>
+<dt>
+Changes:
+<dd>
+The program was rewritten in C. It now supports C++ and caches
+compiled binaries. Often-used scripts run much faster than in previous
+versions.
+</dl></blockquote>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200601183" title="200601183" href="200601b.html#200601183">■</a> 
+<a href="http://expat.sf.net/">[Soft] expat 2.0.0</a></h3>
+<blockquote><dl>
+<dt>
+About:
+<dd>
+Expat is a fast, non-validating, stream-oriented XML parsing
+library.
+</dl></blockquote>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200601184" title="200601184" href="200601b.html#200601184">■</a> 
+<a href="http://qdbm.sf.net/">[Soft] QDBM: Quick DataBase Manager 1.8.41</a></h3>
+<blockquote><dl>
+<dt>
+Changes:
+<dd>
+Compression of pages of B+ trees with LZO and BZIP was added. The
+configuration for VC++ was modified. The advanced API was enhanced.
+</dl></blockquote>
+<!-- section end -->
+</div>
+<!-- 2006/01/18 end -->
+
+
+
+<hr class="hide">
+<!-- 2006/01/19 start -->
+<h2><a name="20060119" href="200601b.html#20060119">2006-01-19 (Thu)</a></h2>
+<!-- 2006-01-20 01:52:02 -->
+
+<div class="entry1">
+<h3><a name="200601191" title="200601191" href="200601b.html#200601191">■</a> 
+[Gmail] フィルタの順番</h3>
+<p>
+stock関連のフィルタをちょっといじったら、なぜかすりぬけて転送先に届くようになってしまった。
+どこかパターンを間違えたんだろうと元に戻してもだめ。
+それじゃってんで単純なパターンにしてもだめ。
+なんでかなとよく見るとフィルタの順番が違うことに気づいた。
+修正したものが一番最後に移動している。
+そうか。この順番で実行してるんだな。
+stock関連のフィルタが一番最後だから、その前に転送されてしまう、と。
+というわけで転送のフィルタを強制的に更新してみたらうまくいった。
+今まではたまたまうまくいく順番だったわけだ。
+</p>
+
+<p>
+またバッドノウハウが1つ増えた。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200601192" title="200601192" href="200601b.html#200601192">■</a> 
+[Mail] ruby-talk news gateway</h3>
+<p>
+ruby-talk MLの流量が少ない。gatewayがとまってるっぽい。
+</p>
+<!-- section end -->
+</div>
+<!-- 2006/01/19 end -->
+
+
+
+<hr class="hide">
+<!-- 2006/01/20 start -->
+<h2><a name="20060120" href="200601b.html#20060120">2006-01-20 (Fri)</a></h2>
+<!-- 2006-01-21 00:25:34 -->
+
+<div class="entry1">
+<h3><a name="200601201" title="200601201" href="200601b.html#200601201">■</a> 
+<a href="http://www.in-ulm.de/~mascheck/various/shebang/">[Unix] The '#!'-magic, some details about the shebang mechanism on various Unix flavours</a></h3>
+<p>
+各OSの違いがなかなか興味深い。
+</p><blockquote><ul>
+<li>FreeBSD earlier than 6.0 and BSD/OS split up the arguments like a
+shell to fill up  argv[].<br>
+Thanks to Akinori Musha for pointing out the change on FreeBSD.
+</ul></blockquote><p>
+FreeBSD 6.0の情報もすでに載ってるというか、さすがknuさんだ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2006/01/20 end -->
+
+<hr>
+<div>
+<a href="200601a.html">&lt;Prev(,)</a> | 
+<a href="200601c.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

@@ -1,0 +1,737 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2014-12-c</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="201412b.html">
+<link rel="next" href="201501a.html">
+
+<link rel="stylesheet" type="text/css" href="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.css">
+<script async type="text/javascript" src="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.js"></script>
+<script type="text/javascript">
+<!--       
+$(document).ready(function() {
+  prettyPrint();
+});
+-->
+</script>
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2014年12月下旬〜</p>
+<hr>
+<div>
+<a href="201412b.html" accesskey=",">&lt;Older(,)</a> | 
+<a href="201501a.html" accesskey=".">Newer(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2014/12/21 start -->
+<h2><a name="20141221" href="201412c.html#20141221">2014-12-21 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="201412211" title="201412211" href="201412c.html#201412211">■</a> 
+awkで約分 #シェル芸</h3>
+<p>
+ユークリッドの互除法を使うというのをどこかで見かけたのでawkで書いてみた。<br>
+<a href="http://ja.wikipedia.org/wiki/%E3%83%A6%E3%83%BC%E3%82%AF%E3%83%AA%E3%83%83%E3%83%89%E3%81%AE%E4%BA%92%E9%99%A4%E6%B3%95">ユークリッドの互除法</a>を使えば最大公約数が簡単に求められる。
+</p><ol>
+<li>入力を m, n (m ≧ n) とする。
+<li>n = 0 なら、 m を出力してアルゴリズムを終了する。
+<li>m を n で割った余りを新たに n とし、更に 元のnを新たにm とし 2. に戻る。
+</ol><p>
+awkでこれを表現すると
+</p>
+<pre>
+while (n) {
+  r = m % n
+  m = n
+  n = r
+}
+</pre>
+<p>
+となる。これをゴルフすると
+</p>
+<pre>
+while (n = m % (m = n));
+</pre>
+<p>
+となる。
+</p>
+<p>
+先日の勉強会のQ7にあてはめて前半の通分を略すと
+</p>
+<pre>
+% echo 1532 2880 | awk '{m = $1; n = $2; while(n = m % (m = n)); print $1 / m &quot;/&quot; $2 / m}' 
+383/720
+</pre>
+<p>
+となる。おのおのを最大公約数で割れば約分したことになる。
+</p>
+<!-- section end -->
+</div>
+<!-- 2014/12/21 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/12/22 start -->
+<h2><a name="20141222" href="201412c.html#20141222">2014-12-22 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="201412221" title="201412221" href="201412c.html#201412221">■</a> 
+bashとzshで約分 #シェル芸</h3>
+<p>
+昨日のawkで書いたものをそのままbashへ移植してもちゃんと動く。
+</p>
+<pre>
+% bash -c 'echo 1532 2880 | { read a b; m=$a; n=$b; while ((n=m%(m=n)));do :;done; echo $[a/m]/$[b/m]; }'  
+383/720
+</pre>
+<p>
+だが、zshだとだめ。
+</p>
+<pre>
+% zsh -c 'echo 1532 2880 | { read a b; m=$a; n=$b; while ((n=m%(m=n)));do :;done; echo $[a/m]/$[b/m]; }'
+0/1
+</pre>
+<p>
+どうもn=m%(m=n)でm=nを評価した瞬間にその前にあるmもnになってしまうからみたい。<br>
+1回目にすでにnが0になっている。<br>
+それならばと無駄に(t=m)にしてみたらいけた。
+</p>
+<pre>
+% zsh -c 'echo 1532 2880 | { read a b; m=$a; n=$b; while ((n=(t=m)%(m=n)));do :;done; echo $[a/m]/$[b/m]; }'
+383/720
+</pre>
+<p>
+最初からこれを見せられたら謎でしかないな。
+</p>
+<!-- section end -->
+</div>
+<!-- 2014/12/22 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/12/23 start -->
+<h2><a name="20141223" href="201412c.html#20141223">2014-12-23 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="201412231" title="201412231" href="201412c.html#201412231">■</a> 
+Google Chromeのプロファイルを削除</h3>
+<p>
+軽量化しようとぐぐってみたが、どうも対策として再インストールしかないようで。<br>
+再インストールというかユーザープロファイルを初期化って話なので、単にmvしてみた。<br>
+~/.config/google-chromeをどこかへ退避させる。<br>
+拡張とかもろもろの設定はだいたい同期すれば元に戻る。<br>
+同期というものGoogleへログインすれば裏で勝手に行なわれる。<br>
+ここでだいたいというのが曲者で、たとえばVichromeとかStylishの設定は戻ってこない。<br>
+こいつらはsqlite3形式で独自に管理されているので、そのまま使いたければそのまま持ってくればok。<br>
+</p>
+<pre>
+Vichrome
+~/.config/google-chrome/Default/Local Storage/chrome-extension_gghkfhpblkcmlkmpcpgaajbbiikbhpdi_0.localstorage
+Stylisth
+~/.config/google-chrome/Default/databases/chrome-extension_dhdgffkkebhmkfjojejmpbldmpobfkfo_0
+~/.config/google-chrome/Default/databases/chrome-extension_fjnbnpbmkenffdnngjfgmeleoegfcffe_0
+</pre>
+<p>
+実は33.0以降でmvするといろいろと面倒なことが起こるので外からcookieを参照してる場合はやらないほうがいい。
+</p>
+<!-- section end -->
+</div>
+<!-- 2014/12/23 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/12/24 start -->
+<h2><a name="20141224" href="201412c.html#20141224">2014-12-24 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="201412241" title="201412241" href="201412c.html#201412241">■</a> 
+Google Chromeのcookieが暗号化されている</h3>
+<p>
+新たに作ったプロファイルのcookieをsqlite3で読み出してみたら、<br>
+valueが空でencrypted_valueへ移動していた。<br>
+古いバージョンから使い続けているとそのままvalueを使うようで、<br>
+新規cookieはencrypted_valueへ移行してるようだ。<br>
+そのおかげでbrowserのcookieを読み出して流用がしにくくなったね。<br>
+ぐぐるとpythonのスクリプトとか出てくるが、成功しなかった。
+</p>
+<p>
+今はfitbitにアクセスするときに使ってるぐらいなので、<br>
+ログイン処理を自前で用意して毎回ログインするようにして対処。
+</p>
+<pre>
+% curl -c fitbit-cookie.txt 'https://www.fitbit.com/login' \
+  --data 'login=Log+In&amp;includeWorkflow=&amp;redirect=&amp;switchToNonSecureOnRedirect=&amp;disableThirdPartyLogin=false&amp;email=メールアドレス&amp;password=パスワード&amp;rememberMe=true'
+</pre>
+<p>
+たぶんもっと省略できると思うけど、これでいけている。
+</p>
+<!-- section end -->
+</div>
+<!-- 2014/12/24 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/12/25 start -->
+<h2><a name="20141225" href="201412c.html#20141225">2014-12-25 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="201412251" title="201412251" href="201412c.html#201412251">■</a> 
+<a href="http://nullx0.blog.fc2.com/blog-entry-110.html">化け猫アイコンメーカーの設定保存</a></h3>
+<p>
+微妙に再現できなくて困っていたら保存できるようになっていた。<br>
+これでサンタ帽もかぶせることもできる！
+</p>
+<!-- section end -->
+</div>
+<!-- 2014/12/25 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/12/26 start -->
+<h2><a name="20141226" href="201412c.html#20141226">2014-12-26 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="201412261" title="201412261" href="201412c.html#201412261">■</a> 
+忘年会</h3>
+<p>
+馬場。今年は19:00からとちょっと遅め。<br>
+システムがまた変わって食べ放題になっていた。<br>
+そのため一人1500円ぐらい。<br>
+納会からの流れ。
+</p>
+<p>
+なぜ迷子に。
+</p>
+<p>
+例によって公開内緒話から。<br>
+どうすればOpenSSLを外せるか。<br>
+cURL同梱はどうだ。<br>
+転職おめでとうございます。
+</p>
+<p>
+前向きに検討。
+</p>
+<p>
+CTOの仕事とは何か？
+</p>
+<p>
+四捨五入して50。
+</p>
+<p>
+security@にセキュリティとは関係ないメールが来るのは、<br>
+www.ruby-lang.orgに書かれている唯一のメールアドレスだから。<br>
+(matzのアドレスもあるのでそっちにも行っているかも。)
+</p>
+<p>
+Heartなんちゃらやらshellshockやら大変な年だった。
+</p>
+<p>
+jqは癖があるけど、ま、いろいろと使わないといけなかったりする。
+</p>
+<p>
+@eban, @gotoyuzo, @hemge, @hsbt, @nahi
+</p>
+<!-- section end -->
+</div>
+<!-- 2014/12/26 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/12/27 start -->
+<h2><a name="20141227" href="201412c.html#20141227">2014-12-27 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="201412271" title="201412271" href="201412c.html#201412271">■</a> 
+factorで素数判定</h3>
+<p>
+factorという便利なコマンドがある。引数に数値を渡すと素因数分解してくれる。
+</p>
+<pre>
+% factor 999 9999
+999: 3 3 3 37
+9999: 3 3 11 101
+</pre>
+<p>
+標準入力も受け付けてくれて至れり尽くせりだ。
+</p>
+<pre>
+% echo 999 9999 | factor
+999: 3 3 3 37
+9999: 3 3 11 101
+</pre>
+<p>
+自分自身しか出力しないときは素数と判定できる。
+</p>
+<pre>
+% factor 19    
+19: 19
+</pre>
+<p>
+つまりフィールド数が2個のときが素数なわけだ。<br>
+awkを使えば簡単に判断できる。たとえば20までの素数が知りたければ
+</p>
+<pre>
+% factor {2..20} | awk 'NF==2{print $2}' | xargs        
+2 3 5 7 11 13 17 19
+</pre>
+<p>
+でいいわけだ。これを短くすると
+</p>
+<pre>
+% factor {2..20} | awk 'NF==2&amp;&amp;$0=$2' | xargs
+2 3 5 7 11 13 17 19
+</pre>
+<p>
+と書ける。2個ということは3個目以降は空とみなせるので
+</p>
+<pre>
+% factor {2..20} | awk '!$3&amp;&amp;$0=$2' | xargs
+2 3 5 7 11 13 17 19
+</pre>
+<p>
+でもいい。これで最終形だと思っていたが、実はまだ短くなることに最近気づいた。
+</p>
+<pre>
+% factor {2..20} | awk '$0*=!$3' | xargs
+2 3 5 7 11 13 17 19
+</pre>
+<p>
+最初のフィールドは&quot;:&quot;がついてて邪魔だが数値として扱うと後ろの文字は無視される。<br>
+さらに!は0か1になるので
+</p>
+<pre>
+% awk 'BEGIN{ print &quot;19:&quot; * 1, &quot;19:&quot; * 0 }'
+19 0
+</pre>
+<p>
+1のときはちゃんと数値になり、0のときは出力されない。<br>
+うまい具合にぴったりだ。<br>
+あと&quot;:&quot;を消すには&quot;19:&quot; + 0というのもよくやる。ゴルフ的には+&quot;19:&quot;だが。
+</p>
+<p>
+いやいや、
+<a href="200711a.html#200711081">似たようなこと既に書いていたよ。</a></p>
+<!-- section end -->
+</div>
+<!-- 2014/12/27 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/12/28 start -->
+<h2><a name="20141228" href="201412c.html#20141228">2014-12-28 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="201412281" title="201412281" href="201412c.html#201412281">■</a> 
+bashで関数を消す</h3>
+<p>
+unsetで消せるが、注意が必要。同じ名前の変数があるとそちらをまず消す。<br>
+もう一度unsetすると関数が消える。
+</p>
+<pre>
+$ foo=1
+$ foo(){ date; }
+$ type foo
+foo は関数です
+foo () 
+{ 
+    date
+}
+$ echo $foo
+1
+$ unset foo
+$ echo $foo
+
+$ type foo
+foo は関数です
+foo () 
+{ 
+    date
+}
+$ unset foo
+$ type foo
+bash: type: foo: 見つかりません
+</pre>
+<p>
+関数を消したいときはunset -fで。
+</p>
+<pre>
+$ foo=1
+$ foo(){ date; }
+$ type foo
+foo は関数です
+foo () 
+{ 
+    date
+}
+$ unset -f foo
+$ echo $foo
+1
+$ type foo
+bash: type: foo: 見つかりません
+</pre>
+<!-- section end -->
+</div>
+<!-- 2014/12/28 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/12/29 start -->
+<h2><a name="20141229" href="201412c.html#20141229">2014-12-29 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="201412291" title="201412291" href="201412c.html#201412291">■</a> 
+AOL Readerで重複しているアイテムを既読に</h3>
+<p>
+Yahoo Pipes!で作ったRSSに日付をつけなかったもんだから、<br>
+更新すると同じタイトルが何度も含まれてしまう事案が発生。<br>
+Yahoo Pipes!のほう直せばいいが、jqでなんとかしてみる。
+</p>
+<p>
+まず、該当するRSSのリストを取得。トークンは
+<a href="201412a.html#20141206">例によってブラウザから。</a><br>
+リストはjsonで。
+</p>
+<pre>
+% curl -s -H 'Token: トークン' \
+  'https://reader.aol.com/reader/api/0/stream/contents/feed/XXXXXX?n=10000&amp;xt=user/-/state/read' &gt; tmp.json
+</pre>
+<p>
+jsonはこんな感じになっている。
+</p>
+<pre>
+{
+  &quot;items&quot;: [
+    {
+      &quot;id&quot;: &quot;XXXXXX/1234567890123456789&quot;,
+      &quot;categories&quot;: [],
+      &quot;crawlTimeMsec&quot;: &quot;1419821730319870&quot;,
+      &quot;timestampUsec&quot;: &quot;1419821730319&quot;,
+      &quot;title&quot;: &quot;タイトル1&quot;,
+      &quot;published&quot;: &quot;2014-12-29 02:55:30&quot;,
+      &quot;updated&quot;: &quot;2014-12-29 02:55:30&quot;,
+      &quot;summary&quot;: {
+        &quot;direction&quot;: &quot;ltr&quot;,
+        &quot;content&quot;: &quot;hogehoge&quot;
+      },
+      &quot;likingUsers&quot;: [],
+      &quot;comments&quot;: [],
+      &quot;annotations&quot;: [],
+      &quot;origin&quot;: {
+        &quot;streamId&quot;: &quot;feed/XXXXXX&quot;,
+        &quot;title&quot;: &quot;foo bar&quot;,
+        &quot;htmlUrl&quot;: &quot;fake&quot;
+      },
+      &quot;alternate&quot;: [
+        {
+          &quot;href&quot;: &quot;http://127.0.0.1/&quot;
+        }
+      ],
+      &quot;author&quot;: &quot;&quot;,
+      &quot;enclosure&quot;: []
+    },
+    ...
+  ]
+}
+</pre>
+<p>
+このitems[].titleでgroup_byして一番新しいもの以外を既読にすればいい。そのリストをjqで作る。
+</p>
+<pre>
+% jq -r '.items|[.[]|{title,id}]|group_by(.title)|del(.[][0])|.[][].id' tmp.json
+</pre>
+<p>
+これでok。あとは
+<a href="201412b.html#20141212">先日の要領</a>で既読にする。
+</p>
+<!-- section end -->
+</div>
+<!-- 2014/12/29 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/12/30 start -->
+<h2><a name="20141230" href="201412c.html#20141230">2014-12-30 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="201412301" title="201412301" href="201412c.html#201412301">■</a> 
+<a href="http://blog.ueda.asia/?p=4852">【問題】年末年始シェル芸問題集を解いた</a></h3>
+
+<h4><a name="201412301S1" href="201412c.html#201412301S1">_</a> <strong>Q1 重複しているJPEG画像リスト</strong>: </h4>
+<div class="sub">
+<p>
+Ubuntuにはduffというコマンドが存在する。
+</p>
+<pre>
+% find ~ -name '*.jpg' -type f -print0 | duff -0 | xargs -0 -n1
+前略
+2 files in cluster 290 (107509 bytes, digest 5462549a45443053e2ab416e9162c67649c80e2e)
+/home/eban/ebooks/150-guin-001-r90-jpg/074.jpg
+/home/eban/ebooks/png/images/image_222.jpg
+2 files in cluster 291 (81913 bytes, digest 548129fe0ad326ebf7c768ea5bd7833069b61a16)
+/home/eban/ebooks/150-guin-001-r90-jpg/172.jpg
+/home/eban/ebooks/png/images/image_516.jpg
+2 files in cluster 292 (92154 bytes, digest eee80c51d3261d5db206c49160eab6cff107433b)
+/home/eban/ebooks/150-guin-001-r90-jpg/099.jpg
+/home/eban/ebooks/png/images/image_297.jpg
+2 files in cluster 293 (108541 bytes, digest 946f4efe81ba23e7cb619648912eb3e5d70ab18e)
+/home/eban/ebooks/150-guin-001-r90-jpg/036.jpg
+/home/eban/ebooks/png/images/image_108.jpg
+</pre>
+
+</div>
+<h4><a name="201412301S2" href="201412c.html#201412301S2">_</a> <strong>Q2 羽田空港の緯度経度</strong>: </h4>
+<div class="sub">
+<p>
+Google MapのAPIを使うと簡単。
+</p>
+<pre>
+% curl -s 'http://maps.google.com/maps/api/geocode/json?address=羽田空港' | \
+  jq -r '.results[0].geometry.location|&quot;緯度:\(.lat), 経度:\(.lng)&quot;'
+緯度:35.5493932, 経度:139.7798386
+</pre>
+
+</div>
+<h4><a name="201412301S3" href="201412c.html#201412301S3">_</a> <strong>Q3 ネイピア数</strong>: </h4>
+<div class="sub">
+<p>
+bc -lとやると裏で級数展開してくれる。
+</p>
+<pre>
+% echo 'scale=1000;e(1)' | bc -l                    
+2.718281828459045235360287471352662497757247093699959574966967627724\
+07663035354759457138217852516642742746639193200305992181741359662904\
+35729003342952605956307381323286279434907632338298807531952510190115\
+73834187930702154089149934884167509244761460668082264800168477411853\
+74234544243710753907774499206955170276183860626133138458300075204493\
+38265602976067371132007093287091274437470472306969772093101416928368\
+19025515108657463772111252389784425056953696770785449969967946864454\
+90598793163688923009879312773617821542499922957635148220826989519366\
+80331825288693984964651058209392398294887933203625094431173012381970\
+68416140397019837679320683282376464804295311802328782509819455815301\
+75671736133206981125099618188159304169035159888851934580727386673858\
+94228792284998920868058257492796104841984443634632449684875602336248\
+27041978623209002160990235304369941849146314093431738143640546253152\
+09618369088870701676839642437814059271456354906130310720851038375051\
+01157477041718986106873969655212671546889570350354
+</pre>
+
+</div>
+<h4><a name="201412301S4" href="201412c.html#201412301S4">_</a> <strong>Q4 base64を何度も実行する</strong>: </h4>
+<div class="sub">
+<p>
+最初は適当に50回ほど実行した。
+</p>
+<pre>
+% tmp=$(cat message2015.txt); for i in {1..31};do tmp=$(echo &quot;$tmp&quot; | base64 -d); done; echo &quot;$tmp&quot;  
+:(){: | : &amp;};:
+</pre>
+
+</div>
+<h4><a name="201412301S5" href="201412c.html#201412301S5">_</a> <strong>Q5 円周率</strong>: </h4>
+<div class="sub">
+<p>
+atan(1)*4で。
+</p>
+<pre>
+% echo 'scale=1000;a(1)*4' | bc -l
+3.141592653589793238462643383279502884197169399375105820974944592307\
+81640628620899862803482534211706798214808651328230664709384460955058\
+22317253594081284811174502841027019385211055596446229489549303819644\
+28810975665933446128475648233786783165271201909145648566923460348610\
+45432664821339360726024914127372458700660631558817488152092096282925\
+40917153643678925903600113305305488204665213841469519415116094330572\
+70365759591953092186117381932611793105118548074462379962749567351885\
+75272489122793818301194912983367336244065664308602139494639522473719\
+07021798609437027705392171762931767523846748184676694051320005681271\
+45263560827785771342757789609173637178721468440901224953430146549585\
+37105079227968925892354201995611212902196086403441815981362977477130\
+99605187072113499999983729780499510597317328160963185950244594553469\
+08302642522308253344685035261931188171010003137838752886587533208381\
+42061717766914730359825349042875546873115956286388235378759375195778\
+18577805321712268066130019278766111959092164201988
+</pre>
+
+</div>
+<h4><a name="201412301S6" href="201412c.html#201412301S6">_</a> <strong>Q6 {a,b,c,d,e}からすべての組み合わせ </strong>: </h4>
+<div class="sub">
+<p>
+なんかsortすると順番があれだが。
+</p>
+<pre>
+% printf &quot;%s\n&quot; {a,,,,}{,b,,,}{,,c,,}{,,,d,}{,,,,e} | sort -u
+
+a
+ab
+abc
+abcd
+abcde
+abce
+abd
+abde
+abe
+ac
+acd
+acde
+ace
+ad
+ade
+ae
+b
+bc
+bcd
+bcde
+bce
+bd
+bde
+be
+c
+cd
+cde
+ce
+d
+de
+e
+</pre>
+</div>
+<!-- section end -->
+</div>
+<!-- 2014/12/30 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/12/31 start -->
+<h2><a name="20141231" href="201412c.html#20141231">2014-12-31 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="201412311" title="201412311" href="201412c.html#201412311">■</a> 
+<a href="http://blog.ueda.asia/?p=4852">Q7 完全数</a></h3>
+<p>
+14474011154664524427946373126085988481573677491474835889066354349131199152128<br>
+とりあえず16進で見てみる。
+</p>
+<pre>
+% echo 'obase=16;14474011154664524427946373126085988481573677491474835889066354349131199152128' | bc
+1FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFC0000000000000000000000000000000
+</pre>
+<p>
+かなり特徴的だとわかる。上位は全部ビットが立ち、下位は寝ている。<br>
+この時点で2のべき乗で割れることもわかる。2進で0の数を数えてみよう。
+</p>
+<pre>
+% echo 'obase=2;14474011154664524427946373126085988481573677491474835889066354349131199152128' | bc    
+11111111111111111111111111111111111111111111111111111111111111111111\
+11111111111111111111111111111111111111111111111111111111111000000000\
+00000000000000000000000000000000000000000000000000000000000000000000\
+0000000000000000000000000000000000000000000000000
+% echo 'obase=2;14474011154664524427946373126085988481573677491474835889066354349131199152128' | bc | tr -cd 0 | wc -c
+126
+</pre>
+<p>
+つまり2の126乗で割り切れる。逆に1の数は
+</p>
+<pre>
+% echo 'obase=2;14474011154664524427946373126085988481573677491474835889066354349131199152128' | bc | tr -cd 1 | wc -c
+127
+</pre>
+<p>
+なので結局bc的には (2^127-1)*(2^126) となる。一応2^127-1が素数であることも確認しておく。
+</p>
+<pre>
+% echo '2^127-1' | bc | xargs openssl prime     
+7FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF is prime
+</pre>
+<p>
+というわけであとは約数の組み合わせで足していけばいい。
+</p>
+<p>
+2^126のほうは2^0+2^1+...+2^126なので2進数的には0から126までつまり127ビット全部立っていることを意味する。<br>
+要するに2^127-1だ。どこかで見た値だ。<br>
+つぎに2^127-1との組み合わせだが、こちらは(2^127-1)*(2^0+2^1+...+2^125)なので(その数自身は除くので125までになる)、<br>
+(2^127-1)*(2^126-1)となる。これにさっきの2^127-1を足すと、
+(2^127-1)*(2^126-1)+2^127-1 となり、まとめると<br>
+(2^127-1)*(2^126) となりめでたく完全数になることが確認できた。<br>
+って、最後は全然シェル関係ないじゃん。というわけでtwitterでは
+</p>
+<pre>
+% echo '170141183460469231731687303715884105727*(2^126-1)+2^127-1'|BC_LINE_LENGTH=99 bc
+14474011154664524427946373126085988481573677491474835889066354349131199152128
+</pre>
+<p>
+でごまかしてみた。
+
+</p>
+<!-- section end -->
+</div>
+<!-- 2014/12/31 end -->
+
+<hr>
+<div>
+<a href="201412b.html">&lt;Older(,)</a> | 
+<a href="201501a.html">Newer(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

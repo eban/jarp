@@ -1,0 +1,378 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2013-9-b</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="201309a.html">
+<link rel="next" href="201309c.html">
+
+<link rel="stylesheet" type="text/css" href="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.css">
+<script type="text/javascript" src="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.js"></script>
+<script type="text/javascript">
+<!--       
+$(document).ready(function() {
+  prettyPrint();
+});
+-->
+</script>
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2013年9月中旬〜</p>
+<hr>
+<div>
+<a href="201309a.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="201309c.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2013/09/11 start -->
+<h2><a name="20130911" href="201309b.html#20130911">2013-09-11 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="201309111" title="201309111" href="201309b.html#201309111">■</a> 
+Cygwinでjq</h3>
+<p>
+configureしてmakeでいけるかと思ったら、結構面倒だった。<br>
+git clone git://github.com/stedolan/jq.git して、<br>
+autoreconfしなきゃいけないけど、これが通らない。<br>
+どうもautomakeが新しすぎてバグにぶち当たるようで。
+</p>
+<pre>
+% autoreconf
+automake-1.14: error: global options already processed
+automake-1.14: Please contact &lt;bug-automake@gnu.org&gt;.
+ at /usr/share/automake-1.14/Automake/Channels.pm line 662
+        Automake::Channels::msg('automake', '', 'global options already processed') called at /usr/share/automake-1.14/Automake/ChannelDefs.pm line 212
+        Automake::ChannelDefs::prog_error('global options already processed') called at /usr/share/automake-1.14/Automake/Options.pm line 421
+        Automake::Options::process_global_option_list('HASH(0x600924fb8)') called at /bin/automake-1.14 line 5331
+        Automake::scan_autoconf_traces('configure.ac') called at /bin/automake-1.14 line 5431
+        Automake::scan_autoconf_files() called at /bin/automake-1.14 line 8259
+autoreconf-2.69: automake failed with exit status: 29
+</pre>
+<p>
+Cygwinでautomakeをインストールすると、<br>
+無駄に過去のバージョンまで一緒にインストールされるけど、<br>
+ひょっとしてこういう自体に対処するため？<br>
+というわけで1個前のバージョンを指定してみる。
+</p>
+<pre>
+% WANT_AUTOMAKE=1.13 autoreconf
+parallel-tests: error: required file 'config/test-driver' not found
+parallel-tests:   'automake --add-missing' can install 'test-driver'
+autoreconf-2.69: automake failed with exit status: 1
+% WANT_AUTOMAKE=1.13 automake --add-missing
+parallel-tests: installing 'config/test-driver'
+</pre>
+<p>
+これでconfigureができあがった。<br>
+あといろんなgemを入れないとドキュメントができないらしいが、<br>
+jq自身だけできればいいならこれでok。
+</p>
+<!-- section end -->
+</div>
+<!-- 2013/09/11 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/09/12 start -->
+<h2><a name="20130912" href="201309b.html#20130912">2013-09-12 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="201309121" title="201309121" href="201309b.html#201309121">■</a> 
+判子をかすれさせるには</h3>
+<p>
+判子を作ったはいいが、あまりにも完璧すぎていけない。<br>
+一部かすれるとかないとらしくない。<br>
+convertでできるもんかな。
+</p>
+<!-- section end -->
+</div>
+<!-- 2013/09/12 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/09/13 start -->
+<h2><a name="20130913" href="201309b.html#20130913">2013-09-13 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="201309131" title="201309131" href="201309b.html#201309131">■</a> 
+またNo-IPからexpireするぞと警告が</h3>
+<p>
+noip2はだめだなこりゃ。というわけでddclientを試す。<br>
+インストールはパッケージがあるので普通にaptitudeで。<br>
+serverはdynupdate.no-ip.comで、更新プロトコルはdyndns2で、<br>
+ネットワークインターフェイスはとりあえずeth0にしてそのまま続けて完了。<br>
+eth0だとプライベートアドレスになってしまうので、<br>
+/etc/ddclient.confを編集してuse=の行を
+</p>
+<pre>
+use=web, web=checkip.dyndns.com/, web-skip='IP Address'
+</pre>
+<p>
+に変更。sudo ddclient -daemon=0 -debug -verbose -noquietして確認。<br>
+最後に
+</p>
+<pre>
+SUCCESS:  updating XXXXXXX.no-ip.org: good: IP address set to XXX.XXX.XXX.XXX
+</pre>
+<p>
+と出てくればok。
+</p>
+<!-- section end -->
+</div>
+<!-- 2013/09/13 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/09/14 start -->
+<h2><a name="20130914" href="201309b.html#20130914">2013-09-14 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="201309141" title="201309141" href="201309b.html#201309141">■</a> 
+No-IPの更新は結局curlで</h3>
+<p>
+noip2とかddclientを常駐させとくのもばからしいし、<br>
+curl一発cronで1日と16日に実行でいいかという結論に。<br>
+</p>
+<pre>
+0 0 1,16 * * curl -sn &quot;https://dynupdate.no-ip.com/nic/update?hostname=XXXXXXXX.no-ip.org&amp;myip=`curl -s ifconfig.me`&quot;
+</pre>
+<p>
+curlもftpみたいに~/.netrcに
+</p>
+<pre>
+machine dynupdate.no-ip.com login アカウント名 password パスワード
+</pre>
+<p>
+と書いておけば-nで読み込んでくれる。ifconfig.meはIPアドレスを返してくれるので便利。<br>
+User-Agentで判断してる。ifconfig.me/ipなら確実にIPアドレスを返す。
+</p>
+<!-- section end -->
+</div>
+<!-- 2013/09/14 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/09/15 start -->
+<h2><a name="20130915" href="201309b.html#20130915">2013-09-15 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="201309151" title="201309151" href="201309b.html#201309151">■</a> 
+JSONの残念なところ</h3>
+<p>
+最後のカンマが許されないのでエラーになってしまう。<br>
+hashとか配列とかいじるときにコピペするとどうしえも残りがち。<br>
+しょうがないので
+</p>
+<pre>
+{
+  &quot;foo&quot;: 1,
+  &quot;bar&quot;: 2,
+  &quot;ダミーの終わり&quot;: 0
+}
+</pre>
+<p>
+みたいなことしてるけど、あまりかっこよくない。
+</p>
+<!-- section end -->
+</div>
+<!-- 2013/09/15 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/09/16 start -->
+<h2><a name="20130916" href="201309b.html#20130916">2013-09-16 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="201309161" title="201309161" href="201309b.html#201309161">■</a> 
+o(pen)を定義</h3>
+<p>
+Linuxでは/bin/openが存在するが、これはopenvtへのsymlinkらしい。<br>
+openvtなんてコマンドがあることすら知らなかったが実にもったいない名前ではある。<br>
+どこかのOSのように関連付けられたコマンドを起動するほうがよさげだ。<br>
+というわけでXfceだったらexo-open、その他だったらgnome-openを起動するようにした。<br>
+ついでに今さらopenでもないのでもうoにした。
+</p>
+<pre>
+#! /bin/sh
+
+open=gnome-open
+if [ &quot;$GDMSESSION&quot; = xfce ]; then
+  open=exo-open
+fi
+exec &quot;$open&quot; &quot;$@&quot;
+</pre>
+<p>
+今まではXfceでもgnome-openを使っていたが、<br>
+フォルダを指定した時にGNOME上じゃないとやはり起動に時間がかかる。<br>
+exo-openならXfceのファイルマネージャーが開かれるので速い。<br>
+まあ、GNOMEはあまり使わないのでexo-openを直接使えばいいんだが。
+</p>
+<!-- section end -->
+</div>
+<!-- 2013/09/16 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/09/17 start -->
+<h2><a name="20130917" href="201309b.html#20130917">2013-09-17 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="201309171" title="201309171" href="201309b.html#201309171">■</a> 
+xdg-open</h3>
+<p>
+わざわざ作らなくてもすでにxdg-openがあるとの情報をemasakaさんから得た。<br>
+というわけで、もうalias o=xdg-openだけでいいね。
+</p>
+<!-- section end -->
+</div>
+<!-- 2013/09/17 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/09/18 start -->
+<h2><a name="20130918" href="201309b.html#20130918">2013-09-18 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="201309181" title="201309181" href="201309b.html#201309181">■</a> 
+fstabでパス名に空白を使う</h3>
+<p>
+cifsでmountするときは相手側がWindowsなので空白が含まれているときがある。<br>
+これを/etc/fstabで設定しようとしてはたと困った。<br>
+fstabでは空白は区切り文字なのでescapeしないといけない。<br>
+単にbackslashでquoteしてもだめ。&quot;&quot;で全体をくくってみてもだめ。<br>
+man fstabしてもman mountしてもそのあたりの記述が見つからない。<br>
+そういえばcygwinのfstabでは8進数が使えたのでやっぱそうなのかと試すといけた。
+</p>
+<pre>
+//server/share/foo bar/hoge
+</pre>
+<p>
+のような場合は
+</p>
+<pre>
+//server/share/foo\040bar/hoge
+</pre>
+<p>
+とすればok。注意点としては\40では駄目。0も必要。\x20のような16進も使えない。
+</p>
+<!-- section end -->
+</div>
+<!-- 2013/09/18 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/09/19 start -->
+<h2><a name="20130919" href="201309b.html#20130919">2013-09-19 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="201309191" title="201309191" href="201309b.html#201309191">■</a> 
+GmaneのRSSの空白の扱い</h3>
+<p>
+なかださんから以前指摘された件。@rubyciの大元はruby-cvs MLだけどGmaneのRSSを利用してる。<br>
+でなぜかたまに空白がなくなる。RSSの段階でなくなってるわけでなぜこんなことになってるのか。<br>
+たとえば
+<a href="https://twitter.com/rubyci/status/380566099907342336">これ</a>はなぜかmakeSymbolとなってしまっている。
+</p>
+<p>
+それはそれとしておめでとう！
+</p>
+<!-- section end -->
+</div>
+<!-- 2013/09/19 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/09/20 start -->
+<h2><a name="20130920" href="201309b.html#20130920">2013-09-20 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="201309201" title="201309201" href="201309b.html#201309201">■</a> 
+cURLでDiigo bookmark</h3>
+<p>
+まず
+<a href="https://www.diigo.com/api_keys/new/">API Key</a>を入手。アカウント名とパスワードは例によって~/.netrcにあらかじめ追加しておく。
+</p>
+<pre>
+machine secure.diigo.com login アカウント名 password パスワード
+</pre>
+<p>
+あとはURLエンコードするところを--data-urlencodeで指定する。titleとかdescriptionとか。<br>
+--trace-ascii -すると何を渡しているかもわかるのでデバッグ時に便利。
+</p>
+<pre>
+% curl --trace-ascii - -sn -d 'key=api_key&amp;url=http://jarp.does.notwork.org/&amp;shared=no' \
+  --data-urlencode 'title=テスト' https://secure.diigo.com/api/v2/bookmarks
+</pre>
+<!-- section end -->
+</div>
+<!-- 2013/09/20 end -->
+
+<hr>
+<div>
+<a href="201309a.html">&lt;Prev(,)</a> | 
+<a href="201309c.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

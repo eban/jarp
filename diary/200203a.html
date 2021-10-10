@@ -1,0 +1,561 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2002-3-a</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="200202c.html">
+<link rel="next" href="200203b.html">
+
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2002年3月上旬〜</p>
+<hr>
+<div>
+<a href="200202c.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="200203b.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2002/03/01 start -->
+<h2><a name="20020301" href="200203a.html#20020301">2002-03-01 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="200203011" title="200203011" href="200203a.html#200203011">■</a> 
+dnsmasq 1.3.1</h3>
+<p>
+bug fixということなので更新。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200203012" title="200203012" href="200203a.html#200203012">■</a> 
+Ruby 1.6.7</h3>
+<p>
+リリースされた。いよいよ次は1.8か？
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200203013" title="200203013" href="200203a.html#200203013">■</a> 
+Linux 2.4.19-pre2</h3>
+<p>
+なんでこんなに大きいんだと思ったら-ac patchがmergeされてる。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/03/01 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/03/02 start -->
+<h2><a name="20020302" href="200203a.html#20020302">2002-03-02 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="200203021" title="200203021" href="200203a.html#200203021">■</a> 
+<a href="http://www.ruby-lang.org/en/raa-list.rhtml?name=csv">csv 1.1.0</a></h3>
+<p>
+パッケージを作った。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200203022" title="200203022" href="200203a.html#200203022">■</a> 
+2月のspam</h3>
+<p>
+83通。また記録更新。28日しかないのに。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200203023" title="200203023" href="200203a.html#200203023">■</a> 
+Linux 2.4.19-pre2-ac1</h3>
+<p>
+EXTRAVERSIONはpre1-ac3だし、SCHED_YIELDはundefinedだし、
+aic7xxxはbisonでしか通らないし、なんか不調だな。
+</p>
+
+<p>
+むりやりSCHED_YIELDの行を消してみたら、案の定kernel panicだ。
+
+<a href="http://www.surriel.com/patches/">-rmap12g</a> を試そう。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/03/02 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/03/03 start -->
+<h2><a name="20020303" href="200203a.html#20020303">2002-03-03 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="200203031" title="200203031" href="200203a.html#200203031">■</a> 
+Linux 2.4.19-pre2-ac2</h3>
+<p>
+
+<a href="200203a.html#200203023">昨日の件</a> は直った。あ、aic7xxxのYACCはだめだな。
+</p>
+<pre>
+YACC='bison -y'
+</pre>
+<p>
+が必要だ。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/03/03 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/03/04 start -->
+<h2><a name="20020304" href="200203a.html#20020304">2002-03-04 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="200203041" title="200203041" href="200203a.html#200203041">■</a> 
+af_packet</h3>
+<p>
+いつの間にかdhcpdが動かなくなってる。
+af_packetがloadできないのが原因だ。
+直接insmodしてみるとsk_run_filterがunresolved symbolになる。
+</p>
+<pre>
+% cd /lib/modules/2.4.19-pre2-ac2/kernel/net
+% nm -o */*.o |grep sk_
+packet/af_packet.o:         U sk_alloc_R01c9d713
+packet/af_packet.o:         U sk_free_Rde40e159
+packet/af_packet.o:         U sk_run_filter
+unix/unix.o:         U sk_alloc_R01c9d713
+unix/unix.o:         U sk_free_Rde40e159
+</pre>
+<p>
+うーむ。なぜsk_run_filterだけ？
+configでなにかいじったっけかなあ。
+</p>
+<pre>
+% cd /lib/modules/2.4.18-rc4-rmap12f/kernel/net 
+ruby:kernel/net % nm -o */*.o |grep sk_
+packet/af_packet.o:         U sk_alloc_Rdf2e4fd0
+packet/af_packet.o:         U sk_free_R595e3982
+packet/af_packet.o:         U sk_run_filter_R43942fcc
+unix/unix.o:         U sk_alloc_Rdf2e4fd0
+unix/unix.o:         U sk_free_R595e3982
+</pre>
+<p>
+このあたりはokだ。.configを残して置くべきだった。
+</p>
+
+<p>
+一度CONFIG_FILTERをNにした気がするので、
+その設定が微妙に残っているのだろうか？
+mrproperしてみよう。うぐ。うまくいった。
+そうだったのか。make menuconfigしなおしたら要注意だな。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/03/04 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/03/05 start -->
+<h2><a name="20020305" href="200203a.html#20020305">2002-03-05 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="200203051" title="200203051" href="200203a.html#200203051">■</a> 
+伊東家の食卓</h3>
+<p>
+ベルヌーイの定理が伊東家ではお馴染らしい。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200203052" title="200203052" href="200203a.html#200203052">■</a> 
+<a href="http://www.kernel.org/pub/linux/kernel/people/rml/preempt-kernel/v2.4/preempt-kernel-rml-2.4.19-pre2-ac2-3.patch">preempt-kernel-rml-2.4.19-pre2-ac2-3.patch</a></h3>
+<p>
+いやーもうなんだかわからんpatch状態だ。
+</p>
+
+
+
+
+<!-- section end -->
+</div>
+<!-- 2002/03/05 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/03/06 start -->
+<h2><a name="20020306" href="200203a.html#20020306">2002-03-06 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="200203061" title="200203061" href="200203a.html#200203061">■</a> 
+Perl 5.7.3</h3>
+<p>
+最近ccは2.95.3でgccは3.0.4という感じで使っているのでこうしてみた。
+</p>
+<pre>
+% sh Configure -de -Dusedevel -Dprefix=/usr/local/test/perl573 -Dcc=gcc
+% time make all test
+&lt;snip&gt;
+make all test  5103.96s user 969.21s system 94% cpu 1:46:48.92 total
+</pre>
+<p>
+ぐはぁ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200203062" title="200203062" href="200203a.html#200203062">■</a> 
+ltrace 0.3.23</h3>
+<p>
+更新。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200203063" title="200203063" href="200203a.html#200203063">■</a> 
+<a href="http://user-mode-linux.sourceforge.net/">User-mode Linux Kernel</a></h3>
+<p>
+このページを見るとUML?と思う人続出だと思う。それはそれとしてなんか面白そう。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200203064" title="200203064" href="200203a.html#200203064">■</a> 
+Re: ruby/gtk 0.26</h3>
+<p>
+実は一昨日あたりからまたMarkさんからメールが来てる。
+</p>
+<pre>
+C:\USR\LOCAL\BIN&gt; ruby -e 'require &quot;gtk&quot;'   -&gt; ok
+C:&gt; \usr\local\bin\ruby -e 'require &quot;gtk&quot;'    -&gt; error
+</pre>
+<p>
+結局LoadLibraryExでLOAD_WITH_ALTERED_SEARCH_PATHを指定すると
+Windows 98とWindows 2000では挙動が違うのが原因。
+LoadLibraryを使うように変更してしまった。
+</p>
+
+<p>
+本はSAMS Teach Yourself Ruby in 21 Daysで今月printされる予定とか言ってるが大丈夫なのか？
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200203065" title="200203065" href="200203a.html#200203065">■</a> 
+<a href="http://www.loveruby.net/~aamine/ja/diary/latest.html#d06_3">zsh</a></h3>
+<p>
+vimで:b 1とか。
+</p>
+<pre>
+fg(){
+   builtin fg %$1
+}
+</pre>
+<p>
+ぐらいでもいいか。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/03/06 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/03/07 start -->
+<h2><a name="20020307" href="200203a.html#20020307">2002-03-07 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="200203071" title="200203071" href="200203a.html#200203071">■</a> 
+RDoc alpha-c</h3>
+<p>
+更新。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200203072" title="200203072" href="200203a.html#200203072">■</a> 
+<a href="http://lkpc.sourceforge.net/">Linux Kernel Patches Collection</a></h3>
+<p>
+パッチをまとめている。
+JFSやXFSも含まれてるのでちょっと試したいときに便利。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200203073" title="200203073" href="200203a.html#200203073">■</a> 
+HATANAKA</h3>
+<p>
+久し振りのBadtrans.B。
+</p>
+<!-- section end -->
+</div>
+<!-- 2002/03/07 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/03/08 start -->
+<h2><a name="20020308" href="200203a.html#20020308">2002-03-08 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="200203081" title="200203081" href="200203a.html#200203081">■</a> 
+<a href="http://sax.sax.de/~adlibit/">e3</a></h3>
+<p>
+rescue floppyに入れる小さいエディタを探してたらこれを見つけた。
+アセンブリ言語で書かれてる(Cにも移植されてる)。しかも
+</p>
+<pre>
+For the command syntax you can choice between the families of
+Wordstar(TM), EMACS, Pico, nedit or vi editors. In Linux the e3
+uncompressed executable's size is at 12000 byte, a compressed
+executable will need around 8700 byte, so you won't waste your disk
+space ;-)
+</pre>
+<p>
+って、すごすぎる。viモードもある。うれしいねえ。
+</p>
+<pre>
+% file e3
+e3: ELF 32-bit LSB executable, Intel 80386, version 1, statically linked, stripped
+</pre>
+<p>
+なのでlibc.soも要らない。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200203082" title="200203082" href="200203a.html#200203082">■</a> 
+LoadLibraryEx vs. LoadLibrary</h3>
+<p>
+どこに行っちゃったんだろうなあ。2日経っても届かないようなので、
+
+<a href="../files/LoadLibraryEx_vs._LoadLibrary.txt">ここ</a> に置いとこ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200203083" title="200203083" href="200203a.html#200203083">■</a> 
+<a href="https://www.netsecurity.ne.jp/article/2/4276.html">MyLife</a></h3>
+<p>
+UPXで圧縮ねえ。添付ファイルのサイズを気にしたんだろうか。んなわけない。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/03/08 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/03/09 start -->
+<h2><a name="20020309" href="200203a.html#20020309">2002-03-09 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="200203091" title="200203091" href="200203a.html#200203091">■</a> 
+<a href="http://www.ruby-lang.org/en/raa-list.rhtml?name=ri">ri</a></h3>
+<p>
+riの#! lineを直した。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200203092" title="200203092" href="200203a.html#200203092">■</a> 
+OpenSSH 3.1p1</h3>
+<p>
+というわけで更新。ついでにOpenSSLも0.9.6cに上げとく。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/03/09 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/03/10 start -->
+<h2><a name="20020310" href="200203a.html#20020310">2002-03-10 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="200203101" title="200203101" href="200203a.html#200203101">■</a> 
+<a href="http://www.ruby-lang.org/en/raa-list.rhtml?name=Win32OLE">Win32OLE 0.4.2, 0.4.3</a></h3>
+<p>
+更新。と思ったらruby-cvsが来て0.4.3になった模様。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200203102" title="200203102" href="200203a.html#200203102">■</a> 
+<a href="http://user-mode-linux.sourceforge.net/">User-mode Linux</a></h3>
+<p>
+実際に2.4.18にパッチをあてて作ってみた。
+root fsが別に必要らしく
+
+<a href="http://user-mode-linux.sourceforge.net/dl-sf.html">download</a>
+のページから一番小さいtomrtbtを取ってきた。
+でもうまく立ち上がらない。
+</p>
+<pre>
+INIT: version 2.60 booting
+INIT: Entering runlevel: 5
+</pre>
+<p>
+とinitまでは行ってるんだけどなあ。
+</p>
+<pre>
+init=/bin/sh
+</pre>
+<p>
+をつけるとshのプロンプトが出てくるのでinittabの書き方なのか？
+しばらくしたら
+</p>
+<pre>
+INIT: Id &quot;c1&quot; respawning too fast: disabled for 5 minutes
+INIT: no more processes left in this runlevel
+</pre>
+<p>
+が出てきた。やっぱなんか変だ。
+configで適当にyと応えたりしてるので、まずは
+
+<a href="http://user-mode-linux.sourceforge.net/dl-sf.html#The%20recommended%20installation">RPM</a>
+を取ってきて試す。ちゃんと動くじゃん。やっぱconfigがまずいのか。
+そのRPMの中にconfigも入っていて、
+これをベースにmake menuconfigしなおしたらうまくいった。
+</p>
+<pre>
+# mount -t hostfs none /mnt/host
+</pre>
+<p>
+とすればホスト側の/が/mnt/hostでアクセスできる。
+でも、tomrtbtはlibc5ベースだしなあ。
+というわけでuClibcをstaticにlinkしたrubyを作ってコピーしてみた。
+思ったより速い。BogoMIPS的にはホストの1/5しかないんだけど、
+fib.rbで比較すると全く同じぐらいの速さ。さすがBogoMIPSだ(意味不明)。
+</p>
+
+<p>
+VMwareでもいいんだけど、biosとかboot loaderとかskipできるので、
+こっちのほうがrescue floppy imageのデバッグがしやすい。
+initrdがちゃんと動くかどうかの確認とか。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200203103" title="200203103" href="200203a.html#200203103">■</a> 
+花粉症</h3>
+<p>
+今年は喉が辛いなあ。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/03/10 end -->
+
+<hr>
+<div>
+<a href="200202c.html">&lt;Prev(,)</a> | 
+<a href="200203b.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

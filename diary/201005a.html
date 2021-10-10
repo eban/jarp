@@ -1,0 +1,346 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2010-5-a</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="201004c.html">
+<link rel="next" href="201005b.html">
+
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2010年5月上旬〜</p>
+<hr>
+<div>
+<a href="201004c.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="201005b.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2010/05/01 start -->
+<h2><a name="20100501" href="201005a.html#20100501">2010-05-01 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="201005011" title="201005011" href="201005a.html#201005011">■</a> 
+4月のspam</h3>
+<p>
+3000通ほど。
+
+</p>
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="201005012" title="201005012" href="201005a.html#201005012">■</a> 
+[Fedora] Fedora 13 Betaを入れてみた</h3>
+<p>
+その前に半年ほどまえに入れた時に作ったF12用のdiscがあったのでこれを入れた。<br>
+sdaかsdb1にしかgrubをインストールできないのでしかたなくsdaに入れたので、<br>
+Ubuntuがまた立ちあがらなくなった。<br>
+それはそれとして64ビット版じゃないので4GB丸々使えないのがなんだかなというわけで、<br>
+ついでにF13 Betaを試すことにする。<br>
+こっちはなぜかsdbとsdb1にしかgrubをインストールできない。<br>
+しかたなくsdbに入れたがこれだとsdaにはF12で入れたgrubが残っているので、<br>
+結局のところ何も立ち上がらなくなったわけで。あ、windowsは立ち上がってたかも。<br>
+BIOSの機能でboot deviceを選ぶことができるので、<br>
+毎回忘れずにそれを使えば辛うじてsdbから立ち上げることもできるが面倒。<br>
+もう面倒なのでまたUbuntuを入れ直すことにした。<br>
+UbuntuはFedoraをちゃんと見つけてくれるので、<br>
+この状態でインストールすれば全部メニューに出てくるはず。
+</p>
+<p>
+で、ちゃんと全部出てきたわけで。めでたしめでたし。
+</p>
+<p>
+しかしUSB外付けHDDのsdbはなんかうまくいかないねえ。
+
+</p>
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="201005013" title="201005013" href="201005a.html#201005013">■</a> 
+<a href="http://fedoraproject.org/get-prerelease">[Fedora] F13 Beta Live CDの容量が941MB</a></h3>
+<p>
+どうせDVD-RWに焼くのでどうでもいいが、これCDには収まらないよ？<br>
+と思ったらLive DVDって書いてあった。KDE版だと収まるのか
+</p>
+<!-- section end -->
+</div>
+<!-- 2010/05/01 end -->
+
+
+
+<hr class="hide">
+<!-- 2010/05/02 start -->
+<h2><a name="20100502" href="201005a.html#20100502">2010-05-02 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="201005021" title="201005021" href="201005a.html#201005021">■</a> 
+[Ubuntu] GTK_IM_MODULE=scim</h3>
+<p>
+scimも選んでもなぜかgnome-terminalの入力メソッドがXの入力メソッドってやつになってしまって使いにくい。<br>
+しかたなく環境変数で解決させた。
+</p>
+<pre>
+% export GTK_IM_MODULE=scim
+</pre>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="201005022" title="201005022" href="201005a.html#201005022">■</a> 
+[Ubuntu] 閉じるボタンが左上</h3>
+<p>
+これはもう慣れだと思うがずーっと閉じるボタンは右上で使ってきたので右上にないと混乱する。<br>
+というわけで[システム]-[設定]-[外観の設定]-[テーマ]でNew Waveとかを選んだら右上になった。<br>
+色はカスタマイズでコントロールをRadianceに変更。<br>
+デフォルトのAmbianceに似ているがこっちのほうがいろいろと見やすいと思う。
+</p>
+<!-- section end -->
+</div>
+<!-- 2010/05/02 end -->
+
+
+
+<hr class="hide">
+<!-- 2010/05/03 start -->
+<h2><a name="20100503" href="201005a.html#20100503">2010-05-03 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="201005031" title="201005031" href="201005a.html#201005031">■</a> 
+[Ubuntu] update-grub</h3>
+<p>
+HDDを増設したので外付けHDDは(hd1)から(hd2)に変わった。
+</p>
+<pre>
+% sudo update-grub
+</pre>
+<p>
+で/boot/grub/grub.confを更新。ここはGRUB4DOSのfind --set-rootが欲しいところ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2010/05/03 end -->
+
+
+
+<hr class="hide">
+<!-- 2010/05/04 start -->
+<h2><a name="20100504" href="201005a.html#20100504">2010-05-04 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="201005041" title="201005041" href="201005a.html#201005041">■</a> 
+[Ubuntu] Ubuntu 10.04のsvn update</h3>
+<p>
+なんでヘルプでは出てくるのにnot supportedなんだ?<br>
+</p>
+<pre>
+% svn help update|grep -A1 'set-depth &lt;'
+  --set-depth &lt;ARG&gt;        : set new working copy depth to ARG ('exclude',
+                            'empty', 'files', 'immediates', or 'infinity')
+% svn update --set-depth exclude ext/Win32API
+svn: Request depth 'exclude' not supported
+</pre>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="201005042" title="201005042" href="201005a.html#201005042">■</a> 
+[Ubuntu] Ubuntu使いづらい</h3>
+<p>
+おかしいな。会社ではそれほどUbuntuは使いにくいとは思わないのに、<br>
+家で使ってるとなんでこんなに痒いとこに手が届かない感が漂うんだろう？
+</p>
+<p>
+kmod-nvidiaがインストールできればF13 betaでもいいんだけど。<br>
+今さらF12ってのもなあ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2010/05/04 end -->
+
+
+
+<hr class="hide">
+<!-- 2010/05/05 start -->
+<h2><a name="20100505" href="201005a.html#20100505">2010-05-05 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="201005051" title="201005051" href="201005a.html#201005051">■</a> 
+[Radio] アニソン三昧</h3>
+<p>
+一日中聴いていた。結構いいかげんに進行してるんだな。<br>
+夜中にtwitterの反応が悪くなったのはやっぱこのせいだよねえ。<br>
+VIPも落ちたという話だし。
+</p>
+<!-- section end -->
+</div>
+<!-- 2010/05/05 end -->
+
+
+
+<hr class="hide">
+<!-- 2010/05/06 start -->
+<h2><a name="20100506" href="201005a.html#20100506">2010-05-06 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="201005061" title="201005061" href="201005a.html#201005061">■</a> 
+<a href="http://www.rubyinside.com/rdropbox-a-ruby-client-library-for-dropbox-3241.html">RDropbox: A Ruby Client Library for Dropbox</a></h3>
+<blockquote><p>
+With RDropbox you can log into a Dropbox account using OAuth and then
+upload and download files. A requirement, however, is that you apply
+for Dropbox API access and are approved, as the API is not fully open
+to the public without going through the approval process (this appears
+to be in order to avoid overloading their service).
+</p></blockquote>
+<!-- section end -->
+</div>
+<!-- 2010/05/06 end -->
+
+
+
+<hr class="hide">
+<!-- 2010/05/07 start -->
+<h2><a name="20100507" href="201005a.html#20100507">2010-05-07 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="201005071" title="201005071" href="201005a.html#201005071">■</a> 
+[PC] Epson Endeavor NP-11</h3>
+<p>
+忘れたころに例のPCが届いた。思ったよりも小さい。<br>
+いきなり換装するかと思ったが、爪ありのはめこみらしく下手すると折れそう。<br>
+自重しとこう。
+
+これは容量も小さいしUbuntuかな。
+</p>
+<!-- section end -->
+</div>
+<!-- 2010/05/07 end -->
+
+
+
+<hr class="hide">
+<!-- 2010/05/08 start -->
+<h2><a name="20100508" href="201005a.html#20100508">2010-05-08 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="201005081" title="201005081" href="201005a.html#201005081">■</a> 
+[twitter] twitterで改行を表示</h3>
+<p>
+<a href="http://around140.ja.utf8art.com/twitter_line_feed_css_firefox">Twitterで入力した改行を表示する方法</a>を参考に
+</p>
+<pre>
+@-moz-document domain(&quot;twitter.com&quot;) {
+  .entry-content{white-space:pre-wrap;}
+}
+</pre>
+<p>
+をstylishに追加。元々無視されてるせいか改行入りのtweetは少ない。<br>
+<a href="http://twitter.com/rubyci">@rubyci</a>は先週あたりから入るようになったのでちょっと確認してみたくなった。<br>
+探したけど
+<a href="userstyles.org">userstyles.org</a>にはないようだ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2010/05/08 end -->
+
+
+
+<hr class="hide">
+<!-- 2010/05/09 start -->
+<h2><a name="20100509" href="201005a.html#20100509">2010-05-09 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="201005091" title="201005091" href="201005a.html#201005091">■</a> 
+Google レイアウト変更 うざい</h3>
+<p>
+左がうざいかというと考えてみると以前からサイドバーは表示したのでそれほどうざくない。<br>
+それよりも「ウェブを検索」と「日本語のページを検索」が下に移動していて、<br>
+CSSで左に表示しているのがうざい。w3mで簡単に変更できなくなった。<br>
+この検索オプションのために下まで移動しないといけない。面倒。
+</p>
+<!-- section end -->
+</div>
+<!-- 2010/05/09 end -->
+
+
+
+<hr class="hide">
+<!-- 2010/05/10 start -->
+<h2><a name="20100510" href="201005a.html#20100510">2010-05-10 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="201005101" title="201005101" href="201005a.html#201005101">■</a> 
+[Fedora] kmod-nvidia</h3>
+<p>
+家に帰ったらUbuntuの調子が悪くて再起動した。<br>
+たぶんsafe-upgradeして再起動しないまま放置してたのがまずかったんだと思う。<br>
+そのついでに久し振りにF13 Betaを立ち上げてkmod-nvidiaがどうなったか確認してみると、<br>
+依存関係問題も修復されていて無事インストールできた。<br>
+再起動してみるとファン制御も問題なし。これでF13 Betaへ移行できるな。
+</p>
+<!-- section end -->
+</div>
+<!-- 2010/05/10 end -->
+
+<hr>
+<div>
+<a href="201004c.html">&lt;Prev(,)</a> | 
+<a href="201005b.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

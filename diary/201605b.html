@@ -1,0 +1,308 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2016-5-b</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="201605a.html">
+<link rel="next" href="201605c.html">
+
+<link rel="stylesheet" type="text/css" href="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.css">
+<script async type="text/javascript" src="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.js"></script>
+<script type="text/javascript">
+<!--       
+$(document).ready(function() {
+  prettyPrint();
+});
+-->
+</script>
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2016年5月中旬〜</p>
+<hr>
+<div>
+<a href="201605a.html" accesskey=",">&lt;Older(,)</a> | 
+<a href="201605c.html" accesskey=".">Newer(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2016/05/11 start -->
+<h2><a name="20160511" href="201605b.html#20160511">2016-05-11 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="201605111" title="201605111" href="201605b.html#201605111">■</a> 
+Google Chromeから拡張のボタンが消えた</h3>
+<p>
+なんか寂しくなったと思ったら拡張のボタンがない。<br>
+どういうことだと三をクリックすると1番上に並んでた。<br>
+なるほど。いっぱいあるとどんどん狭くなるから、<br>
+ここに隠したのか。ひと手間ではあるが、それはそれで。
+</p>
+<!-- section end -->
+</div>
+<!-- 2016/05/11 end -->
+
+
+
+<hr class="hide">
+<!-- 2016/05/12 start -->
+<h2><a name="20160512" href="201605b.html#20160512">2016-05-12 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="201605121" title="201605121" href="201605b.html#201605121">■</a> 
+シグナル名のリスト</h3>
+<p>
+確認の意味で。
+</p>
+<pre>
+% for i in {1..15};do (sh -c &quot;kill -$i \$\$&quot;; kill -l $?);done
+HUP
+INT
+QUIT
+ILL
+TRAP
+ABRT
+BUS
+FPE
+KILL
+USR1
+SEGV
+USR2
+PIPE
+ALRM
+TERM
+</pre>
+<!-- section end -->
+</div>
+<!-- 2016/05/12 end -->
+
+
+
+<hr class="hide">
+<!-- 2016/05/13 start -->
+<h2><a name="20160513" href="201605b.html#20160513">2016-05-13 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="201605131" title="201605131" href="201605b.html#201605131">■</a> 
+まゆげ</h3>
+<p>
+タイ文字フォントのfonts-thai-tlwgを入れるとまゆげになる。<br>
+(･ิω･ิ)
+</p>
+<!-- section end -->
+</div>
+<!-- 2016/05/13 end -->
+
+
+
+<hr class="hide">
+<!-- 2016/05/14 start -->
+<h2><a name="20160514" href="201605b.html#20160514">2016-05-14 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="201605141" title="201605141" href="201605b.html#201605141">■</a> 
+AWS LambdaはDockerが使われているのか？</h3>
+<p>
+なんらかのコンテナ技術が使われているんだと思うんだけどよくわからない。<br>
+とりあえずnodeがPID 1になってるのでDockerっぽい。
+</p>
+<pre>
+% lambdash ps       
+  PID TTY          TIME CMD
+    1 ?        00:00:00 node
+   15 ?        00:00:00 ps
+</pre>
+<!-- section end -->
+</div>
+<!-- 2016/05/14 end -->
+
+
+
+<hr class="hide">
+<!-- 2016/05/15 start -->
+<h2><a name="20160515" href="201605b.html#20160515">2016-05-15 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="201605151" title="201605151" href="201605b.html#201605151">■</a> 
+zshで愛は生まれるのか</h3>
+<p>
+#だらけなのがなかなか興味深い。
+</p>
+<pre>
+% a=生 b=死; echo \\u$[[##16]#a &amp; #b]     
+愛
+</pre>
+<p>
+まず$[#a]でunicode番号が得られる。<br>
+これはnumeric expressionでしか使えない。
+#a &amp; #bでビット演算して[##16]で16進に変換、<br>
+##とすれば&quot;16#&quot;のような余計なprefixはつかない。<br>
+あとは\\uを頭につけてあげればokだ。
+</p>
+<pre>
+% echo \\u611B
+愛
+</pre>
+<!-- section end -->
+</div>
+<!-- 2016/05/15 end -->
+
+
+
+<hr class="hide">
+<!-- 2016/05/16 start -->
+<h2><a name="20160516" href="201605b.html#20160516">2016-05-16 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="201605161" title="201605161" href="201605b.html#201605161">■</a> 
+パタトクカシーー</h3>
+<p>
+parallelを使うと、こんなのを
+</p>
+<pre>
+% printf 'パトカー\nタクシー\n' | while read a;do echo &quot;$a&quot; | grep -o . | nl; done | sort -s -k1,1n | awk '$0=$2' | paste -sd &quot;&quot; 
+パタトクカシーー
+</pre>
+<p>
+こんな感じで書ける。
+</p>
+<pre>
+% printf 'パトカー\nタクシー\n' | parallel -N1 --pipe grep -o . \| nl | sort -s -k1,1n | awk '$0=$2' | paste -sd &quot;&quot;
+パタトクカシーー
+</pre>
+<!-- section end -->
+</div>
+<!-- 2016/05/16 end -->
+
+
+
+<hr class="hide">
+<!-- 2016/05/17 start -->
+<h2><a name="20160517" href="201605b.html#20160517">2016-05-17 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="201605171" title="201605171" href="201605b.html#201605171">■</a> 
+Kimono 2 Portia</h3>
+<p>
+2月一杯でサービス終了したkimonolabsだが、その間際にPortiaへインポートしてみた。<br>
+間際すぎてQueued for conversionのまま変化ないので間に合わなかったかと放置していたら、<br>
+なんと今頃になってReady to importとメールが飛んできた。<br>
+2ヶ月以上ちゃんと進めていたのか、というかそんなたくさんキューに溜ってたんだな。
+
+</p>
+<!-- section end -->
+</div>
+<!-- 2016/05/17 end -->
+
+
+
+<hr class="hide">
+<!-- 2016/05/18 start -->
+<h2><a name="20160518" href="201605b.html#20160518">2016-05-18 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="201605181" title="201605181" href="201605b.html#201605181">■</a> 
+Queue for import</h3>
+<p>
+で、さっそくインポートしてたらQueue for importになった。<br>
+先は長そうだ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2016/05/18 end -->
+
+
+
+<hr class="hide">
+<!-- 2016/05/19 start -->
+<h2><a name="20160519" href="201605b.html#20160519">2016-05-19 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="201605191" title="201605191" href="201605b.html#201605191">■</a> 
+Successfully migrated</h3>
+<p>
+以外に短かった。マイグレーションも終わったようで、<br>
+確かに見覚えのある名前が並んでいる。<br>
+しかし、Portiaの使い方がよくわからない。<br>
+まあ、今はIFTTT+Werckerで間に合っちゃってるしなあ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2016/05/19 end -->
+
+
+
+<hr class="hide">
+<!-- 2016/05/20 start -->
+<h2><a name="20160520" href="201605b.html#20160520">2016-05-20 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="201605201" title="201605201" href="201605b.html#201605201">■</a> 
+ご請求</h3>
+<p>
+今年もご請求の季節がやってきた。<br>
+もはやレンタルサーバなんて借りる必要は全然ないんだけど、<br>
+inetdはFreeBSDなので残してたり。
+</p>
+<!-- section end -->
+</div>
+<!-- 2016/05/20 end -->
+
+<hr>
+<div>
+<a href="201605a.html">&lt;Older(,)</a> | 
+<a href="201605c.html">Newer(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

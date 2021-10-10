@@ -1,0 +1,278 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2008-12-b</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="200812a.html">
+<link rel="next" href="200812c.html">
+
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2008年12月中旬〜</p>
+<hr>
+<div>
+<a href="200812a.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="200812c.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2008/12/11 start -->
+<h2><a name="20081211" href="200812b.html#20081211">2008-12-11 (Thu)</a></h2>
+<!-- 2008-12-12 01:53:05 -->
+
+<div class="entry1">
+<h3><a name="200812111" title="200812111" href="200812b.html#200812111">■</a> 
+[Fedora] dnsmasqでなぜか快調なネットワーク</h3>
+<p>
+あれだけ不調だったネットワーク環境が、<br>
+dnsmasqを入れただけで快調に。<br>
+どゆこと？ドライバは関係ないのか。
+</p>
+
+<p>
+最近のdnsmasqの設定は簡単になっていて、<br>
+/etc/resolv.confの先頭にnameserver 127.0.0.1を挿入して、<br>
+serviceでstartするだけ。これで元のnameserverをdnsmasqは見てくれる。
+</p>
+
+<pre>
+nameserver 127.0.0.1
+nameserver 192.168.11.1
+</pre>
+<p>
+てな感じで。
+</p>
+<!-- section end -->
+</div>
+<!-- 2008/12/11 end -->
+
+
+
+<hr class="hide">
+<!-- 2008/12/12 start -->
+<h2><a name="20081212" href="200812b.html#20081212">2008-12-12 (Fri)</a></h2>
+<!-- 2008-12-13 19:07:22 -->
+
+<div class="entry1">
+<h3><a name="200812121" title="200812121" href="200812b.html#200812121">■</a> 
+[Web] Stikkit</h3>
+<p>
+終了のお知らせが届いた。最初はspamかと思った。<br>
+たぶん登録だけして忘れてるサービスがいっぱいあるんだろうな。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2008/12/12 end -->
+
+
+
+<hr class="hide">
+<!-- 2008/12/13 start -->
+<h2><a name="20081213" href="200812b.html#20081213">2008-12-13 (Sat)</a></h2>
+<!-- 2008-12-14 04:03:49 -->
+
+<div class="entry1">
+<h3><a name="200812131" title="200812131" href="200812b.html#200812131">■</a> 
+[ニコニコ動画] 新プレ</h3>
+<p>
+そろそろ新プレでそぉいできるかと思ったらまだだった。<br>
+おかげで現行プレーヤに戻してそぉい動画を延々と見ることに。
+</p>
+<!-- section end -->
+</div>
+<!-- 2008/12/13 end -->
+
+
+
+<hr class="hide">
+<!-- 2008/12/14 start -->
+<h2><a name="20081214" href="200812b.html#20081214">2008-12-14 (Sun)</a></h2>
+<!-- 2008-12-15 01:01:18 -->
+
+<div class="entry1">
+<h3><a name="200812141" title="200812141" href="200812b.html#200812141">■</a> 
+[Battery] enelongの容量がへたってきた</h3>
+<p>
+
+<a href="http://www.jtt.ne.jp/products/original/enelong/index.html">1000回充電に対応</a>
+って書いてあるんだけどなあ。<br>
+週1回ぐらいの充電だから、まだ1000回にはほど遠い。<br>
+印象としてはすでに半分ぐらいの容量。
+</p>
+<!-- section end -->
+</div>
+<!-- 2008/12/14 end -->
+
+
+
+<hr class="hide">
+<!-- 2008/12/15 start -->
+<h2><a name="20081215" href="200812b.html#20081215">2008-12-15 (Mon)</a></h2>
+<!-- 2008-12-16 00:51:13 -->
+
+<div class="entry1">
+<h3><a name="200812151" title="200812151" href="200812b.html#200812151">■</a> 
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-core/20570">[Ruby] Re: ruby -p behavior in 1.9</a></h3>
+<p>
+-p/-nが指定されたときにsub/gsubとかの挙動が復活する可能性が。
+</p>
+<!-- section end -->
+</div>
+<!-- 2008/12/15 end -->
+
+
+
+<hr class="hide">
+<!-- 2008/12/16 start -->
+<h2><a name="20081216" href="200812b.html#20081216">2008-12-16 (Tue)</a></h2>
+<!-- 2008-12-17 01:24:44 -->
+
+<div class="entry1">
+<h3><a name="200812161" title="200812161" href="200812b.html#200812161">■</a> 
+[Fedora] 再起動催促アイコン出現</h3>
+<p>
+Software Updateの設定でAutomatically installをAll updatesにしてるせいか、<br>
+パネルに再起動を促すアイコンが出現した。F9のときは出てなかったよな。<br>
+そうそう。こういうのが出てくれないと気づかないんだよねえ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2008/12/16 end -->
+
+
+
+<hr class="hide">
+<!-- 2008/12/17 start -->
+<h2><a name="20081217" href="200812b.html#20081217">2008-12-17 (Wed)</a></h2>
+<!-- 2008-12-18 01:07:23 -->
+
+<div class="entry1">
+<h3><a name="200812171" title="200812171" href="200812b.html#200812171">■</a> 
+<a href="https://bugzilla.redhat.com/show_bug.cgi?id=473571#c19">[Fedora] Bug 473571 - Possible Bug In Intel GM965 Xorg Drivers</a></h3>
+<p>
+これだと思ったが、すでにxorg-x11-drv-i810-2.5.0-4は導入済みだった。<br>
+つまり結局何も変わってない。残念。現象が違うのか。<br>
+一部たまに乱れる程度だしなあ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2008/12/17 end -->
+
+
+
+<hr class="hide">
+<!-- 2008/12/18 start -->
+<h2><a name="20081218" href="200812b.html#20081218">2008-12-18 (Thu)</a></h2>
+<!-- 2008-12-19 01:33:59 -->
+
+<div class="entry1">
+<h3><a name="200812181" title="200812181" href="200812b.html#200812181">■</a> 
+[Comic] BECK</h3>
+<p>
+完結したので読み返し。全然覚えてないな。主人公の名前すら。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2008/12/18 end -->
+
+
+
+<hr class="hide">
+<!-- 2008/12/19 start -->
+<h2><a name="20081219" href="200812b.html#20081219">2008-12-19 (Fri)</a></h2>
+<!-- 2008-12-20 01:12:51 -->
+
+<div class="entry1">
+<h3><a name="200812191" title="200812191" href="200812b.html#200812191">■</a> 
+[Work] 仕事納め</h3>
+<p>
+さて去年買ってまだ封も開けてないFF4でもやるか。ってどこにいったんだろ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2008/12/19 end -->
+
+
+
+<hr class="hide">
+<!-- 2008/12/20 start -->
+<h2><a name="20081220" href="200812b.html#20081220">2008-12-20 (Sat)</a></h2>
+<!-- 2008-12-21 01:31:00 -->
+
+<div class="entry1">
+<h3><a name="200812201" title="200812201" href="200812b.html#200812201">■</a> 
+<a href="http://nantara.seesaa.net/article/111421109.html">[TV] なんたらかんたら: 今日の相棒が重すぎる件について</a></h3>
+<p>
+亀山大人気なんだな。<br>
+最終回だとばかり思っていたら次回予告がまぐろなわけでびっくりした。<br>
+というかやっとseesaaが見えるようになったわけで。<br>
+でも400 Bad Requestとか出るページもちらほら。<br>
+まだ全快でもなさげ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2008/12/20 end -->
+
+<hr>
+<div>
+<a href="200812a.html">&lt;Prev(,)</a> | 
+<a href="200812c.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

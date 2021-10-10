@@ -1,0 +1,389 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2006-8-c</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="200608b.html">
+<link rel="next" href="200609a.html">
+
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2006年8月下旬〜</p>
+<hr>
+<div>
+<a href="200608b.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="200609a.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2006/08/21 start -->
+<h2><a name="20060821" href="200608c.html#20060821">2006-08-21 (Mon)</a></h2>
+<!-- 2006-08-22 01:37:35 -->
+
+<div class="entry1">
+<h3><a name="200608211" title="200608211" href="200608c.html#200608211">■</a> 
+[Ruby] タグを打ったらrsync</h3>
+<p>
+現在RubyのCVSリポジトリはコミット専用サーバとpserver専用サーバなるものがあるんだけど、
+この2つの同期はコミット時のloginfoで制御している。<br>
+で、loginfoってのはコミット時にしか有効じゃないので、<br>
+タグを打っても同期されない。<br>
+実はcvsupdもpserver専用サーバで動いてるので、<br>
+次回のコミットまで待たないといけないという非常になさけない状況にあった。
+</p>
+
+<p>
+で、ついに今日taginfoをいじったのでrsyncできるようになった(多分)。<br>
+本当なら1.8.5 pre5で試されるはずだったんだが…
+</p>
+<!-- section end -->
+</div>
+<!-- 2006/08/21 end -->
+
+
+
+<hr class="hide">
+<!-- 2006/08/22 start -->
+<h2><a name="20060822" href="200608c.html#20060822">2006-08-22 (Tue)</a></h2>
+<!-- 2006-08-23 01:32:32 -->
+
+<div class="entry1">
+<h3><a name="200608221" title="200608221" href="200608c.html#200608221">■</a> 
+[CVS] taginfo</h3>
+<p>
+なんだかんだでエラーが起きてたりしたんだけど、
+そのエラーを見てtaginfoはタグを打つ前に呼ばれることがわかった。
+つまりrsyncを遅延させないといけない。これはこまった。
+一時撤退。
+</p>
+<!-- section end -->
+</div>
+<!-- 2006/08/22 end -->
+
+
+
+<hr class="hide">
+<!-- 2006/08/23 start -->
+<h2><a name="20060823" href="200608c.html#20060823">2006-08-23 (Wed)</a></h2>
+<!-- 2006-08-24 01:39:00 -->
+
+<div class="entry1">
+<h3><a name="200608231" title="200608231" href="200608c.html#200608231">■</a> 
+[YAML] YAMLの数字とカンマと空白</h3>
+<p>
+YAMLを書いてていつも不思議に思っていたんだけど、
+</p>
+<pre>
+% irb -ryaml
+&gt;&gt; YAML::load(&quot;[1, 2]&quot;)
+=&gt; [1, 2]
+&gt;&gt; YAML::load(&quot;[1,2]&quot;)
+=&gt; [12]
+</pre>
+<p>
+のように配列のときに必ず空白が必要になる。これは結構はまる。<br>
+なんでこうなってるのか、今日気づいた。<br>
+つまりこういうことだったんだな。
+</p>
+<pre>
+&gt;&gt; YAML::load(&quot;[1,234, 12,345]&quot;)
+=&gt; [1234, 12345]
+</pre>
+<p>
+納得。
+</p>
+<!-- section end -->
+</div>
+<!-- 2006/08/23 end -->
+
+
+
+<hr class="hide">
+<!-- 2006/08/24 start -->
+<h2><a name="20060824" href="200608c.html#20060824">2006-08-24 (Thu)</a></h2>
+<!-- 2006-08-25 01:56:08 -->
+
+<div class="entry1">
+<h3><a name="200608241" title="200608241" href="200608c.html#200608241">■</a> 
+[del.icio.us] del.icio.usのポストのURLが変更になってた</h3>
+<p>
+LDRの未読が10000を越えたので、いいかげん読まないとと思い流し読み。<br>
+いつのまにかdel.icio.usのポストのURLが変わってた。<br>
+
+<a href="http://blog.del.icio.us/blog/2006/08/security_everyb.html">リダイレクトしてる</a>
+
+からそのままでもいいんだけど、アクセス回数が増えるわけで、<br>
+一発ブックマークの魅力も半減する(おおげさ)。
+具体的には
+<a href="http://blog.del.icio.us/blog/2006/05/feel_secure.html">blog</a>
+に書いてあるとおり
+</p>
+<pre>
+http://del.icio.us/api/posts/get
+</pre>
+<p>
+のようなURLが
+</p>
+<pre>
+https://api.del.icio.us/v1/posts/get
+</pre>
+<p>
+になる。bookmarkletを修正。
+</p>
+
+<p>
+あれ？
+<a href="200608a.html#200608051">w3m版</a>はなぜかダウンロードしようとするな。<br>
+すでにdel.icio.usへのポストは終了してるからCTRL-Gでキャンセル可能ではあるが、<br>
+うっとうしいね、これは。
+</p>
+<!-- section end -->
+</div>
+<!-- 2006/08/24 end -->
+
+
+
+<hr class="hide">
+<!-- 2006/08/25 start -->
+<h2><a name="20060825" href="200608c.html#20060825">2006-08-25 (Fri)</a></h2>
+<!-- 2006-08-26 21:46:05 -->
+
+<div class="entry1">
+<h3><a name="200608251" title="200608251" href="200608c.html#200608251">■</a> 
+[Ruby] ruby-cvsへ大量のメール</h3>
+<p>
+まさかあんなことになるとは思いもしなかった。<br>
+関係者各位もうしわけございません。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200608252" title="200608252" href="200608c.html#200608252">■</a> 
+[Mail] 皮肉な結果</h3>
+<p>
+
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-talk/210302">Subjectにラベルを入れてS/N比を上げようと提案</a>
+をしたのはいいが、
+
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-talk/210458">[(CORE/)LIB:PROPOSAL/DISCUSSION]</a>
+のようななんだかわけのわからんラベルをつけて、早速
+
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-talk/210477">Subjectの先頭がnoiseだらけでおれのMUAでは全部表示されないぞ</a>
+
+と言われて、以後議論は完全に下火に。<br>
+いや、提案自体は悪くないと思うんだけどね。
+</p>
+<!-- section end -->
+</div>
+<!-- 2006/08/25 end -->
+
+
+
+<hr class="hide">
+<!-- 2006/08/26 start -->
+<h2><a name="20060826" href="200608c.html#20060826">2006-08-26 (Sat)</a></h2>
+<!-- 2006-08-27 03:12:15 -->
+
+<div class="entry1">
+<h3><a name="200608261" title="200608261" href="200608c.html#200608261">■</a> 
+[Comic] ジョジョ</h3>
+<p>
+ストーンオーシャンを含む80巻やっと読み終わった。<br>
+素数ネタは神父だったんだな。次はSBRだ。<br>
+今はウルトラジャンプで掲載されているのか。
+</p>
+<!-- section end -->
+</div>
+<!-- 2006/08/26 end -->
+
+
+
+<hr class="hide">
+<!-- 2006/08/27 start -->
+<h2><a name="20060827" href="200608c.html#20060827">2006-08-27 (Sun)</a></h2>
+<!-- 2006-08-28 01:17:45 -->
+
+<div class="entry1">
+<h3><a name="200608271" title="200608271" href="200608c.html#200608271">■</a> 
+[YAML] Syckでインライン形式で表示させる</h3>
+<p>
+普通にy &quot;foo&quot;=&gt;&quot;bar&quot;すると
+</p>
+<pre>
+% ruby -ryaml -e 'y &quot;foo&quot;=&gt;&quot;bar&quot;' 
+--- 
+foo: bar
+</pre>
+<p>
+のような形式になるが、
+特異メソッドto_yaml_sytle()を定義して:inlineを返すとインライン形式で表示できるらしい。
+</p>
+<pre>
+% ruby -ryaml -e 'h={&quot;foo&quot;=&gt;&quot;bar&quot;};def h.to_yaml_style():inline end;y h'
+--- {foo: bar}
+</pre>
+<p>
+なるほどねえ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2006/08/27 end -->
+
+
+
+<hr class="hide">
+<!-- 2006/08/28 start -->
+<h2><a name="20060828" href="200608c.html#20060828">2006-08-28 (Mon)</a></h2>
+<!-- 2006-08-29 01:43:57 -->
+
+<div class="entry1">
+<h3><a name="200608281" title="200608281" href="200608c.html#200608281">■</a> 
+<a href="http://www.bindview.com/Services/RAZOR/Utilities/Windows/strace_readme.cfm">[Win32] Strace for NT</a></h3>
+<blockquote><p>
+Strace for NT is a debugging/investigation utility for examining the
+NT system calls made by a process. It is meant to be used like the
+strace (or truss) on linux and other unix OSes.
+</p></blockquote>
+<!-- section end -->
+</div>
+<!-- 2006/08/28 end -->
+
+
+
+<hr class="hide">
+<!-- 2006/08/29 start -->
+<h2><a name="20060829" href="200608c.html#20060829">2006-08-29 (Tue)</a></h2>
+<!-- 2006-08-30 02:15:56 -->
+
+<div class="entry1">
+<h3><a name="200608291" title="200608291" href="200608c.html#200608291">■</a> 
+[Mail] 1 spam</h3>
+<p>
+Subjectに1とだけ書いてあるspamというかなんというか迷惑なメールが目立つ。<br>
+中身は
+</p>
+<pre>
+Hi, friend!
+Error on ///
+New line
+THE_BAT2
+</pre>
+<p>
+とみんな同じようだ。いったい何の意味がある？
+</p>
+<!-- section end -->
+</div>
+<!-- 2006/08/29 end -->
+
+
+
+<hr class="hide">
+<!-- 2006/08/30 start -->
+<h2><a name="20060830" href="200608c.html#20060830">2006-08-30 (Wed)</a></h2>
+<!-- 2006-08-31 01:31:42 -->
+
+<div class="entry1">
+<h3><a name="200608301" title="200608301" href="200608c.html#200608301">■</a> 
+<a href="http://win32.perl.org/wiki/index.php?title=Strawberry_Perl">[Perl] Strawberry Perl</a></h3>
+<p>
+MinGWとdmakeをバンドルしてるらしい。
+</p><blockquote><p>
+Strawberry Perl is part of the Vanilla Perl Project to provide a
+binary distribution of Perl for the Windows operating system. It
+includes a bundled compiler and pre-installed modules that offer the
+ability to install XS CPAN modules directly from CPAN.
+</p></blockquote><p>
+
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-talk/211497">[ruby-talk:211497]</a>より。
+</p>
+<!-- section end -->
+</div>
+<!-- 2006/08/30 end -->
+
+
+
+<hr class="hide">
+<!-- 2006/08/31 start -->
+<h2><a name="20060831" href="200608c.html#20060831">2006-08-31 (Thu)</a></h2>
+<!-- 2006-09-01 02:35:11 -->
+
+<div class="entry1">
+<h3><a name="200608311" title="200608311" href="200608c.html#200608311">■</a> 
+[Ruby] Array#shuffle, Array#shuffle!</h3>
+<p>
+Ruby 1.9にArray#shuffle, Array#shuffle!が追加された。
+</p>
+<pre>
+% ruby-1.9 -ve 'p [0,1,2].shuffle'
+ruby 1.9.0 (2006-08-31) [i386-linux]
+[0, 2, 1]
+</pre>
+<p>
+あと、nil.to_sが&quot;&quot;ではなく&quot;nil&quot;になった。これはやだな。
+たぶんこの変更のせいでirbから抜けるときにCtrl-Dだと抜けられなくなった。
+</p>
+<!-- section end -->
+</div>
+<!-- 2006/08/31 end -->
+
+<hr>
+<div>
+<a href="200608b.html">&lt;Prev(,)</a> | 
+<a href="200609a.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

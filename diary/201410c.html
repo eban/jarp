@@ -1,0 +1,412 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2014-10-c</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="201410b.html">
+<link rel="next" href="201411a.html">
+
+<link rel="stylesheet" type="text/css" href="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.css">
+<script async type="text/javascript" src="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.js"></script>
+<script type="text/javascript">
+<!--       
+$(document).ready(function() {
+  prettyPrint();
+});
+-->
+</script>
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2014年10月下旬〜</p>
+<hr>
+<div>
+<a href="201410b.html" accesskey=",">&lt;Older(,)</a> | 
+<a href="201411a.html" accesskey=".">Newer(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2014/10/21 start -->
+<h2><a name="20141021" href="201410c.html#20141021">2014-10-21 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="201410211" title="201410211" href="201410c.html#201410211">■</a> 
+<a href="http://www.commandlinefu.com/commands/view/13735/split-a-large-file-without-wasting-disk-space">Split a large file, without wasting disk space</a></h3>
+<p>
+これは賢い。splitしたら同じサイズだけ必要になるがloop deviceにしてしまうわけだな。<br>
+他の方法でやるとしたらddでskipして読むくらいだけど、<br>
+ファイルとしてアクセスできたほうがわかりやすい。
+</p>
+<!-- section end -->
+</div>
+<!-- 2014/10/21 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/10/22 start -->
+<h2><a name="20141022" href="201410c.html#20141022">2014-10-22 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="201410221" title="201410221" href="201410c.html#201410221">■</a> 
+ページ番号だけのPDF</h3>
+<p>
+enscriptとps2pdfでヘッダー部分にページ番号を表示するのは結構簡単。
+</p>
+<pre>
+% echo $'\f\f' | enscript --header='$%/$=' -o- | ps2pdf - &gt; n.pdf
+[ 3 pages * 1 copy ] left in -
+</pre>
+<p>
+\fつまりCTRL+Lがページ区切りになる。100ページ分作りたければ
+</p>
+<pre>
+% yes $'\f' | head -n99 | enscript --header='$%/$=' -o- | ps2pdf - &gt; foo.pdf
+</pre>
+<p>
+でいい。
+</p>
+<p>
+問題はページ番号の位置。PostScriptなんだから中身を書き換えればいいんだろうけど。
+</p>
+<pre>
+5 0 moveto user_header_left_str show
+</pre>
+<p>
+これっぽいな。
+</p>
+<!-- section end -->
+</div>
+<!-- 2014/10/22 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/10/23 start -->
+<h2><a name="20141023" href="201410c.html#20141023">2014-10-23 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="201410231" title="201410231" href="201410c.html#201410231">■</a> 
+<a href="https://cygwin.com/ml/cygwin-announce/2014-10/msg00042.html">TEST RELEASE: Cygwin 1.7.33-0.1</a></h3>
+<p>
+次のバージョンはちょっと地雷らしいのでTEST RELEASEなんてのが出た。
+</p>
+<pre>
+- Cygwin can now generate passwd/group entries directly from Windows
+  user databases (local SAM or Active Directory), thus allowing to run
+  Cygwin without having to create /etc/passwd and /etc/group files.
+  Introduce /etc/nsswitch.conf file to configure passwd/group handling.
+
+  For bordercase which require to use /etc/passwd and /etc/group files,
+  change mkpasswd/mkgroup to generate passwd/group entries compatible
+  with the entries read from SAM/AD.
+</pre>
+<p>
+これだな。/etc/passwdと/etc/groupを作らなくてもよくなると。
+</p>
+<pre>
+- /proc/cygdrive is a new symlink pointing to the current cygdrive prefix.
+  This can be utilized in scripts to access paths via cygdrive prefix, even
+  if the cygdrive prefix has been changed by the user.
+</pre>
+<p>
+そうそう。
+</p>
+<pre>
+% ln -s /cygdrive/c/tmp<br>
+</pre>
+<p>
+とかした後で
+</p>
+<pre>
+% mount -c /
+</pre>
+<p>
+でprefix変えちゃうと先のsymlinkは使えなくなっちゃうんで、そういう機能がないとちょっと困る。
+</p>
+<!-- section end -->
+</div>
+<!-- 2014/10/23 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/10/24 start -->
+<h2><a name="20141024" href="201410c.html#20141024">2014-10-24 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="201410241" title="201410241" href="201410c.html#201410241">■</a> 
+Cygwin 32bit版と64bit版</h3>
+<p>
+同じ1.7.32なのに挙動が違う。<br>
+32bitだとLANG=Cと同じ。
+</p>
+<pre>
+% uname -a
+CYGWIN_NT-5.1 PC 1.7.32(0.274/5/3) 2014-08-13 23:03 i686 Cygwin
+% printf &quot;a\nb\nB\nA\n&quot; | LANG=ja_JP.UTF-8 sort
+A
+B
+a
+b
+% printf &quot;a\nb\nB\nA\n&quot; | LANG=C sort
+A
+B
+a
+b
+</pre>
+<p>
+一方64bitだと例のen_US.UTF-8と同じ。
+</p>
+<pre>
+% uname -a
+CYGWIN_NT-6.1 JPC20317432 1.7.32(0.274/5/3) 2014-08-13 23:06 x86_64 Cygwin
+% printf &quot;a\nb\nB\nA\n&quot; | LANG=ja_JP.UTF-8 sort
+a
+A
+b
+B
+% printf &quot;a\nb\nB\nA\n&quot; | LANG=en_US.UTF-8 sort
+a
+A
+b
+B
+</pre>
+<p>
+なんで違うのかはまあいいとして、ja_JPでもやられるとうっとうしい。<br>
+いちいちLANGつけるのも面倒なので
+</p>
+<pre>
+% export LC_COLLATE=C
+</pre>
+<p>
+とすることにした。これでsortやlsとかの順番もCになる。
+</p>
+<!-- section end -->
+</div>
+<!-- 2014/10/24 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/10/25 start -->
+<h2><a name="20141025" href="201410c.html#20141025">2014-10-25 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="201410251" title="201410251" href="201410c.html#201410251">■</a> 
+VirtualBox上のUbuntuを14.10に上げたら640x480固定になってしまう</h3>
+<p>
+例の[デバイス]-[Guest AdditionsのCDイメージを挿入...]してインストールしなおしてもだめ。<br>
+<a href="http://www.ubuntugeek.com/fix-for-ubuntu-14-10-screen-resolution-issue-on-virtualbox.html">Fix for ubuntu 14.10 screen resolution issue on Virtualbox | Ubuntu Geek</a><br>
+に解決方法があった。virtualbox-guest-dkmsパッケージをインストールすればいいらしい。<br>
+</p>
+<pre>
+% sudo apt-get install virtualbox-guest-dkms
+</pre>
+<p>
+あとは再起動までしなくても、ログアウトしてログインしなおせばok。
+</p>
+<!-- section end -->
+</div>
+<!-- 2014/10/25 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/10/26 start -->
+<h2><a name="20141026" href="201410c.html#20141026">2014-10-26 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="201410261" title="201410261" href="201410c.html#201410261">■</a> 
+コマンド置換内のquote処理</h3>
+<p>
+ちょっと気になった。
+</p>
+<pre>
+$ echo '$PWD'
+$PWD
+$ echo &quot;'$PWD'&quot;
+'/tmp'
+$ echo &quot;$(echo '$PWD')&quot;
+$PWD
+</pre>
+<p>
+コマンド置換内はquote処理はまた別の話なんだな。
+</p>
+<!-- section end -->
+</div>
+<!-- 2014/10/26 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/10/27 start -->
+<h2><a name="20141027" href="201410c.html#20141027">2014-10-27 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="201410271" title="201410271" href="201410c.html#201410271">■</a> 
+zmvで問答無用で連番化</h3>
+<p>
+zmvは-wとか-Wオプションが有名だけど、%03dな連番に名前を変えたければ、
+</p>
+<pre>
+% i=0; zmv '*.jpg' '${(l:3::0:)$((++i))}.jpg'
+</pre>
+<p>
+とすればいける。-nで確認して-vつけて実行するとわかりやすい。
+</p>
+<!-- section end -->
+</div>
+<!-- 2014/10/27 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/10/28 start -->
+<h2><a name="20141028" href="201410c.html#20141028">2014-10-28 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="201410281" title="201410281" href="201410c.html#201410281">■</a> 
+UbuntuのGoogle ChromeでTLS1</h3>
+<p>
+Chrome自身の設定ではできないのでオプションを追加するしかない。<br>
+/usr/share/applications/google-chrome.desktopのExecで、<br>
+chromeを起動しているオプションに--ssl-version-min=tls1を追加。
+</p>
+<p>
+参考:
+<a href="https://zmap.io/sslv3/browsers.html#chrome-ubuntu">Protecting Browsers against POODLE</a></p>
+<!-- section end -->
+</div>
+<!-- 2014/10/28 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/10/29 start -->
+<h2><a name="20141029" href="201410c.html#20141029">2014-10-29 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="201410291" title="201410291" href="201410c.html#201410291">■</a> 
+rsyncで見慣れないエラー</h3>
+<p>
+Acrobatでもろもろ処理した結果をCygwinからLinuxへ転送しようとしたらなんか変なエラーが。
+</p>
+<pre>
+% rsync -av --progress 1410/*-{cs,opt}.pdf m:scan/1410/
+protocol version mismatch -- is your shell clean?
+(see the rsync man page for an explanation)
+rsync error: protocol incompatibility (code 2) at /usr/src/ports/rsync/rsync-3.0.9-1/src/rsync-3.0.9/compat.c(174) [sender=3.0.9]
+</pre>
+<p>
+なんでshellがと思ったが、今さっき~/.zshrcにechoを仕込んで値を見てたんだった。これか。<br>
+rsyncはrcファイルとかで何か表示するとこんなエラーになるんだな。
+</p>
+<!-- section end -->
+</div>
+<!-- 2014/10/29 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/10/30 start -->
+<h2><a name="20141030" href="201410c.html#20141030">2014-10-30 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="201410301" title="201410301" href="201410c.html#201410301">■</a> 
+素焼きアーモンド</h3>
+<p>
+近所のスーパーから素焼きアーモンドがなくなったのでネットでいろいろ見て回ったら、<br>
+実は結構お得な商品だったんだと判明。スーパーではその商品が1袋100gで280円ぐらいだったが、<br>
+300円以上するものらしい。<br>
+どうせ買うならいっぱい入ってるほうが安いだろうと全然別のものを700gで1400円のを発注した。<br>
+100gあたり200円だ。<br>
+アーモンドは1粒だいたい1gなので、よく言われている1日の適量である23粒食べると、<br>
+30日でちょうど食べ終わる。なんだかんで毎日食べても1ヶ月は保つわけだ。
+</p>
+<p>
+なんてことを思いながら最近またスーパーへ行ってみたらなんと置いてあった。<br>
+しかし90gになっていた。値段はそのまま。この切り替えで一時なくなっていたんだな。<br>
+まあ、ネットで買ったやつでもうまいので結果的にはよかったが。<br>
+で、その1400円のもすぐに1500円になっていた。<br>
+アーモンドの仕入れ価格が上がっているらしい。アベノミクスか?
+</p>
+<!-- section end -->
+</div>
+<!-- 2014/10/30 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/10/31 start -->
+<h2><a name="20141031" href="201410c.html#20141031">2014-10-31 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="201410311" title="201410311" href="201410c.html#201410311">■</a> 
+AOL Readerで困ること</h3>
+<p>
+登録用のURLがないので一々FeedのURLをコピーしてAOL Readerの+を押さないといけない。<br>
+その+はPOSTなのでBookmarkletにもできない。これさえなんとかなれば文句ないんだけど。
+</p>
+<!-- section end -->
+</div>
+<!-- 2014/10/31 end -->
+
+<hr>
+<div>
+<a href="201410b.html">&lt;Older(,)</a> | 
+<a href="201411a.html">Newer(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

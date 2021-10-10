@@ -1,0 +1,495 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2001-6-c</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="200106b.html">
+<link rel="next" href="200107a.html">
+
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2001年6月下旬〜</p>
+<hr>
+<div>
+<a href="200106b.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="200107a.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2001/06/21 start -->
+<h2><a name="20010621" href="200106c.html#20010621">2001-06-21 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="200106211" title="200106211" href="200106c.html#200106211">■</a> 
+PS2Linux</h3>
+<p>
+RedHat系とは書かれていたが実際はkondaraらしい。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200106212" title="200106212" href="200106c.html#200106212">■</a> 
+Ruby Binaries</h3>
+<p>
+いつまでもCygwin 1.1.8-2でもないだろうってというわけで、
+1.3.2-1を用意した。ってそれは一昨日だったか。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200106213" title="200106213" href="200106c.html#200106213">■</a> 
+gcc -v</h3>
+<p>
+configure時のオプションが表示されるようになった。
+</p>
+<pre>
+% gcc -v
+Reading specs from /usr/local/lib/gcc-lib/i586-pc-linux-gnu/3.0/specs
+Configured with: ../configure --enable-languages=c,c++ \
+--enable-shared --with-system-zlib --enable-sjlj-exceptions \
+--enable-version-specific-runtime-libs --enable-c-mbchar --enable-threads
+Thread model: posix
+gcc version 3.0
+</pre>
+
+
+<!-- section end -->
+</div>
+<!-- 2001/06/21 end -->
+
+
+
+<hr class="hide">
+<!-- 2001/06/22 start -->
+<h2><a name="20010622" href="200106c.html#20010622">2001-06-22 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="200106221" title="200106221" href="200106c.html#200106221">■</a> 
+[Cygwin] socket</h3>
+<p>
+結局中田さんの対応版を取り込んだ。
+富豪な人は試してみるべし。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2001/06/22 end -->
+
+
+
+<hr class="hide">
+<!-- 2001/06/23 start -->
+<h2><a name="20010623" href="200106c.html#20010623">2001-06-23 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="200106231" title="200106231" href="200106c.html#200106231">■</a> 
+學天則</h3>
+<p>
+ドイツで行方不明ときたか。そりゃ残念だ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200106232" title="200106232" href="200106c.html#200106232">■</a> 
+引数に構造体自体を渡す</h3>
+<p>
+まさかRubyがこれを使ってるとは思わなかったな。
+だから中田さん提案の
+</p>
+<pre>
+{
+    struct timeval tv;
+    tv.tv_sec = 0;
+    tv.tv_usec = 100000;
+    rb_thread_wait_for(&amp;tv);
+}
+</pre>
+<p>
+をそのまま#if defined __CYGWIN__, #endifで包んだわけだけど、
+実際のrb_thread_wait_forはstruct timevalを受け付けるようになっている。
+Win98で試したらここで止まってしまった。
+あれ？てことは遅いマシンでも一度はEINPROGRESSになるのか。
+で、次のconnect(2)が分かれ目で、
+速いマシンだとsocketのsetupがまだ終わってないこともあるわけだ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200106233" title="200106233" href="200106c.html#200106233">■</a> 
+gawk 3.1.0</h3>
+<p>
+sortもできるようになっている。
+asortという名前だけど、sortという名前だとあまりにありがちで、
+そういう名前のfunctionを作っている可能性は十分にある。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2001/06/23 end -->
+
+
+
+<hr class="hide">
+<!-- 2001/06/24 start -->
+<h2><a name="20010624" href="200106c.html#20010624">2001-06-24 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="200106241" title="200106241" href="200106c.html#200106241">■</a> 
+rubywin 0.0.3.3</h3>
+<p>
+更新。<br>
+0.0.3.2からVPATHがなくなったのはなぜ？面倒だ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200106242" title="200106242" href="200106c.html#200106242">■</a> 
+[Cygwin] gcc-2.95.3-5</h3>
+<p>
+結局cygwin-1.1.8-2とgcc-2.95.3-5の組み合わせにすることにした。
+</p>
+<pre>
+% tar xfvz cygwin-1.1.8-2-src.tar.gz
+% tar xfv gcc-2.95.3-5-src.tar.bz2 --us=bzip2
+% mkdir build; cd build
+% lndir ../cygwin-1.1.8-2
+% ln -s ../gcc-2.95.3-5/{gcc,libio,libstdc++} .
+% mkdir obj; cd obj
+% CFLAGS=-Os CXXFLAGS=-Os ../configure \
+  --target=i686-pc-cygwin \
+  --prefix=/usr/local/cygwin \
+  --enable-languages=c,c++
+% make
+% make install tooldir=/usr/local/cygwin
+% vi /usr/local/cygwin/lib/gcc-lib/i686-pc-cygwin/2.95.3-5/specs
+</pre>
+<p>
+最終的なspecsは
+<a href="../files/gcc-2.95.3-5-specs-cross.cygwin">これ</a> 。
+</p>
+
+
+
+
+<!-- section end -->
+</div>
+<!-- 2001/06/24 end -->
+
+
+
+<hr class="hide">
+<!-- 2001/06/25 start -->
+<h2><a name="20010625" href="200106c.html#20010625">2001-06-25 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="200106251" title="200106251" href="200106c.html#200106251">■</a> 
+GCC 3.0</h3>
+<p>
+そうか。MAJOR番号を越えたら-Vはもう保証されないのか。結構痛いな。
+</p>
+<pre>
+% cat main.c             
+/* #include &lt;stdio.h&gt; */
+main(){}
+% gcc -V 2.95.3 -c main.c
+main.c:1: parse error before `/'
+</pre>
+<p>
+何が起こっているのかと思ったらこういうことらしい。
+</p>
+<pre>
+% gcc -V 2.95.3 -v -c main.c
+Reading specs from /usr/local/lib/gcc-lib/i586-pc-linux-gnu/2.95.3/specs
+Configured with: ../configure --enable-languages=c,c++ \
+--enable-shared --with-system-zlib --enable-sjlj-exceptions \
+--enable-version-specific-runtime-libs --enable-c-mbchar --enable-threads
+Thread model: posix
+gcc driver version 3.0 executing gcc version 2.95.3
+ /usr/local/lib/gcc-lib/i586-pc-linux-gnu/2.95.3/cc1 -lang-c -v \
+-D__GNUC__=2 -D__GNUC_MINOR__=95 -D__GNUC_PATCHLEVEL__=3 -D__ELF__ \
+-Dunix -D__i386__ -Dlinux -D__ELF__ -D__unix__ -D__i386__ -D__linux__ \
+-D__unix -D__linux -Asystem(posix) -D__NO_INLINE__ -D__STDC_HOSTED__=1 \
+-Acpu(i386) -Amachine(i386) -Di386 -D__i386 -D__i386__ -Di586 -Dpentium \
+-D__i586 -D__i586__ -D__pentium -D__pentium__ main.c -quiet -dumpbase \
+main.c -version -o /tmp/cc9k0dCc.s
+cc1: Invalid option `-v'
+GNU C version 2.95.3 20010315 (release) (i586-pc-linux-gnu) compiled by \
+GNU C version 2.95.3 20010315 (release).
+main.c:1: parse error before `/'
+</pre>
+<p>
+GCC 3.0はcc1自身がcppの機能を持っているんだよね。
+だからいきなりcc1を起動しちゃう。うーむ。
+-traditional-cppでいけるかなと思ったら、これはtradcpp0を起動しようとする。
+</p>
+<pre>
+% ln /usr/local/lib/gcc-lib/i586-pc-linux-gnu/2.95.3/{cpp0,tradcpp0}
+</pre>
+<p>
+としても、今度は
+</p>
+<pre>
+% gcc -V 2.95.3 -traditional-cpp -c main.c
+cc1: Invalid option `-fpreprocessed'
+</pre>
+<p>
+と余計なオプションをつけてくれる。だめじゃん。
+</p>
+
+<p>
+info gccすると
+</p>
+
+<pre>
+However, since no real work is done in the driver program, it usually
+does not matter that the driver program in use is not the one for the
+specified target.  It is common for the interface to the other
+executables to change incompatibly between compiler versions, so
+unless the version specified is very close to that of the driver (for
+example, `-V 3.0' with a driver program from GCC version 3.0.1), use
+of `-V' may not work; for example, using `-V 2.95.2' will not work
+with a driver program from GCC 3.0.
+</pre>
+
+<p>
+ということだ。
+</p>
+
+<p>
+結論。古いgccをgcc-2.95.3にrenameだ。残しといてよかった。
+</p>
+<!-- section end -->
+</div>
+<!-- 2001/06/25 end -->
+
+
+
+<hr class="hide">
+<!-- 2001/06/26 start -->
+<h2><a name="20010626" href="200106c.html#20010626">2001-06-26 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="200106261" title="200106261" href="200106c.html#200106261">■</a> 
+<a href="http://www.jp.playstation.com/linux/3rd.html">PS2 LinuxKit追加</a></h3>
+<p>
+キャンセル分300台だそうだ。注文開始は6/27 20:00だから先走らないように。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200106262" title="200106262" href="200106c.html#200106262">■</a> 
+[Cygwin] socket問題(EINPROGRESS, EINVAL)</h3>
+<p>
+0.1秒待ってもまだEINVALになることがあるらしい。
+中田さんからとりあえず10回は繰り返す案が出たけど、
+確かにきちっとsetup完を待ちたいよね。一日考えよう。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2001/06/26 end -->
+
+
+
+<hr class="hide">
+<!-- 2001/06/27 start -->
+<h2><a name="20010627" href="200106c.html#20010627">2001-06-27 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="200106271" title="200106271" href="200106c.html#200106271">■</a> 
+<a href="http://www.linux-ipv6.org/">USAGI Project</a></h3>
+<p>
+仕事でIPv6に関わることになった。まずはUSAGIだ。
+てゆうかLinuxのIPv6がいつのまにか取り残されていたなんて知らなかったなあ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200106272" title="200106272" href="200106c.html#200106272">■</a> 
+[Cygwin] socket問題</h3>
+<p>
+まだ迷ってる。
+さっさと入れて試してもらったほうがいいかな。
+もしくはrescueしてもらって何回失敗するか数えてもらうとか。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2001/06/27 end -->
+
+
+
+<hr class="hide">
+<!-- 2001/06/28 start -->
+<h2><a name="20010628" href="200106c.html#20010628">2001-06-28 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="200106281" title="200106281" href="200106c.html#200106281">■</a> 
+Win32API</h3>
+<p>
+
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-list/6991">以前にも</a> 書いたが、
+StructがCの構造体のイメージで扱えると便利だよね。<br>
+Win32API拡張ライブラリ的には'P'じゃなくて'S'を用意して、
+その直後にpackのtemplateを書いてもらえば少しは楽になるのかな。
+</p>
+<pre>
+struct foo {
+    int a;
+    int b;
+};
+</pre>
+<p>
+みたいなのなら
+</p>
+<pre>
+'Sii'
+</pre>
+<p>
+と指定する。ここにきて配列になってる欠点が利点に。んなわけないか。
+あ、なぜ配列なのかというとPerlのWin32::APIをそのまま移植したから。
+</p>
+
+<p>
+アラインメントの問題もあるからそれほど楽にはなってない気も。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2001/06/28 end -->
+
+
+
+<hr class="hide">
+<!-- 2001/06/29 start -->
+<h2><a name="20010629" href="200106c.html#20010629">2001-06-29 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="200106291" title="200106291" href="200106c.html#200106291">■</a> 
+SKK</h3>
+<p>
+なにげなく~/.skk-recordの最後の行を見ると
+</p>
+<pre>
+Fri Apr 26 16:16:24 1991  登録:   6  確定:   62  確定率:  90%  語数:      2
+</pre>
+<p>
+とあった。おお、10年経ってる。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2001/06/29 end -->
+
+
+
+<hr class="hide">
+<!-- 2001/06/30 start -->
+<h2><a name="20010630" href="200106c.html#20010630">2001-06-30 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="200106301" title="200106301" href="200106c.html#200106301">■</a> 
+Plamo 2.2</h3>
+<p>
+Linux JapanにPlamo 2.2がついてきたから入れ換える。
+/boot/grub/menu.lstを見るといままではPlamo 2.0b1だったらしい。
+一年半ぐらい使ってたかな。
+</p>
+
+<p>
+reiserfsにしようかと思ったが、どうもインストーラには選ぶとこなし。<br>
+30分ぐらいで終わる。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200106302" title="200106302" href="200106c.html#200106302">■</a> 
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-talk/17082">Farewell</a></h3>
+<p>
+うますぎ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2001/06/30 end -->
+
+<hr>
+<div>
+<a href="200106b.html">&lt;Prev(,)</a> | 
+<a href="200107a.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

@@ -1,0 +1,1641 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2002-1-c</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="200201b.html">
+<link rel="next" href="200202a.html">
+
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2002年1月下旬〜</p>
+<hr>
+<div>
+<a href="200201b.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="200202a.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2002/01/21 start -->
+<h2><a name="20020121" href="200201c.html#20020121">2002-01-21 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="200201211" title="200201211" href="200201c.html#200201211">■</a> 
+<a href="../files/Makefile.pack">Makefile.pack</a></h3>
+<p>
+i386-cygwinとかi386-msdosdjgppとか書くのが面倒になってきたので、
+って一年も経ってるのに今頃かよ、cygwin,mingw,djgppでもいけるようにした。
+</p>
+<pre>
+ifneq (,$(findstring $(TARGET),cygwin))
+  TARGET=i386-cygwin
+endif
+ifneq (,$(findstring $(TARGET),mingw))
+  TARGET=i386-mingw32
+endif
+ifneq (,$(findstring $(TARGET),djgpp))
+  TARGET=i386-msdosdjgpp
+endif
+</pre>
+<p>
+PACKAGE, VERSION, TARGETが指定されてないときは、
+wordsを使えば一度にチェックできてよさげだ。
+</p>
+<pre>
+ifneq ($(words $(PACKAGE) $(VERSION) $(TARGET)), 3)
+  $(error You must set PACKAGE, VERSION and TARGET.)
+endif
+</pre>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200201212" title="200201212" href="200201c.html#200201212">■</a> 
+GNU Fileutilsの不思議</h3>
+<p>
+最近雑誌やWeb上で
+</p>
+<pre>
+-rw-r--r--    1 watanabe ruby            0  1月 21 01:08 foo
+</pre>
+<p>
+というls -lの結果がよく目立つ。なぜ「21日」とならないんだろう？
+古めのruby-1.2.6/ChangeLogは
+</p>
+<pre>
+-rw-r--r--    1 watanabe ruby        90643  6月 21  1999 ChangeLog
+</pre>
+<p>
+と「年」もない。昔はちゃんと表示されてたはず。
+fileutils.moがまずい？
+</p>
+
+<p>
+ふだんLC_TIME=C, LC_MESSAGES=Cしているおれにはどうでもいい話ではあるが。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200201213" title="200201213" href="200201c.html#200201213">■</a> 
+<a href="http://cvs.m17n.org/~akr/diary/d2002_01.html#a2002_01_21_1">rbとso</a></h3>
+<p>
+-g '*.{rb,so}'は試したんだけど、-g '*.(rb|so)'ってのは思い付きませんでした。
+ものすごく意外です。というわけで
+</p>
+<pre>
+_path_files -W dirs -g '*.(rb|so)' -/
+</pre>
+<p>
+としよう。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200201214" title="200201214" href="200201c.html#200201214">■</a> 
+<a href="http://cygwin.com/ml/cygwin-announce/2002/msg00026.html">Updated: cygwin-1.3.8-1</a></h3>
+<p>
+毎度お馴染のどたばたで1.3.8になった。
+まだミラーサイトには来てないので試してない。
+アナウンスにも書いてあるように1.3.7のcygwin1.dllは、
+regfreeがexportされてないのでlftpとか動かなくなって、
+makeし直したなんて内緒だ。
+</p>
+
+<p>
+実は1.3.7の
+</p>
+<pre>
+- Create special versions of import library with only appropriate symbols
+  for libpthread.a, libm.a, and libc.a. (Ralf Habacker, Christopher Faylor)
+</pre>
+<p>
+が気になっていたんだけど、これも明日要確認だな。
+</p>
+<!-- section end -->
+</div>
+<!-- 2002/01/21 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/01/22 start -->
+<h2><a name="20020122" href="200201c.html#20020122">2002-01-22 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="200201221" title="200201221" href="200201c.html#200201221">■</a> 
+glibc 2.2.5</h3>
+<p>
+今回はこんな感じで。
+</p>
+<pre>
+% tar xfvz glibc-2.2.4.tar.gz
+% mv glibc-2.2.{4,5}
+% cd glibc-2.2.5
+% bzip2 -dc ../glibc-2.2.4-2.2.5.diff.bz2 |patch -p1
+% tar xfv ../glibc-linuxthreads-2.2.5.tar.bz2 --bzip2
+% mkdir linux; cd linux
+% CC='/usr/bin/gcc -pipe' \
+  CFALGS=-Os \
+  ../configure \
+  --prefix=/usr \
+  --enable-add-ons
+% make
+execv: Permission denied
+.../glibc-2.2.5/linux/sunrpc/rpcgen: C preprocessor failed with exit code 1
+</pre>
+<p>
+エラーになってしまった。うーむ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200201222" title="200201222" href="200201c.html#200201222">■</a> 
+<a href="http://cygwin.com/ml/cygwin-announce/2002/msg00030.html">Updated: cygwin-1.3.9-1</a></h3>
+<p>
+1.3.8を取ってこようと思ったらすでに1.3.9だった。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200201223" title="200201223" href="200201c.html#200201223">■</a> 
+<a href="200201b.html#200201206">pdnsd</a></h3>
+<p>
+いまのとこ問題なし。pdnsd-ctlを使うとDynamic DNSみたいなことができる。
+</p>
+<pre>
+% sudo /usr/local/sbin/pdnsd-ctl add a 192.168.1.100 hoge.localdomain
+Opening socket /var/cache/pdnsd/pdnsd.status.
+Succeeded
+% ruby -rresolv -e 'p Resolv.getaddress(&quot;hoge.localdomain&quot;)'
+&quot;192.168.1.100&quot;
+</pre>
+<p>
+永続化はできない。立ち上げ直すと忘れてしまう。
+</p>
+
+<p>
+やはりoff-line時に使えるDNSがあると便利だ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200201224" title="200201224" href="200201c.html#200201224">■</a> 
+メール配送</h3>
+<p>
+また遅れてる。[ruby-list:33478]から[ruby-list:33481]が来ない。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/01/22 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/01/23 start -->
+<h2><a name="20020123" href="200201c.html#20020123">2002-01-23 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="200201231" title="200201231" href="200201c.html#200201231">■</a> 
+Devel::Logger 0.9.1</h3>
+<p>
+logger.rbしかインストールされないのでちょっと不安になる。
+それはそれとしてパッケージを作る。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200201232" title="200201232" href="200201c.html#200201232">■</a> 
+Don't stop the music/今井絵理子</h3>
+<p>
+あ、東風だ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200201233" title="200201233" href="200201c.html#200201233">■</a> 
+<a href="http://cvs.m17n.org/~akr/diary/d2002_01.html#a2002_01_23_1">Resolv.gettaddress</a></h3>
+<p>
+そもそもチェックするだけならrubyすら必要ないのに、
+なぜresolv.rbかと言えば、単に
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-dev/15573">このtimeout</a>
+を思い出したから。でもdnscacheを使ってたときは試すのを忘れてたんだった。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200201234" title="200201234" href="200201c.html#200201234">■</a> 
+ruby-talk分割</h3>
+<p>
+流量が多いからruby-talkを分割しよう案が出てる。
+その中にはやはり
+</p>
+<pre>
+ruby-dev
+ruby-ext
+</pre>
+<p>
+という名前も挙がっている。
+そろそろ日本語メーリングリストは-jaとかつけないとまずそう。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/01/23 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/01/24 start -->
+<h2><a name="20020124" href="200201c.html#20020124">2002-01-24 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="200201241" title="200201241" href="200201c.html#200201241">■</a> 
+glibc 2.2.5その後</h3>
+<p>
+なぜかexecv: Permission deniedになる件は全然解決しないんだけど
+
+<a href="#20020124F1"><sup><small>*1</small></sup></a>、
+とりあえず別のPentium!!! 800MHzなマシンで実行してみると30分で無事make終了。
+うーむ。全くもって解決しない。
+</p>
+
+<p>
+そのままtarballを作ってこのマシンへ転送して試す。
+</p>
+<pre>
+% mkdir ~/glibc-2.2.5; cd ~/glibc-2.2.5
+% tar xfvz glibc-2.2.5-bin.tar.gz
+% ls
+etc  lib  sbin  usr
+% mkdir bin
+% cp /bin/bash bin
+% ldd =bash
+        libncurses.so.5 =&gt; /lib/libncurses.so.5 (0x4001a000)
+        libdl.so.2 =&gt; /lib/libdl.so.2 (0x4005b000)
+        libc.so.6 =&gt; /lib/libc.so.6 (0x4005e000)
+        /lib/ld-linux.so.2 =&gt; /lib/ld-linux.so.2 (0x40000000)
+% cp /lib/libncurses.so.5 lib
+% sudo chroot ~/glibc-2.2.5 /bin/bash
+zsh: illegal hardware instruction  sudo chroot (J~(B/glibc-2.2.5 /bin/bash
+</pre>
+<p>
+む？glibcってそんな最適化オプションまでつけるのか。
+しかたなくconfigure時にi586-pc-linux-gnuを指定してもう一度やり直し。
+</p>
+<pre>
+% sudo chroot (J~(B/glibc-2.2.5 /bin/bash 
+bash-2.04#
+</pre>
+<p>
+よさそう。週末にでも入れ換えよう。あう、bashを更新するの忘れてる。
+</p>
+
+<hr align="left" width="40%">
+<div>
+<a name="20020124F1" href="200201c.html#20020124F1"><small>*1</small></a>:
+なにしろmakeに時間がかかりすぎてデバッグする気にならない。
+</div>
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200201242" title="200201242" href="200201c.html#200201242">■</a> 
+static版bashとdiet libc版ash</h3>
+<pre>
+% sbash --version
+GNU bash, version 2.05.0(1)-release (i586-pc-linux-gnu)
+Copyright 2000 Free Software Foundation, Inc.
+% ldd =sbash
+        not a dynamic executable
+</pre>
+<p>
+static版を作っただけだったんだ。
+diet libc版ashがあるからsbashはもう要らないな。
+</p>
+<pre>
+% ls -l /bin/ash /bin/sbash
+-rwxr-xr-x    1 root     root        78808 Jan 20 17:56 /bin/ash
+-rwxr-xr-x    1 root     root       561044 Aug 11 18:25 /bin/sbash
+</pre>
+<p>
+/bin/shもashにしようかなあ。
+/etc/rc.d/あたりがbashに依存してなければいいんだけど。
+でも動かなければ#!/bin/bashに書き換えちゃえばいいだけの話か。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200201243" title="200201243" href="200201c.html#200201243">■</a> 
+rimメール配送</h3>
+<p>
+まだ遅れてる。もう10日も経つというのに。
+いい加減rimを見限るべき？
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200201244" title="200201244" href="200201c.html#200201244">■</a> 
+ピーターフランクル</h3>
+<p>
+大宮駅で本を売ってた。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/01/24 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/01/25 start -->
+<h2><a name="20020125" href="200201c.html#20020125">2002-01-25 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="200201251" title="200201251" href="200201c.html#200201251">■</a> 
+/bin/shをashに</h3>
+<p>
+案の定きちんと立ち上がらない。次はglibc 2.2.5も待っているというのに。
+ってそれはどうでもいい。やはり旧環境を残しといて正解だ。
+</p>
+
+<p>
+メッセージを見てるとread-onlyのままつき進んでいるようだ。
+/etc/rc.d/rc.Sでread-only filesystemかどうか判断してるんだけど、
+ashだとこの手は使えないらしい。
+</p>
+<pre>
+READWRITE=no
+if echo -n &gt;&gt; &quot;Testing filesystem status&quot;; then
+ rm -f &quot;Testing filesystem status&quot;
+ READWRITE=yes
+fi
+</pre>
+<p>
+ifのところは、bashなら
+</p>
+<pre>
+/etc/rc.d/rc.S: Testing filesystem status: Read-only file system
+</pre>
+<p>
+と表示して先に進むが、ashだと
+</p>
+<pre>
+/etc/rc.d/rc.S: cannot create Testing filesystem status: read-only file system
+</pre>
+<p>
+と表示してrc.S自体が終了してしまう。
+rc.Sでrwでremountするので、read-onlyのままなんだな。
+ここは#!/bin/bashとしよう。
+最初から存在してるスクリプトでは結局これだけだった。
+残り2つは後からインストールしたもの。
+</p>
+
+<p>
+/etc/rc.d/init.d/fcronで
+</p>
+<pre>
+start-stop-daemon: not found
+</pre>
+<p>
+と表示される。これは
+</p>
+<pre>
+elif start-stop-daemon -V &gt; /dev/null 2&gt;&amp;1; then
+</pre>
+<p>
+がなぜかredirectされないため。
+typeを使って存在をチェックしたほうがまだいいのかもしれない。
+どうせ存在しないからコメントアウト。
+</p>
+
+<p>
+/etc/rc.d/init.d/vmwareで
+</p>
+<pre>
+local: not found
+</pre>
+<p>
+が出てる。vmwareはlocalだらけなので#!/bin/bashとする。
+</p>
+
+<p>
+これでいいようだ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200201252" title="200201252" href="200201c.html#200201252">■</a> 
+<a href="http://znz.s1.xrea.com/t/?date=20020125#p02">[Web] つっこみ</a></h3>
+<p>
+後日どころか
+<a href="200201c.html#200201213">即日リンク</a> を返しているんですけど？
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/01/25 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/01/26 start -->
+<h2><a name="20020126" href="200201c.html#20020126">2002-01-26 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="200201261" title="200201261" href="200201c.html#200201261">■</a> 
+ashとbash</h3>
+<p>
+Ruby 1.6.6 (2001-01-25)でconfigure.inを変更したから、
+configureし直したわけだが、何かが変。
+/bin/shをashにしたからbashとashの挙動の違いであることは確かだ。
+</p>
+
+<p>
+例えばmingw32版はそもそもconfigure自体が失敗する。
+</p>
+<pre>
+configure: error: cached CC is different -- throw away ./config.cache
+(it is also a good idea to do 'make clean' before compiling)
+</pre>
+<p>
+configureに与えるオプションがいっぱいあって、
+それをシェルスクリプトにしてるので以前と違いはないはず。
+config.cacheを見てみると
+</p>
+<pre>
+ac_cv_prog_CC=${ac_cv_prog_CC=$'i686-pc-cygwin-gcc -bmingw'}
+</pre>
+<p>
+となっていた。む？この$はいったい何？早速実験だ。
+</p>
+<pre>
+% bash -c 'a=$&quot;foo bar&quot;;echo $a'
+foo bar
+% ash -c 'a=$&quot;foo bar&quot;;echo $a' 
+$foo bar
+</pre>
+<p>
+なるほど。これが原因か。zsh、pdkshでも試してみよう。
+</p>
+<pre>
+% zsh -c 'a=$&quot;foo bar&quot;;echo $a'
+$foo bar
+% ksh -c 'a=$&quot;foo bar&quot;;echo $a'        
+$foo bar
+</pre>
+<p>
+どうもbashの形勢不利だな。
+bashだとconfig.cacheを保存時に$をつけて、読み込む時に$を取るので、
+なんとなく辻褄が合ってしまっているのか。
+</p>
+
+<p>
+config.cacheを消してconfigureすると
+</p>
+<pre>
+ac_cv_prog_CC=${ac_cv_prog_CC='i686-pc-cygwin-gcc -bmingw'}
+</pre>
+<p>
+となった。やはりあの$はどこから出てくるのか気になる。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200201262" title="200201262" href="200201c.html#200201262">■</a> 
+雪</h3>
+<p>
+予報通り夜に雪となったが、2,3時間ほどでまた雨に。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200201263" title="200201263" href="200201c.html#200201263">■</a> 
+<a href="http://cvs.m17n.org/~akr/diary/d2002_01.html#a2002_01_25_7">4.2BSD Bourne Shell</a></h3>
+<p>
+ソースを見てみる。ははは。
+</p>
+<pre>
+#define IF      if(
+#define THEN    ){
+#define ELSE    } else {
+#define ELIF    } else if (
+#define FI      ;}
+</pre>
+<p>
+各ファイルにはちゃんとS. R. Bourneと名前がある。
+ダイアルアップで6MB弱は痛かったけど、取ってきた甲斐があったなあ。おもしろい。<br>
+
+<a href="ftp://minnie.tuhs.org/UnixArchive/4BSD/Distributions/4.2BSD/">ftp://minnie.tuhs.org/UnixArchive/4BSD/Distributions/4.2BSD/</a>
+のsrc.tar.gz。
+</p>
+
+<p>
+早速makeしてみるとエラーだらけ。
+1983年当時のコンパイラでは許されていたのか。
+とりえずコンパイルエラーだけは
+<a href="../files/4.2BSD-sh-0.diff">直して</a>
+みたが、SEGVになる。
+</p>
+<pre>
+(gdb) run
+Starting program: /home/watanabe/0201/bin/sh-eban/sh 
+
+Program received signal SIGSEGV, Segmentation fault.
+0x804841a in addblok (reqd=28) at blok.c:63
+63                      pushstak(0);
+</pre>
+<p>
+pushstakは
+</p>
+<pre>
+#define          pushstak(c)     (*staktop++=(c))
+</pre>
+<p>
+のようマクロになっている。
+</p>
+<pre>
+(gdb) p staktop
+$1 = 0x4c49414d &lt;Address 0x4c49414d out of bounds&gt;
+</pre>
+<p>
+これは&quot;LIAM&quot;だな。逆から読むと&quot;MAIL&quot;だ。
+どうもalloc()がまずいようだ。setbrk.cを見るとsbrk(2)してる。
+mode.hを
+</p>
+<pre>
+-union { int _cheat;};
+-#define Lcheat(a)      ((a)._cheat)
++#define Lcheat(a)      *((int *)&amp;(a))
+</pre>
+<p>
+としたのが間違いだと思うんだけど、
+そもそもこのunionが今じゃ考えられない使い方をしてるしなあ。
+</p>
+
+<p>
+unionにしろstructにしろcastしないで使えてたのが不思議だ。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/01/26 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/01/27 start -->
+<h2><a name="20020127" href="200201c.html#20020127">2002-01-27 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="200201271" title="200201271" href="200201c.html#200201271">■</a> 
+glibc 2.2.5をインストール</h3>
+<p>
+作っておいた
+<a href="200201c.html#200201241">tarball</a> を展開する。
+いつものように他のktermでsuして非常事態に際して待機しておく。
+</p>
+<pre>
+% sudo tar xfUvz glibc-2.2.5-bin.tar.gz -C /
+% sudo ldconfig
+% ruby -v
+ruby 1.6.6 (2002-01-25) [i386-linux]
+</pre>
+<p>
+よさそう。rebootしてみる。特に問題なし。
+ここで時計を見てなんか変だと気づいた。UTCになってる。
+</p>
+<pre>
+% date
+Sat Jan 26 15:24:57 Local time zone must be set--see zic manual page 2002
+</pre>
+<p>
+ふーむ。
+</p>
+<pre>
+% man zic
+man: No such file or directory
+zsh: segmentation fault  man zic
+</pre>
+<p>
+あれ？manが動かなくなった。とりあえずtime zoneを直そう。
+</p>
+<pre>
+% ls -l /etc/localtime
+lrwxrwxrwx    1 root     root           29 Jan 26 14:46 /etc/localtime -&gt;\
+  ../usr/share/zoneinfo/Factory
+</pre>
+<p>
+これか。
+</p>
+<pre>
+% sudo ln -sf /usr/share/zoneinfo/localtime /etc/localtime
+% date
+Sun Jan 27 00:28:52 JST 2002
+</pre>
+<p>
+okだ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200201272" title="200201272" href="200201c.html#200201272">■</a> 
+man: No such file or directory</h3>
+<p>
+これは何がないと言ってるのかな？ltraceしてみる。
+</p>
+<pre>
+perror(&quot;man&quot;)                                     = &lt;void&gt;
+fprintf(0x08050d18, &quot;Failed to open the message catal&quot;... &lt;unfinished ...&gt;
+--- SIGSEGV (Segmentation fault) ---
+</pre>
+<p>
+perrorはNo such...だな。その後のfprintfは表示されてないからここでSEGVか。
+unfinishedが非常に怪しいが、わからん。ソースを手に入れよう。
+
+<a href="http://www.linux.or.jp/JM/man-ja/man-pager.html">日本語 man 環境の設定</a>
+を見てman-1.5g.tar.gzとman-1.5g-ja2.diff.gzを入手。
+そのページの通りにインストールするとSEGVはしなくなった。
+あ、これじゃ原因がわからないな。ま、いいか。
+</p>
+
+<p>
+結局存在しないmanualを指定するとNo such...になるようだ。
+でもzicはあるんだけどなあ。
+</p>
+<pre>
+% man foo
+man: No such file or directory
+Failed to open the message catalog man on the path NLSPATH=&lt;none&gt;
+
+No manual entry for foo
+</pre>
+<p>
+これを表示したかったのか。場所はsrc/gripes.cで、
+</p>
+<pre>
+s = getenv(&quot;NLSPATH&quot;);
+lg = getenv(&quot;LANG&quot;);
+if ((s || lg) &amp;&amp; (!lg || strcmp(lg, &quot;en&quot;))) {
+    perror(mantexts);
+    fprintf(stderr,
+&quot;Failed to open the message catalog %s on the path NLSPATH=%s\n\n&quot;,
+            mantexts, s ? s : &quot;&lt;none&gt;&quot;);
+</pre>
+<p>
+これじゃLANGをenにしない限り必ず表示されるね。
+あまり意味があるとも思えないな。-DNONLSを加えよう。
+</p>
+<pre>
+% man foo
+No manual entry for foo
+</pre>
+<p>
+これでよしとする。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200201273" title="200201273" href="200201c.html#200201273">■</a> 
+<a href="http://cvs.m17n.org/~akr/diary/d2002_01.html#a2002_01_27_1">$'...'</a></h3>
+<p>
+
+<a href="200201c.html#200201261">あの実験</a> は何の役にも立ってなかったわけですね。
+一番外側を&quot;&quot;にするとlogin shellが展開しちゃうと思ってああしたわけだけど、
+それが裏目ってしまったか。
+</p>
+<pre>
+% bash -c &quot;a=$'foo bar';echo \$a&quot;
+foo bar
+% zsh -c &quot;a=$'foo bar';echo \$a&quot;
+foo bar
+% ash -c &quot;a=$'foo bar';echo \$a&quot;
+$foo bar
+% ksh -c &quot;a=$'foo bar';echo \$a&quot;
+$foo bar
+</pre>
+<p>
+うーむ。どうもpdkshはそれほどkshと互換性がないようだ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200201274" title="200201274" href="200201c.html#200201274">■</a> 
+<a href="http://kornshell.com/">KornShell</a></h3>
+<p>
+というわけで
+<a href="http://kornshell.com/">本家KornShell</a> を試してみよう。
+</p>
+
+<h4><a name="200201274S1" href="200201c.html#200201274S1">_</a> <strong>zsh: command not found: mamake</strong>: </h4>
+<div class="sub">
+<p>
+
+<a href="http://www.research.att.com/~gsf/cgi-bin/download.cgi?action=list&amp;name=INIT">INIT</a>
+と
+<a href="http://www.research.att.com/~gsf/cgi-bin/download.cgi?action=list&amp;name=ast-ksh">ast-ksh</a>
+のSOURCEをダウンロードしてみたがどうもよくわからない。
+</p>
+<pre>
+% mkdir ast; cd ast
+% tar xfvz ../INIT.2001-10-31.tgz
+% tar xfvz ../ast-ksh.2001-10-31.tgz
+% export PACKAGEROOT=$PWD
+% export INSTALLROOT=$PACKAGEROOT/arch/`bin/package`
+% bin/package make CC=gcc CCFLAGS=-Os
+(snip)
++zsh:1&gt; mamake -r */* -k install ksh93 CC=gcc CCFLAGS=-Os
+zsh: command not found: mamake
+mamake: *** exit code 1 making all
+(snip)
+</pre>
+<p>
+うーむ。PATHの問題かと思って&quot;.&quot;を足してみてもだめ。
+ちゃんとbin/package helpを読もう。やっぱりわからん。
+zshが出てくるってことは環境変数SHELLか？
+</p>
+<pre>
+% SHELL=/bin/sh bin/package make CC=gcc CCFLAGS=-Os
+</pre>
+<p>
+あ、いけた。どうもそういうことらしい。
+bin/packageには#!がないのからzshが実行してしまうのか。
+bin/packageはzshには対応してないんだな。
+なぜ#!/bin/shとなってないんだろう？
+#!/bin/kshを入れるわけにはいかないし、
+kshを作っているところだけに意地でも#!/bin/shを入れたくなかったとか。
+</p>
+
+<p>
+じゃ
+</p>
+<pre>
+% sh bin/package make CC=gcc CCFLAGS=-Os
+</pre>
+<p>
+でいいじゃんという気がするが、これもなぜか
+</p>
+<pre>
+zsh: command not found: mamake
+</pre>
+<p>
+となる。中でまたシェルスクリプトを呼んでいるのか。
+</p>
+
+</div>
+<h4><a name="200201274S2" href="200201c.html#200201274S2">_</a> <strong>foo</strong>: </h4>
+<div class="sub">
+<p>
+いけたと軽く書いてるけど、
+実は1時間経った今、まだsfioを作ってるところだ。kshのコンパイルはまだまだ先らしい。
+しらばくしてkshをmakeしにいった。parse error続発だ。なんで止まらないんだ？
+bashで試そう。
+</p>
+<pre>
+% SHELL=/bin/bash bin/package make CC=gcc CCFLAGS=-Os
+</pre>
+<p>
+同じだ。
+</p>
+<pre>
+FEATURE/options:12: parse error before '/' token
+</pre>
+<p>
+が気になる。arch/linux.i386/src/cmd/ksh93/FEATURE/optionsを見てみると、
+なんと
+</p>
+<pre>
+/usr/local/lib/ruby/site_ruby/1.6
+/usr/local/lib/ruby/site_ruby/1.6/i386-linux
+/usr/local/lib/ruby/site_ruby
+/usr/local/lib/ruby/1.6
+/usr/local/lib/ruby/1.6/i386-linux
+.
+</pre>
+<p>
+が間にはさまってるじゃん！びっくりだよ。だれがrubyを実行したんだ？
+先頭を見るとsrc/cmd/ksh93/features/options.shが作ったとわかる。
+</p>
+<pre>
+sh -c   'function foo
+        {
+                local bar=0 2&gt; /dev/null || return 1
+                return ${bar=1}
+        }
+        foo
+        ' &amp;&amp; echo &quot;#define SHOPT_ALIASLOCAL     1&quot;
+</pre>
+<p>
+だからfunctionとlocalをサポートしてないとだめなんだ。
+ちがうか。localをサポートしてるかどうかを調べてるんだ。
+~/bin/fooに
+</p>
+<pre>
+#!/usr/local/bin/ruby
+puts $:
+</pre>
+<p>
+というのあってこれが実行されてた。なにかの実験のために置いてたんだろうきっと。
+たぶん
+</p>
+<pre>
+PATH= foo
+</pre>
+<p>
+と実行してくれればfooというコマンドがあったりしても問題ないんだけど。
+普通はないよね、そんな名前のコマンドは。
+</p>
+<pre>
+% cp =bash ~/bin/sh
+% rm arch/linux.i386/src/cmd/ksh93/FEATURE/options
+</pre>
+<p>
+してもう一度。ついでにSHELL=/bin/bashにしとく。いいみたい。やっと先に進んだ。
+</p>
+
+</div>
+<h4><a name="200201274S3" href="200201c.html#200201274S3">_</a> <strong>$'...'</strong>: </h4>
+<div class="sub">
+<p>
+これで試せる。
+</p>
+<pre>
+% arch/linux.i386/bin/ksh -c &quot;a=$'foo bar';echo \$a&quot;
+foo bar
+</pre>
+<p>
+ああ、満足。って長いよ。
+</p>
+
+</div>
+<h4><a name="200201274S4" href="200201c.html#200201274S4">_</a> <strong>インストール</strong>: </h4>
+<div class="sub">
+<p>
+それにしてもでかい。stripしても800KBか。
+</p>
+<pre>
+% ls -l ksh
+-rwxr-xr-x    1 watanabe ruby       819576 Jan 27 19:22 ksh
+</pre>
+<p>
+インストールはインストールでtsortが必要らしい。
+</p>
+<pre>
+% SHELL=/bin/bash sudo bin/package install /bin ksh
+tsort: not found
+package: at least one package name expected
+</pre>
+<p>
+面倒なのでcpしとこう。pdkshは/bin/pdkshに名前を変更。
+</p>
+
+</div>
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200201275" title="200201275" href="200201c.html#200201275">■</a> 
+<a href="http://cvs.m17n.org/~akr/diary/d2002_01.html#a2002_01_26_3">4.2BSD Bourne Shell</a></h3>
+<p>
+なるほど。
+無限ループしてるようなのでgdbで調べてたんですけど、
+確かにfault.cを見るとtrapしてるようですね。
+defs.hには
+</p>
+<pre>
+#define MEMF    11
+</pre>
+<p>
+と書かれていて、これはSEGVだし。
+</p>
+
+<p>
+ソースを見ただけで結構満足できたし、これはこれでよしとしよう。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200201276" title="200201276" href="200201c.html#200201276">■</a> 
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-talk/32355">RDoc alpha-9</a></h3>
+<p>
+更新。eval対応がそろそろ出そうではあるけど。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200201277" title="200201277" href="200201c.html#200201277">■</a> 
+<a href="http://www.sfc.keio.ac.jp/~s01397ms/d/?date=20020127#p02">[Ruby] mingw32でのRuby/Gtkのextconf.rb</a></h3>
+<p>
+Ruby-GTK maintainerのNeil Conwayさんに聞かれたときに
+
+<a href="../files/ruby-gtk-0.26-extconf.rb.diff">このパッチ</a>
+を渡したら
+</p>
+<pre>
+Great! Patch applied.
+</pre>
+<p>
+と言われたので、すでに修正されてるんじゃないかな。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200201278" title="200201278" href="200201c.html#200201278">■</a> 
+Linux 2.4.18-pre7</h3>
+<p>
+例によってsched O(1)とpreemptをあてる。preemptはrejectしたが、手で修正。
+</p>
+<pre>
+EXPORT_SYMBOL(waitfor_one_page);
+</pre>
+<p>
+は復活してるようだ。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/01/27 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/01/28 start -->
+<h2><a name="20020128" href="200201c.html#20020128">2002-01-28 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="200201281" title="200201281" href="200201c.html#200201281">■</a> 
+autoconfと[</h3>
+<p>
+
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-list/33539">[ruby-list:33539]</a>
+でなにをcommitしようとしてたかというと、
+
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-list/33531">[ruby-list:33531]</a> を受けて、
+以下の断片を追加しようと思っていた。
+</p>
+<pre>
+case &quot;$target_os&quot; in
+   solaris2.[0-6]*);;
+   *) LDSHARED=&quot;$LDSHARED -shared&quot;;;
+esac
+</pre>
+<p>
+で、実際にテストしてみると、どうしても-sharedがついてしまう。
+この部分の抜き出して実行すればちゃんと意図した通りに動く。
+1時間ほどしてautoconfでは[]はquote文字だと気づく。
+</p>
+<pre>
+   solaris2.[[0-6]]*);;
+</pre>
+<p>
+としないといけないんだよね。
+</p>
+
+<p>
+このテスト自体はsolarisじゃなくても
+</p>
+<pre>
+% ./configure --target=sparc-solaris2.5
+% ./configure --target=sparc-solaris7
+</pre>
+<p>
+のように--targetで指定すればどこでもできる。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200201282" title="200201282" href="200201c.html#200201282">■</a> 
+Win32OLE 0.3.4</h3>
+<p>
+更新。<br>
+ChangeLog:
+</p>
+<pre>
+* depend :remove win32ole.c
+* win32ole.c (fole_s_const_load): accept type library as first argument.
+* testWIN32OLE.rb (test_s_const_load): ditto.
+* win32ole.c (ole_method_help): get parameter name.
+</pre>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200201283" title="200201283" href="200201c.html#200201283">■</a> 
+<a href="200201c.html#200201273">$'...'</a></h3>
+<p>
+最初の$もquoteしないとやっぱまずいよね。
+</p>
+<pre>
+% bash -c &quot;a=\$'foo bar';echo \$a&quot;
+foo bar
+% zsh -c &quot;a=\$'foo bar';echo \$a&quot;
+foo bar
+% ksh -c &quot;a=\$'foo bar';echo \$a&quot;
+foo bar
+% ash -c &quot;a=\$'foo bar';echo \$a&quot;
+$foo bar
+% pdksh -c &quot;a=\$'foo bar';echo \$a&quot;
+$foo bar
+</pre>
+<p>
+結果は同じではあるが。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200201284" title="200201284" href="200201c.html#200201284">■</a> 
+RDoc alpha-9-1</h3>
+<p>
+install.rbを書き換えるのを忘れていた。すまん。なひさん。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/01/28 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/01/29 start -->
+<h2><a name="20020129" href="200201c.html#20020129">2002-01-29 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="200201291" title="200201291" href="200201c.html#200201291">■</a> 
+rsyncとxdelta</h3>
+<p>
+rsyncは忘れないんだけど、xdeltaを忘れてしまうことがあるようだ。
+たまに壊れるのはそういうことなんだな。
+これは例によって手動だから忘れるわけで、
+rsyncしてついでにxdeltaもするスクリプトを書かないとだめだな。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200201292" title="200201292" href="200201c.html#200201292">■</a> 
+GNU fileutilsその後</h3>
+<p>
+ltrace ls -lしてみるとdcgettextした結果に変化がない。
+fileutils-4.1のpo/ja.poを見ると
+</p>
+<pre>
+#: src/ls.c:1374
+msgid &quot;%a %b %d %H:%M:%S %Y&quot;
+msgstr &quot;&quot;
+
+#: src/ls.c:1377
+msgid &quot;%b %e  %Y&quot;
+msgstr &quot;&quot;
+
+#: src/ls.c:1378
+msgid &quot;%b %e %H:%M&quot;
+msgstr &quot;&quot;
+</pre>
+<p>
+となってて、これじゃ変化ないよね。
+でも月だけは「1月」となるから、strftime内部でも変換しているようだ。
+早速実験だ。
+</p>
+<pre>
+% cat test.c
+#include &lt;stdio.h&gt;
+#include &lt;locale.h&gt;
+#include &lt;time.h&gt;
+main()
+{
+    char buf[1024];
+    time_t t = time(0);
+    struct tm *tm = localtime(&amp;t);
+
+    setlocale(LC_ALL, &quot;&quot;);
+    strftime(buf, sizeof buf, &quot;%a&quot;, tm);
+    printf(&quot;%s\n&quot;, buf);
+}
+% gcc test.c
+% ./a.out
+Tue
+% LC_ALL=ja_JP.eucJP ./a.out
+火
+</pre>
+<p>
+というかman strftimeすると「現在のロケールで」っていっぱい書いてあるじゃん。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200201293" title="200201293" href="200201c.html#200201293">■</a> 
+LC_TIMEとLC_MESSAGES</h3>
+<p>
+
+<a href="http://znz.s1.xrea.com/t/?date=20020127#p01">&lt;zt diary&gt;</a>
+経由でysjjさんの書かれた
+
+<a href="http://www.unixuser.org/~ysjj/bash_script_i18n.html">bashスクリプトでメッセージカタログ</a>
+を見て、ふむふむとfileutilsのpo/ja.poを書き換えてみた。
+そもそもなぜ空なんだろう？
+</p>
+<pre>
+#: src/ls.c:1374
+msgid &quot;%a %b %d %H:%M:%S %Y&quot;
+msgstr &quot;%Y年%m月%e日 %H時%M分%S秒&quot;
+
+#: src/ls.c:1377
+msgid &quot;%b %e  %Y&quot;
+msgstr &quot;  %Y年 %m月%e日&quot;
+
+#: src/ls.c:1378
+msgid &quot;%b %e %H:%M&quot;
+msgstr &quot;%m月%e日 %H時%M分&quot;
+</pre>
+<p>
+てな感じ。だが全然変わらない。
+ソースを見ると肝心のところがLC_TIMEになっている。
+これってLC_MESSAGESの間違いじゃないかな？
+</p>
+<pre>
+% LC_ALL=ja_JP.eucJP ./ls -l ls 
+-rwxr-xr-x    1 watanabe ruby        56388 01月29日 02時36分 ls
+</pre>
+<p>
+ほら。ちゃんと出たじゃん。
+これですべて謎が解けたんだろうか？
+</p>
+
+<p>
+po/Makefileを見てたら
+</p>
+<pre>
+        timedir=$$destdir/$$lang/LC_TIME; \
+        rm -fr $$timedir; \
+        ln -s LC_MESSAGES $$timedir \
+        || (mkdir $$timedir &amp;&amp; ln $$dir/* $$timedir); \
+        echo &quot;installing $$timedir as an alias for $$dir&quot;; \
+</pre>
+<p>
+とある。ひょっとして最初からあるファイル
+</p>
+<pre>
+/usr/share/locale/ja_JP.eucJP/LC_TIME
+</pre>
+<p>
+がいけない気がする。aliasって書いてあるしなあ。
+ls.cをもう一度よく見ると他は_()マクロを使っているのに、
+ここだけdcgettextでLC_TIMEを指定してる。
+ということは間違いじゃなくて、やはり意図的なんだ。うーむ。
+</p>
+
+<p>
+そんな気がして
+</p>
+<pre>
+% cd /usr/share/locale/ja_JP.eucJP
+% sudo mv LC_TIME{,.orig}
+% sudo ln -s LC_MESSAGES LC_TIME
+</pre>
+<p>
+するとls.cにパッチをあてなくてもちゃんと表示される。
+そういうことらしい。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200201294" title="200201294" href="200201c.html#200201294">■</a> 
+LC_ALL</h3>
+<p>
+ふだんはLC_MESSAGES=C LC_TIME=C LC_COLLATE=Cという設定をしてるので、
+一々
+</p>
+<pre>
+% env -u LC_MESSAGES -u LC_TIME -u LC_COLLATE ls -l
+</pre>
+<p>
+とかしてたんだけど、
+</p>
+<pre>
+% LC_ALL=ja_JP.eucJP ls -l
+</pre>
+<p>
+でいいんだと気づく(strftimeの実験時に)。
+</p>
+<pre>
+% LC_ALL=ja_JP.eucJP locale
+LANG=ja_JP.eucJP
+LC_CTYPE=&quot;ja_JP.eucJP&quot;
+LC_NUMERIC=&quot;ja_JP.eucJP&quot;
+LC_TIME=&quot;ja_JP.eucJP&quot;
+LC_COLLATE=&quot;ja_JP.eucJP&quot;
+LC_MONETARY=&quot;ja_JP.eucJP&quot;
+LC_MESSAGES=&quot;ja_JP.eucJP&quot;
+LC_PAPER=&quot;ja_JP.eucJP&quot;
+LC_NAME=&quot;ja_JP.eucJP&quot;
+LC_ADDRESS=&quot;ja_JP.eucJP&quot;
+LC_TELEPHONE=&quot;ja_JP.eucJP&quot;
+LC_MEASUREMENT=&quot;ja_JP.eucJP&quot;
+LC_IDENTIFICATION=&quot;ja_JP.eucJP&quot;
+LC_ALL=ja_JP.eucJP
+</pre>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200201295" title="200201295" href="200201c.html#200201295">■</a> 
+<a href="http://znz.s1.xrea.com/t/?date=20020129#p02">[shell] foo</a></h3>
+<p>
+ええ。ですからすでに
+<a href="200201c.html#200201251">/bin/shをashに</a> してしまったのです。
+だからこそ、KornShellのmakeではまったわけなんですが、
+そう言った意味ではあれは一体なんのチェックなんだか謎になってしまうか？
+</p>
+<pre>
+% mkdir tmp; cd tmp
+% touch a
+% bash -c 'function ls
+{
+  echo ls
+}
+ls -l'
+ls
+% sh -c 'function ls
+{
+  echo ls
+}
+ls -l'
+function: not found
+ls
+total 0
+-rw-r--r--    1 watanabe ruby            0 Jan 29 02:48 a
+% sh -c 'ls()  
+{         
+  echo ls
+}     
+ls -l'
+ls
+</pre>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200201296" title="200201296" href="200201c.html#200201296">■</a> 
+W32/Myparty@MM</h3>
+<p>
+今日も盛大にメール配送が遅れてる。間違いなくW32/Myparty@MMの所為だな。
+uuencodeという手口が温故知新だが、だから猿のようにクリックするなよ、頼むから。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200201297" title="200201297" href="200201c.html#200201297">■</a> 
+Ruby Developer's Guide</h3>
+<p>
+なんとなくamazon.comのほうが安い気もするが、amazon.co.jpで注文。
+一ヶ月ぐらいかかる？
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/01/29 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/01/30 start -->
+<h2><a name="20020130" href="200201c.html#20020130">2002-01-30 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="200201301" title="200201301" href="200201c.html#200201301">■</a> 
+<a href="http://www.sfc.keio.ac.jp/~s01397ms/d/?date=20020128#p08">[Ruby] mingw32でのRuby/Gtkのextconf.rb</a></h3>
+<p>
+なぜ足したかというと、mingwですらなくても文句はなかったから。
+つまりcygwinとmingw版は酒井さんとわたししかmakeしたことがないんだと思う。
+</p>
+
+<p>
+でもholonのX on Windowsがあるからこれから増えるかもしれないなあ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200201302" title="200201302" href="200201c.html#200201302">■</a> 
+<a href="http://www.ruby-lang.org/en/raa-list.rhtml?name=Racc">Racc 1.4.2</a></h3>
+<p>
+--without-extが新設されたので、djgppは
+</p>
+<pre>
+% i386-msdosdjgpp-ruby ../setup.rb config \
+  --without-ext \
+  --ruby-path=/usr/local/bin/ruby
+</pre>
+<p>
+てな感じでok。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200201303" title="200201303" href="200201c.html#200201303">■</a> 
+<a href="../files/Makefile.pack">Makefile.pack</a></h3>
+<p>
+うそうそ。引数が逆。
+</p>
+<pre>
+ifneq (,$(findstring cygwin,$(TARGET)))
+  TARGET=i386-cygwin
+endif
+ifneq (,$(findstring mingw,$(TARGET)))
+  TARGET=i386-mingw32
+endif
+ifneq (,$(findstring djgpp,$(TARGET)))
+  TARGET=i386-msdosdjgpp
+endif
+</pre>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200201304" title="200201304" href="200201c.html#200201304">■</a> 
+<a href="http://www.ruby-lang.org/en/raa-list.rhtml?name=Log4r">Log4r 1.0.1</a></h3>
+<p>
+更新。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200201305" title="200201305" href="200201c.html#200201305">■</a> 
+<a href="http://www.ruby-lang.org/en/raa-list.rhtml?name=XML-RPC">XML-RPC 1.7.9</a></h3>
+<p>
+入れてみた。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/01/30 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/01/31 start -->
+<h2><a name="20020131" href="200201c.html#20020131">2002-01-31 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="200201311" title="200201311" href="200201c.html#200201311">■</a> 
+<a href="http://www.ruby-lang.org/en/raa-list.rhtml?name=AspectR">AspectR 0.3.5</a></h3>
+<p>
+
+<a href="http://www.ruby-lang.org/en/raa-list.rhtml?name=RbProf">RbProf</a>
+も同梱されてる。Rubyに付属のprofile.rbより5倍から10倍速いらしい。
+実際に実行するとmarshal.dumpした結果が残る。たとえば
+</p>
+<pre>
+% ruby -rrbprof -rjcode -e '&quot;abcde&quot;.tr(&quot;a-z&quot;,&quot;A-Z&quot;)'
+</pre>
+<p>
+なら-e.profileてな具合に。
+でも実際のコードは&quot;w&quot;と&quot;r&quot;でopenしてるからDOSやWindowsではまずそうだな。
+</p>
+<pre>
+File.open(profile_filename(programName), &quot;w&quot;) do |f|
+  f.write Marshal.dump(profiler)
+end
+</pre>
+<p>
+これは普通
+</p>
+<pre>
+File.open(profile_filename(programName), &quot;wb&quot;) do |f|
+  f.write Marshal.dump(profiler)
+end
+</pre>
+<p>
+とするところだが、Marshal::{dump,load}はportが指定されたら自動的にbinmodeするので
+</p>
+<pre>
+File.open(profile_filename(programName), &quot;w&quot;) do |f|
+  Marshal.dump(profiler, f)
+end
+</pre>
+<p>
+でもいい。とりあえず直しとこう。
+</p>
+
+<p>
+2回目以降は前回の結果と比較して、その差を表示してくれる。
+最適化に燃えるときなんかにいいかも。
+</p>
+<pre>
+Compared to profile taken Wed Jan 30 23:11:21 JST 2002
+******************************************************
+                                 New       Old       Diff   
+Total elapsed time               0.3       0.33     -9.09%  
+
+TOPLEVEL                         0.28      0.31     -9.68%  
+String#tr!                       0.02      0.02     -0.00%  
+String#expand_ch_hash            0.0       0.0              
+String#_expand_ch                0.0       0.0              
+String#_regex_quote              0.0       0.0              
+String#tr                        0.0       0.0              
+</pre>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200201312" title="200201312" href="200201c.html#200201312">■</a> 
+<a href="../files/Makefile.pack">Makefile.pack</a></h3>
+<p>
+パッチを作ったら自動的にパッケージに含ませるようにした。
+</p>
+<pre>
+DOC += $(wildcard $(PACKAGE)-$(VERSION)*.diff)
+</pre>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200201313" title="200201313" href="200201c.html#200201313">■</a> 
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-talk/32588">ruby-tar 0.1.0 available</a></h3>
+<p>
+pure rubyのtar。なぜかライブラリではなくコマンドとして実装されてる。
+最後はif __FILE__ == $0のイディオムを使って欲しいなあ。
+これでsetup.exeを使わないインストーラを作るのも悪くないかも。
+でもsetup.exeを使っている人は当然Cygwinをインストールしてるはずで、
+systemでtarを呼べばいいか。
+あ、Rubyで書くとruby.exeとcygwin-ruby16.dllあたりが更新できない気がする。
+</p>
+
+<p>
+READMEを見てパッケージングは見送り。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200201314" title="200201314" href="200201c.html#200201314">■</a> 
+<a href="http://www.ruby-lang.org/en/raa-list.rhtml?name=PerfCtr">PerfCtr 0.1.1</a></h3>
+<p>
+中はCR+LFだなあ。いやだな。
+</p>
+<pre>
+stray '\' in program
+</pre>
+<p>
+になるんだよね。
+というか、たしかgcc 2.95.3からはCR+LFも受けつけるようになったはずなんだけどなあ。
+3.0からだっけ？
+</p>
+<pre>
+Requirements?
+-------------
+ANSI C compiler, Ruby and cygwin.
+</pre>
+<p>
+というのはなんでだろう？MinGWでも問題なくperfctr.soは作れるんだけど。
+たぶんVC++でもいけるんじゃないかな。肝は
+</p>
+<pre>
+QueryPerformanceFrequency
+QueryPerformanceCounter
+</pre>
+<p>
+のようだ。
+</p>
+
+<p>
+これを使ってhigh-resolutionになるのなら、
+win32/win32.cのgettimeofdayもそうすればいい気もする。
+でもよく見たらこれって絶対じゃなくて相対なのか。うーむ。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/01/31 end -->
+
+<hr>
+<div>
+<a href="200201b.html">&lt;Prev(,)</a> | 
+<a href="200202a.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

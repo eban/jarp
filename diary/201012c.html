@@ -1,0 +1,429 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2010-12-c</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="201012b.html">
+<link rel="next" href="201101a.html">
+
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2010年12月下旬〜</p>
+<hr>
+<div>
+<a href="201012b.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="201101a.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2010/12/21 start -->
+<h2><a name="20101221" href="201012c.html#20101221">2010-12-21 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="201012211" title="201012211" href="201012c.html#201012211">■</a> 
+仕事納め</h3>
+<p>
+きのこ本買ってきたので読む。
+
+</p>
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="201012212" title="201012212" href="201012c.html#201012212">■</a> 
+Logicool Wireless Mouse M505</h3>
+<p>
+マウスすげー調子いい。単3電池だと重いがまあそのうち慣れるだろう。<br>
+あとなぜかスリープしてる気配がないんだけど、これで本当に15ヶ月も保つのかな。<br>
+変にクリックとしなくすむしスリープなしで省電力を達成できてるんだとしたらすごいな。
+</p>
+<!-- section end -->
+</div>
+<!-- 2010/12/21 end -->
+
+
+
+<hr class="hide">
+<!-- 2010/12/22 start -->
+<h2><a name="20101222" href="201012c.html#20101222">2010-12-22 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="201012221" title="201012221" href="201012c.html#201012221">■</a> 
+bashとzshの除外リストの違い</h3>
+<p>
+bashは !(file1|file2) で、zshだと ^(file1|file2) と違うが、<br>
+zshでもsetopt ksh_globすれば!が使えるようになる。<br>
+<a href="http://www.ideaxidea.com/archives/2010/12/linux_commands.html">&quot;Linuxで使えるクレージーな小技コマンドいろいろ - IDEA*IDEA&quot;</a><br>
+を見てるといろいろとつっこみたくなるよね。
+</p>
+<!-- section end -->
+</div>
+<!-- 2010/12/22 end -->
+
+
+
+<hr class="hide">
+<!-- 2010/12/23 start -->
+<h2><a name="20101223" href="201012c.html#20101223">2010-12-23 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="201012231" title="201012231" href="201012c.html#201012231">■</a> 
+<a href="http://danielchoi.com/software/vmail.html">Vmail</a></h3>
+<p>
+gem install vmailで使える。imapなので試しやすい。<br>
+説明では
+</p><blockquote><p>
+To archive a message, put the cursor on it and type ,e. Archiving a message moves it to the all mailbox.
+</p></blockquote><p>
+と書かれていてarchiveはeなんだと勘違いしたが、&quot;,e&quot;なので注意。<br>
+背景が薄くグレーになっているのに気づかなかった。<br>
+もうちょっと強調してくれてもいいと思うよ。
+</p>
+<p>
+日本語もokだが、文字単位で数えているせいかカラムがずれるのは御愛嬌。<br>
+ずれてもそれほど問題ない。化けるわけでもないので。
+</p>
+<p>
+space barで次々読めて、そのままarchiveされたらすげー使いやすいよなあ。軽いし。
+</p>
+<p>
+でもちょっとバグってる。archiveしても前のメッセージが何度も出てきたり。<br>
+惜しいな。
+</p>
+<!-- section end -->
+</div>
+<!-- 2010/12/23 end -->
+
+
+
+<hr class="hide">
+<!-- 2010/12/24 start -->
+<h2><a name="20101224" href="201012c.html#20101224">2010-12-24 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="201012241" title="201012241" href="201012c.html#201012241">■</a> 
+gmailが突然エラーに</h3>
+<p>
+なんかよくわからないうちにgmailにアクセスすると何をやっても
+</p>
+<pre>
+Bad Request
+Error 400
+</pre>
+<p>
+と言われてしまうようになってしまった。<br>
+他のブラウザでは問題なくアクセスできるのでクッキーかと思い、<br>
+mail.google.comに関するのを全部削除したら復活した。
+</p>
+<p>
+ぐぐってみるとやはりみんなクッキーを消してるようだ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2010/12/24 end -->
+
+
+
+<hr class="hide">
+<!-- 2010/12/25 start -->
+<h2><a name="20101225" href="201012c.html#20101225">2010-12-25 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="201012251" title="201012251" href="201012c.html#201012251">■</a> 
+とあるDVDをやっと見た</h3>
+<p>
+ネタばれされたんで忘れるまで数年間放置していた有名なドラマのDVDを借りた。<br>
+すっかり忘れているようだ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2010/12/25 end -->
+
+
+
+<hr class="hide">
+<!-- 2010/12/26 start -->
+<h2><a name="20101226" href="201012c.html#20101226">2010-12-26 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="201012261" title="201012261" href="201012c.html#201012261">■</a> 
+bashでも{00..10}</h3>
+<p>
+zshの専売かと思ったら、bash4から{00..10}で0-prefixが可能になってた。
+</p>
+<pre>
+% bash -c 'echo {00..10}'
+00 01 02 03 04 05 06 07 08 09 10
+</pre>
+<p>
+<a href="http://golf.shinh.org/p.rb?long+decimal">long decimal</a>を解いてて気づいたんだけど。
+</p>
+<!-- section end -->
+</div>
+<!-- 2010/12/26 end -->
+
+
+
+<hr class="hide">
+<!-- 2010/12/27 start -->
+<h2><a name="20101227" href="201012c.html#20101227">2010-12-27 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="201012271" title="201012271" href="201012c.html#201012271">■</a> 
+<a href="http://golf.shinh.org/p.rb?Divide+section">Divide section</a></h3>
+<p>
+mathnとstepに気づけば楽。
+</p>
+<pre>
+require'mathn'
+a,b,c=gets.split.map &amp;:to_i
+$&gt;&lt;&lt;(a*c).step(b*c,b-a).map{|x|x/c}*' '
+
+#!ruby -parmathn
+eval&quot;A,B,C=&quot;+$F*&quot;,&quot;
+$_=(A*C).step(B*C,B-A).map{|x|x/C}*' '
+
+#!ruby -narmathn
+eval&quot;A,B,C=&quot;+$F*&quot;,&quot;
+(A*C).step(B*C,B-A){|x|$&gt;&lt;&lt;[x/C,&quot; &quot;]}
+
+#!ruby -narmathn
+eval&quot;A,B,C=&quot;+$F*&quot;,&quot;
+A.step(B,(B-A)/C){|x|$&gt;&lt;&lt;[x,&quot; &quot;]}
+
+#!ruby -parmathn
+eval&quot;A,B,C=&quot;+$F*&quot;,&quot;
+$_=A.step(B,(B-A)/C).map*&quot; &quot;
+
+#!ruby -parmathn
+eval&quot;A,B,C=&quot;+$F*&quot;,&quot;
+$_=[*A.step(B,(B-A)/C)]*&quot; &quot;
+
+#!ruby -parmathn
+A,B,C=$F.map &amp;:to_i
+$_=[*A.step(B,(B-A)/C)]*&quot; &quot;
+</pre>
+最終的にはuruさんと同じ解になったわけだが、evalでも同じサイズだった。<br>
+$Fとsprintf的に%1$dとか使えば短くなるかと思ったらだめだった。<br>
+そうか。
+<a href="http://golf.shinh.org/reveal.rb?Divide+section/leonid_1292287851&amp;rb">一回代入</a>すればA,B,Cの順番で出てくるからいけるんだな。
+<!-- section end -->
+</div>
+<!-- 2010/12/27 end -->
+
+
+
+<hr class="hide">
+<!-- 2010/12/28 start -->
+<h2><a name="20101228" href="201012c.html#20101228">2010-12-28 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="201012281" title="201012281" href="201012c.html#201012281">■</a> 
+<a href="http://www.commandlinefu.com/commands/view/7415/compare-copies-of-a-file-with-md5">Compare copies of a file with md5</a></h3>
+<p>
+cmpでいいだろってのはまったくもってその通りなんだけど、<br>
+md5sumの結果だけ残しておけば元ファイルを消してもいいという使い方もあったりする。<br>
+ファイルサイズがでかくて、リモートで新たに生成したりする場合なんかに。
+</p>
+<p>
+それはそれとして
+</p>
+<pre>
+diff &lt;(md5sum render_pack.zip| cut -d &quot; &quot; -f 1) &lt;(md5sum /media/green/render_pack.zip| cut -d &quot; &quot; -f 1);echo $?
+</pre>
+<p>
+のcutは余計だな。md5sum &lt; render_pack.zipのようにすれば、<br>
+ファイル名はどちらも-になるのでcutする必要なし。<br>
+比較もmd5sumにやらせればいい話で
+</p>
+<pre>
+% md5sum &lt; render_pack.zip &gt; render_pack_zip.md5sum
+% md5sum -c render_pack_zip.md5sum &lt; /media/green/render_pack.zip
+</pre>
+<p>
+でいけるはずだ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2010/12/28 end -->
+
+
+
+<hr class="hide">
+<!-- 2010/12/29 start -->
+<h2><a name="20101229" href="201012c.html#20101229">2010-12-29 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="201012291" title="201012291" href="201012c.html#201012291">■</a> 
+<a href="http://vimgolf.com">VimGolf</a></h3>
+<p>
+ポストすると自分と同じサイズ以上の他の人の解が見られるようになるというのが面白い。<br>
+で、自分の解にはなぜか&quot;\x80\xFD5&quot;が余計についてしまって3B損してる。<br>
+とつぶやいたら池上さんに<br>
+<a href="http://groups.google.com/group/linux.debian.bugs.dist/browse_thread/thread/37abbcdc11a91dea">Bug#608242: With :set nocompatible, vim -w or -W records extra garbage keystrokes</a><br>
+を教えてもらった。set nocompatibleが原因ということなので、~/.vimrcで
+</p>
+<pre>
+au BufRead ~/.vimgolf/put/* setl compatible
+</pre>
+<p>
+とした。これで、vim特有の機能は使えなくなるが、それはそれでまあいいんじゃないかと。<br>
+しかし、~/.vimrcは読まないようにすべきだと思うんだけどねえ。<br>
+チートし放題じゃないの？
+</p>
+<!-- section end -->
+</div>
+<!-- 2010/12/29 end -->
+
+
+
+<hr class="hide">
+<!-- 2010/12/30 start -->
+<h2><a name="20101230" href="201012c.html#20101230">2010-12-30 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="201012301" title="201012301" href="201012c.html#201012301">■</a> 
+忘年会</h3>
+<p>
+馬場のShakey'sでピザとパスタの毎年恒例の忘年会。
+</p>
+<p>
+本屋を覗くとやはりいた。16時開始って早くない？禁煙席でお待ちください。食べ放題じゃないよ。<br>
+WEBrickのせいじゃないよ。どうしても煙草が吸いたい人。拳を握りしめる人。喫煙席が空きました。<br>
+jruby派の人。opensslの拡張の話。gemの話。debianのRubyパッケージな話。なんとgentoo。CentOS 6はいつ？<br>
+翻訳bot。4sq。拳を握りしめる人。rvmはどうなの？あい変わらずの公開内緒話。<br>
+腹が減ったので予定より早く来た人。<br>
+余計なものをつけ足すからうんと言えない。殴るポーズの人。今なにやってるの？<br>
+イギリス。親子丼。実はカレーライス。ラーメン的な何か。イギリス料理以外はうまい。<br>
+なんかささるよresolverが。辻斬りな人。殴る人。餅をついてて遅れた人。邪気眼。<br>
+ビジネスタイム。名刺交換。名刺切らしてました。乱心。<br>
+のろける人達。転職。引越し。拳を握りしめる人。こんなとこ来ねーよ。気まずいタイミング。<br>
+思いの外大きかったコーラL。ケータイと共にアドレス帳を捨てる人。乱心。そもそもケータイを持ってない人。乱心。<br>
+合コン。電話番号。PDAも持ってないの？RAがどうのこうの。<br>
+kakasiが1.9で通らない。RubyKaigi終了の件。方向性の違い？<br>
+教え子。ruby-math。回文。平均点。Excelで十分。エンタープライズ企業。テンプレート。<br>
+北海道。後進育成。決裁権のないマネージャー。<br>
+ed。debianにはあるよ。引き続き拳を握りしめる人。そういえば昨年は風邪をうつされて大変な目に会った。<br>
+馬場忘年会は2003年から開始。9人は記録か。ゴールドは半端ない。乱心。反抗期と家出。<br>
+なんとクラックされてたのかjarp。風邪には気をつけよう。拳を握りしめる人。リアル厨2な人。いやだ。<br>
+ビッグパフェ？生クリームが凍ってる。スイーツなピザが好評。殴る人。殴られ放しの人。実は仲がいい。<br>
+マーライオン。郵便ポストが会社の中に。かっこいい。ダストシュート。消防法。<br>
+猫自慢の人。35歳限界説。チョコレートを配る人(ありがとう)。20時解散。厄年。よいおとしを。
+</p>
+<p>
+雨が降らなくてよかった。帰りは寒かったな。
+</p>
+<p>
+参加者: 
+<a href="http://twitter.com/_ko1">@_ko1</a>,
+<a href="http://twitter.com/eban">@eban</a>,
+<a href="http://twitter.com/gotoken">@gotoken</a>,
+<a href="http://twitter.com/gotoyuzo">@gotoyuzo</a>,
+<a href="http://twitter.com/hemge">@hemge</a>,
+<a href="http://twitter.com/hsbt">@hsbt</a>,
+<a href="http://twitter.com/koichiroo">@koichiroo</a>,
+<a href="http://twitter.com/nahi">@nahi</a>,
+<a href="http://twitter.com/nay3">@nay3</a></p>
+<!-- section end -->
+</div>
+<!-- 2010/12/30 end -->
+
+
+
+<hr class="hide">
+<!-- 2010/12/31 start -->
+<h2><a name="20101231" href="201012c.html#20101231">2010-12-31 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="201012311" title="201012311" href="201012c.html#201012311">■</a> 
+rvm install goruby</h3>
+<p>
+残念ながらエラーになってしまう。
+</p>
+<pre>
+% rvm install goruby
+Cloning 
+Error running 'git clone --depth 1  /home/eban/.rvm/repos/goruby', please read /home/eban/.rvm/log/goruby/ruby.repo.log
+Could not fetch  - trying 
+Cloning 
+Error running 'git clone --depth 1  /home/eban/.rvm/repos/goruby', please read /home/eban/.rvm/log/goruby/ruby.repo.log
+/home/eban/.rvm/scripts/manage: line 1248: cd: /home/eban/.rvm/repos/goruby: No such file or directory
+fatal: Not a git repository (or any of the parent directories): .git
+Copying from repo to source...
+Error running '\cp -R &quot;/home/eban/.rvm/repos/goruby&quot; &quot;/home/eban/.rvm/src/goruby&quot;', please read /home/eban/.rvm/log/goruby/ruby.copy.log
+/home/eban/.rvm/scripts/manage: line 1270: cd: /home/eban/.rvm/src/goruby: No such file or directory
+/home/eban/.rvm/scripts/manage: line 79: cd: /home/eban/.rvm/src/goruby: No such file or directory
+Running autoconf
+Error running 'autoconf', please read /home/eban/.rvm/log/goruby/autoconf.log
+Skipping configure step, 'configure' script does not exist, did autoconf not run successfully?
+Compiling goruby, this may take a while depending on your cpu(s)...
+Error running 'make golf ', please read /home/eban/.rvm/log/goruby/make.log
+There has been an error while trying to run make.          
+Halting the installation.
+</pre>
+<p>
+リポジトリ情報がないもんなあ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2010/12/31 end -->
+
+<hr>
+<div>
+<a href="201012b.html">&lt;Prev(,)</a> | 
+<a href="201101a.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

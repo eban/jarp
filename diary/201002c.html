@@ -1,0 +1,328 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2010-2-c</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="201002b.html">
+<link rel="next" href="201003a.html">
+
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2010年2月下旬〜</p>
+<hr>
+<div>
+<a href="201002b.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="201003a.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2010/02/21 start -->
+<h2><a name="20100221" href="201002c.html#20100221">2010-02-21 (Sun)</a></h2>
+<!-- 2010-02-21 23:37:18 -->
+
+<div class="entry1">
+<h3><a name="201002211" title="201002211" href="201002c.html#201002211">■</a> 
+<a href="http://www.commandlinefu.com/commands/view/4896/numerically-sorted-human-readable-disk-usage">[Tips] Numerically sorted human readable disk usage</a></h3>
+<p>
+なかなかいいんだけど、これだと空白を含むディレクトリがあるとだめ。
+</p>
+
+<pre>
+% du -x --max-depth=1 | sort -n | cut -f2- | xargs -d '\n' du -hxs
+</pre>
+<p>
+cutで2番目以降のフィールドを表示し、<br>
+xargsには明示的に改行をデリミタに指定すればよさげ。
+</p>
+
+<p>
+そもそもdu -hの結果でsortできればこんな面倒なことをしなくていいわけで、<br>
+こんなこともあろうかとGNU coreutilsのsortにはちゃんと-hオプションがあったりする。<br>
+</p><blockquote><p>
+-h, --human-numeric-sort    compare human readable numbers (e.g., 2K 1G)
+</p></blockquote><p>
+ruby-1.9.1-p378で試すとこんな感じ。ってtkでかすぎ。
+</p>
+
+<pre>
+% du -h --max-depth=1 ext | sort -h
+12K	ext/continuation
+12K	ext/coverage
+12K	ext/fiber
+24K	ext/fcntl
+28K	ext/io
+28K	ext/mathn
+36K	ext/dbm
+36K	ext/etc
+36K	ext/syslog
+48K	ext/racc
+52K	ext/gdbm
+52K	ext/stringio
+56K	ext/iconv
+56K	ext/sdbm
+56K	ext/strscan
+68K	ext/pty
+72K	ext/readline
+84K	ext/curses
+144K	ext/zlib
+168K	ext/socket
+204K	ext/dl
+272K	ext/bigdecimal
+300K	ext/digest
+304K	ext/json
+376K	ext/syck
+516K	ext/win32ole
+592K	ext/openssl
+720K	ext/nkf
+1.8M	ext/ripper
+8.9M	ext/tk
+15M	ext
+</pre>
+
+<!-- section end -->
+</div>
+<!-- 2010/02/21 end -->
+
+
+
+<hr class="hide">
+<!-- 2010/02/22 start -->
+<h2><a name="20100222" href="201002c.html#20100222">2010-02-22 (Mon)</a></h2>
+<!-- 2010-02-22 23:42:17 -->
+
+<div class="entry1">
+<h3><a name="201002221" title="201002221" href="201002c.html#201002221">■</a> 
+[SKK] SKK-JISYO.L</h3>
+<p>
+もう20年は使ってるSKKではあるが、辞書がいまだにこんなに小さい。
+</p>
+
+<pre>
+% ls -oh /usr/share/skk/SKK-JISYO.L
+-rw-r--r-- 1 root 4.3M 2009-09-26 09:15 /usr/share/skk/SKK-JISYO.L
+</pre>
+<p>
+こんだけ小さいならskkservは要らないよななんて思った。
+</p>
+
+<pre>
+% ls -oh ~/.skk-jisyo
+-rw------- 1 eban 197K 2010-02-21 20:03 /home/eban/.skk-jisyo
+</pre>
+<p>
+個人辞書もあまり増えない。使ってる語彙なんてそれほど多くないしねえ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2010/02/22 end -->
+
+
+
+<hr class="hide">
+<!-- 2010/02/23 start -->
+<h2><a name="20100223" href="201002c.html#20100223">2010-02-23 (Tue)</a></h2>
+<!-- 2010-02-23 23:30:41 -->
+
+<div class="entry1">
+<h3><a name="201002231" title="201002231" href="201002c.html#201002231">■</a> 
+<a href="http://www.nongnu.org/lzip/clzip.html">[Soft]  Clzip - A C language version of the lzip lossless data compressor</a></h3>
+<blockquote><p>
+Clzip is a lossless data compressor based on the LZMA algorithm, with
+very safe integrity checking and a user interface similar to the one
+of gzip or bzip2. Clzip decompresses almost as fast as gzip and
+compresses better than bzip2, which makes it well suited for software
+distribution and data archiving.<br>
+Clzip uses the lzip file format; the files produced by clzip are fully
+compatible with lzip-1.4 or newer. Clzip is in fact a C language
+version of lzip, intended for embedded devices or systems lacking a
+C++ compiler. 
+</p></blockquote>
+
+<p>
+lzipとxzはどっちを使うべきなんだろう。
+</p>
+<!-- section end -->
+</div>
+<!-- 2010/02/23 end -->
+
+
+
+<hr class="hide">
+<!-- 2010/02/24 start -->
+<h2><a name="20100224" href="201002c.html#20100224">2010-02-24 (Wed)</a></h2>
+<!-- 2010-02-24 23:21:28 -->
+
+<div class="entry1">
+<h3><a name="201002241" title="201002241" href="201002c.html#201002241">■</a> 
+<a href="http://golf.shinh.org/p.rb?Fibonacci+Numbers#Ruby">[Golf] Fibonacci Numbers</a></h3>
+<p>
+例の発言を機に3年振りに見直したら28Bから25Bへ。<br>
+でもこれって1.8.8devだと動かないんだよなあ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2010/02/24 end -->
+
+
+
+<hr class="hide">
+<!-- 2010/02/25 start -->
+<h2><a name="20100225" href="201002c.html#20100225">2010-02-25 (Thu)</a></h2>
+<!-- 2010-02-26 07:05:17 -->
+
+<div class="entry1">
+<h3><a name="201002251" title="201002251" href="201002c.html#201002251">■</a> 
+<a href="http://www.rutschle.net/tech/sslh.shtml">[Soft] ssl/ssh multiplexer</a></h3>
+<p>
+あとで試す。
+</p><blockquote><p>
+sslh lets one accept both HTTPS and SSH connections on the same
+port. It makes it possible to connect to an SSH server on port 443
+(e.g. from inside a corporate firewall) while still serving HTTPS on
+that port.
+</p></blockquote>
+<!-- section end -->
+</div>
+<!-- 2010/02/25 end -->
+
+
+
+<hr class="hide">
+<!-- 2010/02/26 start -->
+<h2><a name="20100226" href="201002c.html#20100226">2010-02-26 (Fri)</a></h2>
+<!-- 2010-02-27 19:50:09 -->
+
+<div class="entry1">
+<h3><a name="201002261" title="201002261" href="201002c.html#201002261">■</a> 
+[Cygwin] zshが/cygdrive経由だと補完が効かない</h3>
+<p>
+bashはちゃんと効くんだけど、なぜかzshは/cygdrive以下だと効かない。<br>
+しかもc:/でも効かないのに
+</p>
+
+<pre>
+% ln -s c:/ ~/c
+</pre>
+<p>
+みたいなことをすると~/c経由では補完が効く。どういうこと？<br>
+とりあえずこれで凌いでいる。
+</p>
+<!-- section end -->
+</div>
+<!-- 2010/02/26 end -->
+
+
+
+<hr class="hide">
+<!-- 2010/02/27 start -->
+<h2><a name="20100227" href="201002c.html#20100227">2010-02-27 (Sat)</a></h2>
+<!-- 2010-02-28 02:18:25 -->
+
+<div class="entry1">
+<h3><a name="201002271" title="201002271" href="201002c.html#201002271">■</a> 
+[Mail] 超有名人のメールアドレスがUser unknown</h3>
+<p>
+ruby-coreでのエラーメール。これは処理に困るなあ。<br>
+いつもは適当に気を利かせてunsubscribeするんだが。<br>
+本当に退職しちゃったんかな。
+</p>
+
+<p>
+
+<a href="http://en.wikipedia.org/wiki/Tim_Bray">ぐぐってみたら本当に辞めていた</a>
+。処理早いな。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2010/02/27 end -->
+
+
+
+<hr class="hide">
+<!-- 2010/02/28 start -->
+<h2><a name="20100228" href="201002c.html#20100228">2010-02-28 (Sun)</a></h2>
+<!-- 2010-03-01 00:30:14 -->
+
+<div class="entry1">
+<h3><a name="201002281" title="201002281" href="201002c.html#201002281">■</a> 
+[Cygwin] zshが/cygdrive経由だと補完が効かない理由</h3>
+<p>
+
+<a href="http://twitter.com/znz/status/9774819915">できる</a>という話なので調べてみた。<br>
+するとautoload -U compinit; compinit -uのせいだとわかった。<br>
+しかしこれをやめるとコマンドラインのオプションの補完ができなくなる。<br>
+さてどっちを優先すべきか。
+</p>
+
+<pre>
+% ln -s /cygdrive/c /
+</pre>
+<p>
+とすれば/cでアクセスできてmount -c /と同じ効果があるわけで、<br>
+こっちにするか。どうせあとDドライブぐらいだし高が知れてる。
+</p>
+<!-- section end -->
+</div>
+<!-- 2010/02/28 end -->
+
+<hr>
+<div>
+<a href="201002b.html">&lt;Prev(,)</a> | 
+<a href="201003a.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

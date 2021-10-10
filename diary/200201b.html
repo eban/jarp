@@ -1,0 +1,1567 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2002-1-b</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="200201a.html">
+<link rel="next" href="200201c.html">
+
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2002年1月中旬〜</p>
+<hr>
+<div>
+<a href="200201a.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="200201c.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2002/01/11 start -->
+<h2><a name="20020111" href="200201b.html#20020111">2002-01-11 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="200201111" title="200201111" href="200201b.html#200201111">■</a> 
+Linux 2.4.18-pre3</h3>
+<p>
+そろそろリリース？
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200201112" title="200201112" href="200201b.html#200201112">■</a> 
+しあわせの書</h3>
+<p>
+なんと今日発送しましたのメールが。明日には届くかな。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200201113" title="200201113" href="200201b.html#200201113">■</a> 
+<a href="http://www.ruby-lang.org/en/raa-list.rhtml?name=rpkg">rpkg</a></h3>
+<p>
+multi-platformがどーのこーのとか書いてあるわりには、lib/rpkg/rpkg.rbに
+</p>
+<pre>
+`cp -a doc/* #{$dirs.doc}/#{@name}`
+</pre>
+<p>
+とかあったりで、全然ポータブルじゃない。
+</p>
+<pre>
+QUICKSTART
+quickstart/
+</pre>
+<p>
+でとどめ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200201114" title="200201114" href="200201b.html#200201114">■</a> 
+<a href="http://www.ruby-lang.org/en/raa-list.rhtml?name=Lapidary">Lapidary 0.2.1</a></h3>
+<p>
+rpkgで使われているので、あらかじめパッケージを作っとこう。
+</p>
+<pre>
+% mkdir ~/dist/i386-cygwin/usr/local/lib/ruby/site_ruby/1.6/Lapidary
+% cp -a*.rb UI ~/dist/i386-cygwin/usr/local/lib/ruby/site_ruby/1.6/Lapidary
+% cat &gt;../lapidary.contents
+DOC=ChangeLog LICENSE README examples *.html
+CONTENTS=usr/local/lib/ruby/site_ruby/$(RUBYVER)/Lapidary
+% make -f ../Makefile.pack PACKAGE=lapidary VERSION=0.2.1 \
+  TARGET=i386-cygwin
+% make -f ../Makefile.pack PACKAGE=lapidary VERSION=0.2.1 \
+  TARGET=i386-mingw32 symlink
+% make -f ../Makefile.pack PACKAGE=lapidary VERSION=0.2.1 \
+  TARGET=i386-msdosdjgpp symlink
+</pre>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/01/11 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/01/12 start -->
+<h2><a name="20020112" href="200201b.html#20020112">2002-01-12 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="200201121" title="200201121" href="200201b.html#200201121">■</a> 
+<a href="http://lafor.eresmas.com/raf/index.html">raf</a></h3>
+<p>
+very niceらしいが、w3mだと何も表示されない。
+vしてHTMLソースを見てみると、
+</p>
+<pre>
+&lt;script&gt;
+if ( navigator.appName == &quot;Netscape&quot; )
+{
+        location.replace(&quot;http://lafor.eresmas.com/raf/raf.html.gz&quot;);
+}
+else
+{
+        location.replace(&quot;http://lafor.eresmas.com/raf/raf_nc.html&quot;);
+}
+&lt;/script&gt;
+&lt;script src=http://www.eresmas.com/js/fly.js&gt;&lt;/script&gt;
+</pre>
+<p>
+ともう笑うしかない。
+
+<a href="http://lafor.eresmas.com/raf/raf_nc.html">Netscapeじゃないほう</a>
+に行ってみるとやはりJavaScriptで、結局のところ笑うしかないのであった。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200201122" title="200201122" href="200201b.html#200201122">■</a> 
+<a href="http://www.xmms.org/">xmms 1.2.6</a></h3>
+<p>
+早速makeだ。
+とその前に
+<a href="http://www3.big.or.jp/~sian/linux/products/xmms/">xmms-ja</a>
+のほうも調べてみると、やはりすでにあった。
+
+<a href="http://www3.big.or.jp/~sian/linux/products/xmms/files/sources/xmms-1.2.6j_20020109.tar.bz2">xmms-1.2.6j_20020109 source</a>
+を使うことにした
+<a href="#20020112F1"><sup><small>*1</small></sup></a> 。
+</p>
+<pre>
+% CFLAGS=-Os ./configure --enable-kanji --prefix=/usr/local
+% make
+% make install
+</pre>
+<p>
+で、問題なし。iconvが使われるから--enable-kanjiは関係ないが、
+以前のままのオプションでやってみた。
+起動してみるとPLAYLIST EDITORで日本語が全く表示されない。
+README.jpを読むと自分で設定しろってことになってるようだ。
+[Option]-[Preferences]-[Audio I/O Plugins]-[Input Plugins]-
+[MPEG Layer 1/2/3 Player]-[Configure]-[Title]に
+</p>
+<pre>
+□ Convert Input  SJIS -&gt; EUC-JP
+□ Convert Output EUC -&gt; SJIS
+</pre>
+<p>
+というのがある。これって1.2.5のころにはあったっけ？
+まあいいや。
+ここをチェックしてiconv的に有効な文字列を入れろということなんだろう。
+で、見事に表示されたのであった。
+</p>
+
+<hr align="left" width="40%">
+<div>
+<a name="20020112F1" href="200201b.html#20020112F1"><small>*1</small></a>:
+patchをあてると
+<a href="200102a.html#200102101S2">例の問題</a> があるので。
+</div>
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200201123" title="200201123" href="200201b.html#200201123">■</a> 
+<a href="http://www.zdnet.co.jp/news/bursts/0201/10/11.html">Badtrans.B</a></h3>
+<p>
+ほんとに多いよね。今日も来てるし。&quot;TAKIMOTO Nobukazu&quot;。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200201124" title="200201124" href="200201b.html#200201124">■</a> 
+<a href="http://www.zdnet.co.jp/news/bursts/0201/10/02.html">「！広告！」をSubjectに表示義務</a></h3>
+<p>
+これに従うspamが本当にあったら面白いんだが。2月1日を楽しみに待とう。
+てゆか、うちには日本のspamはほとんど来ないんだった。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/01/12 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/01/13 start -->
+<h2><a name="20020113" href="200201b.html#20020113">2002-01-13 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="200201131" title="200201131" href="200201b.html#200201131">■</a> 
+<a href="http://www.tech9.net/rml/linux/">preempt-kernel-rml-2.4.18-pre3-1</a></h3>
+<p>
+出たようなので更新してみる。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200201132" title="200201132" href="200201b.html#200201132">■</a> 
+RubyUnit 0.5.3, Win32OLE 0.3.3</h3>
+<p>
+更新。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200201133" title="200201133" href="200201b.html#200201133">■</a> 
+<a href="http://www.ruby-lang.org/en/raa-list.rhtml?name=Mmap">mmap 0.1.6</a></h3>
+<p>
+Cygwinにはmlockとかないのでやめとく。
+と思ったが適当に#ifdefしたらtestsが通ったのでパッケージを作った。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200201134" title="200201134" href="200201b.html#200201134">■</a> 
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-talk/30997">#!Nobu Nakada</a></h3>
+<p>
+なかださんはinterpreterだったのか。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200201135" title="200201135" href="200201b.html#200201135">■</a> 
+ruby-talk vs. ruby-list (02:53)</h3>
+<p>
+いつruby-talkがruby-listを抜くか一目ではわかりにくくなったので、
+ここ1ヶ月は注意しよう。あと2349通。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200201136" title="200201136" href="200201b.html#200201136">■</a> 
+しあわせの書</h3>
+<p>
+まだ読んでないけど、例の仕掛けは確認した。すごすぎる。
+15年ぐらい前に発行された文庫本なので、
+かなり大きな本屋じゃないと置いてないんだろうなあ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200201137" title="200201137" href="200201b.html#200201137">■</a> 
+<a href="http://znz.s1.xrea.com/t/?date=20020112#p08">[Ruby] Re: CVS</a></h3>
+<p>
+make cleanはもったいないから基本的にしないし。ってなんという理由だ。
+</p>
+
+<p>
+たとえばbuild directoryを別に用意した場合、
+</p>
+<pre>
+% cvs co ruby
+% mkdir build; cd build
+% autoconf ../ruby/configure.in &gt;configure; chmod +x configure
+% ./configure --srcdir=../ruby
+% make
+cd ../ruby &amp;&amp; autoconf
+...
+</pre>
+<p>
+てな感じで、Makefile自体srcdirにconfigureがあることを前提にしてるので、
+強制してるというか。個人的にはこのtargetが大嫌いなんだけど。
+</p>
+<pre>
+config.status:  $(srcdir)/configure
+                $(SHELL) ./config.status --recheck
+
+$(srcdir)/configure: $(srcdir)/configure.in
+                cd $(srcdir) &amp;&amp; $(AUTOCONF)
+</pre>
+
+<!-- section end -->
+</div>
+<!-- 2002/01/13 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/01/14 start -->
+<h2><a name="20020114" href="200201b.html#20020114">2002-01-14 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="200201141" title="200201141" href="200201b.html#200201141">■</a> 
+<a href="http://kerneltrap.org/article.php?sid=486">Linux: Preemptible Kernel Compatible With O(1) Scheduler</a></h3>
+<p>
+おお、これは早速試さないと。と思ったが、
+</p>
+<pre>
+linux-2.4.17.tar.bz2
+patch-2.4.18-pre3.bz2
+preempt-kernel-rml-2.4.18-pre3-ingo-1.patch
+</pre>
+<p>
+という組み合わせではrejectしてまう。
+.rejを見ても周りは全然存在しないコードだし。どうなってんだろう？
+カーネルのソースを取ってくるにも20MB以上じゃちょっとねえ。
+</p>
+
+<p>
+あ、そうじゃなくてO(1) schedulerパッチもあてないといけないのか。
+結局
+<a href="http://redhat.com/~mingo/O(1)-scheduler/sched-O1-2.4.17-H6.patch">これ</a>
+をpre3にむりやりあてたらいけたようだ。
+</p>
+
+<p>
+とりあえず無事に立ち上がった。今日一日使ってみよう。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200201142" title="200201142" href="200201b.html#200201142">■</a> 
+&quot;Anthony David Smith&quot;</h3>
+<p>
+海外からBadtrans.Bは初めてかも。
+なぜかvirusは日本から、spamは海外からよく来る。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200201143" title="200201143" href="200201b.html#200201143">■</a> 
+bdb 0.28</h3>
+<p>
+前回は詳しく書いてなかったので、そのあたりを。
+以前、
+<a href="200111b.html#200111153">簡単にクロスでmakeできなくなった</a> と書いたが、
+src/以下は普通の拡張ライブラリなので直接ここで作業すればいい。
+</p>
+<pre>
+% cd src; mkdir cygwin mingw
+% cd cygwin
+% i386-cygwin-ruby ../extconf.rb \
+  --with-db-prefix=/usr/local/cygwin-local/BerkeleyDB.3.3 \
+  --enable-test
+% make
+% upx *.so
+% make site-install
+
+% ../cd mingw
+% i386-mingw32-ruby ../extconf.rb \
+  --with-db-prefix=/usr/local/mingw/BerkeleyDB.3.3 \
+  --enable-test
+% make
+% upx *.so
+% make site-install
+</pre>
+<p>
+--enable-testをつけると-ldb4,-ldb3,-ldb2のテストをしなくなる。
+単なる時間の節約にすぎないのでなくてもいい。
+って、これは論理が逆だねえ。
+</p>
+
+<p>
+defaultは--enable-testで、--disable-testで-ldbのみにするなら
+</p>
+<pre>
+--- src/extconf.rb.orig	Sun Dec  9 01:08:43 2001
++++ src/extconf.rb	Mon Jan 14 19:52:38 2002
+@@ -11 +11 @@
+-unless (!test &amp;&amp; (have_library(&quot;db4&quot;, &quot;db_version&quot;) ||
++unless (test != false &amp;&amp; (have_library(&quot;db4&quot;, &quot;db_version&quot;) ||
+</pre>
+<p>
+という手が考えられる。testがnilかtrueのときにはテストする。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200201144" title="200201144" href="200201b.html#200201144">■</a> 
+<a href="../files/Makefile.pack">Makefile.pack</a></h3>
+<p>
+PACKAGEとかVERSIONとか書くのが面倒になってきたので、
+って一年も経っているのに今頃かよ、
+P,V,Tでもいけるようにした。
+</p>
+<pre>
+ifneq ($(P),)
+  PACKAGE=$(P)
+endif
+ifneq ($(V),)
+  VERSION=$(V)
+endif
+ifneq ($(T),)
+  TARGET=$(T)
+endif
+</pre>
+<p>
+これでこんな感じで短く書ける。
+</p>
+<pre>
+% cat ../bdb.contents
+DOC=Changes README.en bdb.html bdb.rd docs examples tests tests.diff
+% make -f ../Makefile.pack P=bdb V=0.2.8 T=i386-cygwin
+% make -f ../Makefile.pack P=bdb V=0.2.8 T=i386-mingw32
+</pre>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200201145" title="200201145" href="200201b.html#200201145">■</a> 
+make install vs. make site-install</h3>
+<p>
+間違えてmake installしてしまわないように、
+ターゲットを書き換えてしまうことにした。
+どこで書き換えるのがいいかなと考えたが、
+どうせi386-{cygwin,mingw32}-rubyを必ず使うので、
+スクリプトがextconf.rbだったらMakefileをいじることにした。
+</p>
+<pre>
+case &quot;$script&quot; in
+  *extconf.rb) ruby -pi~ -e 'sub /^(install:)/,&quot;system-\\1&quot;' Makefile;;
+esac
+</pre>
+<p>
+を追加した。
+</p>
+<pre>
+install: site-install
+</pre>
+<p>
+もMakefileに追加すればもっといいかもしれないが、
+間違いに気づくだけで十分だ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200201146" title="200201146" href="200201b.html#200201146">■</a> 
+<a href="http://www.ruby-lang.org/en/raa-list.rhtml?name=Devel%3A%3AWhich">Devel::Which</a></h3>
+<p>
+作ってみた。
+</p>
+<pre>
+% ruby -rdevel/which -e 'p which_library &quot;gtk&quot;'
+&quot;/usr/local/lib/ruby/site_ruby/1.6/i386-linux/gtk.so&quot;
+</pre>
+<p>
+どこにインストールしたっけなあってのを確認するために、
+whereis_libraryなんてのもあるといいかも。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200201147" title="200201147" href="200201b.html#200201147">■</a> 
+<a href="https://sourceforge.net/project/showfiles.php?group_id=42128&amp;release_id=69821">rdoc alpha-7</a></h3>
+<p>
+まだalpha versionではあるけど試してみた。
+実際にドキュメントを埋め込んでなくても、
+なかなか見事なClass browserとして使える。
+</p>
+
+<p>
+net/smtp.rbを試したら無限ループしてるようだ。
+</p>
+
+<p>
+install.rbを見ると
+</p>
+<pre>
+# 'Markup' will eventually be a separate package, but
+# for now we'll install it automatically
+
+Dir.chdir(&quot;markup&quot;) &amp;&amp; system(&quot;ruby install.rb&quot;)
+</pre>
+<p>
+とあるが、markupが別になったらDir.chdirは例外になるからあまり意味はない。
+</p>
+
+<p>
+それはそれとして、パッケージとしてまとめとこう。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200201148" title="200201148" href="200201b.html#200201148">■</a> 
+DATE: 14 Ene 02 07:28:43 a.m.</h3>
+<p>
+という形式のメールが来た。自作fromがエラーになる。
+sample/from.rbをちょっといじって使っているんだけど、
+</p>
+<pre>
+y = m = d = 0
+y, m, d = parsedate(date) if date
+</pre>
+<p>
+でy, m, dのいずれもnilになっているらしい。
+そのメールを見ると
+</p>
+<pre>
+DATE: 14 Ene 02 07:28:43 a.m.
+</pre>
+<p>
+となってて、こりゃparseできないだろうなと一目でわかる。
+sample/from.rbを見るといつのまにか
+</p>
+<pre>
+y, m, d = parsedate(date) if date
+y ||= 0; m ||= 0; d ||= 0
+</pre>
+<p>
+となっていた。くー。
+</p>
+
+<p>
+てゆか、spamなんだから、どうでもいいんだが。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/01/14 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/01/15 start -->
+<h2><a name="20020115" href="200201b.html#20020115">2002-01-15 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="200201151" title="200201151" href="200201b.html#200201151">■</a> 
+<a href="http://hp.vector.co.jp/authors/VA012337/soft/fd/">FDclone 2.0</a></h3>
+<p>
+7年ぐらい前にベータテスターをしていたのだった。懐しい。
+それはそれとして 
+<a href="http://hp.vector.co.jp/authors/VA012337/soft/fd/#shell">fdsh</a>
+ってのはなかなか興味深い存在だ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200201152" title="200201152" href="200201b.html#200201152">■</a> 
+<a href="http://yuya.4th.to/ruby/">Yuya版rb2exe</a></h3>
+<p>
+%Rubyでyu-yanさんにちらっと仕組を教えてもらったが、よくわからなかった。
+単にLoadLibraryということだけど、これの引数はファイル名。
+ということは一時ファイルとしてWin32API.soをどこかに作るんだろうか？
+ソースが公開されるのを待とう。
+</p>
+
+<p>
+あ、requireを静的な拡張ライブラリにするのはどう？という提案をしてみたけど、
+本当にうまくいくかなあ。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/01/15 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/01/16 start -->
+<h2><a name="20020116" href="200201b.html#20020116">2002-01-16 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="200201161" title="200201161" href="200201b.html#200201161">■</a> 
+Ruby/GTK 0.26-1</h3>
+<p>
+もうめちゃくちゃだ。
+0.26-1のCygwin版は
+<a href="../files/rbgtk.c.diff">このパッチ</a> をあてたまま-DNATIVE_WIN32したgtk.soだった。
+これじゃ全く意味がない。
+Mark Slagellさんに指摘されるまで気づかなかった。
+やはりクロスでやってると確認が甘くなるな。
+</p>
+
+<p>
+MinGW版のほうはWindows 98で
+</p>
+<pre>
+-e:1:in 'require': 1157: One of the library files needed to run this 
+application cannot be found.   - 
+C:/SITE/RUBYM/USR/LOCAL/lib/ruby/site_ruby/1.6/i386-mingw32/gtk.so 
+(LoadError)
+</pre>
+<p>
+となるらしい。Windows 2000では正常という話で、単に長さの問題？
+メッセージの通りDLLが1個足りないという気もしないでもないが。
+</p>
+
+<p>
+それとまだ中身は0.25じゃないかと問われてしまった。
+前回は明かにタイムスタンプが8月だったので、
+0.25に違いないと思ったけど、今回は間違いないはず。
+なにしろちゃんとSEGVするんだから
+<a href="#20020116F1"><sup><small>*1</small></sup></a>。
+</p>
+
+<p>
+どうすればバージョンがわかるのか
+</p>
+<pre>
+% grep -i version **/*.[ch]
+</pre>
+<p>
+してみた。するとsrc/rbgtkconst.cには
+</p>
+<pre>
+#define RBGTK_MAJOR_VERSION 0
+#define RBGTK_MINOR_VERSION 2
+#define RBGTK_MICRO_VERSION 5
+</pre>
+<p>
+とある。え？俺のせいじゃないよ、こりゃ。
+</p>
+<pre>
+% LD_LIBRARY_PATH=. ruby -v -rgtk -e 'p Gtk::BINDING_VERSION'
+ruby 1.6.6 (2001-12-26) [i386-linux]
+[0, 2, 5]
+</pre>
+<p>
+Copyright問題と似たようなもんか。
+</p>
+<pre>
+#define RBGTK_MICRO_VERSION 6
+</pre>
+<p>
+に変更して0.26-2を出そう。
+</p>
+
+<hr align="left" width="40%">
+<div>
+<a name="20020116F1" href="200201b.html#20020116F1"><small>*1</small></a>:
+いやSEGVしちゃだめ。
+</div>
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200201162" title="200201162" href="200201b.html#200201162">■</a> 
+undefined method `inherited' for false (NameError)</h3>
+<p>
+とかなんとかやってると、最新のRuby 1.6.6では上記のエラーになったりで、
+こういうときは速いマシンが欲しくなるな。
+</p>
+
+<p>
+あれ？ruby-devにこの件でメール出したのに届いてない？
+7時頃返ってきた。8時間もかかってる。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200201163" title="200201163" href="200201b.html#200201163">■</a> 
+<a href="http://www.ruby-lang.org/en/raa-list.rhtml?name=Devel%3A%3AWhich">Devel::Which</a></h3>
+<p>
+whereis_libraryが入った。ありがとうgotokenさん。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200201164" title="200201164" href="200201b.html#200201164">■</a> 
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-talk/31311">Vote for Windows Installer packages</a></h3>
+<p>
+新しいインストーラはVC++に決まったようだが、
+それに入れて欲しいパッケージがあったら
+
+<a href="http://rubygarden.com/ruby?WindowsInstaller">ここ</a> へ行こう。
+</p>
+
+<p>
+とりあえず、その結果を尊重してこっちも作ろう。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200201165" title="200201165" href="200201b.html#200201165">■</a> 
+Suica</h3>
+<p>
+今日からtouch &amp; goなのだ。定期入れの真ん中にしまいこんだ。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/01/16 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/01/17 start -->
+<h2><a name="20020117" href="200201b.html#20020117">2002-01-17 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="200201171" title="200201171" href="200201b.html#200201171">■</a> 
+%string</h3>
+<pre>
+eval %qPprint eval %-eval %:'Just another Ruby hacker,' :-P
+</pre>
+<p>
+が1.6.6ではエラーになる。
+</p>
+<pre>
+* parse.y (yylex): disallow alpha-numeric and mbchar for
+  terminator of %string.
+</pre>
+<p>
+最後の:-Pが肝なので別解を考えよう。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200201172" title="200201172" href="200201b.html#200201172">■</a> 
+<a href="http://www.ruby-lang.org/en/raa-list.rhtml?name=html-parser">html-parser 19990912p2</a></h3>
+<p>
+まずはhtml-parserだ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200201173" title="200201173" href="200201b.html#200201173">■</a> 
+<a href="http://www.ruby-lang.org/en/raa-list.rhtml?name=REXML">REXML 1.2.5</a></h3>
+<p>
+結構サイズが大きいんだなあ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200201174" title="200201174" href="200201b.html#200201174">■</a> 
+<a href="http://www.ruby-lang.org/en/raa-list.rhtml?name=NQXML">NQXML 1.1.3</a></h3>
+<p>
+XML関連が多いね。まずは簡単なこの3つのパッケージを作成。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200201175" title="200201175" href="200201b.html#200201175">■</a> 
+<a href="http://www.ruby-lang.org/en/raa-list.rhtml?name=Log4r">Log4r 1.0.0</a></h3>
+<p>
+1.0.0になったね。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200201176" title="200201176" href="200201b.html#200201176">■</a> 
+FreeML</h3>
+<p>
+リニューアルしたはいいがSubjectがなんか変じゃない？
+たとえば[rubyist:1015]はこんな感じになってる。
+</p>
+<pre>
+Subject: [rubyist:1015] Re:
+ $B&lt;!4|%j%j!&lt;%9$K8~$1$F:#8e(B
+</pre>
+<p>
+FreeMLのシステムの問題だと思うけど、これはdecodeすると
+</p>
+<pre>
+Subject: [rubyist:1015] R
+ e:
+ 次期リリースに向けて今後
+</pre>
+<p>
+となる(nkf -mの結果)。なぜにRとe:に分割する？
+しかもe:の後に無意味な^Mがあるし。
+というか要らんとこまでencodeしてるし。
+このencodeのしかたはOutlookよりひどいな。
+</p>
+
+<p>
+どうもFreeMLは好きになれない。
+</p>
+
+<p>
+[rubyist:1023]がRe:だけになってしまったのも、これが原因か？
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200201177" title="200201177" href="200201b.html#200201177">■</a> 
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-talk/31460">RDoc alpha-8</a></h3>
+<p>
+net/smtp.rbもちゃんとparseできるようになった。
+</p>
+<pre>
+Alpha-8 is necessary because of a serious bug in -7 which caused
+looping when parsing some method parameter lists.
+</pre>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200201178" title="200201178" href="200201b.html#200201178">■</a> 
+メール配送の遅れ</h3>
+<p>
+今日も一日rimのメールは遅れ気味だった。今度はなにが原因？
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200201179" title="200201179" href="200201b.html#200201179">■</a> 
+！広告！</h3>
+<p>
+オージス総研から「！広告！」メールが来た。
+会社のメールアドレス宛てだったから、ObjectDay2001かな。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/01/17 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/01/18 start -->
+<h2><a name="20020118" href="200201b.html#20020118">2002-01-18 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="200201181" title="200201181" href="200201b.html#200201181">■</a> 
+<a href="http://www.dm4lab.to/~usa/dekigoto/200201b.html#id20020116_P1_1">ldd</a></h3>
+<p>
+
+<a href="http://cygwin.com/ml/cygwin/">cygwin ML</a>
+で検索すると、
+objdump -pの出力結果をフィルタリングしたシェルスクリプトが見つかった。
+やってることは再帰的に
+</p>
+<pre>
+% objdump -p foo.exe | grep 'DLL Name'
+</pre>
+<p>
+してDLLを見つけ、whichするようなもんかな。
+</p>
+
+<p>
+Linuxでは、というかglibc 2.2.3からlddはシェルスクリプトになってる模様。
+</p>
+<pre>
+% sh -x ldd =ruby
+</pre>
+<p>
+してみると最終的には
+</p>
+<pre>
+% LD_TRACE_LOADED_OBJECTS=1 \
+  LD_WARN= \
+  LD_BIND_NOW= \
+  LD_LIBRARY_VERSION=6 \
+  LD_VERBOSE= \
+  /usr/local/bin/ruby
+</pre>
+<p>
+を実行しているだけのように見える。
+いや実際にこの通り環境変数を設定してruby自体を実行すると、
+lddでお馴染の結果が得られるわけだが、
+こんな仕組みになっていたなんて全然知らなかった。
+</p>
+<pre>
+% LD_TRACE_LOADED_OBJECTS=1 ruby
+        libruby.so.1.6.6 =&gt; /usr/local/lib/libruby.so.1.6.6 (0x4001a000)
+        libdl.so.2 =&gt; /lib/libdl.so.2 (0x400c2000)
+        libcrypt.so.1 =&gt; /lib/libcrypt.so.1 (0x400c5000)
+        libm.so.6 =&gt; /lib/libm.so.6 (0x400f2000)
+        libc.so.6 =&gt; /lib/libc.so.6 (0x40115000)
+        libgcc_s.so.1 =&gt; /usr/local/lib/libgcc_s.so.1 (0x4022c000)
+        /lib/ld-linux.so.2 =&gt; /lib/ld-linux.so.2 (0x40000000)
+</pre>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200201182" title="200201182" href="200201b.html#200201182">■</a> 
+<a href="http://www.ruby-lang.org/en/raa-list.rhtml?name=bdb">bdb 0.2.9</a></h3>
+<p>
+更新。Changes:
+</p>
+<pre>
+* stupid bug with free()
+* added -R for Solaris 2 (Thanks Amos Gouaux &lt;amos+ruby@utdallas.edu&gt;)
+</pre>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200201183" title="200201183" href="200201b.html#200201183">■</a> 
+<a href="http://www.ruby-lang.org/en/raa-list.rhtml?name=Win32+Modules">Win32 Modules</a></h3>
+<p>
+HomepageもDownloadも
+</p>
+<pre>
+e-mail me with request
+</pre>
+<p>
+なんだけど、提供する場所を持ってないということなんだろうか？
+そういえばいきなりバイナリをruby-talkへ投げたやつが以前いたな。
+
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-talk/28728">同一人物だよ</a> 。
+</p>
+
+<p>
+パッケージは作らないほうがよさそうだ。メールを出すのも面倒だし。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200201184" title="200201184" href="200201b.html#200201184">■</a> 
+<a href="http://www.rim.or.jp/support/announce/trouble/2002/jan17-1.html">rimnetメール配送遅延発生</a></h3>
+<p>
+3日も経ってからってちょっと報告が遅いんじゃない？
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200201185" title="200201185" href="200201b.html#200201185">■</a> 
+<a href="200201a.html#200201082">The Ruby Way</a></h3>
+<p>
+やっと来た。結構時間がかかったな。こんなに分厚いとは思わなかった。
+600ページほど。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200201186" title="200201186" href="200201b.html#200201186">■</a> 
+BEGIN, END</h3>
+<p>
+RubyでBEGINとENDが使えるようになって随分経つが、
+</p>
+<pre>
+BEGIN do ... end
+END do ... end
+</pre>
+<p>
+はいつの間にかエラーになってる。
+採用された当初はできたと思うんだけど夢だったんだろうか？
+でもこうして並べてみるとBEGINとEndとendは確かになんか変だ。
+</p>
+
+<p>
+do end派としては残念だ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200201187" title="200201187" href="200201b.html#200201187">■</a> 
+<a href="http://www.dm4lab.to/~usa/dekigoto/200201b.html#id20020118_P4_1">depend</a></h3>
+<p>
+mkmf.rbが
+</p>
+<pre>
+{$(srcdir)}.c.#{$OBJEXT}:
+        $(CC) $(CFLAGS) -I$(&lt;D) $(CPPFLAGS) -c $(&lt;:/=\\)
+</pre>
+<p>
+こうなってるので、win32ole.cは必要ない。助田さんに頼むのがいいのかな。
+</p>
+<pre>
+win32ole.o : $(hdrdir)/ruby.h $(hdrdir)/config.h $(hdrdir)/defines.h
+</pre>
+<p>
+でいいんだよね。
+</p>
+
+<p>
+荒技としてはmkmf.rbでMakefileにコピーする際削除してしまうとか。
+</p>
+<pre>
+line.gsub!(/[^\s]+\.(cc|cpp|cxx|c|C)\s*/, '')
+</pre>
+<p>
+をwhile loopの最初に入れる。うーむ。
+</p>
+
+<p>
+というか律義にdependを作らなくてもいい気もする。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/01/18 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/01/19 start -->
+<h2><a name="20020119" href="200201b.html#20020119">2002-01-19 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="200201191" title="200201191" href="200201b.html#200201191">■</a> 
+freshmeat newsletter</h3>
+<p>
+どうせ毎日見てるのでsubscribeしてみた。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200201192" title="200201192" href="200201b.html#200201192">■</a> 
+<a href="http://rubygarden.com/ruby?WindowsInstaller">WindowsInstaller</a></h3>
+<pre>
+・ voting is open until end of the day Friday, and then I'm going to start
+   adding them up.
+</pre>
+<p>
+ということなので日本時間では今日締め切られる予定。
+03:00 JST現在これだけ。*はすでにRuby Binariesでパッケージング済みのもの。
+PostgreSQL/RubyはRuby/PostgreSQLの間違いと思われるので消した。
+</p>
+<pre>
+ActiveScriptRuby, ArunaDB, AspectR, *BDB, *eruby, FXRuby,
+*html-parser, IOWA, irb-tools, *Lapidary, *Log4r, mysql-ruby,
+*NArray, *NQXML, *OptionParser, Pickaxe Book, RbWrap, *RDoc,
+*REXML, *ri, Rubicon, RubyCOM, Ruby DBI, *Ruby/GDLib, RubyGL,
+*Ruby/GTK, Ruby-MCrypt, RubyMock, Ruby/ODBC, Ruby/PostgreSQL,
+*Ruby/Tk, *RubyUnit, *ruby-zlib, rudl, SOAP4R, *vruby/swin,
+*WEBrick, *Win32OLE, *XMLParser, xmlrpc4r
+</pre>
+<p>
+こうして見ると、XML, HTML, Database, GUI, UnitTestが目につく。
+</p>
+
+<p>
+とりあえずなんだかわからんRubyMockあたりを
+
+<a href="http://www.ruby-lang.org/en/raa.html">RAA</a> で調べておくか。
+これもRubyUnitがらみらしい。
+</p>
+
+<p>
+といいつつも、次はSOAP4Rにしよう。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/01/19 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/01/20 start -->
+<h2><a name="20020120" href="200201b.html#20020120">2002-01-20 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="200201201" title="200201201" href="200201b.html#200201201">■</a> 
+<a href="http://www.ruby-lang.org/en/raa-list.rhtml?name=RubyUnit">RubyUnit 0.5.4</a></h3>
+<p>
+更新。ChangeLog:
+</p>
+<pre>
+* runit/testfailure.rb: correct not to occure 
+  warning message with ruby -w. (Thanks to David Alan Black)
+</pre>
+
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200201202" title="200201202" href="200201b.html#200201202">■</a> 
+<a href="http://www.dm4lab.to/~usa/dekigoto/200201b.html#id20020118_P4_5">/etc/hosts</a></h3>
+<p>
+Cygwinは/etc/hostsを見ません。そこはWindowsと同じ。
+BINDでも入れて-lresolvすればUnixと同じだけど、
+そんなことする人はもういないだろうなあ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200201203" title="200201203" href="200201b.html#200201203">■</a> 
+Linux 2.4.18-pre4</h3>
+<p>
+kernel.orgが今トラブってるらしいが、
+その前に2.4.18-pre4はダウンロードしておいた。
+makeしてinstallしてみると。
+</p>
+<pre>
+find kernel -path '*/pcmcia/*' -name '*.o' | xargs -i -r ln -sf ../{} pcmcia
+if [ -r System.map ]; then /sbin/depmod -ae -F System.map \
+  2.4.18-pre4; fi
+depmod: *** Unresolved symbols in \
+  /lib/modules/2.4.18-pre4/kernel/fs/minix/minix.o
+depmod:         waitfor_one_page
+</pre>
+<p>
+てな感じだ。
+grep waitfor_one_page **/*.[ch]してみるとなくなったわけではない。
+patchをgrepしたらわかった。
+</p>
+<pre>
+-EXPORT_SYMBOL(waitfor_one_page);
+</pre>
+<p>
+が原因だ。exportするのをやめたらしい。
+これじゃminixとかext2をモジュールにできない。
+よくわからんが、こいつを元に戻して、例によってO(1)+preemptもあてて、
+勝手にEXTRAVERSIONを書き換えて更新。
+</p>
+<pre>
+% uname -r
+2.4.18-pre4-sched-O1-H6-preempt
+</pre>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200201204" title="200201204" href="200201b.html#200201204">■</a> 
+setup.exeでLog4Rをインストール</h3>
+<p>
+setup.exeでwarningになると%Rubyに話題になってる模様。
+IRCはlogをダイアルアップ時に取ってきてたまに見るだけなので、
+ここに書いておこう。
+</p>
+
+<p>
+grep warning: *.ccしてみると、どうも
+</p>
+<pre>
+usr/local/doc/ruby/log4r-1.0.0/doc/rdoc/classes/Log4r/FileOutputter
+usr/local/doc/ruby/log4r-1.0.0/doc/rdoc/classes/Log4r/FileOutputter.src
+</pre>
+<p>
+の存在がいけない感じ。
+FileOutputterをCreateDirectoryした後にFileOutputter.srcをCreateDirectoryすると、
+なぜかERROR_ALREADY_EXISTSになってしまう。
+でもここだけ抜き出してテストプログラムを書くとちゃんとうまくいくし。
+うーむ。setup.exeのバグとしか思えないんだけどよくわからない。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200201205" title="200201205" href="200201b.html#200201205">■</a> 
+SOAP4Rとuri</h3>
+<p>
+早速SOAP4R 1.4.2をダウンロードしてみたわけだが、
+uriがredistにあるんだよね。
+つい先日1.6にuriはaddされたわけで、どうしよう？
+1.6.7が出てからにしようかな。
+てゆか1.6.7はどうなったんだ？
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200201206" title="200201206" href="200201b.html#200201206">■</a> 
+<a href="http://home.t-online.de/home/Moestl/">pdnsd</a></h3>
+<p>
+Proxy DNSだけど/etc/hostsを見てくれるので、tinydnsも必要ない。これはいいかも。
+しばらく使ってみよう。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200201207" title="200201207" href="200201b.html#200201207">■</a> 
+<a href="http://www.geocrawler.com/lists/3/SourceForge/18160/0/7570923/">[Mingw-msys] (ANNOUNCEMENT) msys-1.0.3 has been released.</a></h3>
+<pre>
+In version 1.0.4, you'll be able to use symlinks in the parameter list    
+to a win32 program.                                                       
+</pre>
+<p>
+ってどうやって実現するんだろう？
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200201208" title="200201208" href="200201b.html#200201208">■</a> 
+<a href="http://www.zsh.org/">zsh 4.0.4</a></h3>
+<p>
+今頃になって4.0.4にした。
+</p>
+
+<p>
+zshってpartial completionも使えるのか。
+</p>
+<pre>
+% ls /u/l/l/r/1.6/&lt;TAB&gt;
+</pre>
+<p>
+とすれば
+</p>
+<pre>
+% ls /usr/local/lib/ruby/1.6/
+</pre>
+<p>
+となる。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200201209" title="200201209" href="200201b.html#200201209">■</a> 
+fake-ruby</h3>
+<p>
+i386-cygwin-rubyとかi386-mingw32-rubyとかこの日記にはたびたび出てくるけど、
+その実体は現在こうなっている。
+</p>
+
+<p>
+/usr/local/bin/fake-ruby:
+</p>
+<pre>
+#!/bin/sh
+RUBY_PLATFORM=$(expr $0 : '.*/\(i386-[^-/]*\)') \
+exec /usr/local/bin/ruby -rfake &quot;$@&quot;
+</pre>
+
+<p>
+/usr/local/lib/ruby/site_ruby/fake.rb:
+</p>
+<pre>
+class Object
+  platform = ENV['RUBY_PLATFORM'] or raise 'Set RUBY_PLATFORM'
+  version = ENV['RUBY_VERSION'] || RUBY_VERSION
+  dist = ENV['RUBY_DIST']
+
+  destdir = File.join((dist || File.expand_path('~/dist')), platform)
+
+  $:.collect! do |x|
+    x.sub! /^\/usr/, destdir+'/usr'
+    x.sub! Regexp.quote(RUBY_PLATFORM), platform
+    x.sub! /\d+\.\d+/, version[/\d+\.\d+/] 
+    x
+  end
+
+  remove_const :RUBY_PLATFORM
+  RUBY_PLATFORM = platform
+
+  if defined? PLATFORM
+    remove_const :PLATFORM
+    PLATFORM = platform
+  end
+
+  remove_const :RUBY_VERSION
+  RUBY_VERSION = version
+
+  if defined? VERSION
+    remove_const :VERSION
+    VERSION = version
+  end
+
+  CROSS_COMPILING = true
+
+  ENV['PATH'] = File.join(destdir, 'usr/local/bin') + ':' + ENV['PATH']
+  END {
+    if /\bextconf\.rb\b/ =~ $0 and File.exist?('Makefile')
+      ARGV.replace ['Makefile']
+      $-i = '~'
+      while line = gets
+        print line.sub(/^(install:)/, 'system-\1')
+      end
+      print &quot;\nexport PATH:=#{ENV['PATH']}\n&quot;
+    end
+  }
+end
+</pre>
+<p>
+
+<a href="../ruby/fake_TARGET.rb">fake_TARGET.rb</a> では-sでグローバル変数を介して情報を渡していたが、
+全部環境変数に変更した。仕上げに
+</p>
+<pre>
+% ln -s /usr/local/bin/fake-ruby /usr/local/bin/i386-cygwin-ruby
+% ln -s /usr/local/bin/fake-ruby /usr/local/bin/i386-mingw32-ruby
+% ln -s /usr/local/bin/fake-ruby /usr/local/bin/i386-msdosdjgpp-ruby
+</pre>
+<p>
+としてある。fake.rbのPATHは
+</p>
+<pre>
+% ln -s /usr/local/bin/fake-ruby ~/dist/i386-cygwin/usr/local/bin/ruby
+% ln -s /usr/local/bin/fake-ruby ~/dist/i386-mingw32/usr/local/bin/ruby
+% ln -s /usr/local/bin/fake-ruby ~/dist/i386-msdosdjgpp/usr/local/bin/ruby
+</pre>
+<p>
+のため。
+fake-rubyの
+</p>
+<pre>
+RUBY_PLATFORM=$(expr $0 : '.*/\(i386-[^-/]*\)') \
+</pre>
+<p>
+が肝だ。
+ディレクトリやコマンド名にそのままプラットフォームを含めているのはそのため。
+</p>
+
+<p>
+本当はexprを使わずにi386-*を抜き出したいところではある。
+~/distを考えなければ
+</p>
+<pre>
+name=${0##*/}
+RUBY_PLATFORM=${name%-ruby}
+</pre>
+<p>
+でいいんだけど。exprと逆に取り除く方向なので難しい。
+</p>
+<pre>
+x=${0%/usr/local/bin/ruby}
+target=${x##*/}
+RUBY_PLATFORM=${target%-ruby}
+</pre>
+<p>
+という手はあるなあ。Rubyで書くとこれだけの話ではあるが。
+</p>
+<pre>
+#!/usr/local/bin/ruby
+ENV['RUBY_PLATFORM'] = $0[/i386-[^-\/]+/]
+exec '/usr/local/bin/ruby', '-rfake', *ARGV
+</pre>
+
+<p>
+GNU makeはMakefileに
+</p>
+<pre>
+export PATH:=/some/where/bin:$(PATH)
+</pre>
+<p>
+と書ける。位置はどこでもいい。
+$-i = '~'を使っているため最初に入れるのが面倒だから最後に入っている。
+</p>
+<pre>
+print &quot;\nexport PATH:=#{ENV['PATH']}\n&quot;
+</pre>
+<p>
+の最初の&quot;\n&quot;はWin32OLEのため。なぜかdependに改行がなかった。
+でも0.3.3-01でうまい具合にdependは更新されて改行がついたので、
+もう&quot;\n&quot;はなくてもいいかも。
+これでMakefileに直接rubyと書いてあっても、
+~/dist以下のrubyが起動されるため、
+いちいちMakefileを書き換えたりRUBY=とかmakeの引数で渡す必要がなくなる。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="2002012010" title="2002012010" href="200201b.html#2002012010">■</a> 
+bashでbasename, dirname</h3>
+<p>
+ついでにbashだけでbasename, dirnameを書くとこうなる。
+</p>
+<pre>
+$ a=/usr/local/bin/ruby
+$ echo ${a##*/}
+ruby
+$ echo ${a%/*}
+/usr/local/bin
+</pre>
+<p>
+bashに限らず最近のshなら使えると思うけど。zshとかkshとかashとか。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="2002012011" title="2002012011" href="200201b.html#2002012011">■</a> 
+[Cygwin] wget</h3>
+<p>
+Cygwinのwgetがなかなか1.8に上がらないのは、
+1.8だと:portをそのままファイル名にしてしまうかららしい。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="2002012012" title="2002012012" href="200201b.html#2002012012">■</a> 
+<a href="http://cygwin.com/ml/cygwin-announce/2002/msg00023.html">Cygwin 1.3.7-1</a></h3>
+<p>
+freshmeat newsletterでCygwin 1.3.7が出たことを知る。
+明日試そう。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="2002012013" title="2002012013" href="200201b.html#2002012013">■</a> 
+zshとruby</h3>
+<p>
+なんとなく
+</p>
+<pre>
+% ruby -&lt;TAB&gt;
+</pre>
+<p>
+してみるとちゃんと出てくる。
+</p>
+<pre>
+--copyright -- copyright notice
+--debug     -- debug mode
+--help      -- print help message
+--verbose   -- verbose mode
+--version   -- print version
+--yydebug   -- compiler debug mode
+&lt;以下省略&gt;
+</pre>
+<p>
+早速/usr/local/share/zsh/4.0.4/functions/_rubyを見てみると最後に
+libraryがどうのこうのとある。ってことは
+</p>
+<pre>
+% ruby -r&lt;TAG&gt;
+</pre>
+<p>
+で出るのか？出るね。
+CWDにいっぱいファイルがあるとそれも出てくるから.rbと.soに限定したいところだ。
+_perl_modulesぐらいのことはしないと駄目かな。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="2002012014" title="2002012014" href="200201b.html#2002012014">■</a> 
+diet libc版ash</h3>
+<p>
+ついでにdiet libcでashをmakeしてみた。
+ソースはcygwinのものを使用。
+<a href="../files/ash-20011018-1-diet.diff">パッチ</a> 。
+</p>
+<pre>
+% patch -p1 &lt;/some/where/ash-20011018-1-diet.diff
+% ./configure
+% make CFLAGS='-D__DIET_LIBC__ -D_BSD_SOURCE -Os' \
+  CC='diet gcc' CC_BUILD='diet gcc'
+% sudo cp sh-new /bin/ash
+</pre>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/01/20 end -->
+
+<hr>
+<div>
+<a href="200201a.html">&lt;Prev(,)</a> | 
+<a href="200201c.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

@@ -1,0 +1,1573 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2001-2-a</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="200101c.html">
+<link rel="next" href="200102b.html">
+
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2001年2月上旬〜</p>
+<hr>
+<div>
+<a href="200101c.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="200102b.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2001/02/01 start -->
+<h2><a name="20010201" href="200102a.html#20010201">2001-02-01 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="200102011" title="200102011" href="200102a.html#200102011">■</a> 
+<a href="http://www.rainer-keuchel.de/">Perl for Windows CE</a></h3>
+emacsもあるようだ。
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200102012" title="200102012" href="200102a.html#200102012">■</a> 
+GNU tarのbzip2サポート</h3>
+ChangeLogを見ると最初は-y。でもすぐ取り消し。
+と思ったらやっぱり-yを追加。そのあとなぜか-Iへ変更。
+で最新は-jだ。<br>
+もう一文字はあきらめたほうがいいと思う。--bzip2でいいじゃん。
+
+<h4><a name="200102012S1" href="200102a.html#200102012S1">_</a> <strong>--bzip2</strong>: </h4>
+<div class="sub">
+が、甘かった。tar 1.12はバグってる
+<a href="#20010201F1"><sup><small>*1</small></sup></a>。
+--bzip2では引数を要求される。
+<pre>
+% tar cfv foo.tar.bz2 foo --bzip2
+tar: option `--bzip2' requires an argument
+Try `tar --help' for more information.
+% tar cfv foo.tar.bz2 foo --bzip2=
+foo
+</pre>
+
+</div>
+<h4><a name="200102012S2" href="200102a.html#200102012S2">_</a> <strong>--us=bzip2</strong>: </h4>
+<div class="sub">
+結局--use-compress-program=bzip2を使うのがいいみたい
+<a href="#20010201F2"><sup><small>*2</small></sup></a>。
+<pre>
+% tar cfv foo.tar.bz2 foo --use-compress-program=bzip2
+foo
+</pre>
+--us=bzip2まで省略可能。
+
+</div>
+<hr align="left" width="40%">
+<div>
+<a name="20010201F1" href="200102a.html#20010201F1"><small>*1</small></a>:
+tar 1.13では直ってる。
+<br>
+<a name="20010201F2" href="200102a.html#20010201F2"><small>*2</small></a>:
+あ、いや最初からpipeで十分なんだけど。
+</div>
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200102013" title="200102013" href="200102a.html#200102013">■</a> 
+<a href="200101c.html#200101314S3">opendir</a></h3>
+原因は_dev_tのサイズの違いだった。
+<pre>
+/usr/include/mingw/sys/types.h:
+...
+#ifdef __MSVCRT__
+typedef unsigned int _dev_t;
+#else
+typedef short _dev_t;
+#endif
+...
+/usr/include/mingw/sys/stat.h:
+...
+struct _stat
+{
+        _dev_t  st_dev;         /* Equivalent to drive number 0=A 1=B ... */
+        _ino_t  st_ino;         /* Always zero ? */
+        _mode_t st_mode;        /* See above constants */
+...
+</pre>
+libmingw32.aのdirent.cが-D__MSVCRT__でコンパイルされてないから、
+dirent.cの
+<pre>
+  if (!S_ISDIR (statDir.st_mode))
+    {
+      /* Error, stat reports not a directory. */
+      errno = ENOTDIR;
+      return (DIR *) 0;
+    }
+</pre>
+で、st_modeに正しくアクセスできなくなる。<br>
+つまりstatを使うとはcrtdllとmsvcrtで共有できないわけだ。
+opendir関係は外に出したほうがいい気がする。<br>
+あ、というより-mno-cygwinはmsvcrt用になったんだから、
+やっぱりspecsに-D__MSVCRT__を追加するのが筋なんだろう。
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200102014" title="200102014" href="200102a.html#200102014">■</a> 
+cygwin 1.1.8-2</h3>
+heapサイズは1GBから256MBになった。
+これでWin9X/MEでも
+<a href="http://cygwin.com/ml/cygwin/2001-01/msg01689.html">レジストリをいじる</a>必要はない。<br>
+Ruby 1.6.3が出る頃にはクロスの環境も1.1.8-2にしよう。
+<!-- section end -->
+</div>
+<!-- 2001/02/01 end -->
+
+
+
+<hr class="hide">
+<!-- 2001/02/02 start -->
+<h2><a name="20010202" href="200102a.html#20010202">2001-02-02 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="200102021" title="200102021" href="200102a.html#200102021">■</a> 
+vrswin 010128</h3>
+<pre>
+% mkdir vrswin010128
+% cd vrswin010128
+% lha xt /hoge/vrswin010128.lzh
+% mkdir cygwin mingw
+% cd cygwin
+% ruby -rfake_TARGET -s ../extconf.rb -target=i386-cygwin
+% make
+% upx *.so
+% make site-install
+% cd ../mingw
+% ruby -rfake_TARGET -s ../extconf.rb -target=i386-mingw32
+% make
+% upx *.so
+% make site-install
+% cd ..
+% cat &gt;../vrswin.contents
+DOC=Files.txt Readme.rd.* dtest.rb test*.rb
+CONTENTS=usr/local/lib/ruby/site_ruby/$(RUBYVER)/$(TARGET)/swin.so
+% make -f ../Makefile.pack PACKAGE=vrswin VERSION=010128 TARGET=i386-cygwin
+% make -f ../Makefile.pack PACKAGE=vrswin VERSION=010128 TARGET=i386-mingw32
+</pre>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200102022" title="200102022" href="200102a.html#200102022">■</a> 
+vruby 010125</h3>
+
+<pre>
+% mkdir vruby010125
+% cd vruby010125
+% lha xt /hoge/vruby010125.lzh
+% cp -av vr ~/dist/i386-cygwin/usr/local/lib/ruby/site_ruby/1.6
+% cp -av vr ~/dist/i386-mingw32/usr/local/lib/ruby/site_ruby/1.6
+% cat &gt;../vruby.contents
+DOC=DLLManager.rb Files.txt Readme.rd.* tests vrinstall.rb
+CONTENTS=usr/local/lib/ruby/site_ruby/$(RUBYVER)/vr/*
+% make -f ../Makefile.pack PACKAGE=vruby VERSION=010125 TARGET=i386-cygwin
+% make -f ../Makefile.pack PACKAGE=vruby VERSION=010125 TARGET=i386-mingw32
+</pre>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200102023" title="200102023" href="200102a.html#200102023">■</a> 
+ext/</h3>
+なんか増えてきたので拡張ライブラリはext/を掘ってそこに移動。
+それに伴い
+<a href="../files/Makefile.pack">Makefile.pack</a>も更新。
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200102024" title="200102024" href="200102a.html#200102024">■</a> 
+amazon.co.jp</h3>
+今月も送料無料だ。本当にそれでやってけるのか？
+<!-- section end -->
+</div>
+<!-- 2001/02/02 end -->
+
+
+
+<hr class="hide">
+<!-- 2001/02/03 start -->
+<h2><a name="20010203" href="200102a.html#20010203">2001-02-03 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="200102031" title="200102031" href="200102a.html#200102031">■</a> 
+cygwin 1.1.8-2, gcc-2.95.2-7 on Linux</h3>
+今回はCVSじゃなくてリリースされたものを使う。<br>
+mingw, w32apiのソースはcygwin-1.1.8-2-src.tar.gzにも含まれているので必要ない。
+<pre>
+% tar xfvz cygwin-1.1.8-2-src.tar.gz
+% tar xfvz gcc-2.95.2-7-src.tar.gz
+% mkdir build
+% cd build
+% lndir ../cygwin-1.1.8-2
+% mkdir gcc libio libstdc++
+% for i in gcc libstdc++ libio;do mkdir $i;cd $i;\
+  lndir ../../gcc-2.95.2-7/$i;cd ..;done
+% mkdir obj
+% cd obj
+% CFLAGS=-Os CXXFLAGS=-Os ../configure --target=i686-pc-cygwin \
+  --prefix=/usr/local/cygwin --enable-languages=c,c++
+% time make |&amp; tee make.log
+...
+make 2&gt;&amp; 1  3605.69s user 316.80s system 94% cpu 1:08:50.54 total
+tee make.log  0.11s user 0.91s system 0% cpu 1:08:50.46 total
+% make install
+</pre>
+lndirが面倒なら
+<pre>
+% tar xfvz cygwin-1.1.8-2-src.tar.gz
+% tar xfvz gcc-2.95.2-7-src.tar.gz
+% cd cygwin-1.1.8-2
+% mv ../gcc-2.95.2-7/{gcc,libstdc++,libio} .
+% mkdir obj
+% cd obj
+% &lt;あとは同じ&gt;
+</pre>
+でもいい。
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200102032" title="200102032" href="200102a.html#200102032">■</a> 
+specs</h3>
+例によってspecsの
+<a href="../files/gcc-2.95.2-7-specs-cross-20010203.diff">パッチ</a>。
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200102033" title="200102033" href="200102a.html#200102033">■</a> 
+bmingw package</h3>
+libgcc.aからimpure_ptrへの参照がなくなったのでcygwinのlibgcc.aを使って
+も問題ない。というわけでlibgcc.aもsymlinkに。<br>
+これで大物はlibstdc++.aだけか。
+<a href="../ruby/binaries/mingw/bmingw/bmingw-20010203.tar.gz">bmingw-20010203.tar.gz</a>
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200102034" title="200102034" href="200102a.html#200102034">■</a> 
+DJGPPでsymlink</h3>
+stubify.exeかstubedit.exeがあればsymlinkもどきも可能。
+<pre>
+% ./ruby -ve 'File.symlink &quot;ruby.exe&quot;, &quot;hoge.exe&quot;'
+ruby 1.6.2 (2001-02-02) [i386-msdosdjgpp]
+% ls -l hoge.exe
+-rwxr-xr-x   1 watanabe ruby         2048 Feb  3 16:46 hoge.exe
+% ./hoge -v
+ruby 1.6.2 (2001-02-02) [i386-msdosdjgpp]
+</pre>
+でもできるのは.exeだけ。
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200102035" title="200102035" href="200102a.html#200102035">■</a> 
+uconv 0.4.5</h3>
+<pre>
+% tar xfvz uconv-0.4.5.tar.gz
+% cd uconv
+% mkdir cygwin mingw
+% cd cygwin
+% ruby -rfake_TARGET -s ../extconf.rb -target=i386-cygwin
+% make
+% upx *.so
+% make site-install
+% cd ../mingw
+% ruby -rfake_TARGET -s ../extconf.rb -target=i386-mingw32
+% make
+% upx *.so
+% make site-install
+% cd ..
+% cat &gt;../uconv.contents
+DOC=MANIFEST README* samples
+% make -f ../Makefile.pack PACKAGE=uconv VERSION=0.4.5 TARGET=i386-cygwin
+% make -f ../Makefile.pack PACKAGE=uconv VERSION=0.4.5 TARGET=i386-mingw32
+</pre>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200102036" title="200102036" href="200102a.html#200102036">■</a> 
+tmail 0.8.18</h3>
+<pre>
+% tar xfvz tmail-0.8.18.tar.gz
+% cd tmail-0.8.18
+% ruby -rfake_TARGET -s setup.rb -target=i386-cygwin config \
+  --ruby-path=/usr/local/bin/ruby
+% ruby -rfake_TARGET -s setup.rb -target=i386-cygwin setup
+</pre>
+ここで破綻。そろそろsetup.rbをまじめに読むか。<br>
+ふむふむsystemしてるね。
+--ruby-pathを指定しないと
+クロスで作ったrubyを実行しようとしてるからまずい。<br>
+--ruby-path=/usr/local/bin/rubyすると
+fake_TARGETなしになるからこれもまずい。
+
+<h4><a name="200102036S1" href="200102a.html#200102036S1">_</a> <strong>i386-cygwin-ruby</strong>: </h4>
+<div class="sub">
+じゃ
+<a href="../files/i386-cygwin-ruby">i386-cygwin-ruby</a>を用意しよう
+<a href="#20010203F1"><sup><small>*1</small></sup></a>。
+<pre>
+% rm config.save
+% i386-cygwin-ruby setup.rb config \
+  --ruby-path=/usr/local/bin/i386-cygwin-ruby
+% i386-cygwin-ruby setup.rb setup
+% upx ext/*/*.so
+% i386-cygwin-ruby setup.rb install
+</pre>
+わらわらとインストールされる。<br>
+パッケージとしてはtmailだけあればいいと思うから、tmail.contentsは
+<pre>
+DOC=LGPL README.* doc.* sample
+CONTENTS=usr/local/lib/ruby/site_ruby/$(RUBYVER)/tmail/* \
+usr/local/lib/ruby/site_ruby/$(RUBYVER)/$(TARGET)/tmail/*
+</pre>
+としとくか。
+<pre>
+% make -f ../Makefile.pack PACKAGE=tmail VERSION=0.8.18 TARGET=i386-cygwin
+</pre>
+
+</div>
+<h4><a name="200102036S2" href="200102a.html#200102036S2">_</a> <strong>i386-mingw32-ruby</strong>: </h4>
+<div class="sub">
+たぶんいろいろ要らないものがあるだろうから--withoutしてみる。
+<pre>
+% i386-cygwin-ruby setup.rb clean
+% rm config.save ext/*/Makefile ext/*/*.def
+% i386-mingw32-ruby setup.rb config \
+  --ruby-path=/usr/local/bin/i386-mingw32-ruby \
+  --without=ext/cparse,ext/cscan,lib/amstd,lib/raccrt,lib/strscan
+% i386-mingw32-ruby setup.rb setup
+% rm ext/*/*.so
+% i386-mingw32-ruby setup.rb install
+% make -f ../Makefile.pack PACKAGE=tmail VERSION=0.8.18 TARGET=i386-mingw32
+</pre>
+
+</div>
+<hr align="left" width="40%">
+<div>
+<a name="20010203F1" href="200102a.html#20010203F1"><small>*1</small></a>:
+bin/racc/raccのようなのはsetup後に修正するとして。
+</div>
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200102037" title="200102037" href="200102a.html#200102037">■</a> 
+mingw32版rubyの-rが遅い</h3>
+<h4><a name="200102037S1" href="200102a.html#200102037S1">_</a> <strong>kconv</strong>: </h4>
+<div class="sub">
+mingw32版をWin98でruby -rtmail/tmail -e0してテストしたら返ってこない。
+なぬーってことで同じように内部的に.soをrequireしてるkconvで実験。
+<pre>
+% time c:/usr/local/bin/ruby -v -rkconv -ep
+ruby 1.6.2 (2001-02-02) [i386-mingw32]
+c:/usr/local/bin/ruby -v -rkconv -ep  0.00s user 0.00s system 0% cpu 2.580 total
+% time ruby -v -rkconv -ep  
+ruby 1.6.2 (2001-02-02) [i386-cygwin]
+ruby -v -rkconv -ep  0.00s user 0.00s system 0% cpu 0.280 total
+</pre>
+kconvですらこんなに差がある。何の違いだろう？<br>
+</div>
+<h4><a name="200102037S2" href="200102a.html#200102037S2">_</a> <strong>jcode</strong>: </h4>
+<div class="sub">
+.soをrequireしないjcodeでテスト。
+<pre>
+% time c:/usr/local/bin/ruby -v -rjcode -ep
+ruby 1.6.2 (2001-02-02) [i386-mingw32]
+Warning: $KCODE is NONE.
+c:/usr/local/bin/ruby -v -rjcode -ep  0.00s user 0.00s system 0% cpu 8.840 total
+% time ruby -v -rjcode -ep 
+ruby 1.6.2 (2001-02-02) [i386-cygwin]
+Warning: $KCODE is NONE.
+ruby -v -rjcode -ep  0.00s user 0.00s system 0% cpu 0.330 total
+</pre>
+どうも、scriptのparseにものすごく時間がかかってるようだ。
+<pre>
+% time c:/usr/local/bin/ruby -v -wc c:/usr/local/lib/ruby/1.6/jcode.rb
+ruby 1.6.2 (2001-02-02) [i386-mingw32]
+Syntax OK
+c:/usr/local/bin/ruby -v -wc c:/usr/local/lib/ruby/1.6/jcode.rb  \
+0.00s user 0.00s system 0% cpu 8.840 total
+</pre>
+あ、cygwin上のshellから実行すると遅くなるようだ。うーむ。
+<pre>
+C:\usr\local\bin&gt;c:\cygwin\bin\time ./ruby -v -wc ../lib/ruby/1.6/jcode.rb
+ruby 1.6.2 (2001-02-02) [i386-mingw32]
+Syntax OK
+0.00user 0.00system 0:00.77elapsed 0%CPU (0avgtext+0avgdata 0maxresident)k
+0inputs+0outputs (0major+0minor)pagefaults 0swaps
+</pre>
+
+</div>
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200102038" title="200102038" href="200102a.html#200102038">■</a> 
+AJICO</h3>
+よく見るとベースはRIZEのTOKIEだな。
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200102039" title="200102039" href="200102a.html#200102039">■</a> 
+CREA</h3>
+あ、本人か。
+<!-- section end -->
+</div>
+<div align="right">〜浜崎あゆみ/evolutionを聴きながら〜</div>
+<!-- 2001/02/03 end -->
+
+
+
+<hr class="hide">
+<!-- 2001/02/04 start -->
+<h2><a name="20010204" href="200102a.html#20010204">2001-02-04 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="200102041" title="200102041" href="200102a.html#200102041">■</a> 
+Ruby/zlib 0.4.0</h3>
+<h4><a name="200102041S1" href="200102a.html#200102041S1">_</a> <strong>zlib</strong>: </h4>
+<div class="sub">
+zlib 1.1.3ってついこの間xdeltaのときに作ったが、
+クロスのほうもついでに作っとこう。
+<pre>
+% CC='i686-pc-cygwin-gcc -bmingw' \
+  AR='i686-pc-cygwin-ar rc' \
+  RANLIB=i686-pc-cygwin-ranlib \
+  prefix=/usr/local/mingw \
+  ./configure
+% make
+% make install
+</pre>
+
+</div>
+<h4><a name="200102041S2" href="200102a.html#200102041S2">_</a> <strong>Ruby/zlib</strong>: </h4>
+<div class="sub">
+<pre>
+% tar xfvz ruby-zlib-0.4.0.tar.gz
+% cd ruby-zlib-0.4.0
+% mkdir cygwin mingw
+% cd cygwin
+% i386-cygwin-ruby ../extconf.rb
+% make
+% upx zlib.so
+% make site-install
+% cd ../mingw
+% i386-mingw32-ruby ../extconf.rb
+% make
+% upx zlib.so
+% make site-install
+% cd ..
+% cat &gt;../ruby-zlib.contents
+DOC= ChangeLog MANIFEST zlib.*.html
+CONTENTS=usr/local/lib/ruby/site_ruby/$(RUBYVER)/$(TARGET)/zlib.so
+% make -f ../Makefile.pack PACKAGE=ruby-zlib VERSION=0.4.0 TARGET=i386-cygwin
+% make -f ../Makefile.pack PACKAGE=ruby-zlib VERSION=0.4.0 TARGET=i386-mingw32
+</pre>
+
+</div>
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200102042" title="200102042" href="200102a.html#200102042">■</a> 
+RubyWin 0.0.2.6</h3>
+<pre>
+% unzip -a rubywin-0.0.2.6.zip
+% cd rubywin
+% mkdir cygwin mingw
+% cd cygwin
+% i386-cygwin-ruby ../config.rb
+% make
+...
+i686-pc-cygwin-windres --include-dir .. --define USE_WINDRES ../resource.rc resource.o
+../resource.rc:6: windows.h: No such file or directory
+i686-pc-cygwin-windres: ../resource.rc:17: parse error
+make: *** [resource.o] Error 1
+</pre>
+windres問題はちょっと面倒だね。
+そろそろCygwin MLで文句が出るかもしれない。
+<pre>
+--- config.rb.orig	Fri Feb  2 00:00:00 2001
++++ config.rb	Sat Feb  3 23:36:07 2001
+@@ -49,7 +49,7 @@
+ 
+   $RESCC = &lt;&lt;STR
+ resource.o: $(srcdir)/resource.rc $(srcdir)/resource.h
+-	#{CONFIG['WINDRES']} --include-dir $(srcdir) --define USE_WINDRES $(srcdir)/resource.rc resource.o
++	#{CONFIG['WINDRES']} --preprocessor '$(CC) -E -xc-header -DRC_INVOKE #{CONFIG[&quot;MWIN32&quot;]||&quot;&quot;}' --include-dir $(srcdir) --define USE_WINDRES $(srcdir)/resource.rc resource.o
+ STR
+ 
+ end
+</pre>
+でもう一度。
+<pre>
+% make
+% i686-pc-cygwin-strip rubywin.exe
+% upx rubywin.exe
+% make install RUBYOPT1='-rfake_TARGET -s' RUBYOPT2=-target=i386-cygwin
+% cd ../mingw
+% i386-mingw32-ruby ../config.rb
+% make
+% i686-pc-cygwin-strip rubywin.exe
+% upx rubywin.exe
+% make install RUBYOPT1='-rfake_TARGET -s' RUBYOPT2=-target=i386-mingw32
+% cd ..
+% make 
+</pre>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200102043" title="200102043" href="200102a.html#200102043">■</a> 
+setup.rb</h3>
+そうか。~/dist/TARGET/usr/local/bin/rubyをfakeにしとけってことか。
+今のところruby.exeが本体だから、rubyという名前で置いといてもokではある。
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200102044" title="200102044" href="200102a.html#200102044">■</a> 
+GTK+ for MinGW</h3>
+そろそろRuby/GTKを用意しなきゃ。<br>
+GIMP for Win32のDLLを使うとすぐ互換性がなくなるので、
+statically libraryを作るところから始める。<br>
+Ruby porterの主な仕事はlibraryの移植とも言える。
+拡張ライブラリは普通C libraryのwrapperにだしね。
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200102045" title="200102045" href="200102a.html#200102045">■</a> 
+pthreads</h3>
+まずはpthreadsだ。これはpthreads-snap-1999-05-30.tar.gzを使う。
+GIMP for Win32が未だにこれを使っているからだけど、
+Cygwinにある最新を使ったほうがいいのかもしれない。
+configureしても無駄だったので適当にMakefileを修正。
+<pre>
+% diff -u1 Makefile.in Makefile
+--- Makefile.in Sat May 29 23:48:25 1999
++++ Makefile    Sun Feb  4 15:32:59 2001
+@@ -1 +1,2 @@
++# Generated automatically from Makefile.in by configure.
+ #
+</pre>
+なんだそれは？きっと最新はちゃんとしてるんだろう。<br>
+さらに_timeb関係が当時と違うようなので、
+timebではなく_timebを使うように削除。<br>
+makeしてlibpthread32.aとpthread.hを/usr/local/mingw/{lib,include}へコピー。
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200102046" title="200102046" href="200102a.html#200102046">■</a> 
+glib</h3>
+glib-src-20001226.zipを使う。
+サブモジュールがあるため各ディレクトリのmakefile.mingwは、
+共通のbuild/win32/make.mingwをincludeするようになっている。<br>
+CC, CXX, DLLTOOLにi686-pc-cygwin-をつける。<br>
+このままではDLLを作ってしまうが、
+build-dllというshell scriptで作るようになっているので、
+DLLを作るところで
+</p><blockquote><p>
+i686-pc-cygwin-ar rcu lib$libname.a $objs
+</p></blockquote><p>
+してお茶を濁すことにした。
+<h4><a name="200102046S1" href="200102a.html#200102046S1">_</a> <strong>iconv</strong>: </h4>
+<div class="sub">
+読みが甘かった。glibはiconvを使うようになってるらしい。
+<pre>
+gconvert.c:23: iconv.h: No such file or directory
+gconvert.c:48: #error libiconv in use but included iconv.h not from libiconv
+make: *** [gconvert.o] Error 1
+</pre>
+じゃ、次はiconvだな。
+
+</div>
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200102047" title="200102047" href="200102a.html#200102047">■</a> 
+libiconv</h3>
+使うのは
+<a href="ftp://ftp.ilog.fr/pub/Users/haible/gnu/libiconv-1.5.1.tar.gz">libiconv-1.5.1.tar.gz</a>だ。
+<h4><a name="200102047S1" href="200102a.html#200102047S1">_</a> <strong>configure</strong>: </h4>
+<div class="sub">
+<pre>
+% CC='i686-pc-cygwin-gcc -bmingw' \
+  CFLAGS=-Os \
+  AR=i686-pc-cygwin-ar \
+  NM=/usr/local/cygwin/bin/i686-pc-cygwin-nm \
+  RANLIB=i686-pc-cygwin-ranlib \
+  ./configure \
+  --target=i386-mingw32 \
+  --host=i686-pc-cygwin \
+  --build=i586-pc-linux \
+  --prefix=/usr/local/mingw
+</pre>
+毎度お馴染の環境変数、オプションを指定する。
+NMはなぜか絶対パスかどうかのチェックが入っている。
+</div>
+<h4><a name="200102047S2" href="200102a.html#200102047S2">_</a> <strong>make</strong>: </h4>
+<div class="sub">
+すんなりmakeは通る。unicodeのテーブルを抱いてるから結構大きい。
+<pre>
+% ls -l lib/.libs/libiconv.a
+-rw-r--r--   1 watanabe ruby       646550 Feb  4 16:12 lib/.libs/libiconv.a
+</pre>
+vim6とかRubyのiconv拡張ライブラリとか考えるとDLLにしてもいいかな。<br>
+sudo make installして完了。
+
+</div>
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200102048" title="200102048" href="200102a.html#200102048">■</a> 
+glibに戻る</h3>
+gmarshalあたりでエラーになるが、libraryはできてるので気にしないことにする。<br>
+headerは/usr/local/mingw/lib/glib/includeへ、
+libraryは/usr/local/libへインストールする。
+
+<h4><a name="200102048S1" href="200102a.html#200102048S1">_</a> <strong>glib-config</strong>: </h4>
+<div class="sub">
+Linuxのglib-configをほげって
+<a href="../files/glib-1.3-config.mingw">glib-1.3-config.mingw</a>を作成。
+
+</div>
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200102049" title="200102049" href="200102a.html#200102049">■</a> 
+gtk+/gdk</h3>
+まずはgdkだ。
+../../build/win32/make.mingwをglibで作ったものと置き換える。<br>
+make -f makefile.cygwinすると
+<pre>
+In file included from gtkcolorsel.c:34:
+gtkintl.h:7: libintl.h: No such file or directory
+make: *** [gtkcolorsel.o] Error 1
+</pre>
+と言われる。先にgettextか。
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="2001020410" title="2001020410" href="200102a.html#2001020410">■</a> 
+gettext</h3>
+これもconfigureしづらいのでmakefile.cygwinを使う。
+intlだけmakeすればよさそう。
+できあがったlibintl.aを/usr/local/mingw/libへ、
+libintl.hを/usr/local/mingw/includeへコピー。
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="2001020411" title="2001020411" href="200102a.html#2001020411">■</a> 
+再びgtk+/gdk</h3>
+<pre>
+make: *** No rule to make target `win32/libgdk-win32.a', needed by `gdk-1.3.dll'.  Stop.
+</pre>
+先にwin32のほうをmakeしなきゃいけないのか。<br>
+タブレットは要らないよね。../../config.hのHAVE_WINTABをコメントアウト。<br>
+makefile.cygwinも適当に修正。<br>
+で戻る。
+リンク時に_imp__fooがundefinedになるので、
+gtktypes.hのextern __declspec(dllimport)がexternになるように修正。
+glibのほうもdllimportを一掃。
+と思ったらdllexportのほうも修正しないとだめだね。
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="2001020412" title="2001020412" href="200102a.html#2001020412">■</a> 
+gtk</h3>
+同じように__declspec対応する。
+いろんなテストプログラムができあがるのでWin98上で動くかどうか確認。
+wineでもsimple.exeが動いた。
+最後にheaderは/usr/local/mingw/include/{gtk,gdk}へ、
+libraryは/usr/local/mingw/libへコピーした。<br>
+gtk-configもLinuxのを参考に
+<a href="../files/gtk-1.3-config.mingw">gtk-1.3-config.mingw</a>を用意した。
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="2001020413" title="2001020413" href="200102a.html#2001020413">■</a> 
+Ruby/GTK</h3>
+やっと準備完了。imlibはもういいや。<br>
+それはそれとしてRuby/GTKの最新ってどうなってるんだっけ？
+とりあえず
+<a href="http://www.ueda.info.waseda.ac.jp/~igarashi/ruby/dl/">ここ</a>からgnome-ruby-snapshot-20010122.tar.gzを取ってきた。
+<pre>
+% tar xfvz gnome-ruby-snapshot-20010122.tar.gz
+% cd gnome-ruby-snapshot-20010122/gtk
+</pre>
+
+<h4><a name="2001020413S1" href="200102a.html#2001020413S1">_</a> <strong>extconf.rb</strong>: </h4>
+<div class="sub">
+gtk/extconf.rbにはちょっとしたパッチをあてた。
+<pre>
+--- gtk/extconf.rb.orig	Fri Jan 19 20:52:55 2001
++++ gtk/extconf.rb	Sun Feb  4 20:26:29 2001
+@@ -64,3 +64,3 @@
+   lib_ary = []
+-  if /cygwin/ =~ PLATFORM
++  if /cygwin|mingw/ =~ PLATFORM
+   elsif /mswin32/ !~ PLATFORM
+
+</pre>
+
+</div>
+<h4><a name="2001020413S2" href="200102a.html#2001020413S2">_</a> <strong>__declspec</strong>: </h4>
+<div class="sub">
+なぜかdllをリンクするとこでエラー。
+<pre>
+% i386-mingw32-ruby extconf.rb gtk-1.3-config.mingw
+% make RUBY=i386-mingw32-ruby AR=i686-pc-cygwin-ar
+...
+global.o(.text+0x2b9):global.c: undefined reference to \
+  `_imp__GTK_TYPE_GDK_EVENT'
+global.o(.text+0x315):global.c: undefined reference to \
+  `_imp__GTK_TYPE_CTREE_NODE'
+rbgtkobject.o(.text+0x1f1):rbgtkobject.c: undefined reference to \
+  `_imp__GTK_TYPE_GDK_EVENT'
+collect2: ld returned 1 exit status
+</pre>
+あれ？__declspecは撲滅したはずなのになあ。
+gtktypebuiltins.hはawkで作るようになってるのか。
+じゃscriptを直さないと。
+とりあえず/usr/local/mingw/include/gtk/gtktypebuiltins.hを修正して再開。
+
+</div>
+<h4><a name="2001020413S3" href="200102a.html#2001020413S3">_</a> <strong>make</strong>: </h4>
+<div class="sub">
+<pre>
+% make RUBY=i386-mingw32-ruby AR=i686-pc-cygwin-ar
+% ls -l src/gtk.so
+-rwxr-xr-x   1 watanabe ruby      2299904 Feb  4 21:32 src/gtk.so
+% upx src/gtk.so
+% ls -l src/gtk.so
+-rwxr-xr-x   1 watanabe ruby      1027584 Feb  4 21:32 src/gtk.so
+</pre>
+やっとできた。iconvも含んでいるからでかいと思い込んでいたが、
+g_iconv*をRuby/GTKは呼んでないから純粋にこんなもんなんだろう。
+これだけで他のDLLは要らないんだからよしとする。<br>
+
+</div>
+<h4><a name="2001020413S4" href="200102a.html#2001020413S4">_</a> <strong>-fnative-struct</strong>: </h4>
+<div class="sub">
+てゆうかそんなことを言うのはちゃんとWin98で動いてからにせよ。
+<pre>
+Gtk-ERROR **:Imcompatible build!
+The code using GTK+ thinks GtkWindow is of different
+size than it actually is in this build of GTK+.
+On Windows, this probably means that you have compiled
+your code with gcc without the -fnative-struct switch.
+aborting...
+</pre>
+がーん。なるほどねえ。
+<a href="../files/gtk-1.3-config.mingw">gtk-1.3-config.mingw</a>に-fnative-structを追加。
+もう一度makeし直してWin98上でsample/helloworld.rbがちゃんと表示されることを確認。<br>
+
+</div>
+<h4><a name="2001020413S5" href="200102a.html#2001020413S5">_</a> <strong>Makefile.pack</strong>: </h4>
+<div class="sub">
+じゃパックしよう。とここでちょっと困る。Makefile.packは
+<pre>
+include ../$(PACKAGE).contents
+</pre>
+と固定になっているからだ。gnome-*の場合gtkのみをパッキングしたい。
+ちょっと考えて
+<a href="../files/Makefile.pack">こう</a>することにした。
+<pre>
+-include ../$(PACKAGE).contents
+ifndef DOC
+-include ../../$(PACKAGE).contents
+endif
+</pre>
+深いのが出たらまた追加しよう。
+<pre>
+% cat &gt;../../gtk.contents
+DOC=BUGS COPYING* ChangeLog ENVIRONMENT MANIFEST README* ToDo doc sample
+% make -f ../../Makefile.pack PACKAGE=gtk VERSION=20010122 TARGET=i386-mingw32
+</pre>
+cygwinはまた今度。
+</div>
+<!-- section end -->
+</div>
+<!-- 2001/02/04 end -->
+
+
+
+<hr class="hide">
+<!-- 2001/02/05 start -->
+<h2><a name="20010205" href="200102a.html#20010205">2001-02-05 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="200102051" title="200102051" href="200102a.html#200102051">■</a> 
+<a href="http://www.phekda.freeserve.co.uk/richdawe/lsck/lsck_new.htm#2001-01-28">libsocket for DJGPP</a></h3>
+試してみるかと思って見に行ったら開発終了。
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200102052" title="200102052" href="200102a.html#200102052">■</a> 
+<a href="http://cygwin.com/ml/cygwin/2001-02/msg00188.html">make menuconfig on 1.1.8</a></h3>
+Cygwin上でLinuxのカーネルをクロスコンパイルしようとする兵がいようとは。
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200102053" title="200102053" href="200102a.html#200102053">■</a> 
+libiconv</h3>
+Cygwin版も作っとこう。
+<pre>
+% CC='i686-pc-cygwin-gcc' \
+  CFLAGS=-Os \
+  AR=i686-pc-cygwin-ar \
+  NM=/usr/local/cygwin/bin/i686-pc-cygwin-nm \
+  RANLIB=i686-pc-cygwin-ranlib \
+  ./configure \
+  --target=i686-pc-cygwin \
+  --host=i686-pc-cygwin \
+  --build=i586-pc-linux \
+  --prefix=/usr/local/cygwin-local
+% make 
+% make install
+</pre>
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200102054" title="200102054" href="200102a.html#200102054">■</a> 
+iconv</h3>
+<pre>
+% tar xfvz iconv-0.4.3.tar.gz
+% cd iconv-0.4.3
+% mkdir cygwin mingw
+</pre>
+<h4><a name="200102054S1" href="200102a.html#200102054S1">_</a> <strong>i386-cygwin</strong>: </h4>
+<div class="sub">
+<pre>
+% cd cygwin
+% i386-cygwin-ruby ../extconf.rb --with-opt-dir=/usr/local/cygwin-local
+checking for iconv.h... yes
+checking for iconv() in -liconv... no
+checking for rb_obj_freeze()... yes
+checking for rb_block_given_p()... yes
+creating Makefile
+</pre>
+-liconvを見つけてくれない。
+/usr/local/cygwin-local/include/iconv.hが
+<pre>
+#ifndef LIBICONV_PLUG
+#define iconv libiconv
+#endif
+</pre>
+となってるからだ。なんかよくわからん。とりあえず
+<pre>
+--- extconf.rb.orig	Thu Sep 21 05:03:37 2000
++++ extconf.rb	Mon Feb  5 02:13:20 2001
+@@ -9,3 +9,3 @@
+ if have_header(&quot;iconv.h&quot;)
+-  have_library(&quot;iconv&quot;, &quot;iconv&quot;)
++  have_library(&quot;iconv&quot;, &quot;iconv&quot;) || have_library(&quot;iconv&quot;, &quot;libiconv&quot;)
+   if method(:have_func).arity != 1
+</pre>
+としてみる。
+<pre>
+% i386-cygwin-ruby ../extconf.rb --with-opt-dir=/usr/local/cygwin-local
+checking for iconv.h... yes
+checking for iconv() in -liconv... no
+checking for libiconv() in -liconv... yes
+checking for rb_obj_freeze()... yes
+checking for rb_block_given_p()... yes
+creating Makefile
+% make
+% upx iconv.so
+% make site-install
+</pre>
+よさそうだ。
+
+</div>
+<h4><a name="200102054S2" href="200102a.html#200102054S2">_</a> <strong>i386-mingw32</strong>: </h4>
+<div class="sub">
+<pre>
+% cd ../mingw
+% i386-mingw32-ruby ../extconf.rb --with-opt-dir=/usr/local/mingw
+% make
+% upx iconv.so
+% make site-install
+</pre>
+
+</div>
+<h4><a name="200102054S3" href="200102a.html#200102054S3">_</a> <strong>pack</strong>: </h4>
+<div class="sub">
+<pre>
+% cd ..
+% cat &gt;../iconv.contents
+DOC=MANIFEST iconv.rlog rd.css
+% make -f ../Makefile.pack PACKAGE=iconv VERSION=0.4.3 TARGET=i386-cygwin
+% make -f ../Makefile.pack PACKAGE=iconv VERSION=0.4.3 TARGET=i386-mingw32
+</pre>
+あれ？以前はiconv.rdもあったよね。てゆうかrd.cssだけあっても意味がないし。
+MANIFESTからもれてるのが原因かな？
+
+</div>
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200102055" title="200102055" href="200102a.html#200102055">■</a> 
+<a href="http://namazu.org/~satoru/diary/?200101c&amp;to=200101312#200101312">grep競争</a></h3>
+ruby惨敗。<br>
+perlの場合メタ文字を含んでないかつ$&amp; $` $'を使わないと、
+indexに自動的に切り替わるので、indexで勝負したほうがいいだろう。
+<h4><a name="200102055S1" href="200102a.html#200102055S1">_</a> <strong>//とindex</strong>: </h4>
+<div class="sub">
+とりあえずrubyで//とindexではどのくらい違うのかを計る。
+<pre>
+% TIMEFMT='%E real  %U user  %S sys  %P cpu'     
+% ls -l ruby-talk.0101
+-rw-------   1 watanabe ruby      5663931 Feb  2 01:11 ruby-talk.0101
+
+% time perl -ne 'print if index($_,&quot;HOGE&quot;)&gt;0' ruby-talk.0101
+5.92s real  5.70s user  0.37s sys  102% cpu
+
+% time perl -ne 'print if /HOGE/' ruby-talk.0101          
+5.92s real  5.62s user  0.36s sys  101% cpu
+
+% time ruby -ne 'print if /HOGE/' ruby-talk.0101 
+8.86s real  8.56s user  0.34s sys  100% cpu
+
+% time ruby -ne 'print if $_.index &quot;HOGE&quot;' ruby-talk.0101
+14.08s real  13.60s user  0.52s sys  100% cpu
+
+</pre>
+なぬ？rubyの場合
+<strong>indexのほうが遅い。</strong>こりゃまいったね。indexは基本的には単純なmemcmpでしかないしね。
+perlはBM法を使ってるもんなあ。
+</div>
+<!-- section end -->
+</div>
+<!-- 2001/02/05 end -->
+
+
+
+<hr class="hide">
+<!-- 2001/02/06 start -->
+<h2><a name="20010206" href="200102a.html#20010206">2001-02-06 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="200102061" title="200102061" href="200102a.html#200102061">■</a> 
+eruby</h3>
+eruby 0.1.3はwin32ではSEGVしてしまう。
+2000-12-22に対応したのでCVSから取り寄せる。
+正月に導入したcvsupのおかげでいつでも好きなときにcoできる。
+<h4><a name="200102061S1" href="200102a.html#200102061S1">_</a> <strong>i386-cygwin</strong>: </h4>
+<div class="sub">
+<pre>
+% cvs -d ~ruby/cvs co eruby
+% cd eruby
+% mkdir cygwin mingw
+% cd cygwin
+% i386-cygwin-ruby ../Makefile.RB
+% make
+% i686-pc-cygwin-strip eruby.exe
+% upx eruby.exe
+% make install
+...
+/usr/local/lib/ruby/1.6/ftools.rb:32:in `open': No such file or directory \
+  - &quot;/home/watanabe/dist/i386-cygwin/usr/local/include/eruby.h&quot; (Errno::ENOENT)
+        from /usr/local/lib/ruby/1.6/ftools.rb:32:in `syscopy'
+        from /usr/local/lib/ruby/1.6/ftools.rb:59:in `copy'
+        from /usr/local/lib/ruby/1.6/ftools.rb:179:in `install'
+        from -e:1
+make: [install] Error 1 (ignored)
+...
+</pre>
+あ、これはまずいね。includeはあらかじめ作っておくことにしよう。
+<pre>
+% mkdir ~/dist/i386-{cygwin,mingw32,msdosdjgpp}/usr/local/include
+% make install
+../eruby.h -&gt; /home/watanabe/dist/i386-cygwin/usr/local/include/eruby.h
+chmod 0644 /home/watanabe/dist/i386-cygwin/usr/local/include/eruby.h
+</pre>
+
+</div>
+<h4><a name="200102061S2" href="200102a.html#200102061S2">_</a> <strong>i386-mingw32</strong>: </h4>
+<div class="sub">
+<pre>
+% cd ../mingw
+% i386-mingw32-ruby ../Makefile.RB
+% make
+% i686-pc-cygwin-strip eruby.exe
+% upx eruby.exe
+% make install
+</pre>
+
+</div>
+<h4><a name="200102061S3" href="200102a.html#200102061S3">_</a> <strong>pack</strong>: </h4>
+<div class="sub">
+<pre>
+% cd ..
+% cat &gt;../eruby.contents
+DOC=ChangeLog README.* eruby.rd
+CONTENTS=usr/local/bin/eruby.exe \
+usr/local/man/man1/eruby.1
+% make -f ../Makefile.pack PACKAGE=eruby VERSION=20001222 TARGET=i386-cygwin
+% make -f ../Makefile.pack PACKAGE=eruby VERSION=20001222 TARGET=i386-mingw32
+</pre>
+
+</div>
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200102062" title="200102062" href="200102a.html#200102062">■</a> 
+libstdc++.a</h3>
+<a href="http://cygwin.com/ml/cygwin/">Cygwin ML</a>を見てるとMinGW用のlibstdc++.aを/usr/lib/mingwへ置こうという話が出てる。
+そうなるとbmingw packageのlibstdc++.aも要らなくなる。
+-D__MSVCRT__の話も出てるけど、どうなるんだろう？
+<!-- section end -->
+</div>
+<!-- 2001/02/06 end -->
+
+
+
+<hr class="hide">
+<!-- 2001/02/07 start -->
+<h2><a name="20010207" href="200102a.html#20010207">2001-02-07 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="200102071" title="200102071" href="200102a.html#200102071">■</a> 
+windres</h3>
+heliumにこっそり--target=i686-pc-cygwinな環境を作ったら、
+<pre>
+winver_stamp: mkvers.sh include/cygwin/version.h winver.rc $(DLL_OFILES)
+        @echo &quot;Making version.o and winver.o&quot;;\
+        $(SHELL) ${word 1,$^} ${word 2,$^} ${word 3,$^} $(WINDRES) &amp;&amp; \
+        touch $@ &amp;&amp; \
+        $(COMPILE_CXX) -o version.o version.cc
+</pre>
+でエラーに。
+windresがi686-pc-cygwin-gccを呼ぼうとするが、
+今作ってるんだからあるわけがない。とりあえず一時的に
+<pre>
+% ln -s /usr/bin/gcc ~/bin/i686-pc-cygwin-gcc
+</pre>
+してごまかす。これはすでにインストールされてる環境だとcrossといえども
+気づきにくい。nativeだとgccが呼ばれるだけだからエラーにもならないし。
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200102072" title="200102072" href="200102a.html#200102072">■</a> 
+expat 1.95.0</h3>
+ruby-talk MLを見ててxmlparserを思い出す。
+まずはexpatだ。
+<h4><a name="200102072S1" href="200102a.html#200102072S1">_</a> <strong>i386-cygwin</strong>: </h4>
+<div class="sub">
+<pre>
+% tar xfvz expat-1.95.0.tar.gz
+% cd expat-1.95.0
+% mkdir cygwin mingw
+% CC=i686-pc-cygwin-gcc \
+  NM=i686-pc-cygwin-nm \
+  AR=i686-pc-cygwin-ar \
+  RANLIB=i686-pc-cygwin-ranlib \
+  LD=i686-pc-cygwin-ld \
+  CFLAGS=-Os \
+  ../configure \
+  --target=i386-cygwin \
+  --host=i686-pc-cygwin \
+  --build=i586-pc-linux \
+  --prefix=/usr/local/cygwin-local
+% make
+% make install
+...
+/usr/bin/ginstall -c -m 644 expat.h /usr/local/cygwin-local/include
+/usr/bin/ginstall: expat.h: No such file or directory
+make[1]: *** [install] Error 1
+...
+</pre>
+あ、srcdirに対応してないなあ。面倒なのでcygwin/lib/Makefileを書き換える。
+</p><blockquote><p>
+APIHEADER = $(srcdir)/expat.h
+</p></blockquote><p>
+と思ったがこれからMinGWもあるのでlib/Makefile.inを書き換える。
+
+</div>
+<h4><a name="200102072S2" href="200102a.html#200102072S2">_</a> <strong>i386-mingw</strong>: </h4>
+<div class="sub">
+<pre>
+% cd ../mingw
+% CC='i686-pc-cygwin-gcc -bmingw' \
+  NM=i686-pc-cygwin-nm \
+  AR=i686-pc-cygwin-ar \
+  RANLIB=i686-pc-cygwin-ranlib \
+  LD=i686-pc-cygwin-ld \
+  CFLAGS=-Os \
+  ../configure \
+  --target=i386-mingw32 \
+  --host=i686-pc-cygwin \
+  --build=i586-pc-linux \
+  --prefix=/usr/local/mingw
+...
+checking whether byte ordering is bigendian... configure: error: \
+  can not run test program while cross compiling
+</pre>
+あ、bigendianチェックがあったのか。ac_cv_c_bigendian=yesを追加。
+<pre>
+% CC='i686-pc-cygwin-gcc -bmingw' \
+  NM=i686-pc-cygwin-nm \
+  AR=i686-pc-cygwin-ar \
+  RANLIB=i686-pc-cygwin-ranlib \
+  LD=i686-pc-cygwin-ld \
+  CFLAGS=-Os \
+  ac_cv_c_bigendian=yes \
+  ../configure \
+  --target=i386-mingw32 \
+  --host=i686-pc-cygwin \
+  --build=i586-pc-linux \
+  --prefix=/usr/local/mingw
+% make
+% make install
+</pre>
+
+</div>
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200102073" title="200102073" href="200102a.html#200102073">■</a> 
+xmlparser 0.6.1</h3>
+<pre>
+% tar xfvz xmlparser-0.6.1.tar.gz
+% cd xmlparser
+% mkdir cygwin mingw
+</pre>
+
+<h4><a name="200102073S1" href="200102a.html#200102073S1">_</a> <strong>i386-cygwin</strong>: </h4>
+<div class="sub">
+<pre>
+% cd cygwin
+% i386-cygwin-ruby ../extconf.rb
+% make
+...
+xmlparser.o(.text+0x15):xmlparser.c: \
+  undefined reference to `_imp__XML_ParserFree'
+...
+</pre>
+あれ？これも_imp__か。うーむ。結局
+<pre>
+/usr/local/cygwin-local/include/expat.h
+/usr/local/mingw/include/expat.h
+</pre>
+を書き換えることにした。
+<pre>
+% make clean
+% make
+% upx *.so
+% make site-install
+</pre>
+
+</div>
+<h4><a name="200102073S2" href="200102a.html#200102073S2">_</a> <strong>i386-mingw32</strong>: </h4>
+<div class="sub">
+<pre>
+% cd ../mingw
+% i386-mingw32-ruby ../extconf.rb
+% make
+% upx *.so
+% make site-install
+</pre>
+そういえばlib/*.rbがインストールされてない。
+そもそもMakefileに出てこない。
+mkmf.rbがsrcdirに対応してないようだ。
+明日考えよう。
+</div>
+<!-- section end -->
+</div>
+<!-- 2001/02/07 end -->
+
+
+
+<hr class="hide">
+<!-- 2001/02/08 start -->
+<h2><a name="20010208" href="200102a.html#20010208">2001-02-08 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="200102081" title="200102081" href="200102a.html#200102081">■</a> 
+mkmf.rb</h3>
+というわけでcommitした。
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200102082" title="200102082" href="200102a.html#200102082">■</a> 
+xmlparserの続き</h3>
+<h4><a name="200102082S1" href="200102a.html#200102082S1">_</a> <strong>pack</strong>: </h4>
+<div class="sub">
+<pre>
+% cat &gt;../xmlparser.contents
+DOC=Encodings MANIFEST README* obsolete samples
+CONTENTS=usr/local/lib/ruby/site_ruby/$(RUBYVER)/$(TARGET)/xmlparser.so \
+usr/local/lib/ruby/site_ruby/$(RUBYVER)/{\
+sax.rb,xmldigest.rb,xmltree.rb,xmltreevisitor.rb,\
+saxdriver.rb,xmlencoding-ja.rb,xmltreebuilder-ja.rb,\
+wget.rb,xmlparser.rb,xmltreebuilder.rb}
+% make -f ../Makefile.pack PACKAGE=xmlparser VERSION=0.6.1 TARGET=i386-cygwin
+% make -f ../Makefile.pack PACKAGE=xmlparser VERSION=0.6.1 TARGET=i386-mingw32
+</pre>
+{}を使いたくなったので
+<a href="../files/Makefile.pack">Makefile.pack</a>にSHELL=/bin/bashを追加した。
+
+</div>
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200102083" title="200102083" href="200102a.html#200102083">■</a> 
+ruby 1.6.2 (2001-02-08)</h3>
+更新した。
+<!-- section end -->
+</div>
+<!-- 2001/02/08 end -->
+
+
+
+<hr class="hide">
+<!-- 2001/02/09 start -->
+<h2><a name="20010209" href="200102a.html#20010209">2001-02-09 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="200102091" title="200102091" href="200102a.html#200102091">■</a> 
+gcc-2.95.2-7</h3>
+いつのまにかcurrentからtestになってるような気がする。
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200102092" title="200102092" href="200102a.html#200102092">■</a> 
+libstdc++.a for MinGW</h3>
+これは次回のリリースには/usr/lib/mingwへ置かれそう。
+そうなるとbmingw packageはなくてもいいね。
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200102093" title="200102093" href="200102a.html#200102093">■</a> 
+c:/usr/local/bin\ruby.exe</h3>
+niftyのFEXTというフォーラムで先週djgpp版のrubyの挙動について質問があった。
+RUBYLIBを設定しないとkconvがrequireできないという。
+で、その方が調べた結果、__dos_argv0には
+</p><blockquote><p>
+c:/usr/local/bin\ruby.exe
+</p></blockquote><p>
+が入ってるという話。それはかなり予想外だ。
+Win98ではどう頑張っても
+</p><blockquote><p>
+C:\USR\LOCAL\BIN\RUBY.EXE
+</p></blockquote><p>
+にしかならない。PATH=c:/usr/local/binしても同じ。<br>
+どうせ/に変換するわけだから、先にすることにした。
+これで「表bin」というディレクトリに置かれていた場合にも、
+正しく対応できるようになるってかなり苦しいいいわけではある。
+<!-- section end -->
+</div>
+<!-- 2001/02/09 end -->
+
+
+
+<hr class="hide">
+<!-- 2001/02/10 start -->
+<h2><a name="20010210" href="200102a.html#20010210">2001-02-10 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="200102101" title="200102101" href="200102a.html#200102101">■</a> 
+xmms 1.2.4</h3>
+<h4><a name="200102101S1" href="200102a.html#200102101S1">_</a> <strong>xmms-1.2.4j-20010104</strong>: </h4>
+<div class="sub">
+xmms-1.2.4j-20010104.diff.bz2をあててconfigure。
+<pre>
+% CFLAGS=-Os ./configure --enable-kanji
+...
+Note: Configure has discovered that you already have xmms installed and
+it do not match with the given --prefix. You have xmms installed in
+/usr/local/bin/xmms and you chose /usr/local/bin/bin/xmms
+Rerun configure with the --prefix option set to the correct location
+of the old xmms.
+Or simply uninstall the old xmms.
+</pre>
+と脅しがかかる。
+なんかよくわからんが--prefix=/usr/localをつけてもう一度。
+<pre>
+% CFLAGS=-Os ./configure --enable-kanji --prefix=/usr/local
+% make
+% sudo make install
+% sudo ldconfig
+% xmms
+
+Segmentation fault
+
+あなたはXMMSのバグを見つけたようです。
+http://www.xmms.org/bugs を開いてバグレポートを送ってください。
+</pre>
+どうもxmms-1.2.4j-20010104.diff.bz2をあてるとSEGVるようだ。
+とりあえず最新をまた探してこよう。
+
+</div>
+<h4><a name="200102101S2" href="200102a.html#200102101S2">_</a> <strong>xmms-1.2.4j-20010119</strong>: </h4>
+<div class="sub">
+<a href="http://www3.big.or.jp/~sian/linux/products/xmms/">xmms-ja</a>に行ってみると最新はxmms-1.2.4j-20010119になっていたので、
+これでもう一度やってみる。
+<pre>
+% CFLAGS=-Os ./configure --enable-kanji --prefix=/usr/local
+% make
+cd . &amp;&amp; aclocal
+aclocal: configure.in: 10: macro `AM_DISABLE_STATIC' not found in library
+aclocal: configure.in: 11: macro `AM_PROG_LIBTOOL' not found in library
+aclocal: configure.in: 180: macro `AM_GNU_GETTEXT' not found in library
+make: *** [aclocal.m4] Error 1
+% ls -l --fu aclocal.m4 configure.in              
+-rw-r--r--   1 watanabe ruby        77183 Sat Feb 10 19:44:16 2001 aclocal.m4
+-rw-r--r--   1 watanabe ruby        14949 Sat Feb 10 19:44:17 2001 configure.in
+</pre>
+patchをあてるタイミングでconfigure.inのほうが新しくなってしまったのが原因だ。
+アルファベット的にもconfigure.inのほうが新しくなる確率は高い
+<a href="#20010210F1"><sup><small>*1</small></sup></a>。
+touchすると今度はautomakeしようとするし、あー面倒。
+autoconfしちゃえばいいんだけど、どうもautoconf 2.49あたりに依存してい
+るらしく、なんかこれも面倒。というわけでtouch作戦を敢行。
+<pre>
+% touch aclocal.m4
+% touch Makefile.in
+% touch configure
+% touch config.status
+% touch stamp-h.in
+% make
+</pre>
+でよさそうだ。なんでもかんでもMakefileに書くのも善し悪しだ。
+
+</div>
+<h4><a name="200102101S3" href="200102a.html#200102101S3">_</a> <strong>タイトル</strong>: </h4>
+<div class="sub">
+タイトルが化ける。sjis2eucを2回してるような化けかただな。
+
+</div>
+<hr align="left" width="40%">
+<div>
+<a name="20010210F1" href="200102a.html#20010210F1"><small>*1</small></a>:
+RubyのCVSでconfigureを含めないのはこれが理由。
+cvs updateでconfigureよりconfigure.inが新しくなる可能性がある。
+autoconfの違いで作られるconfigureも違ってしまい、
+次回のcvs updateでconflictする。
+</div>
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200102102" title="200102102" href="200102a.html#200102102">■</a> 
+autoconf on DJGPP</h3>
+DJGPPの環境はあまり追い掛けてなかったんだけど、
+ずいぶん前からautoconf 2.13が使えるようになっているようだ。
+試してみよう。
+<h4><a name="200102102S1" href="200102a.html#200102102S1">_</a> <strong>bash</strong>: </h4>
+<div class="sub">
+こういうシェルスクリプトは/bin/shが基本なので
+<pre>
+bash-2.04$ mkdir c:/bin
+bash-2.04$ cp c:/djgpp/bin/bash.exe c:/bin/sh.exe
+</pre>
+しておく。
+
+</div>
+<h4><a name="200102102S2" href="200102a.html#200102102S2">_</a> <strong>autoconf</strong>: </h4>
+<div class="sub">
+rubyのソースを展開したらautoconfする。
+これでDJGPPの環境に合ったconfigureが作られる。
+bash上なら単に
+<pre>
+bash-2.04$ autoconf
+</pre>
+で実行できるが、MS-DOSプロンプト上の場合は
+<pre>
+&gt; bash autoconf
+</pre>
+とする。
+
+</div>
+<h4><a name="200102102S3" href="200102a.html#200102102S3">_</a> <strong>configure</strong>: </h4>
+<div class="sub">
+configureも同じ要領。
+
+</div>
+<h4><a name="200102102S4" href="200102a.html#200102102S4">_</a> <strong>make</strong>: </h4>
+<div class="sub">
+なぜか
+</p><blockquote><p>
+process.c:796: too many arguments to function `getpgrp'
+</p></blockquote><p>
+で止まる。configure時に
+</p><blockquote><p>
+checking whether getpgrp takes no argument... no
+</p></blockquote><p>
+になってしまうのが原因だがなぜだろう？できあがったconfigureを見る。
+なるほど。forkしてるのか。DJGPPはdummyのforkがあったりするのでこのテス
+トは無意味だ。クロスじゃないけどac_cv_func_getpgrp_void=yesを指定する
+のがいいね。それよりはconfigure.inに入れてしまったほうがいいような気も
+する。
+
+</div>
+<h4><a name="200102102S5" href="200102a.html#200102102S5">_</a> <strong>/dev/env</strong>: </h4>
+<div class="sub">
+makeしてる様子をなにげなく見てると
+</p><blockquote><p>
+gcc -Os -I. -I. -I/dev/env/DJDIR/include -c array.c
+</p></blockquote><p>
+と表示されている。/dev/env/DJDIRなんてあり？
+kb.infoを見るとこういうことらしい。
+<pre>
+You can use the special `/dev/env/foo/' construct in file names to
+expand it into the value of the environment variable `foo' at run time.
+`/dev/env/foo~bar~' will expand to `bar' if `foo' is undefined, or if
+its value is empty.
+</pre>
+$DJDIR/includeと同じ意味ってことか。なるほどねえ。
+
+</div>
+<h4><a name="200102102S6" href="200102a.html#200102102S6">_</a> <strong>/dev/X/</strong>: </h4>
+<div class="sub">
+なんとなくまだありそうな気がするので、kb.infoを探ってみた。
+<pre>
+File names which begin with `/dev/X/', where X is a drive letter, are
+converted to the DOS `X:/' form; this is required for running some
+Unix shell scripts which take apart the `PATH' variable where colons
+separate directories.
+</pre>
+Cygwinの/cygdriveに相当するものだ。
+<pre>
+`PATH' to pseudo-Unix form.  For example, if the original
+value of `PATH' is like this:
+
+      PATH=c:\djgpp\bin;d:\gnu\emacs\bin
+
+then setting `PATH_SEPARATOR=:' converts it to this:
+
+      PATH=/dev/c/djgpp/bin:/dev/d/gnu/emacs/bin
+</pre>
+のようにPATH_SEPARATORでPATHも変化する。
+なかなか面白い仕組だ。
+</div>
+<h4><a name="200102102S7" href="200102a.html#200102102S7">_</a> <strong>ruby.exe</strong>: </h4>
+<div class="sub">
+早速できあがったruby.exeで試してみる。
+<pre>
+bash-2.04$ ./ruby -e 'print ARGF.gets' /dev/env/HOME/.zshrc
+setenv() { export $1=$2 }
+</pre>
+これだとcommand.comとかshellに依存することなく環境変数を参照できるわけだ。
+</div>
+<!-- section end -->
+</div>
+<!-- 2001/02/10 end -->
+
+<hr>
+<div>
+<a href="200101c.html">&lt;Prev(,)</a> | 
+<a href="200102b.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

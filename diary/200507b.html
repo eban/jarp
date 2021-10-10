@@ -1,0 +1,553 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2005-7-b</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="200507a.html">
+<link rel="next" href="200507c.html">
+
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2005年7月中旬〜</p>
+<hr>
+<div>
+<a href="200507a.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="200507c.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2005/07/11 start -->
+<h2><a name="20050711" href="200507b.html#20050711">2005-07-11 (Mon)</a></h2>
+<!-- 2005-07-12 02:55:04 -->
+
+<div class="entry1">
+<h3><a name="200507111" title="200507111" href="200507b.html#200507111">■</a> 
+<a href="http://gcc.gnu.org/">[GNU] GCC 4.0.1</a></h3>
+<p>
+メモリが足りない。
+</p>
+<pre>
+insn-attrtab.c: In function `insn_default_latency':
+insn-attrtab.c:13536: virtual memory exhausted
+</pre>
+<p>
+実は会社のPCでGCC 4.0.0をmakeしたらメモリが足りなくて放ったらかしにしてたんだけど、やっぱだめか。
+というわけで一時的にswap fileを適当に512MBほど作ってみる。
+</p>
+<pre>
+% dd if=/dev/zero of=swapfile bs=1M count=1 seek=511
+% mkswap swapfile
+% sudo swapon swapfile
+</pre>
+<p>
+これでやっと通った。
+</p>
+<!-- section end -->
+</div>
+<!-- 2005/07/11 end -->
+
+
+
+<hr class="hide">
+<!-- 2005/07/12 start -->
+<h2><a name="20050712" href="200507b.html#20050712">2005-07-12 (Tue)</a></h2>
+<!-- 2005-07-13 00:32:04 -->
+
+<div class="entry1">
+<h3><a name="200507121" title="200507121" href="200507b.html#200507121">■</a> 
+<a href="http://www.discas.net/">[DVD] DISCAS 日曜出荷とＭプラン当日出荷</a></h3>
+<p>
+ほぼぽすれんで決まりだなと思っていたら、DISCASから
+<a href="http://www.discas.net/d/d/s?ap=c_information">こんなお知らせ</a>
+が来た。
+</p><blockquote><dl>
+<dt>
+日曜日出荷とMプランのご返却当日出荷スタート！(05.07.08)   	 2005/07/08
+<dd>
+7月8日（金）より、Mプランのご返却当日出荷がスタートしました。
+<dd>
+従来、Mプランの当日発送の予約締切時間は午前10時半頃だったため、ご返却
+受付当日に発送予約をいただいたDVDは翌日発送となっておりました。
+しかしながら、当日発送のご要望が多かったことから、このたび、ご返却受付
+当日も含めて15時までに発送予約いただいたDVDについては、当日発送させて
+いただくことになりました。
+<dd>
+また、同じくご要望の多かった日曜日の出荷業務を、7月10日（日）よりスター
+トします。
+但し、日曜日は郵便休業によって、ご返却投函いただいたDVDが配送センター
+に到着しませんため、主にMプランやスポットレンタルで発送予約いただいた
+DVDの出荷となります。
+<dd>
+是非ともご活用下さいませ。
+</dl></blockquote><p>
+この2点がかなり気になっていたんだけど一気に解消。
+とはいうものの☆マーク問題は残ってるな。ちょっと悩む。
+</p>
+<!-- section end -->
+</div>
+<!-- 2005/07/12 end -->
+
+
+
+<hr class="hide">
+<!-- 2005/07/13 start -->
+<h2><a name="20050713" href="200507b.html#20050713">2005-07-13 (Wed)</a></h2>
+<!-- 2005-07-14 01:54:55 -->
+
+<div class="entry1">
+<h3><a name="200507131" title="200507131" href="200507b.html#200507131">■</a> 
+[Ruby] gcc 4.0のなぞ</h3>
+<p>
+なんかgcc 4.0でコンパイルしたRuby 1.9が変だ。
+fileutils.rbがsyntax errorになってしまう。
+どうもrequire 'etc'が原因のようだ。
+parse.cを-O2以上で最適化すると起こる。
+しかし起こるのは会社のPCだけで、家のFC3では起きない。
+会社のは自前でmakeの4.0.0, 4.0.1、家のはどこかから持ってきた半年前ぐらいの4.0.0という違いはあるが。
+それは大きいか。
+</p>
+
+<p>
+FC4に上げればgcc 4.0.0になるはずだからもう一度確認してみよう。
+</p>
+<!-- section end -->
+</div>
+<!-- 2005/07/13 end -->
+
+
+
+<hr class="hide">
+<!-- 2005/07/14 start -->
+<h2><a name="20050714" href="200507b.html#20050714">2005-07-14 (Thu)</a></h2>
+<!-- 2005-07-15 03:22:00 -->
+
+<div class="entry1">
+<h3><a name="200507141" title="200507141" href="200507b.html#200507141">■</a> 
+[Firefox] ForecastFoxが常に雨</h3>
+<p>
+なぜか最近Omiya, Japanの現在の天気を見ると雨が多い。
+多いというか雨しか見てない。
+梅雨だからとあまり気にしてなかったが、
+今は降ってないしどう考えてもおかしい。
+Tokyo, Japanはちゃんと現在の天気っぽい。問題ない。
+なぜ？
+</p>
+
+<p>
+と書いたとたんにCloudyになった。おいおい。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200507142" title="200507142" href="200507b.html#200507142">■</a> 
+[PC] IDE変換USB 2.0変換ケーブル</h3>
+<p>
+剥き出しのまま使うのかと以前書いた気もするが、あればあったで便利だよなと思い発注したIDE変換USB 2.0ケーブルが届いた。
+もうリムーバブルHDDケースですら面倒でもう半年ぐらい交換してないし、
+その辺にごろごろ転がってるHDDが気軽に直につながるんなら楽だ。
+</p>
+
+<p>
+ものは
+<a href="http://www.akibakan.com/100001akibakan/shop/product/detail.do?shopId=100001&amp;pfid=BCAK0008876&amp;sku=BCAK0008876A&amp;pdListCf01=sub_menu.html&amp;pdListCf02=&amp;pdListCf03=&amp;pdListCf04=&amp;pdListCf05=header_tab_mac.html&amp;pdListCf06=&amp;pdListCf07=&amp;pdListCf08=&amp;pdListCf09=&amp;pdListCf10=">IDE変換USB2.0ケーブル 3.5&quot;HDD光学式ドライブ [UD-301S]</a>
+
+というやつ。
+<a href="http://www.tmtm.org/ja/tdiary/?date=20050524#p02">以前とみたさんが日記で書いていた</a>
+
+のとは別バージョンで、3.5&quot;だけで2.5&quot;はない。
+</p>
+
+<p>
+さてLinuxだと/dev/sdaのようにSCSIとして認識された。
+あとは普通にmountすれば使える。
+</p>
+<pre>
+% sudo mount /dev/sda1 /mnt
+</pre>
+<p>
+どのくらい時間がかかる比較してみる。とりあえず1.5Gのファイルをコピー。
+</p>
+<pre>
+% ls -lh hoge
+-rw-r--r--  1 eban eban 1.5G Apr 30 16:53 hoge
+% time cp hoge /mnt
+cp hoge /mnt  0.36s user 11.95s system 3% cpu 6:40.95 total
+% time cp hoge<br>
+cp hoge ~  0.34s user 12.04s system 2% cpu 10:02.48 total
+</pre>
+<p>
+なんとUSB経由のほうが速いよ。まじで？
+</p>
+
+<p>
+しかしこれPnPなわけで思ったより便利そう。
+</p>
+<!-- section end -->
+</div>
+<!-- 2005/07/14 end -->
+
+
+
+<hr class="hide">
+<!-- 2005/07/15 start -->
+<h2><a name="20050715" href="200507b.html#20050715">2005-07-15 (Fri)</a></h2>
+<!-- 2005-07-16 14:32:21 -->
+
+<div class="entry1">
+<h3><a name="200507151" title="200507151" href="200507b.html#200507151">■</a> 
+[DVD] ぽすれん vs. DISCAS</h3>
+<p>
+何気なく今日も借りちゃったので、自動的にぽすれん継続決定。
+DISCASはSプラン(使わなければ費用はかからない)に移行してるので、
+条件が変わったらそのときまた考えればいいや。
+</p>
+<!-- section end -->
+</div>
+<!-- 2005/07/15 end -->
+
+
+
+<hr class="hide">
+<!-- 2005/07/16 start -->
+<h2><a name="20050716" href="200507b.html#20050716">2005-07-16 (Sat)</a></h2>
+<!-- 2005-07-17 02:13:38 -->
+
+<div class="entry1">
+<h3><a name="200507161" title="200507161" href="200507b.html#200507161">■</a> 
+[PC] 250GB HDD</h3>
+<p>
+性懲りもなくsofmapで250GB HDDを11480円で買う。
+しかし毎回買うたびに安くなるってのはすごいことだ。
+</p>
+
+<p>
+さてFC4はこれに入れるか、今のままupgradeするか、どうするかな。
+新規じゃできて当たり前だし、やっぱupgradeにしよう。
+そういえばその前に使っていた40GBが/dev/hda3で丸々遊んでいることに気づいた。
+それを言ったら/dev/hda1のWindows XPのほうがもっと遊びすぎか。
+</p>
+<!-- section end -->
+</div>
+<!-- 2005/07/16 end -->
+
+
+
+<hr class="hide">
+<!-- 2005/07/17 start -->
+<h2><a name="20050717" href="200507b.html#20050717">2005-07-17 (Sun)</a></h2>
+<!-- 2005-07-18 00:33:33 -->
+
+<div class="entry1">
+<h3><a name="200507171" title="200507171" href="200507b.html#200507171">■</a> 
+[Linux] FC3からFC4へyumでupgrade</h3>
+<p>
+早速
+<a href="http://www.brandonhutchinson.com/Upgrading_Red_Hat_Linux_with_yum.html">Upgrading Red Hat Linux/Fedora Core with yum</a>
+
+を見ながら作業開始。
+</p>
+<pre>
+% sudo rpm -Uvh http://download.fedora.redhat.com/pub/fedora/linux/core/4/i386/os/Fedora/RPMS/fedora-release-4-2.noarch.rpm
+% sudo yum -y update kernel
+</pre>
+<p>
+最後に
+</p>
+<pre>
+Error: Missing Dependency: mkinitrd &gt;= 4.2.15-1 is needed by package kernel
+Error: Missing Dependency: policycoreutils &gt;= 1.22-2 is needed by package selinux-policy-targeted
+Error: Missing Dependency: libselinux &gt;= 1.23.5-1 is needed by package selinux-policy-targeted
+</pre>
+<p>
+とエラーメッセージが表示される。このままrebootして大丈夫なのか？
+まあいいや。/etc/sysconfig/selinuxの
+</p>
+<pre>
+SELINUX=Enforced
+</pre>
+<p>
+を
+</p>
+<pre>
+SELINUX=disabled
+</pre>
+<p>
+にしてrebootする。kernel panicだ。
+考えてみるとFC4のkernelはインストールされてないわけでどこかが壊れたようだ。
+とりあえず先のfedora-releaseを取ってきた場所から
+mkinitrd, policycoreutils, libselinuxとそれらが必要とするrpmをダウンロードし、
+rpm -ivh *.rpmでインストールしてから再度yum update kernelしたら一応いけた。
+/boot/grub/grub.confも更新されている。rebootも成功。
+</p>
+
+<p>
+続いてFC3のkernelを削除。
+</p>
+<pre>
+% sudo yum remove kernel-2.6.11\*FC3\*
+</pre>
+<p>
+やっと全体のupgrade。
+</p>
+<pre>
+% sudo yum -y upgrade
+</pre>
+<p>
+最後にエラーになった。
+</p>
+<pre>
+Error: Missing Dependency: kernel-utils is needed by package kernel-smp
+Error: Missing Dependency: libpcap.so.0.8.3 is needed by package isdn4k-utils
+Error: Missing Dependency: libFLAC.so.4 is needed by package easytag
+Error: Missing Dependency: libpcap.so.0.8.3 is needed by package ppp
+</pre>
+<p>
+isdn, easytag, pppはあってもなくてもどうでもいいのでremoveする。
+</p>
+<pre>
+% sudo yum -y remove isdn4k-utils easytag ppp
+</pre>
+<p>
+kernel-utilsはFC3のkernelを消したのになぜ？と/bootを見るとsmpが残ってた。
+</p>
+<pre>
+% sudo yum remove kernel-smp-2.6.\*FC3\*
+</pre>
+<p>
+としてしまおう。古いversionの他のkernelも残ってたので、
+</p>
+<pre>
+% sudo yum remove kernel-2.6.\*FC3\*
+</pre>
+<p>
+で消した。依存関係はこれで解決したので再度yum upgradeしてみると
+</p>
+<pre>
+...
+Total download size: 1.4 G
+Downloading Packages:
+(1/1007): setools-2.1.1-1 100% |=========================| 480 kB    00:04     
+...
+</pre>
+<p>
+表示されダウンロードが始まった。1007パッケージか。どのくらいかかるかな。
+2時間半ほどかかり、その後50分ほどしてからやっとupdate処理が始まった。
+</p>
+<pre>
+Updating: libgcc 100 % done 1/1917 
+warning: /etc/aliases created as /etc/aliases.rpmnew
+Updating: setup 100 % done 2/1917 
+Updating: filesystem 100 % done 3/1917 
+Updating: desktop-backgrounds-basic 100 % done 4/1917 
+Updating: fedora-logos 100 % done 5/1917 
+warning: /etc/mailcap saved as /etc/mailcap.rpmsave
+warning: /etc/mime.types saved as /etc/mime.types.rpmsave
+Updating: mailcap 100 % done 6/1917 
+Updating: termcap 100 % done 7/1917 
+Updating: gnome-mime-data 100 % done 8/1917 
+...
+</pre>
+<p>
+1917かー。
+</p>
+
+<p>
+あとは終わってからrebootすればいいわけだけど、
+帰ってこれない可能性もあるので、
+とりあえずここで日記だけ上げとこう。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200507172" title="200507172" href="200507b.html#200507172">■</a> 
+<a href="http://msmtp.sf.net/">[Soft] msmtp 1.4.3</a></h3>
+<blockquote><dl>
+<dt>
+Changes:
+<dd>
+This release allows empty envelope-from addresses by introducing a new
+command auto_from (and option --auto-from) to enable or disable
+automatic envelope-from addresses.
+</dl></blockquote>
+<!-- section end -->
+</div>
+<!-- 2005/07/17 end -->
+
+
+
+<hr class="hide">
+<!-- 2005/07/18 start -->
+<h2><a name="20050718" href="200507b.html#20050718">2005-07-18 (Mon)</a></h2>
+<!-- 2005-07-19 01:42:56 -->
+
+<div class="entry1">
+<h3><a name="200507181" title="200507181" href="200507b.html#200507181">■</a> 
+[Linux] FC3からFC4へyumでupgrade成功</h3>
+<p>
+結局update処理に2時間半かかった。なんだかんだで10時間ぐらい格闘したことに。
+</p>
+
+<p>
+
+<a href="http://www.brandonhutchinson.com/Upgrading_Red_Hat_Linux_with_yum.html">今日見たら</a>
+</p><blockquote><p>
+# yum remove kernel-smp\*FC3\* (if you have one or more FC3 SMP kernels installed)
+</p></blockquote><p>
+が追加されてた。まさかここ見たわけじゃないよねえ。
+</p>
+
+<p>
+終わったのでcleanしとこう。
+</p>
+<pre>
+% df .              
+Filesystem           1K-blocks      Used Available Use% Mounted on
+/dev/mapper/VolGroup00-LogVol00
+                     114209392  97108244  11299576  90% /
+% sudo yum clean all
+Repository base already added, not adding again
+Cleaning up Everything
+1392 headers removed
+1153 packages removed
+14 metadata files removed
+7 cache files removed
+7 cache files removed
+% df .              
+Filesystem           1K-blocks      Used Available Use% Mounted on
+/dev/mapper/VolGroup00-LogVol00
+                     114209392  95314344  13093476  88% /
+</pre>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200507182" title="200507182" href="200507b.html#200507182">■</a> 
+[Linux] FC4で気づいたこと</h3>
+<ul>
+<li>firefoxが日本語化されてる。テーマが微妙に違う。違和感。
+<li>中国語と韓国語のフォントが入ったようで、Gmailのspamがわかりやすくなった。読めないけど。
+<li>yumが速くなったという噂を聞いた。全然そんな気がしない。
+<li>LANGがja_JP.UTF-8やja_JP.eucJPだとgripが異常終了。これは困る。
+</ul>
+<!-- section end -->
+</div>
+<!-- 2005/07/18 end -->
+
+
+
+<hr class="hide">
+<!-- 2005/07/19 start -->
+<h2><a name="20050719" href="200507b.html#20050719">2005-07-19 (Tue)</a></h2>
+<!-- 2005-07-20 04:10:44 -->
+
+<div class="entry1">
+<h3><a name="200507191" title="200507191" href="200507b.html#200507191">■</a> 
+[Ruby] GCC 4.0.xでRubyのsyntax errorの件</h3>
+<p>
+書き忘れていたが、
+<a href="200507b.html#200507131">syntax errorになる件</a>はFC4にしてすぐ試したら全然問題なかった。
+</p>
+
+<p>
+で、今日会社でmakeしてみるとなんと通ってしまった。
+parse.yとそれに付随するruby.cを一個戻してみると再現するので、どうもなかださんがいじった
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-dev/26530">静的変数を削除する変更</a>の飛ばっちりを受けて直ってしまったようだ。
+さすがだ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2005/07/19 end -->
+
+
+
+<hr class="hide">
+<!-- 2005/07/20 start -->
+<h2><a name="20050720" href="200507b.html#20050720">2005-07-20 (Wed)</a></h2>
+<!-- 2005-07-21 02:21:44 -->
+
+<div class="entry1">
+<h3><a name="200507201" title="200507201" href="200507b.html#200507201">■</a> 
+[PC] USB HUB</h3>
+<p>
+USBスピーカ、ディジタルオーディオ、IDE USBケーブルと3つに対して、PCのUSBの口が2個しかないのでUSB HUBを購入。
+2000円ぐらいの4ポートのやつを2つ。
+相性も考えてELECOMとSIGMAとかいうメーカー。
+SIGMAってあまり聞いたことないなあ。大丈夫か？
+</p>
+
+<p>
+で、実際に試すと予想に反してELECOMはなんか全然だめ。
+SIGMAのほうは快調。
+</p>
+
+<p>
+2つ買っといて正解だが本当に相性があるのかと不満だったり。
+</p>
+<!-- section end -->
+</div>
+<!-- 2005/07/20 end -->
+
+<hr>
+<div>
+<a href="200507a.html">&lt;Prev(,)</a> | 
+<a href="200507c.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

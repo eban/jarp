@@ -1,0 +1,402 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2012-9-c</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="201209b.html">
+<link rel="next" href="201210a.html">
+
+<link rel="stylesheet" type="text/css" href="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.css">
+<script async type="text/javascript" src="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.js"></script>
+<script type="text/javascript">
+<!--       
+$(document).ready(function() {
+  prettyPrint();
+});
+-->
+</script>
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2012年9月下旬〜</p>
+<hr>
+<div>
+<a href="201209b.html" accesskey=",">&lt;Older(,)</a> | 
+<a href="201210a.html" accesskey=".">Newer(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2012/09/21 start -->
+<h2><a name="20120921" href="201209c.html#20120921">2012-09-21 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="201209211" title="201209211" href="201209c.html#201209211">■</a> 
+IFTTTが9/27にtwitterからのtriggerを停止</h3>
+<p>
+IFTTTからメールが来たよ。
+</p><blockquote><p>
+Dear eban,<br>
+In recent weeks, Twitter announced policy changes* that will affect how applications and users like yourself can interact with Twitter's data. As a result of these changes, on September 27th we will be removing all Twitter Triggers, disabling your ability to push tweets to places like email, Evernote and Facebook. All Personal and Shared Recipes using a Twitter Trigger will also be removed. Recipes using Twitter Actions and your ability to post new tweets via IFTTT will continue to work just fine. 
+</p></blockquote><p>
+favをevernoteへ保存とかは使えなくなる。<br>
+RSSからtwitterへpostしてるようなbotは大丈夫ってことだな。
+</p>
+<!-- section end -->
+</div>
+<!-- 2012/09/21 end -->
+
+
+
+<hr class="hide">
+<!-- 2012/09/22 start -->
+<h2><a name="20120922" href="201209c.html#20120922">2012-09-22 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="201209221" title="201209221" href="201209c.html#201209221">■</a> 
+multitailの日本語化</h3>
+<p>
+ああそういえばtokuhiromさんが言ってたなと思い出した。<br>
+<a href="http://blog.64p.org/entry/2012/07/19/111421">「ncurses で日本語を表示したいときに気をつけること3点 - tokuhirom's blog.」</a><br>
+というわけでmultitailのmain.cにsetlocale(LC_ALL, &quot;&quot;);を足して、<br>
+Makefileの-lncursesを-lncurseswにしたらいけた。<br>
+ちょっとしか使ってないけど、特に問題ない。<br>
+いや、bしたときのwrap部分は泣き別れが起きてるようだ。<br>
+でも全部化けるよりは格段まし。
+</p>
+<!-- section end -->
+</div>
+<!-- 2012/09/22 end -->
+
+
+
+<hr class="hide">
+<!-- 2012/09/23 start -->
+<h2><a name="20120923" href="201209c.html#20120923">2012-09-23 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="201209231" title="201209231" href="201209c.html#201209231">■</a> 
+CygwinのsedとawkはSTDINだけテキストモードになる</h3>
+<p>
+なぜかsedとawkだけ。
+</p>
+<pre>
+% printf &quot;foo\r\n&quot; | hexdump -C
+00000000  66 6f 6f 0d 0a                                    |foo..|
+00000005
+% printf &quot;foo\r\n&quot; | sed &quot;&quot; | hexdump -C
+00000000  66 6f 6f 0a                                       |foo.|
+00000004
+% printf &quot;foo\r\n&quot; | awk 1 | hexdump -C
+00000000  66 6f 6f 0a                                       |foo.|
+00000004
+</pre>
+<p>
+他はバイナリモードになってるのでそのまま。
+</p>
+<pre>
+% printf &quot;foo\r\n&quot; | cat | hexdump -C
+00000000  66 6f 6f 0d 0a                                    |foo..|
+00000005
+% printf &quot;foo\r\n&quot; | perl -pe0 | hexdump -C
+00000000  66 6f 6f 0d 0a                                    |foo..|
+00000005
+% printf &quot;foo\r\n&quot; | ruby -pe0 | hexdump -C
+00000000  66 6f 6f 0d 0a                                    |foo..|
+00000005
+</pre>
+<p>
+sedのソースみたらわざとSTDINだけテキストモードにしてたのでこれは意図的なんだけど、<br>
+クリップボードとかメモ帳を相手にしてるとちょっと困る。unix2dosを通すとかしないといけない。
+</p>
+<!-- section end -->
+</div>
+<!-- 2012/09/23 end -->
+
+
+
+<hr class="hide">
+<!-- 2012/09/24 start -->
+<h2><a name="20120924" href="201209c.html#20120924">2012-09-24 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="201209241" title="201209241" href="201209c.html#201209241">■</a> 
+ニコニコポイントが失効するよとのお知らせ</h3>
+<p>
+いつのまにか500Pもあるんだけど、これってなんだっけ？<br>
+プレニアム123.45万人越えた記念キャンペーンあたりか。<br>
+1000Pあれば燃えよドラゴンあたりを無期限にできるのだが。<br>
+まあ、久し振りに次の週末にでも見るか。
+</p>
+<!-- section end -->
+</div>
+<!-- 2012/09/24 end -->
+
+
+
+<hr class="hide">
+<!-- 2012/09/25 start -->
+<h2><a name="20120925" href="201209c.html#20120925">2012-09-25 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="201209251" title="201209251" href="201209c.html#201209251">■</a> 
+Windows版Thunderbirdのダウングレードができない</h3>
+<p>
+<a href="https://addons.mozilla.org/en-US/thunderbird/addon/exchange-20072010-calendar-/">Exchange 2007/2010 Calendar and Tasks Provider</a><br>
+がThunderbird 15で動かないので14へ落とそうかと思って見に行ってみるとすでにない。<br>
+セキュリティ上の理由で禁止してるんだろうけど。<br>
+そういうわけでここ1ヶ月ほど予定表をたまにしかみなくなったので結構やばい。
+</p>
+<p>
+ああ、product=thunderbird-14.0とすればいいのか。手でURLを書き換えればいけるな。
+</p>
+<!-- section end -->
+</div>
+<!-- 2012/09/25 end -->
+
+
+
+<hr class="hide">
+<!-- 2012/09/26 start -->
+<h2><a name="20120926" href="201209c.html#20120926">2012-09-26 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="201209261" title="201209261" href="201209c.html#201209261">■</a> 
+Thunderbirdの自動更新を無効に</h3>
+<p>
+Thunderbird 14へ戻したのはいいが、自動更新が有効のままだったのでまた15に上がってしまった。<br>
+これは設定にあるのでそこで無効にすればok。<br>
+ツール-オプション-詳細-更新-Thunderbird
+</p>
+<!-- section end -->
+</div>
+<!-- 2012/09/26 end -->
+
+
+
+<hr class="hide">
+<!-- 2012/09/27 start -->
+<h2><a name="20120927" href="201209c.html#20120927">2012-09-27 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="201209271" title="201209271" href="201209c.html#201209271">■</a> 
+CygwinのImageMagickのconvertで画像をクリップボードへ保存</h3>
+<p>
+以前
+<a href="201208a.html#201208051">日付印を作った話</a>を書いた。これって最終的にはPDFへ貼りつけるだけなので、<br>
+なんとかして画像をクリップボードへ保存する方法が知りたかったわけだが、<br>
+ぐぐってみるとWindows版のImageMagickは
+<a href="http://www.imagemagick.org/script/formats.php#pseudo">clipboard:でいける</a>と書いてあった。<br>
+Cygwin版でもやってみるとなんといけた。<br>
+ファイル名の代わりにclipboard:とするだけでいい。<br>
+RWなのでクリップボードにある画像を処理することもできるわけだ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2012/09/27 end -->
+
+
+
+<hr class="hide">
+<!-- 2012/09/28 start -->
+<h2><a name="20120928" href="201209c.html#20120928">2012-09-28 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="201209281" title="201209281" href="201209c.html#201209281">■</a> 
+イー・モバイルを解約しようとして、にねん得割に変更した話</h3>
+<p>
+カードの明細見たらなんかイー・モバイルがいつもより高い。<br>
+8月に1時間ほど使ったら6140円請求された。<br>
+基本料金は2160円。すでに2年しばりも終わり様子を見てたが、<br>
+これはさすがに高すぎるな。年に数回しか使わないし解約しよう。<br>
+なんか噂では解約するのが大変だとか聞いていたが、<br>
+会社の近くに営業所があったので帰りに寄ってみた。<br>
+必要なのは住所氏名電話番号、チップ、暗証番号か身分を証明できる免許証類。<br>
+途中4桁の暗証番号を入れろと言われたが、2回チャレンジしてあきらめた。<br>
+そんなの覚えてないよ。というわけで免許証を提示。<br>
+あとはチップ入りのUSBの本体を渡せば終了。<br>
+で、ここでLTEをおすすめされたが、まあ後でじっくり考えるよということで。<br>
+その後、だったらにねん得割はどうですかとすすめられた。<br>
+なんとふだんは0円で、使った月だけ4280円上限というプランがあるという。<br>
+すでに2年以上経ってるので0円の資格ありなんだそうだ。<br>
+そっちにしたら解約時は1万近く取られるらしいが、<br>
+金がかからないなら別に解約する必要もない。<br>
+なにそれ先に言ってよというわけで、解約やめてこのプランへ変更。<br>
+</p>
+<p>
+解約しなければ恒久的に続くらしいが、<br>
+このサービス自体いつまで続けるかはわからないと言っていた。<br>
+そりゃユーザー数確保してるだけだもんな。全然儲からないし。<br>
+震災時にはつながったよと強調してたので、いざってときには役立つのかもしれない。
+</p>
+<p>
+さて、LTEはどうしたもんかな。Nexus7も今日ぽちっと押しちゃったし。
+</p>
+<!-- section end -->
+</div>
+<!-- 2012/09/28 end -->
+
+
+
+<hr class="hide">
+<!-- 2012/09/29 start -->
+<h2><a name="20120929" href="201209c.html#20120929">2012-09-29 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="201209291" title="201209291" href="201209c.html#201209291">■</a> 
+GNU coreutilsのdateコマンドの不思議</h3>
+<p>
+今年の体育の日はいつか調べようとためしに
+</p>
+<pre>
+% date -d'second monday'
+Mon Oct  1 00:00:01 JST 2012
+</pre>
+<p>
+と実行してみたら、secondが秒と認識されてるようで。<br>
+じゃあfirstとか他はどうなんだとやってみると
+</p>
+<pre>
+% date -d'first monday' 
+Mon Oct  1 00:00:00 JST 2012
+% date -d'third monday' 
+Mon Oct 15 00:00:00 JST 2012
+% date -d'forth monday'
+date: `forth monday' は無効な日付です
+</pre>
+<p>
+firstとthirdしか認識しない。って、いやいやfourthだろ。
+</p>
+<pre>
+% date -d'fourth monday'
+Mon Oct 22 00:00:00 JST 2012
+</pre>
+<p>
+まあ、でもこれって今現在からの相対であって、<br>
+たまたま10月の第何週と一致してるだけなんだけどね。
+</p>
+<pre>
+% date -d'sixth monday'
+Mon Nov  5 00:00:00 JST 2012
+</pre>
+<p>
+6番目が出てくる。
+</p>
+<p>
+2番目はどうすればいいのかというと
+</p>
+<pre>
+Because the word `second' stands for the unit of
+time there is no way to write the ordinal number 2, but for convenience
+`third' stands for 3, `fourth' for 4, `fifth' for 5, `sixth' for 6,
+`seventh' for 7, `eighth' for 8, `ninth' for 9, `tenth' for 10,
+`eleventh' for 11 and `twelfth' for 12.
+</pre>
+<p>
+info dateを見ると方法はないという。なにそれー。<br>
+2ndとか使えるようにしとけばいいような。
+</p>
+<!-- section end -->
+</div>
+<!-- 2012/09/29 end -->
+
+
+
+<hr class="hide">
+<!-- 2012/09/30 start -->
+<h2><a name="20120930" href="201209c.html#20120930">2012-09-30 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="201209301" title="201209301" href="201209c.html#201209301">■</a> 
+dateで第2月曜日</h3>
+<p>
+まあ、計算すればいけるわけで、1日の曜日を元に第2月曜日を計算するとこうなる。
+</p>
+<pre>
+% echo $[8+(8-$(date -d2012-10-01 +%u))%7]
+8
+% expr 8 + '(' 8 - $(date -d2012-10-01 +%w) ')' % 7 
+8
+</pre>
+<p>
+今年ので検算させてみたら合ってるようだ。
+</p>
+<pre>
+% for i in {1..12};do d=$[8+(8-$(date -d2012-$i-01 +%u))%7]; echo -n $[8&lt;=$d &amp;&amp; $d&lt;=14]; date -d&quot;2012-$i-$d&quot; +&quot;, %F, %a&quot;; done
+1, 2012-01-09, Mon
+1, 2012-02-13, Mon
+1, 2012-03-12, Mon
+1, 2012-04-09, Mon
+1, 2012-05-14, Mon
+1, 2012-06-11, Mon
+1, 2012-07-09, Mon
+1, 2012-08-13, Mon
+1, 2012-09-10, Mon
+1, 2012-10-08, Mon
+1, 2012-11-12, Mon
+1, 2012-12-10, Mon
+</pre>
+<p>
+第2は8日から14日の範囲に収まる。
+</p>
+<!-- section end -->
+</div>
+<!-- 2012/09/30 end -->
+
+<hr>
+<div>
+<a href="201209b.html">&lt;Older(,)</a> | 
+<a href="201210a.html">Newer(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

@@ -1,0 +1,380 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2011-12-b</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="201112a.html">
+<link rel="next" href="201112c.html">
+
+<link rel="stylesheet" type="text/css" href="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.css">
+<script type="text/javascript" src="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.js"></script>
+<script type="text/javascript">
+<!--       
+$(document).ready(function() {
+  prettyPrint();
+});
+-->
+</script>
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2011年12月中旬〜</p>
+<hr>
+<div>
+<a href="201112a.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="201112c.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2011/12/11 start -->
+<h2><a name="20111211" href="201112b.html#20111211">2011-12-11 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="201112111" title="201112111" href="201112b.html#201112111">■</a> 
+佐藤史生</h3>
+<p>
+スキャンすべく棚を探ると佐藤史生の「打天楽」と「やどり木」が出てきた。<br>
+輝度を上げたら黄ばみも取れた。上げすぎると全体的に線が細くうすくなるので注意。
+</p>
+<p>
+それにしてもなつかしいなとwikipediaを見るとなんと去年亡くなっていた。<br>
+うーむ。惜しい人を亡くした。
+</p>
+<p>
+そうそう。砂糖・塩だと最初は気づかなかったんだよな。「ふみお」だと思ってた。<br>
+そういえば「夢見る惑星」はどこへやったっけかな。
+</p>
+<!-- section end -->
+</div>
+<!-- 2011/12/11 end -->
+
+
+
+<hr class="hide">
+<!-- 2011/12/12 start -->
+<h2><a name="20111212" href="201112b.html#20111212">2011-12-12 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="201112121" title="201112121" href="201112b.html#201112121">■</a> 
+最終金曜日</h3>
+<p>
+朝まで生テレビは毎月最終金曜日の深夜にやってるとかどうでもいいが、<br>
+来月の最終金曜日は何日か？今月は最終週が平坦でつまらないので。<br>
+</p>
+<p>
+やっぱcalを使うのがやっぱお約束だよね。cutを組み合わせると
+</p>
+<pre>
+% cal 1 2012 | cut -d' ' -f6 | grep . | tail -1
+27
+</pre>
+<p>
+となる。cutの-dは文字列ではなく文字なので1けたの日付の週はずれまくりだが、<br>
+最終週だけ合ってればokなので気にしない。
+</p>
+<pre>
+% cal 1 2012 | cut -d' ' -f6                  
+2012
+Fr
+3
+11
+20
+27
+
+
+</pre>
+<p>
+ああ、でもawkのほうがこの場合は自然か。
+</p>
+<pre>
+% cal 1 2012 | awk '$6{d=$6}END{print d}' 
+27
+</pre>
+<!-- section end -->
+</div>
+<!-- 2011/12/12 end -->
+
+
+
+<hr class="hide">
+<!-- 2011/12/13 start -->
+<h2><a name="20111213" href="201112b.html#20111213">2011-12-13 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="201112131" title="201112131" href="201112b.html#201112131">■</a> 
+Rubyで最終金曜日</h3>
+<p>
+Rubyだとどうするんだろうね。dateを使えばいいか。
+</p>
+<p>
+<pre>
+% ruby -rdate -e 'l=Date.new(2012,1,-1);puts l-(l.wday+2)%7'
+2012-01-27
+</pre>
+</p>
+<p>
+-1で末日を表わす。l-l.wdayで直近の日曜日になる。<br>
+あとは-2すれば金曜日だが、末日が金曜日土曜日の場合は1週間早まるので%7で調整。
+</p>
+<!-- section end -->
+</div>
+<!-- 2011/12/13 end -->
+
+
+
+<hr class="hide">
+<!-- 2011/12/14 start -->
+<h2><a name="20111214" href="201112b.html#20111214">2011-12-14 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="201112141" title="201112141" href="201112b.html#201112141">■</a> 
+crontabで最終金曜日に実行、月末に実行</h3>
+<p>
+また例によってcrontabの書き方なわけなんだけど、どう判別するか。<br>
+結局最終ってことは翌週は違う月になるのでdate +%mを見ればいける。<br>
+GNU coreutilsのdateだと-d weekで1週間後になるので
+</p>
+<pre>
+0 0 * * fri test `date +\%m` != `date +\%m -d week` &amp;&amp; command
+</pre>
+<p>
+でok。
+</p>
+<p>
+同じように月末に実行したいなら28日から31日しか可能性はないので、<br>
+その日の翌日が違う月になることを確認すればいい。<br>
+それよりは翌日が1日になることを確認したほうが簡単だ。
+</p>
+<pre>
+0 0 28-31 * * test `date +\%d -d tomorrow` = 01 &amp;&amp; command
+</pre>
+<p>
+となる。
+</p>
+<!-- section end -->
+</div>
+<!-- 2011/12/14 end -->
+
+
+
+<hr class="hide">
+<!-- 2011/12/15 start -->
+<h2><a name="20111215" href="201112b.html#20111215">2011-12-15 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="201112151" title="201112151" href="201112b.html#201112151">■</a> 
+順番大事</h3>
+<p>
+T1的には16階調で十分だがconvertは-depthの順番が大事。
+</p>
+<pre>
+% convert orig.png -type GrayScale -depth 4 -resize 514x751 target.png
+% convert orig.png -type GrayScale -resize 514x751 -depth 4 target.png
+</pre>
+<p>
+-depthを-resizeの前に持ってくるとまったく見れない画像になる。でも
+</p>
+<pre>
+% convert orig.png -type GrayScale -depth 4 - | convert - -resize 514x751 target.png
+</pre>
+<p>
+なら特に問題なさげ。なんで？
+</p>
+<!-- section end -->
+</div>
+<!-- 2011/12/15 end -->
+
+
+
+<hr class="hide">
+<!-- 2011/12/16 start -->
+<h2><a name="20111216" href="201112b.html#20111216">2011-12-16 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="201112161" title="201112161" href="201112b.html#201112161">■</a> 
+るびまを手っ取り早くePubにしたかった</h3>
+<p>
+Instapaperで読みたい記事をRead Laterしておいて、<br>
+<a href="http://www.instapaper.com/u">Unreadのページ</a>へ行くと右側にDOWNLOAD ePubリンクがあるので、それをダウンロード。<br>
+ePub化されるのはUnreadなもの全部なので順番とかそのあたりはあらかじめ調整する。<br>
+そのままだと新しいものが最初になるので注意。<br>
+できあがりはlangが&quot;en&quot;になっているのでT1では化けるので&quot;ja&quot;へ変更する。<br>
+置換はcalibreがお手軽。書誌を編集でタイトルと著者を入力、<br>
+本の変換の検索と置換で&quot;en.*?&quot;を&quot;ja&quot;に置き換える。
+</p>
+<p>
+でもちゃんと読めないんだよなあ。なぜか目次から先に進めない。<br>
+2/40と表示されてるのに最後のページになるは二度目からは「書籍を表示できません。」エラーになるは。<br>
+PDFも試したが、謎の空白ページが続いたりなぜかフォントが小さくなったりとこれも変。<br>
+なかなか難しいな。惜しいところまで行ってるんだが。
+</p>
+<!-- section end -->
+</div>
+<!-- 2011/12/16 end -->
+
+
+
+<hr class="hide">
+<!-- 2011/12/17 start -->
+<h2><a name="20111217" href="201112b.html#20111217">2011-12-17 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="201112171" title="201112171" href="201112b.html#201112171">■</a> 
+150 dpiでスキャンするより300 dpiでスキャンして16階調にしたほうがサイズが小さい</h3>
+<p>
+なんでだろうねえ。
+</p>
+<pre>
+% convert in.png -deskew 40% -level 30%,100% -sharpen 5 -density 150x150 -colorspace gray -resize 514x751\! -depth 4 out.png
+</pre>
+<p>
+と実行してるコマンドは同じなんだけど。-deskewは傾きの自動補正で文庫本だとかなりいい感じで補正してくれる。<br>
+ただぼけるので-sharpen 5でぼけ補正したほうがいい。
+</p>
+<!-- section end -->
+</div>
+<!-- 2011/12/17 end -->
+
+
+
+<hr class="hide">
+<!-- 2011/12/18 start -->
+<h2><a name="20111218" href="201112b.html#20111218">2011-12-18 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="201112181" title="201112181" href="201112b.html#201112181">■</a> 
+本にはさまれてる物</h3>
+<p>
+80冊ほど自炊してると本にいろんなものがはさまれてることに気づく。<br>
+しおりは当たり前としても、買ったときのレシートとか、JITTERIN'JINNの初武道館公演のちらしとか。<br>
+引越しの案内とか五百円札なんてのまで。
+</p>
+<p>
+昔はまだバーコードなんてなかったからレシートも簡素で、<br>
+タイムスタンプすらなく値段ぐらいしかない。<br>
+なつかしい。
+</p>
+<p>
+あと昔行き付けの書店も今はもうなかったりするんだよなあ。
+
+</p>
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="201112182" title="201112182" href="201112b.html#201112182">■</a> 
+古い本</h3>
+<p>
+今のところ一番古い本は1977年発行の3分間 眼がよくなる体操とかいう本。<br>
+カバーしてないからたぶん神田の古本屋で50円ぐらいで買ったんだろうな。<br>
+一応自炊したが、さすがに必要なかったような。
+amazonで見たら新装版が出てた。結構人気なのか？
+</p>
+<!-- section end -->
+</div>
+<!-- 2011/12/18 end -->
+
+
+
+<hr class="hide">
+<!-- 2011/12/19 start -->
+<h2><a name="20111219" href="201112b.html#20111219">2011-12-19 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="201112191" title="201112191" href="201112b.html#201112191">■</a> 
+Sony Tablet S</h3>
+<p>
+でかい本はやっぱもうちょっとでかいデバイスで見たいと勢いで買ったはいいが、<br>
+これってWiFiがないとほとんど何もできない。<br>
+ルータの設定すればいいんだけど説明書が見つからない。<br>
+自炊しとけよって話だ。いやメーカーのサイトへ行けばあるか。
+</p>
+<p>
+Webで設定見に行けばいいんだった。最初から動いてるじゃん。キーを設定したら簡単につながった。
+</p>
+<p>
+あとどうやってebookを読むんだと思ったらSony Reader for Android tabletsをダウンロードしてインストールするらしい。<br>
+それはちょっと残念だ。なんか別なビューアが欲しかった。
+</p>
+<!-- section end -->
+</div>
+<!-- 2011/12/19 end -->
+
+
+
+<hr class="hide">
+<!-- 2011/12/20 start -->
+<h2><a name="20111220" href="201112b.html#20111220">2011-12-20 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="201112201" title="201112201" href="201112b.html#201112201">■</a> 
+Calibreのサーバ機能</h3>
+<p>
+今まではいちいちUSBケーブルつないでたけど、<br>
+WiFiが使えるんだからサーバを用意するかといろいろ調べてたら、<br>
+Calibreにその機能があった。さすがだな。これは便利すぎる。<br>
+「設定」-「ネットで共有」で適当にポート番号を8080とかに設定して、<br>
+真ん中あたりの「サーバー開始」でok。起動時に自動にしとこう。
+</p>
+<!-- section end -->
+</div>
+<!-- 2011/12/20 end -->
+
+<hr>
+<div>
+<a href="201112a.html">&lt;Prev(,)</a> | 
+<a href="201112c.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

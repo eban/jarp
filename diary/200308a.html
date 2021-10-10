@@ -1,0 +1,399 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2003-8-a</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="200307c.html">
+<link rel="next" href="200308b.html">
+
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2003年8月上旬〜</p>
+<hr>
+<div>
+<a href="200307c.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="200308b.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2003/08/01 start -->
+<h2><a name="20030801" href="200308a.html#20030801">2003-08-01 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="200308011" title="200308011" href="200308a.html#200308011">■</a> 
+7月のspam</h3>
+<p>
+1201通。相変わらずの量。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200308012" title="200308012" href="200308a.html#200308012">■</a> 
+[Zaurus] SL-C760</h3>
+<p>
+一昨日買ったZaurusだが、ネットワークはどうしようかな。
+viがjELVISだったということに驚く。
+<a href="http://www.busybox.net/">busybox</a>かー。
+<a href="http://www.uclibc.org/">uClibc</a>は使ってないな。glibc 2.2.2だった。
+</p>
+
+<!-- section end -->
+</div>
+<!-- 2003/08/01 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/08/02 start -->
+<h2><a name="20030802" href="200308a.html#20030802">2003-08-02 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="200308021" title="200308021" href="200308a.html#200308021">■</a> 
+[Zaurus] USB接続(ネットワーク)</h3>
+<p>
+ZaurusとPCをつなぐにはUSBがあるが、
+シリアル通信とネットワークの2種類ある。
+シリアルが推奨されているが、
+ネットワークにすればZaurus側でsambaが立ち上がり、
+\\zaurusでアクセスできるようになる。
+Samba 2.0.7-ja-2.2とコメントに表示されている。
+/etc/inetd.confをいじればtelnetも使える。
+すぐサスペンドしちゃうので油断ならないが、
+オートパワーオフの時間を長くするのもねえ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2003/08/02 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/08/03 start -->
+<h2><a name="20030803" href="200308a.html#20030803">2003-08-03 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="200308031" title="200308031" href="200308a.html#200308031">■</a> 
+<a href="http://openlab.ring.gr.jp/skk/">[Emacs] SKK 12.2.2</a></h3>
+<p>
+今使ってるSKKは10.62aなのでかなり前のものだよなあ。
+うっ。いきなり
+</p>
+<pre>
+This version of Daredevil SKK requires APEL/10.6 or later
+</pre>
+<p>
+と言われてしまった。7/5に出てたのか。上げとこう。
+</p>
+
+<p>
+何の問題もなくバージョンアップ完了。
+あ、でも「全英」の色が黄色ってのはちょっと見辛いな。
+設定いじるのは面倒だし、滅多に使わないからこのままにしとこ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200308032" title="200308032" href="200308a.html#200308032">■</a> 
+[Zaurus] SDカード</h3>
+<p>
+256MBのSDカードを買った。mountコマンドで確認してみると
+</p>
+<pre>
+/dev/mmcda1 on /usr/mnt.rom/card type vfat (rw)
+</pre>
+<p>
+のようにvfatでmountされるようだ。
+というわけで、
+外すときはSDカードアイコンをクリックして外す作業=umountが必要。
+でも、外すことはないだろうな。他にSDカードを読めるデバイスもないし、
+スワップファイルを置くかもしれないし。
+</p>
+<!-- section end -->
+</div>
+<!-- 2003/08/03 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/08/04 start -->
+<h2><a name="20030804" href="200308a.html#20030804">2003-08-04 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="200308041" title="200308041" href="200308a.html#200308041">■</a> 
+<a href="http://www.ruby-lang.org/">[Ruby] Ruby 1.8.0</a></h3>
+<p>
+出た。貧弱なマシンだと全makeは辛い。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200308042" title="200308042" href="200308a.html#200308042">■</a> 
+[Zaurus] USBネットワーク</h3>
+<p>
+mp3ファイルをsshで転送してみる。結構速い。
+</p>
+<pre>
+track01.mp3  100% 4147KB 581.2KB/s   00:07    
+track02.mp3  100% 3499KB 593.3KB/s   00:05    
+track03.mp3  100% 4286KB 530.6KB/s   00:08    
+</pre>
+<p>
+でもsamba経由だと遅い。なぜだ？
+</p>
+<!-- section end -->
+</div>
+<!-- 2003/08/04 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/08/05 start -->
+<h2><a name="20030805" href="200308a.html#20030805">2003-08-05 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="200308051" title="200308051" href="200308a.html#200308051">■</a> 
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-dev/21148">[Ruby] cygwin-ruby18.dll vs. cygruby18.dll</a></h3>
+<p>
+今はdefファイルを作ってないから、そこから作らないとだめだな。
+もしくは以前作った
+<a href="../files/impgen.rb">impgen.rb</a>を使って、DLLからシンボルを生成するか。
+</p>
+<!-- section end -->
+</div>
+<!-- 2003/08/05 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/08/06 start -->
+<h2><a name="20030806" href="200308a.html#20030806">2003-08-06 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="200308061" title="200308061" href="200308a.html#200308061">■</a> 
+[Ruby][Cygwin] --disable-shared</h3>
+<p>
+やめてしまうほうがいいのかな。というかやめたい。
+誰も使ってないし、保守が滞り勝ちだし。
+</p>
+<!-- section end -->
+</div>
+<!-- 2003/08/06 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/08/07 start -->
+<h2><a name="20030807" href="200308a.html#20030807">2003-08-07 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="200308071" title="200308071" href="200308a.html#200308071">■</a> 
+[Zaurus][SL-C760] マイクロドライブ RMD-1G</h3>
+<p>
+amazonで買ったメルコのマイクロドライブ RMD-1G を試してみた。
+問題ないねえ。
+</p>
+<pre>
+bash-2.05# df
+Filesystem           1k-blocks      Used Available Use% Mounted on
+/dev/root                54272     48616      5656  90% /
+/dev/ram1                   44        27        17  61% /dev
+/dev/mtdblock3           69632     24228     45404  35% /home
+none                      1024        44       980   4% /dev/shm
+/dev/mmcda1             249728     77696    172032  31% /usr/mnt.rom/card
+/dev/hda1              1050144        64   1050080   0% /usr/mnt.rom/cf
+</pre>
+<p>
+/dev/hda1なのか。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200308072" title="200308072" href="200308a.html#200308072">■</a> 
+[Ruby] forwarding DLL</h3>
+<p>
+forwarding DLLはこんな感じで作れる。
+</p>
+<pre>
+% nm --extern --defined libruby-static.a | \
+  ruby -ne 'BEGIN{puts &quot;EXPORTS&quot;}; puts $1+&quot;=cygruby18.&quot;+$1 if / [CDT] _(.*)$/' &gt;rubydll.def
+% dllwrap -s --def=rubydll.def -o cygwin-ruby18.dll
+</pre>
+
+<!-- section end -->
+</div>
+<!-- 2003/08/07 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/08/08 start -->
+<h2><a name="20030808" href="200308a.html#20030808">2003-08-08 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="200308081" title="200308081" href="200308a.html#200308081">■</a> 
+[LL] 台風</h3>
+<p>
+明日大丈夫かな。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200308082" title="200308082" href="200308a.html#200308082">■</a> 
+[Ruby] un.rb</h3>
+<p>
+<a href="http://whytheluckystiff.net/articles/2003/08/04/rubyOneEightOh#Un:--As-in--run-">_whyのところ</a>でun.rbが紹介されてる。結構好評のようだ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2003/08/08 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/08/09 start -->
+<h2><a name="20030809" href="200308a.html#20030809">2003-08-09 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="200308091" title="200308091" href="200308a.html#200308091">■</a> 
+<a href="http://ll.jus.or.jp/">Lightweight Language Statuday</a></h3>
+<p>
+そうか。Ruby 1.9はRiteのための仕様的移行なのか。ふむ。
+</p>
+
+<p>
+Rubyが2MBなのはtarballで、Perlが50MBなのは伸長展開したソース。
+</p>
+<pre>
+% wc -c perl-5.8.0.tar.gz ruby-1.8.0.tar.gz
+11023084 perl-5.8.0.tar.gz
+1979070 ruby-1.8.0.tar.gz
+13002154 total
+% du -s perl-5.8.0 ruby-1.8.0
+53508   perl-5.8.0
+11268   ruby-1.8.0
+</pre>
+
+<p>
+昼休み帰って来たら、すでに「詳説正規表現第2版」が売り切れ。
+5冊しか持って来なかったらしい。買おうと思ってたのに〜と駄々を捏ねたら、
+渡里さんが3時の休憩までに取り行ってくれた。もうしわけない。
+</p>
+
+<p>
+君ならどう書く？でLightning Talksは無理があるよね。
+お題を一つにして事前に公開すればもっと盛り上がったんじゃないかな。
+</p>
+
+<p>
+酒も呑めないし、つまみも喰えないし、タバコは嫌いだし、すぐに帰った。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200308092" title="200308092" href="200308a.html#200308092">■</a> 
+<a href="http://cygwin.com/ml/cygwin/2003-08/msg00525.html">[Cygwin] [ANNOUNCEMENT] Available for test: cygwin-1.5.2-1</a></h3>
+<p>
+問題がなければ8/23って、やけに慎重だな。
+</p>
+<!-- section end -->
+</div>
+<!-- 2003/08/09 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/08/10 start -->
+<h2><a name="20030810" href="200308a.html#20030810">2003-08-10 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="200308101" title="200308101" href="200308a.html#200308101">■</a> 
+[LLS][Ruby] Ruby 1.6.x</h3>
+<p>
+そうだ。思い出した。Ruby 1.6.9は出ないので、そこんとこよろしく。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200308102" title="200308102" href="200308a.html#200308102">■</a> 
+<a href="http://gcc.gnu.org/gcc-3.3/">[GNU] GCC 3.3.1</a></h3>
+<p>
+しまったなあ。気づいたのが21時過ぎじゃ、寝るまでに終わらない。
+明日にしよう。
+</p>
+<!-- section end -->
+</div>
+<!-- 2003/08/10 end -->
+
+<hr>
+<div>
+<a href="200307c.html">&lt;Prev(,)</a> | 
+<a href="200308b.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

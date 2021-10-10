@@ -1,0 +1,532 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2003-8-b</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="200308a.html">
+<link rel="next" href="200308c.html">
+
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2003年8月中旬〜</p>
+<hr>
+<div>
+<a href="200308a.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="200308c.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2003/08/11 start -->
+<h2><a name="20030811" href="200308b.html#20030811">2003-08-11 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="200308111" title="200308111" href="200308b.html#200308111">■</a> 
+[LLS][Ruby] Apacheのログ</h3>
+<p>
+LL土曜でApacheのログの話のときにtime.rbが使えないかという質問があったけど、
+だめだねえ。
+ParseDate::parsedateがというかDate::_parseが対応してない。
+</p>
+
+<p>
+Date::_strptimeを使えば以下のように書ける。
+</p>
+<pre>
+% ruby -rdate -rpp \
+    -e 'pp Date._strptime(ARGV[0], &quot;%d/%b/%Y:%T %Z&quot;)' \
+    '11/Aug/2003:22:36:08 +0900'
+{:zone=&gt;&quot;+0900&quot;,
+ :sec=&gt;8,
+ :year=&gt;2003,
+ :hour=&gt;22,
+ :offset=&gt;32400,
+ :mday=&gt;11,
+ :min=&gt;36,
+ :mon=&gt;8}
+</pre>
+<p>
+これをTimeオブジェクトにするにはparsedateのようにvalues_atを使うのが簡単。
+</p>
+<pre>
+% ruby -rdate -e '
+  p Time.mktime(*Date._strptime(ARGV[0], &quot;%d/%b/%Y:%T %Z&quot;).
+  values_at(:year, :mon, :mday, :hour, :min, :sec, :zone))' \
+  '11/Aug/2003:22:36:08 +0900'
+Mon Aug 11 22:36:08 JST 2003
+</pre>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200308112" title="200308112" href="200308b.html#200308112">■</a> 
+<a href="http://gcc.gnu.org/gcc-3.3/">[GNU] GCC 3.3.1</a></h3>
+<p>
+<a href="200305b.html#200305171">GCC 3.3</a>を作ったときと同じ手順。
+</p>
+
+<p>
+Rubyで試す。問題なし。
+</p>
+<!-- section end -->
+</div>
+<!-- 2003/08/11 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/08/12 start -->
+<h2><a name="20030812" href="200308b.html#20030812">2003-08-12 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="200308121" title="200308121" href="200308b.html#200308121">■</a> 
+[Ruby] un.rb</h3>
+<p>
+実はun.rbにはワイルドカードを展開する処理が入っている。
+これはmkmf.rbで作られたMakefileの中に
+</p>
+<pre>
+CLEANOBJS     = &quot;*.{o,a,s[ol],pdb,bak}&quot;
+</pre>
+<p>
+という記述があることからもわかるように、
+shellに依らないワイルドカードを使いたいがためである。
+でもshellに展開されないようにquoteしなきゃいけないってのは、
+ちょっと気持ち悪いかもしれない。
+</p>
+<!-- section end -->
+</div>
+<!-- 2003/08/12 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/08/13 start -->
+<h2><a name="20030813" href="200308b.html#20030813">2003-08-13 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="200308131" title="200308131" href="200308b.html#200308131">■</a> 
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-talk/78874">[Ruby] pack(&quot;U&quot;)</a></h3>
+<p>
+UTF-8に変換するなら、pack(&quot;U&quot;)を使う手もある。
+</p>
+<pre>
+% ruby -e 'p [0xf1].pack(&quot;U&quot;)'             
+&quot;\303\261&quot;
+% ruby -riconv -e 'p Iconv.iconv(&quot;UTF-8&quot;, &quot;ISO-8859-1&quot;, &quot;\xf1&quot;)'   
+[&quot;\303\261&quot;]
+</pre>
+
+<!-- section end -->
+</div>
+<!-- 2003/08/13 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/08/14 start -->
+<h2><a name="20030814" href="200308b.html#20030814">2003-08-14 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="200308141" title="200308141" href="200308b.html#200308141">■</a> 
+[Ruby] cygruby18.dll</h3>
+<p>
+<a href="http://raa.ruby-lang.org/project/ruby-serialport/">raa:ruby-serialport</a>の
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-talk/79016">バイナリが欲しい</a>という話なので、1.8用を用意しとこう。で、ここではたと気づく。
+今現在うちで作っている環境のインポートライブラリはcygruby18.dllに依存しているから、
+これで作ってしまうと1.8のリリース版では使えないってことになる。
+うーむ。リリース版に逆forwarding DLLを含めるべきか。
+</p>
+<!-- section end -->
+</div>
+<!-- 2003/08/14 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/08/15 start -->
+<h2><a name="20030815" href="200308b.html#20030815">2003-08-15 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="200308151" title="200308151" href="200308b.html#200308151">■</a> 
+[Ruby] PragProgRuby用の拡張ライブラリをMinGWで作る</h3>
+<p>
+今頃になってまとめるのもなんだけど、なんとなく形になってきた。
+アイディアとしてはRUBY_PLATFORMと$LOAD_PATHのmswin32をmingw32に置き換えて、
+$prefix/lib/ruby/i386-mingw32に偽のrbconfigを置けば、
+</p>
+<pre>
+% ruby -rfake-mingw32 extconf.rb
+</pre>
+<p>
+で、いけるはずだという算段。fake-mingw32.rbはこんな感じ。
+</p>
+<pre>
+class Object
+  platform = RUBY_PLATFORM.dup
+  remove_const :RUBY_PLATFORM
+  platform.sub!(/mswin32/, &quot;mingw32&quot;)
+  RUBY_PLATFORM = platform
+  if defined? PLATFORM
+    remove_const :PLATFORM
+    PLATFORM = RUBY_PLATFORM
+  end
+  $LOAD_PATH.each do |x|
+    x.gsub!(/mswin32/, &quot;mingw32&quot;)
+  end
+end
+</pre>
+<p>
+でrbconfig.rbはこんな感じ。
+</p>
+<pre>
+require File.join(RUBY_PLATFORM.sub(/mingw32/, &quot;mswin32&quot;), &quot;rbconfig&quot;)
+
+module Config
+  no_isocext = nil
+  open(File.join(CONFIG[&quot;archdir&quot;], &quot;win32&quot;, &quot;win32.h&quot;)) do |win32|
+    no_isocext = win32.find do |x| /__NO_ISOCEXT/ =~ x end
+  end
+  if RUBY_VERSION &lt; &quot;1.7&quot;
+    MAKEFILE_CONFIG[&quot;LDSHARED&quot;] = &quot;dllwrap --target=mingw32 -mno-cygwin -s&quot;
+    MAKEFILE_CONFIG[&quot;CFLAGS&quot;] = &quot;-DNT -Os&quot;
+    MAKEFILE_CONFIG[&quot;DLDFLAGS&quot;] = &quot;&quot;
+  else
+    MAKEFILE_CONFIG[&quot;LDSHARED&quot;] = &quot;gcc -mno-cygwin -shared -s&quot;
+    MAKEFILE_CONFIG[&quot;CFLAGS&quot;] = &quot;-Os &quot;
+    MAKEFILE_CONFIG[&quot;DLDFLAGS&quot;] = &quot; -Wl,--enable-auto-import,--export-all -L$(bindir)&quot;
+  end
+  MAKEFILE_CONFIG[&quot;CPPFLAGS&quot;] &lt;&lt; &quot; -D__NO_ISOCEXT&quot; unless no_isocext
+  MAKEFILE_CONFIG[&quot;LDFLAGS&quot;] = &quot;-Wl,--stack,0x02000000&quot;
+  MAKEFILE_CONFIG[&quot;LIBS&quot;] = &quot;-lwsock32&quot;
+  MAKEFILE_CONFIG[&quot;CC&quot;] = &quot;gcc -mno-cygwin&quot;
+  MAKEFILE_CONFIG[&quot;CPP&quot;] = &quot;gcc -mno-cygwin -E&quot;
+  MAKEFILE_CONFIG[&quot;GNU_LD&quot;] = &quot;yes&quot;
+  MAKEFILE_CONFIG[&quot;CPPOUTFILE&quot;] = &quot;-o conftest.i&quot;
+  MAKEFILE_CONFIG[&quot;OUTFLAG&quot;] = &quot;-o &quot;
+  MAKEFILE_CONFIG[&quot;YACC&quot;] = &quot;bison -y&quot;
+  MAKEFILE_CONFIG[&quot;RANLIB&quot;] = &quot;ranlib&quot;
+  MAKEFILE_CONFIG[&quot;AR&quot;] = &quot;ar&quot;
+  MAKEFILE_CONFIG[&quot;ARFLAGS&quot;] = &quot;&quot;
+  MAKEFILE_CONFIG[&quot;NM&quot;] = &quot;nm&quot;
+  MAKEFILE_CONFIG[&quot;DLLWRAP&quot;] = &quot;dllwrap&quot;
+  MAKEFILE_CONFIG[&quot;AS&quot;] = &quot;as&quot;
+  MAKEFILE_CONFIG[&quot;DLLTOOL&quot;] = &quot;dlltool&quot;
+  MAKEFILE_CONFIG[&quot;WINDRES&quot;] = &quot;windres&quot;
+  MAKEFILE_CONFIG[&quot;LN_S&quot;] = &quot;&quot;
+  MAKEFILE_CONFIG[&quot;SET_MAKE&quot;] = &quot;&quot;
+  MAKEFILE_CONFIG[&quot;OBJEXT&quot;] = &quot;o&quot;
+  MAKEFILE_CONFIG[&quot;XLDFLAGS&quot;] = &quot;&quot;
+  MAKEFILE_CONFIG[&quot;CCDLFLAGS&quot;] = &quot;-DIMPORT&quot;
+  MAKEFILE_CONFIG[&quot;DLEXT&quot;] = &quot;so&quot;
+  MAKEFILE_CONFIG[&quot;DLEXT2&quot;] = &quot;dll&quot;
+  MAKEFILE_CONFIG[&quot;LIBEXT&quot;] = &quot;a&quot;
+  MAKEFILE_CONFIG[&quot;LINK_SO&quot;] = &quot;&quot;
+  MAKEFILE_CONFIG[&quot;LIBPATHFLAG&quot;] = &quot; -L%s&quot;
+  MAKEFILE_CONFIG[&quot;LIBARG&quot;] = &quot;-l%s&quot;
+  MAKEFILE_CONFIG[&quot;LIBRUBYARG_SHARED&quot;] = &quot;-l$(RUBY_SO_NAME)&quot;
+  MAKEFILE_CONFIG[&quot;LIBRUBYARG_STATIC&quot;] = &quot;-l$(RUBY_SO_NAME)-static&quot;
+  MAKEFILE_CONFIG[&quot;STRIP&quot;] = &quot;strip&quot;
+  MAKEFILE_CONFIG[&quot;LIBRUBY_A&quot;] = &quot;lib$(RUBY_INSTALL_NAME).lib&quot;
+  MAKEFILE_CONFIG[&quot;LIBRUBY_SO&quot;] = &quot;$(RUBY_SO_NAME).dll&quot;
+  MAKEFILE_CONFIG[&quot;LIBRUBY_ALIASES&quot;] = &quot;&quot;
+  MAKEFILE_CONFIG[&quot;LIBRUBY&quot;] = &quot;$(RUBY_SO_NAME).lib&quot;
+  MAKEFILE_CONFIG[&quot;LIBRUBYARG&quot;] = &quot;-L. -l$(RUBY_SO_NAME)&quot;
+  MAKEFILE_CONFIG[&quot;TRY_LINK&quot;] = &quot;&quot;
+  MAKEFILE_CONFIG[&quot;COMPILE_C&quot;] = &quot;&quot;
+  MAKEFILE_CONFIG[&quot;COMPILE_CXX&quot;] = &quot;&quot;
+  MAKEFILE_CONFIG[&quot;COMPILE_RULES&quot;] = &quot;&quot;
+  MAKEFILE_CONFIG[&quot;COMMON_LIBS&quot;] = &quot;m&quot;
+  MAKEFILE_CONFIG[&quot;COMMON_MACROS&quot;] = &quot;WIN32_LEAN_AND_MEAN=&quot;
+  MAKEFILE_CONFIG[&quot;COMMON_HEADERS&quot;] = &quot;windows.h winsock.h&quot;
+  MAKEFILE_CONFIG[&quot;SOLIBS&quot;] = &quot;$(LIBS)&quot;
+  MAKEFILE_CONFIG[&quot;configure_args&quot;] = &quot;--enable-shared&quot;
+  MAKEFILE_CONFIG[&quot;sitearch&quot;] = &quot;i386-msvcrt&quot;
+  remove_const :CONFIG
+  CONFIG = {}
+  MAKEFILE_CONFIG.each{|k,v| CONFIG[k] = v.dup}
+  CONFIG.each_value do |val|
+    Config::expand(val)
+  end
+  CROSS_COMPILING = nil unless defined? CROSS_COMPILING
+end
+</pre>
+<p>
+基本はmingw32のrbconfig.rbを読んで差分だけを置き換えるという方針。
+一応1.6,1.7にも対応してる(はず)。win32oleで試してみたら、これでrequireもできた。
+よさげだ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2003/08/15 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/08/16 start -->
+<h2><a name="20030816" href="200308b.html#20030816">2003-08-16 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="200308161" title="200308161" href="200308b.html#200308161">■</a> 
+<a href="http://curl.haxx.se/">[Linux] curl 7.10.7</a></h3>
+<p>
+今回はちゃんとopensslを認識。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200308162" title="200308162" href="200308b.html#200308162">■</a> 
+雨</h3>
+<p>
+今日も寒い。10月下旬の陽気。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200308163" title="200308163" href="200308b.html#200308163">■</a> 
+[Ruby] fileutils</h3>
+<p>
+fake-mingw32に簡単なinstallerをつけよう。
+fileutilsを使って書き上げてから、1.6だとだめだと気づいた。
+ftoolsで書き直せばいいんだけど、どうせならでっちあげるか。
+</p>
+<pre>
+require 'ftools'
+module FileUtils
+  def self.makedirs(d, opt={})
+    File.makedirs(d, opt[:verbose])
+  end
+  def self.install(s, d, opt={})
+    File.install(s, d, opt[:mode], opt[:verbose])
+  end
+end
+</pre>
+<p>
+インストール用ならこの程度で十分でしょ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200308164" title="200308164" href="200308b.html#200308164">■</a> 
+<a href="http://www.loveruby.net/~aamine/ja/tdiary/20030816.html#p03">[Windows2000] NTP</a></h3>
+<p>
+Windows 2000にはNTPサーバはないけど、時刻同期なら
+</p>
+<pre>
+&gt; net time /setsntp:NTPサーバ
+</pre>
+<p>
+で可能。Windows Timeはこの同期を裏でやってくれるサービスなので、
+これも動かしておく必要がある。
+</p>
+<!-- section end -->
+</div>
+<!-- 2003/08/16 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/08/17 start -->
+<h2><a name="20030817" href="200308b.html#20030817">2003-08-17 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="200308171" title="200308171" href="200308b.html#200308171">■</a> 
+<a href="http://jarp.jin.gr.jp/win32/">[Win32] PDCurses 2.60</a></h3>
+<p>
+mingw,bcc32用のバイナリを用意。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200308172" title="200308172" href="200308b.html#200308172">■</a> 
+<a href="http://jarp.jin.gr.jp/win32/">[Ruby][MinGW] fake-mingw32</a></h3>
+<p>
+zipファイルを用意。
+</p>
+<!-- section end -->
+</div>
+<!-- 2003/08/17 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/08/18 start -->
+<h2><a name="20030818" href="200308b.html#20030818">2003-08-18 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="200308181" title="200308181" href="200308b.html#200308181">■</a> 
+[GCC] --with-local-prefix</h3>
+<p>
+Gentoo Linuxのgccを-vつきで実行してたら
+</p>
+<pre>
+存在しないディレクトリ &quot;/usr/local/include&quot; を無視します
+</pre>
+<p>
+が気になった。
+prefixを/usrにしたら/usr/local/includeは最初から見ないはずなのにどうなっているのか？
+もう一度よく見るとconfigure時に
+</p>
+<pre>
+--with-local-prefix=/usr/local
+</pre>
+<p>
+と指定されてるようだ。こんなオプションがあったのか。
+なるほどねえ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2003/08/18 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/08/19 start -->
+<h2><a name="20030819" href="200308b.html#20030819">2003-08-19 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="200308191" title="200308191" href="200308b.html#200308191">■</a> 
+<a href="http://www.osk.3web.ne.jp/~nyasu/diary/200308.html#20030818_0">[Ruby] ASRでfake-mingw32</a></h3>
+<p>
+なるほど。
+<a href="http://arton.hp.infoseek.co.jp/indexj.html">ASR</a>はヘッダとライブラリがついてこないわけですね。
+インポートライブラリが全部noになるのはmsvcrt-ruby18-static.libがないからです。
+mkmf.logで確認してください。
+</p>
+<pre>
+&gt; copy $ACTIVESCRIPTRUBY\bin\msvcrt-ruby18.dll $ACTIVESCRIPTRUBY\lib\msvcrt-ruby18-static.lib
+</pre>
+<p>
+とすればごまかすことも可能です。
+</p>
+<!-- section end -->
+</div>
+<!-- 2003/08/19 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/08/20 start -->
+<h2><a name="20030820" href="200308b.html#20030820">2003-08-20 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="200308201" title="200308201" href="200308b.html#200308201">■</a> 
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-list/38171">[Ruby] libcygwin-ruby18-static.a</a></h3>
+<p>
+結局おれが原因だったわけだよ。まぬけすぎ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200308202" title="200308202" href="200308b.html#200308202">■</a> 
+<a href="http://jarp.jin.gr.jp/win32/">[Ruby] fake-mingw32 0.3</a></h3>
+<p>
+fake-mingw32をraccで試してみた。
+</p>
+<pre>
+ruby -rfake-mingw32 setup.rb config
+</pre>
+<p>
+と実行しても、setup.rbから呼ばれるrubyに-rfake-mingw32がつかない。
+できあがったMakefileはmswin用になってしまう。
+まあ、そんなに凝る必要もないので、環境変数RUBYOPTで対応。
+</p>
+<pre>
+ENV['RUBYOPT'] = 'rfake-mingw32'
+</pre>
+<p>
+をfake-mingw32.rb自身に追加することにしよう。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200308203" title="200308203" href="200308b.html#200308203">■</a> 
+[Virus][Worm] Sobig.F</h3>
+<p>
+70通を越えた。凄まじい感染力だ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200308204" title="200308204" href="200308b.html#200308204">■</a> 
+<a href="http://tinyurl.com/">TinyURL</a></h3>
+<p>
+長いURLを短くするサービス。これは面白い。
+</p>
+<!-- section end -->
+</div>
+<!-- 2003/08/20 end -->
+
+<hr>
+<div>
+<a href="200308a.html">&lt;Prev(,)</a> | 
+<a href="200308c.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

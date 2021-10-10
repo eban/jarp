@@ -1,0 +1,388 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2013-8-c</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="201308b.html">
+<link rel="next" href="201309a.html">
+
+<link rel="stylesheet" type="text/css" href="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.css">
+<script type="text/javascript" src="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.js"></script>
+<script type="text/javascript">
+<!--       
+$(document).ready(function() {
+  prettyPrint();
+});
+-->
+</script>
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2013年8月下旬〜</p>
+<hr>
+<div>
+<a href="201308b.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="201309a.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2013/08/21 start -->
+<h2><a name="20130821" href="201308c.html#20130821">2013-08-21 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="201308211" title="201308211" href="201308c.html#201308211">■</a> 
+<a href="http://golf.shinh.org/p.rb?Bisection">Bisection</a></h3>
+<p>
+bashだとsedで真ん中に空白入れるよりも、foldを使ったほうが楽だと気づいた。<br>
+で
+<a href="http://golf.shinh.org/p.rb?n+section">n section</a>のほうは入力データのEOFに改行がないので非常に困る。うーむ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2013/08/21 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/08/22 start -->
+<h2><a name="20130822" href="201308c.html#20130822">2013-08-22 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="201308221" title="201308221" href="201308c.html#201308221">■</a> 
+libuim: [fatal] cannot execute /path/of/filter-program</h3>
+<p>
+これはいったいなんだろう。ぐぐっても1個もヒットしないのはなんかすごい。
+</p>
+<pre>
+% grep '/path/of/filter-program' ~/.uim.d/customs/*.scm
+/home/eban/.uim.d/customs/custom-annotation.scm:(define annotation-filter-command &quot;/path/of/filter-program&quot;)
+</pre>
+<p>
+ということらしいが、annotation-filter-command自体ぐぐってもそのファイル名にしか存在しない。<br>
+コメントアウトしとくか。
+</p>
+<!-- section end -->
+</div>
+<!-- 2013/08/22 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/08/23 start -->
+<h2><a name="20130823" href="201308c.html#20130823">2013-08-23 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="201308231" title="201308231" href="201308c.html#201308231">■</a> 
+空耳アワード</h3>
+<p>
+始まるときにバレーのそーれの掛け声に続いてみんみん蝉の鳴き声が必ず入るが、<br>
+これはつまり2つ合わせて空耳ということだったんだな。<br>
+確認してみたら空耳アワード2006にもあったからひょっとしたら最初からか。<br>
+マーティは2006年から(2010年を除く)、NIGOは2008年から連続。
+</p>
+<p>
+ちょっと過去の駄洒落を拾ってみた。
+<ul>
+<li>Rock部門 ろくなもんじゃねえ
+<li>MEGADETH傑作部門 さらば涙と言おう(森田建作)
+<li>「ポルトガルの4月」歴代空耳作品 ブルドッグ(にっちもさっちも)
+<li>高橋力から年賀状来る! Livin' la Vida Loca(リッキー・マーティン)
+<li>ジャンパー作品無し 4年目に突入! 水に飛び込む音
+<li>歴代ジャンパー作品 2億4千万の瞳 -エキゾチック・ジャパン-
+<li>スタジオピア もしもピアノが弾けたなら
+<li>スタジオピア作品 ヒヨコの鳴き声
+<li>新川ディレクター班高地ネタ撮影に成功!! Sing(カーペンターズ)
+<li>ビギンブーム到来!Tシャツレンパツ!! いびき(ビギ)、蚊の飛ぶ音(ぶーん)
+<li>ディーバ部門 ムーンリバー
+</ul>
+<p>
+あとで足すかも。
+</p>
+<!-- section end -->
+</div>
+<!-- 2013/08/23 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/08/24 start -->
+<h2><a name="20130824" href="201308c.html#20130824">2013-08-24 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="201308241" title="201308241" href="201308c.html#201308241">■</a> 
+PS3で動画フォルダの名前変更</h3>
+<p>
+本体のHDDは調子が悪くて使ってなかったので気づかなかったが、<br>
+本体側ならフォルダ分類をアルバム別にすればフォルダの情報でアルバム名を変更できた。<br>
+外付けUSB HDDやDLNAだとそれができない。<br>
+まあ、DLNA自体はnasneやPCなのでこれはPCから何とでもなる。<br>
+問題はUSB HDDで外してPCにつなげばいいんだろうけど、面倒。<br>
+いやわざわざUSB HDDから本体にコピーして名前変えて戻すなんて作業とどっちが面倒か。<br>
+あ、USB HDDはPS3本体じゃなくてnasneにつないじゃえば共有フォルダとして使えるか。<br>
+しかしtorneのビデオが入ってるからなあ。これが本体に移動できないので悩みどころだ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2013/08/24 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/08/25 start -->
+<h2><a name="20130825" href="201308c.html#20130825">2013-08-25 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="201308251" title="201308251" href="201308c.html#201308251">■</a> 
+No-IPからexpireするよとのお知らせ</h3>
+<p>
+noip2を常駐させてるんだけど、これって何やってんのか？<br>
+-Sでもっともらしいステータスも返ってきてるしなあ。<br>
+ひょっとしてDynDNSみたいにログインも必要になったとか？
+</p>
+<!-- section end -->
+</div>
+<!-- 2013/08/25 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/08/26 start -->
+<h2><a name="20130826" href="201308c.html#20130826">2013-08-26 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="201308261" title="201308261" href="201308c.html#201308261">■</a> 
+weechatのキーバインド</h3>
+<p>
+使い始めのころにファンクションキーにいろいろ割り当てたはずなんだけど、<br>
+どうやったのか思い出せないので調べた。<br>
+<a href="http://www.weechat.org/files/doc/devel/weechat_quickstart.en.html#key_bindings">Key bindings</a><br>
+クイックスタートにあった。meta-kの後に該当するファンクションキーを押せばいいようで。<br>
+meta-kはalt-kかescの後にkで。
+</p>
+<!-- section end -->
+</div>
+<!-- 2013/08/26 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/08/27 start -->
+<h2><a name="20130827" href="201308c.html#20130827">2013-08-27 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="201308271" title="201308271" href="201308c.html#201308271">■</a> 
+uim-skkのインジケータが役に立たない</h3>
+<p>
+「あ」と「_A」という感じで表示されるはずだが、<br>
+使ってるうちになぜか重なってしまい変化しなくなる。<br>
+会社でも家でも同じ症状なのでUbuntu 13.04全般？。<br>
+日本語打つ前は必ずとCTRL+Jするからあまり困ってはいないんだけど。<br>
+そう言った意味ではskk.vimはCTRL+Jがトグルになってて困ってたが、<br>
+今はuim-skkがCTRL+Jを横取りしちゃうのでどうでもよくなった。
+</p>
+<p>
+<img src="../images/uim-skk.png" alt="">
+</p>
+<!-- section end -->
+</div>
+<!-- 2013/08/27 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/08/28 start -->
+<h2><a name="20130828" href="201308c.html#20130828">2013-08-28 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="201308281" title="201308281" href="201308c.html#201308281">■</a> 
+git 1.8からの警告</h3>
+<p>
+ずっと放置してたこの警告だけど、いいかげんうっとうしくなったのでsimpleを選んだ。
+</p>
+<pre>
+% git push
+warning: push.default is unset; its implicit value is changing in
+Git 2.0 from 'matching' to 'simple'. To squelch this message
+and maintain the current behavior after the default changes, use:
+
+  git config --global push.default matching
+
+To squelch this message and adopt the new behavior now, use:
+
+  git config --global push.default simple
+
+See 'git help config' and search for 'push.default' for further information.
+(the 'simple' mode was introduced in Git 1.7.11. Use the similar mode
+'current' instead of 'simple' if you sometimes use older versions of Git)
+</pre>
+<!-- section end -->
+</div>
+<!-- 2013/08/28 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/08/29 start -->
+<h2><a name="20130829" href="201308c.html#20130829">2013-08-29 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="201308291" title="201308291" href="201308c.html#201308291">■</a> 
+bashとzshのread</h3>
+<p>
+bashでスクリプト書いててはまった。
+</p>
+<pre>
+% bash -c 'echo a b c | read a b c; echo $b'
+
+</pre>
+<p>
+のようにパイプにしてしまうとreadは別プロセスで動くので変数は捨てられてしまう。<br>
+しかたないので
+</p>
+<pre>
+% bash -c 'read a b c &lt; &lt;(echo a b c); echo $b'
+b
+</pre>
+<p>
+としてみたが、
+</p>
+<pre>
+% bash -c 'echo a b c | { read a b c; echo $b; }'
+b
+</pre>
+<p>
+とすればいいか。()でもいいが。
+</p>
+<pre>
+% bash -c 'echo a b c | while read a b c; do echo $b; done'      
+b
+</pre>
+<p>
+という手もあるな。
+</p>
+<p>
+ところでこれがzshだと
+</p>
+<pre>
+% zsh -c 'echo a b c | read a b c; echo $b'
+b
+</pre>
+<p>
+と動いてしまうわけなんだけど、まあ、気が利いてるというかなんというか。
+</p>
+<!-- section end -->
+</div>
+<!-- 2013/08/29 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/08/30 start -->
+<h2><a name="20130830" href="201308c.html#20130830">2013-08-30 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="201308301" title="201308301" href="201308c.html#201308301">■</a> 
+いつの間にかdiigo delicious syncが切れる</h3>
+<p>
+で、気づくのは2ヶ月ぐらい経ってから。<br>
+いいかげんdeliciousを見限るか、監視しないといけないな。<br>
+APIってまだ活きてるんかな。
+</p>
+<!-- section end -->
+</div>
+<!-- 2013/08/30 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/08/31 start -->
+<h2><a name="20130831" href="201308c.html#20130831">2013-08-31 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="201308311" title="201308311" href="201308c.html#201308311">■</a> 
+PS3のデータバックアップ</h3>
+<p>
+1TBの2.5inch USB HDDを手に入れたのでPS3のHDDに使おう。<br>
+だが換装する前にまずはバックアップだ。<br>
+その辺に転がってる500GB USB HDDを使おうと思ったが、<br>
+FAT32じゃないとだめらしい。<br>
+しょうがないのでWindows XPでformatしようと思ったら、NTFSしか選べない。<br>
+Windows XPではどこかからtoolを持ってこないといけないらしい。<br>
+Linuxでいいかと適当にman mkfs.vfat見て
+</p>
+<pre>
+% sudo mkfs.vfat -v -F 32 /dev/sdi1
+</pre>
+<p>
+してみたらあっさりいけた。最初は-cもつけてbad blockの検査もやらせてたけど、<br>
+30分しても終わらないので中断した。-cを外せば2分もかからない。<br>
+</p>
+<p>
+あとはPS3側は本体設定にバックアップユーティリティがあるので、<br>
+指示にしたがって20分ぐらいで無事に終了。<br>
+9332MBということで、1GB程度。USBフラッシュで十分じゃないかい。<br>
+別のHDDもつながってるし、そっちでも十分だった。<br>
+どのくらい必要とかやる前に出てくれるといいんだが。
+</p>
+<!-- section end -->
+</div>
+<!-- 2013/08/31 end -->
+
+<hr>
+<div>
+<a href="201308b.html">&lt;Prev(,)</a> | 
+<a href="201309a.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

@@ -1,0 +1,805 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2001-9-a</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="200108c.html">
+<link rel="next" href="200109b.html">
+
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2001年9月上旬〜</p>
+<hr>
+<div>
+<a href="200108c.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="200109b.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2001/09/01 start -->
+<h2><a name="20010901" href="200109a.html#20010901">2001-09-01 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="200109011" title="200109011" href="200109a.html#200109011">■</a> 
+version.h</h3>
+<p>
+とりあえずrubyとかlibruby.{a,so}とかが変更されるんなら、
+積極的にversion.hを更新しようよ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200109012" title="200109012" href="200109a.html#200109012">■</a> 
+ERRNO::EINVAL</h3>
+<p>
+ruby-talk MLのほうでもERRNO::EINVALが結構目立つね。
+一応お約束のようにCVSのほうは対応済みだとか、
+Ruby Binariesがあるとか説明しようかと思うんだけど、
+Andyさんのインストーラを使ってるような人には、
+tarballを紹介しても無駄のような気もするし。
+いや違う。英語でそれを説明するのが面倒なだけだ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200109013" title="200109013" href="200109a.html#200109013">■</a> 
+Ruby 1.6.5</h3>
+<p>
+というわけでERRNO::EINVALもそろそろうざいので、1.6.5リリース希望。
+3ヶ月経ったことだし。
+</p>
+<pre>
+1.6.1 2000-09-27
+1.6.2 2000-12-25
+1.6.3 2001-03-19
+1.6.4 2001-06-04
+</pre>
+<p>
+ね？やっぱ今月出さなきゃ。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2001/09/01 end -->
+
+
+
+<hr class="hide">
+<!-- 2001/09/02 start -->
+<h2><a name="20010902" href="200109a.html#20010902">2001-09-02 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="200109021" title="200109021" href="200109a.html#200109021">■</a> 
+ハードディスクレコーダー</h3>
+<p>
+最近急に欲しくなった。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200109022" title="200109022" href="200109a.html#200109022">■</a> 
+linux-&gt;dos cross-compiler redux</h3>
+<p>
+comp.os.msdos.djgppにLinux上でDJGPPのクロス環境を作る手順が投稿されてる。
+</p>
+<pre>
+Message-ID: &lt;Pine.GSO.4.31.0108301902230.20351-100000@elaine10.Stanford.EDU&gt;
+</pre>
+<p>
+gcc 3.0.1用に書かれているが、gcc 2.95.3にも通用すると思う。
+というかgcc30s2.zipの変わりにgcc2953s2.zipを使えばいいだけか。
+
+<a href="200105a.html#200105082">以前</a>
+差分だらけでよくわからんと書いたが、基本的に全部あてればいいようだ。
+gcc30s2.zipも入手して比較してみよう。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2001/09/02 end -->
+
+
+
+<hr class="hide">
+<!-- 2001/09/03 start -->
+<h2><a name="20010903" href="200109a.html#20010903">2001-09-03 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="200109031" title="200109031" href="200109a.html#200109031">■</a> 
+<a href="http://www.xrea.com/jp/">XREA.COM - JP</a></h3>
+<p>
+sshが可能とあるが、rbashなためきつい。
+しかも毎分毎にプロセスをkillするので、おちおちviで編集もできない。
+</p>
+<pre>
+rbash-2.04$ time cat;date
+Killed
+
+real    0m45.617s
+user    0m0.000s
+sys     0m0.000s
+Mon Sep  3 19:56:57 JST 2001
+rbash-2.04$ time cat;date
+Killed
+
+real    0m57.835s
+user    0m0.000s
+sys     0m0.000s
+Mon Sep  3 19:58:01 JST 2001
+</pre>
+<p>
+これじゃ当然rsyncもまともにできない。
+scpは/usr/bin/scpと/usr/local/bin/scpとあるが、
+/usr/bin/scpのほうは
+</p>
+<pre>
+% scp foo s1:
+scp: error while loading shared libraries: \
+libcrypto.so.0: cannot load shared object file: No such file or directory
+</pre>
+<p>
+とlibcrypto.so.0の実体がないままでscpできないし、
+PATH上ではこっちが優先されるし、
+かと言って/usr/local/bin/scpを使うにはPATHを変更しなきゃいけないけど、
+~/.bash{rc,_profile}に書いてもなんかうまくいかないし。
+ftpは事前に登録しろとかわけのわからんこというし。捨てか？
+</p>
+
+<p>
+あ、違った。
+~/.bashrcでPATHが本当に効いてるかどうか試すためにコメントアウトしたんだった。
+というわけで~/.bashrcに
+</p>
+<pre>
+PATH=/usr/local/bin:/usr/bin:/bin
+</pre>
+<p>
+とか書いとけばscpもok。でもこれも殺されるのかな？明日実験してみよう。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200109032" title="200109032" href="200109a.html#200109032">■</a> 
+const char * const *</h3>
+<p>
+家に帰ってmakeしてみると
+</p>
+<pre>
+eval.c:5329: warning: passing arg 2 of `rb_find_file_ext' discards\
+qualifiers from pointer target type
+</pre>
+<p>
+のwarningを喰らう。intern.hにrb_find_file_ext()のprototypeが入ったからか。
+</p>
+<pre>
+int rb_find_file_ext _((VALUE*, char**));
+</pre>
+<p>
+loadable_extが
+</p>
+<pre>
+static const char *const loadable_ext[] = {
+    &quot;.rb&quot;, DLEXT,
+#ifdef DLEXT2
+    DLEXT2,
+#endif
+    0
+};
+</pre>
+<p>
+となってるため、中身が変更されるかもしれないと
+</p>
+<pre>
+if (rb_find_file_ext(&amp;f, loadable_ext) == 0) {
+</pre>
+<p>
+の部分でgccが文句を言うわけだ。対応するには
+</p>
+<pre>
+int rb_find_file_ext _((VALUE*, const char * const*));
+</pre>
+<p>
+とするか、もしくは
+</p>
+<pre>
+static char *loadable_ext[] = {
+</pre>
+<p>
+とするかのどちらかだと思うが、
+この場合constを取り除いてもいいんじゃないかな？<br>
+因みに
+</p>
+<pre>
+static const char *const loadable_ext[] = {
+</pre>
+<p>
+はcharのポインタ配列の中身とcharのポインタの中身がconstという意味。
+要するに配列も文字列も書き換えられないようにしてるわけだ。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2001/09/03 end -->
+
+
+
+<hr class="hide">
+<!-- 2001/09/04 start -->
+<h2><a name="20010904" href="200109a.html#20010904">2001-09-04 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="200109041" title="200109041" href="200109a.html#200109041">■</a> 
+<a href="http://cygwin.com/ml/cygwin/2001-08/msg01406.html">Press for Cygwin</a></h3>
+<p>
+
+<a href="http://www.win2000mag.com/articles/index.cfm?articleid=21992">この記事</a>
+でWinZipが使われたらしく、Chrisは肝心要のcygwin-1.3.2-1.tar.gz
+をcygwin-1.3.2-1.tar.bz2に変換して、WinZipが使えないようにしたようだ。
+symlinkがあるからWinZipで展開してはいけない。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200109042" title="200109042" href="200109a.html#200109042">■</a> 
+<a href="http://cygwin.com/ml/cygwin/2001-09/msg00014.html">[ANNOUNCEMENT] Important upcoming change in Cygwin 1.3.3</a></h3>
+<p>
+今週1.3.3を出すらしい。
+1.3.3からは//x形式のドライブ指定はできない。
+/cygdriveとかmount --change-cygdrive-prefixで指定した形式にする必要がある。
+注意しよう。
+</p>
+
+<p>
+/cygdriveが使えるようになる前から//xすら嫌いだったので
+</p>
+<pre>
+% mkdir /x
+% mount -b x: /x
+</pre>
+<p>
+していたが、去年ぐらいから、そのメールにも書いてあるように
+</p>
+<pre>
+% mount -b --change-cygdrive-prefix /
+</pre>
+<p>
+してる。これでいちいち/cygdriveとかmountしなくてもいい。
+あ、いまだったら
+</p>
+<pre>
+% mount -b -c /
+</pre>
+<p>
+でいいのか。-cも使えるようにしたんだ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200109043" title="200109043" href="200109a.html#200109043">■</a> 
+XREA.COMでscp</h3>
+<p>
+結局殺されるのであった。
+</p>
+<pre>
+% scp gcc-3.0.1.tar.bz2 s1:
+gcc-3.0.1.tar.bz2     67% |*******************          |  9100 KB 00:26 ETA
+Received disconnect: Command terminated on signal 9.
+ERROR: send() failed, 32
+lost connection
+% ls -l gcc-3.0.1.tar.bz2 
+-rw-r--r--   1 watanabe ruby     13844796 Aug 21 12:08 gcc-3.0.1.tar.bz2
+</pre>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200109044" title="200109044" href="200109a.html#200109044">■</a> 
+地震 (23:55)</h3>
+<p>
+震度2ぐらい？
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200109045" title="200109045" href="200109a.html#200109045">■</a> 
+<a href="http://www.cbook24.com/bm_detail.asp?sku=99924085">今週のSPOT LIGHT</a></h3>
+<p>
+訳者は
+</p>
+<pre>
+田 和勝さん
+</pre>
+<p>
+ではなく(でんさんかよ!)
+</p>
+<pre>
+田和 勝さん
+</pre>
+<p>
+だよ。メールしとくか。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2001/09/04 end -->
+
+
+
+<hr class="hide">
+<!-- 2001/09/05 start -->
+<h2><a name="20010905" href="200109a.html#20010905">2001-09-05 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="200109051" title="200109051" href="200109a.html#200109051">■</a> 
+Ruby 1.6.5</h3>
+<p>
+いよいよversion.hも1.6.5だ。今週リリースされる予定。
+</p>
+<pre>
+% wc -c i*/*090*.tar.gz
+ 843564 i386-cygwin/ruby-1.6.4-20010903-i386-cygwin.tar.gz
+ 837760 i386-cygwin/ruby-1.6.5-20010905-i386-cygwin.tar.gz
+ 788074 i386-mingw32/ruby-1.6.4-20010903-i386-mingw32.tar.gz
+ 782600 i386-mingw32/ruby-1.6.5-20010905-i386-mingw32.tar.gz
+ 711422 i386-msdosdjgpp/ruby-1.6.4-20010903-i386-msdosdjgpp.tar.gz
+ 705627 i386-msdosdjgpp/ruby-1.6.5-20010905-i386-msdosdjgpp.tar.gz
+4669047 total
+</pre>
+<p>
+みんな小さくなってる。なぜに？
+</p>
+<pre>
+% diff -u1 =(tar tfz *0903*) =(tar tfz *0905*|sed 's/1\.6\.5/1\.6\.4/')
+--- /tmp/zshOHKcR4      Wed Sep  5 21:39:41 2001
++++ /tmp/zshjFo4pj      Wed Sep  5 21:39:42 2001
+@@ -198,3 +198,2 @@
+ usr/local/doc/ruby/ruby-1.6.4/sample/regx.rb
+-usr/local/doc/ruby/ruby-1.6.4/sample/io.rb
+ usr/local/doc/ruby/ruby-1.6.4/sample/getopts.test
+@@ -227,3 +226,2 @@
+ usr/local/doc/ruby/ruby-1.6.4/sample/tsvr.rb
+-usr/local/doc/ruby/ruby-1.6.4/sample/rbc.rb
+ usr/local/doc/ruby/ruby-1.6.4/sample/rcs.rb
+</pre>
+<p>
+io.rbとrbc.rbか。いつのまにかcvs removeされてたわけね。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200109052" title="200109052" href="200109a.html#200109052">■</a> 
+<a href="http://cygwin.com/ml/cygwin/2001-09/msg00163.html">different lynx fix for: Alert!: Unable to connect to remote host</a></h3>
+<p>
+lynxでもCygwinのEINVAL, EINPROGRESS問題が起こってるらしい。で、
+
+<a href="http://cygwin.com/ml/cygwin/2001-09/msg00179.html">その返事</a>
+によれば次のsnapshotで直ってるという話だ。1.3.3に期待。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2001/09/05 end -->
+
+
+
+<hr class="hide">
+<!-- 2001/09/06 start -->
+<h2><a name="20010906" href="200109a.html#20010906">2001-09-06 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="200109061" title="200109061" href="200109a.html#200109061">■</a> 
+Just another Ruby porter,</h3>
+<p>
+この日記のタイトルは
+</p>
+<pre>
+Just another Ruby porter.
+</pre>
+<p>
+ではなくて
+</p>
+<pre>
+Just another Ruby porter,
+</pre>
+<p>
+だことはあまり知られてないらしい。
+というか&lt;h1&gt;にしとこ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200109062" title="200109062" href="200109a.html#200109062">■</a> 
+XREA.COM</h3>
+<p>
+殺されまくりだ。
+</p>
+<pre>
+rbash-2.04$ while :;do date;cat;done
+Thu Sep  6 10:23:08 JST 2001
+Killed
+Thu Sep  6 10:23:10 JST 2001
+Killed
+Thu Sep  6 10:23:15 JST 2001
+Killed
+Thu Sep  6 10:23:21 JST 2001
+Killed
+Thu Sep  6 10:23:26 JST 2001
+Killed
+Thu Sep  6 10:23:31 JST 2001
+</pre>
+<p>
+5秒かよ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200109063" title="200109063" href="200109a.html#200109063">■</a> 
+kakasi-000124-1</h3>
+<p>
+なぜか辞書の位置が
+</p>
+<pre>
+/usr/local/{cygwin-local,mingw}/share/kakasi/kanwadict
+</pre>
+<p>
+になってたので修正。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200109064" title="200109064" href="200109a.html#200109064">■</a> 
+涼夏</h3>
+<p>
+8月に何度か涼しいと書いたが、
+実際関東甲信地方は平均気温が平年より0.3度低かったらしい。
+特に熊谷は0.8度、東京でも0.6度、水戸にいたっては1.3度も低い。
+でも、おいらが子供の頃はこんなもんだった気もするんだけどなあ。
+</p>
+
+<p>
+ついでに7月は平年より2.7度も高かった。まさに酷暑だ。
+最高気温が35度以上の日を「酷暑日」というらしい。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2001/09/06 end -->
+
+
+
+<hr class="hide">
+<!-- 2001/09/07 start -->
+<h2><a name="20010907" href="200109a.html#20010907">2001-09-07 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="200109071" title="200109071" href="200109a.html#200109071">■</a> 
+[Cygwin] smbclient</h3>
+<p>
+
+<a href="http://cygwin.com">http://cygwin.com/</a> を見るとsmbclientのCygwin版がある。
+一瞬なぬ？と思ったが、
+</p>
+<pre>
+Very useful for batch files in Windows to grab files from
+shares and the like.
+</pre>
+<p>
+ということらしい。
+確かにatコマンドだとsystem権限で動くから、いろいろ面倒なこともあるし、
+そういう場合はsmbclientが使えると便利かもしれない。
+</p>
+
+<p>
+そういえば以前mtoolsをCygwinに移植して使ってた。
+なぜかcp foo a:するより速かったからだ。今はそんなこともないだろう。
+というか滅多にフロッピーを使わないからよくわからん。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200109072" title="200109072" href="200109a.html#200109072">■</a> 
+Ruby 1.6.5</h3>
+<p>
+今日は出なかったみたい。ってことは来週か？
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2001/09/07 end -->
+
+
+
+<hr class="hide">
+<!-- 2001/09/08 start -->
+<h2><a name="20010908" href="200109a.html#20010908">2001-09-08 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="200109081" title="200109081" href="200109a.html#200109081">■</a> 
+gcc 3.0.x</h3>
+<p>
+gcc 3.0, gcc 3.0.1だと-gつきでrubyをmakeするとSEGV。
+gdbで見てもどうもglibcの中のような感じでよくわからないので
+
+<a href="#20010908F1"><sup><small>*1</small></sup></a>、
+一個一個-gを外しarray.oからmakeしてみることにする。
+するとerror.cが原因であることがわかった。
+うーむ。これはまた意外なもんが原因だったりするなあ。
+eval.cあたりだと思ったんだけど。
+</p>
+
+<hr align="left" width="40%">
+<div>
+<a name="20010908F1" href="200109a.html#20010908F1"><small>*1</small></a>:
+mainまで来ない。
+</div>
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200109082" title="200109082" href="200109a.html#200109082">■</a> 
+<a href="http://www.zdnet.co.jp/broadband/0109/07/codegreen.html">Code Green, CRclean</a></h3>
+<p>
+ほんとに放たれたか。
+</p>
+<pre>
+黒茶赤橙黄緑青紫灰白
+ 0 1 2 3 4 5 6 7 8 9
+</pre>
+<p>
+個人的にはこの順番で進んで欲しかった。
+20年前に覚えたんだけど、忘れないもんだね。
+あと金と銀が別にある。±1%と±5%だっけ？
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200109083" title="200109083" href="200109a.html#200109083">■</a> 
+東京八重州</h3>
+<p>
+ヤン・ヨーステンが住んでたからこの地名になったとは！
+</p>
+<!-- section end -->
+</div>
+<!-- 2001/09/08 end -->
+
+
+
+<hr class="hide">
+<!-- 2001/09/09 start -->
+<h2><a name="20010909" href="200109a.html#20010909">2001-09-09 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="200109091" title="200109091" href="200109a.html#200109091">■</a> 
+error.cとgcc 3.0.x</h3>
+<p>
+昨日に引き続きerror.cの謎を調査してる。
+このファイルを見ると目立つのは
+</p>
+<pre>
+#ifdef EPERM
+    set_syserr(EPERM, &quot;EPERM&quot;);
+#endif
+</pre>
+<p>
+の羅列だ。
+この構造上全部コメントアウトしても特に問題ないのでまずはそこから試す。
+で、ビンゴだったりするんだが、どうも#ifdefは関係ないようで
+</p>
+<pre>
+set_syserr(EPERM, &quot;EPERM&quot;);
+...
+set_syserr(ENOANO, &quot;ENOANO&quot;);
+</pre>
+<p>
+までならok、
+</p>
+<pre>
+set_syserr(EBADRQC, &quot;EBADRQC&quot;);
+</pre>
+<p>
+までいくとSEGVになる。単に数か？56個以上あるとだめだな。
+であれば、ループにすれば解決するはず。
+</p>
+<pre>
+struct error_macro {
+    int value;
+    char *name;
+} error_macros[] = {
+#ifdef EPERM
+    EPERM, &quot;EPERM&quot;,
+#endif
+    ...
+#ifdef EDQUOT
+    EDQUOT, &quot;EDQUOT&quot;,
+#endif
+    0, 0,
+};
+</pre>
+<p>
+と構造体の配列を用意し、
+</p>
+<pre>
+struct error_macro *e;
+...
+for (e = error_macros; e-&gt;name; e++) {
+    set_syserr(e-&gt;value, e-&gt;name);
+}
+</pre>
+<p>
+という感じで。これでいけた。まつもとさんが帰ってきてから聞いてみよう。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200109092" title="200109092" href="200109a.html#200109092">■</a> 
+<a href="http://www.jaoo.dk/bigwig/jaoo/Tutorials.html">JAOO</a></h3>
+<p>
+まつもとさんは何しにデンマークへ行くのかと思ったら
+
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-talk/17234">[ruby-talk:17234]</a>
+か。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200109093" title="200109093" href="200109a.html#200109093">■</a> 
+RubyUnit 0.4.0</h3>
+<p>
+更新。うーむ。同じ名前でrepackはやめようよ。
+勝手に0.4.0-1とする。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200109094" title="200109094" href="200109a.html#200109094">■</a> 
+Tokie</h3>
+<p>
+「ときえ」だと思ってたんだけど、RIZEの金子は「とっきー」と呼んでた。
+ニックネーム？
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2001/09/09 end -->
+
+
+
+<hr class="hide">
+<!-- 2001/09/10 start -->
+<h2><a name="20010910" href="200109a.html#20010910">2001-09-10 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="200109101" title="200109101" href="200109a.html#200109101">■</a> 
+<a href="http://www.spc.gr.jp/tdiary/">tDiary</a></h3>
+<p>
+結局のところtDiaryがRubyのキラーアプリになってるような。
+XREA.COMの使い途としてはやっぱtDiaryか？
+そもそもsshでloginしてどーのこーのというのが間違ってたな。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200109102" title="200109102" href="200109a.html#200109102">■</a> 
+[Cygwin] Tcl/Tk</h3>
+<p>
+いままではなぜかずーっと8.0だったが、
+今日cvs updateしてみるとやっと8.3.2へ上がった模様。
+このままリリースされれば日本語が表示可能になるはず。
+</p>
+
+<p>
+そうするとtcl83.dllだけじゃなくてcygtcl83.dllも探すように、
+ext/tcltklib/stubs.cを書き換える必要があるな。
+</p>
+
+<p>
+そういえば1.3.3はまだ出てない。ま、そんなもんか。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2001/09/10 end -->
+
+<hr>
+<div>
+<a href="200108c.html">&lt;Prev(,)</a> | 
+<a href="200109b.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

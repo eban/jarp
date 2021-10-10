@@ -1,0 +1,378 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2010-12-a</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="201011c.html">
+<link rel="next" href="201012b.html">
+
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2010年12月上旬〜</p>
+<hr>
+<div>
+<a href="201011c.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="201012b.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2010/12/01 start -->
+<h2><a name="20101201" href="201012a.html#20101201">2010-12-01 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="201012011" title="201012011" href="201012a.html#201012011">■</a> 
+11月のspam</h3>
+<p>
+2200通ほど。先月忘れていることに気づいた。
+
+</p>
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="201012012" title="201012012" href="201012a.html#201012012">■</a> 
+<a href="http://www.kt.rim.or.jp/%7ekbk/zakkicho/10/zakkicho1011c.html#D20101129-3">逆転したビット列</a></h3>
+<p>
+reverseを使わないとするとunpackぐらいですねえ。
+</p>
+<pre>
+&gt;&gt; n = 4
+=&gt; 4
+&gt;&gt; (0..2**n-1).map{|e| e.chr.unpack(&quot;b#{n}&quot;)[0].to_i(2)}
+=&gt; [0, 8, 4, 12, 2, 10, 6, 14, 1, 9, 5, 13, 3, 11, 7, 15]
+</pre>
+<!-- section end -->
+</div>
+<!-- 2010/12/01 end -->
+
+
+
+<hr class="hide">
+<!-- 2010/12/02 start -->
+<h2><a name="20101202" href="201012a.html#20101202">2010-12-02 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="201012021" title="201012021" href="201012a.html#201012021">■</a> 
+man install info</h3>
+<p>
+Ubuntuでman install infoと実行したらinstall-infoが出てきて驚いた。<br>
+一方FreeBSDでman install infoと実行するとinstall-infoじゃなくて、<br>
+man install, man infoが続けて実行される感じになる。
+</p>
+<!-- section end -->
+</div>
+<!-- 2010/12/02 end -->
+
+
+
+<hr class="hide">
+<!-- 2010/12/03 start -->
+<h2><a name="20101203" href="201012a.html#20101203">2010-12-03 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="201012031" title="201012031" href="201012a.html#201012031">■</a> 
+<a href="http://www.commandlinefu.com/commands/view/7151">Monitor a file with tail with timestamps added</a></h3>
+<p>
+単純だけどなかなかいいアイデア。<br>
+画面に表示されるメッセージをファイルに落としてるときはタイムスタンプがないから、<br>
+そんなとき使えそうだ。
+</p>
+<p>
+まあ、でもおれだったら
+</p>
+<pre>
+% tail -f file | awk '$0=strftime(&quot;%F %T%z\t&quot;)$0'
+</pre>
+<p>
+とするかな。
+</p>
+<!-- section end -->
+</div>
+<!-- 2010/12/03 end -->
+
+
+
+<hr class="hide">
+<!-- 2010/12/04 start -->
+<h2><a name="20101204" href="201012a.html#20101204">2010-12-04 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="201012041" title="201012041" href="201012a.html#201012041">■</a> 
+findの-mtimeのずれ？</h3>
+<p>
+find . -mtime +1とやると1日以上古いファイルが見つけてくれるとふつう思うが、<br>
+実際は2日以上のファイルが対象となる。なぜか1日ずれるのが仕様らしい。<br>
+</p>
+<pre>
+These tests are mainly useful with ranges (`+N' and `-N').
+
+ -- Test: -atime n
+ -- Test: -ctime n
+ -- Test: -mtime n
+     True if the file was last accessed (or its status changed, or it
+     was modified) N*24 hours ago.  The number of 24-hour periods since
+     the file's timestamp is always rounded down; therefore 0 means
+     &quot;less than 24 hours ago&quot;, 1 means &quot;between 24 and 48 hours ago&quot;,
+     and so forth.  Fractional values are supported but this only
+     really makes sense for the case where ranges (`+N' and `-N') are
+     used.
+</pre>
+<p>
+24時間の幅があるので0からカウントすると一日ずれちゃうってことなんだな。
+</p>
+<p>
+何がいいたいかというと30日以上古いファイルを検索するには
+<a href="201009a.html#201009081">+30じゃなくて+29にしないとだめ</a>ってことだ。<br>
+なんでメールが来るのか悩んだよ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2010/12/04 end -->
+
+
+
+<hr class="hide">
+<!-- 2010/12/05 start -->
+<h2><a name="20101205" href="201012a.html#20101205">2010-12-05 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="201012051" title="201012051" href="201012a.html#201012051">■</a> 
+@rubyciの頻度</h3>
+<p>
+@rubyciは
+<a href="http://twitterfeed.com/">twitterfeed</a>を使っているんだけど、<br>
+twitterfeed側の制約で30分間隔で最新の5個までしかポストしないので取りこぼしがある。<br>
+無制限だとtwitter側のlimitでポストできなくなるしねえ。<br>
+だったら30分で1個にしちゃってもいいのかもなあ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2010/12/05 end -->
+
+
+
+<hr class="hide">
+<!-- 2010/12/06 start -->
+<h2><a name="20101206" href="201012a.html#20101206">2010-12-06 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="201012061" title="201012061" href="201012a.html#201012061">■</a> 
+リプライする振りをするspam</h3>
+<p>
+ruby-talk MLに1.8.5の話題が出てなんだと思ったらspamだった。<br>
+直前ににHello, Everyone!とか挨拶してるメールもあった。<br>
+律儀なspammerだな。って手動かよ。これは防げないな。<br>
+spamなのでリンクしない。
+</p>
+<!-- section end -->
+</div>
+<!-- 2010/12/06 end -->
+
+
+
+<hr class="hide">
+<!-- 2010/12/07 start -->
+<h2><a name="20101207" href="201012a.html#20101207">2010-12-07 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="201012071" title="201012071" href="201012a.html#201012071">■</a> 
+<a href="https://github.com/skoneka/screen-session">screen-session</a></h3>
+<blockquote><dl>
+<dt>
+About
+<dd>
+screen-session is a collection of tools for GNU Screen, including
+session saver.<br>
+session saver currently supports saving of:
+layouts, scrollbacks, titles, filters and is able to restart programs 
+run in windows. It recognizes groups and regular windows. Currently there 
+is no support for serial and telnet window types.
+</dl></blockquote>
+<!-- section end -->
+</div>
+<!-- 2010/12/07 end -->
+
+
+
+<hr class="hide">
+<!-- 2010/12/08 start -->
+<h2><a name="20101208" href="201012a.html#20101208">2010-12-08 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="201012081" title="201012081" href="201012a.html#201012081">■</a> 
+<a href="http://golf.shinh.org/p.rb?Comparing+two+numbers">Comparing two+numbers</a></h3>
+<p>
+&lt;, =, &gt;の並びがASCIIコードで60, 61, 62だとは気づかなかった。1B届かなかった。
+</p>
+<pre>
+#!ruby -an
+a,b=$F
+puts a+&quot; &quot;+&quot;=&gt;&lt;&quot;[a.to_i&lt;=&gt;b.to_i,1]+&quot; &quot;+b
+
+#!ruby -apl
+a,b=$F
+$_=a+&quot; &quot;+&quot;=&gt;&lt;&quot;[a.to_i&lt;=&gt;b.to_i,1]+&quot; &quot;+b
+
+#!ruby -apl
+a,b=$F.map &amp;:to_i
+$_=[a,&quot; &quot;,&quot;=&gt;&lt;&quot;[a&lt;=&gt;b,1],&quot; &quot;,b]
+
+#!ruby -apl
+a,b=$F
+$_=a+&quot; &quot;+&quot;=&gt;&lt;&quot;[a.hex&lt;=&gt;b.hex,1]+&quot; &quot;+b
+
+#!ruby -ap
+a,b=$F
+sub&quot; &quot;,&quot; &quot;+&quot;=&gt;&lt;&quot;[a.hex&lt;=&gt;b.hex,1]+&quot; &quot;
+
+#!ruby -p
+~/ /
+sub&quot; &quot;,&quot; &quot;+&quot;=&gt;&lt;&quot;[$`.hex&lt;=&gt;$'.hex,1]+&quot; &quot;
+
+#!ruby -p
+sub(/ /){$&amp;+&quot;=&gt;&lt;&quot;[$`.hex&lt;=&gt;$'.hex,1]+$&amp;}
+
+#!ruby -ap
+sub(/ /){&quot; %c &quot;%&quot;=&gt;&lt;&quot;[eval$F*&quot;&lt;=&gt;&quot;]}
+
+#!ruby -ap
+$_[/ /]=&quot; %c &quot;%&quot;=&gt;&lt;&quot;[eval$F*&quot;&lt;=&gt;&quot;]
+
+#!ruby -an
+puts$F*&quot; %c &quot;%&quot;=&gt;&lt;&quot;[eval$F*&quot;&lt;=&gt;&quot;]
+
+#!ruby -apl
+$_=$F*&quot; %c &quot;%&quot;=&gt;&lt;&quot;[eval$F*&quot;&lt;=&gt;&quot;]
+
+番外: 逆に長くなった
+#!ruby -apl
+$_=$F*&quot;=&gt;&lt;&quot;[eval($F*&quot;&lt;=&gt;&quot;),1].center(3)
+
+#!ruby -apl
+$_=$F*&quot;=&gt;&lt;&quot;[eval$F*&quot;&lt;=&gt;&quot;].chr.center(3)
+</pre>
+<p>
+よくもまあ、こんだけ試したもんだな。
+</p>
+<!-- section end -->
+</div>
+<!-- 2010/12/08 end -->
+
+
+
+<hr class="hide">
+<!-- 2010/12/09 start -->
+<h2><a name="20101209" href="201012a.html#20101209">2010-12-09 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="201012091" title="201012091" href="201012a.html#201012091">■</a> 
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-talk/375192">Splitting on capital letters</a></h3>
+<p>
+なんか無駄に豪華な方法が最初に出たからか、いっぱい集まったな。<br>
+折角なので古い順に。
+</p>
+<pre>
+&quot;BenefitsAndFeatures&quot;.split(/([[:upper:]][[:lower:]]*)/).delete_if(&amp;:empty?).join(&quot;-&quot;)
+&quot;BenefitsAndFeatures&quot;.underscore.split('_').map(&amp;:capitalize).join('-')
+&quot;BenefitsAndFeatures&quot;.gsub(/[A-Z]/) { |c| &quot;-#{c}&quot; }).reverse.chomp('-').reverse
+&quot;BenefitsAndFeatures&quot;.gsub(/\w(?=[A-Z])/){|match| &quot;#{match}-&quot;}
+&quot;BenefitsAndFeatures&quot;.split(/(?=[A-Z])/).join('-')
+&quot;BenefitsAndFeatures&quot;.gsub(/(?&lt;=[[:lower:]])[[:upper:]]+/, '-\\&amp;')
+&quot;BenefitsAndFeatures&quot;.scan(/[[:upper:]]+[[:lower:]]+/).join('-')
+&quot;BenefitsAndFeatures&quot;.gsub( /.(?=[[:upper:]])/, '\&amp;-' )
+&quot;BenefitsAndFeatures&quot;.gsub /([a-z])([A-Z])/ , '\1-\2'
+</pre>
+<p>
+思い付いたのはこんな感じだが、ちゃんと上にも出てた。
+</p>
+<pre>
+&quot;BenefitsAndFeatures&quot;.scan(/[A-Z][a-z]+/)*&quot;-&quot;
+</pre>
+
+<!-- section end -->
+</div>
+<!-- 2010/12/09 end -->
+
+
+
+<hr class="hide">
+<!-- 2010/12/10 start -->
+<h2><a name="20101210" href="201012a.html#20101210">2010-12-10 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="201012101" title="201012101" href="201012a.html#201012101">■</a> 
+zshでソート</h3>
+<p>
+zshでソートしてみたら思わぬバグが。
+</p>
+<pre>
+% a=(3 2 1 0 -1 -2 -3); echo ${(n)a}
+-1 -2 -3 0 1 2 3
+</pre>
+<p>
+(n)で数値として扱うんだから、-3 -2 -1 0 1 2 3にならないと変だろう。<br>
+<a href="http://golf.shinh.org/p.rb?sort">この問題</a>で発覚。
+</p>
+<!-- section end -->
+</div>
+<!-- 2010/12/10 end -->
+
+<hr>
+<div>
+<a href="201011c.html">&lt;Prev(,)</a> | 
+<a href="201012b.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

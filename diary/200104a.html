@@ -1,0 +1,610 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2001-4-a</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="200103c.html">
+<link rel="next" href="200104b.html">
+
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2001年4月上旬〜</p>
+<hr>
+<div>
+<a href="200103c.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="200104b.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2001/04/01 start -->
+<h2><a name="20010401" href="200104a.html#20010401">2001-04-01 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="200104011" title="200104011" href="200104a.html#200104011">■</a> 
+hoge</h3>
+homeと打とうとしてついhogeと打ってしまうことはないだろうか？
+指が勝手に動いてる。
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200104012" title="200104012" href="200104a.html#200104012">■</a> 
+[Cygwin] gcc 2.95.3-2</h3>
+<h4><a name="200104012S1" href="200104a.html#200104012S1">_</a> <strong>make install</strong>: </h4>
+<div class="sub">
+いきなりmake installしてしまうとなにがどこにインストールされるのか、
+ちと心配になるというのはよくあるよね。
+そういうときはprefixをコマンドラインで指定して、
+全然違う場所にインストールして様子を見てみよう。
+<pre>
+% make install prefix=$HOME/cygwin/gcc-2.95.3-2
+</pre>
+のように
+<a href="#20010401F1"><sup><small>*1</small></sup></a>。
+<pre>
+i686-pc-cygwin-gcc -V 2.95.2-7
+</pre>
+とかで過去のバージョンも呼び出せるんだから気にしなくてもいいかもしれない。
+が、 gcc 2.95.3からはcppじゃなくてcpp0を呼び出すようになってしまったので、
+あらかじめln -s cpp cpp0しとくとか工夫が必要。<br>
+Cygwinでsetup.exeを使ってgccをインストールし直すと、
+御丁寧にも過去バージョンを消してくれるので注意。
+
+</div>
+<h4><a name="200104012S2" href="200104a.html#200104012S2">_</a> <strong>tooldir</strong>: </h4>
+<div class="sub">
+いろいろ調べてみると、Cygwinのgcc-2.95.3-2.tar.gzは
+<pre>
+% make install tooldir=/usr
+</pre>
+で作ってあるらしい。このバージョンに限らないけど。
+これで${prefix}/i686-pc-cygwinじゃなくなるわけでspecs問題も解決か？
+specs自体はmake時にbuild_tooldirを元に決めてるから、
+これを指定すればうまくいきそうだが、
+build_tooldirはasとかにもからんでくるのでmake時に指定するのはまずい。
+よって、make install時にはtooldirだけ指定し、specsはその後、手で修正する。
+<pre>
+% sudo make install tooldir=/usr/local/cygwin
+</pre>
+このままだとgccだけなので、
+以前インストールしたCygwin 1.1.8-2も同じようにインストールし直す。
+で、これで-mno-cygwin環境がましになったので、
+Cygwin 1.1.8-2を最初からmakeし直すことにした。
+最初からgccといっしょにmakeしとけばいいと今になって気づく。まあいいや。
+
+</div>
+<h4><a name="200104012S3" href="200104a.html#200104012S3">_</a> <strong>libstdc++.a</strong>: </h4>
+<div class="sub">
+-lstdc++が見つからないエラーで止まる。
+見てみるとtooldirを指定しても強制的に間にi686-pc-cygwinが入るようになってるようだ。
+しょうがないから手でsymlinkを張り直す。
+<pre>
+% cd /usr/local/cygwin/lib/gcc-lib/i686-pc-cygwin/2.95.3-2
+% sudo rm libstdc++.a
+% sudo ln -s ../../../../lib/libstdc++.a.2.10.0 libstdc++.a
+</pre>
+これで最後まで通る。同じように
+<pre>
+% sudo make install tooldir=/usr/local/cygwin
+</pre>
+する。修正したspecsは差分じゃなくてそのまま
+<a href="../files/gcc-2.95.3-2-specs-cross.cygwin">ここ</a>に置いとこう。
+
+</div>
+<hr align="left" width="40%">
+<div>
+<a name="20010401F1" href="200104a.html#20010401F1"><small>*1</small></a>:
+Rubyの場合はDESTDIRを使う。
+</div>
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200104013" title="200104013" href="200104a.html#200104013">■</a> 
+JARH</h3>
+$&gt;&lt;&lt;{'Just another Ruby hacker,'=&gt;''}.default=0
+<!-- section end -->
+</div>
+<!-- 2001/04/01 end -->
+
+
+
+<hr class="hide">
+<!-- 2001/04/02 start -->
+<h2><a name="20010402" href="200104a.html#20010402">2001-04-02 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="200104021" title="200104021" href="200104a.html#200104021">■</a> 
+[mingw32] opendirと-mno-cygwin</h3>
+mswin32版はwin32/win32.cのopendirを使っているが、
+mingw32版は-lmingw32のopendirを使ってる。
+これは最初に移植した際missing/dir.hをincludeするとエラーになってしまい、
+面倒なのでmingw32が提供してるものを使おうと日和ったからだが、
+MSVCRTとCRTDLLとの違いがもろに出るのでまじめに対応することにした。<br>
+これでstat問題はひとまず関係なくなる。
+つまりbmingw packageを使わなくても-mno-cygwinでいける。
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200104022" title="200104022" href="200104a.html#200104022">■</a> 
+<a href="../files/gcc-2.95.3-2-specs-cross.cygwin">[Cygwin] specs</a></h3>
+昨日のspecsだとdllwrap経由の時に-lcygwinが見つからないというエラーになる。
+tooldir=/usr/local/cygwinの所為だ。
+dllwrapに-vをつけて様子を見るとgccに-nostartfilesをつけてる。
+-L/usr/local/cygwin/libは*startfile:にあるから、これじゃ見つからない。
+というわけでlib:に移動。
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200104023" title="200104023" href="200104a.html#200104023">■</a> 
+i586-pc-msdosdjgpp-gcc</h3>
+Ruby 1.6.4までにgcc 2.95.3のi586-pc-msdosdjgpp-gccを用意しようと思っているんだけど、
+いつもstddef.hあたりでエラーになる件はもう問題ない？<br>
+i386-wrs-vxworks5.xのときも悩んだ記憶がある。
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200104024" title="200104024" href="200104a.html#200104024">■</a> 
+JARH</h3>
+print eval 'Just another Ruby hacker,'.dump
+<!-- section end -->
+</div>
+<!-- 2001/04/02 end -->
+
+
+
+<hr class="hide">
+<!-- 2001/04/03 start -->
+<h2><a name="20010403" href="200104a.html#20010403">2001-04-03 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="200104031" title="200104031" href="200104a.html#200104031">■</a> 
+YAPC, YARPC</h3>
+やぷしー、やるぷしーと読む。
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200104032" title="200104032" href="200104a.html#200104032">■</a> 
+[Cygwin] cygcheck -s</h3>
+なんか変だなと思ったら
+<pre>
+% cygcheck -s
+</pre>
+しよう。まじで。
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200104033" title="200104033" href="200104a.html#200104033">■</a> 
+1000000000</h3>
+fj.os.ms-windows.programmingを見てたら「2001年9月9日問題」とか出てた。
+なんだそれはと思ったら、
+<pre>
+% ruby -e 'p Time.at 1000000000'
+Sun Sep 09 10:46:40 JST 2001
+</pre>
+ということらしい。
+つまりこの日に9桁から10桁になるわけだ。
+そんなとこに依存するバグを作るのも難しいと思うんだけど。
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200104034" title="200104034" href="200104a.html#200104034">■</a> 
+JARH</h3>
+print 'Just another Ruby hacker'.concat ?,
+<!-- section end -->
+</div>
+<!-- 2001/04/03 end -->
+
+
+
+<hr class="hide">
+<!-- 2001/04/04 start -->
+<h2><a name="20010404" href="200104a.html#20010404">2001-04-04 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="200104041" title="200104041" href="200104a.html#200104041">■</a> 
+[DJGPP] gcc-2.95.3</h3>
+<pre>
+% tar xfvz gcc-2.95.3.tar.gz
+% cd gcc-2.95.3
+% mkdir obj; cd obj
+% CFLAGS=-Os CXXFLAGS=-Os \
+  ../configure \
+  --target=i586-pc-msdosdjgpp \
+  --enable-languages=c,c++ \
+  --enable-shared \
+  --enable-c-mbchar
+% sudo mkdir -p /usr/local/lib/gcc-lib/i586-pc-msdosdjgpp/2.95.3
+% make
+</pre>
+やっぱり、size_tとwchar_tがまずいね。ちと調査が必要だな。
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200104042" title="200104042" href="200104a.html#200104042">■</a> 
+JARH</h3>
+print 'Just another Ruby hacker,'.intern.to_s
+<!-- section end -->
+</div>
+<!-- 2001/04/04 end -->
+
+
+
+<hr class="hide">
+<!-- 2001/04/05 start -->
+<h2><a name="20010405" href="200104a.html#20010405">2001-04-05 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="200104051" title="200104051" href="200104a.html#200104051">■</a> 
+[Cygwin] w3m</h3>
+WinNTでSEGVる件は
+<pre>
+char *p = &quot;&quot;;
+*p = '\0';
+</pre>
+が原因だった。WinNTは保護されてるんだね。
+なにしろgdb上で実行すると
+<pre>
+% w3m http://host/index.html &gt; index.html
+</pre>
+と同じような感じになり、ちゃんと動いてしまうからデバッグにならない。
+termcapのacが問題だからTERMがcygwinとかlinuxなら問題なく動く。
+これ以外に設定してる人かつWinNTとなるとかなり確率は低い。<br>
+パッチは
+<a href="../files/w3m-0.2.1-cygwin.diff">ここ</a>に置いとこう。<br>
+回避するには-fwritable-stringsでもいいけど、
+このオプションを使うとなんか負けた気分になるのであまり使いたくない。<br>
+Linuxでの実行例:
+<pre>
+% cat hoge.c
+main()
+{
+    char *p = &quot;&quot;;
+    *p = '\0';
+}
+% gcc hoge.c
+% ./a.out
+zsh: segmentation fault  ./a.out
+% gcc -fwritable-strings hoge.c
+% ./a.out                      
+%
+</pre>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200104052" title="200104052" href="200104a.html#200104052">■</a> 
+<a href="http://cygwin.com/ml/cygwin/2001-04/msg00311.html">[ANNOUNCEMENT] Added: apache_1.3.20 will support Cygwin</a></h3>
+1.3.20ではout-of-the-boxでサポートされる。
+っていつの間にか1.3.19になってたのか。
+ついこの間まで1.3.14だと思ってたのに。
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200104053" title="200104053" href="200104a.html#200104053">■</a> 
+JARH</h3>
+print 'Just another Ruby hacker,'.dump[1..-2]
+<!-- section end -->
+</div>
+<!-- 2001/04/05 end -->
+
+
+
+<hr class="hide">
+<!-- 2001/04/06 start -->
+<h2><a name="20010406" href="200104a.html#20010406">2001-04-06 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="200104061" title="200104061" href="200104a.html#200104061">■</a> 
+sh-elf-gcc</h3>
+会社でshでelfなcross gccをCygwin上に構築。<br>
+multilibを作る途中のconfigureで、
+どうもcross-compileしたものを無理矢理実行するテストがあるような気がする。
+Windowsが出すalertがうるさい。
+
+<h4><a name="200104061S1" href="200104a.html#200104061S1">_</a> <strong>cross compilerをcrossで作る</strong>: </h4>
+<div class="sub">
+Cygwin上で動くsh-elf-gccをLinuxで作るには
+<pre>
+% ./configure 
+  --target=sh-elf \
+  --host=i686-pc-cygwin \
+  --build=i586-pc-linux-gnu
+</pre>
+という感じでconfigureを実行すればよい。
+もちろんあらかじめ--target=i686-pc-cygwinで作ったクロスの環境は必要だけど。<br>
+mingw32版rubyはそんな感じの指定になっている。
+<pre>
+% env CC='i686-pc-cygwin -mno-cygwin' \
+  ./configure \
+  --target=i386-mingw32 \
+  --host=i686-pc-cygwin \
+  --build=i586-pc-linux-gnu \
+  ...
+</pre>
+
+</div>
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200104062" title="200104062" href="200104a.html#200104062">■</a> 
+JARH</h3>
+'Just another Ruby hacker,'.each_line do |x| print x end
+<!-- section end -->
+</div>
+<!-- 2001/04/06 end -->
+
+
+
+<hr class="hide">
+<!-- 2001/04/07 start -->
+<h2><a name="20010407" href="200104a.html#20010407">2001-04-07 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="200104071" title="200104071" href="200104a.html#200104071">■</a> 
+花見</h3>
+というか花吹雪見物。それはそれで見物であったが。
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200104072" title="200104072" href="200104a.html#200104072">■</a> 
+<a href="200104a.html#200104061S1">sh-elf-gcc</a></h3>
+訂正。Linux上に必要なのは--target=sh-elfな環境だった。
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200104073" title="200104073" href="200104a.html#200104073">■</a> 
+JARH</h3>
+['JUST ANOTHER ', 'RUBY HACKER,'].each do |x| print x.capitalize end
+<!-- section end -->
+</div>
+<!-- 2001/04/07 end -->
+
+
+
+<hr class="hide">
+<!-- 2001/04/08 start -->
+<h2><a name="20010408" href="200104a.html#20010408">2001-04-08 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="200104081" title="200104081" href="200104a.html#200104081">■</a> 
+[Cygwin] gcc-2.95.3-2</h3>
+gcc -mno-cygwinで-mwin32相当もonになったはずだが、肝心の変更が
+<pre>
+%{mwin32|no-cygwin:...}
+</pre>
+じゃ、-no-cygwinのときだから全然だめだよ。
+rubyは-mwin32が新設されたときに強制的につけるようにしたから問題ない。
+GNU dbmを作っていて気づいた。
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200104082" title="200104082" href="200104a.html#200104082">■</a> 
+GNU dbm</h3>
+cygwin版もmingw32版もndbmはGNU dbmのndbm互換インターフェースを使っているけど、
+Win9x/MEではファイルをLockFileしたままCopyFileしようとするとエラーになる。
+WinNT/2kでは問題ない。こういうよくわからない非互換性は面倒だよね。
+mignw32版gdbmはなぜかLockFileすらできないし。うーむ。
+というわけでWin9x/MEだったらLockしないことにする。
+更新は次回に。
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200104083" title="200104083" href="200104a.html#200104083">■</a> 
+JARH</h3>
+printf '%.25s', 'Just another Ruby hacker,JARH'
+<!-- section end -->
+</div>
+<!-- 2001/04/08 end -->
+
+
+
+<hr class="hide">
+<!-- 2001/04/09 start -->
+<h2><a name="20010409" href="200104a.html#20010409">2001-04-09 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="200104091" title="200104091" href="200104a.html#200104091">■</a> 
+WinNT/2k vs. Win9x/ME</h3>
+例の
+<pre>
+% ruby -e 'Thread.new{`echo test`}.join'
+</pre>
+なんだけど、WinNTだとまったく問題なし。
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-dev/12795">[ruby-dev:12795]</a>のスクリプトもちゃんと動く。どうしてこんなに違うんだ？
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200104092" title="200104092" href="200104a.html#200104092">■</a> 
+[Cygwin] GNU dbm</h3>
+crossでconfigureしようとしたらなんか変だ。
+明日考えよう。
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200104093" title="200104093" href="200104a.html#200104093">■</a> 
+JARH</h3>
+print 'Just another Ruby hacker,'.split(/Z/)[0]
+<!-- section end -->
+</div>
+<!-- 2001/04/09 end -->
+
+
+
+<hr class="hide">
+<!-- 2001/04/10 start -->
+<h2><a name="20010410" href="200104a.html#20010410">2001-04-10 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="200104101" title="200104101" href="200104a.html#200104101">■</a> 
+ruby-talk ML</h3>
+流量が急に落ちてる気がする。爆発以前に戻ったというか。
+そのくらいで落ち着いてくれるとありがたい。
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200104102" title="200104102" href="200104a.html#200104102">■</a> 
+GNU dbm</h3>
+<h4><a name="200104102S1" href="200104a.html#200104102S1">_</a> <strong>configure</strong>: </h4>
+<div class="sub">
+<pre>
+% tar xfvz gdbm-1.8.0-3-src.tar.gz
+% cd gdbm-1.8.0
+% CC=i686-pc-cygwin-gcc \
+  LD=i686-pc-cygwin-ld \
+  AR=i686-pc-cygwin-ar \
+  RANLIB=i686-pc-cygwin-ranlib \
+  NM=/usr/local/cygwin/bin/i686-pc-cygwin-nm \
+  ./configure \
+  --target=i686-pc-cygwin \
+  --host=i686-pc-cygwin \
+  --build=i586-pc-linux-gnu \
+  --prefix=/usr/local/cygwin-local
+&lt;中略&gt;
+checking host system type... \
+Invalid configuration `i686-pc-cygwin': system `cygwin' not recognized
+&lt;後略&gt;
+</pre>
+なんとcygwinが認識されない。なぜに？
+<pre>
+% ls -l config.sub
+-rwx------   1 watanabe ruby        19802 May 19  1999 config.sub
+</pre>
+なるほど2年前だとするとcygwin32じゃないとだめか。
+中を見るとやはり-cygwin32*になってる。というわけで
+<pre>
+--host=i686-pc-cygwin32
+</pre>
+にしてもう一回。
+binutils軍団は全部i686-pc-cygwinをつけてるから、
+実のところ--hostはほとんど意味なし。
+
+</div>
+<h4><a name="200104102S2" href="200104a.html#200104102S2">_</a> <strong>make</strong>: </h4>
+<div class="sub">
+早速makeすると
+<pre>
+/bin/sh ./libtool --mode=compile i686-pc-cygwin-gcc -c   -I. -I. -O dbminit.c
+i686-pc-cygwin-gcc -c -I. -I. -O dbminit.c
+dbminit.c: In function `dbminit':
+dbminit.c:49: function `dbminit' definition is marked dllimport
+make: *** [dbminit.lo] Error 1
+</pre>
+該当する行を見ると
+<pre>
+GDBM_EXPORT(int, dbminit) (file)
+     char *file;
+</pre>
+となってる。
+GDBM_EXPORTはsystems.hで定義されている。DLL絡みだな。
+じーっと見ると-DGDBM_STATICすればよさそう。てゆうか
+<pre>
+Makefile.cygwin
+</pre>
+なんてのがあるじゃん。なぬ？<br>
+つづく。
+
+</div>
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200104103" title="200104103" href="200104a.html#200104103">■</a> 
+JARH</h3>
+print 'Just another Ruby hacker,'.split(//)
+<!-- section end -->
+</div>
+<!-- 2001/04/10 end -->
+
+<hr>
+<div>
+<a href="200103c.html">&lt;Prev(,)</a> | 
+<a href="200104b.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

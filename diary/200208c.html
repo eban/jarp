@@ -1,0 +1,693 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2002-8-c</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="200208b.html">
+<link rel="next" href="200209a.html">
+
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2002年8月下旬〜</p>
+<hr>
+<div>
+<a href="200208b.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="200209a.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2002/08/21 start -->
+<h2><a name="20020821" href="200208c.html#20020821">2002-08-21 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="200208211" title="200208211" href="200208c.html#200208211">■</a> 
+<a href="http://www.fefe.de/dietlibc/">[Linux] diet libc 0.20</a></h3>
+<p>
+0.18からlibm2.Sが加わってfrexpが使えるようになった。
+でもlibm2.Sはsqrtだの一緒くたになっていて、
+同時に参照するとmultiple definitionになってしまう。
+うーむ。また余計な仕事を増やしてくれるなあ。
+</p>
+<pre>
+% cat foo.c
+#include &lt;math.h&gt;
+main()
+{
+    int i;
+    frexp(sqrt(1.0), &amp;i);
+}
+% diet gcc foo.c -lm
+/opt/diet/lib-i386/libm.a(libm2.o): In function `sqrt':
+libm2.o(.text+0x7): multiple definition of `sqrt'
+/opt/diet/lib-i386/libm.a(sqrt.o)(.text+0x0): first defined here
+collect2: ld returned 1 exit status
+</pre>
+<p>
+あ、diet libcのfrexpを使わなきゃいいのか。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200208212" title="200208212" href="200208c.html#200208212">■</a> 
+<a href="http://www.ruby-lang.org/en/raa-list.rhtml?name=Log4r">[Ruby] Log4r 1.0.2</a></h3>
+<p>
+更新。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/08/21 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/08/22 start -->
+<h2><a name="20020822" href="200208c.html#20020822">2002-08-22 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="200208221" title="200208221" href="200208c.html#200208221">■</a> 
+<a href="http://www.bitkeeper.com/">BitKeeper</a></h3>
+<p>
+BitKeeperってrepositoryごとcloneしなきゃいけないもんなんだろうか？
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/08/22 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/08/23 start -->
+<h2><a name="20020823" href="200208c.html#20020823">2002-08-23 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="200208231" title="200208231" href="200208c.html#200208231">■</a> 
+Forwarding DLL</h3>
+<p>
+なんとなく
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-talk/47867">呼ばれたような気がした</a>
+ので
+
+<a href="../ruby/binaries/mingw/mingw32-ruby16-to-mswin32-ruby16.zip">Forwarding DLL</a>
+を用意してみた。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200208232" title="200208232" href="200208c.html#200208232">■</a> 
+<a href="200208c.html#200208221">BitKeeper</a></h3>
+<p>
+Googleしてみたら
+
+<a href="http://www.da-cha.org/kernel/bk-kernel-howto_ja.html">この文書</a>
+が見つかった。やっぱcloneしなきゃだめなんだ。
+</p>
+<pre>
+変更セットのコンセプトの後に、さらに追い討ちをかけることにな
+るが、複数のソーススリーのコピーを持つことに慣れてほしい。こ
+れは、一部の人にとっては、*本当に*慣れるのが大変だ。ソースツ
+リーを分けることは、BitKeeper では、メジャーおよびマイナーの
+並行した複数の開発ラインを線引して管理することを意味している。 
+CVSでいうブランチは、分離されたソースツリーになるが、
+BitKeeperの用語では、&quot;クローン&quot;[Heh, or Star Wars]になる。
+</pre>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200208233" title="200208233" href="200208c.html#200208233">■</a> 
+メール配送の遅れ</h3>
+<p>
+うーむ。17通もたまってるなあ。
+<a href="200208a.html#200208093">攻撃されてる</a>
+影響だろうか？
+</p>
+<pre>
+helium:~ % mailq |grep eban|wc
+     17      17    1003
+</pre>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/08/23 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/08/24 start -->
+<h2><a name="20020824" href="200208c.html#20020824">2002-08-24 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="200208241" title="200208241" href="200208c.html#200208241">■</a> 
+[Linux] GTK+ 2</h3>
+<p>
+
+<a href="http://xpad.sf.net/">xpad 1.5</a>
+をmakeしようとしたらGTK+ 2を要求された。
+最近ちらほらそういうソフトも出てきたのでインストールすることにした。
+1.2.xが上書きされたら困ると思っていたら、
+-2.0がsuffixされてるので問題ないようだ。
+その前にglib, atk, pangoが必要。
+</p>
+
+<p>
+gtk+-2.0.6をmakeしてみたら、1時間経っても終わらない。
+いや、最近のソフトはみんなでかいね。結局1時間半かかった。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/08/24 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/08/25 start -->
+<h2><a name="20020825" href="200208c.html#20020825">2002-08-25 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="200208251" title="200208251" href="200208c.html#200208251">■</a> 
+<a href="http://www.sourcejudy.com/">Judy</a></h3>
+<p>
+ruby-talk MLで話題になっているが、
+
+<a href="http://www.sourcejudy.com/JudySL_3x.htm">JudySL</a>
+というのがRubyのstより速いhashらしい。
+</p>
+
+<p>
+最低限何が必要なのか調べてみる。
+</p>
+<pre>
+% cd src/JudySL
+% gcc -I../JudyCommon -I.. -c JudySL.c
+% nm --undefined JudySL.o|grep Judy 
+JudyLDel
+JudyLFirst
+JudyLFreeArray
+JudyLIns
+JudyLLast
+JudyLNext
+JudyLPrev
+__JudyLGet
+</pre>
+<p>
+結構依存してるんだな。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/08/25 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/08/26 start -->
+<h2><a name="20020826" href="200208c.html#20020826">2002-08-26 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="200208261" title="200208261" href="200208c.html#200208261">■</a> 
+[Cygwin] gcc 2.95.3-10</h3>
+<p>
+specsが間違ってるなあ。gcc-2 -mno-cygwinでRubyのwin32/win32.cがエラーになる。
+_cdeclがエラーだ。__cdeclはエラーにならない。
+specsのその部分はこうなっている。
+</p>
+<pre>
+%(cpp_cpu) %{posix:-D_POSIX_SOURCE} \
+-D__stdcall=__attribute__((__stdcall__)) \
+-D__fastcall=__attribute__((__fastcall__)) \
+-D__cdecl=__attribute__((__cdecl__)) \
+%{!ansi:-D_stdcall=__attribute__((__stdcall__)) \
+  -D_fastcall=__attribute__((__fastcall__))}
+  -D_cdecl=__attribute__((__cdecl__))} \
+-D__declspec(x)=__attribute__((x)) \
+</pre>
+<p>
+2.95.3-5はこうなっていた。
+</p>
+<pre>
+%(cpp_cpu) %{posix:-D_POSIX_SOURCE} \
+-D__stdcall=__attribute__((__stdcall__)) \
+-D__fastcall=__attribute__((__fastcall__)) \
+-D__cdecl=__attribute__((__cdecl__)) \
+%{!ansi:-D_stdcall=__attribute__((__stdcall__)) \
+  -D_fastcall=__attribute__((__fastcall__)) \
+  -D_cdecl=__attribute__((__cdecl__))} \
+-D__declspec(x)=__attribute__((x)) \
+</pre>
+<p>
+なるほど。これか。
+</p>
+<pre>
+  -D_fastcall=__attribute__((__fastcall__))}
+</pre>
+<p>
+ここで閉じてるからだ。
+対応が取れてないんだからその時点でエラーになって欲しいね。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200208262" title="200208262" href="200208c.html#200208262">■</a> 
+[Ruby] diet libc対応</h3>
+<p>
+diet-dynを使わないとdlopen(3)が使えないことが判明。
+dietコマンドは-staticをつけるが、
+diet libcにはlibdl.aはなくlibdl.soしかない。
+でも、getenvでSEGVってしまうんだな。うーむ。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/08/26 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/08/27 start -->
+<h2><a name="20020827" href="200208c.html#20020827">2002-08-27 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="200208271" title="200208271" href="200208c.html#200208271">■</a> 
+[Ruby] diet libc対応</h3>
+<p>
+getenvが怪しいというわけで実験。
+</p>
+<pre>
+% echo 'main(){getenv(&quot;FOO&quot;);}' &gt; foo.c
+% diet-dyn foo.c
+% ./a.out
+zsh: segmentation fault  ./a.out
+</pre>
+<p>
+だめじゃん。diet-dynがバグバグってことはstaticにlinkするしかないか？
+</p>
+
+<p>
+i386/getenv.Sじゃなくてlib/getenv.cを使ってみる。okだ。
+i386/getenv.SはPICになってないってことか。
+</p>
+
+<p>
+-ldlをlinkすると
+</p>
+<pre>
+libdl.so used.
+</pre>
+<p>
+と標準エラーに吐かれて非常に欝陶しい。
+</p>
+
+<p>
+あ、今度はrubyを作るところで.endeがundefと文句言われた。
+</p>
+<pre>
+% nm -o /opt/diet/lib-i386/*.a|grep 'U \.ende'
+</pre>
+<p>
+してみるとcosh.o,sinh.o,tanh.oのようだ。ソースを見ると
+</p>
+<pre>
+.Lende:
+
+.size    cosh,.ende-cosh
+</pre>
+<p>
+てな感じで、ラベル名が間違ってる。それぞれ
+</p>
+<pre>
+.size    cosh,.Lende-cosh
+</pre>
+<p>
+と変更してやっとrubyまでできた。
+</p>
+<pre>
+% ./ruby -v                                 
+libdl.so used.
+ruby 1.7.2 (2002-08-24) [i386-linux]
+</pre>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/08/27 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/08/28 start -->
+<h2><a name="20020828" href="200208c.html#20020828">2002-08-28 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="200208281" title="200208281" href="200208c.html#200208281">■</a> 
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-talk/48383">[Ruby] AC_CHECK_TOOL, AC_CHECK_PROGS</a></h3>
+<p>
+どちらも同じ引数を取るような気もするが、
+AC_CHECK_PROGSだけ複数形なのはやはり意味があったようだ。
+
+<a href="http://znz.s1.xrea.com/t/?date=20020827#p01">というわけで</a>
+</p>
+<pre>
+AC_CHECK_TOOL(AR, ar)
+if test -z &quot;$AR&quot;; then
+  AC_CHECK_PROGS(AR, aal, ar)
+fi
+</pre>
+<p>
+としてみた。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200208282" title="200208282" href="200208c.html#200208282">■</a> 
+<a href="200208b.html#200208164">[Linux] GCC 3.1でmakeしたkernel</a></h3>
+<p>
+10日以上経つがGCC 2.95.3でmakeしたkernelは快調だ。
+やはりGCC 3.xだとまだやばいようだ。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/08/28 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/08/29 start -->
+<h2><a name="20020829" href="200208c.html#20020829">2002-08-29 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="200208291" title="200208291" href="200208c.html#200208291">■</a> 
+[Ruby] 1.7.3</h3>
+<p>
+偶然なのか結構いいタイミングでmswin32/mingw32のDLL共通化ができたようだ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200208292" title="200208292" href="200208c.html#200208292">■</a> 
+[Ruby] setup.ini</h3>
+<pre>
+@ xmlrpc4r
+[prev]
+version: 1.7.11-1
+install: ext/xmlrpc4r-1.7.11-1.tar.gz 63820
+[curr]
+version: 1.7.9-1
+install: ext/xmlrpc4r-1.7.9-1.tar.gz 62938
+</pre>
+<p>
+と間違ってる。単純にsortしてるからだ。
+こんなものを考えてみた。
+</p>
+<pre>
+% cat versions.rb
+class Versions
+  include Comparable
+  def self.[](v)
+    self.new v
+  end
+  def initialize(v)
+    @version = v
+  end
+  def to_a
+    @version.scan(/\d+/).map{|x| x.to_i}
+  end
+  def &lt;=&gt;(other)
+    self.to_a &lt;=&gt; other.to_a
+  end
+end
+
+if __FILE__ == $0
+  require 'test/unit'
+
+  class TC_Versions &lt; Test::Unit::TestCase
+    def test_01
+      assert([1, 2], Versions[&quot;1.2&quot;].to_a)
+    end
+    def test_02
+      assert(Versions[&quot;1.2&quot;] &lt; Versions[&quot;1.10&quot;])
+    end
+    def test_03
+      assert(Versions[&quot;1.2.1&quot;] &lt; Versions[&quot;1.10&quot;])
+    end
+    def test_04
+      assert(Versions[&quot;1.02.1&quot;] == Versions[&quot;1.2.1&quot;])
+    end
+    def test_05
+      assert(Versions[&quot;1.2&quot;] &lt; Versions[&quot;1.2.1&quot;])
+    end
+  end
+end
+</pre>
+<p>
+と、ここまで作って、
+
+<a href="http://www.allruby.com/rpkg/version.rb">ほとんど同じもの</a>
+が存在することに気づく。
+[]まで考えてるとこが同じというか、Test::Unitを使うとこまで同じか。
+
+<a href="http://www.allruby.com/rpkg/version.rb">version.rb</a>
+のほうはまじめに比較しているが、versions.rbは
+Array#&lt;=&gt;に帰着させている。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200208293" title="200208293" href="200208c.html#200208293">■</a> 
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-talk/48504">[Ruby] Judy</a></h3>
+<p>
+結局のところRubyには使えないってこと？
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/08/29 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/08/30 start -->
+<h2><a name="20020830" href="200208c.html#20020830">2002-08-30 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="200208301" title="200208301" href="200208c.html#200208301">■</a> 
+uClibc 0.9.15</h3>
+<p>
+更新。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200208302" title="200208302" href="200208c.html#200208302">■</a> 
+[Ruby] diet libc対応。</h3>
+<p>
+なぜかmakeがエラーになってしまう。
+</p>
+<pre>
+compiling dl
+.../ext/dl/extconf.rb:148:in `initialize': [unknown error] - \
+  &quot;dlconfig.h&quot; (Errno::E125)
+</pre>
+<p>
+[unknown error]あたりが謎だが、該当する行は
+</p>
+<pre>
+open(file){|f|f.read} == str
+</pre>
+<p>
+だ。なんで？
+</p>
+<pre>
+% ./miniruby -e 'p open(&quot;foobar&quot;)'
+libdl.so used.
+-e:1:in `initialize': [unknown error] - &quot;foobar&quot; (Errno::E125)
+        from -e:1:in `open'
+        from -e:1
+</pre>
+<p>
+errnoがおかしい。
+</p>
+<pre>
+% cat foobar.c
+#include &lt;stdio.h&gt;
+extern int errno;
+main()
+{
+    fopen(&quot;foobar&quot;, &quot;r&quot;);
+    printf(&quot;%d\n&quot;, errno);
+}
+% diet-dyn gcc foobar.c
+% ./a.out
+0
+% diet gcc foobar.c 
+/opt/diet/lib-i386/libc.a(vprintf.o): In function `vprintf':
+vprintf.o(.text+0x53): warning: the printf functions add several kilobytes of bloat.
+/opt/diet/lib-i386/libc.a(fwrite.o): In function `fwrite':
+fwrite.o(.text+0x4b): warning: your code uses stdio (7+k bloat).
+% ./a.out
+2
+</pre>
+<p>
+うーむ。diet-dynは使いものにならないな、こりゃ。
+となるとdietコマンドを使わざるを得ないわけで、
+Ruby/DLは使えないという結論に。だから
+<a href="200205b.html#200205126">sizeof(FILE)</a>の件は気にしなくてもいいのかもしれない。でも気になる。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200208303" title="200208303" href="200208c.html#200208303">■</a> 
+retrunの話</h3>
+<p>
+先週returnの話であちこち盛り上がっていたが、
+returnってなぜかretrunと打ってしまうことが多い。
+makeもmkaeやamkeになることがある。
+これってどっちも右手左手交互に打つパターンなんだよね。
+だからそのタイミングがちょっとずれると2回連続で同じほうの手で打ってしまい、
+retrunやmkaeになるようだ。
+</p>
+
+<p>
+retrunでgoogleするとこれまた山のようにヒットする。
+もしやと思いRubyのChangeLogを調べてみると、やはりあった。
+</p>
+<pre>
+% grep retrun ChangeLog
+        * process.c (rb_proc_times): need not to check retrun value from
+          block retruns true for any of elements.
+</pre>
+<p>
+次の機会にでも直しておこう。
+</p>
+<!-- section end -->
+</div>
+<!-- 2002/08/30 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/08/31 start -->
+<h2><a name="20020831" href="200208c.html#20020831">2002-08-31 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="200208311" title="200208311" href="200208c.html#200208311">■</a> 
+<a href="http://buildtool.sourceforge.net/">Buildtool</a></h3>
+<p>
+autoconfの代わりになるものらしい。が、かなり趣きが違う。
+</p>
+<pre>
+□ Buildtool needs to be installed beforehand on any system before you can
+   build a buildtool-ized package. This avoids the inclusion of really
+   huge configure (autoconf) and Makefile.in (automake) scripts in your
+   source package.
+</pre>
+<p>
+前もってインストールしておかないといけないの？
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200208312" title="200208312" href="200208c.html#200208312">■</a> 
+[vim] ChangeLog</h3>
+<p>
+vimにもstrftimeぐらいはあるだろうと調べたらやはりあった。
+というわけでChangeLogのためのmapを書いてみた。
+</p>
+<pre>
+map ch 1Gi&lt;C-R&gt;=strftime(&quot;%a %b %e %X %Y  WATANABE Hirofumi  &lt;eban@ruby-lang.org&gt;\n\n\n\n&quot;)&lt;CR&gt;&lt;UP&gt;&lt;UP&gt;&lt;TAB&gt;* 
+</pre>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/08/31 end -->
+
+<hr>
+<div>
+<a href="200208b.html">&lt;Prev(,)</a> | 
+<a href="200209a.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

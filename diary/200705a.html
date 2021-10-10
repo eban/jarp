@@ -1,0 +1,448 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2007-5-a</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="200704c.html">
+<link rel="next" href="200705b.html">
+
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2007年5月上旬〜</p>
+<hr>
+<div>
+<a href="200704c.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="200705b.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2007/05/01 start -->
+<h2><a name="20070501" href="200705a.html#20070501">2007-05-01 (Tue)</a></h2>
+<!-- 2007-05-02 01:36:46 -->
+
+<div class="entry1">
+<h3><a name="200705011" title="200705011" href="200705a.html#200705011">■</a> 
+4月のspam</h3>
+<p>
+388通。gmail側約5100スレッド。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200705012" title="200705012" href="200705a.html#200705012">■</a> 
+[TV] フジテレビ</h3>
+<p>
+信じられないことに未だに野球中継の延長してる。それも3日連続で。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200705013" title="200705013" href="200705a.html#200705013">■</a> 
+<a href="http://news.com.com/2100-1012_3-6180322.html">[Ruby] IronRuby</a></h3>
+<blockquote><p>
+Specifically, Scott Guthrie, general manager in Microsoft's Server and
+Tools division, announced IronRuby, a version of the Ruby language for
+.Net. Over the past few years, Microsoft has hired experts in dynamic
+languages, including Python and JavaScript, to expand support for
+these languages.
+</p></blockquote>
+<!-- section end -->
+</div>
+<!-- 2007/05/01 end -->
+
+
+
+<hr class="hide">
+<!-- 2007/05/02 start -->
+<h2><a name="20070502" href="200705a.html#20070502">2007-05-02 (Wed)</a></h2>
+<!-- 2007-05-03 02:19:13 -->
+
+<div class="entry1">
+<h3><a name="200705021" title="200705021" href="200705a.html#200705021">■</a> 
+[twitter] mpd twitter</h3>
+<p>
+あらかじめ 
+<a href="http://raa.ruby-lang.org/project/mpd-rb/">Ruby MPD</a>とgemでtwitterをインストールしておく。
+</p>
+<pre>
+#! /usr/local/bin/ruby
+require 'rubygems'
+require 'mpd'
+require 'nkf'
+require 'twitter'
+
+user = 'twitterに登録したメールアドレス'
+pass = 'パスワード'
+
+m = MPD.new(&quot;localhost&quot;)
+
+t = Twitter::Base.new(user, pass)
+
+last = nil
+loop do
+  status = m.strf(&quot;%t / %a&quot;)
+  if status != last
+    t.post(status)
+    puts NKF.nkf(&quot;-We&quot;, status)
+  end
+  last = status
+  sleep 5
+end
+</pre>
+<p>
+Oggのタグは全部UTF-8で書いているのでそのまま送っている。
+</p>
+<!-- section end -->
+</div>
+<!-- 2007/05/02 end -->
+
+
+
+<hr class="hide">
+<!-- 2007/05/03 start -->
+<h2><a name="20070503" href="200705a.html#20070503">2007-05-03 (Thu)</a></h2>
+<!-- 2007-05-04 01:04:32 -->
+
+<div class="entry1">
+<h3><a name="200705031" title="200705031" href="200705a.html#200705031">■</a> 
+[Music] Last.FMからのメール</h3>
+<p>
+
+<a href="200705a.html#200705021">昨日の日記</a>を書いてるときにそういえばLast.FM最近全然使ってないよなと思ったら、<br>
+今日になってそのLast.FMからメールが来た。
+</p><blockquote><p>
+Where did you go? You don't seem to have been using your Last.fm profile much
+recently.
+</p></blockquote><p>
+などと言われちゃったよ。すごい偶然だ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200705032" title="200705032" href="200705a.html#200705032">■</a> 
+<a href="http://freshmeat.net/projects/libmrss/">[Soft] libmrss 0.17.2</a></h3>
+<p>
+すごいね、なんか。全部対応してる。
+</p><blockquote><dl>
+<dt>
+About:
+<dd>
+libmRSS is a C library for parsing, writing, and creating RSS (Rich
+Site Summary, Really Simple Syndication, and RDF Site Summary) and ATOM
+files or streams. The formats supported are: RSS 0.91, RSS 0.92, RSS 1.0,
+RSS 2.0, ATOM 0.3, and ATOM 1.0. 
+</dl></blockquote>
+<!-- section end -->
+</div>
+<!-- 2007/05/03 end -->
+
+
+
+<hr class="hide">
+<!-- 2007/05/04 start -->
+<h2><a name="20070504" href="200705a.html#20070504">2007-05-04 (Fri)</a></h2>
+<!-- 2007-05-05 02:33:25 -->
+
+<div class="entry1">
+<h3><a name="200705041" title="200705041" href="200705a.html#200705041">■</a> 
+<a href="http://golf.shinh.org/p.rb?Summation#Ruby">[穴] Summation</a></h3>
+<p>
+Rubyでの解のStatisticsがいい具合にみんな違うのが興味深い。<br>
+28Bはすごい謎だが。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200705042" title="200705042" href="200705a.html#200705042">■</a> 
+[twitter] wgetでtwitterにポスト</h3>
+<p>
+単にPOSTすればいいだけなのでwgetでもtwitterにポストできる。
+</p>
+<pre>
+% wget --user=ユーザ名 --password=パスワード \
+  --post-data=status=&quot;$(echo '日本語はUTF-8で'|nkf -Ew)&quot; \
+  http://twitter.com/statuses/update.json
+</pre>
+<p>
+jsonとかxmlとかは好みで。
+</p>
+<!-- section end -->
+</div>
+<!-- 2007/05/04 end -->
+
+
+
+<hr class="hide">
+<!-- 2007/05/05 start -->
+<h2><a name="20070505" href="200705a.html#20070505">2007-05-05 (Sat)</a></h2>
+<!-- 2007-05-07 21:57:46 -->
+
+<div class="entry1">
+<h3><a name="200705051" title="200705051" href="200705a.html#200705051">■</a> 
+<a href="http://golf.shinh.org/p.rb?128+bits">[穴] 128ビット</a></h3>
+<p>
+例の128ビットを2進数で表示する問題。<br>
+バイナリが9Bと12Bの2つに分かれているのが面白い。<br>
+でも12Bがわからん。単に9Bのビット反転かなあ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200705052" title="200705052" href="200705a.html#200705052">■</a> 
+[twitter] twitter用firefox拡張</h3>
+<p>
+
+<a href="http://www.twitbin.com">twitbin</a>や
+
+<a href="http://mikedemers.net/projects/tweetbar">tweetbar</a>
+のようなサイドバー系を試すが場所を取られるのがちょっと気に入らない。
+</p>
+
+<p>
+先日
+<a href="http://spatialviews.com/twitterbar/">twitterbar</a>という変なUIの拡張を試した。<br>
+ロケーションバーで&quot; --post&quot;と入力した瞬間にポストされるという仕様。<br>
+普通にボタンを使ってもいいんだけど、なんというかポストされる瞬間が小気味いい。<br>
+でも
+<a href="https://addons.mozilla.org/ja/firefox/addon/1722">myurlbar_a</a>
+との相性が悪い。myurlbar_aの機能が死んでしまう。うーむ。
+</p>
+
+<p>
+結局
+<a href="http://userscripts.org/scripts/show/8684">twitter lite</a>のお世話に。
+</p>
+<!-- section end -->
+</div>
+<!-- 2007/05/05 end -->
+
+
+
+<hr class="hide">
+<!-- 2007/05/06 start -->
+<h2><a name="20070506" href="200705a.html#20070506">2007-05-06 (Sun)</a></h2>
+<!-- 2007-05-07 02:04:23 -->
+
+<div class="entry1">
+<h3><a name="200705061" title="200705061" href="200705a.html#200705061">■</a> 
+[Mail] ruby-talk MLのメールがほとんどspam扱いになってた</h3>
+<p>
+なんか最近メールが少ないなとgmailのspamを確認してみたらruby-talkだらけだった。<br>
+サルベージしたら100通近くあった。<br>
+一体何があったんだ？
+</p>
+<!-- section end -->
+</div>
+<!-- 2007/05/06 end -->
+
+
+
+<hr class="hide">
+<!-- 2007/05/07 start -->
+<h2><a name="20070507" href="200705a.html#20070507">2007-05-07 (Mon)</a></h2>
+<!-- 2007-05-08 02:01:55 -->
+
+<div class="entry1">
+<h3><a name="200705071" title="200705071" href="200705a.html#200705071">■</a> 
+[PC] 連休明け</h3>
+<p>
+さすがにきつい。
+</p>
+
+<p>
+会社のPCの環境がが家のと結構違っていて面喰う。<br>
+主にFirefoxの拡張やらグリモンやらbookmarkletなんだけど、<br>
+グリモンとかbookmarkletはどこから入れたのかすっかり忘れて探すのに一苦労。<br>
+そういうのに限ってbookmarkしてなかったりで、<br>
+いまだに見つかってない。<br>
+bookmarkletはちょっと困りもんだなあ。<br>
+
+<a href="http://blummy.com/">http://blummy.com/</a>だと間接的になって動かないのもあったりで、<br>
+Goolgle Notebookにでも残しておくのが案外手軽でいいのかもしれない。
+</p>
+<!-- section end -->
+</div>
+<!-- 2007/05/07 end -->
+
+
+
+<hr class="hide">
+<!-- 2007/05/08 start -->
+<h2><a name="20070508" href="200705a.html#20070508">2007-05-08 (Tue)</a></h2>
+<!-- 2007-05-09 01:19:44 -->
+
+<div class="entry1">
+<h3><a name="200705081" title="200705081" href="200705a.html#200705081">■</a> 
+ご請求</h3>
+<p>
+今年もinetdからご請求がやってきた。さすがにもうspamと間違うこともない。<br>
+中身を何気なく見てたらクレジットカードで支払えると書いてある。<br>
+あれいつのまに？過去メールを確認してみると一昨年からできるようになったようだ。<br>
+早速変更だ。ってすごいUIだよこれ。()の中に○を書いてsubmitしろとある。<br>
+しかも確認メールが1営業日以内に届くという。<br>
+やけにのんびりした仕様だ。<br>
+あ、しかも決裁は自動引き落しではなくwebで手続きせよきたか。
+</p>
+
+<p>
+いずれにしても手間ばかりかかるねえ。こんな商売してて大丈夫なんだろうか。
+</p>
+<!-- section end -->
+</div>
+<!-- 2007/05/08 end -->
+
+
+
+<hr class="hide">
+<!-- 2007/05/09 start -->
+<h2><a name="20070509" href="200705a.html#20070509">2007-05-09 (Wed)</a></h2>
+<!-- 2007-05-10 01:03:25 -->
+
+<div class="entry1">
+<h3><a name="200705091" title="200705091" href="200705a.html#200705091">■</a> 
+inetd支払い終了</h3>
+<p>
+なんだかんだで楽になったか。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200705092" title="200705092" href="200705a.html#200705092">■</a> 
+[穴] FizzBuzz</h3>
+<p>
+なんかまつりになってるのでさらしとこう。
+</p>
+<pre>
+% seq 100|sed '5~5s/.*/Buzz/;3~3s/[^B]*/Fizz/'
+</pre>
+<p>
+~はGNU sed特有。<br>
+shやbashならwildcardをquoteしなくもいいのでさらに1B縮む。
+</p>
+<!-- section end -->
+</div>
+<!-- 2007/05/09 end -->
+
+
+
+<hr class="hide">
+<!-- 2007/05/10 start -->
+<h2><a name="20070510" href="200705a.html#20070510">2007-05-10 (Thu)</a></h2>
+<!-- 2007-05-11 02:34:30 -->
+
+<div class="entry1">
+<h3><a name="200705101" title="200705101" href="200705a.html#200705101">■</a> 
+[穴] submit用script</h3>
+<p>
+shinhさんから教えてもらったcurlを使ったsubmit用をスクリプトを見て、<br>
+
+<a href="http://mechanize.rubyforge.org/">WWW::Mechanize</a>を思い出した。というわけでちょっと実験。
+</p>
+<pre>
+require 'rubygems'
+require 'mechanize'
+
+file = ARGV.shift
+problem = ARGV.shift
+
+agent = WWW::Mechanize.new
+
+page = agent.get('http://golf.shinh.org/p.rb?'+problem)
+form = page.forms.first
+form.user = ENV['USER']
+#form.reveal = 'on'
+form.problem = problem
+form.file_uploads.name('file').first.file_name = file
+
+puts agent.submit(form).parser
+</pre>
+<p>
+てな感じでanagol.rbを作れば
+</p>
+<pre>
+% ruby anagol.rb Summation.awk Summation
+</pre>
+<p>
+で、Summation.awkをsubmitできる。htmlがそのまま表示されるので
+</p>
+<pre>
+% ruby anagol.rb Summation.awk Summation | w3m -T text/html
+</pre>
+<p>
+するといいかもしれない。
+</p>
+<!-- section end -->
+</div>
+<!-- 2007/05/10 end -->
+
+<hr>
+<div>
+<a href="200704c.html">&lt;Prev(,)</a> | 
+<a href="200705b.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

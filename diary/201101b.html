@@ -1,0 +1,332 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2011-1-b</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="201101a.html">
+<link rel="next" href="201101c.html">
+
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2011年1月中旬〜</p>
+<hr>
+<div>
+<a href="201101a.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="201101c.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2011/01/11 start -->
+<h2><a name="20110111" href="201101b.html#20110111">2011-01-11 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="201101111" title="201101111" href="201101b.html#201101111">■</a> 
+<a href="http://code.google.com/p/lzham/">ZHAM ALPHA 6</a></h3>
+<blockquote><dl>
+<dt>
+Description:
+<dd>
+LZHAM (LZ, Huffman, Arithmetic, Markov) is a general purpose lossless data
+compression library that borrows many ideas from LZMA but purposely makes
+several key tradeoffs that favor decompression speed over compression ratio.
+LZHAM's compression ratio is currently approximately .5-1.5% less than LZMA,
+but decompresses approximately 2-3x faster on a Core i7.<br>
+LZHAM's decompressor is intended to be particularly fast on embedded devices,
+handhelds and game console platforms. 
+</dl></blockquote>
+<!-- section end -->
+</div>
+<!-- 2011/01/11 end -->
+
+
+
+<hr class="hide">
+<!-- 2011/01/12 start -->
+<h2><a name="20110112" href="201101b.html#20110112">2011-01-12 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="201101121" title="201101121" href="201101b.html#201101121">■</a> 
+PayPalからのメール</h3>
+<p>
+ふとgmailでis:unreadしてみたら、PayPalからのメールがいっぱい出てきた。<br>
+どうもフィルタで問答無用でPayPalからだったらarchiveしていたようだ。<br>
+なんでこんな設定にしたんだろう？って
+<a href="200708a.html#200708031">これだな。</a>たぶんこのときに設定したんだな。ずっと放置していた。<br>
+あれ、アカウント消されてなかったんかい。<br>
+まあ、メールも大した内容じゃないからよかったが。
+</p>
+<!-- section end -->
+</div>
+<!-- 2011/01/12 end -->
+
+
+
+<hr class="hide">
+<!-- 2011/01/13 start -->
+<h2><a name="20110113" href="201101b.html#20110113">2011-01-13 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="201101131" title="201101131" href="201101b.html#201101131">■</a> 
+<a href="http://golf.shinh.org/p.rb?Old+Magician">Old Magician</a></h3>
+<p>
+問題読まなくてもoutput見れば何を表示すべきかわかる。<br>
+要は黒の個数の偶奇で決まるので2つめの数字だけで見ればいい。<br>
+と、えらそうに書いているが気づいたのは締め切り2日前だったという。
+</p>
+<!-- section end -->
+</div>
+<!-- 2011/01/13 end -->
+
+
+
+<hr class="hide">
+<!-- 2011/01/14 start -->
+<h2><a name="20110114" href="201101b.html#20110114">2011-01-14 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="201101141" title="201101141" href="201101b.html#201101141">■</a> 
+svnadmin dumpとxzとの相性のよさ</h3>
+<p>
+Rubyのsvnリポジトリをsvnadmin dumpしたら26GBにもなって驚いた。<br>
+素のリポジトリは786MBなのになんでこんなに大きくなるんだ？
+</p>
+<p>
+それはそれとしてgzip, bzip2, xzで圧縮してみたらちょっと信じられない結果に。
+</p>
+<pre>
+% ls -oh ruby-svn.dump*
+-rw-r--r-- 1 eban  26G 2011-01-14 10:08 ruby-svn.dump
+-rw-r--r-- 1 eban 4.9G 2011-01-14 23:14 ruby-svn.dump.bz2
+-rw-r--r-- 1 eban 7.1G 2011-01-14 20:40 ruby-svn.dump.gz
+-rw-r--r-- 1 eban 139M 2011-01-14 19:30 ruby-svn.dump.xz
+</pre>
+<p>
+xzはどうなってんの、これ？信じ難いのでmd5sumとってみた。
+</p>
+<pre>
+% time md5sum ruby-svn.dump; time xz -dc &lt;ruby-svn.dump.xz | md5sum
+506c2161bfdbfeacb399d0dead52e567  ruby-svn.dump
+md5sum ruby-svn.dump  90.35s user 14.61s system 39% cpu 4:26.06 total
+506c2161bfdbfeacb399d0dead52e567  -
+xz -dc &lt; ruby-svn.dump.xz  56.67s user 5.15s system 87% cpu 1:10.56 total
+md5sum  56.73s user 4.49s system 86% cpu 1:10.55 total
+</pre>
+<p>
+合ってるよ。すげー。って、xzで伸長したほうが速いんだな。<br>
+このくらいのサイズの差があるとIOのreadよりも計算のほうが速いってことか。<br>
+いろいろと予想外だ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2011/01/14 end -->
+
+
+
+<hr class="hide">
+<!-- 2011/01/15 start -->
+<h2><a name="20110115" href="201101b.html#20110115">2011-01-15 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="201101151" title="201101151" href="201101b.html#201101151">■</a> 
+<a href="http://golf.shinh.org/p.rb?Character+distance">Character distance</a></h3>
+<p>
+例によって:
+</p>
+<pre>
+73B gets.chars{|c|a=$_.index(c);$_[a]=&quot;\0&quot;;puts c+&quot;: #{B-a}&quot;if B=$_.index(c)}
+64B i=-1;gets.chars{|c|$_[i+=1]=0;puts c+&quot;: #{A-i}&quot;if A=$_.index(c)
+59B i=0;gets.chars{|c|puts c+&quot;: #{A-i+1}&quot;if A=$_.index(c,i+=1)}
+56B gets;puts$&amp;+&quot;: #{A+1}&quot;if A=$'.index($&amp;)while sub! /./,&quot;&quot;
+55B gets;($_=$';puts$&amp;+&quot;: #{A+1}&quot;if A=$_.index($&amp;))while/./
+54B gets;puts$&amp;+&quot;: #{$'.index($&amp;)+1}&quot;if($_=$')[$&amp;]while/./
+52B gets;puts$&amp;+&quot;: #{A+1}&quot;if A=($_=$').index($&amp;)while/./
+</pre>
+<p>
+gsubではできないと思い込んでしまったなあ。あとはこれか。
+</p>
+<pre>
+51B gets;puts$&amp;+&quot;: #{A+1}&quot;if(A=($_=$').index$&amp;)while/./
+</pre>
+<!-- section end -->
+</div>
+<!-- 2011/01/15 end -->
+
+
+
+<hr class="hide">
+<!-- 2011/01/16 start -->
+<h2><a name="20110116" href="201101b.html#20110116">2011-01-16 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="201101161" title="201101161" href="201101b.html#201101161">■</a> 
+iriver T30 プレイリスト</h3>
+<p>
+まったくもって今更ではあるけど、iriver T30でプレイリストが使いたくなった。<br>
+ぐぐったら
+<a href="http://phintsan.kapsi.fi/iriver-t50.html">Playlist format for iriver T50</a>がヒットした。<br>
+なぜかUTF-16BEなんだな。ほぼバイナリでちょっと面倒。
+</p>
+<p>
+とりあえず、全曲をプレイリスト化するスクリプトを作成。<br>
+引数にマウントしたディレクトリを指定するとカレントディレクトリにplaylist.plaを作る。
+</p>
+<pre>
+# coding: UTF-8
+
+playlist = nil
+Dir.chdir(ARGV[0]) do
+  playlist = *Dir.glob(&quot;**/*.{mp3,ogg}&quot;)
+end
+
+n = playlist.size
+
+open(&quot;playlist.pla&quot;, &quot;wb&quot;) do |f|
+  f.print [n, &quot;iriver UMS PLA&quot;].pack(&quot;Na508&quot;)
+  playlist.each do |file|
+    file = &quot;/&quot; + file
+    f.print [File.dirname(file).size + 2, file.tr('/','\\').encode(&quot;UTF-16BE&quot;)].pack(&quot;na510&quot;)
+  end
+end
+</pre>
+<p>
+いちおうT30でPlaylistsフォルダに置けば読めた。ファイル名は拡張子を.plaにすればなんでもよさげ。<br>
+m3uファイルを作ってPlaylistsフォルダに置いてみたが、さすがに無理だった。
+</p>
+<!-- section end -->
+</div>
+<!-- 2011/01/16 end -->
+
+
+
+<hr class="hide">
+<!-- 2011/01/17 start -->
+<h2><a name="20110117" href="201101b.html#20110117">2011-01-17 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="201101171" title="201101171" href="201101b.html#201101171">■</a> 
+iriverのプレイリスト形式</h3>
+<p>
+512バイトのあたまにある2バイトでディレクトリの長さ的なものが本当に使われているか実験してみた。<br>
+id3tagをつけないとファイル名を表示するようになるが、まさにこの表示する名前は長さで決まっていた。<br>
+0にすると絶対パス的なものになる。ものすごく長くなって非常にうっとうしい。
+</p>
+<p>
+T30自身でファイルを消すとなぜか再生モードがリセットされてしまう。<br>
+一方プレイリストにも独立した再生モードがあるんだけど、こちらはちゃんと保持される。<br>
+プレイリストを使い始めたきっかけはリセットされるのがうっとうしいからだったりする。
+</p>
+<!-- section end -->
+</div>
+<!-- 2011/01/17 end -->
+
+
+
+<hr class="hide">
+<!-- 2011/01/18 start -->
+<h2><a name="20110118" href="201101b.html#20110118">2011-01-18 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="201101181" title="201101181" href="201101b.html#201101181">■</a> 
+<a href="http://golf.shinh.org/p.rb?toggleCASE">toggleCASE</a></h3>
+<p>
+ふと思いついた方法で縮むかと思ったが、例外がありあまり縮まなかった。<br>
+非常に惜しいんだけど、上位の二人はこっち方面じゃないのかな。
+</p>
+<!-- section end -->
+</div>
+<!-- 2011/01/18 end -->
+
+
+
+<hr class="hide">
+<!-- 2011/01/19 start -->
+<h2><a name="20110119" href="201101b.html#20110119">2011-01-19 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="201101191" title="201101191" href="201101b.html#201101191">■</a> 
+ssh -X</h3>
+<p>
+あるときからssh -XしてもDISPLAYが設定されない状況が続いてしばらくほっといたんだけど、<br>
+どうもUbuntuがサーバだとだめみたいという感じだった。3台ともだったので。<br>
+で、今日試したら3台ともokだった。どこかの更新でなおったのか？なんだったんだろうな。
+</p>
+<!-- section end -->
+</div>
+<!-- 2011/01/19 end -->
+
+
+
+<hr class="hide">
+<!-- 2011/01/20 start -->
+<h2><a name="20110120" href="201101b.html#20110120">2011-01-20 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="201101201" title="201101201" href="201101b.html#201101201">■</a> 
+<a href="http://golf.shinh.org/p.rb?strikethrough_H_H_H_H_H_H_H_H_H_H_H_H_Hbackspace+converter+FIXED">strikethrough_H_H_H_H_H_H_H_H_H_H_H_H_Hbackspace converter FIXED</a></h3>
+<p>
+正規表現だけかと思ったが、leonidさんの&gt;を含めるかどうかで1B違うというのはなかなか気づかない。<br>
+うまいな。と思ったらPerl陣はみんな気づいていた。
+</p>
+<!-- section end -->
+</div>
+<!-- 2011/01/20 end -->
+
+<hr>
+<div>
+<a href="201101a.html">&lt;Prev(,)</a> | 
+<a href="201101c.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

@@ -1,0 +1,377 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2009-11-c</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="200911b.html">
+<link rel="next" href="200912a.html">
+
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2009年11月下旬〜</p>
+<hr>
+<div>
+<a href="200911b.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="200912a.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2009/11/21 start -->
+<h2><a name="20091121" href="200911c.html#20091121">2009-11-21 (Sat)</a></h2>
+<!-- 2009-11-22 01:15:54 -->
+
+<div class="entry1">
+<h3><a name="200911211" title="200911211" href="200911c.html#200911211">■</a> 
+[Eee PC] Eee PCをUSB機器から起動</h3>
+<p>
+BIOSの設定でBoot Boosterをdisableにする。<br>
+起動時にESCを押すとメニューが出てくるので起動したいデバイスを選ぶ。
+</p>
+
+<p>
+さすがにメインPCで再起動の繰り返しはうっとうしくなってきた。<br>
+ってこれこそVirtualBox使えばいいんか。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200911212" title="200911212" href="200911c.html#200911212">■</a> 
+[VirtualBox] VirtualBoxでUSB機器からの起動</h3>
+<p>
+なんか無理っぽい。
+</p>
+<!-- section end -->
+</div>
+<!-- 2009/11/21 end -->
+
+
+
+<hr class="hide">
+<!-- 2009/11/22 start -->
+<h2><a name="20091122" href="200911c.html#20091122">2009-11-22 (Sun)</a></h2>
+<!-- 2009-11-23 02:41:13 -->
+
+<div class="entry1">
+<h3><a name="200911221" title="200911221" href="200911c.html#200911221">■</a> 
+[Fedora] Fedora 12 ISOイメージをtorrentで</h3>
+<p>
+さてFedora 12をインストールするかと思ったら、<br>
+まだISOイメージをダウンロードしてないことに気づいた。<br>
+やっぱtorrentだよなってことで3時間程で完。
+</p>
+
+<p>
+とりあえずはUbuntu 9.10が入ってるとこをつぶす予定。<br>
+LVMももうやめる。増やしたり減らしたりしないし、<br>
+Ubuntuから見るの面倒だしデメリットのほうが大きい。
+</p>
+<!-- section end -->
+</div>
+<!-- 2009/11/22 end -->
+
+
+
+<hr class="hide">
+<!-- 2009/11/23 start -->
+<h2><a name="20091123" href="200911c.html#20091123">2009-11-23 (Mon)</a></h2>
+<!-- 2009-11-24 01:29:24 -->
+
+<div class="entry1">
+<h3><a name="200911231" title="200911231" href="200911c.html#200911231">■</a> 
+[PC] DVD+RW不調</h3>
+<p>
+昨日ダウンロードしたISOイメージをDVD+RWに焼いて試してみるもリードエラー。<br>
+ここでなんかはまる気がしたのでVirtualBoxで試すとやはりだめ。<br>
+2枚目からはVirtualBoxだけで試す。だめ。3枚目もだめ。ってどうなってんだ。<br>
+4枚目は成功した。そのまま予行練習も兼ねてインストール進めてみると1時間ほどで終了。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200911232" title="200911232" href="200911c.html#200911232">■</a> 
+[Fedora] Fedora 12をVirtualBoxへインストール</h3>
+<p>
+パーティションの設定のとこはLVMをやめると計算が面倒。<br>
+あいかわらずデフォルトでは/bootは別パーティションにするようだ。<br>
+どうせ全部御破算にするので/とswapだけにしてみた(/はext4)。<br>
+特に問題なく起動するのを確認。本番でもこうするか。
+</p>
+
+<p>
+grubが0.97なのにext4に対応しているようで、<br>
+grub2ではなくそのまま旧grub改って感じのバージョンがインストールされる。<br>
+そうか。先日作ったUSBフラッシュもこっちにしとくとより確実だな。
+</p>
+
+<p>
+grubのメニューにはUbuntuは出てこない。<br>
+2つF12をインストールしてみたんだけど、<br>
+他のF12が拾えないところからしてwindowsぐらいしか対応してない模様。<br>
+存在確認してchainloaderで済ませるから簡単だしなあ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200911233" title="200911233" href="200911c.html#200911233">■</a> 
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-talk/351089">[Ruby] [ANN] kramdown 0.1.0 - first relase of fast, pure Ruby Markdown parser</a></h3>
+<p>
+markdownっていろいろ処理系が多いねえ。
+</p>
+
+<p>
+&quot;kram&quot;.reverse #=&gt; mark
+</p>
+<!-- section end -->
+</div>
+<!-- 2009/11/23 end -->
+
+
+
+<hr class="hide">
+<!-- 2009/11/24 start -->
+<h2><a name="20091124" href="200911c.html#20091124">2009-11-24 (Tue)</a></h2>
+<!-- 2009-11-25 00:54:58 -->
+
+<div class="entry1">
+<h3><a name="200911241" title="200911241" href="200911c.html#200911241">■</a> 
+[RSS] cia.vcのRSSに余計な空白が含まれるようになった</h3>
+<p>
+今月の頭ぐらいからcia.vcのRSSに意味不明の空白が含まれるようになった。<br>
+そのままHTMLとして見るんなら見た目は変わらないからいいんだけど、<br>
+twitterfeedでtwitterへ流すと重複した空白の分だけ表示できる量が減ってしまって、<br>
+残念な思いで胸がいっぱいです。<br>
+2,30文字はありそうなのでかなりもったいない。
+</p>
+
+<p>
+やっぱ、Y!Pipesの登場か？
+</p>
+<!-- section end -->
+</div>
+<!-- 2009/11/24 end -->
+
+
+
+<hr class="hide">
+<!-- 2009/11/25 start -->
+<h2><a name="20091125" href="200911c.html#20091125">2009-11-25 (Wed)</a></h2>
+<!-- 2009-11-25 23:36:25 -->
+
+<div class="entry1">
+<h3><a name="200911251" title="200911251" href="200911c.html#200911251">■</a> 
+[Fedora] 先週失敗したyum upgradeで無理矢理アップグレードに成功</h3>
+<p>
+
+<a href="200911b.html#200911181">先週失敗した</a>まま放っておいたが、<br>
+今日改めてyum upgradeしてみてもやはり同じ結果に。<br>
+試してに1個だけ引数に指定してみるとなんとちゃんと更新された。<br>
+もちろん/bootなんかにはインストールしない。<br>
+引数に全部指定すればいけるのかと取っといたログからパッケージを抜き出して<br>
+実行してみたがやはりだめ。ということはサイズのほうか？<br>
+forで1つずつ指定してみたら進んだ。なんかえらい無駄ではあるが一応最後まで通った。<br>
+再起動もok。
+</p>
+
+<p>
+さてどうしたもんかな。たぶんyum updateでも100MBぐらいの更新になったら<br>
+同じように失敗しそうだしなあ。F13に上げるときに考えよう。
+</p>
+<!-- section end -->
+</div>
+<!-- 2009/11/25 end -->
+
+
+
+<hr class="hide">
+<!-- 2009/11/26 start -->
+<h2><a name="20091126" href="200911c.html#20091126">2009-11-26 (Thu)</a></h2>
+<!-- 2009-11-28 13:01:18 -->
+
+<div class="entry1">
+<h3><a name="200911261" title="200911261" href="200911c.html#200911261">■</a> 
+[Twitter] @rubyciの設定の話</h3>
+<p>
+
+<a href="http://twitter.com/rubyci">@rubyci</a>は
+<a href="http://cia.vc/stats/project/ruby">cia.vc</a>
+のRSSを 
+<a href="http://twitterfeed.com/">twitterfeed.com</a>でtwitterに流してる。<br>
+で、よく見ると
+<a href="http://cia.vc/stats/project/ruby/.rss/customize">Customized RSS</a>
+なんてある。<br>
+これでPlain Textを選ぶと余計な空白がなくなることが判明。<br>
+Y!Pipesを使うまでもなかった。
+</p>
+
+<p>
+twitterfeedでの変更ではOpenIDのプロバイダが思い出せないとかいろいろあったが、<br>
+まあtwitter側の情報があればそれで認証可能なので問題ないようだ。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2009/11/26 end -->
+
+
+
+<hr class="hide">
+<!-- 2009/11/27 start -->
+<h2><a name="20091127" href="200911c.html#20091127">2009-11-27 (Fri)</a></h2>
+<!-- 2009-11-28 06:37:11 -->
+
+<div class="entry1">
+<h3><a name="200911271" title="200911271" href="200911c.html#200911271">■</a> 
+めがねのフレームが金属疲労でぽっきり</h3>
+<p>
+このめがねのフレームは一部最初から折れ曲っていて、<br>
+クッションのような働きになっている。<br>
+圧迫感もなくいい感じで気に入ってた。<br>
+いつかはだめになるだろうと買うときにもちょっと思ったが3年か。<br>
+保ったほうかな。部品の在庫があるといいんだが。
+</p>
+
+<p>
+店が19時に閉まるということなので定時で帰ったが、
+閉店ぎりぎりで行ったところでメーカーもすでに就業時間を過ぎてるし、<br>
+明日明後日は週末で休みだし、在庫確認は週明けになるということで、<br>
+土日に行っても同じことだった。そりゃそうだよな。
+</p>
+<!-- section end -->
+</div>
+<!-- 2009/11/27 end -->
+
+
+
+<hr class="hide">
+<!-- 2009/11/28 start -->
+<h2><a name="20091128" href="200911c.html#20091128">2009-11-28 (Sat)</a></h2>
+<!-- 2009-11-29 01:13:54 -->
+
+<div class="entry1">
+<h3><a name="200911281" title="200911281" href="200911c.html#200911281">■</a> 
+<a href="http://mozilla-remix.seesaa.net/article/134170168.html">[Thunderbird] Mozilla Re-Mix: Thunderbird 3.0のヘッダをコンパクトに表示するアドオン「CompactHeader」</a></h3>
+<p>
+Tb3.0b4には対応してないらしく、-ボタンを押すとヘッダ表示部が消えてしまう。<br>
+しかも元に戻せない。残念。アンインストール。
+</p>
+<!-- section end -->
+</div>
+<!-- 2009/11/28 end -->
+
+
+
+<hr class="hide">
+<!-- 2009/11/29 start -->
+<h2><a name="20091129" href="200911c.html#20091129">2009-11-29 (Sun)</a></h2>
+<!-- 2009-11-29 23:55:22 -->
+
+<div class="entry1">
+<h3><a name="200911291" title="200911291" href="200911c.html#200911291">■</a> 
+[Thunderbird] なぜかTb3のヘッダにContent-Transfer-Encodingが表示される</h3>
+<p>
+こう長いフィールドが表示されると右へずれるので目立つ。<br>
+prefs.jsをながめてみるとそのものずばりの設定が見つかった。
+</p>
+
+<pre>
+user_pref(&quot;mailnews.headers.extraExpandedHeaders&quot;, &quot;x-enigmail-version content-transfer-encoding openpgp x-mimeole x-bugzilla-reason x-php-bug&quot;);
+</pre>
+
+<p>
+enigmailが勝手に設定したんだろうか？まあ、それはそれとして、<br>
+ここに空白区切りで並べれば表示できるとわかったのは収穫だ。<br>
+x-ml-nameとx-ml-countだけにしてみた。<br>
+これでruby-talkのMLタグがちょっとはわかりやすくなるかな。
+</p>
+
+<p>
+もうちょっと柔軟に表示するものを設定できるといいんだが。
+</p>
+<!-- section end -->
+</div>
+<!-- 2009/11/29 end -->
+
+
+
+<hr class="hide">
+<!-- 2009/11/30 start -->
+<h2><a name="20091130" href="200911c.html#20091130">2009-11-30 (Mon)</a></h2>
+<!-- 2009-12-01 01:57:54 -->
+
+<div class="entry1">
+<h3><a name="200911301" title="200911301" href="200911c.html#200911301">■</a> 
+[SSH] sshの攻撃対策の結果</h3>
+<p>
+2週間以上経ったのでログを確認してみると、なんと1つも攻撃がなかった。<br>
+ほんとにポート番号を変えるだけでよかったのかも。
+</p>
+<!-- section end -->
+</div>
+<!-- 2009/11/30 end -->
+
+<hr>
+<div>
+<a href="200911b.html">&lt;Prev(,)</a> | 
+<a href="200912a.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

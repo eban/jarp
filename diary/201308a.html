@@ -1,0 +1,458 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2013-8-a</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="201307c.html">
+<link rel="next" href="201308b.html">
+
+<link rel="stylesheet" type="text/css" href="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.css">
+<script type="text/javascript" src="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.js"></script>
+<script type="text/javascript">
+<!--       
+$(document).ready(function() {
+  prettyPrint();
+});
+-->
+</script>
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2013年8月上旬〜</p>
+<hr>
+<div>
+<a href="201307c.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="201308b.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2013/08/01 start -->
+<h2><a name="20130801" href="201308a.html#20130801">2013-08-01 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="201308011" title="201308011" href="201308a.html#201308011">■</a> 
+Rubyに分数と複素数リテラルが入った</h3>
+<p>
+夏休みの宿題がはかどるわけですね。
+</p>
+<pre>
+% ruby -e 'p 1/2' 
+0
+% ruby -e 'p 1/2r'
+(1/2)
+% ruby -e 'p 18/12r'   
+(3/2)
+% ruby -e 'p 1/2r-1/3r'
+(1/6)
+% ruby -e 'p (2+3i)*(1+2i)'
+(-4+7i)
+</pre>
+<p>
+虚数部にも分数を使いたいときはriとすればいいようだ。
+</p>
+<pre>
+% ruby -e 'p 1+2/3ri'   
+((1/1)-(2/3)*i)
+</pre>
+<!-- section end -->
+</div>
+<!-- 2013/08/01 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/08/02 start -->
+<h2><a name="20130802" href="201308a.html#20130802">2013-08-02 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="201308021" title="201308021" href="201308a.html#201308021">■</a> 
+7月のspam</h3>
+<p>
+317通。例のあれがなくなったのでまあ元に戻った。
+
+</p>
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="201308022" title="201308022" href="201308a.html#201308022">■</a> 
+ばるす</h3>
+<p>
+23:22:45との情報を得たので
+</p>
+<pre>
+% echo 'sleep 45;echo バルス|tw --pipe'|at 23:22
+</pre>
+<p>
+を仕掛けておいたが、実際は23:21:50だった。<br>
+まあ1分あるからatrm効くかと実行したが、間に合わず
+</p>
+<pre>
+% atq 
+130	Fri Aug  2 23:22:00 2013 = eban
+% atrm 130
+Warning: deleting running job
+</pre>
+<p>
+と警告が出るのであった。この時点で消せてないと気づかず実行されちゃったけど、そうだよなあ。<br>
+45秒はsleepだし。でこれも50秒に実行されてたので自動実行するにしても、<br>
+5秒ぐらい前に設定したほうがいいのかもしれない。
+</p>
+<!-- section end -->
+</div>
+<!-- 2013/08/02 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/08/03 start -->
+<h2><a name="20130803" href="201308a.html#20130803">2013-08-03 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="201308031" title="201308031" href="201308a.html#201308031">■</a> 
+<a href="https://bugs.ruby-lang.org/issues/3753">Rubyのdefの戻り値がシンボルに</a></h3>
+<p>
+実はこの話はものすごい昔から
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-dev/6391">提案</a>されていてる。今回ついに入ったわけだ。
+</p>
+<pre>
+% ruby -ve 'p def foo()end'
+ruby 2.1.0dev (2013-08-03 trunk 42352) [x86_64-linux]
+:foo
+</pre>
+<p>
+print def Just_another_Ruby_hacker()end.to_s.gsub(&quot;_&quot;,&quot; &quot;)+&quot;,&quot;
+</p>
+<!-- section end -->
+</div>
+<!-- 2013/08/03 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/08/04 start -->
+<h2><a name="20130804" href="201308a.html#20130804">2013-08-04 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="201308041" title="201308041" href="201308a.html#201308041">■</a> 
+Cygwinでsetupするたびにpangoがエラーになる</h3>
+<p>
+setupの最後に
+</p>
+<pre>
+Package: Unknown package
+        pango1.0.sh exit code 1
+</pre>
+<p>
+と言われてしまう。<br>
+ちょっと気味が悪いがのpango1.0.shも消されてしまうので、調査不能なんだよねえ。<br>
+ああ、表示してるところで探せばまだ残ってるかも。
+</p>
+<!-- section end -->
+</div>
+<!-- 2013/08/04 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/08/05 start -->
+<h2><a name="20130805" href="201308a.html#20130805">2013-08-05 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="201308051" title="201308051" href="201308a.html#201308051">■</a> 
+convertで星型</h3>
+<p>
+今日は判子の日なので星型の判子を作ったよ。
+</p>
+<pre>
+% ruby -e 'include Math;r=100;puts &quot;path \&quot;&quot;+11.times.map{|i|s=i%2==0?1:0.4;th=(90+i*36)*PI/180.0;&quot;%s%d,%d&quot; % [i==0 ? &quot;M&quot; : &quot;L&quot;, 100.5+r*s*cos(th), 100.5-r*s*sin(th)]}.join(&quot; &quot;)+&quot; Z\&quot;&quot;'|\
+convert -size 200x200 xc:white -fill white -stroke red -strokewidth 4 -draw @- star.png
+</pre>
+<p>
+ちょっと長いが、Rubyで星型のデータを作ってconvertの-drawに食わせている。
+実際には
+</p>
+<pre>
+path &quot;M100,0 L76,68 L5,69 L62,112 L41,181 L100,140 L159,181 L138,112 L195,69 L124,68 L100,0 Z&quot;
+</pre>
+<p>
+のようなSVGのデータを生成している。
+</p>
+<p>
+<img src="../images/star.png" alt="">
+</p>
+<!-- section end -->
+</div>
+<!-- 2013/08/05 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/08/06 start -->
+<h2><a name="20130806" href="201308a.html#20130806">2013-08-06 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="201308061" title="201308061" href="201308a.html#201308061">■</a> 
+丸みを帯びた星型</h3>
+<p>
+ちょっととんがりすぎなのでベジェ曲線命令を使ってで丸みを。
+</p>
+<pre>
+ruby -e 'include Math;r=100;puts &quot;path \&quot;M&quot;+11.times.map{|i|s=i%2==0?0.4:1;th=(126+i*36)*PI/180.0;&quot;%s%d,%d&quot; % [i==1 ? &quot;Q&quot; : &quot;&quot;, 100.5+r*s*cos(th), 100.5-r*s*sin(th)]}.join(&quot; &quot;)+&quot; Z\&quot;&quot;'|\
+convert -size 200x200 xc:white -fill white -stroke red -strokewidth 4 -draw @- -trim star2.png
+</pre>
+<p>
+ここまでくると何を作っているかわかるかも。
+</p>
+<p>
+<img src="../images/star2.png" alt="">
+</p>
+<!-- section end -->
+</div>
+<!-- 2013/08/06 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/08/07 start -->
+<h2><a name="20130807" href="201308a.html#20130807">2013-08-07 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="201308071" title="201308071" href="201308a.html#201308071">■</a> 
+RubyのMLがFMLからMailmanに</h3>
+<p>
+つまりPerlからPythonへ。<br>
+Mailmanの設定はWebから可能だが、ちょっと凝った設定しようと思ったらハンドラを書かざるを得ない。<br>
+Pythonはやはり勝手が違い慣れない。<br>
+秘密の抜け穴を作るには最終的にはmsgdata[&quot;approved&quot;] = 1でいける。<br>
+しかしまだエラーを起こすことがあるようで、油断ならない。<br>
+syslogで様子見るか。
+</p>
+<!-- section end -->
+</div>
+<!-- 2013/08/07 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/08/08 start -->
+<h2><a name="20130808" href="201308a.html#20130808">2013-08-08 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="201308081" title="201308081" href="201308a.html#201308081">■</a> 
+convertでさくら模様</h3>
+<p>
+あの丸みを帯びた星を先割れにすればさくらに。
+</p>
+<pre>
+% cat sakura.rb
+include Math
+R=100
+def circle(th, s)
+  [R+0.5+R*s*cos(th), R+0.5-R*s*sin(th)]
+end
+puts &quot;path \&quot;M&quot;+11.times.map{|i|
+  if i % 2 == 0
+    s = 0.5
+    th=(126+i*36)*PI/180.0
+    &quot;%d,%d&quot; % circle(th, s)
+  else
+    s = 1
+    thm=(116+i*36)*PI/180.0
+    th=(126+i*36)*PI/180.0
+    thp=(136+i*36)*PI/180.0
+    &quot;%s%d,%d %d,%d %d,%d&quot; % [i == 1 ? &quot;Q&quot; : &quot;&quot;, *circle(thm, s*0.90), *circle(th, s*0.7), *circle(thp, s*0.90)]
+  end
+}.join(&quot; &quot;)+&quot; Z\&quot;&quot;
+% ruby sakura.rb |convert -size 200x200 xc:white -fill white -stroke red -strokewidth 4 -draw @- -trim sakura.png
+</pre>
+<p>
+とがってる頂点を10度きざみで3つに分割している。
+</p>
+<p>
+<img src="../images/sakura.png" alt="">
+</p>
+<!-- section end -->
+</div>
+<!-- 2013/08/08 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/08/09 start -->
+<h2><a name="20130809" href="201308a.html#20130809">2013-08-09 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="201308091" title="201308091" href="201308a.html#201308091">■</a> 
+Ruby ML関連のMailmanの設定</h3>
+<p>
+Pythonの初歩がわからず手間取ったが、なんとか秘密の抜け穴も掘ることができた。<br>
+終わってみれば数行のhandlerを書いただけなんだけどねえ。<br>
+秘密なのでそのスクリプトは見せられない。
+</p>
+<p>
+今回はvetteとpostとerrorのログが役に立った。3ついっぺんに見るために
+</p>
+<pre>
+% tail -f /var/log/mailman/{post,error,vette}
+</pre>
+<p>
+と実行した。更新したログがあると
+</p>
+<pre>
+==&gt; /var/log/mailman/post &lt;==
+</pre>
+<p>
+のようにファイル名も表示されるのでデバッグには十分。<br>
+syslogを使ってvetteあたりに情報を書いていく感じ。<br>
+ああ、ひょっとしたらdebugとか好きな名前でもいけたのかもしれない。<br>
+あと、handlerとか修正したらmailmanを再起動するのを忘れずに。
+</p>
+<!-- section end -->
+</div>
+<!-- 2013/08/09 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/08/10 start -->
+<h2><a name="20130810" href="201308a.html#20130810">2013-08-10 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="201308101" title="201308101" href="201308a.html#201308101">■</a> 
+convertで「たいへんよくできました」</h3>
+<p>
+内側に細い線でなぞればそれらしいものができあがる。<br>
+sakura.rbも微妙にいじられてるが気にしない。
+</p>
+<pre>
+% cat sakura.rb
+include Math
+
+R = 100
+
+def circle(th, r)
+  [R+0.5+r*cos(th), R+0.5-r*sin(th)]
+end
+
+def sakura ratio
+  r = R * ratio
+  &quot;path \&quot;M&quot;+11.times.map{|i|
+    th=(54+i*36)*PI/180.0
+    if i % 2 == 0
+      &quot;%d,%d&quot; % circle(th, r -  R * 0.4)
+    else
+      thm=(44+i*36)*PI/180.0
+      thp=(64+i*36)*PI/180.0
+      &quot;%s%d,%d %d,%d %d,%d&quot; % [i == 1 ? &quot;Q&quot; : &quot;&quot;, *circle(thm, r), *circle(th, r*0.8), *circle(thp, r)]
+    end
+  }.join(&quot; &quot;)+&quot; Z\&quot;&quot;
+end
+
+puts sakura ARGV[0].to_f
+% convert -size 200x200 xc:white -fill white -stroke red \
+    -strokewidth 4 -draw @&lt;(ruby sakura.rb 1) \
+    -strokewidth 1 -draw @&lt;(ruby sakura.rb 0.9) \
+    -rotate 36 -trim sakura36.png
+</pre>
+<p>
+<img src="../images/sakura36.png" alt="">
+</p>
+<p>
+なぜ36度回転しているかというともう1個重ねるため。
+</p>
+<pre>
+% convert -size 200x200 xc:white -fill white -stroke red \
+    -strokewidth 4 -draw @&lt;(ruby sakura.rb 1) \
+    -strokewidth 1 -draw @&lt;(ruby sakura.rb 0.9) -rotate 36 png:- | \
+  convert - \( -size 200x200 xc:none -fill white -stroke red \
+    -strokewidth 4 -draw @&lt;(ruby sakura.rb 1) \
+    -strokewidth 1 -draw @&lt;(ruby sakura.rb 0.9) \) \
+    -gravity center -composite -trim tyd.png
+</pre>
+<p>
+<img src="../images/tyd.png" alt="">
+</p>
+<p>
+ガワのできあがり。xc:noneにすることで背景を透明にしている。<br>
+重ねるとその外側だけ顔を出すことになる。
+</p>
+<p>
+あとは縦書きで書ければ完璧だったんだけど、一応の完成。
+</p>
+<pre>
+% convert tyd.png \
+    \( -size 200x200 xc:none -stroke red -strokewidth 2 \
+       -font /usr/share/fonts/opentype/ipafont-mincho/ipam.ttf \
+       -pointsize 24 -gravity center \
+       -draw $'text 0,0 &quot;たいへん\nよくねて\nました&quot;' \
+    \) -gravity center -composite -rotate 10 tyd10.png
+</pre>
+<p>
+<img src="../images/tyd10.png" alt="">
+</p>
+<p>
+例によってちょっと傾けることで判子らしさを表現している。
+</p>
+<!-- section end -->
+</div>
+<!-- 2013/08/10 end -->
+
+<hr>
+<div>
+<a href="201307c.html">&lt;Prev(,)</a> | 
+<a href="201308b.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

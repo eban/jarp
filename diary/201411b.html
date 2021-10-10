@@ -1,0 +1,374 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2014-11-b</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="201411a.html">
+<link rel="next" href="201411c.html">
+
+<link rel="stylesheet" type="text/css" href="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.css">
+<script async type="text/javascript" src="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.js"></script>
+<script type="text/javascript">
+<!--       
+$(document).ready(function() {
+  prettyPrint();
+});
+-->
+</script>
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2014年11月中旬〜</p>
+<hr>
+<div>
+<a href="201411a.html" accesskey=",">&lt;Older(,)</a> | 
+<a href="201411c.html" accesskey=".">Newer(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2014/11/11 start -->
+<h2><a name="20141111" href="201411b.html#20141111">2014-11-11 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="201411111" title="201411111" href="201411b.html#201411111">■</a> 
+convertの-auto-gammaが結構いい感じで濃くしてくれる</h3>
+<p>
+あまり考えずにスキャンした初期のものを見るとうすくてかなり困ったものになってる。<br>
+いちいち最適なパラメータを試行錯誤するのも面倒だなといろいろ探してみたら、<br>
+-auto-gammaが結構いい感じだ。ただ文字がつぶれがち。
+</p>
+<p>
+<img src="../images/orig-101.png" alt="">
+<img src="../images/auto-gamma-101.png" alt="">
+</p>
+<p>
+この場合は-gamma 0.3ぐらいが丁度いいかな。
+</p>
+<p>
+<img src="../images/gamma-0.3-101.png" alt="">
+</p>
+<!-- section end -->
+</div>
+<!-- 2014/11/11 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/11/12 start -->
+<h2><a name="20141112" href="201411b.html#20141112">2014-11-12 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="201411121" title="201411121" href="201411b.html#201411121">■</a> 
+<a href="http://www.pixelbeat.org/programming/gcc/static_assert.html">Compile time assertions in C</a></h3>
+<p>
+なかなか興味深い話だ。
+</p>
+<pre>
+% echo 'main(){(void)sizeof(char[0]);}' | gcc -xc -c - -o /dev/null
+% echo 'main(){(void)sizeof(char[-1]);}' | gcc -xc -c - -o /dev/null
+&lt;stdin&gt;: In function ‘main’:
+&lt;stdin&gt;:1:1: error: size of unnamed array is negative
+</pre>
+<p>
+常数同士の計算ならコンパイル時に行なわれるので、<br>
+その結果がエラーになるように調整すればいいってわけだな。
+</p>
+<!-- section end -->
+</div>
+<!-- 2014/11/12 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/11/13 start -->
+<h2><a name="20141113" href="201411b.html#20141113">2014-11-13 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="201411131" title="201411131" href="201411b.html#201411131">■</a> 
+torneの調子が悪い</h3>
+<p>
+TOKYO MXでの録画ばかり変だったのでTOKYO MXが原因かと思ったらNHKでも起きた。<br>
+よくみるとnasneではなくtorneだけなのでこっちが原因か。<br>
+こまったねえ。J:COMもあるからそっちで代用するとして、nasne安いしもう1台買うか。
+</p>
+<!-- section end -->
+</div>
+<!-- 2014/11/13 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/11/14 start -->
+<h2><a name="20141114" href="201411b.html#20141114">2014-11-14 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="201411141" title="201411141" href="201411b.html#201411141">■</a> 
+feedproxy経由のリンクが新しいタブで開けない</h3>
+<p>
+Google Chromeで。最初はAOL Readerの不具合かと思ったが、<br>
+そのリンクをdiigoへ登録してもだめだった。<br>
+なにか拡張が悪さしてるんだろうと調べてみると、<br>
+ABPの
+<a href="https://code.google.com/p/adblock-plus-japanese-filter/">日本用フィルタ (ABP Japanese filters)</a>のせいだった。<br>
+無効にして様子見。
+</p>
+<!-- section end -->
+</div>
+<!-- 2014/11/14 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/11/15 start -->
+<h2><a name="20141115" href="201411b.html#20141115">2014-11-15 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="201411151" title="201411151" href="201411b.html#201411151">■</a> 
+torne復活</h3>
+<p>
+念の為アンテナレベル確認してみると、あららめちゃくちゃ低い。<br>
+アンテナ線が原因か。ちょっと触るだけで変化する。<br>
+というわけでtorne自身は問題なかった。疑ってすまん。
+</p>
+<!-- section end -->
+</div>
+<!-- 2014/11/15 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/11/16 start -->
+<h2><a name="20141116" href="201411b.html#20141116">2014-11-16 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="201411161" title="201411161" href="201411b.html#201411161">■</a> 
+jqでFizzBuzz</h3>
+<p>
+最初は普通にこんな感じで作ってみたが、納得せず。
+</p>
+<pre>
+% jq -n -r 'range(1;101)|if .%15==0 then &quot;FizzBuzz&quot; elif .%3==0 then &quot;Fizz&quot; elif .%5==0 then &quot;Buzz&quot; else . end'
+</pre>
+<p>
+で、いろいろ調べてみると//なんて便利な技があった。<br>
+Perl版を思い起こすとこんな感じになる。
+</p>
+<pre>
+% jq -n -r 'range(1;101)|. as$i|[[&quot;Fizz&quot;][.%3],[&quot;Buzz&quot;][.%5]]|add//$i'
+</pre>
+<p>
+いや、ゴルフする必要はないんだが。<br>
+%はたぶん1.4ぐらいじゃないと動かない。
+</p>
+<!-- section end -->
+</div>
+<!-- 2014/11/16 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/11/17 start -->
+<h2><a name="20141117" href="201411b.html#20141117">2014-11-17 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="201411171" title="201411171" href="201411b.html#201411171">■</a> 
+1から100までの整数</h3>
+<p>
+そうだ。jqでもできるんだった。
+</p>
+<pre>
+% jq -n 'range(1;101)'
+</pre>
+<p>
+<a href="http://shinh.skr.jp/m/?date=20141118#p01">ゴルフ場に入れるなら、</a>sedと同じように入力がないときは<br>
+-nかecho null|にする必要があるかな。
+</p>
+<!-- section end -->
+</div>
+<!-- 2014/11/17 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/11/18 start -->
+<h2><a name="20141118" href="201411b.html#20141118">2014-11-18 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="201411181" title="201411181" href="201411b.html#201411181">■</a> 
+jqでゴルフ</h3>
+<p>
+ちょっと簡単なのを解いてみたが、一応なんとかなりそげ。
+</p>
+<pre>
+% jq -n -r '&quot;Hello, World!&quot;'
+Hello, World!
+% echo hogehoge | jq -R -r .
+hogehoge
+% echo $'hoge\n\nhoge\n\nhoge' | jq -R -r 'select(.!=&quot;&quot;)'
+hoge
+hoge
+hoge
+</pre>
+<!-- section end -->
+</div>
+<!-- 2014/11/18 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/11/19 start -->
+<h2><a name="20141119" href="201411b.html#20141119">2014-11-19 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="201411191" title="201411191" href="201411b.html#201411191">■</a> 
+jqでCSVを扱う</h3>
+<p>
+ずっとjqばかりだが、今日はCSVだ。<br>
+splitがあるので簡単に扱える。
+</p>
+<pre>
+% echo -e 'a,b,c,d,e,f\ng,h,i,j,k,l'                        
+a,b,c,d,e,f
+g,h,i,j,k,l
+% echo -e 'a,b,c,d,e,f\ng,h,i,j,k,l' | jq -R -c 'split(&quot;,&quot;)'
+[&quot;a&quot;,&quot;b&quot;,&quot;c&quot;,&quot;d&quot;,&quot;e&quot;,&quot;f&quot;]
+[&quot;g&quot;,&quot;h&quot;,&quot;i&quot;,&quot;j&quot;,&quot;k&quot;,&quot;l&quot;]
+</pre>
+<p>
+第0と第2を抜き出したければ、こんな感じ。
+</p>
+<pre>
+% echo -e 'a,b,c,d,e,f\ng,h,i,j,k,l' | jq -R -c 'split(&quot;,&quot;) | [.[0,2]]'
+[&quot;a&quot;,&quot;c&quot;]
+[&quot;g&quot;,&quot;i&quot;]
+</pre>
+<p>
+addすれば結合。-rで文字列の&quot;&quot;がなくなる。
+</p>
+<pre>
+% echo -e 'a,b,c,d,e,f\ng,h,i,j,k,l' | jq -R -c 'split(&quot;,&quot;) | [.[0,2]] | add' 
+&quot;ac&quot;
+&quot;gi&quot;
+% echo -e 'a,b,c,d,e,f\ng,h,i,j,k,l' | jq -R -c -r 'split(&quot;,&quot;) | [.[0,2]] | add'
+ac
+gi
+</pre>
+<p>
+数値はちょっと面倒。
+</p>
+<pre>
+% echo -e '1,2,3\n4,5,6' | jq -R -c 'split(&quot;\n&quot;)|map(split(&quot;,&quot;)|.[]|tonumber)' 
+[1,2,3]
+% echo -e '1,2,3\n4,5,6' | jq -R -c 'split(&quot;\n&quot;)|map(split(&quot;,&quot;)|.[]|tonumber) | add'      
+6
+15
+</pre>
+<!-- section end -->
+</div>
+<!-- 2014/11/19 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/11/20 start -->
+<h2><a name="20141120" href="201411b.html#20141120">2014-11-20 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="201411201" title="201411201" href="201411b.html#201411201">■</a> 
+vimでkeywordとみなされる文字</h3>
+<p>
+*.shを編集しているときにdwとかするとなぜか.も含まれてしまう。<br>
+いつからvimがそんな挙動に変わったのか忘れたが、やっと重い腰を上げた。<br>
+まずは~/.vimrcを二分法で探してみた。やはりsyntax onが原因か。<br>
+一応:scriptnamesで確認する。
+</p>
+<pre>
+% vim -u NONE -c 'syntax on|redir!&gt;foo.log|scriptnames|redir END|q' foo.sh
+% cat foo.log; echo
+
+  1: /usr/share/vim/vim74/syntax/syntax.vim
+  2: /usr/share/vim/vim74/syntax/synload.vim
+  3: /usr/share/vim/vim74/syntax/syncolor.vim
+  4: /usr/share/vim/vim74/filetype.vim
+  5: /usr/share/vim/vim74/syntax/sh.vim
+</pre>
+<p>
+5のsh.vimだな。中を見てみると先頭部分にこんな記述が。
+</p>
+<pre>
+&quot; AFAICT &quot;.&quot; should be considered part of the iskeyword.  Using iskeywords in
+&quot; syntax is dicey, so the following code permits the user to
+&quot;  g:sh_isk set to a string     : specify iskeyword.
+&quot;  g:sh_noisk exists    : don't change iskeyword
+&quot;  g:sh_noisk does not exist    : (default) append &quot;.&quot; to iskeyword
+if exists(&quot;g:sh_isk&quot;) &amp;&amp; type(g:sh_isk) == 1    &quot; user specifying iskeyword
+ exe &quot;setl isk=&quot;.g:sh_isk
+elseif !exists(&quot;g:sh_noisk&quot;)            &quot; optionally prevent appending '.' to iskeyword
+ setl isk+=.
+endif
+</pre>
+<p>
+というわけで、~/.vimrcに let g:sh_noisk=1 を追加して解決した。
+</p>
+<!-- section end -->
+</div>
+<!-- 2014/11/20 end -->
+
+<hr>
+<div>
+<a href="201411a.html">&lt;Older(,)</a> | 
+<a href="201411c.html">Newer(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

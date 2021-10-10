@@ -1,0 +1,492 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2016-7-a</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="201606c.html">
+<link rel="next" href="201607b.html">
+
+<link rel="stylesheet" type="text/css" href="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.css">
+<script async type="text/javascript" src="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.js"></script>
+<script type="text/javascript">
+<!--       
+$(document).ready(function() {
+  prettyPrint();
+});
+-->
+</script>
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2016年7月上旬〜</p>
+<hr>
+<div>
+<a href="201606c.html" accesskey=",">&lt;Older(,)</a> | 
+<a href="201607b.html" accesskey=".">Newer(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2016/07/01 start -->
+<h2><a name="20160701" href="201607a.html#20160701">2016-07-01 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="201607011" title="201607011" href="201607a.html#201607011">■</a> 
+zsh: 引数リストが長すぎます</h3>
+<p>
+先日のrsyncの実験で100万ファイルを作ったわけだけど、<br>
+普通に引数で指定すると長すぎてエラーになってしまう。
+</p>
+<pre>
+% time touch a/{01..1000000}
+zsh: 引数リストが長すぎます: touch
+</pre>
+<p>
+こういうときはどうするかというとxargsを使う。<br>
+これがxargsの本来の使い方でOSの制限内の引数サイズで分割してコマンドを実行してくれる。
+</p>
+<pre>
+% time seq -w 1000000 | xargs touch
+seq -w 1000000  0.90s user 0.01s system 2% cpu 34.366 total
+</pre>
+<p>
+ファイルを作るだけでも結構時間がかかる。
+</p>
+<!-- section end -->
+</div>
+<!-- 2016/07/01 end -->
+
+
+
+<hr class="hide">
+<!-- 2016/07/02 start -->
+<h2><a name="20160702" href="201607a.html#20160702">2016-07-02 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="201607021" title="201607021" href="201607a.html#201607021">■</a> 
+ピタゴラ暗号棒</h3>
+<p>
+jqで。
+</p>
+<pre>
+% echo 'つおたくところうやうさきよん' | jq -Rr './&quot;&quot;|.[keys|group_by(.%3)[1,2,0][]]'
+お
+と
+う
+さ
+ん
+た
+こ
+や
+き
+つ
+く
+ろ
+う
+よ
+</pre>
+<p>
+ちょっと縦に場所を食ってるのでpasteで横に。
+</p>
+<pre>
+% echo 'つおたくところうやうさきよん' | jq -Rr './&quot;&quot;|.[keys|group_by(.%3)[1,2,0][]]' | paste -sd &quot;&quot;
+おとうさんたこやきつくろうよ
+</pre>
+<p>
+実はjqだけでもできる。
+</p>
+<pre>
+% echo 'つおたくところうやうさきよん' | jq -Rr '[./&quot;&quot;|.[keys|group_by(.%3)[1,2,0][]]]|join(&quot;&quot;)'
+おとうさんたこやきつくろうよ
+</pre>
+<p>
+ちょっと解説。./&quot;&quot;はsplit(&quot;&quot;)と同じで1文字毎に配列に変換してる。
+</p>
+<pre>
+% echo 'つおたくところうやうさきよん' | jq -Rc './&quot;&quot;'
+[&quot;つ&quot;,&quot;お&quot;,&quot;た&quot;,&quot;く&quot;,&quot;と&quot;,&quot;こ&quot;,&quot;ろ&quot;,&quot;う&quot;,&quot;や&quot;,&quot;う&quot;,&quot;さ&quot;,&quot;き&quot;,&quot;よ&quot;,&quot;ん&quot;]
+</pre>
+<p>
+ここから「おとうさんたこやきつくろうよ」を拾う。<br>
+index的には[1,4,7,10,13,2,5,8,11,0,3,6,9,12]という配列ができれば抜き出せる。
+</p>
+<pre>
+% echo 'つおたくところうやうさきよん' | jq -Rc '[./&quot;&quot;|.[1,4,7,10,13,2,5,8,11,0,3,6,9,12]]'   
+[&quot;お&quot;,&quot;と&quot;,&quot;う&quot;,&quot;さ&quot;,&quot;ん&quot;,&quot;た&quot;,&quot;こ&quot;,&quot;や&quot;,&quot;き&quot;,&quot;つ&quot;,&quot;く&quot;,&quot;ろ&quot;,&quot;う&quot;,&quot;よ&quot;]
+</pre>
+<p>
+その配列はそれぞれ3で割って1,2,0余るものなのでkeys|group_by(.%3)[1,2,0]と表現できる。
+</p>
+<pre>
+% echo 'つおたくところうやうさきよん' | jq -Rc '[./&quot;&quot;|keys|group_by(.%3)[1,2,0][]]'
+[1,4,7,10,13,2,5,8,11,0,3,6,9,12]
+</pre>
+<p>
+以上まとめると最初の例になる。
+</p>
+<!-- section end -->
+</div>
+<!-- 2016/07/02 end -->
+
+
+
+<hr class="hide">
+<!-- 2016/07/03 start -->
+<h2><a name="20160703" href="201607a.html#20160703">2016-07-03 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="201607031" title="201607031" href="201607a.html#201607031">■</a> 
+rsコマンド</h3>
+<p>
+結構便利。transposeが簡単にできるのがいいね。<br>
+Debian系ならそのものずばりのrsでインストールできる。<br>
+</p>
+<pre>
+% sudo apt-get install rs
+</pre>
+<p>
+transposeは-Tでok。それとxargs -n3みたいなのも可能。
+</p>
+<pre>
+% seq 100 | rs 0 10
+1    2    3    4    5    6    7    8    9    10
+11   12   13   14   15   16   17   18   19   20
+21   22   23   24   25   26   27   28   29   30
+31   32   33   34   35   36   37   38   39   40
+41   42   43   44   45   46   47   48   49   50
+51   52   53   54   55   56   57   58   59   60
+61   62   63   64   65   66   67   68   69   70
+71   72   73   74   75   76   77   78   79   80
+81   82   83   84   85   86   87   88   89   90
+91   92   93   94   95   96   97   98   99   100
+% seq 100 | rs -j 0 10
+  1    2    3    4    5    6    7    8    9   10
+ 11   12   13   14   15   16   17   18   19   20
+ 21   22   23   24   25   26   27   28   29   30
+ 31   32   33   34   35   36   37   38   39   40
+ 41   42   43   44   45   46   47   48   49   50
+ 51   52   53   54   55   56   57   58   59   60
+ 61   62   63   64   65   66   67   68   69   70
+ 71   72   73   74   75   76   77   78   79   80
+ 81   82   83   84   85   86   87   88   89   90
+ 91   92   93   94   95   96   97   98   99  100
+% seq 100 | rs -j -g1 0 10
+  1   2   3   4   5   6   7   8   9  10
+ 11  12  13  14  15  16  17  18  19  20
+ 21  22  23  24  25  26  27  28  29  30
+ 31  32  33  34  35  36  37  38  39  40
+ 41  42  43  44  45  46  47  48  49  50
+ 51  52  53  54  55  56  57  58  59  60
+ 61  62  63  64  65  66  67  68  69  70
+ 71  72  73  74  75  76  77  78  79  80
+ 81  82  83  84  85  86  87  88  89  90
+ 91  92  93  94  95  96  97  98  99 100
+% seq 100 | rs 0 10 | rs -j -g1 -T
+  1  11  21  31  41  51  61  71  81  91
+  2  12  22  32  42  52  62  72  82  92
+  3  13  23  33  43  53  63  73  83  93
+  4  14  24  34  44  54  64  74  84  94
+  5  15  25  35  45  55  65  75  85  95
+  6  16  26  36  46  56  66  76  86  96
+  7  17  27  37  47  57  67  77  87  97
+  8  18  28  38  48  58  68  78  88  98
+  9  19  29  39  49  59  69  79  89  99
+ 10  20  30  40  50  60  70  80  90 100
+</pre>
+<p>
+ピタゴラ暗号棒もいける。
+</p>
+<pre>
+% echo 'つおたくところうやうさきよん' | grep -o . | rs 0 3 | rs -T -g0 | sed '1{h;d};$G'
+おとうさん
+たこやき
+つくろうよ
+</pre>
+<!-- section end -->
+</div>
+<!-- 2016/07/03 end -->
+
+
+
+<hr class="hide">
+<!-- 2016/07/04 start -->
+<h2><a name="20160704" href="201607a.html#20160704">2016-07-04 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="201607041" title="201607041" href="201607a.html#201607041">■</a> 
+Linux Lite 3.0</h3>
+<p>
+<a href="https://www.linuxliteos.com/forums/release-announcements/linux-lite-3-0-final-released/">Linux Lite 3.0 Final Released</a><br>
+いつのまにかリリースされてたのでupgradeするかと思ったら、<br>
+最後のほうにこんな文言が。
+</p><blockquote><p>
+There is NO upgrade from Series 2 ( 2.0, 2.2, 2.4, 2.6, 2.8 ) to Series 3.
+</p></blockquote><p>
+まじか。インストールし直しだ。
+</p>
+<p>
+それはそれとしてこのままdo-release-upgradeするとどうなるのか？
+</p>
+<!-- section end -->
+</div>
+<!-- 2016/07/04 end -->
+
+
+
+<hr class="hide">
+<!-- 2016/07/05 start -->
+<h2><a name="20160705" href="201607a.html#20160705">2016-07-05 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="201607051" title="201607051" href="201607a.html#201607051">■</a> 
+SlackとGoogle Chromeの相性</h3>
+<p>
+かなり悪い。
+</p>
+<p>
+bot-userの生成とかOutgoing Webhooksの設定保存とかしようとすると、高い確率で失敗する。<br>
+これがエラーもなく単に元の値に戻るだけだったりするので非常にわかりにくい。<br>
+最初は気づかなかったくらい。<br>
+なぜか反映されないなと確認して何度か実行してようやく気づいた。<br>
+いろいろ試しているとGoogle Chromeだとそんな感じになるようで。<br>
+Firefoxでは起きてない。<br>
+というわけでSlackの設定で変なことが起きたらGoogle Chromeを疑ってみよう。
+</p>
+<!-- section end -->
+</div>
+<!-- 2016/07/05 end -->
+
+
+
+<hr class="hide">
+<!-- 2016/07/06 start -->
+<h2><a name="20160706" href="201607a.html#20160706">2016-07-06 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="201607061" title="201607061" href="201607a.html#201607061">■</a> 
+xargs -n1は遅い</h3>
+<p>
+xargsはコマンドを省略すると/bin/echoを呼ぶ。<br>
+ということはxargs -n1は分割された要素の数だけ/bin/echoを実行してしまう。<br>
+10000個で5秒もかかってしまう。
+</p>
+<p>
+<pre>
+% echo {1..10000} | time -f %E xargs -n1 &gt; /dev/null
+0:04.98
+</pre>
+</p>
+<p>
+そこでtr -s ' ' '\n'の出番だが、fmt -1でもいいかもしれない。短いし。
+</p>
+<pre>
+% echo {1..1000000} | sed 's/ /  /g' | /usr/bin/time -f %E tr -s ' ' '\n' &gt; /dev/null
+0:00.91
+% echo {1..1000000} | sed 's/ /  /g' | /usr/bin/time -f %E fmt -1 &gt; /dev/null
+0:00.97
+</pre>
+<p>
+速度もそんなに変わらない。
+</p>
+<!-- section end -->
+</div>
+<!-- 2016/07/06 end -->
+
+
+
+<hr class="hide">
+<!-- 2016/07/07 start -->
+<h2><a name="20160707" href="201607a.html#20160707">2016-07-07 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="201607071" title="201607071" href="201607a.html#201607071">■</a> 
+ピタゴラ暗号棒短冊 #jq</h3>
+<p>
+七夕ということでピタゴラ暗号棒と短冊を合体してみた。jqで。
+</p>
+<pre>
+% echo 'つおたくところうやうさきよん' | \
+  jq -Rr './&quot;&quot;|[.[keys|group_by((.+2)%3)[][]]]|&quot;+----+&quot;,&quot;| \(.[]) |&quot;,&quot;+----+&quot;' 
++----+
+| お |
+| と |
+| う |
+| さ |
+| ん |
+| た |
+| こ |
+| や |
+| き |
+| つ |
+| く |
+| ろ |
+| う |
+| よ |
++----+
+</pre>
+<!-- section end -->
+</div>
+<!-- 2016/07/07 end -->
+
+
+
+<hr class="hide">
+<!-- 2016/07/08 start -->
+<h2><a name="20160708" href="201607a.html#20160708">2016-07-08 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="201607081" title="201607081" href="201607a.html#201607081">■</a> 
+jqの小ネタ</h3>
+<p>
+複数の条件があるときは全部愚直に書かないといけない。
+</p>
+<pre>
+% seq 10 | jq 'select(. == 1 or . == 3 or . == 8)' 
+1
+3
+8
+</pre>
+<p>
+正規表現でと思ったが、元が数値なのでかえって面倒なことに。
+</p>
+<pre>
+% seq 10 | jq 'select(tostring|test(&quot;^(1|3|8)$&quot;))'
+1
+3
+8
+</pre>
+<p>
+jqではcommaでまとめられるようだ。
+</p>
+<pre>
+% seq 10 | jq 'select(. == (1,3,8))'              
+1
+3
+8
+</pre>
+<p>
+cf: 
+<a href="http://stackoverflow.com/questions/38121740/how-to-filter-array-of-objects-by-element-property-values-using-jq">json - How to filter array of objects by element property values using jq? - Stack Overflow</a></p>
+<!-- section end -->
+</div>
+<!-- 2016/07/08 end -->
+
+
+
+<hr class="hide">
+<!-- 2016/07/09 start -->
+<h2><a name="20160709" href="201607a.html#20160709">2016-07-09 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="201607091" title="201607091" href="201607a.html#201607091">■</a> 
+jqで短冊</h3>
+<p>
+短冊jq芸を書こうと思ってたら寝落ちして明け方twitterに投稿したのがこれ。
+</p>
+<pre>
+% echo ちょっと出遅れた | jq -Rrs '&quot;+----+&quot;,&quot;| \((./&quot;&quot;)[:-1][]) |&quot;,&quot;+----+&quot;'
++----+
+| ち |
+| ょ |
+| っ |
+| と |
+| 出 |
+| 遅 |
+| れ |
+| た |
++----+
+</pre>
+<p>
+やはり寝惚けてたらしく-sなんて不要だった。<br>
+そうすれば1.5のバグっぽい仕様の小細工([:-1])も不要になる。
+</p>
+<pre>
+% echo ちょっと出遅れた | jq -rR '&quot;+----+&quot;,&quot;| \((./&quot;&quot;)[]) |&quot;,&quot;+----+&quot;' 
++----+
+| ち |
+| ょ |
+| っ |
+| と |
+| 出 |
+| 遅 |
+| れ |
+| た |
++----+
+</pre>
+<p>
+&quot;+----+&quot;が2個出てくるから変数に入れたいとこだが、残念ながらそのほうが長くなる。
+</p>
+<pre>
+% echo ちょっと出遅れた | jq -rR '&quot;+----+&quot;as$s|$s,&quot;| \((./&quot;&quot;)[]) |&quot;,$s'
++----+
+| ち |
+| ょ |
+| っ |
+| と |
+| 出 |
+| 遅 |
+| れ |
+| た |
++----+
+</pre>
+<!-- section end -->
+</div>
+<!-- 2016/07/09 end -->
+
+<hr>
+<div>
+<a href="201606c.html">&lt;Older(,)</a> | 
+<a href="201607b.html">Newer(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

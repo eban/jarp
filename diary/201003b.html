@@ -1,0 +1,381 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2010-3-b</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="201003a.html">
+<link rel="next" href="201003c.html">
+
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2010年3月中旬〜</p>
+<hr>
+<div>
+<a href="201003a.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="201003c.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2010/03/11 start -->
+<h2><a name="20100311" href="201003b.html#20100311">2010-03-11 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="201003111" title="201003111" href="201003b.html#201003111">■</a> 
+<a href="http://d.akinori.org/2010/03/11/gnu-diff1%E3%81%AE%E3%83%A9%E3%83%83%E3%83%91%E3%83%BC%E3%80%8Cdi%E3%80%8D/">[Soft] diffの件</a></h3>
+<p>
+元々は個々に呼んでいたdiffを-rで1回で済ませて高速化というのが主目的だったので、<br>
+やはりその弱点がネックになるんだよねえ。<br>
+たまたま見つけたオプションで情報を少なくできればさらなる高速化が可能かなと。<br>
+なかなかうまくはいかないもので。
+</p>
+<!-- section end -->
+</div>
+<!-- 2010/03/11 end -->
+
+
+
+<hr class="hide">
+<!-- 2010/03/12 start -->
+<h2><a name="20100312" href="201003b.html#20100312">2010-03-12 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="201003121" title="201003121" href="201003b.html#201003121">■</a> 
+[Fedora12] yum updateで久し振りの依存エラー</h3>
+<p>
+Fedora12になってから初めてかも。
+</p>
+
+<pre>
+nss-3.12.6-1.2.fc12.i686(updates) は依存性に問題があります
+  --&gt; 依存性の欠落: nspr &gt;= 4.8.4 はパッケージ nss-3.12.6-1.2.fc12.i686 (updates) が必要としています
+nss-devel-3.12.6-1.2.fc12.i686(updates) は依存性に問題があります
+  --&gt; 依存性の欠落: nspr-devel &gt;= 4.8.4 はパッケージ nss-devel-3.12.6-1.2.fc12.i686 (updates) が必要としています
+nss-devel-3.12.6-1.2.fc12.i686(updates) は依存性に問題があります
+  --&gt; 依存性の欠落: pkgconfig(nspr) &gt;= 4.8.4 はパッケージ nss-devel-3.12.6-1.2.fc12.i686 (updates) が必要としています
+nss-3.12.6-1.2.fc12.i686(updates) は依存性に問題があります
+  --&gt; 依存性の欠落: nss-util = 3.12.6 はパッケージ nss-3.12.6-1.2.fc12.i686 (updates) が必要としています
+nss-devel-3.12.6-1.2.fc12.i686(updates) は依存性に問題があります
+  --&gt; 依存性の欠落: pkgconfig(nss-util) &gt;= 3.12.6 はパッケージ nss-devel-3.12.6-1.2.fc12.i686 (updates) が必要としています
+エラー: 依存性の欠落: nspr-devel &gt;= 4.8.4 はパッケージ nss-devel-3.12.6-1.2.fc12.i686 (updates) が必要としています
+エラー: 依存性の欠落: pkgconfig(nspr) &gt;= 4.8.4 はパッケージ nss-devel-3.12.6-1.2.fc12.i686 (updates) が必要としています
+エラー: 依存性の欠落: nspr &gt;= 4.8.4 はパッケージ nss-3.12.6-1.2.fc12.i686 (updates) が必要としています
+エラー: 依存性の欠落: pkgconfig(nss-util) &gt;= 3.12.6 はパッケージ nss-devel-3.12.6-1.2.fc12.i686 (updates) が必要としています
+エラー: 依存性の欠落: nss-util = 3.12.6 はパッケージ nss-3.12.6-1.2.fc12.i686 (updates) が必要としています
+</pre>
+
+
+<!-- section end -->
+</div>
+<!-- 2010/03/12 end -->
+
+
+
+<hr class="hide">
+<!-- 2010/03/13 start -->
+<h2><a name="20100313" href="201003b.html#20100313">2010-03-13 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="201003131" title="201003131" href="201003b.html#201003131">■</a> 
+<a href="http://golf.shinh.org/p.rb?a+prime+number">[Golf] a prime number</a></h3>
+<p>
+この問題も単純なようで奥が深い。
+</p>
+
+<p>
+そっか。Ruby 1.8.7からはuptoもdowntoもEnumeratorを返すようになってたんだな。<br>
+timesもか。
+</p>
+
+<p>
+それにしても
+<a href="http://golf.shinh.org/reveal.rb?a+prime+number/yibe_1267268466&amp;pl">この解答</a>
+はすばらしい。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="201003132" title="201003132" href="201003b.html#201003132">■</a> 
+<a href="http://fizzbuzz.g.hatena.ne.jp/eban/20100313">[FizzBuzz] はてなでFizzBuzz</a></h3>
+<p>
+とりあえず、seqとsedでわかりやすい例を。
+</p>
+<!-- section end -->
+</div>
+<!-- 2010/03/13 end -->
+
+
+
+<hr class="hide">
+<!-- 2010/03/14 start -->
+<h2><a name="20100314" href="201003b.html#20100314">2010-03-14 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="201003141" title="201003141" href="201003b.html#201003141">■</a> 
+PCのBIOSが立ち上がらない</h3>
+<p>
+夜中になってFirefoxが反応しないなと思ったら、時計の秒針も止まっていた。<br>
+しかたなく再起動してみるもBIOSが立ち上がらず。<br>
+何度試してもだめ。とりあえず一日電源OFFして様子見。
+</p>
+<!-- section end -->
+</div>
+<!-- 2010/03/14 end -->
+
+
+
+<hr class="hide">
+<!-- 2010/03/15 start -->
+<h2><a name="20100315" href="201003b.html#20100315">2010-03-15 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="201003151" title="201003151" href="201003b.html#201003151">■</a> 
+壊れたらしいPCの状況</h3>
+<p>
+やはり立ち上がらず。断念。買い替えを決意。<br>
+今時だとCPUは何がいいんだろう？
+</p>
+<p>
+というわけでNotePCを使っているわけだが、Gmailの狭さにあきれた。<br>
+右の広告が邪魔すぎる。<br>
+いいタイミングでMini Netbook Gmailの紹介記事があったので早速試す。<br>
+いい感じ。だがこれってgreasemonkeyなんだよなあ。復活させるか。<br>
+というより、DesktopPCは死んでるので復活もなにもない。<br>
+NotePCのほうは元からあるしね。<br>
+なんかCSSでも対応可能なような気もするので、<br>
+後でソースを見てみる。といいつつ見ないよな。<br>
+</p>
+<p>
+日記システムを復活させるにはHDDを取り出さなければならないが、<br>
+FSはext4なためどこかでLinuxを起動しないといけない。<br>
+しかしこのNotePCはUbuntu 9.10が立ち上がらなかったしどうしたもんか。<br>
+UCBフラッシュに構築してEeePCで試すか。<br>
+それならさっさと次のDesktopPCを買ったほうがいいような。
+</p>
+<p>
+それにしてもskk.vimは偉大だ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2010/03/15 end -->
+
+
+
+<hr class="hide">
+<!-- 2010/03/16 start -->
+<h2><a name="20100316" href="201003b.html#20100316">2010-03-16 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="201003161" title="201003161" href="201003b.html#201003161">■</a> 
+小文字のほうの入門git</h3>
+<p>
+入門gitをやっと読み始める。なんか買ってからえらく時間が経ってるような。
+
+</p>
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="201003162" title="201003162" href="201003b.html#201003162">■</a> 
+新しいPCの選定</h3>
+<p>
+それはそれとして、新しいPCを選ばないと。<br>
+面倒だからまたSofmapのちゃちいのにするか。今は牛丼じゃなくてバーガーなんだな。<br>
+もうCPUはどれ選んでいいのやらよくわからない。<br>
+数値がでかければいいってもんでもないし。
+
+</p>
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="201003163" title="201003163" href="201003b.html#201003163">■</a> 
+p4のキーワード展開</h3>
+<p>
+Perlで
+<pre>
+File::Find::name =~ m,(?:$hoge)/(.+),;
+</pre>
+</p>
+<p>
+みたいなコードを書いてp4 submitしたら
+<pre>
+File: //depo/some/where/me.pl $hoge)/(.+),;
+</pre>
+</p>
+<p>
+になった。なんだよそれ。しょうがないので=~の後に改行入れてごまかした。<br>
+ちゃんとした回避方法がわからない。まあでもCVSでもSVNでも$keyword$は回避できないしな。<br>
+:とnameの組み合わせで秘孔を突いてしまったんだろう。
+
+</p>
+<!-- section end -->
+</div>
+<!-- 2010/03/16 end -->
+
+
+
+<hr class="hide">
+<!-- 2010/03/17 start -->
+<h2><a name="20100317" href="201003b.html#20100317">2010-03-17 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="201003171" title="201003171" href="201003b.html#201003171">■</a> 
+Thunderbirdでkeysnail</h3>
+<p>
+ThunderbirdでもKeysnailを使い始めた。各ペインへのフォーカス移動の方法がわからない。<br>
+j/kは各ペインに移動しないといけないわけだが、そこだけマウスってのはちょっとね。<br>
+ヘルプを見てもFirefoxのままなのであまり役に立たない。
+
+</p>
+<!-- section end -->
+</div>
+<!-- 2010/03/17 end -->
+
+
+
+<hr class="hide">
+<!-- 2010/03/18 start -->
+<h2><a name="20100318" href="201003b.html#20100318">2010-03-18 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="201003181" title="201003181" href="201003b.html#201003181">■</a> 
+lighttpdの設定</h3>
+<p>
+lighttpd.confのcgiの設定で&quot;.cgi&quot; =&gt; &quot;&quot;のところを&quot;&quot; =&gt; &quot;&quot;と書いてしまい、<br>
+静的なファイルが全部サイズ0を返してきて悩む。<br>
+ほとんどがcgiだったので何が原因なんだかさっぱりわからなかったが、<br>
+lighty-disable-mod cgiしたらちゃんと見えたのでcgiの設定が原因だとやっとわかった。
+
+</p>
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="201003182" title="201003182" href="201003b.html#201003182">■</a> 
+VirutalBox死亡</h3>
+<p>
+会社のPCのUbuntu on VirtualBoxが死んだ。立ち上がらない。<br>
+どうにもだめなので再インストールした。<br>
+言語の設定でiBusからscimに変更したのに、<br>
+微妙にgnome-terminalがscimにならずシステムのXってやつになってしまい使い辛いったらありゃしない。<br>
+これだとgnome-terminalで複数のタブを開いておいてタブを一個閉じるとなぜか入力不可になってしまう。<br>
+他に一旦フォーカスを移動し戻ってくれば入力可能になるがなんだこの微妙なバグは。<br>
+というか今までそんな現象になっていなかったのにどういうわけなんだろう。<br>
+とりあえずgnome-terminalだけなんとかなればいいんだけどねえ。<br>
+vimはskk.vimがあるから問題ないんだけど。
+</p>
+<p>
+死亡したのは昨日帰るときに休止状態にしたんだけど、<br>
+なぜか移行できずにそのままバッテリー切れして落ちてしまったようで、<br>
+そのときにディスクイメージがクラッシュしたのが原因と思われる。
+</p>
+<!-- section end -->
+</div>
+<!-- 2010/03/18 end -->
+
+
+
+<hr class="hide">
+<!-- 2010/03/19 start -->
+<h2><a name="20100319" href="201003b.html#20100319">2010-03-19 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="201003191" title="201003191" href="201003b.html#201003191">■</a> 
+PCが一瞬復活</h3>
+<p>
+コンセントからも外して放っておいたらなんかの拍子に立ち上がるかと思い放置しておいたわけだが、<br>
+そろそろいいかと電源入れてみるとなんと立ち上がった。しかし、/dev/sdcのHDDがエラー出まくり。<br>
+どうもこいつが原因のようで。しかもホームディレクトリなわけで。<br>
+まあしょうがないので/etc/fstabから外してPCからも外したら(リムーバブル)ちゃんと問題なく起動する。<br>
+そこでよせばいいのにまたsdcをつけて起動したら途中で止まってまた同じようにBIOSすら立ち上がらなくなった。<br>
+たぶんsdcがBIOSの秘孔を突いてなにか放電されるまでフラグが立ちっぱなしになるんだろうな。<br>
+また来週末まで放置だ。
+</p>
+<p>
+いやいやいやいやすでに新しいPCを買う気になっていたわけでこの気持ちの折り合いをどうつけていいやら。
+</p>
+<!-- section end -->
+</div>
+<!-- 2010/03/19 end -->
+
+
+
+<hr class="hide">
+<!-- 2010/03/20 start -->
+<h2><a name="20100320" href="201003b.html#20100320">2010-03-20 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="201003201" title="201003201" href="201003b.html#201003201">■</a> 
+特に何もない一日</h3>
+<p>
+デュラララ!!が面白くて困ると思った。
+</p>
+<p>
+そろそろ日記をなんとかしたいが、HDDを取り出すがのが面倒。<br>
+しかも放置すれば起動するかもしれないという状態なのでやはり待ちなわけで。
+</p>
+<!-- section end -->
+</div>
+<!-- 2010/03/20 end -->
+
+<hr>
+<div>
+<a href="201003a.html">&lt;Prev(,)</a> | 
+<a href="201003c.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

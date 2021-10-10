@@ -1,0 +1,417 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2015-4-a</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="201503c.html">
+<link rel="next" href="201504b.html">
+
+<link rel="stylesheet" type="text/css" href="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.css">
+<script async type="text/javascript" src="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.js"></script>
+<script type="text/javascript">
+<!--       
+$(document).ready(function() {
+  prettyPrint();
+});
+-->
+</script>
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2015年4月上旬〜</p>
+<hr>
+<div>
+<a href="201503c.html" accesskey=",">&lt;Older(,)</a> | 
+<a href="201504b.html" accesskey=".">Newer(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2015/04/01 start -->
+<h2><a name="20150401" href="201504a.html#20150401">2015-04-01 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="201504011" title="201504011" href="201504a.html#201504011">■</a> 
+マウスの充電率が常に70%</h3>
+<p>
+<a href="201501b.html#201501151">あれ</a>からcrontabでマウスの充電率をデイリーで取っていたわけだけど、<br>
+70%のまま変化がないのであった。なんだよ。飾りか。
+</p>
+<pre>
+% awk '{print $NF}' ~/etc/mouse.txt | uniq
+70%
+</pre>
+<!-- section end -->
+</div>
+<!-- 2015/04/01 end -->
+
+
+
+<hr class="hide">
+<!-- 2015/04/02 start -->
+<h2><a name="20150402" href="201504a.html#20150402">2015-04-02 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="201504021" title="201504021" href="201504a.html#201504021">■</a> 
+VirtualBoxのシームレスモード</h3>
+<p>
+こんな便利なモードがあるとは今まで気づかなかった。<br>
+使えるようにするにはGuest Additionsか、<br>
+もしくはvirtualbox-guest-dkmsパッケージを入れる必要あり。<br>
+メニューのビューからシームレスモードへ移行できる。
+</p>
+<!-- section end -->
+</div>
+<!-- 2015/04/02 end -->
+
+
+
+<hr class="hide">
+<!-- 2015/04/03 start -->
+<h2><a name="20150403" href="201504a.html#20150403">2015-04-03 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="201504031" title="201504031" href="201504a.html#201504031">■</a> 
+<a href="http://www.cl.ecei.tohoku.ac.jp/nlp100/#sec05">05. n-gram</a></h3>
+<p>
+sedを使えば結構簡単だった。
+</p>
+<pre>
+% echo 'abcdefghijkl' | sed ':;h;s/\(...\).*/\1/p;g;s/.//;t;d'
+abc
+bcd
+cde
+def
+efg
+fgh
+ghi
+hij
+ijk
+jkl
+</pre>
+<p>
+\(.\{3\}\)と書けばわかりやすいか。
+</p>
+<!-- section end -->
+</div>
+<!-- 2015/04/03 end -->
+
+
+
+<hr class="hide">
+<!-- 2015/04/04 start -->
+<h2><a name="20150404" href="201504a.html#20150404">2015-04-04 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="201504041" title="201504041" href="201504a.html#201504041">■</a> 
+<a href="http://www.cl.ecei.tohoku.ac.jp/nlp100/#sec06">06. 集合 #シェル芸</a></h3>
+<p>
+和集合、積集合、差集合はすべてjoinコマンドで可能。
+</p>
+<pre>
+% bi-gram() { echo &quot;$1&quot; | sed ':;h;s/\(.\{2\}\).*/\1/p;g;s/.//;t;d' | sort -u; }
+% bi-gram paraparaparadise        
+ad
+ap
+ar
+di
+is
+pa
+ra
+se
+% bi-gram paragraph        
+ag
+ap
+ar
+gr
+pa
+ph
+ra
+% join &lt;(bi-gram paraparaparadise) &lt;(bi-gram paragraph)                         
+ap
+ar
+pa
+ra
+% join -a1 -a2 &lt;(bi-gram paraparaparadise) &lt;(bi-gram paragraph)
+ad
+ag
+ap
+ar
+di
+gr
+is
+pa
+ph
+ra
+se
+% join -v1 &lt;(bi-gram paraparaparadise) &lt;(bi-gram paragraph)
+ad
+di
+is
+se
+% bi-gram paraparaparadise|grep se               
+se
+% bi-gram paragraph|grep se
+</pre>
+<p>
+-a1 -a2で和集合、何もつけなければ積集合、-v1で差集合となる。<br>
+seが含まれてるかどうかは普通にgrepで。
+</p>
+<!-- section end -->
+</div>
+<!-- 2015/04/04 end -->
+
+
+
+<hr class="hide">
+<!-- 2015/04/05 start -->
+<h2><a name="20150405" href="201504a.html#20150405">2015-04-05 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="201504051" title="201504051" href="201504a.html#201504051">■</a> 
+ニコ動とかYouTubeで動画が数秒置きに止まる?</h3>
+<p>
+最近なんかやたらとニコ動とかYouTubeで動画が数秒置きに止まるなあと思って、<br>
+また拡張を無効にしまくっていったらuBlockだった。<br>
+ABPより軽いはずなのになぜ?<br>
+まあ、サイト毎に無効にできるから問題ないんだけど。
+</p>
+<!-- section end -->
+</div>
+<!-- 2015/04/05 end -->
+
+
+
+<hr class="hide">
+<!-- 2015/04/06 start -->
+<h2><a name="20150406" href="201504a.html#20150406">2015-04-06 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="201504061" title="201504061" href="201504a.html#201504061">■</a> 
+xargsにメタ文字を渡したい #シェル芸</h3>
+<p>
+xargsにとっては&quot;も'も\も特別な意味を持っていて、シェルと同じように処理され消える。<br>
+したがって対応していないとエラーになってしまう。
+</p>
+<pre>
+% echo '&quot;a b&quot; c' | xargs
+a b c
+% echo '&quot;a b c' | xargs 
+xargs: ダブルクオートが一致しません。デフォルトでは -O オプションを指定しない限り xargs でクォートは特別な意味を持ちます
+</pre>
+<p>
+man xargsしても-Oなんてオプションはどこにも出てこないからおかしいと思ったら、<br>
+実はこのメッセージはバグってて-Oじゃなくて-0が正しい。LANG=Cだと合っている。<br>
+</p>
+<pre>
+% echo '&quot;a b c' | LANG=C xargs
+xargs: unmatched double quote; by default quotes are special to xargs unless you use the -0 option
+</pre>
+<p>
+きっと判別しづらいフォントを使っている人が書いたんだろう。
+</p>
+<p>
+そんな話はどうでもよくて、じゃあそのままの文字を渡したければどうすればいいかというと、<br>
+やはりシェルと同じで\でクォートしてあげる必要がある。
+</p>
+<pre>
+% echo '\&quot;a b c' | xargs
+&quot;a b c
+</pre>
+<p>
+ちょっと面倒。あとはメッセージにしたがって、-0とか-dで区切りを指定するしかない。
+</p>
+<pre>
+% echo '&quot;a b c' | xargs -d '\n'
+&quot;a b c
+</pre>
+<!-- section end -->
+</div>
+<!-- 2015/04/06 end -->
+
+
+
+<hr class="hide">
+<!-- 2015/04/07 start -->
+<h2><a name="20150407" href="201504a.html#20150407">2015-04-07 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="201504071" title="201504071" href="201504a.html#201504071">■</a> 
+<a href="http://www.cl.ecei.tohoku.ac.jp/nlp100/#sec09">09. Typoglycemia #シェル芸</a></h3>
+<p>
+昨日のはこれの伏線だったわけで、無理矢理bashで解いてみた。
+</p>
+<pre>
+xargs -n1 -d ' ' | while read s; do
+if [[ $s =~ ^(.)(.{3,})(.)$ ]]; then
+    echo &quot;${BASH_REMATCH[1]}&quot;`echo ${BASH_REMATCH[2]} | grep -o . | shuf | paste -sd &quot;&quot;`&quot;${BASH_REMATCH[3]}&quot;
+  else
+    echo $s
+  fi
+done | paste -sd ' '
+</pre>
+<p>
+これを09.shと名付け、実行してみる。
+</p>
+<pre>
+% echo &quot;I couldn't believe that I could actually understand what I was reading : the phenomenal power of the human mind .&quot; | bash 09.sh
+I cld'onut blveiee that I cloud atlulcay utneasdnrd what I was rnaeidg : the ponenhmael pweor of the human mind .
+</pre>
+<p>
+このcouldn'tが曲者で-d ' 'を指定しないとエラーになってしまう。<br>
+まあ、xargsを使わなくても、tr ' ' '\n'で十分なんだけど。
+</p>
+<!-- section end -->
+</div>
+<!-- 2015/04/07 end -->
+
+
+
+<hr class="hide">
+<!-- 2015/04/08 start -->
+<h2><a name="20150408" href="201504a.html#20150408">2015-04-08 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="201504081" title="201504081" href="201504a.html#201504081">■</a> 
+<a href="http://www.cl.ecei.tohoku.ac.jp/nlp100/#sec10">10. 行数カウント #シェル芸</a></h3>
+<p>
+第2章はUNIXコマンドと同じ挙動をする処理を書けという話で、確認方法も記載されている。<br>
+ということはつまりシェル芸的にはそれ以外の方法で実現すると解釈しよう。<br>
+行数のカウントはすでに
+<a href="201503b.html#201503151">先月</a>やったのでまた別な方法を考える。
+</p>
+<pre>
+% &lt; hightemp.txt wc -l  
+24
+% &lt; hightemp.txt jq -sR './&quot;\n&quot;|length'
+24
+% &lt; hightemp.txt ruby -ne 'END{p $.}'  
+24
+% &lt; hightemp.txt perl -nE 'END{say $.}'
+24
+% &lt; hightemp.txt tr -cd '\n' | uniq -c | tr -cd '0-9\n'
+24
+</pre>
+<!-- section end -->
+</div>
+<!-- 2015/04/08 end -->
+
+
+
+<hr class="hide">
+<!-- 2015/04/09 start -->
+<h2><a name="20150409" href="201504a.html#20150409">2015-04-09 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="201504091" title="201504091" href="201504a.html#201504091">■</a> 
+<a href="http://www.cl.ecei.tohoku.ac.jp/nlp100/#sec11">11. タブをスペースに置換 #シェル芸</a></h3>
+<p>
+sedとtrを封印されたが、awkでもrubyでもperlでもいける。
+</p>
+<pre>
+% ruby -pe 'gsub(/\t/, &quot; &quot;)' hightemp.txt
+% awk '{gsub(/\t/, &quot; &quot;)}1' hightemp.txt
+% perl -pe 'y/\t/ /' hightemp.txt
+</pre>
+<p>
+ああ、こんな方法もあるな。
+</p>
+<pre>
+% sh -c 'while read a;do echo $a;done' &lt; hightemp.txt
+% awk '$1=$1' hightemp.txt
+</pre>
+<p>
+joinはかなり無理がある。これぐらいだとなぜかsortしなくてもjoinは文句言わない。
+</p>
+<pre>
+% join -o 1.1,1.2,1.3,1.4 hightemp.txt hightemp.txt
+</pre>
+<!-- section end -->
+</div>
+<!-- 2015/04/09 end -->
+
+
+
+<hr class="hide">
+<!-- 2015/04/10 start -->
+<h2><a name="20150410" href="201504a.html#20150410">2015-04-10 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="201504101" title="201504101" href="201504a.html#201504101">■</a> 
+<a href="http://www.cl.ecei.tohoku.ac.jp/nlp100/#sec12">12. 1列目をcol1.txtに，2列目をcol2.txtに保存 #シェル芸</a></h3>
+<p>
+awkだと簡単。
+</p>
+<pre>
+% awk '{print $1 &gt; &quot;col1.txt&quot;; print $2 &gt; &quot;col2.txt&quot;}' hightemp.txt
+% cut -f1 hightemp.txt | diff - col1.txt                             
+% cut -f2 hightemp.txt | diff - col2.txt                           
+</pre>
+<p>
+あとむりやりjoinで。
+</p>
+<pre>
+% join -o 0 hightemp.txt hightemp.txt &gt; col1.txt
+% join -o 1.2 hightemp.txt hightemp.txt &gt; col2.txt
+</pre>
+<!-- section end -->
+</div>
+<!-- 2015/04/10 end -->
+
+<hr>
+<div>
+<a href="201503c.html">&lt;Older(,)</a> | 
+<a href="201504b.html">Newer(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

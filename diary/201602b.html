@@ -1,0 +1,495 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2016-2-b</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="201602a.html">
+<link rel="next" href="201602c.html">
+
+<link rel="stylesheet" type="text/css" href="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.css">
+<script async type="text/javascript" src="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.js"></script>
+<script type="text/javascript">
+<!--       
+$(document).ready(function() {
+  prettyPrint();
+});
+-->
+</script>
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2016年2月中旬〜</p>
+<hr>
+<div>
+<a href="201602a.html" accesskey=",">&lt;Older(,)</a> | 
+<a href="201602c.html" accesskey=".">Newer(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2016/02/11 start -->
+<h2><a name="20160211" href="201602b.html#20160211">2016-02-11 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="201602111" title="201602111" href="201602b.html#201602111">■</a> 
+<a href="https://projecteuler.net/problem=28">Project Euler Problem 28 #シェル芸</a></h3>
+<p>
+Number spiral diagonals. 螺旋状に並んだ数の対角線。<br>
+ながめているだけでいくらでも法則は見つかる。<br>
+一番簡単なのは小さいほうから順番に差分を取る。<br>
+2,2,2,2,4,4,4,4,6,6,6,6,8,8,8,8,...<br>
+となっている。これをそのままRubyで実装するとこうなる。
+</p>
+<pre>
+% ruby -e 'a=1;d=2;s=1;500.times{4.times{s+=a+=d};d+=2};p s'
+669171001
+</pre>
+<p>
+awkに移植するとここんな感じ。
+</p>
+<pre>
+% seq 500|awk '{d+=2;for(i=0;i&lt;4;i++){print a+=d}}' a=1|jq -s add+1
+669171001
+</pre>
+<p>
+どうしても1が邪魔になるので最後にjqで足している。<br>
+for文を展開するとこうなる。
+</p>
+<pre>
+% seq 500|awk '{d+=2;print 4*a+10*d;a+=4*d}' a=1|jq -s add+1
+669171001
+</pre>
+<p>
+さらにゴルフしてみたが、あまりきれいではない。
+</p>
+<pre>
+% seq 500|awk '$0=3*a+(a+=4*(d+=2))+6*d' a=1|jq -s add+1 
+669171001
+</pre>
+<p>
+seqの結果を使ってないので高須クリニックでもいい。
+</p>
+<pre>
+% yes 高須クリニック|head -n 500|awk '$0=3*a+(a+=4*(d+=2))+6*d' a=1|jq -s add+1 
+669171001
+</pre>
+<p>
+ちゃんとseqの結果を使うなら、右上の奇数の自乗数を使うのがいいかな。
+</p>
+<pre>
+% seq 3 2 1001|awk '$0=$0^2*4-6*(d+=2)'|jq -s add+1
+669171001
+</pre>
+<p>
+4倍しちゃうと多すぎなので、調整している。
+</p>
+<p>
+これは単純な数学の問題なのでたぶんそのものずばりな方程式もあるんだろうけど、<br>
+そっちのほうが長くなりそうな。
+</p>
+<!-- section end -->
+</div>
+<!-- 2016/02/11 end -->
+
+
+
+<hr class="hide">
+<!-- 2016/02/12 start -->
+<h2><a name="20160212" href="201602b.html#20160212">2016-02-12 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="201602121" title="201602121" href="201602b.html#201602121">■</a> 
+<a href="https://projecteuler.net/problem=29">Project Euler Problem 29 #シェル芸</a></h3>
+<p>
+Distinct powers. 個別のべき乗。<br>
+ひねりなし。
+</p>
+<p>
+bc版。
+</p>
+<pre>
+% echo {2..100}\^{2..100}\; | BC_LINE_LENGTH= bc | sort -u | wc -l
+9183
+</pre>
+<p>
+Ruby版。
+</p>
+<pre>
+% ruby -e 'p [*2..100].product([*2..100]).map{|a,b|a**b}.uniq.size' 
+9183
+</pre>
+<!-- section end -->
+</div>
+<!-- 2016/02/12 end -->
+
+
+
+<hr class="hide">
+<!-- 2016/02/13 start -->
+<h2><a name="20160213" href="201602b.html#20160213">2016-02-13 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="201602131" title="201602131" href="201602b.html#201602131">■</a> 
+<a href="https://blog.ueda.asia/?p=7655">第21回シェル芸勉強会にYoutubeで参加 #シェル芸</a></h3>
+<p>
+今回はYoutubeでの配信からの参戦。<br>
+最初はPS3のYoutubeアプリで見てたけど、<br>
+PSNが不調でログインできなくなり、<br>
+AndroidのYoutubeアプリで視聴した。
+</p>
+
+<h4><a name="201602131S1" href="201602b.html#201602131S1">_</a> <strong>Q1 bba.pdfからテキストを抽出</strong>: </h4>
+<div class="sub">
+<p>
+pdftotextとかps2txtのようなコマンドが世の中には存在する。<br>
+うまくいかないこともあるが。
+</p>
+<pre>
+% pdftotext bba.pdf -
+</pre>
+</div>
+<h4><a name="201602131S2" href="201602b.html#201602131S2">_</a> <strong>Q2 CP932のデータをUTF-8に変換し折り返して表示</strong>: </h4>
+<div class="sub">
+<p>
+折り返してから変換すると考えるとfoldが使える。
+</p>
+<pre>
+% fold -35 anydata.cp932 | iconv -f cp932
+</pre>
+</div>
+<h4><a name="201602131S3" href="201602b.html#201602131S3">_</a> <strong>Q3 2016年の日曜日</strong>: </h4>
+<div class="sub">
+<p>
+date -fを使う。実はxargsを使うほうが難しい。
+</p>
+<pre>
+% seq -f '2015-12-31 %g day' 365|date -f- +'%w %F'|grep '^0'
+</pre>
+<p>
+<a href="201601c.html#201601251">Project Euler Problem 19</a>で同じようなことをやったばかりだ。
+</p>
+</div>
+<h4><a name="201602131S4" href="201602b.html#201602131S4">_</a> <strong>Q4 データのjoin</strong>: </h4>
+<div class="sub">
+<p>
+新データ優先。
+</p>
+<pre>
+% awk '!a[$1]++' newdata data | sort
+</pre>
+<p>
+結局のところuniqなのでsortでもok。
+</p>
+<pre>
+% sort -u -k1,1 newdata data
+</pre>
+</div>
+<h4><a name="201602131S5" href="201602b.html#201602131S5">_</a> <strong>Q5 不正な文字</strong>: </h4>
+<div class="sub">
+<p>
+適当にsedで変換したけど、これはどうなんだ。
+</p>
+<pre>
+% LANG=C sed -i 's/[\x80-\xff]\+//' a.bash; sed -i 's/˜/~/' b.bash
+</pre>
+</div>
+<h4><a name="201602131S6" href="201602b.html#201602131S6">_</a> <strong>Q6 拡張正規表現を標準正規表現に変換</strong>: </h4>
+<div class="sub">
+<p>
+題意を見失っていたが、perlで書いてみた。繰り返し文字があるとsedではきびしい。
+</p>
+<pre>
+% perl -pe 's/(?:\((.+?)\)|(.))\{(\d+)\}/($1||$2)x$3/eg;s/(\[.+\]|.)\+/$1$1*/g' extended 
+</pre>
+</div>
+<h4><a name="201602131S7" href="201602b.html#201602131S7">_</a> <strong>Q7 各段落の文字数</strong>: </h4>
+<div class="sub">
+<p>
+空白とか改行とか数えない。
+</p>
+<pre>
+% awk 'gsub(/\n/,&quot;&quot;)&amp;&amp;$0=length' RS='　' text
+</pre>
+</div>
+<h4><a name="201602131S8" href="201602b.html#201602131S8">_</a> <strong>Q8 添付ファイルを抽出</strong>: </h4>
+<div class="sub">
+<p>
+uudeviewなんて10年以上忘れてたよ。
+</p>
+<pre>
+Q8 % uudeview -i 1350369599.Vfc03I4682c8M940114.remote
+</pre>
+<p>
+awkでむりやりbase64 -dにつっこんでみた。
+</p>
+<pre>
+% awk -F\&quot; '/filename=/{f=$(NF-1)}f&amp;&amp;!NF{c=&quot;base64 -d&gt;&quot;f;f=&quot;&quot;}c,/^--/{print|c}' 1350369599.Vfc03I4682c8M940114.remote
+</pre>
+<p>
+余計なものが終わりにつくので「base64: 無効な入力」と言われちゃうが気にしない。
+</p>
+</div>
+<!-- section end -->
+</div>
+<!-- 2016/02/13 end -->
+
+
+
+<hr class="hide">
+<!-- 2016/02/14 start -->
+<h2><a name="20160214" href="201602b.html#20160214">2016-02-14 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="201602141" title="201602141" href="201602b.html#201602141">■</a> 
+<a href="https://projecteuler.net/problem=31">Project Euler Problem 31 #シェル芸</a></h3>
+<p>
+Coin sums. 部分和問題。<br>
+<a href="https://ja.wikipedia.org/wiki/%E9%83%A8%E5%88%86%E5%92%8C%E5%95%8F%E9%A1%8C">Wikipedia</a>にも載っているし、解法もわかっている。
+</p>
+<p>
+初期値として0pを考えるとわかりやすいらしい。まずこれを1通りとする。<br>
+1pだけを使って1pから5pまで作る方法を考える。<br>
+1pを作るには1pを引いて0p、0pは1通りなので1pも1通り。<br>
+2pを作るには1pを引いて1p、1pは1通りなので2pも1通り。<br>
+3pを作るには1pを引いて2p、2pは1通りなので3pも1通り。<br>
+4pを作るには1pを引いて3p、3pは1通りなので4pも1通り。<br>
+5pを作るには1pを引いて4p、4pは1通りなので5pも1通り。<br>
+のように全部1通りになる。<br>
+次に1p,2pだけを使う場合。2p未満はやる必要はないので2pから5pで考える。<br>
+2pを作るには2pを引いて0p、0pは1通りなので2pも1通り。足して2通り。<br>
+3pを作るには2pを引いて1p、1pは1通りなので3pも1通り。足して2通り。<br>
+4pを作るには2pを引いて2p、2pは2通りなので4pは2通り。足して3通り。<br>
+5pを作るには2pを引いて3p、3pは3通りなので5pは2通り。足して3通り。<br>
+次に1p,2p,5pだけを使う場合。5p未満はやる必要はないので5pだけで考える。<br>
+5pを作るには5pを引いて0p、0pは1通りなので5pは1通り。足して4通り。<br>
+つまり1p,2p,5pを使って5pを作るには4通り存在する。<br>
+実際に 1+1+1+1+1, 2+1+1+1, 2+2+1, 5の4通りだ。<br>
+これをシェル芸で表現するとこうなる。
+</p>
+<pre>
+% echo 1 2 5 10 20 50 100 200|xargs -n1|awk 'BEGIN{a[0]=1}{for(i=$0;i&lt;=200;i++)a[i]+=a[i-$0]}END{print a[200]}' 
+73682
+</pre>
+<p>
+aという配列に200までの組み合わせ数が入る。<br>
+キャッシュしているようなものなので非常に高速だ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2016/02/14 end -->
+
+
+
+<hr class="hide">
+<!-- 2016/02/15 start -->
+<h2><a name="20160215" href="201602b.html#20160215">2016-02-15 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="201602151" title="201602151" href="201602b.html#201602151">■</a> 
+<a href="https://projecteuler.net/problem=30">Project Euler Problem 30 #シェル芸</a></h3>
+<p>
+30番を飛ばしてた。<br>
+Digit fifth powers. 各桁の5乗。<br>
+まずは上限を探る。各桁の5乗の総和が何桁になると追い付けなくなるか計算。
+</p>
+<pre>
+% awk 'BEGIN{for(i=1;i&lt;10;i++){s+=9**5;if(s&lt;10^i)break};print i}'
+6
+</pre>
+<p>
+上限は6桁とわかった。あとはawkで。6個ぐらいならループより並べちゃったほうが手っ取り早い。
+</p>
+<pre>
+% seq 10 $[6*9**5] | awk '$0==$1^5+$2^5+$3^5+$4^5+$5^5+$6^5' FS=
+4150
+4151
+54748
+92727
+93084
+194979
+</pre>
+<p>
+6個見つかった。足せば答えになる。
+</p>
+<pre>
+% seq 10 $[9**5*6] | awk '$0==$1^5+$2^5+$3^5+$4^5+$5^5+$6^5' FS= | jq -s add 
+443839
+</pre>
+<!-- section end -->
+</div>
+<!-- 2016/02/15 end -->
+
+
+
+<hr class="hide">
+<!-- 2016/02/16 start -->
+<h2><a name="20160216" href="201602b.html#20160216">2016-02-16 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="201602161" title="201602161" href="201602b.html#201602161">■</a> 
+<a href="http://jp.techcrunch.com/2016/02/16/20160215palantir-acquires-kimono-labs-for-its-web-scraping-service/">Kimono Labsが今月で閉鎖</a></h3>
+<p>
+Yahoo! Pipesから移行して半年ほど経ってようやく安定してきたかと思ったら。<br>
+まいったねえ。botはWerckerで動かすか。<br>
+1時間ごとのtwitterのbotならIFTTTのDate&amp;TimeからMakerを起動し、<br>
+Werckerのwebhookを叩けばいけるはずだ。<br>
+webhookがあるならCircleCIでも何でもいいが。
+</p>
+<!-- section end -->
+</div>
+<!-- 2016/02/16 end -->
+
+
+
+<hr class="hide">
+<!-- 2016/02/17 start -->
+<h2><a name="20160217" href="201602b.html#20160217">2016-02-17 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="201602171" title="201602171" href="201602b.html#201602171">■</a> 
+<a href="https://projecteuler.net/problem=32">Project Euler Problem 32 #シェル芸</a></h3>
+<p>
+Pandigital products. パンデジタル積。<br>
+9個ということでいろいろ考えてみると、<br>
+1桁*4桁=4桁か2桁*3桁=4桁のどちらかしか可能性はない。<br>
+というわけで
+</p>
+<pre>
+% echo {2..9}\ {1234..9876}$'\n' {12..98}\ {123..987}$'\n'
+</pre>
+<p>
+が候補となる。あとはawkで実際に計算するわけだけど、明らかにだめなものを除外する。<br>
+5桁になるものと0を含むものがあったらチェックする必要はない。<br>
+</p>
+<pre>
+| awk '(a=$1*$2)&lt;1e4&amp;&amp;a$0!~/0/{print $1&quot;*&quot;$2&quot;=&quot;a}'
+</pre>
+<p>
+2*1234=2468というような文字列を作っている。<br>
+*とか=とか不要だけど、わかりやすいように入れている。<br>
+あとはgrepで同じ文字が2個以上ないかチェックする。<br>
+後方参照でマッチすれば同じ文字があるということなので-vで除外。
+</p>
+<pre>
+| grep -v '\(.\).*\1'
+</pre>
+<p>
+積を抜き出して重複を除外し総和を求める。
+</p>
+<pre>
+| cut -f2 -d= | sort -u | jq -s add 
+</pre>
+<p>
+途中経過。
+</p>
+<pre>
+% echo {2..9}\ {1234..9876}$'\n' {12..98}\ {123..987}$'\n' \
+| awk '(a=$1*$2)&lt;1e4&amp;&amp;a$0!~/0/{print $1&quot;*&quot;$2&quot;=&quot;a}' \
+| grep -v '\(.\).*\1'
+4*1738=6952
+4*1963=7852
+12*483=5796
+18*297=5346
+27*198=5346
+28*157=4396
+39*186=7254
+42*138=5796
+48*159=7632
+</pre>
+<p>
+5796と5346が重複している。
+</p>
+<!-- section end -->
+</div>
+<!-- 2016/02/17 end -->
+
+
+
+<hr class="hide">
+<!-- 2016/02/18 start -->
+<h2><a name="20160218" href="201602b.html#20160218">2016-02-18 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="201602181" title="201602181" href="201602b.html#201602181">■</a> 
+<a href="https://projecteuler.net/problem=33">Project Euler Problem 33 #シェル芸</a></h3>
+<p>
+Digit cancelling fractions. 桁消去分数。<br>
+いろいろと考えてみると(10*a+c)/(10*c+b)という形式しかありえない。<br>
+というわけで(10*a+c)/(10*c+b)=a/bという方程式を解くことになる。
+</p>
+<pre>
+% echo {1..9}\ {1..9}\ {1..9}$'\n' | awk '$1&lt;$2{if(($1$3)*$2==$1*($3$2))print ($1$3)&quot;/&quot;($3$2)}' 
+16/64
+19/95
+26/65
+49/98
+</pre>
+<p>
+4つ見つかった。あとは約分して分母を計算する。<br>
+最大公約数を求めてそれで割れば約分できる。
+</p>
+<pre>
+% echo {1..9}\ {1..9}\ {1..9}$'\n' | awk '$1&lt;$2{if(($1$3)*$2==$1*($3$2)){n*=$1$3;m*=$3$2}}END{k=m;while (m%(m=n));print k/n}' n=1 m=1
+100
+</pre>
+<!-- section end -->
+</div>
+<!-- 2016/02/18 end -->
+
+<hr>
+<div>
+<a href="201602a.html">&lt;Older(,)</a> | 
+<a href="201602c.html">Newer(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

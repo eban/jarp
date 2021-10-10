@@ -1,0 +1,504 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2003-10-b</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="200310a.html">
+<link rel="next" href="200310c.html">
+
+<link rel="stylesheet" type="text/css" href="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.css">
+<script async type="text/javascript" src="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.js"></script>
+<script type="text/javascript">
+<!--       
+$(document).ready(function() {
+  prettyPrint();
+});
+-->
+</script>
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2003年10月中旬〜</p>
+<hr>
+<div>
+<a href="200310a.html" accesskey=",">&lt;Older(,)</a> | 
+<a href="200310c.html" accesskey=".">Newer(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2003/10/11 start -->
+<h2><a name="20031011" href="200310b.html#20031011">2003-10-11 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="200310111" title="200310111" href="200310b.html#200310111">■</a> 
+<a href="http://www.icewm.org/">[WM] IceWM 1.2.13</a></h3>
+<p>
+1週間使った
+<a href="http://www.xfce.org/">XFce4</a>だと、IceWMのKeyWinPrevとKeyWinRaiseに相当する機能が見当たらないので、
+IceWMに戻す。ついでに1.2.13をmake。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200310112" title="200310112" href="200310b.html#200310112">■</a> 
+[Ruby] ruby-talk</h3>
+<p>
+先月と今月分のruby-talkのhamとspamをsa-learnに食わせて学習させた。
+それはいいとして、
+news gatewayから流れてくる古い記事を拒否したらループしてるようで、
+結果としてnews gatewayが止まった状態になってる。
+いろいろ格闘してみたが(たまに失敗して通しちゃったり)、
+どうにもならない。
+daveさんに英語で説明できないので、とりあえずここに書いとこう。
+</p>
+
+<p>
+fml 4.0.3でcfにHOOKを書いて拒否しないで捨てる方法があるのかな。
+$START_HOOKを使って早い段階で$DO_NOTHINGしてみてもやはりループする。
+</p>
+<pre>
+$OLDEST_POST_DAYS = 30;
+$START_HOOK = q#
+    require 'libmti.pl';
+    if ($OLDEST_POST_DAYS &amp;&amp; &amp;Date2UnixTime(GET_ORIGINAL_HEADER_FIELD_VALUE(&quot;Date&quot;)) &lt; time - 86400*$OLDEST_POST_DAYS) {
+      $DO_NOTHING = 1;
+    }
+#;
+</pre>
+<p>
+exitすれば流石に終わるかと思ったがだめだった。うーむ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2003/10/11 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/10/12 start -->
+<h2><a name="20031012" href="200310b.html#20031012">2003-10-12 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="200310121" title="200310121" href="200310b.html#200310121">■</a> 
+[Ruby] ruby-talk</h3>
+<p>
+$CHECK_MESSAGE_ID = 0にして様子を見てたら、1時間半程経った後、
+</p>
+<pre>
+03/10/12 03:48:32 reject mail from root@root.com (root@root.com)
+</pre>
+<p>
+を最後にループはおさまった気配。とりあえず寝る。
+</p>
+
+<p>
+起きた。おさまってない。がっくり。
+</p>
+
+<p>
+23:59:55を最後に突然おさまる。と思ったら01:00:58に再開。
+いや、ループしてない。進んでる。やっと解決か？
+その後3/31までの記事で止まった。不気味な沈黙。
+あ、4/1の記事が来てしまった。けど1通来て続きが来ない。
+やっとdaveさん、気づいたか？
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200310122" title="200310122" href="200310b.html#200310122">■</a> 
+<a href="http://www.thekelleys.org.uk/dnsmasq/doc.html">[Soft] Dnsmasq 1.17</a></h3>
+<pre>
+Changes: This fixes a crash/lockup bug present in versions 1.14,
+1.15, and 1.16. All users of those versions who use the DHCP
+facilities of dnsmasq should upgrade.
+</pre>
+
+<!-- section end -->
+</div>
+<!-- 2003/10/12 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/10/13 start -->
+<h2><a name="20031013" href="200310b.html#20031013">2003-10-13 (Mon)</a></h2>
+
+
+<div class="entry1">
+<h3><a name="200310131" title="200310131" href="200310b.html#200310131">■</a> 
+<a href="http://cachecc1.tuxfamily.org/">[Soft] cachecc1 0.1</a></h3>
+<p>
+gccのbootstrapでcacheしてどうする。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200310132" title="200310132" href="200310b.html#200310132">■</a> 
+<a href="http://raa.ruby-lang.org/project/racc/">[Ruby] Racc 1.4.4</a></h3>
+<p>
+runtime libraryはRuby 1.8に含まれているので--without=raccrtを指定。
+</p>
+<pre>
+% mkdir cygwin; cd cygwin
+% i386-cygwin-ruby ../setup.rb config --without=raccrt \
+  --ruby-path=/usr/local/bin/ruby
+% i386-cygwin-ruby ../setup.rb setup
+% i386-cygwin-ruby ../setup.rb install
+</pre>
+<p>
+djgpp版もracc/parse.rbで吸収されるので同じ指定でいい。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200310133" title="200310133" href="200310b.html#200310133">■</a> 
+<a href="http://www.loveruby.net/~aamine/ja/tdiary/20031013.html#p06">[Windows] ftype, assoc</a></h3>
+<p>
+更に環境変数PATHEXTに.rbを追加すればhelloで実行可能。
+</p>
+<pre>
+C:\tmp&gt;hello.rb                 
+Hello, World!
+
+C:\tmp&gt;hello
+'hello' is not recognized as an internal or external command,
+operable program or batch file.
+
+C:\tmp&gt;set PATHEXT
+PATHEXT=.COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH
+
+C:\tmp&gt;set PATHEXT=%PATHEXT%;.RB
+
+C:\tmp&gt;hello
+Hello, World!
+</pre>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200310134" title="200310134" href="200310b.html#200310134">■</a> 
+[Ruby] ruby-talk news gateway</h3>
+<p>
+結局3/3から3/6までの記事を繰り返し延々と送り続ける挙動になった。
+つまりそれ以上進まないので、止まった状態。
+</p>
+<!-- section end -->
+</div>
+<!-- 2003/10/13 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/10/14 start -->
+<h2><a name="20031014" href="200310b.html#20031014">2003-10-14 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="200310141" title="200310141" href="200310b.html#200310141">■</a> 
+[Ruby] Enumerator</h3>
+<p>
+入った。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200310142" title="200310142" href="200310b.html#200310142">■</a> 
+[Ruby] ruby-talk</h3>
+<p>
+Dateを3月にしてruby-talkに送ってみたら、無事に無視された。
+ってことはnews gateway自体暴走しているとしか思えない。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200310143" title="200310143" href="200310b.html#200310143">■</a> 
+[Mail] SpamAssassin</h3>
+<p>
+rules/を見ると
+</p>
+<pre>
+header DATE_IN_PAST_96_XX       eval:check_for_shifted_date('undef', '-96')
+describe DATE_IN_PAST_96_XX     Date: is 96 hours or more before Received: date
+</pre>
+<p>
+という感じで判断できるようだ。
+で、実際にruby-talkで流れてしまった記事を見ると確かに
+DATE_IN_PAST_96_XXがついてた。
+ブロックされないのはスコアが低いわけか。
+1年ずれてる人は結構いるしね。
+</p>
+<!-- section end -->
+</div>
+<!-- 2003/10/14 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/10/15 start -->
+<h2><a name="20031015" href="200310b.html#20031015">2003-10-15 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="200310151" title="200310151" href="200310b.html#200310151">■</a> 
+<a href="http://yample.sourceforge.net/">[Mail] Yample(Yet Anather Mail Processing Language)</a></h3>
+<p>
+procmailは嫌われてるねえ。
+これがわかりやすいかと言えば大して違いはないと感じる。
+SpamAssassinと組み合わせるのなら、
+どちらもPerlで書かれているから相性はいいのかもしれない。
+</p>
+<!-- section end -->
+</div>
+<!-- 2003/10/15 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/10/16 start -->
+<h2><a name="20031016" href="200310b.html#20031016">2003-10-16 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="200310161" title="200310161" href="200310b.html#200310161">■</a> 
+<a href="http://www.nongnu.org/cvs/">[Soft] CVS 1.11.9</a></h3>
+<p>
+10/10に出ていたらしい。
+それ以前に1.11.7と1.11.8がリリースされていたことに全く気づいてない。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200310162" title="200310162" href="200310b.html#200310162">■</a> 
+<a href="http://www.tbs.co.jp/manhattan/">マンハッタンラブストーリー</a></h3>
+<p>
+赤羽、別所、千倉、土井垣、江本、船越、蒲生、H、井堀、J、軽井沢夫人だよなあ。
+全11話だし。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200310163" title="200310163" href="200310b.html#200310163">■</a> 
+[Net] rim</h3>
+<p>
+22時ぐらいからメールが全然来なくなった。
+<a href="http://www.rim.or.jp/support/announce/trouble.shtml">障害情報</a>はまだ上がってない。どうなってるんだ？
+</p>
+<!-- section end -->
+</div>
+<!-- 2003/10/16 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/10/17 start -->
+<h2><a name="20031017" href="200310b.html#20031017">2003-10-17 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="200310171" title="200310171" href="200310b.html#200310171">■</a> 
+<a href="ftp://ftp.astron.com/pub/file/">[Soft] file 4.06</a></h3>
+<pre>
+Changes: Python bindings were added. Some of the magic definitions
+were fixed along with several minor bugs.
+</pre>
+
+<!-- section end -->
+</div>
+<!-- 2003/10/17 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/10/18 start -->
+<h2><a name="20031018" href="200310b.html#20031018">2003-10-18 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="200310181" title="200310181" href="200310b.html#200310181">■</a> 
+<a href="http://gcc.gnu.org/">[Soft] GCC 3.3.2</a></h3>
+<pre>
+% mkdir linux; cd linux
+% CFLAGS=-Os CXXFLAGS=-Os CC=/usr/bin/gcc ../configure \
+  --enable-languages=c++ --with-system-zlib \
+  --enable-sjlj-exceptions --enable-threads \
+  --disable-version-specific-runtime-libs --disable-nls \
+  --without-included-gettext --without-catgets --disable-shared
+% make CFLAGS=-Os LIBCFLAGS=-Os LIBCXXFLAGS=-Os \
+  STAGE1_CFLAGS=-Os BOOT_CFLAGS=-Os bootstrap
+</pre>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200310182" title="200310182" href="200310b.html#200310182">■</a> 
+<a href="http://i.loveruby.net/ja/prog/refe.html">[Ruby] ReFe 0.8.0</a></h3>
+<p>
+更新。
+</p>
+<!-- section end -->
+</div>
+<!-- 2003/10/18 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/10/19 start -->
+<h2><a name="20031019" href="200310b.html#20031019">2003-10-19 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="200310191" title="200310191" href="200310b.html#200310191">■</a> 
+<a href="http://www.ntp.org/">[Soft] NTP 4.2.0</a></h3>
+<pre>
+(4.2.0)
+* More stuff than I have time to document
+* Bugfixes
+* call-gap filtering
+* wwv and chu refclock improvements
+* OpenSSL integration
+</pre>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200310192" title="200310192" href="200310b.html#200310192">■</a> 
+<a href="http://members.optusnet.com.au/ckolivas/kernel/">[Linux] ck2パッチ</a></h3>
+<p>
+make install modules_installに20分かかった。そろそろ2.6.0-testも試すかな。
+</p>
+
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200310193" title="200310193" href="200310b.html#200310193">■</a> 
+[VMWare] Xなしの場合のvmware-tools</h3>
+<p>
+VMWareのゲストOSであまりXを使うことがないのでXは入れてないんだけど、
+vmware-toolsをインストールするときにXがないとエラーになってしまう。
+試しにmkdir /etc/X11してから./install.pl otherを実行したら通った。
+psしてみると
+</p>
+<pre>
+/etc/vmware-tools/vmware-guestd --background /var/run/vmware-guestd.pid
+</pre>
+<p>
+と実行されてるようだ。
+これがないとsuspend/resumeしたときに本体のクロックと同期しない。
+再起動してこれが動いてなかったら、rc.localあたりにでも追加しよう。
+</p>
+<!-- section end -->
+</div>
+<!-- 2003/10/19 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/10/20 start -->
+<h2><a name="20031020" href="200310b.html#20031020">2003-10-20 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="200310201" title="200310201" href="200310b.html#200310201">■</a> 
+[Worm] Swen</h3>
+<p>
+それにしても、一向に治まる気配がない。
+まだ1日10通前後来る。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200310202" title="200310202" href="200310b.html#200310202">■</a> 
+[DJGPP] GCC 3.3.2</h3>
+<p>
+そろそろGCCもDJGPPのクロス対応してるかと思ったら、
+全く何もしてなかった。とりあえず3.3.1の対応版のソースでクロス環境を作ろう。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200310203" title="200310203" href="200310b.html#200310203">■</a> 
+<a href="http://raa.ruby-lang.org/project/uconv/">[Ruby] Uconv 0.4.11</a></h3>
+<p>
+というわけで、Ruby 1.8用の0.4.11だ。
+--enable-win32apiつきでextconf.rbを実行。
+</p>
+<!-- section end -->
+</div>
+<!-- 2003/10/20 end -->
+
+<hr>
+<div>
+<a href="200310a.html">&lt;Older(,)</a> | 
+<a href="200310c.html">Newer(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

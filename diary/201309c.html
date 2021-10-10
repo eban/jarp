@@ -1,0 +1,409 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2013-9-c</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="201309b.html">
+<link rel="next" href="201310a.html">
+
+<link rel="stylesheet" type="text/css" href="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.css">
+<script type="text/javascript" src="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.js"></script>
+<script type="text/javascript">
+<!--       
+$(document).ready(function() {
+  prettyPrint();
+});
+-->
+</script>
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2013年9月下旬〜</p>
+<hr>
+<div>
+<a href="201309b.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="201310a.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2013/09/21 start -->
+<h2><a name="20130921" href="201309c.html#20130921">2013-09-21 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="201309211" title="201309211" href="201309c.html#201309211">■</a> 
+GmaneのRSSのtitleの空白が消える件</h3>
+<p>
+原因がわかった。MailmanがSubjectに76文字以上あると分割して次の行に継続させるからだ。<br>
+RFC的に。
+</p>
+<pre>
+% grep -A1 Subject: 1593
+Subject: [ruby-cvs:50116] ko1:r42974 (trunk): * include/ruby/ruby.h: make
+	Symbol objects frozen.
+% echo -n 'Subject: [ruby-cvs:50116] ko1:r42974 (trunk): * include/ruby/ruby.h: make'|wc -c
+73
+</pre>
+<p>
+Gmane側はこの改行とindentを削除して空白を入れないというbugがあるようで。<br>
+その結果76文字以上のSubjectだとこのように空白が消えてしまう。<br>
+</p>
+<!-- section end -->
+</div>
+<!-- 2013/09/21 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/09/22 start -->
+<h2><a name="20130922" href="201309c.html#20130922">2013-09-22 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="201309221" title="201309221" href="201309c.html#201309221">■</a> 
+USBのホットプラグが効かない</h3>
+<p>
+最近USBのホットプラグが効かないんだけど、これってkernelのバグ？<br>
+いや効くのもあるんだよなあ。USB HDDとかは大丈夫だけど、MP3プレーヤーがだめだ。<br>
+まあ、mount /mnt/T30ってやれるようにfstabを用意しとけばいいのでそれほど困ってないが。
+</p>
+<!-- section end -->
+</div>
+<!-- 2013/09/22 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/09/23 start -->
+<h2><a name="20130923" href="201309c.html#20130923">2013-09-23 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="201309231" title="201309231" href="201309c.html#201309231">■</a> 
+Cygwinのgetclip/putclip</h3>
+<p>
+なぜかいつの間にかgetclip/putclipがアンインストールされてた。<br>
+調べてみたらcygutilsの分割のせいだった。<br>
+<a href="http://cygwin.com/ml/cygwin-announce/2013-06/msg00007.html">Updated: cygutils-1.4.12-2 NEW: {cygutils-extra/cygutils-x11}-1.4.12-2</a><br>
+cygutils,cygutils-extra,cygutils-x11と3つに分割されたらしい。<br>
+元々getclip/putclipはcygutilsに入っていたが、<br>
+cygutils-extraへ移動したのでアンインストールされてしまったわけか。<br>
+Cygwinのsetupは元あるパッケージを完全に消してから入れるのでこういうことになるんだな。<br>
+というわけでgetclip/putclipを使いたい場合はcygutils-extraを入れる必要がある。
+</p>
+<!-- section end -->
+</div>
+<!-- 2013/09/23 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/09/24 start -->
+<h2><a name="20130924" href="201309c.html#20130924">2013-09-24 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="201309241" title="201309241" href="201309c.html#201309241">■</a> 
+Hototの小技</h3>
+<p>
+フォーカスを一番上の最新にしとくと自動更新につられて移動してしまうが、<br>
+その1つ下に置いとくとそのままで移動することはない。<br>
+つまり前回見たところを覚えていてくれる。<br>
+あとはj/kで移動すればいい。
+</p>
+<!-- section end -->
+</div>
+<!-- 2013/09/24 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/09/25 start -->
+<h2><a name="20130925" href="201309c.html#20130925">2013-09-25 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="201309251" title="201309251" href="201309c.html#201309251">■</a> 
+Cygwinのクリップボードからminttyへコピペ</h3>
+<p>
+たぶんminttyの機能だと思うんだけど、<br>
+UNCとかをコピペするといい感じに変換してくれる。<br>
+たとえばクリップボードの内容が
+</p>
+<pre>
+\\host\share\foo bar\hoge
+</pre>
+<p>
+だった場合は、ペーストすると
+</p>
+<pre>
+'//host/share/foo bar/hoge'
+</pre>
+<p>
+のようになる。空白を含んでいるとちゃんと''で囲んでくれる。<br>
+地味に便利だ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2013/09/25 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/09/26 start -->
+<h2><a name="20130926" href="201309c.html#20130926">2013-09-26 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="201309261" title="201309261" href="201309c.html#201309261">■</a> 
+Windows7 64ビット版のCapsLockをCtrlにとかUS配列とか</h3>
+<p>
+Xkeymacsがなくてそのあたり放置してたけど、やっぱ気を遣うので設定。<br>
+結局10年前の
+<a href="200305c.html#200305241">日</a><a href="200305c.html#200305262">記</a>の通りなわけで、そのまままだ使えるというのもなんとも凄い話だ。<br>
+しかし元々のCtrlがCapsLockでも何でもない何かになってるので、<br>
+どうせならこれもCtrlのままにするようにせねば。CapsLockなんて使わないし。
+</p>
+<!-- section end -->
+</div>
+<!-- 2013/09/26 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/09/27 start -->
+<h2><a name="20130927" href="201309c.html#20130927">2013-09-27 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="201309271" title="201309271" href="201309c.html#201309271">■</a> 
+scancode map</h3>
+<p>
+一応なにを設定したか把握しておく。<br>
+たぶん他のキーマッピングを入れ替えるソフトで設定してダンプしたんだろうな。
+</p>
+<pre>
+00,00,00,00,
+00,00,00,00,
+07,00,00,00,
+38,00,1d,00,
+01,00,29,00,
+29,00,2b,00,
+1d,00,3a,00,
+2b,00,73,00,
+2b,00,7d,00,
+00,00,00,00
+</pre>
+<p>
+バージョン、フラグ、個数、入れ替えデータ、ターミネータ、らしい。<br>
+個数はターミネータも含むと。<br>
+レイアウトは
+<a href="http://hp.vector.co.jp/authors/VA003720/lpproj/others/kbdjpn.htm">Key Layout and Scancodes</a>が詳しい。変更しているのは:
+</p>
+<pre>
+01 Esc
+1d Ctl
+29 半角全角
+2b ] }
+38 Alt
+3a CapsLock
+73 \ _
+7d \ |
+</pre>
+<p>
+ということでまとめると
+</p>
+<pre>
+CtlをAltに
+半角全角をEscに
+]}を半角全角に
+CapsLockをCtrlに
+\_を]}に
+\|を]}に
+</pre>
+<p>
+ということになる。CtrlはAltになっていたのか。<br>
+かなり複雑な入れ替えしてたんだな。
+</p>
+<p>
+つづく。
+</p>
+<!-- section end -->
+</div>
+<!-- 2013/09/27 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/09/28 start -->
+<h2><a name="20130928" href="201309c.html#20130928">2013-09-28 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="201309281" title="201309281" href="201309c.html#201309281">■</a> 
+regeditでhex(4)が使えない</h3>
+<p>
+Windows XPだからか？<br>
+せっかくだからhexじゃなくてhex(4)を使ってみようと思ったがなぜか全く反映されない。
+</p>
+<pre>
+Windows Registry Editor Version 5.00
+
+[HKEY_CURRENT_USER\Keyboard Layout]
+&quot;Scancode Map&quot;=hex(4):\
+00000000,\
+00000000,\
+00000003,\
+003a001d,\
+001d0038,\
+00000000
+
+</pre>
+<p>
+しかたないのでhexで。
+</p>
+<pre>
+Windows Registry Editor Version 5.00
+
+[HKEY_CURRENT_USER\Keyboard Layout]
+&quot;Scancode Map&quot;=hex:\
+00,00,00,00,\
+00,00,00,00,\
+03,00,00,00,\
+1d,00,3a,00,\
+38,00,1d,00,\
+00,00,00,00
+
+</pre>
+<!-- section end -->
+</div>
+<!-- 2013/09/28 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/09/29 start -->
+<h2><a name="20130929" href="201309c.html#20130929">2013-09-29 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="201309291" title="201309291" href="201309c.html#201309291">■</a> 
+<a href="http://www.tv-tokyo.co.jp/tx_nazo/">密室美少女</a></h3>
+<p>
+ball-&gt;玉-&gt;王-&gt;kingが正解だったようだが、<br>
+ball-&gt;丸-&gt;九-&gt;nineだと思ったよ。<br>
+YMDとかLook and sayはもうすぐわかってしまうよねえ。
+</p>
+<p>
+一応最後だけ解いた。合ってたようだ。
+</p>
+<p>
+それはそれとしてなんかよくわからんのだけど真琴が川口春奈になるの？<br>
+新たな人生というわけで整形したという設定か。
+
+</p>
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="201309292" title="201309292" href="201309c.html#201309292">■</a> 
+CDTV</h3>
+<p>
+EXILEのEXILE PRIDEが24週振りに1位とかどうなってんだと調べた。<br>
+EXILE商法らしい。<br>
+<a href="http://www.j-cast.com/2013/09/20184352.html?p=all">EXILE、驚愕の「おまけ商法」　CD発売5か月後に「オリコン1位」返り咲き : J-CASTニュース</a></p>
+<!-- section end -->
+</div>
+<!-- 2013/09/29 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/09/30 start -->
+<h2><a name="20130930" href="201309c.html#20130930">2013-09-30 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="201309301" title="201309301" href="201309c.html#201309301">■</a> 
+xfce4-genmon-pluginにボタンをつけた</h3>
+<p>
+単に簡単なメッセージしか表示できないと思ってたが、結構凝ったこともできるようで。<br>
+<a href="https://github.com/dnschneid/xfce4-genmon-plugin">dnschneid/xfce4-genmon-plugin</a></p>
+<pre>
+To display these items, the script called by genmon should return a simple
+pseudo-XML string.
+
+The pseudo-XML tags which can be used are :
+&lt;txt&gt;Plaintext to display&lt;/txt&gt;
+&lt;xml&gt;&lt;em&gt;Pango&lt;/em&gt;-formatted markup to display.&lt;/xml&gt;
+&lt;img&gt;Path to the image to display&lt;/img&gt;
+&lt;tool&gt;Tooltip text&lt;/tool&gt;
+&lt;bar&gt;Pourcentage to display in the bar&lt;/bar&gt;
+&lt;click&gt;The command to be executed when clicking on the image&lt;/click&gt;
+</pre>
+<p>
+imgタグでボタン、clickタグでコマンドを実行できる。<br>
+つまり xeo-open URL でブラウザへ飛ばすことができるわけだ。
+</p>
+<pre>
+&lt;img&gt;/home/eban/etc/button.png&lt;/img&gt;
+&lt;txt&gt;バナップルがのったパンケーキ
+&lt;span font='9' color='blue'&gt;[さいたま] 23:00 気温21.3度 降水量0.0mm 北西の風2m&lt;/span&gt;&lt;/txt&gt;
+&lt;click&gt;exo-open http://news.livedoor.com/article/detail/8114490/&lt;/click&gt;
+</pre>
+<p>
+色もつけられるし改行も入れられる。
+<a href="https://developer.gnome.org/pango/stable/PangoMarkupFormat.html">Pango Text Attribute Markup Language</a>が使える。
+</p>
+<!-- section end -->
+</div>
+<!-- 2013/09/30 end -->
+
+<hr>
+<div>
+<a href="201309b.html">&lt;Prev(,)</a> | 
+<a href="201310a.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

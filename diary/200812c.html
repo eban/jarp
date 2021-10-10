@@ -1,0 +1,416 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2008-12-c</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="200812b.html">
+<link rel="next" href="200901a.html">
+
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2008年12月下旬〜</p>
+<hr>
+<div>
+<a href="200812b.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="200901a.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2008/12/21 start -->
+<h2><a name="20081221" href="200812c.html#20081221">2008-12-21 (Sun)</a></h2>
+<!-- 2008-12-22 01:01:48 -->
+
+<div class="entry1">
+<h3><a name="200812211" title="200812211" href="200812c.html#200812211">■</a> 
+めがね</h3>
+<p>
+どういうわけかこの時期になるとめがねにトラブルが。<br>
+つるの部分のコーティングがはがれてきてちょっとみっともない。<br>
+どんなあんばいか聞いてみるとコーティングしなおすか、部品の取り寄せらしい。<br>
+片方だけなので部品交換のほうが安くなるかもしれないという話。<br>
+運悪く日曜なのですぐにはわからんとか。<br>
+そうかわざわざ日曜に行かんでもよかったな。<br>
+ずっと休みなんだから。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200812212" title="200812212" href="200812c.html#200812212">■</a> 
+気温</h3>
+<p>
+24:00の気温が19.9℃。なんでこんな時間に最高気温？
+</p>
+<!-- section end -->
+</div>
+<!-- 2008/12/21 end -->
+
+
+
+<hr class="hide">
+<!-- 2008/12/22 start -->
+<h2><a name="20081222" href="200812c.html#20081222">2008-12-22 (Mon)</a></h2>
+<!-- 2008-12-23 01:49:04 -->
+
+<div class="entry1">
+<h3><a name="200812221" title="200812221" href="200812c.html#200812221">■</a> 
+[TV] 00</h3>
+<p>
+リボンズの声はどう聞いても古谷徹だよね。<br>
+クレジットの蒼月昇って誰やねんとぐぐってみるとやはり古谷徹だった。<br>
+いろいろと大人の事情があるらしい。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200812222" title="200812222" href="200812c.html#200812222">■</a> 
+<a href="http://golf.shinh.org/p.rb?apple+lines#Ruby">[Golf] apple lines</a></h3>
+<p>
+手元で通る54Bがゴルフ場では通らない。なんでだろ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2008/12/22 end -->
+
+
+
+<hr class="hide">
+<!-- 2008/12/23 start -->
+<h2><a name="20081223" href="200812c.html#20081223">2008-12-23 (Tue)</a></h2>
+<!-- 2008-12-24 02:37:30 -->
+
+<div class="entry1">
+<h3><a name="200812231" title="200812231" href="200812c.html#200812231">■</a> 
+<a href="http://golf.shinh.org/p.rb?apple+lines">[Golf] apple lines</a></h3>
+<p>
+viで34Bできたーと思ったら0なんて凶悪な入力例があって玉砕。<br>
+0は0回の繰り返しじゃなくて行の最初の文字へ移動するコマンドだもんなあ。<br>
+これって非常に困るよ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2008/12/23 end -->
+
+
+
+<hr class="hide">
+<!-- 2008/12/24 start -->
+<h2><a name="20081224" href="200812c.html#20081224">2008-12-24 (Wed)</a></h2>
+<!-- 2008-12-25 02:16:41 -->
+
+<div class="entry1">
+<h3><a name="200812241" title="200812241" href="200812c.html#200812241">■</a> 
+[Fedora] Fedora10でxineがSEGVする件</h3>
+<p>
+mplayerやvlcやffplayがあるのでxineが落ちても特に問題ないんだけど、<br>
+気持ち悪いのでちょっと調査。<br>
+とりあえず新規でインストールしたFedora10でも落ちるので、<br>
+おれの設定によるものではないことを確認。<br>
+straceしてみると
+</p>
+
+<pre>
+open(&quot;/dev/shm/pulse-shm-1983788885&quot;, O_RDWR|O_CREAT|O_EXCL|O_NOFOLLOW|O_CLOEXEC, 0400) = 7
++++ killed by SIGSEGV +++
+</pre>
+<p>
+で終了していてpulseaudioがかなり怪しい。ためしに
+</p>
+
+<pre>
+% xine -A alsa foo.avi
+</pre>
+<p>
+してみるとちゃんと立ち上がった。これか。とりあえず~/.xine/configに
+</p>
+
+<pre>
+audio.driver:alsa
+</pre>
+<p>
+と書いてお茶を濁す。
+</p>
+<!-- section end -->
+</div>
+<!-- 2008/12/24 end -->
+
+
+
+<hr class="hide">
+<!-- 2008/12/25 start -->
+<h2><a name="20081225" href="200812c.html#20081225">2008-12-25 (Thu)</a></h2>
+<!-- 2008-12-26 02:27:03 -->
+
+<div class="entry1">
+<h3><a name="200812251" title="200812251" href="200812c.html#200812251">■</a> 
+[Comic] BECK, NARUTO, One Piece</h3>
+<p>
+全部で12冊ぐらい読んだような。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200812252" title="200812252" href="200812c.html#200812252">■</a> 
+<a href="http://golf.shinh.org/p.rb?apple+lines#vi">[Golf] apple lines</a></h3>
+<p>
+考えてみると1個ずれるので0のときもなんとかなった。今49Bだがもっと縮むはず。
+</p>
+<!-- section end -->
+</div>
+<!-- 2008/12/25 end -->
+
+
+
+<hr class="hide">
+<!-- 2008/12/26 start -->
+<h2><a name="20081226" href="200812c.html#20081226">2008-12-26 (Fri)</a></h2>
+<!-- 2008-12-27 02:39:57 -->
+
+<div class="entry1">
+<h3><a name="200812261" title="200812261" href="200812c.html#200812261">■</a> 
+[Web] ツールバーもどき</h3>
+<p>
+最近はてぶみたいに上部にツールバーもどきが出てくるサイトがあるけど、<br>
+あれってなんの嫌がらせ？下の文字が隠れてページ送りすると、<br>
+一々ちょっと戻さないといけないことがある。<br>
+特にひどいのが、
+<a href="http://drnicwilliams.com/">Dr Nic</a>の下部。
+</p>
+
+<p>
+なんか流行ってるようでいやな感じ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2008/12/26 end -->
+
+
+
+<hr class="hide">
+<!-- 2008/12/27 start -->
+<h2><a name="20081227" href="200812c.html#20081227">2008-12-27 (Sat)</a></h2>
+<!-- 2008-12-28 00:46:17 -->
+
+<div class="entry1">
+<h3><a name="200812271" title="200812271" href="200812c.html#200812271">■</a> 
+忘年会</h3>
+<p>
+馬場のShakey'sでピザとパスタの毎年恒例の忘年会。<br>
+塩の人達登場。公開内緒話は少なめ。御隠居。uucp。おーぷんささるの行く末。<br>
+yはyuzoのy。
+</p>
+
+<p>
+今年も結構盛り上がったな。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200812272" title="200812272" href="200812c.html#200812272">■</a> 
+[Ruby] rcs.rb(Random Character Stereogram)</h3>
+<p>
+Rubyのソースのsampleに入ってる謎のコード。
+</p>
+
+<pre>
+% ruby rcs.rb rcs.dat
+hy=zg]-[&amp;shy=zg]-[&amp;shy=zg]-[&amp;shy=zg]-[&amp;s=,vzg]-[&amp;s=,vzg]-[&amp;s=,vzg]-[&amp;s=,vzg]-[
+p#a3l40/(/p#a3l40/(/p#a3l40/(/p#a3l40(/#a;3l4$0(/#a;3l4$0(/#a;3l4$0(/#a;3l4$0(
+r/03%lt[mor/03%lt[mor/03%lt[mor/03lt[mr/03&amp;lt[mr[/03&amp;lt[mr[/03&amp;lt[mr[/03&amp;lt[mr
+-vgoidw(bm-vgoidw(bm-vgoidw(bm-goidw(b-goi)dw(b-goi)udw(b-goi)udw(b-goi)udw(b-
+c61/%$[)khc61/%$[)khc61/%$[)hc61/%$[)c61/%$f[)c61/%$f[)`c61/%$f[)`c61/%$f[)`c6
+-pn.su;tn6-pn.su;tn6-pn.sutn6-pn.sut6-pn.sutg6-pn.sutg6-pn].sutg6-pn].sutg6-pn
+7,*-]($8a!7,*-]($8a!7,*-](a!7,*-](a!7,*-](a!7,*-](a!7,*-](a!7z),*-](a!7z),*-](
+95fe;gu*4295fe;gu*4295fe;g4295fe;g4295fe;g4295fe;g4295fe;g8o4295fe;g8o4295fe;g
+\h,l!u,sv&amp;\h,l!u,sv&amp;\h,l!us&amp;\h,l!us&amp;\h,l!us&amp;\h,l!us&amp;\h4,l!9us&amp;\h4,l!9us&amp;\h4,l!
+=lm1,%!yt%=lm1,%!yt%=lm1,%yt%=l1,%yt%=l1,%yt%=l1,%ytt%=l1,,%ytt%=l1,,%ytt%=l1,
+x8[*hun31mx8[*hun31mx8[*hun1mx8[*un1mx8[*un1mx8[-*un1mx8k[-*un1mx8k[-*un1mx8k[
+kpi)jep-kdkpi)jep-kdkpi)jep-dkpijep-dkpijep-dkpijfep-dkxpijfep-dkxpijfep-dkxpi
+-3[$3'#bq2-3[$3'#bq2-3[$3'#bq-3$3'#bq-t3$3#bq-t3$3#abql-t3$3#abql-t3$3#abql-t3
+sc90`326l.sc90`326l.sc90`326l.c0`326l$.c0`36l$.c0`3n6hl$.c0`3n6hl$.c0`3n6hl$.c
+nl)g#&amp;5\\(nl)g#&amp;5\\(nl)g#&amp;5\\(n)#a5q\\(n)#a5q\(n)#ava5q\(n)#ava5q\(n)#ava5q\(n
+b.`4fv*fh^b.`4fv*fh^b.`4fv*fh^b4ffv*fh^b4ffv*fh^bffvm^*fh^bffvm^*fh^bffvm^*fh^
+wv.e$i7gz,wv.e$i7gz,wv.e$i7gz,wv.e$i7gz,wv.e$i7gz,wv.e$i7gz,wv.e$i7gz,wv.e$i7g
+</pre>
+<p>
+裸眼立体視の平行法なら☆が浮き出て、交差法なら凹む。<br>
+どちらでも見ることができる。
+</p>
+<!-- section end -->
+</div>
+<!-- 2008/12/27 end -->
+
+
+
+<hr class="hide">
+<!-- 2008/12/28 start -->
+<h2><a name="20081228" href="200812c.html#20081228">2008-12-28 (Sun)</a></h2>
+<!-- 2008-12-29 04:16:06 -->
+
+<div class="entry1">
+<h3><a name="200812281" title="200812281" href="200812c.html#200812281">■</a> 
+<a href="http://www.gnu.org/software/tar/">[Soft] GNU tar 1.21 (Release)</a></h3>
+<p>
+-Jきちゃったよ。着々と埋まってるな。
+</p>
+
+<pre>
+New short option -J, an alias for --lzma
+</pre>
+<p>
+lzopまで対応するか
+</p>
+
+<pre>
+New option --lzop
+</pre>
+<p>
+気づいてなかったけど、1.20の-aは便利かもしれない。<br>
+展開時は勝手にやってくれてるだけに。
+</p>
+
+<pre>
+New option --auto-compress (-a)
+  With --create, selects compression algorithm
+  basing on the suffix of the archive file name.
+</pre>
+<p>
+F10のtarは1.20なので、こんな感じで使えるわけだ。
+</p>
+
+<pre>
+% tar cavf foo.tar.bz2 xine.log
+xine.log
+% file foo.tar.bz2
+foo.tar.bz2: bzip2 compressed data, block size = 900k
+</pre>
+
+<!-- section end -->
+</div>
+<!-- 2008/12/28 end -->
+
+
+
+<hr class="hide">
+<!-- 2008/12/29 start -->
+<h2><a name="20081229" href="200812c.html#20081229">2008-12-29 (Mon)</a></h2>
+<!-- 2008-12-30 04:23:03 -->
+
+<div class="entry1">
+<h3><a name="200812291" title="200812291" href="200812c.html#200812291">■</a> 
+[PC] HDD 1TB</h3>
+<p>
+何も気にせずに買ったHDDがSATAだった。そうだよな、すでに。<br>
+明日裸族のお立ち台でも買ってくるか。
+</p>
+<!-- section end -->
+</div>
+<!-- 2008/12/29 end -->
+
+
+
+<hr class="hide">
+<!-- 2008/12/30 start -->
+<h2><a name="20081230" href="200812c.html#20081230">2008-12-30 (Tue)</a></h2>
+<!-- 2008-12-31 02:28:53 -->
+
+<div class="entry1">
+<h3><a name="200812301" title="200812301" href="200812c.html#200812301">■</a> 
+<a href="http://www.century.co.jp/products/pc/hdd-kit/crosu2.html">[PC] 裸族のお立ち台</a></h3>
+<p>
+早速買ってきた「裸族のお立ち台」。4000円ほど。ちなみに1TBのHDDは8000円弱。<br>
+安くなったなあ。
+</p>
+
+<p>
+LinuxでもOK。/var/log/messagesを見るとつないだだけで/dev/sdeとして認識している。<br>
+でもフォーマットに2時間近くかかってる。だいじょうぶかな。
+</p>
+<!-- section end -->
+</div>
+<!-- 2008/12/30 end -->
+
+
+
+<hr class="hide">
+<!-- 2008/12/31 start -->
+<h2><a name="20081231" href="200812c.html#20081231">2008-12-31 (Wed)</a></h2>
+<!-- 2009-01-01 02:25:41 -->
+
+<div class="entry1">
+<h3><a name="200812311" title="200812311" href="200812c.html#200812311">■</a> 
+<a href="http://www.novac.co.jp/products/hardware/nv-hd/nv-tw130u/index.html">[PC] SATA+IDE HDD つながーるKIT USB light</a></h3>
+<p>
+また買ってきた。2980円。Linuxでも問題なし。スピードも問題なし。<br>
+IDEも使えるし結構いいかもしれない。
+</p>
+<!-- section end -->
+</div>
+<!-- 2008/12/31 end -->
+
+<hr>
+<div>
+<a href="200812b.html">&lt;Prev(,)</a> | 
+<a href="200901a.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

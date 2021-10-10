@@ -1,0 +1,481 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2014-4-c</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="201404b.html">
+<link rel="next" href="201405a.html">
+
+<link rel="stylesheet" type="text/css" href="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.css">
+<script async type="text/javascript" src="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.js"></script>
+<script type="text/javascript">
+<!--       
+$(document).ready(function() {
+  prettyPrint();
+});
+-->
+</script>
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2014年4月下旬〜</p>
+<hr>
+<div>
+<a href="201404b.html" accesskey=",">&lt;Older(,)</a> | 
+<a href="201405a.html" accesskey=".">Newer(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2014/04/21 start -->
+<h2><a name="20140421" href="201404c.html#20140421">2014-04-21 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="201404211" title="201404211" href="201404c.html#201404211">■</a> 
+extconf.rbでmake -j 5と決め打ちしているgemがあって困った話</h3>
+<p>
+古いマシンでコアは1個しかないし、load averageががんがん上がってもう先に進まない。<br>
+最終的には3時間後にcpp1plusがなんだかわからないエラーを吐いて死亡。
+</p>
+<pre>
+def self.run_build_commands
+  setup_env
+  patch_configure
+  system(*configure_cmd) &amp;&amp;
+    system(&quot;make&quot;, &quot;clean&quot;) &amp;&amp;
+    system(&quot;make&quot;, &quot;-j&quot;, &quot;5&quot;) &amp;&amp;
+    system(&quot;make&quot;, &quot;install&quot;)
+end
+</pre>
+<p>
+gemになってるってことは中身を書き換えるのも面倒でどうしたもんかと思ったが、<br>
+makeのwrapperを作ってごまかしてみたらうまくいった。50分ほどで問題なく終了。
+</p>
+<pre>
+#!/bin/sh
+exec /usr/bin/make &quot;$@&quot; -j 1
+</pre>
+<p>
+という内容のファイルで~/bin/makeに作っておく。<br>
+-jオプションは後から指定されたほうが優先される。
+</p>
+<pre>
+-j [jobs], --jobs[=jobs]
+     Specifies the number of jobs (commands) to run simultaneously.  If there is more than one -j option,  the
+     last  one is effective.  If the -j option is given without an argument, make will not limit the number of
+     jobs that can run simultaneously.
+</pre>
+<p>
+-jだけだと無制限なのか。それも怖いな。
+</p>
+<!-- section end -->
+</div>
+<!-- 2014/04/21 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/04/22 start -->
+<h2><a name="20140422" href="201404c.html#20140422">2014-04-22 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="201404221" title="201404221" href="201404c.html#201404221">■</a> 
+<a href="http://qiita.com/richmikan@github/items/fcf457041bb3c0e60179">たった6個のsedを通せば、Apacheログは驚くほど扱いやすくなる - Qiita</a></h3>
+<p>
+LTSVとかもっと扱いやすい形式にすればいいんじゃないかという話ではあるが、<br>
+そんなところをいじれない一般ユーザーもいるわけで。
+</p>
+<p>
+しかし、このsedスクリプトはちょっといただけない。<br>
+sed 2号には
+</p>
+<pre>
+sed 's/ &quot;\([^&quot;]*\)&quot; / '&quot;$LF&quot;'&quot;\1&quot;'&quot;$LF&quot;' /g'
+</pre>
+<p>
+のように&quot;&quot;の両側に空白があるので、<br>
+肝心の最後のフィールドであるUser-Agentにはマッチしない。<br>
+たとえ最後に空白を追加してもその前のフィールドも&quot;&quot;なため、<br>
+やはり最後のフィールドは取り残される。<br>
+gist版でもそうなってるのでほらこのとおりとはならないはずなんだけどねえ。
+</p>
+<pre>
+% cat httpd-access.log | ./apalognorm.sh
+192.168.0.1 - - 
+[17/Apr/2014:11:22:33_+0900]
+ 
+&quot;GET_/index.html_HTTP/1.1&quot;
+ 200 43206 
+&quot;https://www.google.co.jp/&quot;
+ &quot;Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/34.0.1847.116 Safari/537.36&quot;
+</pre>
+<p>
+しかも元に戻っていない。
+</p>
+<p>
+CombinedLogはフィールド数も固定なので、こんなめんどうなことしなくても
+</p>
+<p>
+<pre>
+sed 's/\(.*\) \(.*\) \(.*\) \[\(.*\)\] &quot;\(.*\)&quot; \(.*\) \(.*\) &quot;\(.*\)&quot; &quot;\(.*\)&quot;/\1`\2`\3`\4`\5`\6`\7`\8`\9/'
+</pre>
+</p>
+<p>
+でいいんじゃないかな。<br>
+区切りはめったに現われないback quoteにしたけどもちろんタブでいい。<br>
+あとはcutなりawkなりお好みのコマンドで。
+</p>
+<pre>
+% sed 's/\(.*\) \(.*\) \(.*\) \[\(.*\)\] &quot;\(.*\)&quot; \(.*\) \(.*\) &quot;\(.*\)&quot; &quot;\(.*\)&quot;/\1`\2`\3`\4`\5`\6`\7`\8`\9/' httpd-access.log |\
+  cut -f9 -d\`
+Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/34.0.1847.116 Safari/537.36
+</pre>
+<!-- section end -->
+</div>
+<!-- 2014/04/22 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/04/23 start -->
+<h2><a name="20140423" href="201404c.html#20140423">2014-04-23 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="201404231" title="201404231" href="201404c.html#201404231">■</a> 
+User-Agentの罠</h3>
+<p>
+昨日の
+</p>
+<pre>
+\(.*\) \(.*\) \(.*\) \[\(.*\)\] &quot;\(.*\)&quot; \(.*\) \(.*\) &quot;\(.*\)&quot; &quot;\(.*\)&quot;
+</pre>
+<p>
+のような正規表現は
+</p>
+<pre>
+\([^ ]*\) \([^ ]*\) \([^ ]*\) \[\([^]]*\)\] &quot;\([^&quot;]*\)&quot; \([^ ]*\) \([^ ]*\) &quot;\([^&quot;]*\)&quot; &quot;\([^&quot;]*\)&quot;
+</pre>
+<p>
+としたほうがバックトラックを抑えることができるので速いが、<br>
+access.logを見るとUser-Agentの中には&quot;を含むものがあったりする。
+</p>
+<pre>
+&quot;{:agent_name=&gt;\&quot;test\&quot;} (2.3.3, ruby 1.9.3 (2012-10-12))&quot;
+</pre>
+<p>
+なんだよ、その名前は。<br>
+というわけで&quot;&quot;だけはそのままにして
+</p>
+<pre>
+\([^ ]*\) \([^ ]*\) \([^ ]*\) \[\([^]]*\)\] &quot;\(.*\)&quot; \([^ ]*\) \([^ ]*\) &quot;\(.*\)&quot; &quot;\(.*\)&quot;
+</pre>
+<p>
+とするのがいいかもしれない。<br>
+まあ、Perlで
+</p>
+<pre>
+perl -pe 's/(.*?) (.*?) (.*?) \[(.*?)\] &quot;(.*?)&quot; (.*?) (.*?) &quot;(.*?)&quot; &quot;(.*?)&quot;/\1`\2`\3`\4`\5`\6`\7`\8`\9/'
+</pre>
+<p>
+とするほうが速いし簡単でわかりやすいが。
+</p>
+<!-- section end -->
+</div>
+<!-- 2014/04/23 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/04/24 start -->
+<h2><a name="20140424" href="201404c.html#20140424">2014-04-24 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="201404241" title="201404241" href="201404c.html#201404241">■</a> 
+Dynのfree accountは5/7に終了する</h3>
+<p>
+昨日メールが来て気づいた。5/7でfree accountも終了になるようで。<br>
+ぐぐってみたらCEOのブログで発表されていた。<br>
+<a href="http://dyn.com/blog/why-we-decided-to-stop-offering-free-accounts/">Why We Decided To Stop Offering Free Accounts | Dyn Blog</a><br>
+FAQもあるね。<br>
+<a href="http://dyn.com/free-user-faqs/">Free User Discontinuation FAQs - Dyn</a></p>
+<!-- section end -->
+</div>
+<!-- 2014/04/24 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/04/25 start -->
+<h2><a name="20140425" href="201404c.html#20140425">2014-04-25 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="201404251" title="201404251" href="201404c.html#201404251">■</a> 
+openssl prime</h3>
+<p>
+opensslコマンドで素数判定できるのはいいが、なぜか結果は16進になってしまう。
+</p>
+<pre>
+% openssl prime 255 
+FF is not prime
+</pre>
+<p>
+つまり素数判定しつつ16進にも変換できるわけだ。どんな用途だ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2014/04/25 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/04/26 start -->
+<h2><a name="20140426" href="201404c.html#20140426">2014-04-26 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="201404261" title="201404261" href="201404c.html#201404261">■</a> 
+Log4rでタイムスタンプ</h3>
+<p>
+<a href="http://log4r.rubyforge.org/rdoc/log4r/formatter/patternformatter_rb.html">File: patternformatter.rb [1.1.7 Log4r API]</a>を見るとdate_patternかdate_methodを使えばいいとわかる。
+</p>
+<pre>
+require 'rubygems'
+require 'log4r'
+logger = Log4r::Logger.new(self.class.to_s)
+formatter = Log4r::PatternFormatter.new(
+  :pattern =&gt; &quot;%d %C[%l]: %M&quot;,
+  :date_pattern =&gt; &quot;%Y/%m/%d %T&quot;
+)
+logger.outputters = Log4r::StdoutOutputter.new(STDOUT, :formatter =&gt; formatter)
+
+logger.debug &quot;hoge&quot;
+</pre>
+<p>
+実行するとこんな感じで表示される。
+</p>
+<pre>
+2014/04/26 22:11:35 Object[DEBUG]: hoge
+</pre>
+<p>
+date_methodを使う場合は
+</p>
+<pre>
+:date_method =&gt; &quot;strftime('%F %T')&quot;
+</pre>
+<p>
+のような感じになる。
+</p>
+<p>
+ただ、ぐぐるとなぜかdate_formatを使った例が出てくる。<br>
+しかも内容は判を押したように&quot;%Y/%m/%d %H:%M:%S&quot;で。<br>
+そんな設定はないので当然無視され表示はデフォルトの&quot;%Y-%m-%d %H:%M:%S&quot;となるわけだが、<br>
+疑問に思わないのだろうか。たしかにそっちのほうが名前がふさわしいと思うので気持ちはわかるが。
+</p>
+<!-- section end -->
+</div>
+<!-- 2014/04/26 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/04/27 start -->
+<h2><a name="20140427" href="201404c.html#20140427">2014-04-27 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="201404271" title="201404271" href="201404c.html#201404271">■</a> 
+Hototがsegvで立ち上がらないのでmikutter</h3>
+<p>
+なにが原因だかわからないが、こういうときぐらいしか試す機会がないので、<br>
+mikutterを久し振りに。mikutterも結構動かないことが多いが今回は大丈夫だった。<br>
+mikutterのタブはよくわからない。リストを設定しても保存されなかったりで。<br>
+でもpluginが書けるからやっぱいいよなあ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2014/04/27 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/04/28 start -->
+<h2><a name="20140428" href="201404c.html#20140428">2014-04-28 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="201404281" title="201404281" href="201404c.html#201404281">■</a> 
+Ruby標準添付logger.rbの表示形式を変更する</h3>
+<p>
+Log4rを使わなくても標準添付のlogger.rbがあるわけで、こっちの表示形式を変更してみる。<br>
+先日のLog4rとまったく同じ形式にする。
+</p>
+<pre>
+require 'logger'
+logger = Logger.new(STDOUT)
+logger.progname = self.class.to_s
+
+logger.debug &quot;hoge&quot;
+
+logger.formatter = proc do |sev, time, prog, msg|
+  &quot;#{time.strftime('%Y/%m/%d %T')} #{prog}[#{sev}]: #{msg.is_a?(String) ? msg : msg.inspect}\n&quot;
+end
+
+logger.debug &quot;hoge&quot;
+</pre>
+<p>
+こちらはprocをというかcallメソッドが呼び出せるものを渡せばいい。<br>
+引数はseverity, time, progname, messageの順になっている。<br>
+%なんちゃらとか覚えなくていいのでこの方法のほうがいいと思う。
+</p>
+<pre>
+D, [2014-04-29T01:43:33.718880 #17391] DEBUG -- Object: hoge
+2014/04/29 01:43:33 Object[DEBUG]: hoge
+</pre>
+<p>
+デフォルトの表示形式はちょっと煩雑すぎるかな。
+</p>
+<!-- section end -->
+</div>
+<!-- 2014/04/28 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/04/29 start -->
+<h2><a name="20140429" href="201404c.html#20140429">2014-04-29 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="201404291" title="201404291" href="201404c.html#201404291">■</a> 
+CPU使用率</h3>
+<p>
+CPU使用率が知りたければtopコマンドを見ればいいが、注意が必要。<br>
+</p>
+<pre>
+% top -bn1|grep '^%Cpu'
+%Cpu(s):  8.0 us,  2.2 sy,  7.0 ni, 79.9 id,  2.5 wa,  0.4 hi,  0.0 si,  0.0 st
+</pre>
+<p>
+のように79.9 idがidleを意味しているので100-79.9=20.1%となる。<br>
+しかしtopが1回目に表示しているのは直近ではなく起動してからの平均値になっている。<br>
+だから直近のが知りたければ2回目以降を見ないといけない。<br>
+topの更新間隔は3秒なので単に-bn2では3秒待つことになる。<br>
+そんなに待つ必要はないので-d1として1秒ぐらいにしておく。
+</p>
+<pre>
+% top -bn2 -d1|grep '^%Cpu'
+%Cpu(s):  8.1 us,  2.2 sy,  7.0 ni, 79.8 id,  2.5 wa,  0.4 hi,  0.0 si,  0.0 st
+%Cpu(s):  2.2 us,  1.2 sy,  0.0 ni, 96.6 id,  0.0 wa,  0.0 hi,  0.0 si,  0.0 st
+</pre>
+<p>
+あとは抜き出せばいい。そのあたりはawkで。余計なプロセスがなるべく出ないように-p0もつけている。
+</p>
+<pre>
+% top -bn2 -d1 -p0         
+top - 01:14:07 up 1 day, 12:16, 10 users,  load average: 0.29, 0.67, 1.05
+Tasks:   1 total,   1 running,   0 sleeping,   0 stopped,   0 zombie
+%Cpu(s):  8.1 us,  2.2 sy,  7.0 ni, 79.9 id,  2.5 wa,  0.4 hi,  0.0 si,  0.0 st
+KiB Mem:   8134968 total,  6435356 used,  1699612 free,   242504 buffers
+KiB Swap:  8347544 total,      708 used,  8346836 free.  2916544 cached Mem
+
+  PID USER      PR  NI    VIRT    RES    SHR S  %CPU %MEM     TIME+ COMMAND
+ 5959 eban      20   0   26588   1364   1096 R   0.0  0.0   0:00.00 top
+
+top - 01:14:08 up 1 day, 12:16, 10 users,  load average: 0.29, 0.67, 1.05
+Tasks:   1 total,   1 running,   0 sleeping,   0 stopped,   0 zombie
+%Cpu(s):  2.0 us,  0.8 sy,  0.0 ni, 97.0 id,  0.3 wa,  0.0 hi,  0.0 si,  0.0 st
+KiB Mem:   8134968 total,  6435356 used,  1699612 free,   242504 buffers
+KiB Swap:  8347544 total,      708 used,  8346836 free.  2916544 cached Mem
+
+  PID USER      PR  NI    VIRT    RES    SHR S  %CPU %MEM     TIME+ COMMAND
+ 5959 eban      20   0   26596   1424   1144 R   0.0  0.0   0:00.00 top
+% top -bn2 -d1 -p0 | awk '/^%Cpu/&amp;&amp;i++{print 100-$8 &quot;%&quot;}'
+2.8%
+</pre>
+<p>
+i++で2個目の%Cpuを抜き出している。まあ、tail -1を使えばいいんだがこういう方法もあるということで。
+</p>
+<!-- section end -->
+</div>
+<!-- 2014/04/29 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/04/30 start -->
+<h2><a name="20140430" href="201404c.html#20140430">2014-04-30 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="201404301" title="201404301" href="201404c.html#201404301">■</a> 
+Firefox 29</h3>
+<p>
+見た目をカスタマイズしていたもんだから、<br>
+今回の変更でいろいろと外観が変わってもう変更するのやめた。<br>
+とはいうもののタイトルは表示してくれないと困るのでそこだけ。<br>
+三本線のボタンを押してメニューを開いて左下の+カスタマイズを選び、<br>
+また左下のタイトルバーを押せばok。<br>
+最初はこれが押せるとは気づかずしばらく悩んだ。<br>
+あとはステータスバーじゃなくてアドオンバーをどうするかだけど、<br>
+メニューの中にほとんど閉じ込めることができてなんかすっきりした。<br>
+インジケータ的なやつだけ上に出しとけばよさそうだ。<br>
+といいつつも
+<a href="https://addons.mozilla.org/ja/firefox/addon/the-addon-bar/">The Addon Bar (restored)</a>を入れた。<br>
+やっぱ必要だな。
+</p>
+<!-- section end -->
+</div>
+<!-- 2014/04/30 end -->
+
+<hr>
+<div>
+<a href="201404b.html">&lt;Older(,)</a> | 
+<a href="201405a.html">Newer(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

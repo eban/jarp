@@ -1,0 +1,463 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2016-2-a</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="201601c.html">
+<link rel="next" href="201602b.html">
+
+<link rel="stylesheet" type="text/css" href="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.css">
+<script async type="text/javascript" src="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.js"></script>
+<script type="text/javascript">
+<!--       
+$(document).ready(function() {
+  prettyPrint();
+});
+-->
+</script>
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2016年2月上旬〜</p>
+<hr>
+<div>
+<a href="201601c.html" accesskey=",">&lt;Older(,)</a> | 
+<a href="201602b.html" accesskey=".">Newer(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2016/02/01 start -->
+<h2><a name="20160201" href="201602a.html#20160201">2016-02-01 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="201602011" title="201602011" href="201602a.html#201602011">■</a> 
+<a href="https://projecteuler.net/problem=23">Project Euler Problem 23 #シェル芸</a></h3>
+<p>
+Non-abundant sums. 非過剰数の総和。<br>
+真の約数の和が出てくるのでProblem 21の方法が使える。
+</p>
+<pre>
+% time seq 28123 | gawk 'i=$0{n[i]=i;for(j=i*2;j&lt;=28123; j+=i)a[j]+=i;if(i&lt;a[i])b[++k]=i}END{for(i in b)for(j=i;(sum=b[i]+b[j])&lt;=28123;j++)n[sum]=0;for(i in n)s+=n[i];print s}'
+4179871
+seq 28123  0.00s user 0.00s system 0% cpu 0.066 total
+gawk   4.41s user 0.00s system 99% cpu 4.416 total
+</pre>
+<p>
+aに真の約数の和、bに過剰数をいれて、それを使って過剰数の和を削除している。<br>
+n[sum]=0はdelete n[sum]でいいんだけど遅い。<br>
+それとjはfor(j in b)とできるんだけどやはり遅い。
+</p>
+<p>
+mawkはgawkよりやはり速い。
+</p>
+<pre>
+% time seq 28123 | mawk 'i=$0{n[i]=i;for(j=i*2;j&lt;=28123; j+=i)a[j]+=i;if(i&lt;a[i])b[++k]=i}END{for(i in b)for(j=i;(sum=b[i]+b[j])&lt;=28123;j++)n[sum]=0;for(i in n)s+=n[i];print s}'
+4179871
+seq 28123  0.00s user 0.00s system 0% cpu 0.077 total
+mawk   3.30s user 0.00s system 99% cpu 3.300 total
+</pre>
+<p>
+cf:
+<a href="http://qiita.com/gin_135/items/8e248de10325f51fe491">Project Eulerをシェル芸で解いてみる(Problem 23) #シェル芸 - Qiita</a></p>
+<!-- section end -->
+</div>
+<!-- 2016/02/01 end -->
+
+
+
+<hr class="hide">
+<!-- 2016/02/02 start -->
+<h2><a name="20160202" href="201602a.html#20160202">2016-02-02 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="201602021" title="201602021" href="201602a.html#201602021">■</a> 
+<a href="https://projecteuler.net/problem=24">Project Euler Problem 24 #シェル芸</a></h3>
+<p>
+Lexicographic permutations. 辞書式順列。<br>
+0,1,2,3,4,5,6,7,8,9からなる順列を辞書式に並べたときの100万番目。<br>
+順列ということは10!通りの数がある。<br>
+1桁目は10通り。ということはそれぞれ9!(362880)のブロックになる。<br>
+1000000/362880が2.7ぐらいなので、1桁目は0,1,2の2になる。<br>
+1000000%362880=274240ということで、今度は8!(40320)で同じように進めると、<br>
+274240/40320が6.8ぐらいなので、2桁目は0,1,3,4,5,6,7の7になる。<br>
+これをシェル芸で表現する。
+</p>
+<pre>
+% echo 0123456789 | sed -r &quot;$(echo 'n=999999;f=3628800;for(i=10;i&gt;0;--i){f/=i;n/f;n%=f}'|bc|sed 's/./s,(.{&amp;})(.)(.*),\\1\\3\\2,/')&quot;
+2783915460
+</pre>
+<p>
+まず、3628800は10!。階乗の値は9!,8!と必要になるのでつぎつぎと割ってあげればいい。
+</p>
+<pre>
+% echo 'n=999999;f=3628800;for(i=10;i&gt;0;--i){f/=i;n/f;n%=f}'|bc
+2
+6
+6
+2
+5
+1
+2
+1
+1
+0
+</pre>
+<p>
+これを使って0123456789から抜き出すわけだけど、抜き出す代わりに並び換える。<br>
+次々と最後へ10回繰り返して移動させれば抜き出すのと同じことになる。
+</p>
+<pre>
+% echo 2662512110|sed 's/./s,(.{&amp;})(.)(.*),\\1\\3\\2,\n/g'
+s,(.{2})(.)(.*),\1\3\2,
+s,(.{6})(.)(.*),\1\3\2,
+s,(.{6})(.)(.*),\1\3\2,
+s,(.{2})(.)(.*),\1\3\2,
+s,(.{5})(.)(.*),\1\3\2,
+s,(.{1})(.)(.*),\1\3\2,
+s,(.{2})(.)(.*),\1\3\2,
+s,(.{1})(.)(.*),\1\3\2,
+s,(.{1})(.)(.*),\1\3\2,
+s,(.{0})(.)(.*),\1\3\2,
+
+</pre>
+<p>
+このsed scriptを通してあげれば並び換え完成。<br>
+backslashがうっとうしいので-rオプションを使っている。
+</p>
+<p>
+cf:
+<a href="http://qiita.com/gin_135/items/0bdaae5b88fe64936c7f">Project Eulerをシェル芸で解いてみる(Problem 24) #シェル芸 - Qiita</a></p>
+<p>
+やってることは基本同じ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2016/02/02 end -->
+
+
+
+<hr class="hide">
+<!-- 2016/02/03 start -->
+<h2><a name="20160203" href="201602a.html#20160203">2016-02-03 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="201602031" title="201602031" href="201602a.html#201602031">■</a> 
+<a href="https://projecteuler.net/problem=25">Project Euler Problem 25 #シェル芸</a></h3>
+<p>
+1000-digit Fibonacci number. 1000桁のフィボナッチ数。<br>
+ひねりなし。
+</p>
+<pre>
+% echo 'b=1;l=10^999;for(;a&lt;l;i++){a=b-a;b+=a}; i' | bc
+4782
+</pre>
+<p>
+最初の1000桁は10^999なので豪快にこれと比較する。
+</p>
+<p>
+cf:
+<a href="http://qiita.com/gin_135/items/3ed104e33488a3596453">Project Eulerをシェル芸で解いてみる(Problem 25) #シェル芸 - Qiita</a></p>
+<!-- section end -->
+</div>
+<!-- 2016/02/03 end -->
+
+
+
+<hr class="hide">
+<!-- 2016/02/04 start -->
+<h2><a name="20160204" href="201602a.html#20160204">2016-02-04 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="201602041" title="201602041" href="201602a.html#201602041">■</a> 
+<a href="https://projecteuler.net/problem=26">Project Euler Problem 26 #シェル芸</a></h3>
+<p>
+Reciprocal cycles. 逆数の循環節。<br>
+d &lt; 1000 なる 1/d の中で小数部の循環節が最も長くなるような d を求めよ。<br>
+</p>
+<p>
+bcでscaleを適当に大きく設定すれば力ずくで解ける。<br>
+肝は繰り返しの正規表現でこればかりはRubyやPerlじゃないと面倒。
+</p>
+<pre>
+% time (seq -f 'scale=2000;1/%g' 999|BC_LINE_LENGTH=0 bc|ruby -pe 'sub(/.*(.+)\1+$/){&quot;#$. #{$1.size}&quot;}'|sort -k2n|tail -n1)
+983 982
+( seq -f 'scale=2000;1/%g' 999 | BC_LINE_LENGTH=0 bc | ruby -pe  | sort -k2n )  3.13s user 0.01s system 104% cpu 3.011 total
+</pre>
+<p>
+3秒かかる。
+</p>
+<p>
+というわけでちゃんと計算してみる。<br>
+たとえば1/17を小数点以下40桁分計算するとこんな感じになる。
+</p>
+<pre>
+% echo 'r=1;for(i=0;i&lt;40;i++){r*=10;print r/17;r%=17}'|bc;echo
+0588235294117647058823529411764705882352
+</pre>
+<p>
+循環は商で考えてしまうと難しい。ここで重要なのは余りのほう。<br>
+同じ余りに戻ってきたときに1周したと考えればいい。<br>
+この方針だと瞬時に求まる。しかも短い。
+</p>
+<pre>
+% time (seq 999 | awk '{for(r=1;!a[r];r=10*r%$0)a[r]=1;print $0,length(a);delete a}'|sort -k2n|tail -n1)
+983 982
+( seq 999 | awk '{for(r=1;!a[r];r=10*r%$0)a[r]=1;print $0,length(a);delete a})  0.05s user 0.00s system 90% cpu 0.053 total
+</pre>
+<p>
+余りで考えると循環の長さは最大でも除数-1にしかならないことがわかる。<br>
+これを利用するとさらに高速化が可能となる。
+</p>
+<!-- section end -->
+</div>
+<!-- 2016/02/04 end -->
+
+
+
+<hr class="hide">
+<!-- 2016/02/05 start -->
+<h2><a name="20160205" href="201602a.html#20160205">2016-02-05 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="201602051" title="201602051" href="201602a.html#201602051">■</a> 
+J:COM NET増速</h3>
+<p>
+料金そのままで下りは倍速になったらしい。<br>
+全然変わってない気もするが。<br>
+上りはそのままだしな。
+</p>
+<!-- section end -->
+</div>
+<!-- 2016/02/05 end -->
+
+
+
+<hr class="hide">
+<!-- 2016/02/06 start -->
+<h2><a name="20160206" href="201602a.html#20160206">2016-02-06 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="201602061" title="201602061" href="201602a.html#201602061">■</a> 
+AWS ECRでタグがついてないdocker imageを消す #シェル芸</h3>
+<p>
+AWS ECRに毎回同じタグをつけてpushしても上書きされるのではなく、<br>
+古いのはタグが外されてただ残るのでたまに掃除してあげないといけない。<br>
+というわけでシェル芸。
+</p>
+<pre>
+% aws --region us-east-1 ecr list-images --repository-name repository | \
+  jq -r '.imageIds[]|select(.imageTag|not).imageDigest' | sed 's/^/imageDigest=/' | \
+  xargs -tr aws --region us-east-1 ecr batch-delete-image --repository-name repository --image-ids
+</pre>
+<p>
+imageDigestの部分がjqとsedで冗長だけど、どうしたもんか。jqだけならこんな感じか。
+</p>
+<pre>
+jq -r '.imageIds[]|select(.imageTag|not)|to_entries[]|[.key,.value]|join(&quot;=&quot;)'
+</pre>
+<p>
+いやこれでいいや。
+</p>
+<pre>
+jq -r '.imageIds[]|select(.imageTag|not)[]|&quot;imageDigest=\(.)&quot;'
+</pre>
+<!-- section end -->
+</div>
+<!-- 2016/02/06 end -->
+
+
+
+<hr class="hide">
+<!-- 2016/02/07 start -->
+<h2><a name="20160207" href="201602a.html#20160207">2016-02-07 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="201602071" title="201602071" href="201602a.html#201602071">■</a> 
+Problem 27で悩み中</h3>
+<p>
+これって力技だと三重ループになって時間がかかりすぎるので、<br>
+なんとかして数を減らさないといけない。<br>
+bが素数になるのはすぐわかるが、素数を発生させるというのも結構面倒だ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2016/02/07 end -->
+
+
+
+<hr class="hide">
+<!-- 2016/02/08 start -->
+<h2><a name="20160208" href="201602a.html#20160208">2016-02-08 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="201602081" title="201602081" href="201602a.html#201602081">■</a> 
+DynamoDB Localのファイル名</h3>
+<p>
+accesskey+region.dbという形式になるので、<br>
+~/.aws/configureのアクセスキーがファイル名に含まれるのがいやなら、<br>
+環境変数を設定するといい。
+</p>
+<pre>
+% AWS_ACCESS_KEY_ID=test AWS_SECRET_ACCESS_KEY= aws dynamodb create-table \
+  --endpoint-url http://localhost:8000 \
+  --region us-east-1 \
+  --table-name test \
+  --attribute-definitions AttributeName=foo,AttributeType=S \
+  --key-schema AttributeName=foo,KeyType=HASH \
+  --provisioned-throughput ReadCapacityUnits=1,WriteCapacityUnits=1
+{
+    &quot;TableDescription&quot;: {
+        &quot;AttributeDefinitions&quot;: [
+            {
+                &quot;AttributeName&quot;: &quot;foo&quot;,
+                &quot;AttributeType&quot;: &quot;S&quot;
+            }
+        ],
+        &quot;TableStatus&quot;: &quot;ACTIVE&quot;,
+        &quot;ProvisionedThroughput&quot;: {
+            &quot;LastIncreaseDateTime&quot;: 0.0,
+            &quot;LastDecreaseDateTime&quot;: 0.0,
+            &quot;WriteCapacityUnits&quot;: 1,
+            &quot;NumberOfDecreasesToday&quot;: 0,
+            &quot;ReadCapacityUnits&quot;: 1
+        },
+        &quot;KeySchema&quot;: [
+            {
+                &quot;AttributeName&quot;: &quot;foo&quot;,
+                &quot;KeyType&quot;: &quot;HASH&quot;
+            }
+        ],
+        &quot;ItemCount&quot;: 0,
+        &quot;TableName&quot;: &quot;test&quot;,
+        &quot;TableSizeBytes&quot;: 0,
+        &quot;CreationDateTime&quot;: 1454935278.852
+    }
+}
+% ls test*
+test_us-east-1.db
+</pre>
+<p>
+適当な名前にできるので、わかりやすい名前をつけられる。
+</p>
+<!-- section end -->
+</div>
+<!-- 2016/02/08 end -->
+
+
+
+<hr class="hide">
+<!-- 2016/02/09 start -->
+<h2><a name="20160209" href="201602a.html#20160209">2016-02-09 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="201602091" title="201602091" href="201602a.html#201602091">■</a> 
+<a href="https://projecteuler.net/problem=27">Project Euler Problem 27</a></h3>
+<p>
+Quadratic primes. 二次式素数。<br>
+なんだかんだでawk芸。<br>
+</p>
+<p>
+n**2+a*n+bが素数になるにはいろいろ制限がある。<br>
+それを使うとチェックする数を減らせる。<br>
+n=0のときを考えるとbは素数だとわかる。<br>
+n=2のときは4+a*2+bなのでbは奇数。よってbは奇素数になる。<br>
+n=1のときは1+a+bとなるが、bは奇数なのでaも奇数になる。<br>
+さらに1+a+bが素数なので1+a+b&gt;1と言える。つまりa&gt;-bとなる。
+</p>
+<p>
+以上を踏まえてawkで実装。
+</p>
+<pre>
+BEGIN {
+  for (b=3; b&lt;=999; b+=2) {
+    if(!prime(b))
+      continue
+    for (a=-b; a&lt;=999; a+=2) {
+      for (n=0; prime((n+a)*n+b); n++);
+      if (maxn &lt; n) {
+        maxn = n-1;
+        f = a*b
+      }
+    }
+  }
+  print f
+}
+
+function prime(n) {
+  if (n in h)
+    return h[n]
+  if (n&lt;2)
+    return h[n]=0
+  for (i=3; i*i&lt;n; i++)
+    if (n%i==0)
+      return h[n]=0
+  return h[n]=1
+}
+</pre>
+<p>
+素数の判断は素朴な方法で、試し割り。<br>
+何度も同じ数が出てきたのでcacheするようにした。<br>
+効果は絶大で4倍ほど速くなる。
+</p>
+<!-- section end -->
+</div>
+<!-- 2016/02/09 end -->
+
+<hr>
+<div>
+<a href="201601c.html">&lt;Older(,)</a> | 
+<a href="201602b.html">Newer(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

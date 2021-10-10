@@ -1,0 +1,414 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2007-2-a</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="200701c.html">
+<link rel="next" href="200702b.html">
+
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2007年2月上旬〜</p>
+<hr>
+<div>
+<a href="200701c.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="200702b.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2007/02/01 start -->
+<h2><a name="20070201" href="200702a.html#20070201">2007-02-01 (Thu)</a></h2>
+<!-- 2007-02-12 22:03:09 -->
+
+<div class="entry1">
+<h3><a name="200702011" title="200702011" href="200702a.html#200702011">■</a> 
+1月のspam</h3>
+<p>
+410通。Gmail側約4400スレッド。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200702012" title="200702012" href="200702a.html#200702012">■</a> 
+<a href="http://golf.shinh.org/p.rb?delete+blank+lines">[CodeGolf] 空行の削除</a></h3>
+<p>
+awkの4Bはどこかで見たテクニック。<br>
+sedの5Bは2通り考えついた。<br>
+bashの6Bはsedの2つ目の応用で。表と裏というか。
+</p>
+<!-- section end -->
+</div>
+<!-- 2007/02/01 end -->
+
+
+
+<hr class="hide">
+<!-- 2007/02/02 start -->
+<h2><a name="20070202" href="200702a.html#20070202">2007-02-02 (Fri)</a></h2>
+<!-- 2007-02-03 02:30:58 -->
+
+<div class="entry1">
+<h3><a name="200702021" title="200702021" href="200702a.html#200702021">■</a> 
+<a href="http://d.hatena.ne.jp/shinichiro_h/20070202#p1">[CodeGolf] アナゴル</a></h3>
+<p>
+blankのsedの別解は/./!dです。だからgrep .なわけで、<br>
+その流れでawkは3Bになると。
+</p>
+
+<p>
+echoはpgじゃなくてddを使いました。<br>
+っていうかpgって何って状態だった。
+</p>
+
+<p>
+なんかDancingをBashの内部コマンドだけで挑戦してるようなので、<br>
+こちらも挑戦。Rubyで使ったアルゴリズムをそのまま移植。<br>
+結構なんとかなるもんだと思ったり。
+</p>
+<!-- section end -->
+</div>
+<!-- 2007/02/02 end -->
+
+
+
+<hr class="hide">
+<!-- 2007/02/03 start -->
+<h2><a name="20070203" href="200702a.html#20070203">2007-02-03 (Sat)</a></h2>
+<!-- 2007-02-04 02:02:37 -->
+
+<div class="entry1">
+<h3><a name="200702031" title="200702031" href="200702a.html#200702031">■</a> 
+<a href="http://peazip.sf.net/">[Soft] PeaZip 1.3</a></h3>
+<blockquote><dl>
+<dt>
+About:
+<dd>
+PeaZip is an archiver tool that supports its native Pea archive
+format (featuring compression, split volumes, and flexible authenticated
+encryption and integrity check schemes) and other mainstream formats, with
+special focus on handling open formats. It can create/browse/extract 7Z,
+7-Zip sfx, Bzip2, Gzip, PAQ, PEA, split, TAR, and ZIP. It can
+browse/extract: ARJ, CAB, CHM, CPIO, DEB, ISO, JAR, LZH, NSIS installers,
+OOo files, RAR, RPM, and Z.
+</dl></blockquote><p>
+こんだけあれば大抵間に合いそうだ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200702032" title="200702032" href="200702a.html#200702032">■</a> 
+[Unix] Bashの(())</h3>
+<p>
+man bashしてみると結構知らない機能が多い。<br>
+普段は移植性を考えて変な機能は使わないしねえ。
+</p>
+<pre>
+read c
+((${#c}&gt;4))&amp;&amp;echo yes||echo no
+</pre>
+<p>
+てな感じでcに入ったバイト数を判断できる。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200702033" title="200702033" href="200702a.html#200702033">■</a> 
+<a href="http://shinh.skr.jp/m/?date=20070204#p0">[CodeGolf] 空行削除</a></h3>
+<p>
+あ、そうか。2Bでいけますね。不思議なことに可能だと示されると思いつく。<br>
+それにしてもawkってほんと奥が深い。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200702034" title="200702034" href="200702a.html#200702034">■</a> 
+<a href="http://shinh.skr.jp/m/?date=20070204#p0">[CodeGolf] ナイスアイディア</a></h3>
+<p>
+それいいね。example.comが一気に縮む。
+</p>
+<!-- section end -->
+</div>
+<!-- 2007/02/03 end -->
+
+
+
+<hr class="hide">
+<!-- 2007/02/04 start -->
+<h2><a name="20070204" href="200702a.html#20070204">2007-02-04 (Sun)</a></h2>
+<!-- 2007-02-12 22:04:31 -->
+
+<div class="entry1">
+<h3><a name="200702041" title="200702041" href="200702a.html#200702041">■</a> 
+<a href="http://golf.shinh.org/p.rb?e">[CodeGolf] e</a></h3>
+<p>
+bcはインストールされてないようだ。残念。
+</p>
+<pre>
+echo 'scale=100;e(1)'|bc -l|tr -d '.\\\n'
+</pre>
+
+<!-- section end -->
+</div>
+<!-- 2007/02/04 end -->
+
+
+
+<hr class="hide">
+<!-- 2007/02/05 start -->
+<h2><a name="20070205" href="200702a.html#20070205">2007-02-05 (Mon)</a></h2>
+<!-- 2007-02-12 22:04:45 -->
+
+<div class="entry1">
+<h3><a name="200702051" title="200702051" href="200702a.html#200702051">■</a> 
+<a href="http://golf.shinh.org/p.rb?Hamming+Numbers">[CodeGolf] Hamming Numbers</a></h3>
+<p>
+Bashで挑戦したが100がどうしても時間内に終わらない。<br>
+困った。
+</p>
+
+<p>
+うささんに教えてもらった方法で通った。
+</p>
+<!-- section end -->
+</div>
+<!-- 2007/02/05 end -->
+
+
+
+<hr class="hide">
+<!-- 2007/02/06 start -->
+<h2><a name="20070206" href="200702a.html#20070206">2007-02-06 (Tue)</a></h2>
+<!-- 2007-02-07 01:06:14 -->
+
+<div class="entry1">
+<h3><a name="200702061" title="200702061" href="200702a.html#200702061">■</a> 
+[Vim] CodeGolf御用達Vimでサイズ表示</h3>
+<p>
+:h line2byte()すると
+</p>
+<pre>
+line2byte(line(&quot;$&quot;) + 1)
+</pre>
+<p>
+で実際のサイズ+1が得られる。それをechoすれば
+</p>
+<pre>
+echo line2byte(line(&quot;$&quot;) + 1) - 1
+</pre>
+<p>
+で表示できる。適当に
+</p>
+<pre>
+map gc :echo 'size'line2byte(line('$')+1)-1&lt;CR&gt;
+</pre>
+<p>
+gcとmappingしてみたが、どうせならstatus lineに表示しちゃえ。<br>
+set statuslineで
+</p>
+<pre>
+%{line2byte(line('$')+1)-1}
+</pre>
+<p>
+をどこかに含めればいい。現在のstatuslineは
+</p>
+<pre>
+set statusline=%&lt;%f\ %m%r%h%w[%{&amp;ff}][%{&amp;fenc?&amp;fenc:&amp;enc}]\ %BH\ %{line2byte(line('$')+1)-1}B%=%l,%c\ %P
+</pre>
+<p>
+となった。なんだかよくわからんな。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200702062" title="200702062" href="200702a.html#200702062">■</a> 
+<a href="http://dgames.jp/dan/?date=20070205#c01">[CodeGolf] ずるじゃないecho</a></h3>
+<p>
+Rubyで8バイトのechoはずるしなくても可能です。
+</p>
+<!-- section end -->
+</div>
+<!-- 2007/02/06 end -->
+
+
+
+<hr class="hide">
+<!-- 2007/02/07 start -->
+<h2><a name="20070207" href="200702a.html#20070207">2007-02-07 (Wed)</a></h2>
+<!-- 2007-02-12 22:05:07 -->
+
+<div class="entry1">
+<h3><a name="200702071" title="200702071" href="200702a.html#200702071">■</a> 
+<a href="http://golf.shinh.org/p.rb?even+lines">[CodeGolf] 偶数行を表示</a></h3>
+<p>
+停滞気味だったので新たな問題を出してみた。<br>
+なんというか簡単な問題なんだけど、新たな発見があって楽しい。<br>
+特にawkは。sedの4Bはなあ。ちょっとねえ。man sedしてみるといいよ。<br>
+奇数行も出すか。ってすでに3B予告されてる。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200702072" title="200702072" href="200702a.html#200702072">■</a> 
+<a href="http://www.rim.or.jp/support/announce/2007/02_06.html">[Mail] 〜 サブミッションポート ( port 587 ) の標準提供開始 〜</a></h3>
+<p>
+ということらしいので早速申し込んだ。msmtpの設定は~/.msmtprcに
+</p>
+<pre>
+account default
+auth on
+host SMTPホスト名
+port 587
+from 自分のメールアドレス
+user ユーザ名
+password パスワード
+</pre>
+<p>
+てな感じでいけた。
+</p>
+<!-- section end -->
+</div>
+<!-- 2007/02/07 end -->
+
+
+
+<hr class="hide">
+<!-- 2007/02/08 start -->
+<h2><a name="20070208" href="200702a.html#20070208">2007-02-08 (Thu)</a></h2>
+<!-- 2007-02-12 22:05:20 -->
+
+<div class="entry1">
+<h3><a name="200702081" title="200702081" href="200702a.html#200702081">■</a> 
+<a href="http://golf.shinh.org/p.rb?Dancing+Kids">[CodeGolf] Dancing Kids</a></h3>
+<p>
+なんとなくsed版に挑戦。sedだとtで分岐するしかないし、<br>
+その先でcで表示するなんのひねりもないものを作ったら意外と小さい。<br>
+そのままbashに移植したらいきなり更新。Rubyに移植したらまた更新。<br>
+というわけで、煮詰まってるときは別の言語でやってみるといいかもしれない。
+</p>
+<!-- section end -->
+</div>
+<!-- 2007/02/08 end -->
+
+
+
+<hr class="hide">
+<!-- 2007/02/09 start -->
+<h2><a name="20070209" href="200702a.html#20070209">2007-02-09 (Fri)</a></h2>
+<!-- 2007-02-12 22:05:33 -->
+
+<div class="entry1">
+<h3><a name="200702091" title="200702091" href="200702a.html#200702091">■</a> 
+<a href="http://golf.shinh.org/p.rb?Square+root">[CodeGolf] Square root</a></h3>
+<p>
+平方根なんて知らないのさということで、文字列の入力と出力だったらsedでしょやっぱ。<br>
+sqrtとprintfを持ってる言語だとそれなりにできてしまうし。<br>
+1,2行目が2,3なのはやはりそういうことなんだろうと作っていて思った。
+</p>
+<!-- section end -->
+</div>
+<!-- 2007/02/09 end -->
+
+
+
+<hr class="hide">
+<!-- 2007/02/10 start -->
+<h2><a name="20070210" href="200702a.html#20070210">2007-02-10 (Sat)</a></h2>
+<!-- 2007-02-12 22:05:52 -->
+
+<div class="entry1">
+<h3><a name="200702101" title="200702101" href="200702a.html#200702101">■</a> 
+<a href="http://golf.shinh.org/p.rb?Fibonacci+Numbers">[CodeGolf] Fibonacci Numbers</a></h3>
+<p>
+なんで46まで？16進表示して納得。Cでは楽できる。<br>
+PerlとBashでは予想外な結果に。Bashって結構豪快だな。
+</p>
+
+<p>
+入力がないとsedが使えなくて残念なので、
+改行1個のファイルかなにかを指定しといて欲しいな。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200702102" title="200702102" href="200702a.html#200702102">■</a> 
+<a href="http://golf.shinh.org/p.rb?sort+characters">[CodeGolf] sort characters</a></h3>
+<p>
+info sedしてたら圧縮する方法を思いついたので試す。140B。わるくないね。
+</p>
+<!-- section end -->
+</div>
+<!-- 2007/02/10 end -->
+
+<hr>
+<div>
+<a href="200701c.html">&lt;Prev(,)</a> | 
+<a href="200702b.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

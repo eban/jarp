@@ -1,0 +1,392 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2003-11-c</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="200311b.html">
+<link rel="next" href="200312a.html">
+
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2003年11月下旬〜</p>
+<hr>
+<div>
+<a href="200311b.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="200312a.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2003/11/21 start -->
+<h2><a name="20031121" href="200311c.html#20031121">2003-11-21 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="200311211" title="200311211" href="200311c.html#200311211">■</a> 
+[Ruby] ruby-talk</h3>
+<p>
+それにしてもよくもまあそんなに書く暇があるもんだ。
+今日は154通。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200311212" title="200311212" href="200311c.html#200311212">■</a> 
+[Video] トランスポーター</h3>
+<p>
+どこかで見たことあると思ったら、
+<a href="200309b.html#200309202">クローサー</a>の姉役の人だった。
+</p>
+<!-- section end -->
+</div>
+<!-- 2003/11/21 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/11/22 start -->
+<h2><a name="20031122" href="200311c.html#20031122">2003-11-22 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="200311221" title="200311221" href="200311c.html#200311221">■</a> 
+<a href="http://www.fefe.de/dietlibc/">[Soft] diet libc 0.24</a></h3>
+<p>
+更新。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200311222" title="200311222" href="200311c.html#200311222">■</a> 
+<a href="200311b.html#200311192">[DJGPP][Ruby] cmp</a></h3>
+<p>
+configureの最後の方でcmpが実行されるので、diffutilsも必要。
+</p>
+<pre>
+% ls -w70
+acnf257b.zip  bsn135b.zip   djtzn203.zip  gpp332b.zip   sed407b.zip
+bnu214b.zip   dif28b.zip    fil41b.zip    grep24b.zip   shl2011b.zip
+bsh204b.zip   djdev203.zip  gcc332b.zip   mak3791b.zip  txt20b.zip
+</pre>
+
+<!-- section end -->
+</div>
+<!-- 2003/11/22 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/11/23 start -->
+<h2><a name="20031123" href="200311c.html#20031123">2003-11-23 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="200311231" title="200311231" href="200311c.html#200311231">■</a> 
+[Ruby] ftools.rb</h3>
+<p>
+ftools.rbにもFile.cp &quot;foo&quot;, &quot;foo&quot;で
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-core/1699">fooが0バイトになってしまう問題</a>はあるわけだけど、これどうしようかな。
+fileutils.rbと同じ変更をするのも芸がないし、
+いっそのことfileutils.rbを使ってftools.rbを書き換えてしまうか。
+なんか以前もそんなことを言ってた気がするぞ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2003/11/23 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/11/24 start -->
+<h2><a name="20031124" href="200311c.html#20031124">2003-11-24 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="200311241" title="200311241" href="200311c.html#200311241">■</a> 
+<a href="../files/test_ftools.rb">[Ruby] test_ftools.rb</a></h3>
+<p>
+というわけで、test/fileutils/test_fileutils.rbをパクって
+<a href="../files/test_ftools.rb">test_ftools.rb</a>を用意した。あとは実装するだけだ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2003/11/24 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/11/25 start -->
+<h2><a name="20031125" href="200311c.html#20031125">2003-11-25 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="200311251" title="200311251" href="200311c.html#200311251">■</a> 
+[Ruby] test_ftools.rb</h3>
+<p>
+人の手でftools.rbに合わせてたりすると、
+test_fileutils.rbが変更されるとそれに伴って変更したりするのが大変。
+というわけで、変換スクリプトを考えたほうがよさげだ。
+もしくはどうせftools.rbの機能は限られてるので、もうあれでよしとする。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200311252" title="200311252" href="200311c.html#200311252">■</a> 
+[Ruby] 1.8.1 preview3</h3>
+<p>
+出なかった。pthread問題が結構痛い。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200311253" title="200311253" href="200311c.html#200311253">■</a> 
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-talk/86222">[Ruby] redirect stdout</a></h3>
+<p>
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-talk/86240">reopenする</a>のがふつうだけど(mswinだけでいいのかよってのは置いとくとして)、
+</p>
+<pre>
+def $stdout.write(*) end
+</pre>
+<p>
+でいいような。
+</p>
+<pre>
+class &lt;&lt; $stdout
+  remove_method &quot;write&quot;
+end
+</pre>
+<p>
+とすれば元に戻る。systemには効かないけど。
+</p>
+<!-- section end -->
+</div>
+<!-- 2003/11/25 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/11/26 start -->
+<h2><a name="20031126" href="200311c.html#20031126">2003-11-26 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="200311261" title="200311261" href="200311c.html#200311261">■</a> 
+<a href="http://raa.ruby-lang.org/project/bdb/">[Ruby] bdb 0.4.9</a></h3>
+<p>
+-ldb-4.2をチェックしてるということはBerkley DB 4.2.xが出てるということか。
+週末にでも。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200311262" title="200311262" href="200311c.html#200311262">■</a> 
+<a href="http://www.cs.utah.edu/flux/knit/preview/cmi.html">[Soft] CMI</a></h3>
+<p>
+実にあやしげなソフトだ。
+<a href="ftp://flux.cs.utah.edu/flux/knit/1.0.0/cmi.pdf">ドキュメント</a>を読むとcppした結果をまとめて最適化し1個のソースに変換してるようだ。
+GCC 3.xだとcc1がcppを兼ねてるから、
+-save-tempsしても*.iは出てこないんだよなあ。
+</p>
+
+<p>
+適当にファイルを作ってMakefileをincludeするか。
+rubyで試そう。
+</p>
+<pre>
+% cat CMIfile
+include Makefile
+
+.SUFFIXES: .i
+.c.i:
+	$(CC) $(CFLAGS) $(CPPFLAGS) -E $&lt; -o $@
+
+flat.c: $(OBJS:.o=.i)
+	cmi *.i -o flat.c
+% make -f CMIfile flat.c
+...
+Fail: substHole met an unexpected case
+make: *** [flat.c] Error 1
+</pre>
+<p>
+ぐはぁ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2003/11/26 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/11/27 start -->
+<h2><a name="20031127" href="200311c.html#20031127">2003-11-27 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="200311271" title="200311271" href="200311c.html#200311271">■</a> 
+[Ruby][Win32] File.exist?(&quot;nul&quot;)</h3>
+<p>
+なぜmsvcrt版rubyでFile.exist?(&quot;nul&quot;)がfalseになるのかがうささんの協力で判明。
+win32/win32.cのrb_w32_stat()で_fullpath()を呼んでいるけど、
+こいつが\\.\nulを返し、それを受け取ったstat()が-1を返すからだった。
+しっかりしろー、msvcrt.dllよ。
+_fullpath()で変換したものをstat()できなくてどうする。
+ってわけで、なんで入れたんだが思い出せん_fullpath()は削除して、
+ついでにFile.exist?(&quot;//host/share/.&quot;)がfalseになっていたのを直してコミット。
+</p>
+<!-- section end -->
+</div>
+<!-- 2003/11/27 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/11/28 start -->
+<h2><a name="20031128" href="200311c.html#20031128">2003-11-28 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="200311281" title="200311281" href="200311c.html#200311281">■</a> 
+[Ruby][FreeBSD][OpenBSD] symlinkのlink</h3>
+<pre>
+% mkdir tmp
+% ln -s tmp/symlink tmp/symlink
+% ln tmp/symlink tmp/symlink
+</pre>
+<p>
+としたとき、Linux, NetBSDではEEXITになり、OpenBSD, FreeBSDではENOENTになる。
+test/fileutils/test_fileutils.rbのtest_lnがこのテストしていた。
+OpenBSDでは
+</p>
+<pre>
+% ln -s . tmp/symlink
+</pre>
+<p>
+でEEXISTになったので、とりあえずこれでコミットしたわけだが、
+今日なひさんの報告でFreeBSDではEPERMになることがわかった。
+tmp/symlinkの先が.でディレクトリなのでtmp/symlink/symlinkを作ろうとしいるようだ。
+チェックが甘かった。
+test_lnであらかじめ作っているtmp/cptmpというファイルを使い、
+</p>
+<pre>
+% ln -s cptmp tmp/symlink
+</pre>
+<p>
+となるように変更。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200311282" title="200311282" href="200311c.html#200311282">■</a> 
+SUSv3</h3>
+<p>
+<a href="http://www.unix-systems.org/version3/online.html">http://www.unix-systems.org/version3/online.html</a>から読めるんだねえ。知らなかった。早速link()を読んでみたがよくわからん。
+</p>
+<!-- section end -->
+</div>
+<!-- 2003/11/28 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/11/29 start -->
+<h2><a name="20031129" href="200311c.html#20031129">2003-11-29 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="200311291" title="200311291" href="200311c.html#200311291">■</a> 
+<a href="http://kernel.org/">[Linux] Linux 2.4.23</a></h3>
+<p>
+特に問題なく起動した。それにしても2.6は今年中に出るのだろうか？
+</p>
+<!-- section end -->
+</div>
+<!-- 2003/11/29 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/11/30 start -->
+<h2><a name="20031130" href="200311c.html#20031130">2003-11-30 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="200311301" title="200311301" href="200311c.html#200311301">■</a> 
+[Ruby] XCFLAGS, ARCH_FLAG</h3>
+<p>
+XCFLAGSはrubyやminirubyをコンパイルするときに指定したいオプションを設定。
+ARCH_FLAGは主に--enable-fat-binaryしたときに有効で、
+コンパイル時、リンク時、共有ライブラリを作るときに指定したいオプションを設定。
+cppやcc -Eのようにプリプロセッサを起動するときには指定したくないというのがミソ。
+そのあたりは
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-core/01819">[ruby-core:01819]</a>を参照。
+</p>
+
+<p>
+XCFLAGSをmkmf.rbで参照しない代わりに、DLDFLAGSへARCH_FLAGを追加。
+ついでに、
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-dev/22085">[ruby-dev:22085]</a>も考慮して、もろもろをコミット。
+</p>
+<!-- section end -->
+</div>
+<!-- 2003/11/30 end -->
+
+<hr>
+<div>
+<a href="200311b.html">&lt;Prev(,)</a> | 
+<a href="200312a.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

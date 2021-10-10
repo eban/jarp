@@ -1,0 +1,616 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2016-6-b</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="201606a.html">
+<link rel="next" href="201606c.html">
+
+<link rel="stylesheet" type="text/css" href="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.css">
+<script async type="text/javascript" src="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.js"></script>
+<script type="text/javascript">
+<!--       
+$(document).ready(function() {
+  prettyPrint();
+});
+-->
+</script>
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2016年6月中旬〜</p>
+<hr>
+<div>
+<a href="201606a.html" accesskey=",">&lt;Older(,)</a> | 
+<a href="201606c.html" accesskey=".">Newer(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2016/06/11 start -->
+<h2><a name="20160611" href="201606b.html#20160611">2016-06-11 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="201606111" title="201606111" href="201606b.html#201606111">■</a> 
+jqで</h3>
+<p>
+anagol的にはつい-sまでしちゃうが、それは不要。
+</p>
+<pre>
+% jot -r 10 1 100 | xargs -n 5 | jq -R -r 'split(&quot; &quot;)|map(tonumber)|sort|@sh'                          
+6 29 34 59 62
+27 30 67 80 82
+</pre>
+<p>
+sort_byを使う方法も。
+</p>
+<pre>
+% jot -r 10 1 100 | xargs -n 5 | jq -R -r 'split(&quot; &quot;)|sort_by(tonumber)|join(&quot; &quot;)'
+2 5 9 32 90
+1 7 76 87 95
+</pre>
+<!-- section end -->
+</div>
+<!-- 2016/06/11 end -->
+
+
+
+<hr class="hide">
+<!-- 2016/06/12 start -->
+<h2><a name="20160612" href="201606b.html#20160612">2016-06-12 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="201606121" title="201606121" href="201606b.html#201606121">■</a> 
+ifconfig.meの代替</h3>
+<p>
+というわけでいろいろ探してみた。
+</p>
+<pre>
+% for i in inet-ip.info ifconfig.io ifconfig.es globalip.me ipcheck.ieserver.net ifconfig.co ipv4bot.whatismyipaddress.com httpbin.org/ip;do echo -n &quot;$i: &quot;; /usr/bin/time -f '%E %C' curl -s $i &gt; /dev/null; done 2&gt;&amp;1 | sort -k2,2 | column -t
+globalip.me:                    0:00.23  curl  -s  globalip.me
+ifconfig.io:                    0:00.25  curl  -s  ifconfig.io
+ipv4bot.whatismyipaddress.com:  0:00.28  curl  -s  ipv4bot.whatismyipaddress.com
+ipcheck.ieserver.net:           0:00.36  curl  -s  ipcheck.ieserver.net
+inet-ip.info:                   0:00.45  curl  -s  inet-ip.info
+httpbin.org/ip:                 0:00.46  curl  -s  httpbin.org/ip
+ifconfig.es:                    0:00.61  curl  -s  ifconfig.es
+ifconfig.co:                    0:00.64  curl  -s  ifconfig.co
+</pre>
+<p>
+どれでも同じようなもんだけど、httpbin.org/ipはjson形式だったりするので注意。
+</p>
+<!-- section end -->
+</div>
+<!-- 2016/06/12 end -->
+
+
+
+<hr class="hide">
+<!-- 2016/06/13 start -->
+<h2><a name="20160613" href="201606b.html#20160613">2016-06-13 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="201606131" title="201606131" href="201606b.html#201606131">■</a> 
+jq 1.4と1.5</h3>
+<p>
+<a href="http://qiita.com/nmrmsys/items/5b4a4bd2e3909db161b1">シェル芸で使いたい jqイディオム - Qiita</a>を見ててあれと思った。
+</p><blockquote><p>
+printfコマンドで最後の改行を削っておかないと、行配列の最後に空の要素が入ってしまう
+</p></blockquote><p>
+そんなことないような。
+</p>
+<pre>
+% echo foo | jq -R -s 'split(&quot;\n&quot;)'
+[
+  &quot;foo&quot;
+]
+</pre>
+<p>
+ああ、jq 1.5だとsplitの挙動が違うのか。
+</p>
+<pre>
+% echo foo | jq-1.5 -R -s 'split(&quot;\n&quot;)'
+[
+  &quot;foo&quot;,
+  &quot;&quot;
+]
+</pre>
+<p>
+これはうっとうしいかも。
+</p>
+<!-- section end -->
+</div>
+<!-- 2016/06/13 end -->
+
+
+
+<hr class="hide">
+<!-- 2016/06/14 start -->
+<h2><a name="20160614" href="201606b.html#20160614">2016-06-14 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="201606141" title="201606141" href="201606b.html#201606141">■</a> 
+jqでCSVの読み込み</h3>
+<p>
+<a href="http://qiita.com/nmrmsys/items/5b4a4bd2e3909db161b1">シェル芸で使いたい jqイディオム - Qiita</a><br>
+CSVの読み込みで全体を配列としないならこういう方法もある。<br>
+まず-sを削除。改行でsplitする必要がなくなりmapも不要になる。<br>
+しかも最後の改行はつかなくなるので前段の処理も不要。
+</p>
+<pre>
+% echo $'foo1,bar1,hoge1\nfoo2,bar2,hoge3' | jq-1.4 -R 'split(&quot;,&quot;) | {&quot;fld1&quot;: .[0], &quot;fld3&quot;: .[2]}'
+{
+  &quot;fld1&quot;: &quot;foo1&quot;,
+  &quot;fld3&quot;: &quot;hoge1&quot;
+}
+{
+  &quot;fld1&quot;: &quot;foo2&quot;,
+  &quot;fld3&quot;: &quot;hoge3&quot;
+}
+% echo $'foo1,bar1,hoge1\nfoo2,bar2,hoge3' | jq-1.5 -R 'split(&quot;,&quot;) | {&quot;fld1&quot;: .[0], &quot;fld3&quot;: .[2]}'
+{
+  &quot;fld1&quot;: &quot;foo1&quot;,
+  &quot;fld3&quot;: &quot;hoge1&quot;
+}
+{
+  &quot;fld1&quot;: &quot;foo2&quot;,
+  &quot;fld3&quot;: &quot;hoge3&quot;
+}
+</pre>
+<p>
+1.4でも1.5でも結果は同じ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2016/06/14 end -->
+
+
+
+<hr class="hide">
+<!-- 2016/06/15 start -->
+<h2><a name="20160615" href="201606b.html#20160615">2016-06-15 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="201606151" title="201606151" href="201606b.html#201606151">■</a> 
+pipeでの$(cat)の挙動</h3>
+<p>
+またまた
+<a href="http://qiita.com/nmrmsys/items/5b4a4bd2e3909db161b1">シェル芸で使いたい jqイディオム - Qiita</a>の登場で恐縮ではあるけど、CSVの読み込みで最後の改行削除で、
+</p>
+<pre>
+cat sample.csv | printf %s &quot;$(cat)&quot;
+</pre>
+<p>
+していた。これはbashでは動くがzshでは動かない。
+</p>
+<pre>
+% echo foo | printf %s &quot;$(cat)&quot; 
+cat: -: 入力/出力エラーです
+</pre>
+<p>
+どうもpipe処理よりも先にコマンド置換が行なわれるようで。<br>
+というわけで後で評価されるようにしてあげればzshでも動く。
+</p>
+<pre>
+% echo foo | { printf %s &quot;$(cat)&quot; } | od -c
+0000000   f   o   o
+0000003
+% echo foo | ( printf %s &quot;$(cat)&quot; ) | od -c
+0000000   f   o   o
+0000003
+</pre>
+<!-- section end -->
+</div>
+<!-- 2016/06/15 end -->
+
+
+
+<hr class="hide">
+<!-- 2016/06/16 start -->
+<h2><a name="20160616" href="201606b.html#20160616">2016-06-16 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="201606161" title="201606161" href="201606b.html#201606161">■</a> 
+slackのcustom slashコマンド</h3>
+<p>
+AWS Lambdaのblueprintに従うとslackにcustom slashコマンドが追加されることになる。<br>
+これが曲者でslashコマンドって結構使い辛い。<br>
+まずecho backがない。何を打ったか記録に残らない。<br>
+まあそれなら応答に入力も含めればよさげだが、<br>
+なぜかコマンドを実行した自分にしか表示されない。<br>
+というわけでこれを利用してchatopsはちょっと無理がある。
+</p>
+<!-- section end -->
+</div>
+<!-- 2016/06/16 end -->
+
+
+
+<hr class="hide">
+<!-- 2016/06/17 start -->
+<h2><a name="20160617" href="201606b.html#20160617">2016-06-17 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="201606171" title="201606171" href="201606b.html#201606171">■</a> 
+slackでchatops</h3>
+<p>
+slash commandだと無理があるならどうすればいいか。
+実はOutgoing WebHooksを使えばほとんど同じことができる。<br>
+こちらはチャンネル指定もできるし、&quot;/&quot;をつける必要もない。<br>
+もちろん普通のメッセージになるのでecho backもするし、<br>
+応答は自分だけじゃなくそのまま普通のbotoのメッセージとして処理される。<br>
+ちょっとquery parameterが違うだけなのでblueprintからの変更も少ない。<br>
+完璧だ。<br>
+</p>
+<!-- section end -->
+</div>
+<!-- 2016/06/17 end -->
+
+
+
+<hr class="hide">
+<!-- 2016/06/18 start -->
+<h2><a name="20160618" href="201606b.html#20160618">2016-06-18 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="201606181" title="201606181" href="201606b.html#201606181">■</a> 
+第23回シェル芸勉強会に参加</h3>
+<p>
+<a href="https://blog.ueda.asia/?p=8465">【問題】第23回梅雨でモワッとしたシェル芸勉強会 – 上田ブログ</a><br>
+というわけで梅雨とは思えない暑さの中行ってきた。<br>
+今回はオープンなデータを扱うawkまつりだった。<br>
+最大の敵はファイル名の長さだった。twitter的には非常につらい。
+
+</p>
+<h4><a name="201606181S1" href="201606b.html#201606181S1">_</a> <strong>Q1</strong>: </h4>
+<div class="sub">
+<p>
+これは準備。YYYYMM 上陸頻度という形式。<br>
+後々の問題のためにはYYYY MMのように空白があったほうがよかったいう意見がちらほら。
+
+</p>
+</div>
+<h4><a name="201606181S2" href="201606b.html#201606181S2">_</a> <strong>Q2 年ごとの台風の上陸頻度の確認</strong>: </h4>
+<div class="sub">
+<p>
+年ごとなので上位4文字をキーにして頻度を集計。<br>
+CSVのほうは上陸してない年は0ではなく空文字なので、<br>
+$NF+0しておく必要がある。+$NFでもいい。<br>
+cmpなので何も表示されなければok。
+</p>
+<pre>
+% awk '{h[substr($1,1,4)]+=$2}END{for(i in h)print i,h[i]}' monthly_typhoon|sort|cmp - &lt;(awk -F, 'NR&gt;1{print $1,+$NF}' landing.csv)
+</pre>
+
+</div>
+<h4><a name="201606181S3" href="201606b.html#201606181S3">_</a> <strong>Q3 各月の台風上陸確率</strong>: </h4>
+<div class="sub">
+<p>
+月ごとなので年は不要。ここでも+することで0-prefixを削除している。
+</p>
+<pre>
+% awk '$2{m[+substr($1,5)]++}END{for(i=1;i&lt;=12;i++)printf &quot;%2d %5.2f%%\n&quot;, i,m[i]*100/NR*12}' monthly_typhoon
+ 1  0.00%
+ 2  0.00%
+ 3  0.00%
+ 4  1.54%
+ 5  3.08%
+ 6 13.85%
+ 7 40.00%
+ 8 63.08%
+ 9 63.08%
+10 20.00%
+11  1.54%
+12  0.00%
+</pre>
+
+</div>
+<h4><a name="201606181S4" href="201606b.html#201606181S4">_</a> <strong>Q4 各年で最初に台風が上陸した月を抽出し、何月が何回だったか集計</strong>: </h4>
+<div class="sub">
+<p>
+landing.csvを使うとこんな感じ。-F,することでNFが,の数になり、それが最初の月になる。
+</p>
+<pre>
+% sed 's/,[1-9].*//' landing.csv | awk -F, 'NR&gt;1&amp;&amp;NF&lt;14{print NF}'|sort -n|uniq -c
+      1 4
+      2 5
+      9 6
+     21 7
+     19 8
+      7 9
+      2 10
+</pre>
+
+<p>
+monthly_typhoonだったらこんな感じ。また+だ。
+</p>
+<pre>
+% awk '$2&amp;&amp;!a[substr($1,1,4)]++{print +substr($1,5)}' monthly_typhoon|sort -n|uniq -c 
+% sed 's/\B/ /4' monthly_typhoon | awk '$3&amp;&amp;!a[$1]++{print +$2}'|sort -n|uniq -c
+</pre>
+
+</div>
+<h4><a name="201606181S5" href="201606b.html#201606181S5">_</a> <strong>Q5 台風が上陸しなかった年を抽出</strong>: </h4>
+<div class="sub">
+<p>
+landing.csvを使うのは禁止。<br>
+xargsを使い1年を1行にして、行頭のだけ残してYYYYMM を削除。<br>
+YYYY01 000000000000が消せればそれが上陸しなかった年。
+</p>
+<pre>
+% xargs -n24 &lt; monthly_typhoon | sed -n  's/ [0-9]\{6\} //g;s/01 0*$//p'
+1984
+1986
+2000
+2008
+</pre>
+
+</div>
+<h4><a name="201606181S6" href="201606b.html#201606181S6">_</a> <strong>Q6 各区で何件ずつレコードがあるか確認</strong>: </h4>
+<div class="sub">
+<p>
+ひねりなし。
+</p>
+<pre>
+% cut -f1 -d' ' hittakuri|sort|uniq -c 
+     56 大阪市中央区
+      9 大阪市住之江区
+     29 大阪市住吉区
+     53 大阪市北区
+     23 大阪市城東区
+      7 大阪市大正区
+     20 大阪市天王寺区
+     33 大阪市平野区
+      8 大阪市旭区
+     22 大阪市東住吉区
+     18 大阪市東成区
+     17 大阪市東淀川区
+      1 大阪市此花区
+     22 大阪市浪速区
+     31 大阪市淀川区
+      6 大阪市港区
+     31 大阪市生野区
+      9 大阪市福島区
+     28 大阪市西区
+     37 大阪市西成区
+      8 大阪市西淀川区
+     15 大阪市都島区
+     19 大阪市阿倍野区
+      6 大阪市鶴見区
+</pre>
+
+</div>
+<h4><a name="201606181S7" href="201606b.html#201606181S7">_</a> <strong>Q7 各区の人口当たりのひったくり件数のランキング</strong>: </h4>
+<div class="sub">
+<p>
+population_h27sepをpという連想配列に読み込む。<br>
+引数にf=1を挟むことでフラグとして使える。<br>
+-(標準入力)を読み込む前にf=1になる。
+<pre>
+% cut -f1 -d' '  hittakuri|sort|uniq -c|awk '!f{p[$1]=$2}f{printf &quot;%7.3f%% %s\n&quot;, $1*100/p[$2],$2}' population_h27sep f=1 -|sort -nr
+  0.059% 大阪市中央区
+  0.045% 大阪市北区
+  0.034% 大阪市西成区
+  0.034% 大阪市浪速区
+  0.031% 大阪市西区
+  0.027% 大阪市天王寺区
+  0.024% 大阪市生野区
+  0.022% 大阪市東成区
+  0.019% 大阪市住吉区
+  0.018% 大阪市阿倍野区
+  0.018% 大阪市淀川区
+  0.017% 大阪市東住吉区
+  0.017% 大阪市平野区
+  0.015% 大阪市都島区
+  0.014% 大阪市城東区
+  0.013% 大阪市福島区
+  0.010% 大阪市東淀川区
+  0.010% 大阪市大正区
+  0.009% 大阪市旭区
+  0.008% 大阪市西淀川区
+  0.007% 大阪市港区
+  0.007% 大阪市住之江区
+  0.005% 大阪市鶴見区
+  0.001% 大阪市此花区
+</pre>
+
+</p>
+</div>
+<h4><a name="201606181S8" href="201606b.html#201606181S8">_</a> <strong>Q8 同一住所で同日に2件以上ひったくりが起こった場合について、その住所と日付を出力</strong>: </h4>
+<div class="sub">
+<p>
+cutでもawkでもいいと思うが、cutのほうが指定が簡単。
+</p>
+<pre>
+% cut -d' ' -f1-3,8-10 hittakuri|sort|uniq -d
+大阪市北区 曾根崎 ２丁目付近 2015年 4月 13日
+大阪市北区 角田町 付近 2015年 11月 4日
+大阪市淀川区 十三本町 １丁目付近 2015年 4月 16日
+</pre>
+
+</div>
+<h4><a name="201606181S9" href="201606b.html#201606181S9">_</a> <strong>Q9 ひったくりの手段とその成功率</strong>: </h4>
+<div class="sub">
+<p>
+既遂が成功で手段が自転車とか。<br>
+/既遂/だとむだに0のときも足してるが場合分けしてないのでb[$7]++もいっしょに書ける。<br>
+<pre>
+% awk '{a[$7]+=/既遂/;b[$7]++}END{for(i in a)printf &quot;%f %s\n&quot;, a[i]/b[i],i}'  hittakuri | sort -nr 
+0.954225 自動二輪
+0.942308 徒歩
+0.920530 自転車
+0.904762 自動車
+</pre>
+</p>
+</div>
+<!-- section end -->
+</div>
+<!-- 2016/06/18 end -->
+
+
+
+<hr class="hide">
+<!-- 2016/06/19 start -->
+<h2><a name="20160619" href="201606b.html#20160619">2016-06-19 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="201606191" title="201606191" href="201606b.html#201606191">■</a> 
+BOMを消す</h3>
+<p>
+nkfじゃなくても3バイト削るだけなのでBOMを消す方法はいろいろある。
+</p>
+<pre>
+tail -c +4
+dd bs=1 skip=3
+sed '1s/^\xEF\xBB\xBF//'
+LANG=ja_JP.UTF-8 sed '1s/^.//'
+LANG=C sed '1s/^...//'
+</pre>
+<p>
+LANGがja_JP.UTF-8ならBOMも1文字と見做される。
+</p>
+<!-- section end -->
+</div>
+<!-- 2016/06/19 end -->
+
+
+
+<hr class="hide">
+<!-- 2016/06/20 start -->
+<h2><a name="20160620" href="201606b.html#20160620">2016-06-20 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="201606201" title="201606201" href="201606b.html#201606201">■</a> 
+Q1をjqで解く</h3>
+<p>
+その前に一昨日の日記にQ1の解を書いてなかった。
+</p>
+<pre>
+% awk -F, 'NR&gt;1{for(i=2;i&lt;NF;i++)printf &quot;%d%02d %d\n&quot;,$1,i-1,$i}' landing.csv &gt; monthly_typhoon
+% head monthly_typhoon                                                                          
+195101 0
+195102 0
+195103 0
+195104 0
+195105 0
+195106 0
+195107 1
+195108 0
+195109 0
+195110 1
+% tail monthly_typhoon
+201503 0
+201504 0
+201505 0
+201506 0
+201507 2
+201508 1
+201509 1
+201510 0
+201511 0
+201512 0
+</pre>
+<p>
+jqでも無理をすればなんとかなるようで。
+</p>
+<pre>
+% jq -R -r 'split(&quot;,&quot;)|[.[0]+(. as $a|range(1;13)|&quot;0\(.) &quot;[-3:]+$a[.])|sub(&quot; $&quot;;&quot; 0&quot;)]|join(&quot;\n&quot;)|select(test(&quot;^\\d&quot;))' landing.csv &gt; monthly_typhoon
+</pre>
+<p>
+肝はrange(1;13)|&quot;0\(.) &quot;[-3:]の部分で、&quot;%02d &quot;を意味している。
+</p>
+<pre>
+% jq -n -c 'range(1;13)|&quot;\(.) &quot;'
+&quot;1 &quot;
+&quot;2 &quot;
+&quot;3 &quot;
+&quot;4 &quot;
+&quot;5 &quot;
+&quot;6 &quot;
+&quot;7 &quot;
+&quot;8 &quot;
+&quot;9 &quot;
+&quot;10 &quot;
+&quot;11 &quot;
+&quot;12 &quot;
+% jq -n -c 'range(1;13)|&quot;0\(.) &quot;[-3:]'
+&quot;01 &quot;
+&quot;02 &quot;
+&quot;03 &quot;
+&quot;04 &quot;
+&quot;05 &quot;
+&quot;06 &quot;
+&quot;07 &quot;
+&quot;08 &quot;
+&quot;09 &quot;
+&quot;10 &quot;
+&quot;11 &quot;
+&quot;12 &quot;
+</pre>
+<p>
+それをRubyで表現するとこんな感じ。
+</p>
+<pre>
+% ruby -anF, -e 'puts (1..12).map{|i|$F[0] + &quot;%02d &quot;%i + $F[i]}.map{|i|i.sub(/ $/, &quot; 0&quot;)}.select{|x|x=~/^\d/}' landing.csv &gt; monthly_typhoon
+</pre>
+<!-- section end -->
+</div>
+<!-- 2016/06/20 end -->
+
+<hr>
+<div>
+<a href="201606a.html">&lt;Older(,)</a> | 
+<a href="201606c.html">Newer(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

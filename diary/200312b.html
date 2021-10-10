@@ -1,0 +1,493 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2003-12-b</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="200312a.html">
+<link rel="next" href="200312c.html">
+
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2003年12月中旬〜</p>
+<hr>
+<div>
+<a href="200312a.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="200312c.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2003/12/11 start -->
+<h2><a name="20031211" href="200312b.html#20031211">2003-12-11 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="200312111" title="200312111" href="200312b.html#200312111">■</a> 
+<a href="http://www.busybox.net/">[Soft] BusyBox 1.00 pre4</a></h3>
+<p>
+0.64と比べるとコマンドが結構増えてる。
+BusyBoxだけあればインストール用のフロッピーディスクはできてしまうね、こりゃ。
+</p>
+
+<p>
+とりあえずglibc 2.3.2で静的にリンクしてみた。
+</p>
+<pre>
+% ./busybox
+BusyBox v1.00-pre4 (2003.12.11-14:33+0000) multi-call binary
+
+Usage: busybox [function] [arguments]...
+   or: [function] [arguments]...
+
+        BusyBox is a multi-call binary that combines many common Unix
+        utilities into a single executable.  Most people will create a
+        link to busybox for each function they wish to use, and BusyBox
+        will act like whatever it was invoked as.
+
+Currently defined functions:
+        [, ash, awk, basename, busybox, cat, chgrp, chmod, chown, chroot,
+        clear, cp, cut, date, dd, df, dirname, dmesg, du, echo, egrep,
+        env, false, fgrep, find, free, grep, gunzip, gzip, halt, head,
+        hostname, id, ifconfig, init, insmod, kill, killall, klogd, ln,
+        logger, ls, lsmod, mesg, mkdir, mknod, mktemp, modprobe, more,
+        mount, mv, nslookup, od, ping, poweroff, printf, ps, pwd, realpath,
+        reboot, reset, rm, rmdir, rmmod, route, rpm, sed, sh, sleep, sort,
+        sync, syslogd, tail, tar, test, touch, tr, true, tty, umount,
+        uname, uniq, uptime, vi, wc, wget, which, whoami, xargs, yes,
+        zcat
+</pre>
+<p>
+viとawkを入れてもこんなもんか。
+</p>
+<pre>
+% ./busybox wc -c busybox
+ 734264 busybox
+</pre>
+<p>
+uClibcにすれば500KBに収まりそう。
+</p>
+<!-- section end -->
+</div>
+<!-- 2003/12/11 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/12/12 start -->
+<h2><a name="20031212" href="200312b.html#20031212">2003-12-12 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="200312121" title="200312121" href="200312b.html#200312121">■</a> 
+<a href="http://moonrock.jp/~don/d/200312.html#d12_t1_4">[Ruby] Cygwin版ruby</a></h3>
+<p>
+irbが動かないのはどうもlibreadline.aが古いのが原因のようです。
+そろそろlibreadline.dll.aを使おうかなあ。
+今夜のスナップショットではirbも動くと思います。
+</p>
+
+<p>
+uconvのほうは1.8.1と1.8.0のRuby DLLの名前が違うのが原因で、
+uconvに関しては1.8.1でしか動かないですね。
+これはどうしようかなあ。
+やはり
+<a href="200308b.html#200308141">逆forwarding DLL</a>が必要か。
+</p>
+<!-- section end -->
+</div>
+<!-- 2003/12/12 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/12/13 start -->
+<h2><a name="20031213" href="200312b.html#20031213">2003-12-13 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="200312131" title="200312131" href="200312b.html#200312131">■</a> 
+<a href="http://fedora.redhat.com/">[Linux] Fedora Core 1</a></h3>
+<p>
+VMware 3.2.0にFedora Core 1を入れてみた。
+なぜか本物のCD-ROMを使うとVMware自体がエラーになってしまう。
+別のマシン上のCD-ROMドライブをsambaで見えるようにして、
+イメージファイルとして扱ったらなんとか立ち上がった。
+</p>
+
+<p>
+インストール後再起動するとなぜかeth0がfailしてしまう。
+静的に割り当てれば問題なし。DHCPだとだめ。
+とは言うものの直接dhclient eth0と実行すればok。
+というわけで起動スクリプトの中で何か起こってるらしい。
+/sbin/ifupだの/etc/sysconfig/network-script/network-functions
+だのを読んでみると、
+どうもmii-toolとethtoolがちゃんと動いてないのが原因のようだ。
+</p>
+<pre>
+% sudo mii-tool eth0     
+SIOCGMIIPHY on 'eth0' failed: Operation not permitted
+% sudo ethtool eth0
+Settings for eth0:
+        Supported ports: [ TP MII ]
+        Supported link modes:   10baseT/Half 10baseT/Full 
+                                100baseT/Half 100baseT/Full 
+        Supports auto-negotiation: Yes
+        Advertised link modes:  Not reported
+        Advertised auto-negotiation: No
+        Speed: 10Mb/s
+        Duplex: Half
+        Port: MII
+        PHYAD: 0
+        Transceiver: internal
+        Auto-negotiation: off
+        Current message level: 0x00000001 (1)
+        Link detected: no
+</pre>
+<p>
+この2つがないときはそのまま進むので
+</p>
+<pre>
+% sudo chmod -x /sbin/mii-tool /sbin/ethtool
+</pre>
+<p>
+としてごまかすことにした。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200312132" title="200312132" href="200312b.html#200312132">■</a> 
+[Mail] Subjectが5KBのspam</h3>
+<p>
+出鱈目な単語がいっぱい並んでいるSubjectのspamが来た。
+フィルタに引っ掛からなければ勝ちというゲームじゃないんだから、
+というか笑ったよ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2003/12/13 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/12/14 start -->
+<h2><a name="20031214" href="200312b.html#20031214">2003-12-14 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="200312141" title="200312141" href="200312b.html#200312141">■</a> 
+<a href="http://www.gnu.org/software/automake/">[Soft] GNU Automake 1.8</a></h3>
+<pre>
+Changes: This version does a better job of guessing default source
+names.  'ar' flags have been moved to a $ARFLAGS variable. Support
+for generating HTML documentation (with texinfo 4.0+) was
+added. Rules for rebuilding makefiles have been improved. Various
+other features were added and bugs fixed.
+</pre>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200312142" title="200312142" href="200312b.html#200312142">■</a> 
+[Ruby] ipaddr.rb</h3>
+<p>
+ipaddr.rbは無条件でAF_INET6を使っているので、
+IPv6対応してない環境ではtest/drb/test_acl.rbがエラーになってしまう。
+これを通すためにipaddr.rbの先頭に
+</p>
+<pre>
+unless Socket.const_defined? &quot;AF_INET6&quot;
+  class Socket
+    AF_INET6 = Object.new
+  end
+  class &lt;&lt; IPSocket
+    alias getaddress_orig getaddress
+    def getaddress(s)
+      /^::/ =~ s ? s : getaddress_orig(s)
+    end
+  end
+end
+</pre>
+<p>
+を追加してみた。
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-dev/21678">うささんの対策案</a>を無視した形になるのはちょっと心苦しいが、
+一応(2)の対策案ということで。
+</p>
+
+<p>
+やってみたらMinGWなぜか変わらなかった。
+なんとIPv6対応してないのにものかかわらずAF_INET6が定義されていた。
+しかもext/socket/socket.cで一ヶ所だけ
+</p>
+<pre>
+#ifdef AF_INET6
+  ... AF_INET6
+#endif
+</pre>
+<p>
+となっていたのが原因のようだ。
+</p>
+<pre>
+#ifdef INET6
+  ... AF_INET6
+#endif
+</pre>
+<p>
+に変更。これでMinGWでもdrbのテストは通った。
+</p>
+
+<p>
+今気づいたけどipadd.rbについてるテストは全然通ってないんだよねえ。
+そりゃそうだよなあ。やはりうささんのパッチと組み合わせたほうがよさそうだ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2003/12/14 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/12/15 start -->
+<h2><a name="20031215" href="200312b.html#20031215">2003-12-15 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="200312151" title="200312151" href="200312b.html#200312151">■</a> 
+[Mail] Bogofilter</h3>
+<p>
+どうもHTML mailのspamは捕り逃してしまうケースが多い。
+まあ、多いといっても数日に1回ぐらいだから全然問題ないレベルなんだけど。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200312152" title="200312152" href="200312b.html#200312152">■</a> 
+<a href="http://japan.cnet.com/news/ent/story/0,2000047623,20062450,00.htm">[Mail] スパムの3分の1はRATに汚染されたPCが原因</a></h3>
+<p>
+なるほどねえ。ありうる話ではあるな。
+でも「ウェブ上を流れる」ってのはなんだかよくわからん表現だ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2003/12/15 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/12/16 start -->
+<h2><a name="20031216" href="200312b.html#20031216">2003-12-16 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="200312161" title="200312161" href="200312b.html#200312161">■</a> 
+<a href="http://lftp.yar.ru/">[Soft] lftp 2.6.10</a></h3>
+<pre>
+* security fixes in html parsing code.
+* fxp between ftps session is now possible (unencrypted yet).
+* fixed a rare bug with access to freed memory in ftp.
+* fixed a bug in mirror, now it does not incorrectly append directory name
+  when target directory is the root.
+* fixed compilation on AIX.
+* Polish translation updated.
+</pre>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200312162" title="200312162" href="200312b.html#200312162">■</a> 
+<a href="http://bogofilter.sf.net/">[Soft] Bogofilter 0.6.10</a></h3>
+<p>
+<a href="200310a.html#200310042">GSLをインストール</a>したのはいいが、
+</p>
+<pre>
+checking for gsl-config... /usr/local/bin/gsl-config
+checking for GSL - version &gt;= 1.4... no
+*** Could not run GSL test program, checking why...
+*** The test program failed to compile or link. See the file config.log for the
+*** exact error that occured. This usually means GSL was incorrectly installed
+*** or that you have moved GSL since it was installed. In the latter case, you
+*** may want to edit the gsl-config script: /usr/local/bin/gsl-config
+</pre>
+<p>
+となってしまう。config.logを見ると
+</p>
+<pre>
+cc1: Invalid option `-Wmissing-format-attribute'
+cc1: Invalid option `-Wsequence-point'
+cc1: Invalid option `-Wfloat-equal'
+cc1: Invalid option `-Wno-system-headers'
+</pre>
+<p>
+が原因なんだけど、
+これってそれまでのいろんなライブラリのチェックでも使ってるんだよね。
+なんで、ここでエラーになるんだろう？
+抜き出してみるとエラーにならない。うーむ。
+</p>
+
+<p>
+あ、gcc 2.95.3だとそうなのか。ということはとconfigure.acを見ると、
+なぜかgslをチェックする前に
+</p>
+<pre>
+PATH_SAVED=&quot;$PATH&quot;
+PATH=/bin:/usr/bin:$PATH
+export PATH
+</pre>
+<p>
+となっていた。ぐはぁ。何のためだ？
+</p>
+<!-- section end -->
+</div>
+<!-- 2003/12/16 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/12/17 start -->
+<h2><a name="20031217" href="200312b.html#20031217">2003-12-17 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="200312171" title="200312171" href="200312b.html#200312171">■</a> 
+<a href="http://www.parallels.ru/2os2.shtml">[Soft] twoOStwo</a></h3>
+<p>
+お試し登録は3ヶ月間有効。
+suspend/resumeができないのがちと痛いが、
+まあ、最低限の機能はある。
+</p>
+
+<p>
+Fedora Core 1をインストールしてみた。
+CD-ROMがejectの度にdisconnectになるのがちょっと気になったくらいで、
+特に問題なし。NICはne2k-picで認識した。DHCPもok。
+ということは
+<a href="200312b.html#200312131">VMwareでああなってしまう</a>のはpcnet32のドライバに何か問題があるということか。
+</p>
+<!-- section end -->
+</div>
+<!-- 2003/12/17 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/12/18 start -->
+<h2><a name="20031218" href="200312b.html#20031218">2003-12-18 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="200312181" title="200312181" href="200312b.html#200312181">■</a> 
+<a href="http://kernel.org/">[Linux] Linux 2.6.0</a></h3>
+<p>
+さてと、まずはmodules-init-toolsだ。
+壊してもいいFodora Core 1で試そうと思ったら、
+gccもなにも入れてなかった。ぐはぁ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200312182" title="200312182" href="200312b.html#200312182">■</a> 
+<a href="http://www.rubyist.net/~tamura/d/?date=20031218#p02">[Soft] twoOStwo</a></h3>
+<p>
+試したのは2.20のリリース版だったのかな。会社で確認しよう。
+3ヶ月なのは確かだけど。
+なんかすごいタイミングで試してるのか。
+ホストはWindows 2000 Pro。Linuxホストは新しいPCが来てから。
+</p>
+<!-- section end -->
+</div>
+<!-- 2003/12/18 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/12/19 start -->
+<h2><a name="20031219" href="200312b.html#20031219">2003-12-19 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="200312191" title="200312191" href="200312b.html#200312191">■</a> 
+<a href="200312b.html#200312182">[Soft] twoOStwo</a></h3>
+<p>
+確認してみたら37TのRC版だった。くー。
+</p>
+<!-- section end -->
+</div>
+<!-- 2003/12/19 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/12/20 start -->
+<h2><a name="20031220" href="200312b.html#20031220">2003-12-20 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="200312201" title="200312201" href="200312b.html#200312201">■</a> 
+[PC] Pentium 2.6GHz</h3>
+<p>
+やっと新しいマシンを買った。ディスクは80GBあるのでまずは半分の40GBに早速手近にあったFedora Core 1を入れてみた。
+</p>
+<pre>
+% grep 'model name' /proc/cpuinfo
+model name      : Intel(R) Pentium(R) 4 CPU 2.60GHz
+</pre>
+
+<!-- section end -->
+</div>
+<!-- 2003/12/20 end -->
+
+<hr>
+<div>
+<a href="200312a.html">&lt;Prev(,)</a> | 
+<a href="200312c.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

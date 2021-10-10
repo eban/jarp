@@ -1,0 +1,523 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2014-7-b</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="201407a.html">
+<link rel="next" href="201407c.html">
+
+<link rel="stylesheet" type="text/css" href="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.css">
+<script async type="text/javascript" src="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.js"></script>
+<script type="text/javascript">
+<!--       
+$(document).ready(function() {
+  prettyPrint();
+});
+-->
+</script>
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2014年7月中旬〜</p>
+<hr>
+<div>
+<a href="201407a.html" accesskey=",">&lt;Older(,)</a> | 
+<a href="201407c.html" accesskey=".">Newer(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2014/07/11 start -->
+<h2><a name="20140711" href="201407b.html#20140711">2014-07-11 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="201407111" title="201407111" href="201407b.html#201407111">■</a> 
+trで文字列の繰り返し</h3>
+<p>
+aからmを0へ、nからzを1へ変換したいとする。<br>
+trでやるならこんな感じになる。
+</p>
+<pre>
+% bash -c 'echo {a..z}' | tr a-z 00000000000001
+0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 1 1 1 1 1 1 1
+</pre>
+<p>
+足りない分は最後の文字が使われるので、<br>
+1はまあそれでいいんだけど、0を何とかしたい。<br>
+</p>
+<pre>
+% bash -c 'echo {a..z}' | tr a-m 0 | tr n-z 1  
+0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 1 1 1 1 1 1 1
+</pre>
+<p>
+2回に分けるのはわかりやすいが、man trしてみたら
+</p>
+<pre>
+       [CHAR*REPEAT]
+              REPEAT copies of CHAR, REPEAT octal if starting with 0
+</pre>
+<p>
+という記述を発見。つまり
+</p>
+<pre>
+% bash -c 'echo {a..z}' | tr a-z '[0*13]1'              
+0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 1 1 1 1 1 1 1
+</pre>
+<p>
+と書けるわけだ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2014/07/11 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/07/12 start -->
+<h2><a name="20140712" href="201407b.html#20140712">2014-07-12 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="201407121" title="201407121" href="201407b.html#201407121">■</a> 
+<a href="http://www.datagenetics.com/blog/june22014/index.html">Coffee Time Challenges</a></h3>
+<p>
+おいらもやってみた。1問目。
+</p>
+<p>
+1) Two Bases<br>
+Challenge: Find three digits X, Y and Z such that XYZ in base10 (ten) is equal to ZYX in base9 (nine)?
+</p>
+<pre>
+% for i in {1..8}{1..8}{1..8};do [ $[9#$i] = `rev&lt;&lt;&lt;$i` ] &amp;&amp; rev&lt;&lt;&lt;$i; done
+445
+</pre>
+<p>
+bashとzshならいける。ああ、でも9進数の連番ならこれでいいのか。
+</p>
+<pre>
+% printf &quot;%s\n&quot; {0..8}{0..8}{0..8}|rev|nl -v0|awk '$1==$2&quot;&quot;&amp;&amp;$0=$1'
+445
+</pre>
+<p>
+9進数の方をreverseしてnl -v0で0からの行番号をつけることで10進数へ変換の代わり、<br>
+あとは同じものを表示すればいい。
+</p>
+<!-- section end -->
+</div>
+<!-- 2014/07/12 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/07/13 start -->
+<h2><a name="20140713" href="201407b.html#20140713">2014-07-13 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="201407131" title="201407131" href="201407b.html#201407131">■</a> 
+<a href="http://www.datagenetics.com/blog/june22014/index.html">2) One Million</a></h3>
+<p>
+2問目。
+</p>
+<p>
+2) One Million<br>
+Challenge: Write 1,000,000 as the product of two numbers; neither of which contains any zeroes.
+</p>
+<p>
+英語だとなんか意味がよくわからないがつまりこういうことか。
+</p>
+<pre>
+% m=1000000;n=$m;while ((m == m/n*n));do : $[n/=2];done; echo $[n*2], $[m/n/2] 
+15624, 64
+</pre>
+<p>
+tailsさんからご指摘いただいたので修正。
+</p>
+<pre>
+% m=1000000;n=$m;while ((m == m/n*n));do : ${l=n} $[n/=2];done; echo $l, $[m/l] 
+15625, 64
+</pre>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="201407132" title="201407132" href="201407b.html#201407132">■</a> 
+1) Two Basesふたたび</h3>
+<p>
+1問目の9進数は10進の連番から9がつくのを消してもいける。<br>
+あとnl使わんでも最終的にはawkなんだからNRを使えばいいだけだった。
+</p>
+<pre>
+% seq -f '%03g' 888 | sed '/9/d' | rev | awk 'NR==$1&quot;&quot;&amp;&amp;$0=NR'
+445
+</pre>
+<!-- section end -->
+</div>
+<!-- 2014/07/13 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/07/14 start -->
+<h2><a name="20140714" href="201407b.html#20140714">2014-07-14 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="201407141" title="201407141" href="201407b.html#201407141">■</a> 
+<a href="http://www.datagenetics.com/blog/june22014/index.html">3) High Product</a></h3>
+<p>
+Challenge: Use the digits 0-9 to create two numbers. What is the highest<br>
+product you can achieve when these two numbers are multiplied together?
+</p>
+<p>
+なんかチートっぽいが、候補となる組み合わせをとりあえず重複ありで表示し、<br>
+grepで重複を消して、bcで計算してsortして一番でかいのを取り出してできあがり。
+</p>
+<pre>
+% printf &quot;%s\n&quot; 8{7,6}{5,4}{3,2}{1,0}\*9{7,6}{5,4}{3,2}{1,0} | \
+  grep -v '\(.\).*\1' | sed 's/.*/print &quot;&amp;=&quot;;&amp;/' | bc | sort -s -t= -k2,2n | tail -1
+87531*96420=8439739020
+</pre>
+<!-- section end -->
+</div>
+<!-- 2014/07/14 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/07/15 start -->
+<h2><a name="20140715" href="201407b.html#20140715">2014-07-15 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="201407151" title="201407151" href="201407b.html#201407151">■</a> 
+<a href="http://www.datagenetics.com/blog/june22014/index.html">4) Exactly a third</a></h3>
+<p>
+Challenge: Arrange the numerals 1-9 into a single fraction that equals exactly<br>
+1/3 (one third). No other math symbols wanted; just concatenation some digits<br>
+for the numerator, and some to make a denominator.
+</p>
+<p>
+1から9までの数字を1回だけ使って1/3にする。<br>
+9個ということは必然的に4桁と5桁に分割される。<br>
+4桁のほうは3倍して桁が上がるのだから3334以上。<br>
+1回しか使わないので3456以上。同じように9876以下。<br>
+この範囲で見つければいい。<br>
+awkで3倍したものと一緒に表示し、grepで重複しているものを除く。<br>
+ついでにここで0も除外。うまい具合にはまった。
+</p>
+<pre>
+% seq 3456 9876 | awk '{print $1 &quot;/&quot; ($1*3)}' | grep -v '\(.\).*\1\|0'
+5823/17469
+5832/17496
+</pre>
+<!-- section end -->
+</div>
+<!-- 2014/07/15 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/07/16 start -->
+<h2><a name="20140716" href="201407b.html#20140716">2014-07-16 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="201407161" title="201407161" href="201407b.html#201407161">■</a> 
+10000列のawk</h3>
+<p>
+問題の作成を
+</p>
+<pre>
+% seq 10000 | paste -sd,
+</pre>
+<p>
+としていたが、pasteは不要で
+</p>
+<pre>
+% seq -s, 10000
+</pre>
+<p>
+でいいのであった。
+</p>
+<p>
+というわけでawkでの解はこんな感じ。
+</p>
+<pre>
+% seq -s, 10000 | awk 'ORS=NR%100?RS:&quot;\n&quot;' RS=,
+</pre>
+<p>
+しかし
+</p>
+<pre>
+% seq -s, 10000 | sed 's/,/\n/100;P;D'
+</pre>
+<p>
+の解には敵わないな。余計な改行もつかないし。
+</p>
+<!-- section end -->
+</div>
+<!-- 2014/07/16 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/07/17 start -->
+<h2><a name="20140717" href="201407b.html#20140717">2014-07-17 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="201407171" title="201407171" href="201407b.html#201407171">■</a> 
+余計な改行をなんとかする</h3>
+<p>
+10000列で100行100列じゃわかりにくいので、100列を10行10列で。
+</p>
+<pre>
+% seq -s, 100 | awk 'ORS=NR%10?RS:&quot;\n&quot;' RS=,       
+1,2,3,4,5,6,7,8,9,10
+11,12,13,14,15,16,17,18,19,20
+21,22,23,24,25,26,27,28,29,30
+31,32,33,34,35,36,37,38,39,40
+41,42,43,44,45,46,47,48,49,50
+51,52,53,54,55,56,57,58,59,60
+61,62,63,64,65,66,67,68,69,70
+71,72,73,74,75,76,77,78,79,80
+81,82,83,84,85,86,87,88,89,90
+91,92,93,94,95,96,97,98,99,100
+
+</pre>
+<p>
+最後に余計な空行が入ってしまう。<br>
+RS=,にしているので最後の改行がそのまま出てきているわけだ。<br>
+単に消すだけならsubを使えばいいが、それもねえ。
+</p>
+<p>
+そんな難しく考えるまでもなくRSに改行も加えてしまえばいい。
+</p>
+<pre>
+% seq -s, 100 | awk 'ORS=NR%10?&quot;,&quot;:&quot;\n&quot;' RS='[,\n]' 
+1,2,3,4,5,6,7,8,9,10
+11,12,13,14,15,16,17,18,19,20
+21,22,23,24,25,26,27,28,29,30
+31,32,33,34,35,36,37,38,39,40
+41,42,43,44,45,46,47,48,49,50
+51,52,53,54,55,56,57,58,59,60
+61,62,63,64,65,66,67,68,69,70
+71,72,73,74,75,76,77,78,79,80
+81,82,83,84,85,86,87,88,89,90
+91,92,93,94,95,96,97,98,99,100
+</pre>
+<p>
+RSが&quot;,&quot;じゃなくなったので、ORSへは文字列&quot;,&quot;で。
+</p>
+<!-- section end -->
+</div>
+<!-- 2014/07/17 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/07/18 start -->
+<h2><a name="20140718" href="201407b.html#20140718">2014-07-18 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="201407181" title="201407181" href="201407b.html#201407181">■</a> 
+<a href="http://www.datagenetics.com/blog/june22014/index.html">6) Word Doc</a></h3>
+<p>
+5)は一体なんなんだろうねえ。引っ掛けかと思った。
+</p>
+<p>
+というわけで6)のWord Doc。
+</p><blockquote><p>
+Challenge: I open up a Word document and type all the numbers 1-10000,
+separated by spaces, (I did not use any 'thousands' punctuation; just raw
+numbers). Then, my daughter came along and used search and replace, and changed
+all the digits '0' into spaces. If I now sum up all the numbers in the document
+what is the total? (Any number delineated by one or more spaces is a distinct
+number).
+</p></blockquote>
+<p>
+Ubuntuにはnum-utilsというパッケージがあって、<br>
+それに含まれるnumsumコマンドを使うと簡単。
+</p>
+<pre>
+% seq -s &quot; &quot; 10000 | tr 0 &quot; &quot; | numsum -r
+37359001
+</pre>
+<p>
+trで空白を+にしてbcに食わせるとか、awkで処理するのが一般的だけど、<br>
+こんなコマンドもあるということで。
+</p>
+<pre>
+% numsum -h
+---------------------------------------------------------------------------
+numsum :  A program that adds up all numbers of input and returns the sum.
+---------------------------------------------------------------------------
+Usage:
+        numsum [options] &lt;file&gt;   (Input from a file.)
+        | numsum [options]        (Input from command pipeline.)
+        numsum [options]          (Input on STDIN.  Use Ctrl-D to stop.)
+
+Options:
+        -i      Only return the integer portion of the final sum.
+        -I      Only return the decimal portion of the final sum
+
+        -c      Print out the sum of each column.
+        -r      Print out the sum of each row.
+
+        -x &lt;n&gt;  Specify a comma seperated list of columns to print.
+        -y &lt;n&gt;  Specify a comma seperated list of rows to print.
+
+        -s &lt;string&gt; Specify a seperator string for spliting columns.
+                    This defaults to consecutive whitespace.
+
+        -d      Debug. For developers only.
+        -h      Help: You're looking at it.
+        -V      Increase verbosity.
+        -q      Quiet mode, don't print any warnings.
+</pre>
+<!-- section end -->
+</div>
+<!-- 2014/07/18 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/07/19 start -->
+<h2><a name="20140719" href="201407b.html#20140719">2014-07-19 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="201407191" title="201407191" href="201407b.html#201407191">■</a> 
+<a href="http://www.datagenetics.com/blog/june22014/index.html">6) Word Doc をbashで</a></h3>
+<p>
+なんとなく全部bashで解いてみたらいけた。
+</p>
+<pre>
+% bash -c 'a=({1..10000}); a=${a[@]//0/ }; echo $[${a// /+}]'
+37359001
+</pre>
+<p>
+と思ったが、これだと1から10000までを空白区切りになってないとか、<br>
+0の繰り返しも1個の空白になるんで題意と違ってしまう。
+</p>
+<pre>
+% bash -c 'a=({1..10000}); a=&quot;${a[*]}&quot;; a=&quot;${a//0/ }&quot;; echo $[${a// /+}0]'
+37359001
+</pre>
+<p>
+こうか。しかしbashも地味に変な機能があるな。
+</p>
+<p>
+zshは
+</p>
+<pre>
+% zsh -c 'echo $[1++1]'         
+zsh:1: bad math expression: operator expected at `1'
+</pre>
+<p>
+となってしまうので+の繰り返しを1個の+へ変換するなりしないといけない。
+</p>
+<p>
+最初の例は
+</p>
+<pre>
+a = [*&quot;1&quot;..&quot;10000&quot;]
+a = a.map{|x|x.tr(&quot;0&quot;, &quot; &quot;)}.join(&quot; &quot;).sub(/ +$/, &quot;&quot;)
+puts eval a.tr(&quot; &quot;, &quot;+&quot;)
+</pre>
+<p>
+と同じはずだが、あまりに深すぎてstack level too deep (SystemStackError)で、<br>
+Rubyが落ちてしまう。
+</p>
+<!-- section end -->
+</div>
+<!-- 2014/07/19 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/07/20 start -->
+<h2><a name="20140720" href="201407b.html#20140720">2014-07-20 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="201407201" title="201407201" href="201407b.html#201407201">■</a> 
+bashで間接的な変数参照</h3>
+<p>
+zshでいうところの
+</p>
+<pre>
+% zsh -c 'foo=bar; bar=1; echo ${(P)foo}'
+1
+</pre>
+<p>
+という機能はbashじゃevalとかしないと無理だと思っていたら、
+</p>
+<pre>
+% bash -c 'foo=bar; bar=1; echo ${!foo}'  
+1
+</pre>
+<p>
+でできると知った。
+</p>
+<pre>
+parameter の最初の文字が感嘆符ならば、変数間接展開が行われます。 bash は残りの
+parameter からなる変数の値を変数の名前と見なします。
+そしてそこで得られた名前の変数を展開した値を、置換処理の続きで使います。 これが
+間接展開 です。
+</pre>
+<!-- section end -->
+</div>
+<!-- 2014/07/20 end -->
+
+<hr>
+<div>
+<a href="201407a.html">&lt;Older(,)</a> | 
+<a href="201407c.html">Newer(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

@@ -1,0 +1,625 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2004-7-b</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="200407a.html">
+<link rel="next" href="200407c.html">
+
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2004年7月中旬〜</p>
+<hr>
+<div>
+<a href="200407a.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="200407c.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2004/07/11 start -->
+<h2><a name="20040711" href="200407b.html#20040711">2004-07-11 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="200407111" title="200407111" href="200407b.html#200407111">■</a> 
+[Ruby] max_by</h3>
+<p>
+MHフォルダのように次に作るべきファイル名を生成するにはふつうmaxを使う。
+文字列を整数として扱うので
+</p>
+<pre>
+foo.max {|x, y| x.to_i &lt;=&gt; y.to_i}
+</pre>
+<p>
+という処理が出てくるが、sort_byの影響か
+</p>
+<pre>
+foo.max_by {|x| x.to_i}
+</pre>
+<p>
+と直したくなる。ってそんなmethodはない。
+</p>
+
+<p>
+to_i自体遅い処理じゃないし、
+そもそも最大値を求めるにはそれぞれ何度も計算しないので、
+あまり意味がないような気もするが、
+to_iを二度書くというのがなんかいけてないというか。
+</p>
+<pre>
+module Enumerable
+  def max_by
+    map{|x| [yield(x), x]}.max.last rescue []
+  end
+end
+</pre>
+<p>
+ぐぐったら、
+
+<a href="http://i.loveruby.net/d/20030910.html#p04">青木さんも同じこと</a>
+を思っていたらしい。って、
+
+<a href="http://i.loveruby.net/d/20030910.html#c01">なかださんのとは同じ処理</a>
+だし。で、青木さんのは
+</p>
+<pre>
+module Enumerable
+  def max_by
+    max {|a,b| yield(a) &lt;=&gt; yield(b) }
+  end
+　
+  def min_by
+    min {|a,b| yield(a) &lt;=&gt; yield(b) }
+  end
+end
+</pre>
+<p>
+となっていた。なぜこっちを真っ先に思い浮かばないかな。
+</p>
+
+<p>
+ruby-talk MLでもつい最近
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-talk/104653">話題</a>になってる。
+%Rubyのログを見るとknuさんまでもが。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200407112" title="200407112" href="200407b.html#200407112">■</a> 
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-talk/105959">[Ruby] ranges</a></h3>
+<p>
+ちょっと考えてみた。
+</p>
+<pre>
+def ranges(a)
+  a.inject([]) do |x, i|
+    if Array(x.last).last == i - 1
+      i = Array(x.pop).first..i
+    end
+    x &lt;&lt; i
+  end
+end
+</pre>
+<p>
+でどうかなと思ったら、(ranges of three or more)という条件があった。
+じゃ、2個のときはばらしてあげよう。
+</p>
+<pre>
+def ranges(a)
+  a.inject([]) do |x, i|
+    last = Array(x.last)
+    if last.last == i - 1
+      i = Array(x.pop).first..i
+    elsif last.size == 2
+      x.concat Array(x.pop)
+    end
+    x &lt;&lt; i
+  end
+end
+</pre>
+<p>
+今度は[1,2]が[1..2]になってだめ。
+</p>
+<pre>
+def ranges(a)
+  a.inject([]) do |x, i|
+    if Array(x.last).last == i - 1
+      i = Array(x.pop).first..i
+      i = i.to_a if i.first.next == i.last
+    end
+    x &lt;&lt; i
+  end.flatten
+end
+</pre>
+<p>
+も、いまいちだな。そもそもArray化してる時点で無駄だ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2004/07/11 end -->
+
+
+
+<hr class="hide">
+<!-- 2004/07/12 start -->
+<h2><a name="20040712" href="200407b.html#20040712">2004-07-12 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="200407121" title="200407121" href="200407b.html#200407121">■</a> 
+<a href="200407a.html#200407101">[GNU] glibc 2.3.2その後</a></h3>
+<p>
+結局gcc 3.3.2, 3.3.3, 3.3.4といろいろ作ってみたが、全部SEGVだった。
+あ、よくよく調べてみると、SEGVしてるのはgcc自身じゃなくて、
+できあがったld-linux.so.2なんだけど、もういいや。
+Plamo 4.0のglibc 2.3.2のバイナリをそのままインストールしてみるか。
+ちょっと恐いよなあ。
+考えてみるとマシンが全然別の場所にあるから失敗したらアウトだ。
+ってことは次に行く2週間後までは手を出せないか。
+</p>
+
+<p>
+あ、そうそう。
+gcc 3.3.4なんてのがいつのまにか出てることに気づいたんだった。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200407122" title="200407122" href="200407b.html#200407122">■</a> 
+[Blog] Bloginesの縦棒</h3>
+<p>
+右側を広くしたいんだけど、あの縦棒がなかなかつかめない。
+めったにマウスカーソルが左右の矢印に変化しない。どうなってんだ？
+あ、変化しなくてもそのままドラッグすればいいのか。
+</p>
+<!-- section end -->
+</div>
+<!-- 2004/07/12 end -->
+
+
+
+<hr class="hide">
+<!-- 2004/07/13 start -->
+<h2><a name="20040713" href="200407b.html#20040713">2004-07-13 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="200407131" title="200407131" href="200407b.html#200407131">■</a> 
+<a href="http://www.cmsimple.dk/">[Soft] CMSimple</a></h3>
+<p>
+About:
+</p><blockquote class="cite"><p>
+CMSimple is a simple content management system for simple
+maintainance of small commercial or private sites. It has a simple
+installation, is easy to modify, and offers an unique combination of
+features. It uses an HTML-file for storing the entire site, which can be
+edited in your favorite editor. It has a dynamic TOC and document locator,
+a WYSIWYG editor (no plugin--functions in IE and Mozilla), a search
+function, link validation, image handling, and automatic backup. It is
+easy to set up your own layout; just edit the template and stylesheet. 
+</p></blockquote><p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200407132" title="200407132" href="200407b.html#200407132">■</a> 
+[夏] クーラーのリモコン</h3>
+<p>
+壊れかけのリモコンの替わりがやってきたが、
+夜になったら急に涼しくなって使う機会がない。
+まあ、リモコンなんてそんなに使うもんでもないが。
+</p>
+<!-- section end -->
+</div>
+<!-- 2004/07/13 end -->
+
+
+
+<hr class="hide">
+<!-- 2004/07/14 start -->
+<h2><a name="20040714" href="200407b.html#20040714">2004-07-14 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="200407141" title="200407141" href="200407b.html#200407141">■</a> 
+[Mail] comp.lang.rubyからのspam</h3>
+<p>
+ruby-talk MLは最近どうもcomp.lang.rubyからのspamが通ってしまっていやな感じだ。
+通ってしまうと一々いらぬ反応するやつが出てくるからうっとうしい。
+まあ、spamassassinが学習しても100%ブロックできるわけでもないし。
+</p>
+
+<p>
+とりあえず今回の一連のspamを見るとalt.*にもクロスポストしてるようなので
+</p>
+<pre>
+&amp;DEFINE_FIELD_PAT_TO_REJECT(&quot;Newsgroups&quot;, &quot;.*alt\..*&quot;);
+</pre>
+<p>
+を入れた。
+</p>
+
+<p>
+クロスポストはcomp.lang.*だけを許すべきかなあ。
+いっそのことcomp.lang.rubyだけにしちゃえばという気もしないでもない。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200407142" title="200407142" href="200407b.html#200407142">■</a> 
+[YAML] YAML日記</h3>
+<p>
+YAMLが好きな人はYAMLで日記を書いてたりするんだろうか？
+ぐぐってみると日記じゃないけど
+<a href="http://www.hpc.cs.ehime-u.ac.jp/~masato/goshin/">YAMLで見る護身術奥傳</a>
+が見つかった。なかなか濃い。
+</p>
+
+<p>
+ちょっと形式を考えてみる。
+</p>
+<pre>
+2004-07-14:
+- Title: yamlで日記
+  Content: |-
+   こんな感じの形式で日記を書くとyaml日記になったりする？
+   なんとなくRDのようなChangeLogのような気がしないでもない。
+   書きやすいかどうかは微妙だ。vimだと色がつくのは利点か。
+- Title: リンクはどうする？
+  Content: |-
+   RDの((&lt;...&gt;))のようにインラインで展開してくれるものがないと苦しい。
+   適当にテンプレートを定義しないと。
+</pre>
+<p>
+これで何が嬉しいかというと、何が嬉しいんだろう？
+そういえばyaml.rbにはYAMLからxmlへ変換する機能はないな。
+まあ、YAML::loadしてREXMLかxmlscanでほげればどうにでもなるか。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200407143" title="200407143" href="200407b.html#200407143">■</a> 
+[Ruby] Enumerableのmax_byとmin_by</h3>
+<p>
+なんと。1.9にmax_byとmin_byが追加された。
+</p>
+<pre>
+------------------------------------------------------ Enumerable#max_by
+     enum.max_by {| obj| block }   =&gt; obj
+------------------------------------------------------------------------
+     Returns the object in _enum_ that gives the maximum value from the
+     given block.
+
+        a = %w(albatross dog horse)
+        a.max_by {|x| x.length }   #=&gt; &quot;albatross&quot;
+</pre>
+
+<!-- section end -->
+</div>
+<!-- 2004/07/14 end -->
+
+
+
+<hr class="hide">
+<!-- 2004/07/15 start -->
+<h2><a name="20040715" href="200407b.html#20040715">2004-07-15 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="200407151" title="200407151" href="200407b.html#200407151">■</a> 
+<a href="http://bogofilter.sf.net/">[Mail] bogofilter 0.92.2</a></h3>
+<p>
+なんか知らないうちに0.92へ飛んでいた。ええと、今までは0.17.5を使っていたのか。
+NEWSを読んでたら
+</p>
+<pre>
+* Fix self-test suite (&quot;make check&quot;) when bogofilter is compiled
+  with QDBM or TDB as the data base engine.
+</pre>
+<p>
+とあったので、いい機会だからQDBMにする。
+</p>
+
+<p>
+まずはBerkeley DBのデータベースをdumpしておく。
+インストール前にやっておかないと後の祭りになるので注意。
+</p>
+<pre>
+% bogoutils -d ~/.bogofilter/wordlist.db &gt; /tmp/wordlist.txt
+</pre>
+<p>
+configure時にQDBMを指定。
+</p>
+<pre>
+% CFLAGS=-Os ./configure --with-database=qdbm
+% make
+% make check
+./t._abort: line 6: 23116 Aborted                 ( ./abortme )
+</pre>
+<p>
+と出てちょっと驚いたが、中身はabort()だったのでそういうものらしい。
+make installして
+</p>
+<pre>
+% bogoutils -l ~/.bogofilter/wordlist.qdbm &lt; /tmp/wordlist.txt
+</pre>
+<p>
+でQDBM用のデータベースを作り直し。これで移行完了。
+</p>
+<pre>
+% bogofilter -V |&amp; head -2
+bogofilter-qdbm version 0.92.2
+    Database: QDBM (version 1.8.13, Depot API)
+</pre>
+<p>
+早速spamをブロック問題なさそう。
+</p>
+<pre>
+X-Bogosity: Yes, tests=bogofilter, spamicity=1.000000, version=0.92.2
+</pre>
+
+<!-- section end -->
+</div>
+<!-- 2004/07/15 end -->
+
+
+
+<hr class="hide">
+<!-- 2004/07/16 start -->
+<h2><a name="20040716" href="200407b.html#20040716">2004-07-16 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="200407161" title="200407161" href="200407b.html#200407161">■</a> 
+[Ruby] class Foo &lt; Bar all; end</h3>
+<p>
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-dev/23911">[ruby-dev:23911]</a>を見てて不思議に思った。なぜ
+</p>
+<pre>
+% ruby -wce 'class Foo &lt; Bar all; end'
+Syntax OK
+</pre>
+<p>
+となるのか。syntax errorにならない。実行してみる。
+</p>
+<pre>
+% ruby -e 'class Foo &lt; Bar all; end'
+-e:1: undefined local variable or method `all' for main:Object (NameError)
+</pre>
+<p>
+まず、allから評価してる。ならばとallを0にしてみる。
+</p>
+<pre>
+% ruby -e 'class Foo &lt; Bar 0; end'  
+-e:1: undefined method `Bar' for main:Object (NoMethodError)
+</pre>
+<p>
+なるほど。Bar(all)なのか。make testでエラーにならないわけだ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2004/07/16 end -->
+
+
+
+<hr class="hide">
+<!-- 2004/07/17 start -->
+<h2><a name="20040717" href="200407b.html#20040717">2004-07-17 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="200407171" title="200407171" href="200407b.html#200407171">■</a> 
+[Ruby] Ruby 1.8.2</h3>
+<p>
+久し振りにtest/runner.rbが全部通るようになった。いつ以来だろう？
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200407172" title="200407172" href="200407b.html#200407172">■</a> 
+[Ruby] WEBrickでURLからlily.cgiを隠す</h3>
+<p>
+WEBrickでlilyを動かしたときにURLからlily.cgiを隠すにはmountすればいい。
+</p>
+<pre>
+require 'webrick'
+
+httpd = WEBrick::HTTPServer.new(:DocumentRoot=&gt;Dir.pwd, :Port=&gt;10080)
+httpd.mount(&quot;/lily/&quot;, WEBrick::HTTPServlet::CGIHandler, 'lily.cgi')
+trap(:INT) do
+  httpd.shutdown
+end
+httpd.start
+</pre>
+<p>
+あとはlily.cfgのurlを
+</p>
+<pre>
+url                 http://localhost:10080/lily
+</pre>
+<p>
+とすればhttp://localhost:10080/lily/でアクセスできる。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200407173" title="200407173" href="200407b.html#200407173">■</a> 
+Buzy</h3>
+<p>
+Buzyのメインボーカルの娘の声ってCOLORの娘にそっくりだなと思ったら本人だった。
+というかCOLORが名前を変えてBuzyになったのか。
+</p>
+<!-- section end -->
+</div>
+<!-- 2004/07/17 end -->
+
+
+
+<hr class="hide">
+<!-- 2004/07/18 start -->
+<h2><a name="20040718" href="200407b.html#20040718">2004-07-18 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="200407181" title="200407181" href="200407b.html#200407181">■</a> 
+[Ruby] test/openssl/test_ssl.rbがcygwinでかたまる件</h3>
+<p>
+test/openssl/test_ssl.rbのstarttlsを
+</p>
+<pre>
+def starttls(ssl)
+  ssl.puts(&quot;STARTTLS&quot;)
+  sleep 0.1
+  ssl.connect
+end
+</pre>
+<p>
+とすれば、とりあえず進むことがわかった。
+で、
+<a href="http://rrr.jin.gr.jp/rwiki?cmd=view;name=ruby-cvs-2004-07-18#Commit_8">ねんのため1秒待つ</a>ことになった。
+</p>
+<!-- section end -->
+</div>
+<!-- 2004/07/18 end -->
+
+
+
+<hr class="hide">
+<!-- 2004/07/19 start -->
+<h2><a name="20040719" href="200407b.html#20040719">2004-07-19 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="200407191" title="200407191" href="200407b.html#200407191">■</a> 
+<a href="http://raa.ruby-lang.org/project/swin/">[Ruby] vrswin 040314</a></h3>
+<p>
+久し振りに更新。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200407192" title="200407192" href="200407b.html#200407192">■</a> 
+<a href="http://raa.ruby-lang.org/project/vruby/">[Ruby] vruby 040717</a></h3>
+<p>
+こちらは例によって自力でinstall
+</p>
+<pre>
+% mkdir lib
+% mv vr lib
+% i386-cygwin-ruby -rmkmf -e 'create_makefile(&quot;vr&quot;)'
+% make install
+% i386-mingw32-ruby -rmkmf -e 'create_makefile(&quot;vr&quot;)'
+% make install
+</pre>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200407193" title="200407193" href="200407b.html#200407193">■</a> 
+<a href="http://raa.ruby-lang.org/project/xmlscan/">[Ruby] xmlscan 0.3.0 20030502</a></h3>
+<p>
+なんとなく0.3.0に上げてみる。
+</p>
+<!-- section end -->
+</div>
+<!-- 2004/07/19 end -->
+
+
+
+<hr class="hide">
+<!-- 2004/07/20 start -->
+<h2><a name="20040720" href="200407b.html#20040720">2004-07-20 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="200407201" title="200407201" href="200407b.html#200407201">■</a> 
+[夏] フェーン現象</h3>
+<p>
+22時に帰宅。室温が35℃ってどういうことよ？
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200407202" title="200407202" href="200407b.html#200407202">■</a> 
+<a href="http://search.cpan.org/~nwclark/perl-5.8.5/">[Perl] Perl 5.8.5</a></h3>
+<p>
+ついこの間RC2が出たと思ったら、もうリリースだ。
+</p>
+<pre>
+% ./configure.gnu -Dcc=gcc -Dccflags=-DDEBUGGING -Duseshrplib=true
+</pre>
+<p>
+としてみた。
+<a href="200406a.html#200406082">後でvimも作り直そう</a>。
+</p>
+<!-- section end -->
+</div>
+<!-- 2004/07/20 end -->
+
+<hr>
+<div>
+<a href="200407a.html">&lt;Prev(,)</a> | 
+<a href="200407c.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

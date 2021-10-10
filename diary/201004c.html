@@ -1,0 +1,334 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2010-4-c</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="201004b.html">
+<link rel="next" href="201005a.html">
+
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2010年4月下旬〜</p>
+<hr>
+<div>
+<a href="201004b.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="201005a.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2010/04/21 start -->
+<h2><a name="20100421" href="201004c.html#20100421">2010-04-21 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="201004211" title="201004211" href="201004c.html#201004211">■</a> 
+[Ruby] mktmpdirでの注意点</h3>
+<p>
+Solarisではchdirしたままだとそのディレクトリは消せないので、<br>
+mktmpdirを使うときは注意。win32も同じだがcygwinはなにか小細工してるようで問題ない。
+</p>
+<pre>
+% ruby -v -rtmpdir -e 'Dir.mktmpdir{|d|Dir.chdir d}'
+ruby 1.8.7 (2008-06-20 patchlevel 22) [i386-solaris2.8]
+/opt/csw/lib/ruby/1.8/fileutils.rb:1291:in `rmdir': Invalid argument - /tmp/d20100422-17387-khrit5 (Errno::EINVAL)
+</pre>
+<p>
+つまりこういう話。
+</p>
+<pre>
+% mkdir foo
+% cd foo
+% rmdir ../foo
+rmdir: directory &quot;../foo&quot;: Can't remove current directory or ..
+</pre>
+<!-- section end -->
+</div>
+<!-- 2010/04/21 end -->
+
+
+
+<hr class="hide">
+<!-- 2010/04/22 start -->
+<h2><a name="20100422" href="201004c.html#20100422">2010-04-22 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="201004221" title="201004221" href="201004c.html#201004221">■</a> 
+[Soft] 最近のautoconf</h3>
+<p>
+Rubyのtrunkでmake upすると最近短めのconfigureが走ったりするが、これって信用できるんかな。<br>
+</p>
+<pre>
+cd -P ../ruby/trunk &amp;&amp; exec autoconf
+running CONFIG_SHELL=/bin/sh /bin/sh ../ruby/trunk/configure optflags= debugflags= CFLAGS=-Os -march=i686 --cache=config.cache --build=i386-cygwin --program-suffix=-trunk build_alias=i386-cygwin --no-create --no-recursion
+configure: loading cache config.cache
+checking whether the C compiler works... yes
+checking for C compiler default output file name... a.exe
+checking for suffix of executables... .exe
+checking whether we are cross compiling... no
+checking whether ln -s works... yes
+checking for dot... no
+checking for doxygen... no
+checking for cd using phisical directory... cd -P
+checking whether -Wno-unused-parameter is accepted... yes
+checking whether -Wno-parentheses is accepted... yes
+checking whether -Wpointer-arith is accepted... yes
+checking whether -Wwrite-strings is accepted... yes
+checking whether -Wno-missing-field-initializers is accepted... yes
+checking whether -Wshorten-64-to-32 is accepted... no
+checking whether -Wno-long-long is accepted... yes
+checking whether -Wextra is accepted... yes
+checking for setjmp type... _setjmp
+checking whether OS depend dynamic link works... yes
+.ext/include/i386-cygwin/ruby/config.h updated
+ruby library version = 1.9.1
+configure: updating cache config.cache
+configure: creating ./config.status
+MAKE=make /bin/sh ./config.status
+config.status: creating GNUmakefile
+config.status: creating Makefile
+MAKE=make /bin/sh ./config.status
+config.status: creating GNUmakefile
+config.status: creating Makefile
+../ruby/trunk/revision.h updated
+</pre>
+<p>
+何でsetjmpなんだとかいまいちどれが選ばれてるのか謎だ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2010/04/22 end -->
+
+
+
+<hr class="hide">
+<!-- 2010/04/23 start -->
+<h2><a name="20100423" href="201004c.html#20100423">2010-04-23 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="201004231" title="201004231" href="201004c.html#201004231">■</a> 
+[Firefox] あとで読むbookmarkletが動かなくなる</h3>
+<p>
+タイミング的には
+<a href="https://addons.mozilla.org/ja/firefox/addon/62581">Tab Utilities Lite</a>を入れた後なのでこれが原因なことは間違いない。<br>
+いろいろ試した結果、設定のOpen tabs forのAddress Babが原因のようで。<br>
+つまりロケーションバーに入力した際に必ず新しいタブを開く設定。<br>
+たしかにbookmarkletと相性が悪そうだ。<br>
+意外とこう最初のほうに並んでるのは試さないもんでなかなか見つからなかった。
+
+</p>
+<!-- section end -->
+</div>
+<!-- 2010/04/23 end -->
+
+
+
+<hr class="hide">
+<!-- 2010/04/24 start -->
+<h2><a name="20100424" href="201004c.html#20100424">2010-04-24 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="201004241" title="201004241" href="201004c.html#201004241">■</a> 
+[PC] PCの納期延期のおしらせ</h3>
+<p>
+もう下旬だしどうなってんのかと見に行ってみると、
+<a href="http://shop.epson.jp/pc/np11/">5月中旬</a>になってんじゃん。<br>
+おいおい。連休にはいじれると思ってたのに。
+</p>
+<!-- section end -->
+</div>
+<!-- 2010/04/24 end -->
+
+
+
+<hr class="hide">
+<!-- 2010/04/25 start -->
+<h2><a name="20100425" href="201004c.html#20100425">2010-04-25 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="201004251" title="201004251" href="201004c.html#201004251">■</a> 
+<a href="http://www.commandlinefu.com/commands/view/5427/get-your-external-ip-address">[commandlinefu] Get your external IP address</a></h3>
+<p>
+curl ifconfig.meだけでなんで？と思ったら本当にそんなホスト名だった。<br>
+<a href="http://ifconfig.me">http://ifconfig.me</a>にアクセスしてみるといろいろ情報が得られて面白い。
+</p>
+<!-- section end -->
+</div>
+<!-- 2010/04/25 end -->
+
+
+
+<hr class="hide">
+<!-- 2010/04/26 start -->
+<h2><a name="20100426" href="201004c.html#20100426">2010-04-26 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="201004261" title="201004261" href="201004c.html#201004261">■</a> 
+tmux</h3>
+<p>
+-xRRとかなんだかよくわからないオプションをつけなくてもだいたいそれ相当なのがいいよね。<br>
+今は
+</p>
+<pre>
+% ssh -t remote 'tmux attach || tmux'
+</pre>
+<p>
+で起動してる。これで困ることはない。<br>
+multitailでもw3mでもscreenよりはましなレイアウトなので、<br>
+それらを多用するホストではtmuxを。
+</p>
+<p>
+あとcocotも併用。euc-jpが必要になることがあるので。<br>
+これはemacsを上げればなんとかなるような気もする。<br>
+機種依存文字が##になるけどそこは気にしない方向で。
+</p>
+<!-- section end -->
+</div>
+<!-- 2010/04/26 end -->
+
+
+
+<hr class="hide">
+<!-- 2010/04/27 start -->
+<h2><a name="20100427" href="201004c.html#20100427">2010-04-27 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="201004271" title="201004271" href="201004c.html#201004271">■</a> 
+[PC] 新たなPC</h3>
+<p>
+ほんとに5月中旬納期が守られるのか？<br>
+また延びそうな気も。<br>
+もう別のPCを発注しちゃおうかと思う今日この頃。
+</p>
+<!-- section end -->
+</div>
+<!-- 2010/04/27 end -->
+
+
+
+<hr class="hide">
+<!-- 2010/04/28 start -->
+<h2><a name="20100428" href="201004c.html#20100428">2010-04-28 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="201004281" title="201004281" href="201004c.html#201004281">■</a> 
+[PC] 新PC</h3>
+<p>
+エプソンダイレクトから言い訳メールが届いた。ここに至ってまだいつになるかわからんと。<br>
+結局我慢できずにソフマップで適当にバーガーPCを発注しちゃったよ。連休だしねえ。<br>
+明後日ぐらいには届くかな。
+</p>
+<!-- section end -->
+</div>
+<!-- 2010/04/28 end -->
+
+
+
+<hr class="hide">
+<!-- 2010/04/29 start -->
+<h2><a name="20100429" href="201004c.html#20100429">2010-04-29 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="201004291" title="201004291" href="201004c.html#201004291">■</a> 
+<a href="http://www.microsoft.com/express/Downloads/">[VC] VC++ 2010 Express</a></h3>
+<p>
+フルだと3.6GB必要。余計なものを入れなければ2.3GB。<br>
+2.3GBも無駄に消費させたくないので不必要なものは後で消そう。<br>
+無事Rubyのtrunkもmakeできた。
+</p>
+<!-- section end -->
+</div>
+<!-- 2010/04/29 end -->
+
+
+
+<hr class="hide">
+<!-- 2010/04/30 start -->
+<h2><a name="20100430" href="201004c.html#20100430">2010-04-30 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="201004301" title="201004301" href="201004c.html#201004301">■</a> 
+[PC] Core i5 750とUbuntu 10.04</h3>
+<p>
+早速1.5TBのHDD増設と思ったがSATAケーブルがない。明日調達しよう。<br>
+Windows7はやっぱ使いにくいので出たばかりのUbuntu 10.04を<br>
+外付けUSB HDD 500GBにインストールしてみたが、<br>
+起動時にerror: file not found.と言われてだめ。<br>
+grubはsdaのMBRにインストールしたのでWindows7も起動しなくなるわけで。<br>
+面倒なのでUbuntuデフォルトのWindows7分割に従う。<br>
+これだとちゃんとgrubのメニューも出てきた。<br>
+Windows7もUbuntuも立ち上がる。<br>
+なんだかんだで3回ぐらいインストールしたような。
+</p>
+<p>
+Ubuntu 10.04の起動は本当に速い。びっくりした。
+</p>
+<p>
+それにしてもUbuntuはなんで閉じるボタンとか左上に配置するようしたんだ？<br>
+これは正直使いづらい。こんなとこ変えなくてもいいのに。<br>
+ひょっとしてgnomeのほう？
+</p>
+<p>
+F12入れるかな。
+</p>
+<!-- section end -->
+</div>
+<!-- 2010/04/30 end -->
+
+<hr>
+<div>
+<a href="201004b.html">&lt;Prev(,)</a> | 
+<a href="201005a.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

@@ -1,0 +1,361 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2010-7-a</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="201006c.html">
+<link rel="next" href="201007b.html">
+
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2010年7月上旬〜</p>
+<hr>
+<div>
+<a href="201006c.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="201007b.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2010/07/01 start -->
+<h2><a name="20100701" href="201007a.html#20100701">2010-07-01 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="201007011" title="201007011" href="201007a.html#201007011">■</a> 
+6月のspam</h3>
+<p>
+2200通ほど。
+
+</p>
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="201007012" title="201007012" href="201007a.html#201007012">■</a> 
+[Diigo] Diigoツールバーがいつの間にかURLフラグメント対応してた</h3>
+<p>
+いつからかな。さすがにうちの日記みたいな感じだとフラグメントが使えないと不便だよな。
+</p>
+<!-- section end -->
+</div>
+<!-- 2010/07/01 end -->
+
+
+
+<hr class="hide">
+<!-- 2010/07/02 start -->
+<h2><a name="20100702" href="201007a.html#20100702">2010-07-02 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="201007021" title="201007021" href="201007a.html#201007021">■</a> 
+[Linux] 再インストール</h3>
+<p>
+Windows 7を潰してsda全部Ubuntu 10.04にした。<br>
+すっきり。
+</p>
+<!-- section end -->
+</div>
+<!-- 2010/07/02 end -->
+
+
+
+<hr class="hide">
+<!-- 2010/07/03 start -->
+<h2><a name="20100703" href="201007a.html#20100703">2010-07-03 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="201007031" title="201007031" href="201007a.html#201007031">■</a> 
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-talk/365148">ANN: zozo 1.0.0 Released</a></h3>
+<p>
+rubygems/bundlerに依存してない場合はロードしなくてもいいわけで、<br>
+それをうまいことやってくれるツールらしい。
+</p><blockquote><p>
+zozo is a tool that makes it easy to reduce the memory footprint of your applications by having them not load rubygems/bundler at runtime:
+</p></blockquote><p>
+LINK: 
+<a href="http://github.com/jeremyevans/zozo">http://github.com/jeremyevans/zozo</a></p>
+<!-- section end -->
+</div>
+<!-- 2010/07/03 end -->
+
+
+
+<hr class="hide">
+<!-- 2010/07/04 start -->
+<h2><a name="20100704" href="201007a.html#20100704">2010-07-04 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="201007041" title="201007041" href="201007a.html#201007041">■</a> 
+[zsh] zshでエラーが起きたときに終了ステータスを自動的に表示する</h3>
+<p>
+いままでは
+</p>
+<pre>
+PROMPT='%(0?..shell returned [%?]
+)%m:%2~ %# '
+</pre>
+<p>
+としてたんだけど、これだと
+</p>
+<pre>
+m:~ % ls foo
+ls: cannot access foo: No such file or directory
+shell returned [2]
+m:~ % 
+shell returned [2]
+m:~ % 
+</pre>
+<p>
+のように続けてEnterを押すと終了ステータスが表示されてしまう。<br>
+ちょっとうざい。<br>
+表示するメッセージに凝らないならsetopt print_exit_valueとするといいようだ。
+</p>
+<pre>
+m:~ % ls foo              
+ls: cannot access foo: No such file or directory
+zsh: exit 2     ls foo
+m:~ % 
+m:~ % 
+</pre>
+<p>
+続けてEnterを押しても余計なメッセージは出ない。
+</p>
+<!-- section end -->
+</div>
+<!-- 2010/07/04 end -->
+
+
+
+<hr class="hide">
+<!-- 2010/07/05 start -->
+<h2><a name="20100705" href="201007a.html#20100705">2010-07-05 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="201007051" title="201007051" href="201007a.html#201007051">■</a> 
+[Ruby] ruby-talk MLの流量が激減してるような？</h3>
+<p>
+ここ数ヶ月。気のせいかな。ちと調べてみよう。
+</p>
+<!-- section end -->
+</div>
+<!-- 2010/07/05 end -->
+
+
+
+<hr class="hide">
+<!-- 2010/07/06 start -->
+<h2><a name="20100706" href="201007a.html#20100706">2010-07-06 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="201007061" title="201007061" href="201007a.html#201007061">■</a> 
+[Mail] 3月以来放置したままのgmailからpop</h3>
+<p>
+いよいよfetchmailしてみたわけだけど、一度に全部は降りてこないようで数百という単位で降ってくる。<br>
+なかなかよく考えられてるな。1万通とか一気にきたらエラー起こりそうだし。<br>
+というわけで何日かにわけてfetchmailすることにした。
+
+</p>
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="201007062" title="201007062" href="201007a.html#201007062">■</a> 
+[Ruby] ruby-talk MLの流量を調べてみた</h3>
+<p>
+gmailから取ってくればすぐにわかると思ったが、意外にも難航してるので別の手段で。<br>
+gmaneの
+<a href="http://blog.gmane.org/gmane.comp.lang.ruby.general">blog形式</a>の左側に欲しいデータがあった。
+</p>
+<pre>
+ 247 July 2010
+1515 June 2010
+1534 May 2010
+1912 April 2010
+1863 March 2010
+1989 February 2010
+1993 January 2010
+2408 December 2009
+2358 November 2009
+1905 October 2009
+2142 September 2009
+2326 August 2009
+2420 July 2009
+</pre>
+<p>
+やっぱり5,6月が少ない。今月もペース的には1200ぐらい。<br>
+全体的には2006年あたりをピークにだんだん減少しているな。<br>
+やっぱ時期的に考えてRailsへ流れたか。
+</p>
+<!-- section end -->
+</div>
+<!-- 2010/07/06 end -->
+
+
+
+<hr class="hide">
+<!-- 2010/07/07 start -->
+<h2><a name="20100707" href="201007a.html#20100707">2010-07-07 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="201007071" title="201007071" href="201007a.html#201007071">■</a> 
+<a href="http://blog.nicovideo.jp/2010/07/post_255.php">ニコ動の新プレーヤ</a></h3>
+<p>
+新機能を見てて、おおと思ったのがこれ。
+</p><blockquote><p>
+再生停止、ボリュームコントロールのキーボード操作に対応
+</p></blockquote><p>
+スペースバーで一時停止/再生のトグル、上下キーでボリューム。<br>
+左右キーで5秒か10秒ほどシークできれば言うことないんだけどな。
+</p>
+<!-- section end -->
+</div>
+<!-- 2010/07/07 end -->
+
+
+
+<hr class="hide">
+<!-- 2010/07/08 start -->
+<h2><a name="20100708" href="201007a.html#20100708">2010-07-08 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="201007081" title="201007081" href="201007a.html#201007081">■</a> 
+[zsh] zshでdateもどき</h3>
+<p>
+dateを使わなくてもこの程度ならzshでも可能。
+</p>
+<pre>
+% a=&quot;%D{%c}&quot;; echo ${(%)a}
+Thu Jul  8 23:00:00 2010
+</pre>
+<p>
+でもここまでたどりつくにはman zshallでもなかなか大変。<br>
+(%)は変数のParameter Expansion Flagsで
+</p>
+<pre>
+%      Expand all % escapes in the resulting words in the same way as in  prompts  (see  EXPANSION  OF  PROMPT
+       SEQUENCES  in  zshmisc(1)). If this flag is given twice, full prompt expansion is done on the resulting
+       words, depending on the setting of the PROMPT_PERCENT, PROMPT_SUBST and PROMPT_BANG options.
+</pre>
+<p>
+という意味でPROMPTのescape sequenceがそのまま使える。PROMPTでは
+</p>
+<pre>
+%D{string}
+       string is formatted using the strftime function.  See strftime(3) for more details.  Various zsh exten‐
+</pre>
+<p>
+なのでstrftime形式が使えるというわけ。
+</p>
+<p>
+いちいち変数を経由しないといけなくて、${(%)%D{%c}}と書けないのがちょっと惜しい。<br>
+苦肉の策で
+</p>
+<pre>
+% echo ${(%)$(&lt;&lt;&lt;'%D{%c}')}
+Thu Jul  8 23:10:00 2010
+</pre>
+<p>
+という手はあるが、どうにも。
+</p>
+<!-- section end -->
+</div>
+<!-- 2010/07/08 end -->
+
+
+
+<hr class="hide">
+<!-- 2010/07/09 start -->
+<h2><a name="20100709" href="201007a.html#20100709">2010-07-09 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="201007091" title="201007091" href="201007a.html#201007091">■</a> 
+[Mail] MH形式のメール</h3>
+<p>
+何も考えずにずっとMH形式でメールを保存してきたが、Thunderbirdからは読めないのが痛い。<br>
+一応nmhなりGNU mailutilsを入れればMHのコマンドが使えるのでscanとかshowとかは問題ない。<br>
+scan formatはちょっと問題あるが。
+</p>
+<p>
+Thunderbirdで読むためにMHをmboxへ変換するってのもなんだしなあ。どうしたもんか。<br>
+あ、dovecot立ち上げてIMAP経由にすればいける？
+</p>
+<!-- section end -->
+</div>
+<!-- 2010/07/09 end -->
+
+
+
+<hr class="hide">
+<!-- 2010/07/10 start -->
+<h2><a name="20100710" href="201007a.html#20100710">2010-07-10 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="201007101" title="201007101" href="201007a.html#201007101">■</a> 
+<a href="http://wiki.dovecot.org/MailboxFormat">[Mail] dovecotはMH形式をサポートしてない</a></h3>
+<p>
+いやーまいったね。dovecotならMH形式使えると思い込んでいた。<br>
+IMAPにこだわるならUW-IMAPかCourier-IMAPになるわけか。<br>
+いや、Courier-IMAPもだめらしい。UW-IMAP一択か。
+</p>
+<!-- section end -->
+</div>
+<!-- 2010/07/10 end -->
+
+<hr>
+<div>
+<a href="201006c.html">&lt;Prev(,)</a> | 
+<a href="201007b.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

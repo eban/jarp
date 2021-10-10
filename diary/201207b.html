@@ -1,0 +1,318 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2012-7-b</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="201207a.html">
+<link rel="next" href="201207c.html">
+
+<link rel="stylesheet" type="text/css" href="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.css">
+<script type="text/javascript" src="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.js"></script>
+<script type="text/javascript">
+<!--       
+$(document).ready(function() {
+  prettyPrint();
+});
+-->
+</script>
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2012年7月中旬〜</p>
+<hr>
+<div>
+<a href="201207a.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="201207c.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2012/07/11 start -->
+<h2><a name="20120711" href="201207b.html#20120711">2012-07-11 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="201207111" title="201207111" href="201207b.html#201207111">■</a> 
+Google Chromeのクッキーをcookies.txt形式で</h3>
+<p>
+Google Chromeもsqlite3でクッキーを管理しているので結構簡単に得られる。
+</p>
+<pre>
+% sqlite3 -separator $'\t' ~/.config/google-chrome/Default/Cookies 'select host_key, &quot;TRUE&quot;, path, &quot;FALSE&quot;, expires_utc, name, value from cookies' &gt; cookies.txt
+</pre>
+<!-- section end -->
+</div>
+<!-- 2012/07/11 end -->
+
+
+
+<hr class="hide">
+<!-- 2012/07/12 start -->
+<h2><a name="20120712" href="201207b.html#20120712">2012-07-12 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="201207121" title="201207121" href="201207b.html#201207121">■</a> 
+またXがハングしたが、Flashは関係なかった</h3>
+<p>
+FirefoxでLDRを読んでたときに死んだわけなんだけど。<br>
+Flashは関係なかったんだな。ってことはタイミング的にはUbuntu 12.04が怪しいわけで、<br>
+なんといってもNVIDIAの件があるしなあ。いっそのこと買い換えるか。いやまだ早いな。
+</p>
+<!-- section end -->
+</div>
+<!-- 2012/07/12 end -->
+
+
+
+<hr class="hide">
+<!-- 2012/07/13 start -->
+<h2><a name="20120713" href="201207b.html#20120713">2012-07-13 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="201207131" title="201207131" href="201207b.html#201207131">■</a> 
+最近のCAPTCHA</h3>
+<p>
+2つ単語が出てくるのが多いが、読み辛いほうだけ入力すればok。<br>
+読めない文字が少しぐらいならスキップしても問題ない。
+</p>
+<!-- section end -->
+</div>
+<!-- 2012/07/13 end -->
+
+
+
+<hr class="hide">
+<!-- 2012/07/14 start -->
+<h2><a name="20120714" href="201207b.html#20120714">2012-07-14 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="201207141" title="201207141" href="201207b.html#201207141">■</a> 
+<a href="http://www.jitu.org/~tko/cgi-bin/bakagaiku.rb?bakaid=20120712">うるう年 </a></h3>
+<p>
+正直なにをしてるのかわからなかった。<br>
+それでいいなら2/29と設定して29が返ってくることを確認すればよさげではある。<br>
+</p>
+<pre>
+return (new Date(year, 1, 29)).getDate() == 29;
+</pre>
+<p>
+とか。JavaScriptはよくわからないけど、例外が起こる処理系があるんなら、
+なんかそんな処理を追加ということで。
+</p>
+<p>
+dateコマンドだとエラーになるようだ。
+</p>
+<pre>
+% date -d 2012-02-29
+Wed Feb 29 00:00:00 JST 2012
+% date -d 2013-02-29
+date: invalid date `2013-02-29'
+zsh: exit 1     date -d '2011-02-29'
+</pre>
+<p>
+これで判断できるわけか。
+</p>
+<!-- section end -->
+</div>
+<!-- 2012/07/14 end -->
+
+
+
+<hr class="hide">
+<!-- 2012/07/15 start -->
+<h2><a name="20120715" href="201207b.html#20120715">2012-07-15 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="201207151" title="201207151" href="201207b.html#201207151">■</a> 
+<a href="https://play.google.com/store/apps/details?id=com.rookiestudio.perfectviewer&amp;hl=ja">Perfect Viewer</a></h3>
+<p>
+これはまじでその名に恥じない完璧なビューアと言える。高速だし申し分ない。<br>
+自炊の元データはzipして保存してるので、そのままTabletへ転送するだけでいける。
+</p>
+<!-- section end -->
+</div>
+<!-- 2012/07/15 end -->
+
+
+
+<hr class="hide">
+<!-- 2012/07/16 start -->
+<h2><a name="20120716" href="201207b.html#20120716">2012-07-16 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="201207161" title="201207161" href="201207b.html#201207161">■</a> 
+「伝染るんです。」の装丁がアレすぎてナニな件</h3>
+<p>
+スキャンして読み飛ばしがないかページ数と画像ファイル名の連番で確認してるんだけど、<br>
+もう何ページなんだかさっぱりわからないので、ページが飛んでるかどうかわからない。
+</p>
+<!-- section end -->
+</div>
+<!-- 2012/07/16 end -->
+
+
+
+<hr class="hide">
+<!-- 2012/07/17 start -->
+<h2><a name="20120717" href="201207b.html#20120717">2012-07-17 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="201207171" title="201207171" href="201207b.html#201207171">■</a> 
+sshでログインするのに時間がかかる</h3>
+<p>
+-vつけてみたらこんな情報が出てきた。
+</p>
+<pre>
+debug1: Next authentication method: gssapi-with-mic
+debug1: Unspecified GSS failure.  Minor code may provide more information
+Credentials cache file '/tmp/krb5cc_1000' not found
+
+debug1: Unspecified GSS failure.  Minor code may provide more information
+Credentials cache file '/tmp/krb5cc_1000' not found
+
+debug1: Unspecified GSS failure.  Minor code may provide more information
+
+
+debug1: Unspecified GSS failure.  Minor code may provide more information
+Credentials cache file '/tmp/krb5cc_1000' not found
+</pre>
+<p>
+not foundが出るまで各々数秒かかるので結構うっとうしい。<br>
+ぐぐってみるといっぱいヒットした。<br>
+~/.ssh/configにGSSAPIAuthentication noを追加で解決。快適。
+</p>
+<!-- section end -->
+</div>
+<!-- 2012/07/17 end -->
+
+
+
+<hr class="hide">
+<!-- 2012/07/18 start -->
+<h2><a name="20120718" href="201207b.html#20120718">2012-07-18 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="201207181" title="201207181" href="201207b.html#201207181">■</a> 
+<a href="http://www.hotot.org/">Hotot - A microblogging client</a></h3>
+<p>
+ショートカットキーが使えるところが気に入ってる。<br>
+smooth scrollじゃなければなおいいんだけど。<br>
+リストのdeleteが本体のものとは知らずにいくつか消してしまったが、<br>
+まあ整理できてよかったということにしておこう。
+</p>
+<!-- section end -->
+</div>
+<!-- 2012/07/18 end -->
+
+
+
+<hr class="hide">
+<!-- 2012/07/19 start -->
+<h2><a name="20120719" href="201207b.html#20120719">2012-07-19 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="201207191" title="201207191" href="201207b.html#201207191">■</a> 
+Cygwin版のp4</h3>
+<p>
+<a href="201004b.html#201004151">以前</a>Windows版のp4をCygwinで使うとパスワードが丸見えになって云々という話を書いたが、<br>
+<a href="http://www.perforce.com/perforce/downloads/archived_drupal.html#cygwinx86">ダウンロードページ</a>を見たらCygwin版も置いてあった。<br>
+あんな小細工は必要なかったようで。<br>
+Discontinued by May 1, 2013ってのが気になるが、まあ大丈夫だろう。
+</p>
+<!-- section end -->
+</div>
+<!-- 2012/07/19 end -->
+
+
+
+<hr class="hide">
+<!-- 2012/07/20 start -->
+<h2><a name="20120720" href="201207b.html#20120720">2012-07-20 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="201207201" title="201207201" href="201207b.html#201207201">■</a> 
+<a href="http://www.commandlinefu.com/commands/view/10978/get-the-ip-address">Get the IP address</a></h3>
+<p>
+ifconfigの結果からIPアドレスを取り出すのにgrepしてcutを駆使している例。<br>
+だったらawkを使えよと思うわけで、別解ではそんな例も出ている。
+</p>
+<pre>
+% ifconfig | grep 'inet addr'
+          inet addr:192.168.0.50  Bcast:192.168.0.255  Mask:255.255.255.0
+          inet addr:127.0.0.1  Mask:255.0.0.0
+</pre>
+<p>
+なので、区切りを空白とコロンにすればIPアドレスは4番目になるので
+</p>
+<pre>
+ifconfig | awk -F&quot;[: ]+&quot; '/inet addr/ {print $4}'
+</pre>
+<p>
+と書けるわけだけど、まあ、もっと簡単に
+<pre>
+ifconfig | awk 'sub(/inet addr:/,&quot;&quot;){print $1}'
+</pre>
+</p>
+<p>
+でいいと思うよ。subは置換できた個数を返すのでこの場合は置換できたときだけprintされる。
+</p>
+<!-- section end -->
+</div>
+<!-- 2012/07/20 end -->
+
+<hr>
+<div>
+<a href="201207a.html">&lt;Prev(,)</a> | 
+<a href="201207c.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

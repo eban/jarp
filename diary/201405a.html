@@ -1,0 +1,698 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2014-5-a</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="201404c.html">
+<link rel="next" href="201405b.html">
+
+<link rel="stylesheet" type="text/css" href="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.css">
+<script async type="text/javascript" src="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.js"></script>
+<script type="text/javascript">
+<!--       
+$(document).ready(function() {
+  prettyPrint();
+});
+-->
+</script>
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2014年5月上旬〜</p>
+<hr>
+<div>
+<a href="201404c.html" accesskey=",">&lt;Older(,)</a> | 
+<a href="201405b.html" accesskey=".">Newer(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2014/05/01 start -->
+<h2><a name="20140501" href="201405a.html#20140501">2014-05-01 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="201405011" title="201405011" href="201405a.html#201405011">■</a> 
+convertで丸く切り抜く</h3>
+<p>
+-drawで円が描けるのでそれを利用して切り抜く。
+</p>
+<pre>
+% convert bakeneko-eban-twitter.png \
+  \( +clone -threshold -1 -negate -fill white -draw &quot;circle 150,150 150,0&quot; \) \
+  -alpha off -compose copy_opacity -composite bakeneko-eban-twitter-circle.png
+</pre>
+<p>
+こんな感じ。<br>
+<img src="../images/bakeneko-eban-twitter.png" alt="">
+<img src="../images/bakeneko-eban-twitter-circle.png" alt="">
+</p>
+<p>
+circleの引数はちょっと変わっていて、<br>
+中心と半径ではなく中心と半径分離れた1点を指定する。<br>
+つまり指定のしかたはいくつもある。
+</p>
+<!-- section end -->
+</div>
+<!-- 2014/05/01 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/05/02 start -->
+<h2><a name="20140502" href="201405a.html#20140502">2014-05-02 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="201405021" title="201405021" href="201405a.html#201405021">■</a> 
+convertで角丸の形に切り抜く</h3>
+<p>
+ベジェ曲線とか使うまでもなく、そのものずばりのroundrectangleが使える。
+</p>
+<pre>
+% convert bakeneko-eban-twitter.png \
+  \( +clone -threshold -1 -negate -fill white -draw &quot;roundrectangle 0,0 300,300 50,50&quot; \) \
+  -alpha off -compose copy_opacity -composite bakeneko-eban-twitter-rr.png
+</pre>
+<p>
+引数は左上、右下、x半径,y半径。
+</p>
+<p>
+<img src="../images/bakeneko-eban-twitter-rr.png" alt="">
+</p>
+<p>
+というわけでこれにするか。
+</p>
+<p>
+この猫自体は
+<a href="http://neutralx0.net/tool/bnmk.html">化け猫アイコンメーカー</a>で作った。
+</p>
+<!-- section end -->
+</div>
+<!-- 2014/05/02 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/05/03 start -->
+<h2><a name="20140503" href="201405a.html#20140503">2014-05-03 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="201405031" title="201405031" href="201405a.html#201405031">■</a> 
+Smart J:COM BOXで赤外線リモコンを使う</h3>
+<p>
+Smart J:COM BOXで赤外線リモコンを使うにはRFリモコンのペアリングを切ればいい。<br>
+</p>
+<pre>
+チャンネルボタンの▽ボタンと音量の［－］ボタンを
+同時に3秒以上押したままにする
+2 ボタンが 4 回点滅したらボタンから指を離す
+</pre>
+<p>
+で、学習型リモコンは1000円程度(UMA-PLRM02)の安いのでok。<br>
+1個1個全部設定するのは面倒だけど1回だけなので。<br>
+というわけで快適になった。<br>
+まあ1年保てば御の字かな。<br>
+</p>
+<p>
+RFリモコンへ戻すにはペアリングさせる。<br>
+各種設定-各種設定-STB設定-設置設定-RFリモコン設定-RFリモコン-新規接続<br>
+を押してチャンネルボタンの△ボタンと音量の［＋］ボタンを3秒以上押せばok。<br>
+これでRFリモコンも赤外線リモコンも使える状態になる。
+</p>
+<!-- section end -->
+</div>
+<!-- 2014/05/03 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/05/04 start -->
+<h2><a name="20140504" href="201405a.html#20140504">2014-05-04 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="201405041" title="201405041" href="201405a.html#201405041">■</a> 
+J:COM Smart Boxで気になること</h3>
+<p>
+追いかけ再生してても録画が終了すると問答無用でスタンバイになる。<br>
+でもDLNAで別な番組を再生しているとスタンバイにならない。<br>
+しかもそのDLNA再生を終了するとスタンバイになる。<br>
+続きから再生ができるようになったのでスタンバイになってもあまり問題にならないが。<br>
+そういえば続きから再生は最初からとどちらかが選べるようになってるが、<br>
+放置すると続きから再生される。
+</p>
+<p>
+いま何処を再生中かが全然わからないのも気になる。<br>
+一時停止とかすればプログレスバーのようなものが出るが、だいたいの位置しかわからない。<br>
+いまのところ唯一正確な位置がわかるのはandroidアプリのリモコンだけだな。
+</p>
+<p>
+追記(5/6): 問答無用でスタンバイになるときは位置を覚えてくれないようだ。残念。
+</p>
+<!-- section end -->
+</div>
+<!-- 2014/05/04 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/05/05 start -->
+<h2><a name="20140505" href="201405a.html#20140505">2014-05-05 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="201405051" title="201405051" href="201405a.html#201405051">■</a> 
+東京アメッシュの画像から通知するシステムを考えてみた</h3>
+<p>
+東京アメッシュの降雨量の画像から丸く切り抜くことができればその後の処理がやりやすい。<br>
+<a href="http://www.rhymester.net/~naohiro/ameshd/">ameshd: 東京アメッシュをポーリングして通知</a>というプログラムがあるがGaucheで書かれていてちょっといじりにくい。<br>
+できればもっと簡単にしたい。<br>
+やってることは半径20km圏内の雨の強さと降っている範囲みたいなものから通知するという感じだ。<br>
+そのためにgifをrgb形式に変換し凡例の8つのレベルを割り出している。<br>
+この部分はconvertで
+<a href="http://ja.wikipedia.org/wiki/XPM">XPM形式</a>に変換すると楽だ。たかだか10色程度しかないので1画素1文字で表現できる。<br>
+</p>
+<pre>
+% convert http://tokyo-ame.jwa.or.jp/mesh/000/201405052220.gif \
+  \( +clone -threshold -1 -negate -fill white -draw &quot;circle 462,144 462,215&quot; \) \
+  -alpha off -compose copy_opacity -composite -trim tmp.xpm
+</pre>
+<p>
+中心は大宮駅にした。あとはawkでレベルに変換してしまえばよさげ。ここも1画素1レベルにできる。<br>
+</p>
+<pre>
+BEGIN {
+  colors[&quot;black&quot;] = 0
+  colors[&quot;#000001&quot;] = 0
+  colors[&quot;None&quot;] = 0
+  colors[&quot;#CCFFFF&quot;] = 1
+  colors[&quot;#6699FF&quot;] = 2
+  colors[&quot;#3333FF&quot;] = 3
+  colors[&quot;green&quot;] = 4
+  colors[&quot;yellow&quot;] = 5
+  colors[&quot;#FF9900&quot;] = 6 
+  colors[&quot;magenta&quot;] = 7
+  colors[&quot;red&quot;] = 8
+}
+NR == 5, /pixels/ {
+  sub(/&quot;,/, &quot;&quot;, $3)
+  levels[substr($0, 2, 1)] = colors[$3]
+}
+length &gt; 70 {
+  n = split(substr($0, 2, length - 3), a, &quot;&quot;)
+  for (i = 1; i &lt;= n; i++) {
+    level = levels[a[i]]
+    sum += level
+    if (max &lt; level)
+      max = level
+  }
+}
+END {
+  print &quot;level:&quot;, max+0, &quot;sum:&quot;, sum
+}
+</pre>
+<p>
+境界あたりに微妙な差があるようでsumの値はちょっと違うがまあだいたいこんなもんだろう。<br>
+ameshdでmaxが0なのにsumが0じゃないときがあるのがよくわからない。
+</p>
+<p>
+実際にいま雨が降ってきたのでその様子を。
+</p>
+<pre>
+% convert http://tokyo-ame.jwa.or.jp/mesh/000/201405060235.gif \
+  \( +clone -threshold -1 -negate -fill white -draw &quot;circle 462,144 462,215&quot; \) \
+  -alpha off -compose copy_opacity -composite -trim xpm:-             
+/* XPM */
+static char *xpm__[] = {
+/* columns rows colors chars-per-pixel */
+&quot;143 143 4 1 &quot;,
+&quot;  c black&quot;,
+&quot;. c #000001&quot;,
+&quot;X c #CCFFFF&quot;,
+&quot;o c None&quot;,
+/* pixels */
+&quot;oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo.......................oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo&quot;,
+&quot;ooooooooooooooooooooooooooooooooooooooooooooooooooooooo.................................ooooooooooooooooooooooooooooooooooooooooooooooooooooooo&quot;,
+&quot;ooooooooooooooooooooooooooooooooooooooooooooooooooo.........................................ooooooooooooooooooooooooooooooooooooooooooooooooooo&quot;,
+&quot;oooooooooooooooooooooooooooooooooooooooooooooooo...............................................oooooooooooooooooooooooooooooooooooooooooooooooo&quot;,
+&quot;ooooooooooooooooooooooooooooooooooooooooooooo.....................................................ooooooooooooooooooooooooooooooooooooooooooooo&quot;,
+&quot;ooooooooooooooooooooooooooooooooooooooooooo.........................................................ooooooooooooooooooooooooooooooooooooooooooo&quot;,
+&quot;ooooooooooooooooooooooooooooooooooooooooo.............................................................ooooooooooooooooooooooooooooooooooooooooo&quot;,
+&quot;ooooooooooooooooooooooooooooooooooooooo.................................................................ooooooooooooooooooooooooooooooooooooooo&quot;,
+&quot;ooooooooooooooooooooooooooooooooooooo.....................................................................ooooooooooooooooooooooooooooooooooooo&quot;,
+&quot;ooooooooooooooooooooooooooooooooooo.........................................................................ooooooooooooooooooooooooooooooooooo&quot;,
+&quot;ooooooooooooooooooooooooooooooooo.............................................................................ooooooooooooooooooooooooooooooooo&quot;,
+&quot;oooooooooooooooooooooooooooooooo...............................................................................oooooooooooooooooooooooooooooooo&quot;,
+&quot;oooooooooooooooooooooooooooooo...................................................................................oooooooooooooooooooooooooooooo&quot;,
+&quot;ooooooooooooooooooooooooooooo.....................................................................................ooooooooooooooooooooooooooooo&quot;,
+&quot;oooooooooooooooooooooooooooo.......................................................................................oooooooooooooooooooooooooooo&quot;,
+&quot;oooooooooooooooooooooooooo...........................................................................................oooooooooooooooooooooooooo&quot;,
+&quot;ooooooooooooooooooooooooo.............................................................................................ooooooooooooooooooooooooo&quot;,
+&quot;oooooooooooooooooooooooo...............................................................................................oooooooooooooooooooooooo&quot;,
+&quot;ooooooooooooooooooooooo.................................................................................................ooooooooooooooooooooooo&quot;,
+&quot;oooooooooooooooooooooo...................................................................................................oooooooooooooooooooooo&quot;,
+&quot;ooooooooooooooooooooo.....................................................................................................ooooooooooooooooooooo&quot;,
+&quot;oooooooooooooooooooo.......................................................................................................oooooooooooooooooooo&quot;,
+&quot;ooooooooooooooooooo.........................................................................................................ooooooooooooooooooo&quot;,
+&quot;oooooooooooooooooo...........................................................................................................oooooooooooooooooo&quot;,
+&quot;ooooooooooooooooo.............................................................................................................ooooooooooooooooo&quot;,
+&quot;oooooooooooooooo...............................................................................................................oooooooooooooooo&quot;,
+&quot;ooooooooooooooo.................................................................................................................ooooooooooooooo&quot;,
+&quot;ooooooooooooooo.................................................................................................................ooooooooooooooo&quot;,
+&quot;oooooooooooooo...................................................................................................................oooooooooooooo&quot;,
+&quot;ooooooooooooo.....................................................................................................................ooooooooooooo&quot;,
+&quot;oooooooooooo.......................................................................................................................oooooooooooo&quot;,
+&quot;oooooooooooo.......................................................................................................................oooooooooooo&quot;,
+&quot;ooooooooooo.........................................................................................................................ooooooooooo&quot;,
+&quot;oooooooooo...........................................................................................................................oooooooooo&quot;,
+&quot;oooooooooo...........................................................................................................................oooooooooo&quot;,
+&quot;ooooooooo.............................................................................................................................ooooooooo&quot;,
+&quot;ooooooooo.............................................................................................................................ooooooooo&quot;,
+&quot;oooooooo...............................................................................................................................oooooooo&quot;,
+&quot;oooooooo...............................................................................................................................oooooooo&quot;,
+&quot;ooooooo.................................................................................................................................ooooooo&quot;,
+&quot;ooooooo.................................................................................................................................ooooooo&quot;,
+&quot;oooooo...................................................................................................................................oooooo&quot;,
+&quot;oooooo...................................................................................................................................oooooo&quot;,
+&quot;ooooo.....................................................................................................................................ooooo&quot;,
+&quot;ooooo.....................................................................................................................................ooooo&quot;,
+&quot;oooo.......................................................................................................................................oooo&quot;,
+&quot;oooo.......................................................................................................................................oooo&quot;,
+&quot;oooo.......................................................................................................................................oooo&quot;,
+&quot;ooo.........................................................................................................................................ooo&quot;,
+&quot;ooo.........................................................................................................................................ooo&quot;,
+&quot;ooo.........................................................................................................................................ooo&quot;,
+&quot;oo...........................................................................................................................................oo&quot;,
+&quot;oo...........................................................................................................................................oo&quot;,
+&quot;oo...........................................................................................................................................oo&quot;,
+&quot;oo...........................................................................................................................................oo&quot;,
+&quot;o.............................................................................................................................................o&quot;,
+&quot;o.............................................................................................................................................o&quot;,
+&quot;o.............................................................................................................................................o&quot;,
+&quot;o.............................................................................................................................................o&quot;,
+&quot;o.............................................................................................................................................o&quot;,
+&quot;..XXX...........XXX............................................................................................................................&quot;,
+&quot;oXXXXXX........X.X.............................................................................................................................&quot;,
+&quot;oXXXX..........................................................................................................................................&quot;,
+&quot;oXXXXXXX.......................................................................................................................................&quot;,
+&quot;oXXXXXXXXXX....................................................................................................................................&quot;,
+&quot;oXXXXXX.XX..X..................................................................................................................................&quot;,
+&quot;oXXXXXXXXX.....................................................................................................................................&quot;,
+&quot;XXXXXXX.X......................................................................................................................................&quot;,
+&quot;XXXX...........................................................................................................................................&quot;,
+&quot;XXX............................................................................................................................................&quot;,
+&quot;X..............................................................................................................................................&quot;,
+&quot;...............................................................................................................................................&quot;,
+&quot;...............................................................................................................................................&quot;,
+&quot;...............................................................................................................................................&quot;,
+&quot;...............................................................................................................................................&quot;,
+&quot;...............................................................................................................................................&quot;,
+&quot;...............................................................................................................................................&quot;,
+&quot;...............................................................................................................................................&quot;,
+&quot;...............................................................................................................................................&quot;,
+&quot;...............................................................................................................................................&quot;,
+&quot;...............................................................................................................................................&quot;,
+&quot;...............................................................................................................................................&quot;,
+&quot;...............................................................................................................................................&quot;,
+&quot;o.............................................................................................................................................o&quot;,
+&quot;o.............................................................................................................................................o&quot;,
+&quot;o.............................................................................................................................................o&quot;,
+&quot;o.............................................................................................................................................o&quot;,
+&quot;o.............................................................................................................................................o&quot;,
+&quot;oo...........................................................................................................................................oo&quot;,
+&quot;oo...........................................................................................................................................oo&quot;,
+&quot;oo...........................................................................................................................................oo&quot;,
+&quot;oo...........................................................................................................................................oo&quot;,
+&quot;ooo.........................................................................................................................................ooo&quot;,
+&quot;ooo.........................................................................................................................................ooo&quot;,
+&quot;ooo.........................................................................................................................................ooo&quot;,
+&quot;oooo.......................................................................................................................................oooo&quot;,
+&quot;oooo.......................................................................................................................................oooo&quot;,
+&quot;oooo.......................................................................................................................................oooo&quot;,
+&quot;ooooo.....................................................................................................................................ooooo&quot;,
+&quot;ooooo.....................................................................................................................................ooooo&quot;,
+&quot;oooooo...................................................................................................................................oooooo&quot;,
+&quot;oooooo...................................................................................................................................oooooo&quot;,
+&quot;ooooooo.................................................................................................................................ooooooo&quot;,
+&quot;ooooooo.................................................................................................................................ooooooo&quot;,
+&quot;oooooooo...............................................................................................................................oooooooo&quot;,
+&quot;oooooooo...............................................................................................................................oooooooo&quot;,
+&quot;ooooooooo.............................................................................................................................ooooooooo&quot;,
+&quot;ooooooooo.............................................................................................................................ooooooooo&quot;,
+&quot;oooooooooo...........................................................................................................................oooooooooo&quot;,
+&quot;oooooooooo...........................................................................................................................oooooooooo&quot;,
+&quot;ooooooooooo.........................................................................................................................ooooooooooo&quot;,
+&quot;oooooooooooo.......................................................................................................................oooooooooooo&quot;,
+&quot;oooooooooooo.......................................................................................................................oooooooooooo&quot;,
+&quot;ooooooooooooo.....................................................................................................................ooooooooooooo&quot;,
+&quot;oooooooooooooo...................................................................................................................oooooooooooooo&quot;,
+&quot;ooooooooooooooo.................................................................................................................ooooooooooooooo&quot;,
+&quot;ooooooooooooooo.................................................................................................................ooooooooooooooo&quot;,
+&quot;oooooooooooooooo...............................................................................................................oooooooooooooooo&quot;,
+&quot;ooooooooooooooooo.............................................................................................................ooooooooooooooooo&quot;,
+&quot;oooooooooooooooooo...........................................................................................................oooooooooooooooooo&quot;,
+&quot;ooooooooooooooooooo.........................................................................................................ooooooooooooooooooo&quot;,
+&quot;oooooooooooooooooooo.......................................................................................................oooooooooooooooooooo&quot;,
+&quot;ooooooooooooooooooooo.....................................................................................................ooooooooooooooooooooo&quot;,
+&quot;oooooooooooooooooooooo...................................................................................................oooooooooooooooooooooo&quot;,
+&quot;ooooooooooooooooooooooo.................................................................................................ooooooooooooooooooooooo&quot;,
+&quot;oooooooooooooooooooooooo...............................................................................................oooooooooooooooooooooooo&quot;,
+&quot;ooooooooooooooooooooooooo.................................X...........................................................ooooooooooooooooooooooooo&quot;,
+&quot;oooooooooooooooooooooooooo...........................................................................................oooooooooooooooooooooooooo&quot;,
+&quot;oooooooooooooooooooooooooooo.......................................................................................oooooooooooooooooooooooooooo&quot;,
+&quot;ooooooooooooooooooooooooooooo.....................................................................................ooooooooooooooooooooooooooooo&quot;,
+&quot;oooooooooooooooooooooooooooooo...................................................................................oooooooooooooooooooooooooooooo&quot;,
+&quot;oooooooooooooooooooooooooooooooo...............................................................................oooooooooooooooooooooooooooooooo&quot;,
+&quot;ooooooooooooooooooooooooooooooooo.........................................XX..................................ooooooooooooooooooooooooooooooooo&quot;,
+&quot;ooooooooooooooooooooooooooooooooooo...........................XXXX.......XX.................................ooooooooooooooooooooooooooooooooooo&quot;,
+&quot;ooooooooooooooooooooooooooooooooooooo........................XXXXX...X..XX................................ooooooooooooooooooooooooooooooooooooo&quot;,
+&quot;ooooooooooooooooooooooooooooooooooooooo.....................XXXXX........X..............................ooooooooooooooooooooooooooooooooooooooo&quot;,
+&quot;ooooooooooooooooooooooooooooooooooooooooo..................XXXXX.......X..............................ooooooooooooooooooooooooooooooooooooooooo&quot;,
+&quot;ooooooooooooooooooooooooooooooooooooooooooo..............XX.XXX.....................................ooooooooooooooooooooooooooooooooooooooooooo&quot;,
+&quot;ooooooooooooooooooooooooooooooooooooooooooooo............XX..X....................................ooooooooooooooooooooooooooooooooooooooooooooo&quot;,
+&quot;oooooooooooooooooooooooooooooooooooooooooooooooo.............X.............X...................oooooooooooooooooooooooooooooooooooooooooooooooo&quot;,
+&quot;ooooooooooooooooooooooooooooooooooooooooooooooooooo.........................................ooooooooooooooooooooooooooooooooooooooooooooooooooo&quot;,
+&quot;ooooooooooooooooooooooooooooooooooooooooooooooooooooooo.................................ooooooooooooooooooooooooooooooooooooooooooooooooooooooo&quot;,
+&quot;oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo.......................oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo&quot;
+};
+</pre>
+<p>
+<img src="../images/201405060235-crop.gif" alt="">
+</p>
+<!-- section end -->
+</div>
+<!-- 2014/05/05 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/05/06 start -->
+<h2><a name="20140506" href="201405a.html#20140506">2014-05-06 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="201405061" title="201405061" href="201405a.html#201405061">■</a> 
+住所から緯度経度を調べる</h3>
+<p>
+<a href="https://developers.google.com/maps/documentation/geocoding/?hl=ja">Google Geocoding API</a>で簡単にいけるようで。
+</p>
+<pre>
+% curl -s 'http://maps.google.com/maps/api/geocode/json?sensor=false&amp;address=埼玉大宮駅' 
+{
+   &quot;results&quot; : [
+      {
+&lt;中略&gt;
+         &quot;formatted_address&quot; : &quot;Omiya Station, Nishikicho, Omiya Ward, Saitama, Japan&quot;,
+         &quot;geometry&quot; : {
+&lt;中略&gt;
+            &quot;location&quot; : {
+               &quot;lat&quot; : 35.906295,
+               &quot;lng&quot; : 139.623999
+            },
+&lt;中略&gt;
+         },
+         &quot;types&quot; : [ &quot;train_station&quot;, &quot;transit_station&quot;, &quot;establishment&quot; ]
+      }
+   ],
+   &quot;status&quot; : &quot;OK&quot;
+}
+% curl -s 'http://maps.google.com/maps/api/geocode/json?sensor=false&amp;address=埼玉大宮駅' |\
+  jq '.results[0].geometry.location'            
+{
+  &quot;lng&quot;: 139.623999,
+  &quot;lat&quot;: 35.906295
+}
+</pre>
+<p>
+大宮駅だけだと他にもある場合もあるので埼玉をつけている。<br>
+このあたりは適当でも流石Googleということでちゃんと検索してくれるようだ。<br>
+正確に自分の家の住所を入れればもちろんちゃんとした値になる。<br>
+これで昨日の東京アメッシュの入力値が得らえる。<br>
+</p>
+<p>
+大宮駅は京都にもあるんだね。
+</p>
+<pre>
+% curl -s 'http://maps.google.com/maps/api/geocode/json?sensor=false&amp;address=大宮駅' |\
+  jq '.results[]|[.formatted_address,.geometry.location]'
+[
+  &quot;Omiya Station, Nishikicho, Omiya Ward, Saitama, Japan&quot;,
+  {
+    &quot;lng&quot;: 139.623999,
+    &quot;lat&quot;: 35.906295
+  }
+]
+[
+  &quot;Omiya Station, Shijoomiyacho, Shimogyo Ward, Kyoto, Kyoto Prefecture, Japan&quot;,
+  {
+    &quot;lng&quot;: 135.748756,
+    &quot;lat&quot;: 35.003587
+  }
+]
+</pre>
+<p>
+jqを使うとこのあたりの抽出は楽だ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2014/05/06 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/05/07 start -->
+<h2><a name="20140507" href="201405a.html#20140507">2014-05-07 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="201405071" title="201405071" href="201405a.html#201405071">■</a> 
+ご請求</h3>
+<p>
+今年もinetdからのご請求の季節がやってきた。相変わらずsubjectは&quot;[inetd]ご請求&quot;だ。<br>
+消費増税で9800円から10080円に。
+</p>
+<pre>
+% echo $[9800/1.05*1.08]
+10080.
+</pre>
+<p>
+あたりまえだが合ってる。
+</p>
+<!-- section end -->
+</div>
+<!-- 2014/05/07 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/05/08 start -->
+<h2><a name="20140508" href="201405a.html#20140508">2014-05-08 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="201405081" title="201405081" href="201405a.html#201405081">■</a> 
+Cygwinのconvertで文字を書くときに警告が出る</h3>
+<p>
+こんな感じで。
+</p>
+<pre>
+convert: unable to read font `/usr/share/fonts/TTF/arial.ttf' @ error/annotate.c/RenderFreetype/1120.
+</pre>
+<p>
+たしかにそんなファイルどころか/usr/share/fonts/すら存在しない。<br>
+arial.ttfはwindows自身が持ってるので、もう適当に
+</p>
+<pre>
+% mkdir -p /usr/share/fonts
+% ln -s c:/Windows/Fonts /usr/share/fonts/TTF
+</pre>
+<p>
+としてお茶を濁した。
+</p>
+<!-- section end -->
+</div>
+<!-- 2014/05/08 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/05/09 start -->
+<h2><a name="20140509" href="201405a.html#20140509">2014-05-09 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="201405091" title="201405091" href="201405a.html#201405091">■</a> 
+convert -list font</h3>
+<p>
+昨日の件はぐぐると
+</p>
+<pre>
+mkdir /usr/share/fonts/TTF
+ln -s /cygdrive/c/Windows/Fonts/arial.ttf /usr/share/fonts/TTF/
+</pre>
+<p>
+という解もありそうだが、これだとarial.ttfだけ救うことになるのであまり得策ではない。<br>
+昨日のように設定すればWindowsのfonts全部がフルパスじゃなくて名前で使えるようになる。<br>
+</p>
+<pre>
+% convert -list font
+</pre>
+<p>
+で指定できるフォントがリストされる。
+</p>
+<pre>
+  Font: ＭＳ-ゴシック-標準
+    family: ＭＳ ゴシック
+    style: Normal
+    stretch: Normal
+    weight: 400
+    glyphs: /usr/share/fonts/TTF/msgothic.ttc
+  Font: ＭＳ-明朝-標準
+    family: ＭＳ 明朝
+    style: Normal
+    stretch: Normal
+    weight: 400
+    glyphs: /usr/share/fonts/TTF/msmincho.ttc
+  Font: ＭＳ-Ｐゴシック-標準
+    family: ＭＳ Ｐゴシック
+    style: Normal
+    stretch: Normal
+    weight: 400
+    glyphs: /usr/share/fonts/TTF/msgothic.ttc
+  Font: ＭＳ-Ｐ明朝-標準
+    family: ＭＳ Ｐ明朝
+    style: Normal
+    stretch: Normal
+    weight: 400
+    glyphs: /usr/share/fonts/TTF/msmincho.ttc
+</pre>
+<p>
+このFont:の行に書かれている名前を指定すればok。
+</p>
+<pre>
+% convert -size 100x100 -pointsize 48 -font ＭＳ-明朝-標準 label:あ a.png
+</pre>
+<p>
+minttyはUTF-8にして使ってるけど問題ないようだ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2014/05/09 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/05/10 start -->
+<h2><a name="20140510" href="201405a.html#20140510">2014-05-10 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="201405101" title="201405101" href="201405a.html#201405101">■</a> 
+東京アメッシュの画像を合成する</h3>
+<p>
+東京アメッシュではz-indexで3枚の画像を合成している。<br>
+map000.jpgとmsk000.pngとYYmmddHHMM.gifだ。<br>
+何の意味があるのか知らないがjpegとpngとgifと全部別になっている。
+</p>
+<p>
+合成するのはconvertで簡単にできる。
+</p>
+<pre>
+% convert \
+  http://tokyo-ame.jwa.or.jp/map/map000.jpg \
+  http://tokyo-ame.jwa.or.jp/map/msk000.png -composite \
+  http://tokyo-ame.jwa.or.jp/mesh/000/201405102300.gif -composite \
+  compo.png
+</pre>
+<p>
+こんな感じでok。実際の雨量画像は5分ごとに12時間分だけ保存されている。<br>
+また
+<a href="http://tokyo-ame.jwa.or.jp/scripts/mesh_index.js">mesh_index.js</a>を見れば最新のタイムスタンプがわかる。
+</p>
+<pre>
+% curl -s http://tokyo-ame.jwa.or.jp/scripts/mesh_index.js | sed 's/,/,\n/g'
+Amesh.setIndexList([&quot;201405110205&quot;,
+&quot;201405110200&quot;,
+&quot;201405110155&quot;,
+&quot;201405110150&quot;,
+&quot;201405110145&quot;,
+&quot;201405110140&quot;,
+&quot;201405110135&quot;,
+&quot;201405110130&quot;,
+&quot;201405110125&quot;,
+&quot;201405110120&quot;,
+&quot;201405110115&quot;,
+&quot;201405110110&quot;,
+&quot;201405110105&quot;,
+&quot;201405110100&quot;,
+&quot;201405110055&quot;,
+&quot;201405110050&quot;,
+&quot;201405110045&quot;,
+&quot;201405110040&quot;,
+&quot;201405110035&quot;,
+&quot;201405110030&quot;,
+&quot;201405110025&quot;,
+&quot;201405110020&quot;,
+&quot;201405110015&quot;,
+&quot;201405110010&quot;,
+&quot;201405110005&quot;]);
+% curl -s http://tokyo-ame.jwa.or.jp/scripts/mesh_index.js | sed 's/^[^&quot;]*&quot;\|&quot;.*\|\r//g'      
+201405110205
+</pre>
+<p>
+現在の時刻から計算してもいいが、実際は更新されるまで1分ぐらいかかるので、<br>
+このファイルを見るのが確実。
+</p>
+<!-- section end -->
+</div>
+<!-- 2014/05/10 end -->
+
+<hr>
+<div>
+<a href="201404c.html">&lt;Older(,)</a> | 
+<a href="201405b.html">Newer(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

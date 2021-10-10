@@ -1,0 +1,575 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2014-6-b</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="201406a.html">
+<link rel="next" href="201406c.html">
+
+<link rel="stylesheet" type="text/css" href="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.css">
+<script async type="text/javascript" src="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.js"></script>
+<script type="text/javascript">
+<!--       
+$(document).ready(function() {
+  prettyPrint();
+});
+-->
+</script>
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2014年6月中旬〜</p>
+<hr>
+<div>
+<a href="201406a.html" accesskey=",">&lt;Older(,)</a> | 
+<a href="201406c.html" accesskey=".">Newer(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2014/06/11 start -->
+<h2><a name="20140611" href="201406b.html#20140611">2014-06-11 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="201406111" title="201406111" href="201406b.html#201406111">■</a> 
+<a href="http://golf.shinh.org/p.rb?Ten+Count#Bash">Ten Count</a></h3>
+<p>
+dcだよなと思ったが、seqで攻めた。最初は
+</p>
+<pre>
+read n;seq $n $[n+9]
+</pre>
+<p>
+としていたが、苦肉の策で1バイト縮めた。
+</p>
+<pre>
+seq $[{n=`dd`,n+9}]
+</pre>
+<p>
+これはzshで動かない。bashは先に{}を展開するがzshはどうも展開しないようで。<br>
+つまりbashでは
+</p>
+<pre>
+seq $[n=`dd`] $[n+9]
+</pre>
+<p>
+と書いたのと同じ。一見
+</p>
+<pre>
+seq $[`dd`{,+9}]
+</pre>
+<p>
+でいいんじゃないかと思えるが、これは
+</p>
+<pre>
+seq $[`dd`] $[`dd`+9]
+</pre>
+<p>
+と展開されるのでだめ。``の評価のほうが後になる。
+</p>
+<pre>
+% echo 1 | bash -c 'seq $[{n=`dd`,n+9}]'
+0+1 records in
+0+1 records out
+2 bytes (2 B) copied, 0.000137874 s, 14.5 kB/s
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+% echo 1 | zsh -c 'seq $[{n=`dd`,n+9}]'
+0+1 records in
+0+1 records out
+2 bytes (2 B) copied, 0.000134562 s, 14.9 kB/s
+zsh:1: bad math expression: illegal character: {
+</pre>
+<p>
+というわけで、zshのほうが1バイト多い。<br>
+<a href="http://golf.shinh.org/p.rb?Ten+Count#Zsh">dcを使っても</a>?をquoteしなきゃいけなくて1バイト差が出てるのが面白い。
+</p>
+<!-- section end -->
+</div>
+<!-- 2014/06/11 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/06/12 start -->
+<h2><a name="20140612" href="201406b.html#20140612">2014-06-12 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="201406121" title="201406121" href="201406b.html#201406121">■</a> 
+flip flop</h3>
+<p>
+よく見かけるchopとflip flopの組み合わせ。
+</p>
+<pre>
+-chop ${LEFT}x${TOP} -flip -flop \
+-chop ${RIGHT}x${BOTTOM} -flip -flop \
+</pre>
+<p>
+同じ-chopなのにこれはどういうことなのか。<br>
+flip flopってなんだっけと調べたらflipが上下反転、flopが左右反転。<br>
+</p>
+<pre>
+% convert label:abc -flip x:
+% convert label:abc -flop x:
+</pre>
+<p>
+とすると確認できる。つまり意味的には
+</p>
+<pre>
+-chop ${LEFT}x${TOP} \
+-flip -flop -chop ${RIGHT}x${BOTTOM} -flip -flop \
+</pre>
+<p>
+なんだな。上下左右を反転させることで左上と右下が入れ替わる。<br>
+だから左上しか指定できない-chopが使えると。ということは180度回転でもいいわけだ。
+</p>
+<pre>
+-chop ${LEFT}x${TOP} \
+-rotate 180 -chop ${RIGHT}x${BOTTOM} -rotate 180 \
+</pre>
+<p>
+kindlizeは-gravityを使ってるようだ。賢い。
+</p>
+<pre>
+-chop #{LEFT}x#{TOP} \
+-gravity SouthEast -chop #{RIGHT}x#{BOTTOM}\
+-gravity NorthWest
+</pre>
+<!-- section end -->
+</div>
+<!-- 2014/06/12 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/06/13 start -->
+<h2><a name="20140613" href="201406b.html#20140613">2014-06-13 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="201406131" title="201406131" href="201406b.html#201406131">■</a> 
+optipngでpipe</h3>
+<p>
+convertした結果をそのままpipeでoptipngに渡したいなんてことを考えてみたが受けつけてくれない。<br>
+むりやり/dev/stdinを使っても
+</p>
+<pre>
+% convert in.jpg png8:- | optipng -out out.png /dev/stdin 
+** Processing: /dev/stdin
+Error: Can't ftell in input file stream
+
+** Status report
+1 file(s) have been processed.
+1 error(s) have been encountered.
+</pre>
+<p>
+と言われてしまう。&lt;()を使っても同じだ。
+</p>
+<pre>
+% optipng -out out.png &lt;(convert in.jpg png8:-)
+** Processing: /proc/self/fd/11
+Error: Can't ftell in input file stream
+
+** Status report
+1 file(s) have been processed.
+1 error(s) have been encountered.
+</pre>
+<p>
+どっちしてもseekできないとだめってことなので、ファイルにせざるを得ない。
+</p>
+<p>
+zshなら=()にすればいける。
+</p>
+<pre>
+% optipng -out out.png =(convert in.jpg png8:-)
+** Processing: /tmp/zsh1oY1na
+200x200 pixels, 8 bits/pixel, 182 colors in palette
+Reducing image to 8 bits/pixel, grayscale
+Input IDAT size = 2110 bytes
+Input file size = 2938 bytes
+
+Trying:
+  zc = 9  zm = 8  zs = 0  f = 0		IDAT size = 1804
+  zc = 9  zm = 8  zs = 1  f = 0		IDAT size = 1723
+
+Selecting parameters:
+  zc = 9  zm = 8  zs = 1  f = 0		IDAT size = 1723
+
+Output file: out.png
+
+Output IDAT size = 1723 bytes (387 bytes decrease)
+Output file size = 1994 bytes (944 bytes = 32.13% decrease)
+</pre>
+<p>
+/tmp/zsh1oY1naと表示されているように一時ファイルを作ってくれる。<br>
+=()って何のためにあるのかと思ったが、こういうときのためにあるんだな。
+</p>
+<!-- section end -->
+</div>
+<!-- 2014/06/13 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/06/14 start -->
+<h2><a name="20140614" href="201406b.html#20140614">2014-06-14 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="201406141" title="201406141" href="201406b.html#201406141">■</a> 
+printf %04sの違い</h3>
+<p>
+ipv6がどうのこうの。
+</p>
+<pre>
+% zsh -c 'printf &quot;%04s\n&quot; &quot;ab&quot;'
+  ab
+% bash -c 'printf &quot;%04s\n&quot; &quot;ab&quot;' 
+  ab
+% /usr/bin/printf &quot;%04s\n&quot; &quot;ab&quot; 
+/usr/bin/printf: %04s: 無効な変換指定です
+zsh: exit 1     /usr/bin/printf &quot;%04s\n&quot; &quot;ab&quot;
+% ruby -e 'printf(&quot;%04s\n&quot;, &quot;ab&quot;)' 
+  ab
+% ruby -e 'printf(&quot;%04s\n&quot;, &quot;ab&quot;)' 
+  ab
+% awk 'BEGIN{printf(&quot;%04s\n&quot;, &quot;ab&quot;)}'  
+  ab
+% python -c 'print &quot;%04s&quot; % &quot;ab&quot;'
+  ab
+% perl -e 'printf(&quot;%04s\n&quot;, &quot;ab&quot;)' 
+00ab
+</pre>
+<p>
+Perlだけ気が利いている。Rubyなら
+</p>
+<pre>
+% ruby -e 'puts &quot;ab&quot;.rjust(4, &quot;0&quot;)'
+00ab
+</pre>
+<p>
+という手もあるが。
+</p>
+<!-- section end -->
+</div>
+<!-- 2014/06/14 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/06/15 start -->
+<h2><a name="20140615" href="201406b.html#20140615">2014-06-15 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="201406151" title="201406151" href="201406b.html#201406151">■</a> 
+convertのshave</h3>
+<p>
+chopを2回しなくてもshaveなんてオプションがあった。<br>
+しかしこれは左と右、上と下は同じ量だけ削られる。別々に指定できない。<br>
+-shave 20x10と書いた場合、左右は両方とも20、上下は両方とも10削られる。<br>
+スキャンした結果だとそんな都合よく対称にはならないのでなかなか使いづらそう。
+</p>
+<!-- section end -->
+</div>
+<!-- 2014/06/15 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/06/16 start -->
+<h2><a name="20140616" href="201406b.html#20140616">2014-06-16 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="201406161" title="201406161" href="201406b.html#201406161">■</a> 
+古いsqlite3のソース</h3>
+<p>
+<a href="http://www.sqlite.org/download.html">sqliteのダウンロードページ</a>に行っても3.7あたりの古いソースはもう見当たらない。<br>
+以前は http://www.sqlite.org/sqlite-3.7.2.tar.gz とすごいところに置いてあったので、<br>
+直接指定してみたらまだあった。3.6.23もあった。
+</p>
+<!-- section end -->
+</div>
+<!-- 2014/06/16 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/06/17 start -->
+<h2><a name="20140617" href="201406b.html#20140617">2014-06-17 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="201406171" title="201406171" href="201406b.html#201406171">■</a> 
+convertで偶数奇数処理</h3>
+<p>
+以前横向きでスキャンした画像を
+<a href="201112c.html#201112311">90度回転して元に戻す処理</a>を書いた。<br>
+シェルスクリプトなのでwindowsだと使えないが、<br>
+convertにはfxがあるのでその処理を吐かせればいいんだと気づいた。
+</p>
+<pre>
+% convert 00?.png -format &quot;convert %f -rotate %[fx:t%2?90:-90] -verbose /tmp/%f&quot; info:
+convert 001.png -rotate -90 -verbose /tmp/001.png
+convert 002.png -rotate 90 -verbose /tmp/002.png
+convert 003.png -rotate -90 -verbose /tmp/003.png
+convert 004.png -rotate 90 -verbose /tmp/004.png
+convert 005.png -rotate -90 -verbose /tmp/005.png
+convert 006.png -rotate 90 -verbose /tmp/006.png
+convert 007.png -rotate -90 -verbose /tmp/007.png
+convert 008.png -rotate 90 -verbose /tmp/008.png
+convert 009.png -rotate -90 -verbose /tmp/009.png
+</pre>
+<p>
+fx内のtは画像リストのインデックス(0から)になっている。<br>
+Cでお馴染の?:も使えるので偶数奇数で-90度/90度と回転させればいい。<br>
+これをリダイレクトしてバッチにすればwindowsでも実行可能だ。<br>
+Linuxでもこのままshに食わせてもいいが、parallelに食わせると時短になる。
+</p>
+<pre>
+% convert 00?.png -format &quot;convert %f -rotate %[fx:t%2?90:-90] -verbose /tmp/%f&quot; info: | parallel
+002.png=&gt;/tmp/002.png PNG 1081x714=&gt;714x1081 714x1081+0+0 8-bit DirectClass 41KB 0.090u 0:00.100
+003.png=&gt;/tmp/003.png PNG 1081x714=&gt;714x1081 714x1081+0+0 8-bit PseudoClass 255c 90.1KB 0.110u 0:00.119
+004.png=&gt;/tmp/004.png PNG 1081x714=&gt;714x1081 714x1081+0+0 8-bit PseudoClass 255c 41KB 0.170u 0:00.169
+005.png=&gt;/tmp/005.png PNG 1081x714=&gt;714x1081 714x1081+0+0 8-bit PseudoClass 255c 32.8KB 0.080u 0:00.079
+007.png=&gt;/tmp/007.png PNG 1081x714=&gt;714x1081 714x1081+0+0 8-bit PseudoClass 255c 41KB 0.090u 0:00.079
+006.png=&gt;/tmp/006.png PNG 1081x714=&gt;714x1081 714x1081+0+0 8-bit PseudoClass 255c 45.1KB 0.190u 0:00.190
+001.png=&gt;/tmp/001.png PNG 1081x714=&gt;714x1081 714x1081+0+0 8-bit DirectClass 1.38MB 0.330u 0:00.339
+009.png=&gt;/tmp/009.png PNG 1081x714=&gt;714x1081 714x1081+0+0 8-bit PseudoClass 255c 45.1KB 0.080u 0:00.070
+008.png=&gt;/tmp/008.png PNG 1081x714=&gt;714x1081 714x1081+0+0 8-bit PseudoClass 255c 32.8KB 0.170u 0:00.179
+</pre>
+<p>
+xargsは引数を省略すると/bin/echoを呼ぶが、parallelは実行する。ここが大きな違い。
+</p>
+<pre>
+% convert 00?.png -format &quot;convert %f -rotate %[fx:t%2?90:-90] -verbose /tmp/%f&quot; info: | xargs -P5 -I@ sh -c @
+003.png=&gt;/tmp/003.png PNG 1081x714=&gt;714x1081 714x1081+0+0 8-bit PseudoClass 255c 90.1KB 0.110u 0:00.150
+005.png=&gt;/tmp/005.png PNG 1081x714=&gt;714x1081 714x1081+0+0 8-bit PseudoClass 255c 32.8KB 0.080u 0:00.169
+002.png=&gt;/tmp/002.png PNG 1081x714=&gt;714x1081 714x1081+0+0 8-bit DirectClass 41KB 0.080u 0:00.159
+007.png=&gt;/tmp/007.png PNG 1081x714=&gt;714x1081 714x1081+0+0 8-bit PseudoClass 255c 41KB 0.090u 0:00.080
+006.png=&gt;/tmp/006.png PNG 1081x714=&gt;714x1081 714x1081+0+0 8-bit PseudoClass 255c 45.1KB 0.180u 0:00.219
+004.png=&gt;/tmp/004.png PNG 1081x714=&gt;714x1081 714x1081+0+0 8-bit PseudoClass 255c 41KB 0.170u 0:00.449
+009.png=&gt;/tmp/009.png PNG 1081x714=&gt;714x1081 714x1081+0+0 8-bit PseudoClass 255c 45.1KB 0.090u 0:00.119
+008.png=&gt;/tmp/008.png PNG 1081x714=&gt;714x1081 714x1081+0+0 8-bit PseudoClass 255c 32.8KB 0.170u 0:00.260
+001.png=&gt;/tmp/001.png PNG 1081x714=&gt;714x1081 714x1081+0+0 8-bit DirectClass 1.38MB 0.310u 0:00.519
+</pre>
+<p>
+とすればxargsでもパラで実行可能。
+</p>
+<!-- section end -->
+</div>
+<!-- 2014/06/17 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/06/18 start -->
+<h2><a name="20140618" href="201406b.html#20140618">2014-06-18 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="201406181" title="201406181" href="201406b.html#201406181">■</a> 
+postfixやめてmsmtpを</h3>
+<p>
+使い始めたはいいが、local mailが届かなくなって困った。<br>
+SMTP clientなんだから当たり前なんだけど、<br>
+そのためにlocalでSMTP server立てるんじゃ意味ないしねえ。<br>
+local mailと言ってもcronの結果ぐらいでいいんだけど。<br>
+しかたないので~/.msmtprcで
+</p>
+<pre>
+aliases ~/etc/aliases
+</pre>
+<p>
+として、~/etc/aliasesで
+</p>
+<pre>
+eban: gmailアドレス
+</pre>
+<p>
+とした。crontabでなにか吐かれるとそっちに飛ぶ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2014/06/18 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/06/19 start -->
+<h2><a name="20140619" href="201406b.html#20140619">2014-06-19 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="201406191" title="201406191" href="201406b.html#201406191">■</a> 
+Rainlendar</h3>
+<p>
+Rainlendarがicsを読み込んでくれるので、<br>
+<a href="http://d.hatena.ne.jp/Tatsu_syo/20110614/1308061547">これ</a>をタスクスケジューラで30分おきに動かすといい感じ同期できる。<br>
+ただ、場所情報がないのが痛い。これだけのためにoutlookを起動しないといけない。<br>
+<a href="http://msdn.microsoft.com/en-us/library/office/ff869026(v=office.15).aspx">AppointmentItem Members (Outlook)</a>を見るとLocationで取れそうだし、他にも情報を入れられそう。<br>
+ただVBSだけにちょっといじりにくい。<br>
+Rubyのwin32oleでいけるのか？
+</p>
+<!-- section end -->
+</div>
+<!-- 2014/06/19 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/06/20 start -->
+<h2><a name="20140620" href="201406b.html#20140620">2014-06-20 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="201406201" title="201406201" href="201406b.html#201406201">■</a> 
+OutlookからiCalendarを吐くRubyスクリプト</h3>
+<p>
+結局Rubyで書いた。
+</p>
+<pre>
+#! /usr/bin/ruby
+# -*- coding: utf-8 -*-
+
+require 'win32ole'
+require 'date'
+
+olFolderCalendar = 9
+WIN32OLE.codepage = WIN32OLE::CP_UTF8
+ol =
+  begin
+    WIN32OLE.connect(&quot;Outlook.Application&quot;)
+  rescue
+    WIN32OLE.new(&quot;Outlook.Application&quot;)
+  end
+
+items = ol.Session.GetDefaultFolder(olFolderCalendar).Items
+items.Sort &quot;[Start]&quot;
+items.IncludeRecurrences = true
+now = Time.now
+seven = now + 7 * 24 * 60 * 60
+body = &lt;&lt;'EOT'
+BEGIN:VCALENDAR
+
+BEGIN:VTIMEZONE
+TZID:Asia/Tokyo
+BEGIN:STANDARD
+TZOFFSETFROM:+0900
+TZOFFSETTO:+0900
+TZNAME:JST
+DTSTART:19700101T000000
+END:STANDARD
+END:VTIMEZONE
+
+EOT
+count = 0
+STATUS_VALUES = [&quot;CANCELLED&quot;, &quot;TENTATIVE&quot;, &quot;CONFIRMED&quot;]
+filter =
+  &quot;[Start] &gt;= '#{now.strftime(&quot;%Y/%m/%d %H:%M&quot;)}'&quot; +
+  &quot; AND [End] &lt;= '#{seven.strftime(&quot;%Y/%m/%d&quot;)}'&quot; +
+  &quot; AND [BusyStatus] &gt; 0&quot;
+e = items.Find(filter)
+while e
+  valarm = 1 &lt; e.BusyStatus &amp;&amp; now &lt; e.Start ? &lt;&lt;'EOT' : &quot;&quot;
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER;VALUE=DURATION:-PT5M
+END:VALARM
+EOT
+  body &lt;&lt; &lt;&lt;&quot;EOT&quot;
+BEGIN:VEVENT
+UID:#{count+=1}
+SUMMARY:#{e.Subject} [#{STATUS_VALUES[e.BusyStatus][0,2]}]
+DTSTART;TZID=Asia/Tokyo:#{e.Start.strftime(&quot;%Y%m%dT%H%M%S&quot;)}
+DTEND;TZID=Asia/Tokyo:#{e.End.strftime(&quot;%Y%m%dT%H%M%S&quot;)}
+LOCATION:#{e.Location}
+STATUS:#{STATUS_VALUES[e.BusyStatus]}
+#{valarm}END:VEVENT
+
+EOT
+  e = items.FindNext
+end
+body &lt;&lt; &quot;END:VCALENDAR\n&quot;
+ARGV[0] ? IO.write(ARGV[0], body) : puts(body)
+</pre>
+<p>
+最初はicalendar gemを使ったけど、やたらと遅いのでもう直接展開することにした。<br>
+WIN32OLE.codepage = WIN32OLE::CP_UTF8とするとutf-8で処理できる。<br>
+これはfilterの中身とかもutf-8で書けるので便利。
+</p>
+<pre>
+  &quot; AND [Subject] &lt;&gt; '昼休み'&quot; +
+</pre>
+<p>
+のようにすれば表示したくない処理も簡単に追加できる。
+</p>
+<pre>
+  &quot; AND [BusyStatus] &gt; 0&quot;
+</pre>
+<p>
+はキャンセルした予定はうっとしいので表示しないという意味。<br>
+あと一律5分前にアラーム設定。これで結構いい感じで使えるようになった。
+</p>
+<!-- section end -->
+</div>
+<!-- 2014/06/20 end -->
+
+<hr>
+<div>
+<a href="201406a.html">&lt;Older(,)</a> | 
+<a href="201406c.html">Newer(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

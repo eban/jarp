@@ -1,0 +1,387 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2003-6-a</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="200305c.html">
+<link rel="next" href="200306b.html">
+
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2003年6月上旬〜</p>
+<hr>
+<div>
+<a href="200305c.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="200306b.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2003/06/01 start -->
+<h2><a name="20030601" href="200306a.html#20030601">2003-06-01 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="200306011" title="200306011" href="200306a.html#200306011">■</a> 
+5月のspam</h3>
+<p>
+1264通。軽く1000を越えてしまった。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200306012" title="200306012" href="200306a.html#200306012">■</a> 
+[Cygwin][MinGW] --export-all-symbols</h3>
+<p>
+--export-all-symbolsにすればauto importできるようだ。
+</p>
+<pre>
+% echo 'int foo;' &gt;foo.c
+% gcc -shared -Wl,--export-all,--out-implib=libfoo.dll.a foo.c
+% nm libfoo.dll.a |tail -3
+         U __head_a_exe
+00000000 I __imp__foo
+00000000 I __nm__foo
+% printf &quot;EXPORTS\nfoo\n&quot; &gt;foo.def
+% gcc -shared -Wl,--out-implib=libfoo.dll.a foo.c foo.def
+% nm libfoo.dll.a |tail -3
+         U __head_a_exe
+00000000 I __imp__foo
+00000000 T _foo
+</pre>
+<p>
+結局__nm__fooというsymbolが大事らしい。
+</p>
+<!-- section end -->
+</div>
+<!-- 2003/06/01 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/06/02 start -->
+<h2><a name="20030602" href="200306a.html#20030602">2003-06-02 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="200306021" title="200306021" href="200306a.html#200306021">■</a> 
+[Linux] Vim - Vi IMproved 6.2</h3>
+<p>
+出たようだ。
+</p>
+<pre>
+% CFLAGS=-Os ./configure --without-x --disable-gui \
+  --enable-multibyte --enable-perlinterp --enable-rubyinterp
+% LD_RUN_PATH=/usr/local/lib/perl5/5.8.0/i586-linux/CORE make
+</pre>
+
+<!-- section end -->
+</div>
+<!-- 2003/06/02 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/06/03 start -->
+<h2><a name="20030603" href="200306a.html#20030603">2003-06-03 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="200306031" title="200306031" href="200306a.html#200306031">■</a> 
+<a href="http://www.splint.org/">[Linux] Splint 3.1.1- Secure Programming Lint</a></h3>
+<pre>
+Changes: Numerous enhancements were made, including improved
+accuracy of the bounds checking code, HTML and CSV output, and
+support for numabstract types. Numerous bugfixes and house-keeping
+updates were also made. Additional security checks were introduced,
+including the addition of messagestream, warningstream, and
+errorstream control flags, and support for +longint and +shortint
+flags. The type checking was also changed accordingly.
+</pre>
+<p>
+makeするとcheckまでするのはいいが、
+/usr/localにある古いデータを使っていちいち文句を言うのはやめて欲しいな。
+</p>
+<!-- section end -->
+</div>
+<!-- 2003/06/03 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/06/04 start -->
+<h2><a name="20030604" href="200306a.html#20030604">2003-06-04 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="200306041" title="200306041" href="200306a.html#200306041">■</a> 
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-talk/72804">[Ruby] HP-UX 11.11</a></h3>
+<p>
+mkmf.logを見るとあきらかに何か足りないよね。その後の
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-talk/72828">socket.h</a>を見てsbsize_tが怪しいことがわかる。
+sbsize_tとHP-UXをキーにぐぐるといっぱいヒットする。
+一番それらしい
+<a href="http://gcc.gnu.org/ml/gcc-bugs/2001-09/msg00139.html">この報告</a>を教えといた。
+それにしても、2年近く経つのに放置状態？
+</p>
+<!-- section end -->
+</div>
+<!-- 2003/06/04 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/06/05 start -->
+<h2><a name="20030605" href="200306a.html#20030605">2003-06-05 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="200306051" title="200306051" href="200306a.html#200306051">■</a> 
+<a href="http://raa.ruby-lang.org/project/xml-rpc/">[Ruby] XML-RPC for Ruby 1.7.17</a></h3>
+<p>
+更新。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200306052" title="200306052" href="200306a.html#200306052">■</a> 
+[Ruby] ss_family問題</h3>
+<p>
+<a href="http://www.ruby-lang.org/cgi-bin/ruby-bugs/incoming?id=814">PR#814</a>,
+<a href="http://www.ruby-lang.org/cgi-bin/ruby-bugs/incoming?id=816">PR#816</a>,
+<a href="http://www.ruby-lang.org/cgi-bin/ruby-bugs/incoming?id=839">PR#839</a>によるとOSFでは&lt;sys/socket.h&gt;に
+</p>
+<pre>
+#define __ss_family     ss_family
+</pre>
+<p>
+という記述があるらしい。
+で、extconf.rbでは問答無用で-Dss_family=__ss_familyとしているので、
+</p>
+<pre>
+#define ss_family     __ss_family
+#define __ss_family     ss_family
+</pre>
+<p>
+と書いたのと同じことになる。これは意味がない。つまり-Dでは絶対に解決できない。
+</p>
+
+<p>
+だったらstruct sockaddr_storageにss_familyというメンバがあれば-Dをつけなければいい？
+__ss_familyがあったら-Dをつけるでもよさそうな気もするが、
+OSFでは#define文があるから両方とも存在することになり、まずそうだ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2003/06/05 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/06/06 start -->
+<h2><a name="20030606" href="200306a.html#20030606">2003-06-06 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="200306061" title="200306061" href="200306a.html#200306061">■</a> 
+[ADSL] リンク</h3>
+<p>
+だめだ。リンクしない。ダイアルアップ環境はもうないしな。うーむ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2003/06/06 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/06/07 start -->
+<h2><a name="20030607" href="200306a.html#20030607">2003-06-07 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="200306071" title="200306071" href="200306a.html#200306071">■</a> 
+[Video] 木更津キャツアイ</h3>
+<p>
+全巻一気に見た。これはばかばかしくて面白いねえ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200306072" title="200306072" href="200306a.html#200306072">■</a> 
+[ADSL] リンク</h3>
+<p>
+一日中ビデオを見ていて気づかなかったが、今日もつながらない。
+明日電話するか。てゆか日記の更新できてないんだよね。
+</p>
+<!-- section end -->
+</div>
+<!-- 2003/06/07 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/06/08 start -->
+<h2><a name="20030608" href="200306a.html#20030608">2003-06-08 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="200306081" title="200306081" href="200306a.html#200306081">■</a> 
+[ADSL] サポートセンター</h3>
+<p>
+電話してみると、そのまま15分待つか平日の昼間に掛け直せと言われた。
+新聞を読みながら待っていると10分ほどでつながった。
+なんだかんだで結局ADSLモデムを交換することになった。
+12日に来るらしいが、それまでどうしようかなあ。
+</p>
+
+
+
+<!-- section end -->
+</div>
+<!-- 2003/06/08 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/06/09 start -->
+<h2><a name="20030609" href="200306a.html#20030609">2003-06-09 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="200306091" title="200306091" href="200306a.html#200306091">■</a> 
+[ADSL] スプリッタ</h3>
+<p>
+法事から帰ってきた父親に電話線どこかいじった？と聞いたら、
+なんとスプリッタを入れた言うではないか。
+うかつだった。思いもよらなかった。まず最初に自分で確認すべきだった。
+12日に送られてきてしまうが、まあ、いいか。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200306092" title="200306092" href="200306a.html#200306092">■</a> 
+<a href="http://cygwin.com/ml/cygwin-announce/2003-06/msg00010.html">[Cygwin] Perl 5.8.0-3</a></h3>
+<p>
+あまりにも評判が悪いせいかPERLIOを設定しなくても、行末はLFのままになった。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200306093" title="200306093" href="200306a.html#200306093">■</a> 
+<a href="http://cygwin.com/ml/cygwin/2003-06/msg00371.html">[Cygwin] Re: output suppressed in ssh session</a></h3>
+<p>
+<a href="200305b.html#200305114">これ</a>ってCygwin DLLのバグらしい。
+でもクラッシュする前は1.3.22でもちゃんと動いてたんだけどなあ。不思議だ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200306094" title="200306094" href="200306a.html#200306094">■</a> 
+<a href="http://ll.jus.or.jp/">Lightweight Language Saturday</a></h3>
+<p>
+申し込んだ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200306095" title="200306095" href="200306a.html#200306095">■</a> 
+<a href="http://ebsd.sunsite.dk/">[BSD] ekkoBSD</a></h3>
+<p>
+また分裂？
+</p>
+<!-- section end -->
+</div>
+<!-- 2003/06/09 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/06/10 start -->
+<h2><a name="20030610" href="200306a.html#20030610">2003-06-10 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="200306101" title="200306101" href="200306a.html#200306101">■</a> 
+[Ruby][Cygwin][MinGW] auto importとupx</h3>
+<p>
+1.8でruby -rreadline -e0を実行するとSEGVになるという報告をもらった。
+調べるてみるとupxで圧縮しているのが原因だった。
+dllimportを活かすとupxで圧縮しても問題ない。うーむ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200306102" title="200306102" href="200306a.html#200306102">■</a> 
+[Ruby] REXML</h3>
+<p>
+Ruby 1.8にREXML 2.7.0相当が入った。
+</p>
+<!-- section end -->
+</div>
+<!-- 2003/06/10 end -->
+
+<hr>
+<div>
+<a href="200305c.html">&lt;Prev(,)</a> | 
+<a href="200306b.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

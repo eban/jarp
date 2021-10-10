@@ -1,0 +1,626 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2014-12-a</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="201411c.html">
+<link rel="next" href="201412b.html">
+
+<link rel="stylesheet" type="text/css" href="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.css">
+<script async type="text/javascript" src="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.js"></script>
+<script type="text/javascript">
+<!--       
+$(document).ready(function() {
+  prettyPrint();
+});
+-->
+</script>
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2014年12月上旬〜</p>
+<hr>
+<div>
+<a href="201411c.html" accesskey=",">&lt;Older(,)</a> | 
+<a href="201412b.html" accesskey=".">Newer(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2014/12/01 start -->
+<h2><a name="20141201" href="201412a.html#20141201">2014-12-01 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="201412011" title="201412011" href="201412a.html#201412011">■</a> 
+fitbitからのお知らせ</h3>
+<p>
+常にNexus7と同期させるようにしたためか、<br>
+fitbitのバッテリーの残量が少なくなるとメールを送ってくる。<br>
+これはかなり助かる。<br>
+同期してるとデバイスで見る機会が減るので、<br>
+気づかずに完全にOFFになってるときがあるんだよねえ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2014/12/01 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/12/02 start -->
+<h2><a name="20141202" href="201412a.html#20141202">2014-12-02 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="201412021" title="201412021" href="201412a.html#201412021">■</a> 
+jqを使ってLTSVをJSONに変換する</h3>
+<p>
+jqって何でもありだな。
+</p>
+<pre>
+% echo $'foo:1\tbar:2\nfoo:3\tbar:4'
+foo:1	bar:2
+foo:3	bar:4
+% echo $'foo:1\tbar:2\nfoo:3\tbar:4' | jq -s -R 'split(&quot;\n&quot;)|map(split(&quot;\t&quot;)|map(split(&quot;:&quot;)|{&quot;key&quot;:.[0],&quot;value&quot;:.[1:]|join(&quot;:&quot;)})|from_entries)' 
+[
+  {
+    &quot;foo&quot;: &quot;1&quot;,
+    &quot;bar&quot;: &quot;2&quot;
+  },
+  {
+    &quot;foo&quot;: &quot;3&quot;,
+    &quot;bar&quot;: &quot;4&quot;
+  }
+]
+</pre>
+<p>
+valueに&quot;:&quot;が含まれるときにsplitは最初の1個目でやめることができないので、
+しかたなく2個目以降をjoinしている。それが
+</p>
+<pre>
+&quot;value&quot;:.[1:]|join(&quot;:&quot;)
+</pre>
+<p>
+の部分。
+</p>
+<p>
+サンプルログを拝借。
+</p>
+<pre>
+% curl -sL https://gist.github.com/masaru-b-cl/4743637/raw/2d89bf75af69f374ed19658d96d75e1c796535dd/access.ltsv | \
+  jq -s -R 'split(&quot;\n&quot;)|map(split(&quot;\t&quot;)|map(split(&quot;:&quot;)|{&quot;key&quot;:.[0],&quot;value&quot;:.[1:]|join(&quot;:&quot;)})|from_entries)'
+[
+  {
+    &quot;time&quot;: &quot;[28/Feb/2013:12:00:00 +0900]&quot;,
+    &quot;host&quot;: &quot;192.168.0.1&quot;,
+    &quot;req&quot;: &quot;GET /list HTTP/1.1&quot;,
+    &quot;status&quot;: &quot;200&quot;,
+    &quot;size&quot;: &quot;5316&quot;,
+    &quot;referer&quot;: &quot;-&quot;,
+    &quot;ua&quot;: &quot;Mozilla/5.0&quot;,
+    &quot;taken&quot;: &quot;9789&quot;,
+    &quot;isrobot&quot;: &quot;1&quot;,
+    &quot;dos&quot;: &quot;-&quot;,
+    &quot;harddos&quot;: &quot;-&quot;,
+    &quot;cache&quot;: &quot;-&quot;
+  },
+  {
+    &quot;time&quot;: &quot;[28/Feb/2013:12:00:00 +0900]&quot;,
+    &quot;host&quot;: &quot;172.16.0.12&quot;,
+    &quot;req&quot;: &quot;GET /list HTTP/1.1&quot;,
+    &quot;status&quot;: &quot;200&quot;,
+    &quot;size&quot;: &quot;5316&quot;,
+    &quot;referer&quot;: &quot;-&quot;,
+    &quot;ua&quot;: &quot;Mozilla/5.0&quot;,
+    &quot;taken&quot;: &quot;9789&quot;,
+    &quot;isrobot&quot;: &quot;1&quot;,
+    &quot;dos&quot;: &quot;-&quot;,
+    &quot;harddos&quot;: &quot;-&quot;,
+    &quot;cache&quot;: &quot;-&quot;
+  }
+]
+</pre>
+<!-- section end -->
+</div>
+<!-- 2014/12/02 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/12/03 start -->
+<h2><a name="20141203" href="201412a.html#20141203">2014-12-03 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="201412031" title="201412031" href="201412a.html#201412031">■</a> 
+jqを使ってJSONをCSVに変換する</h3>
+<p>
+実はjqには@csvなる変換機構が備わっている。
+昨日の結果からvalueだけからなるCSVを作ってみる。
+</p>
+<pre>
+% cat access.json
+[
+  {
+    &quot;time&quot;: &quot;[28/Feb/2013:12:00:00 +0900]&quot;,
+    &quot;host&quot;: &quot;192.168.0.1&quot;,
+    &quot;req&quot;: &quot;GET /list HTTP/1.1&quot;,
+    &quot;status&quot;: &quot;200&quot;,
+    &quot;size&quot;: &quot;5316&quot;,
+    &quot;referer&quot;: &quot;-&quot;,
+    &quot;ua&quot;: &quot;Mozilla/5.0&quot;,
+    &quot;taken&quot;: &quot;9789&quot;,
+    &quot;isrobot&quot;: &quot;1&quot;,
+    &quot;dos&quot;: &quot;-&quot;,
+    &quot;harddos&quot;: &quot;-&quot;,
+    &quot;cache&quot;: &quot;-&quot;
+  },
+  {
+    &quot;time&quot;: &quot;[28/Feb/2013:12:00:00 +0900]&quot;,
+    &quot;host&quot;: &quot;172.16.0.12&quot;,
+    &quot;req&quot;: &quot;GET /list HTTP/1.1&quot;,
+    &quot;status&quot;: &quot;200&quot;,
+    &quot;size&quot;: &quot;5316&quot;,
+    &quot;referer&quot;: &quot;-&quot;,
+    &quot;ua&quot;: &quot;Mozilla/5.0&quot;,
+    &quot;taken&quot;: &quot;9789&quot;,
+    &quot;isrobot&quot;: &quot;1&quot;,
+    &quot;dos&quot;: &quot;-&quot;,
+    &quot;harddos&quot;: &quot;-&quot;,
+    &quot;cache&quot;: &quot;-&quot;
+  }
+]
+% cat access.json | jq -r '.[]|map(.)'        
+[
+  &quot;[28/Feb/2013:12:00:00 +0900]&quot;,
+  &quot;192.168.0.1&quot;,
+  &quot;GET /list HTTP/1.1&quot;,
+  &quot;200&quot;,
+  &quot;5316&quot;,
+  &quot;-&quot;,
+  &quot;Mozilla/5.0&quot;,
+  &quot;9789&quot;,
+  &quot;1&quot;,
+  &quot;-&quot;,
+  &quot;-&quot;,
+  &quot;-&quot;
+]
+[
+  &quot;[28/Feb/2013:12:00:00 +0900]&quot;,
+  &quot;172.16.0.12&quot;,
+  &quot;GET /list HTTP/1.1&quot;,
+  &quot;200&quot;,
+  &quot;5316&quot;,
+  &quot;-&quot;,
+  &quot;Mozilla/5.0&quot;,
+  &quot;9789&quot;,
+  &quot;1&quot;,
+  &quot;-&quot;,
+  &quot;-&quot;,
+  &quot;-&quot;
+]
+% cat access.json | jq -r '.[]|map(.)|@csv'
+&quot;[28/Feb/2013:12:00:00 +0900]&quot;,&quot;192.168.0.1&quot;,&quot;GET /list HTTP/1.1&quot;,&quot;200&quot;,&quot;5316&quot;,&quot;-&quot;,&quot;Mozilla/5.0&quot;,&quot;9789&quot;,&quot;1&quot;,&quot;-&quot;,&quot;-&quot;,&quot;-&quot;
+&quot;[28/Feb/2013:12:00:00 +0900]&quot;,&quot;172.16.0.12&quot;,&quot;GET /list HTTP/1.1&quot;,&quot;200&quot;,&quot;5316&quot;,&quot;-&quot;,&quot;Mozilla/5.0&quot;,&quot;9789&quot;,&quot;1&quot;,&quot;-&quot;,&quot;-&quot;,&quot;-&quot;
+</pre>
+<p>
+&quot;&quot;で囲まなくていいなら、単にjoinでok。
+</p>
+<pre>
+% cat access.json | jq -r '.[]|map(.)|join(&quot;,&quot;)'
+[28/Feb/2013:12:00:00 +0900],192.168.0.1,GET /list HTTP/1.1,200,5316,-,Mozilla/5.0,9789,1,-,-,-
+[28/Feb/2013:12:00:00 +0900],172.16.0.12,GET /list HTTP/1.1,200,5316,-,Mozilla/5.0,9789,1,-,-,-
+</pre>
+<p>
+この場合はmap(.)がなくてもいい。
+<pre>
+% cat access.json | jq -r '.[]|join(&quot;,&quot;)' 
+[28/Feb/2013:12:00:00 +0900],192.168.0.1,GET /list HTTP/1.1,200,5316,-,Mozilla/5.0,9789,1,-,-,-
+[28/Feb/2013:12:00:00 +0900],172.16.0.12,GET /list HTTP/1.1,200,5316,-,Mozilla/5.0,9789,1,-,-,-
+</pre>
+</p>
+<p>
+このあたりの配列の扱いは注意。
+</p>
+<p>
+昨日のLTSVからJSONと今日のJSONからCSVを連続でやれば、LTSVからCSVへ変換も一気にできる。
+</p>
+<pre>
+% cat access.ltsv
+time:[28/Feb/2013:12:00:00 +0900]	host:192.168.0.1	req:GET /list HTTP/1.1	status:200	size:5316	referer:-	ua:Mozilla/5.0	taken:9789	isrobot:1	dos:-	harddos:-	cache:-
+time:[28/Feb/2013:12:00:00 +0900]	host:172.16.0.12	req:GET /list HTTP/1.1	status:200	size:5316	referer:-	ua:Mozilla/5.0	taken:9789	isrobot:1	dos:-	harddos:-	cache:-
+% cat access.ltsv |\
+  jq -s -R -r 'split(&quot;\n&quot;)|map(split(&quot;\t&quot;)|map(split(&quot;:&quot;)|{&quot;key&quot;:.[0],&quot;value&quot;:.[1:]|join(&quot;:&quot;)})|from_entries)[]|join(&quot;,&quot;)'
+[28/Feb/2013:12:00:00 +0900],192.168.0.1,GET /list HTTP/1.1,200,5316,-,Mozilla/5.0,9789,1,-,-,-
+[28/Feb/2013:12:00:00 +0900],172.16.0.12,GET /list HTTP/1.1,200,5316,-,Mozilla/5.0,9789,1,-,-,-
+</pre>
+<p>
+実は単に[]|join(&quot;,&quot;)が追加されただけ。<br>
+途中のkeyは無駄なので、それを省く。
+</p>
+<pre>
+% cat access.ltsv | jq -s -R -r 'split(&quot;\n&quot;)|map(split(&quot;\t&quot;)|map(split(&quot;:&quot;)[1:]|join(&quot;:&quot;)))[]|join(&quot;,&quot;)'
+[28/Feb/2013:12:00:00 +0900],192.168.0.1,GET /list HTTP/1.1,200,5316,-,Mozilla/5.0,9789,1,-,-,-
+[28/Feb/2013:12:00:00 +0900],172.16.0.12,GET /list HTTP/1.1,200,5316,-,Mozilla/5.0,9789,1,-,-,-
+</pre>
+<p>
+こうなるとJSONどこ行ったんだという感じだが、世の中そんなもんである。
+</p>
+<!-- section end -->
+</div>
+<!-- 2014/12/03 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/12/04 start -->
+<h2><a name="20141204" href="201412a.html#20141204">2014-12-04 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="201412041" title="201412041" href="201412a.html#201412041">■</a> 
+数値は数値へ</h3>
+<p>
+うささんからツッコミがあった。<br>
+jqの最新バージョンにはtestがあるので、<br>
+変換できるものをチェックしてtonumberすれば可能。<br>
+数値じゃないものをtonumberするとエラーで終了してしまう。
+</p>
+<pre>
+% jq -n '&quot;abc&quot; | tonumber'
+jq: error: Invalid numeric literal (while parsing 'abc')
+</pre>
+<p>
+というわけで正規表現で数値かどうか確認しないといけない。
+</p>
+<pre>
+% cat access.ltsv | jq -s -R -r 'split(&quot;\n&quot;)|map(split(&quot;\t&quot;)|map(split(&quot;:&quot;)|{&quot;key&quot;:.[0],&quot;value&quot;:(.[1:]|join(&quot;:&quot;)|if test(&quot;^[\\d.]+$&quot;) then tonumber else . end)})|from_entries)'
+[
+  {
+    &quot;time&quot;: &quot;[28/Feb/2013:12:00:00 +0900]&quot;,
+    &quot;host&quot;: &quot;192.168.0.1&quot;,
+    &quot;req&quot;: &quot;GET /list HTTP/1.1&quot;,
+    &quot;status&quot;: 200,
+    &quot;size&quot;: 5316,
+    &quot;referer&quot;: &quot;-&quot;,
+    &quot;ua&quot;: &quot;Mozilla/5.0&quot;,
+    &quot;taken&quot;: 9789,
+    &quot;isrobot&quot;: 1,
+    &quot;dos&quot;: &quot;-&quot;,
+    &quot;harddos&quot;: &quot;-&quot;,
+    &quot;cache&quot;: &quot;-&quot;
+  },
+  {
+    &quot;time&quot;: &quot;[28/Feb/2013:12:00:00 +0900]&quot;,
+    &quot;host&quot;: &quot;172.16.0.12&quot;,
+    &quot;req&quot;: &quot;GET /list HTTP/1.1&quot;,
+    &quot;status&quot;: 200,
+    &quot;size&quot;: 5316,
+    &quot;referer&quot;: &quot;-&quot;,
+    &quot;ua&quot;: &quot;Mozilla/5.0&quot;,
+    &quot;taken&quot;: 9789,
+    &quot;isrobot&quot;: 1,
+    &quot;dos&quot;: &quot;-&quot;,
+    &quot;harddos&quot;: &quot;-&quot;,
+    &quot;cache&quot;: &quot;-&quot;
+  }
+]
+</pre>
+<p>
+これちょっとわかりにくいが、
+</p>
+<pre>
+{&quot;key&quot;:.[0], &quot;value&quot;:.[1:] | join(&quot;:&quot;)}
+</pre>
+<p>
+が
+</p>
+<pre>
+{&quot;key&quot;:.[0], &quot;value&quot;:(.[1:] | join(&quot;:&quot;) | if test(&quot;^\\d+$&quot;) then tonumber else . end)}
+</pre>
+<p>
+になっている。外側もまとめて()で囲まないとエラーになるがどこを囲めばいいんだか悩んだ。
+</p>
+<p>
+実は最新だとRubyのrescue的なものが存在するのでこれを使う手もある。
+</p>
+<pre>
+{&quot;key&quot;:.[0], &quot;value&quot;:(.[1:] | join(&quot;:&quot;) | tonumber? // .)}
+</pre>
+<p>
+?をつけるとエラーが起きても無視しろという意味になり、その値はnullとかempty扱いになる。<br>
+//はPerl6と同じ意味でRubyの||と同じ。<br>
+つまりエラーが起きたら . なので何も変わらないことになりif文と同じ結果になる。
+</p>
+<!-- section end -->
+</div>
+<!-- 2014/12/04 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/12/05 start -->
+<h2><a name="20141205" href="201412a.html#20141205">2014-12-05 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="201412051" title="201412051" href="201412a.html#201412051">■</a> 
+jqゴルフ</h3>
+<p>
+<a href="201411c.html#201411231">jqで日ごとの最低気温</a>では
+</p>
+<pre>
+split(&quot;\n&quot;)|map(split(&quot; &quot;))|group_by(.[0])|.[]|min_by(.[2]|tonumber)|join(&quot; &quot;)
+</pre>
+<p>
+のように&quot;2014-11-01 21:10 14.5&quot;を空白でsplitしてから処理してたけど、<br>
+そうすると最後にjoinしてまた元の形式に戻すというちょっとまどろっこしいことになっていた。<br>
+元の形式がほぼ固定長で最後の気温だけが可変長なのでうまいこと最初の文字列のまま処理できる。
+</p>
+<pre>
+% jq -s -r -R 'split(&quot;\n&quot;)|group_by(.[:11])[]|min_by(.[17:]|tonumber)' saitamashi-201412.log 
+2014-12-01 23:30 10.5
+2014-12-02 22:40 4.2
+2014-12-03 05:50 -0.6
+2014-12-04 05:50 1.2
+</pre>
+<p>
+2014-12-01で10文字なので.[:11]、.[]はgroup_byと統合、気温は17番目から、splitしてないのでjoinも不要。
+</p>
+<p>
+Rubyでやってみると非常によく似ていることがわかる。
+</p>
+<pre>
+% ruby -e 'puts $&lt;.group_by{|x|x[0,10]}.map{|x|x[1].min_by{|y|y[17..-2].to_f}}' saitamashi-201412.log
+2014-12-01 23:30 10.5
+2014-12-02 22:40 4.2
+2014-12-03 05:50 -0.6
+2014-12-04 05:50 1.2
+</pre>
+<!-- section end -->
+</div>
+<!-- 2014/12/05 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/12/06 start -->
+<h2><a name="20141206" href="201412a.html#20141206">2014-12-06 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="201412061" title="201412061" href="201412a.html#201412061">■</a> 
+AOL ReaderのAPIを使う</h3>
+<p>
+oauth2で認証は面倒なので、ブラウザで認証したtokenをそのまま使う。<br>
+chromeなら要素を検証でNetworkを選び適当になにかクリックしてAPIを発行させる。<br>
+その中から/reader/apiで始まるリクエストを選び右クリックしてCopy as cURLを選択。<br>
+この内容から-H 'Token: トークン'を抜き出す。あとはこれを指定すればok。
+</p>
+<p>
+たとえばユーザー情報なら
+</p>
+<pre>
+% curl -s 'https://reader.aol.com/reader/user/info' -H 'Token: トークン' | jq -r .displayName
+eban
+</pre>
+<p>
+という感じでいける。
+</p>
+<!-- section end -->
+</div>
+<!-- 2014/12/06 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/12/07 start -->
+<h2><a name="20141207" href="201412a.html#20141207">2014-12-07 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="201412071" title="201412071" href="201412a.html#201412071">■</a> 
+jqのsplitで正規表現を使う</h3>
+<p>
+<a href="http://stedolan.github.io/jq/manual/">jq Manual</a>を見るとsplit2で正規表現が使えそうな雰囲気だが、<br>
+最新版でも存在しない。<br>
+いったいどうなってるのか。<br>
+いろいろ試してみると第2引数を指定すると正規表現扱いになるようだ。<br>
+2番目の引数はmatchと同じmodifiersが使える。
+</p>
+<pre>
+% jq -cn '&quot;foo  bar baz&quot;|split(&quot; +&quot;)'
+[&quot;foo  bar baz&quot;]
+% jq -cn '&quot;foo  bar baz&quot;|split(&quot; +&quot;;&quot;&quot;)'
+[&quot;foo&quot;,&quot;bar&quot;,&quot;baz&quot;]
+</pre>
+<p>
+しかし、なんかあやしい。
+</p>
+<pre>
+% jq -cn '&quot;hoge&quot;|split(&quot;&quot;;&quot;&quot;)' 
+[&quot;&quot;,&quot;h&quot;,&quot;o&quot;,&quot;g&quot;,&quot;e&quot;]
+</pre>
+<p>
+最初の&quot;&quot;は何？
+</p>
+<p>
+そうそう。それとは別にsplitsというのもある。
+</p>
+<pre>
+% jq -cn '&quot;hoge&quot;|splits(&quot;&quot;)'   
+&quot;&quot;
+&quot;h&quot;
+&quot;o&quot;
+&quot;g&quot;
+&quot;e&quot;
+</pre>
+<p>
+結果は配列ではないのだよねえ。なんというかまだまだ安定しないようだ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2014/12/07 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/12/08 start -->
+<h2><a name="20141208" href="201412a.html#20141208">2014-12-08 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="201412081" title="201412081" href="201412a.html#201412081">■</a> 
+ですまころしあむ</h3>
+<p>
+ideoneにはjqがないしさらしても問題ないかな。
+</p>
+<pre>
+% jq -n -r '&quot;A&quot;*25|explode|range(0;25)as$r|.[$r]+=$r+1|implode'
+BAAAAAAAAAAAAAAAAAAAAAAAA
+ACAAAAAAAAAAAAAAAAAAAAAAA
+AADAAAAAAAAAAAAAAAAAAAAAA
+AAAEAAAAAAAAAAAAAAAAAAAAA
+AAAAFAAAAAAAAAAAAAAAAAAAA
+AAAAAGAAAAAAAAAAAAAAAAAAA
+AAAAAAHAAAAAAAAAAAAAAAAAA
+AAAAAAAIAAAAAAAAAAAAAAAAA
+AAAAAAAAJAAAAAAAAAAAAAAAA
+AAAAAAAAAKAAAAAAAAAAAAAAA
+AAAAAAAAAALAAAAAAAAAAAAAA
+AAAAAAAAAAAMAAAAAAAAAAAAA
+AAAAAAAAAAAANAAAAAAAAAAAA
+AAAAAAAAAAAAAOAAAAAAAAAAA
+AAAAAAAAAAAAAAPAAAAAAAAAA
+AAAAAAAAAAAAAAAQAAAAAAAAA
+AAAAAAAAAAAAAAAARAAAAAAAA
+AAAAAAAAAAAAAAAAASAAAAAAA
+AAAAAAAAAAAAAAAAAATAAAAAA
+AAAAAAAAAAAAAAAAAAAUAAAAA
+AAAAAAAAAAAAAAAAAAAAVAAAA
+AAAAAAAAAAAAAAAAAAAAAWAAA
+AAAAAAAAAAAAAAAAAAAAAAXAA
+AAAAAAAAAAAAAAAAAAAAAAAYA
+AAAAAAAAAAAAAAAAAAAAAAAAZ
+</pre>
+<!-- section end -->
+</div>
+<!-- 2014/12/08 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/12/09 start -->
+<h2><a name="20141209" href="201412a.html#20141209">2014-12-09 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="201412091" title="201412091" href="201412a.html#201412091">■</a> 
+jqで関数定義</h3>
+<p>
+defで関数を定義できるが、一々毎回書いてらんないよねえ。<br>
+~/.jqに書いとけば読んでくれる。<br>
+たとえばtonumberは長いから短くしようと思ったらこんな感じで。
+</p>
+<pre>
+% echo 'def tn: tonumber;' &gt; ~/.jq
+% jq -n '&quot;1234&quot; | tn'
+1234
+</pre>
+<p>
+それにしてもどこにも書いてないな。
+</p>
+<!-- section end -->
+</div>
+<!-- 2014/12/09 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/12/10 start -->
+<h2><a name="20141210" href="201412a.html#20141210">2014-12-10 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="201412101" title="201412101" href="201412a.html#201412101">■</a> 
+jqで素数</h3>
+<p>
+結構短く書けて意外。20未満の素数。
+</p>
+<pre>
+% jq -n 'range(2;20)|select([.%range(2;.)!=0]|all)'
+2
+3
+5
+7
+11
+13
+17
+19
+</pre>
+<p>
+エラトステネスの篩。そのままRubyで書くとこんな感じ。
+</p>
+<pre>
+% ruby -e 'puts (2...20).select{|x|(2...x).all?{|y|x%y!=0}}'
+2
+3
+5
+7
+11
+13
+17
+19
+</pre>
+<!-- section end -->
+</div>
+<!-- 2014/12/10 end -->
+
+<hr>
+<div>
+<a href="201411c.html">&lt;Older(,)</a> | 
+<a href="201412b.html">Newer(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

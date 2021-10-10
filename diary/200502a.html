@@ -1,0 +1,772 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2005-2-a</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="200501c.html">
+<link rel="next" href="200502b.html">
+
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2005年2月上旬〜</p>
+<hr>
+<div>
+<a href="200501c.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="200502b.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2005/02/01 start -->
+<h2><a name="20050201" href="200502a.html#20050201">2005-02-01 (Tue)</a></h2>
+<!-- 2005-02-02 02:36:57 -->
+
+<div class="entry1">
+<h3><a name="200502011" title="200502011" href="200502a.html#200502011">■</a> 
+1月のspam</h3>
+<p>
+ちょうど5000通。
+ruby-lang.orgにしかけたSpamAssassinがおどろくほど効果がない。
+捕まえたspamが1400通で逃したspamが600通ぐらい。
+ってことは6400通なのか。
+</p>
+
+<p>
+考えてみるとQDBM版bogofilterを入れるのは簡単だし、
+同じデータベースが使えるのでさっそく導入。さてどうなるか。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200502012" title="200502012" href="200502a.html#200502012">■</a> 
+<a href="http://www.drugphish.ch/~jonny/cca.html">[Soft] C Code Analyzer 0.5</a></h3>
+<p>
+About:
+</p><blockquote><p>
+The C Code Analyzer (CCA) is a static analysis tool for detecting
+potential security problems in C source code. It's fully automatic; no
+code annotations or the like are required. It features an automatic user
+input tracer, potential buffer overflow detection, and more. An eclipse
+frontend plugin is included. 
+</p></blockquote>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200502013" title="200502013" href="200502a.html#200502013">■</a> 
+[Firefox] 日本語が化けないdel.icio.us登録用bookmarklet</h3>
+<p>
+
+<a href="http://dietrich.ganx4.com/foxylicious/">Foxylicious</a>だと選択したところをExtendにもってけない。
+
+<a href="http://delicious.mozdev.org/">delicious</a>だと文字化けしてしまう。
+bookmarkletもいろいろあるけど、やはり化ける。
+</p>
+
+<p>
+bookmarkletをいろいろ調べていたら、
+
+<a href="http://www.otaflegr.com/delicious-bookmarklet.html">An Enhanced Del.icio.us Bookmarklet</a>
+が見つかった。
+要するにescape()じゃなくてencodeURIComponent()を使えば化けないらしい。
+というわけでいろいろ組み合わせてみた。
+<a href="javascript:u=encodeURIComponent(location.href);d=encodeURIComponent(document.title);s=encodeURIComponent(window.getSelection());void(open('http://del.icio.us/new/USERNAME?&amp;jump=close&amp;url='+u+'&amp;title='+d+'&amp;extended='+s,'delicious','toolbar=no,width=700,height=500'));">[del.icio.us]</a>
+
+これをブックマークかツールバーにD&amp;DしてUSERNAMEを自分のものに置き換えれば使える。
+選択しておけばその部分がExtendへ自動的に初期値として表示される。
+new/なので自分のtagやおすすめも出てくる。
+気になるなら無名function技を使うのもよし。
+できれば右クリックしたときに出てくるコンテキストメニューに加えたいところではある。
+</p>
+
+<p>
+あれ？
+<a href="http://del.icio.us/post/">http://del.icio.us/post/</a>にあるものはちゃんと
+encodeURIComponent()を使ってるな。最近変更されたんだろうか。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200502014" title="200502014" href="200502a.html#200502014">■</a> 
+[Bookmarklet] Bookmarklet Builder</h3>
+<p>
+これは便利。先のもこれでcompressした。
+</p>
+
+<p>
+
+<a href="http://subsimple.com/bookmarklets/jsbuilder.htm">http://subsimple.com/bookmarklets/jsbuilder.htm</a>
+</p>
+<!-- section end -->
+</div>
+<!-- 2005/02/01 end -->
+
+
+
+<hr class="hide">
+<!-- 2005/02/02 start -->
+<h2><a name="20050202" href="200502a.html#20050202">2005-02-02 (Wed)</a></h2>
+<!-- 2005-02-03 01:37:35 -->
+
+<div class="entry1">
+<h3><a name="200502021" title="200502021" href="200502a.html#200502021">■</a> 
+[Cygwin] /usr/lib/subversion/bin/svn</h3>
+<p>
+久し振りにCygwinを更新してみたら、svnがなくなっていた。
+いやほんとはなくなってはいないんだけど、
+なぜか/usr/lib/subversion/binなんてとこに移動していた。
+/usr/share/doc/Cygwin/subversion-1.1.2.READMEを見ると、
+</p><blockquote><dl>
+<dt>
+Q:
+<dd>
+Why are the binaries in /usr/lib/subversion/bin ?
+<dt>
+A:
+<dd>
+Without this workaround, it is impossible to build a working set of
+Perl or Python bindings to be used from the system (/usr/bin)
+installation of Perl or Python, but which link against a custom
+build of Subversion in (for example) /usr/local. This is due to
+deficiencies in the Windows dynamic loader.  Therefore, the
+binaries are placed into a different directory, and PATH is
+adjusted appropriately.
+</dl></blockquote><p>
+ってことなんだけど、いまいちよくわからん。すなおにPATHを通しとこ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200502022" title="200502022" href="200502a.html#200502022">■</a> 
+<a href="http://www.fefe.de/dietlibc/">[Soft] diet libc 0.28</a></h3>
+<p>
+Changes:
+</p><blockquote><p>
+Dynamic linking for AMD64, gdb support for ld.so, and many fixes.
+</p></blockquote>
+<!-- section end -->
+</div>
+<!-- 2005/02/02 end -->
+
+
+
+<hr class="hide">
+<!-- 2005/02/03 start -->
+<h2><a name="20050203" href="200502a.html#20050203">2005-02-03 (Thu)</a></h2>
+<!-- 2005-02-04 02:16:20 -->
+
+<div class="entry1">
+<h3><a name="200502031" title="200502031" href="200502a.html#200502031">■</a> 
+<a href="http://www.mikihoshi.com/d/2005-02-01.html#200502012328290">[Web] del.icio.us APIのrecent</a></h3>
+<p>
+確かにタイトルというかdescriptionは化ける。
+いろいろ実験してみたところ、どうやらdel.icio.us側で二重にUTF-8でエンコードしてるようだ。
+しかもrecentだけ。getは問題ない。
+他で化けないのはこのあたりに原因があるのかな。
+</p>
+
+<p>
+というわけで、UTF-8からISO_8859-1か何かへ変換するとUTF-8に戻る。
+</p>
+<pre>
+Iconv.iconv('ISO_8859-1', 'UTF-8', post['description']).to_s
+</pre>
+<p>
+という感じで。
+</p>
+
+<p>
+しかしこのiconvの引数の順番はいつまでたってもなんか違和感を感じるのはなぜだろう。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200502032" title="200502032" href="200502a.html#200502032">■</a> 
+[rrr] ネットワークトラブル</h3>
+<p>
+昨日も2時間ほど切断された感じだったが、今日は昼頃から全くつながらない。
+かなり重症。と思ったら夜中に復活した。
+</p>
+<!-- section end -->
+</div>
+<!-- 2005/02/03 end -->
+
+
+
+<hr class="hide">
+<!-- 2005/02/04 start -->
+<h2><a name="20050204" href="200502a.html#20050204">2005-02-04 (Fri)</a></h2>
+<!-- 2005-02-05 02:46:13 -->
+
+<div class="entry1">
+<h3><a name="200502041" title="200502041" href="200502a.html#200502041">■</a> 
+[Music] Last.FMをmpg123で聴く</h3>
+<p>
+使い方を間違っていた。
+
+<a href="200501c.html#200501271">realplayなんかで聴く</a>からいけない。
+mpg123だとちゃんとまともに鳴り続ける。しかし、ちょっと工夫が必要。
+</p>
+<pre>
+#! /bin/sh
+mpg123 &quot;$(cat $1)&quot;
+</pre>
+<p>
+というshell scriptを作ってプレーヤとして使う。
+--listでいいような気がするんだけど、
+</p>
+<pre>
+/tmp/http://moses.last.fm/last.mp3?Session=&lt;session-id&gt;: No such file or directory
+</pre>
+<p>
+と言われてしまう。どうも--listだとhttpには対応してないようだ。
+</p>
+
+<p>
+それにしてもpersonal radioはhiroとブリグリしか出てこないよ。
+ま、profile radioが聴けるようになったからいいんだけど。これは面白いねえ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200502042" title="200502042" href="200502a.html#200502042">■</a> 
+<a href="http://delicious.mozdev.org/">[Firefox] delicious 0.4</a></h3>
+<p>
+0.4で文字化けの件は直ってるようだ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200502043" title="200502043" href="200502a.html#200502043">■</a> 
+[make] Makefileの空白</h3>
+<p>
+GNU makeのifeqを使ってちょっとはまった。
+</p>
+<pre>
+foo = $(if $(wildcard /bin), 1, 0)
+ifeq ($(foo), 1)
+  bar = 1
+else
+  bar = 2
+endif
+all:; @echo $(bar)
+</pre>
+<p>
+というMakefileを用意してmakeを実行すると2と表示される。さてなぜか？
+もちろん/binは存在する。
+</p>
+<pre>
+all:; @echo &quot;|$(foo)|&quot;
+</pre>
+<p>
+としてみるとわかるんだけど、これは
+</p>
+<pre>
+| 1|
+</pre>
+<p>
+となる。つまりfooは&quot;1&quot;じゃなくて&quot; 1&quot;のように空白も含まれている。
+だからifeqで等しくないと判断される。
+commaの後に空白を入れるのはクセというか、まあ、普通は入れるよねえ。
+それが含まれてしまったらしい。
+一方ifeqのほうの空白は無視ってのがなんか納得いかない。
+30分ぐらい悩んだ。
+</p>
+<pre>
+all:; @echo $(foo)
+</pre>
+<p>
+としてしまうと単に1としか表示されないから、原因がさっぱりわからなかった。
+</p>
+
+<p>
+実はinfo makeを見ると書いてあるんだよねえ。
+</p>
+<pre>
+Often you want to test if a variable has a non-empty value.  When
+the value results from complex expansions of variables and
+functions, expansions you would consider empty may actually
+contain whitespace characters and thus are not seen as empty.
+However, you can use the `strip' function (*note Text Functions::)
+to avoid interpreting whitespace as a non-empty value.  For
+example:
+
+     ifeq ($(strip $(foo)),)
+     TEXT-IF-EMPTY
+     endif
+
+will evaluate TEXT-IF-EMPTY even if the expansion of `$(foo)'
+contains whitespace characters.
+</pre>
+<p>
+いやな仕様だなあ。とりあえずifeqを使うときはstripを忘れずに。
+</p>
+<pre>
+foo = $(if $(wildcard /bin), 1, 0)
+ifeq ($(strip $(foo)), 1)
+  bar = 1
+else
+  bar = 2
+endif
+all:; @echo $(bar)
+</pre>
+<p>
+なら1と表示される。もちろん最初から空白を入れなきゃいいんだけどね。
+</p>
+<!-- section end -->
+</div>
+<!-- 2005/02/04 end -->
+
+
+
+<hr class="hide">
+<!-- 2005/02/05 start -->
+<h2><a name="20050205" href="200502a.html#20050205">2005-02-05 (Sat)</a></h2>
+<!-- 2005-02-06 02:41:35 -->
+
+<div class="entry1">
+<h3><a name="200502051" title="200502051" href="200502a.html#200502051">■</a> 
+[rrr] rrrが絶不調</h3>
+<p>
+さてどうしたもんか。ミラーサイトを用意すべき？
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200502052" title="200502052" href="200502a.html#200502052">■</a> 
+<a href="http://fuse.sourceforge.net/sshfs.html">[Linux] SSH Filesystem 1.0</a></h3>
+<p>
+Abstruct:
+</p><blockquote><p>
+This is a filesystem client based on the SSH File Transfer Protocol.
+Since most SSH servers already support this protocol it is very easy
+to set up: i.e. on the server side there's nothing to do.  On the
+client side mounting the filesystem is as easy as logging into the
+server with ssh.
+</p></blockquote><p>
+
+<a href="http://fuse.sourceforge.net/">FUSE</a>上で動く。FUSEは面白いな。
+100行ほどの
+<a href="http://fuse.sourceforge.net/helloworld.html">hello world filesystem</a>
+
+なんてのもある。ユーザスペースで扱えるのは手軽でいい。
+</p>
+<!-- section end -->
+</div>
+<!-- 2005/02/05 end -->
+
+
+
+<hr class="hide">
+<!-- 2005/02/06 start -->
+<h2><a name="20050206" href="200502a.html#20050206">2005-02-06 (Sun)</a></h2>
+<!-- 2005-02-07 01:45:06 -->
+
+<div class="entry1">
+<h3><a name="200502061" title="200502061" href="200502a.html#200502061">■</a> 
+<a href="http://sourceforge.net/projects/rlocate/">[Soft] rlocate 0.2.0</a></h3>
+<p>
+About:
+</p><blockquote><p>
+rlocate is an implementation of the
+&quot;locate&quot; command that is always
+up-to-date. The database that the
+original locate uses is usually updated
+only once a day, so newer files cannot
+be located right away. The behavior of
+rlocate is the same as slocate, but it
+also maintains a diff database that
+gets updated whenever a file is created
+or a directory is moved. The rlocate
+kernel module can be compiled only with
+Linux 2.6 kernels.
+</p></blockquote><p>
+カーネルモジュールとして実現しちゃうあたりがなんかすごい。
+でも、そこまでして最新が欲しいかというとそうでもないような。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200502062" title="200502062" href="200502a.html#200502062">■</a> 
+<a href="http://www.epigoon.com/?page=feedview">[Firefox] Feedview</a></h3>
+<p>
+面白い。でもLinux版Firefoxだとstylesheetが無効になったような表示になってしまう。
+キャッシュもクリアしたんだけどなあ。
+Windows版はちゃんと動くだけになんか悔しい。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200502063" title="200502063" href="200502a.html#200502063">■</a> 
+<a href="http://legonet.org/~griffin/firefox_vi-bindings.html">[Firefox] VI-bindings in Mozilla Firefox</a></h3>
+<p>
+jとkだけでも割り当てるとなんか妙に便利だと思ってしまった。
+さらにlessのようにgとGをそれぞれcmd_moveTop, cmd_moveBottomとしてみたが無反応。なぜに？
+</p>
+<!-- section end -->
+</div>
+<!-- 2005/02/06 end -->
+
+
+
+<hr class="hide">
+<!-- 2005/02/07 start -->
+<h2><a name="20050207" href="200502a.html#20050207">2005-02-07 (Mon)</a></h2>
+<!-- 2005-02-08 02:21:46 -->
+
+<div class="entry1">
+<h3><a name="200502071" title="200502071" href="200502a.html#200502071">■</a> 
+<a href="http://msmtp.sf.net/">[Soft] msmtp 1.3.6</a></h3>
+<p>
+Changes:
+</p><blockquote><p>
+The documentation was rewritten and is now available in info,
+HTML, PDF, and man page formats. Some bugs were fixed. A &quot;defaults&quot;
+command was added to set default values in the configuration file. 
+</p></blockquote>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200502072" title="200502072" href="200502a.html#200502072">■</a> 
+[Firefox] viというかless keybindingなFirefox</h3>
+<p>
+
+<a href="200502a.html#200502063">昨日の設定</a>が思いの外便利だったので(まだ言ってる)、&quot;b&quot;と&quot;f&quot;を追加。
+HHK LiteだとPgUpだのPgDnが押しにくいんだよねえ。
+</p>
+<pre>
+&lt;handler event=&quot;keypress&quot; key=&quot;b&quot; command=&quot;cmd_scrollPageUp&quot;/&gt;
+&lt;handler event=&quot;keypress&quot; key=&quot;f&quot; command=&quot;cmd_scrollPageDown&quot;/&gt;
+</pre>
+<p>
+ついでにC-nとかC-pも割り当てようかと思ったが、
+これに慣れると設定してないブラウザで非道い目にあうのでやめた。
+特にC-nで押しっ放しにすると、ひとりブラクラ状態に。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200502073" title="200502073" href="200502a.html#200502073">■</a> 
+[TV] DELLのCM</h3>
+<p>
+最近よく流れてるね。真ん中が沢田亜矢子の娘らしい。澤田かおり。
+</p>
+<!-- section end -->
+</div>
+<!-- 2005/02/07 end -->
+
+
+
+<hr class="hide">
+<!-- 2005/02/08 start -->
+<h2><a name="20050208" href="200502a.html#20050208">2005-02-08 (Tue)</a></h2>
+<!-- 2005-02-10 00:31:39 -->
+
+<div class="entry1">
+<h3><a name="200502081" title="200502081" href="200502a.html#200502081">■</a> 
+[ToDo] Ta-da Listsの文字化け対応patch bookmarklet</h3>
+<p>
+考えてみると
+<a href="200501c.html#200501212">Ta-da Lists</a>と
+<a href="200502a.html#200502013">del.icio.us</a>の化け方が同じだと今になって気づいた。
+というわけで、escapeで検索してみると
+
+<a href="http://www.tadalist.com/javascripts/lists.js">lists.js</a>
+のfunction add_itemの中にある
+</p>
+<pre>
+id = xml_request(add_url + '&amp;content=' + escape(content));
+</pre>
+<p>
+がいかにも怪しい。
+このescape()をencodeURIComponent()に変更できればいいわけだ。
+さてどうやって？ここでbookmarkletを使うことを思いついた。
+普通は他に影響しないように無名function技を使うところだが、
+逆にpatchをあてることに利用してみよう。
+早速置換して例によって
+<a href="http://subsimple.com/bookmarklets/jsbuilder.htm">Bookmarklet Builder</a>
+
+で名前をつけてツールバーへD&amp;Dする。
+続いて、自分のTa-da Listsへ行ってbookmarkletを実行。
+アイテムを追加してMy Listsを開くと化けない。
+成功だ。
+</p>
+<pre>
+javascript:
+function add_item(content) {
+  changed_list = true;
+  if (movement_controls_on) { toggleMovementControls(); }
+  toggle_reorder_link(false);
+  toggle_delete_link(false);
+  
+  id = xml_request(add_url + '&amp;content=' + encodeURIComponent(content));
+  append_child_to_table(gebid(&quot;incomplete_items&quot;),
+    tr_with_todo_item(id, content));
+}
+</pre>
+<p>
+Firefoxだとこのまま改行ありでもブックマークに登録できるようだ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200502082" title="200502082" href="200502a.html#200502082">■</a> 
+<a href="http://gmsl.sf.net/">[Soft] GNU Make Standard Library 1.0.0</a></h3>
+<p>
+About:
+</p><blockquote><p>
+The GNU Make Standard Library (GMSL) is
+a collection of functions implemented
+using native GNU Make functionality
+that provide list and string
+manipulation, integer arithmetic,
+associative arrays, stacks, and
+debugging facilities.
+</p></blockquote><p>
+たぶんこのまま使うことはないと思うけど、なかなか面白い。
+GNU Makeだとevalもありかー。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200502083" title="200502083" href="200502a.html#200502083">■</a> 
+<a href="http://www.gnu.org/software/emacs/">[Soft] Emacs 21.4</a></h3>
+<p>
+diffを取ってみると本体には何の変更もなし。実質movemail.cだけだ。
+</p>
+<pre>
+      {
+-       error (Errmsg, 0, 0);
++       error (&quot;%s&quot;, Errmsg, 0);
+        close (mbfi);
+</pre>
+<p>
+なるほど。フォーマットストリングバグだ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2005/02/08 end -->
+
+
+
+<hr class="hide">
+<!-- 2005/02/09 start -->
+<h2><a name="20050209" href="200502a.html#20050209">2005-02-09 (Wed)</a></h2>
+<!-- 2005-02-10 23:44:45 -->
+
+<div class="entry1">
+<h3><a name="200502091" title="200502091" href="200502a.html#200502091">■</a> 
+<a href="http://trackfeed.com/">[Web] track feed</a></h3>
+<p>
+設置してみた。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200502092" title="200502092" href="200502a.html#200502092">■</a> 
+[Mail] MaildirとMH</h3>
+<p>
+ふと気づくとwormを溜めとくフォルダがMH形式からMaildir形式になっていた。
+このあたりは~/.rdeliverで
+</p>
+<pre>
+def deliver_mh(folder)
+  folder = File.join(&quot;Mail&quot;, folder)
+  Dir.mkdir folder unless File.directory? folder
+  last = Dir.entries(folder).max_by{|x| x.to_i}
+  last = &quot;0&quot; if last == &quot;.&quot;
+  new_file = File.join(folder, last.succ).untaint
+  agent.save(new_file)
+end
+</pre>
+<p>
+てな感じで処理してるわけだけど、last == &quot;.&quot;ってなに？
+空のディレクトリだとlastは&quot;..&quot;になるんだよね。
+&quot;..&quot;.succが&quot;./&quot;なのでうまい具合に&quot;/&quot;で終わるようになってしまった。
+実際のnew_fileは&quot;Mail/worm.200501/./&quot;という感じになり、
+それはMaildir形式で保存するというまさにagent.saveの仕様に合致してしまう。
+フォルダ名を月単位で管理してるから、
+そのタイミングでMaildir形式になってしまったと。うーむ。
+</p>
+
+<p>
+しかし、去年の8月から12月まではMH形式になってるんだよねえ。
+なぜか今年からMaildir形式になってる。
+つまりRuby自身が12月のどこかで&quot;.&quot;ではなく&quot;..&quot;を返すようになったのか？
+</p>
+<pre>
+% mkdir empty
+% ruby -ve 'p Dir.entries(&quot;empty&quot;)'
+ruby 1.9.0 (2005-02-05) [i386-linux]
+[&quot;..&quot;, &quot;.&quot;]
+</pre>
+<p>
+FreeBSDに古いのが残ってた。
+</p>
+<pre>
+% mkdir empty
+% ruby -ve 'p Dir.entries(&quot;empty&quot;)' 
+ruby 1.9.0 (2004-11-20) [i386-freebsd]
+[&quot;.&quot;, &quot;..&quot;]
+</pre>
+<p>
+この違いか。
+</p>
+
+<p>
+面白いからこのままにしとこう。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200502093" title="200502093" href="200502a.html#200502093">■</a> 
+[Music] Last.FMでprofile</h3>
+<p>
+そうか。アルバムを選んでAdd to Profileすれば聴いたことになるのか。
+これで
+<strike>profile</strike></p>
+<p>
+ personal radioが結構豪華になった。
+</p>
+<!-- section end -->
+</div>
+<!-- 2005/02/09 end -->
+
+
+
+<hr class="hide">
+<!-- 2005/02/10 start -->
+<h2><a name="20050210" href="200502a.html#20050210">2005-02-10 (Thu)</a></h2>
+<!-- 2005-02-11 02:06:40 -->
+
+<div class="entry1">
+<h3><a name="200502101" title="200502101" href="200502a.html#200502101">■</a> 
+[Web] ブックマーク</h3>
+<p>
+はてなも始めたらしいけど、さてブックマークを複数持ててもあまりうれしくない。
+登録が面倒だし。乗り換えるくらい魅力的かどうか。
+といいつつも、とりあえず使ってみる。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200502102" title="200502102" href="200502a.html#200502102">■</a> 
+[Music] mpdでLast.FM</h3>
+<p>
+man mpcしてみるとなかなかいい例があった。
+</p>
+<pre>
+Here is a script to load and play m3u playlists (useful for mozilla):
+
+       #!/bin/bash
+       mpc clear
+       cat $1 | mpc add
+       mpc play
+</pre>
+<p>
+そのまま
+<a href="http://last.fm">Last.FM</a>のplayerとして登録。
+なんだかんだでいつのまにかmpdで統一されてる。
+</p>
+
+<ul>
+<li>mpd: 
+<a href="http://www.musicpd.org/">http://www.musicpd.org/</a>
+<li>mpc: 
+<a href="http://www.musicpd.org/mpc.shtml">http://www.musicpd.org/mpc.shtml</a>
+</ul>
+<!-- section end -->
+</div>
+<!-- 2005/02/10 end -->
+
+<hr>
+<div>
+<a href="200501c.html">&lt;Prev(,)</a> | 
+<a href="200502b.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

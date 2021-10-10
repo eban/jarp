@@ -1,0 +1,540 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2003-5-b</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="200305a.html">
+<link rel="next" href="200305c.html">
+
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2003年5月中旬〜</p>
+<hr>
+<div>
+<a href="200305a.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="200305c.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2003/05/11 start -->
+<h2><a name="20030511" href="200305b.html#20030511">2003-05-11 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="200305111" title="200305111" href="200305b.html#200305111">■</a> 
+[Ruby] yaml</h3>
+<p>
+ruby -ryaml -e0はエラーにならなくなったが、まだ怪しいらしい。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200305112" title="200305112" href="200305b.html#200305112">■</a> 
+<a href="http://znz.s1.xrea.com/t/?date=20030509#p02">[Linux] BusyBox</a></h3>
+<p>
+なるほど。それはautoconfのBusyBox対応といえるかも。
+autoconfがhead -1じゃなくてsedを使っているのは、
+なるべく少ないコマンドで済むようにってことだと思うんだけど。
+</p>
+<pre>
+% busybox |&amp; head -1
+BusyBox v0.60.5 (2002.12.08-16:08+0000) multi-call binary
+% busybox sed 1q 
+sed: invalid command
+</pre>
+<p>
+0.60.5でもまだ対応してないか。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200305113" title="200305113" href="200305b.html#200305113">■</a> 
+<a href="200305a.html#200305102">[Cygwin] authorized_keys</a></h3>
+<p>
+思い出した。
+</p>
+<pre>
+% setfacl -m 'g:SYSTEM:r--' ~/.ssh/authorized_keys
+</pre>
+<p>
+としてたんだ。LocalSystemにだけ読めればいいわけだから。
+tarじゃ復元できないな、やっぱ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200305114" title="200305114" href="200305b.html#200305114">■</a> 
+[Cygwin] sshでloginすると…</h3>
+<p>
+なぜかnmakeから起動したCygwinのコマンドが吐くメッセージとかが消えてしまう。
+このためにRubyをnmakeするとsedの結果が0バイトになる。困った。
+Borland makeも同じだなあ。cygcheckしてみると
+</p>
+<pre>
+% cygcheck -s
+
+Cygwin Win95/NT Configuration Diagnostics
+Current System Time: Mon May 12 01:16:37 2003
+
+Windows 2000 Professional Ver 5.0 Build 2195 Service Pack 3
+
+Path:   c:\cygwin\home\watanabe\bin
+        c:\cygwin\usr\local\bin
+        c:\cygwin\bin
+</pre>
+<p>
+とここまで表示したまま止まってしまう。telnetだと問題ない。なぜ？
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200305115" title="200305115" href="200305b.html#200305115">■</a> 
+[Windows 2000] ログオフに時間がかかる</h3>
+<p>
+なぜかログオフすると「設定を保存しています」と表示したまま1分ほど返ってこない。
+ぐぐってみると
+<a href="http://homepage2.nifty.com/winfaq/w2k/boot.html#1445">ここ</a>が見つかった。Q329170をアンインストールか。
+そういえばこの変なイベントも気になってたんだよね。
+でも直らない。うーむ。
+プリンタなんかないから最初からPrint Spoolerなぞ無効にしてるんだけどなあ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2003/05/11 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/05/12 start -->
+<h2><a name="20030512" href="200305b.html#20030512">2003-05-12 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="200305121" title="200305121" href="200305b.html#200305121">■</a> 
+[Cygwin] sshdとstrace</h3>
+<p>
+よくわからないので、straceを取ってみることにする。
+</p>
+<pre>
+% strace -o date.log date
+</pre>
+<p>
+なぜかdateも表示されない。気になってobjdumpしてみる。
+</p>
+<pre>
+% objdump -p =strace.exe | grep 'DLL Name'
+        DLL Name: msvcrt.dll
+        DLL Name: msvcrt.dll
+        DLL Name: ADVAPI32.DLL
+        DLL Name: KERNEL32.dll
+</pre>
+<p>
+ほう。Cygwinとは関係ないのか。だからdateも表示されないわけやね。
+nmakeと同じ症状だ。
+</p>
+
+<p>
+date.logを見ると/dev/coninだの/dev/conoutだのがある。
+そんなのopenしたらconsoleになっちゃうじゃん。これが原因か。
+でも対策はわからない。環境変数CYGWINにttyを入れても何の効果もない。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200305122" title="200305122" href="200305b.html#200305122">■</a> 
+[Cygwin] sshdとcygrunsrv</h3>
+<p>
+sshとtelnetの違いといえばcygrunsrv経由かどうかなので、
+chown watanabe /etc/ssh_host*key /var/emptyして
+sshd -Dだけで起動して試してみる。うまくいった。
+ということはcygrunsrvが原因か？
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200305123" title="200305123" href="200305b.html#200305123">■</a> 
+[Cygwin] sshdとinetd</h3>
+<p>
+ついでにinetd経由でsshdを起動させてみる。/etc/inetd.confに
+</p>
+<pre>
+ssh  stream  tcp     nowait  root    /usr/sbin/sshd sshd -i
+</pre>
+<p>
+を追加。いけた。とりあえずこれでいこう。
+</p>
+<!-- section end -->
+</div>
+<!-- 2003/05/12 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/05/13 start -->
+<h2><a name="20030513" href="200305b.html#20030513">2003-05-13 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="200305131" title="200305131" href="200305b.html#200305131">■</a> 
+[Ruby][MinGW] __USE_CRTIMP</h3>
+<p>
+最新のmingw-runtime 3.0.1でrubyをmakeしてmake testするとエラーになってしまった。
+<a href="http://cygwin.com/ml/cygwin-announce/2003-05/msg00003.html">アナウンス</a>でなんかdefineしろって言ってた気がするので確認すると、
+</p>
+<pre>
+This release among other things adds a _CRTIMP modifier to the import
+declarations.  It's default definition is set to nothing.  It will be
+set to __declspec(dllimport) if you -D__USE_CRTIMP which will provide a
+slight speed improvement to your process but will cause multiply defined
+symbols if you provide a local definition of a shared function, for
+example malloc.
+</pre>
+<p>
+ということらしい。試しに-D__USE_CRTIMPしてみると落ちない。
+なんかよくわからんなあ。mingw-runtime 2.4.1に戻すと問題ない。うーむ。
+win32/win32.cだけが関係してるようだ。
+</p>
+
+<p>
+とりあえずconfigure.inで-D__USE_CRTIMPを追加しておこう。
+</p>
+<!-- section end -->
+</div>
+<!-- 2003/05/13 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/05/14 start -->
+<h2><a name="20030514" href="200305b.html#20030514">2003-05-14 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="200305141" title="200305141" href="200305b.html#200305141">■</a> 
+<a href="200305b.html#200305131">[Ruby][MinGW] `ls`</a></h3>
+<p>
+test.rbのどこで落ちるのか調べてみると、
+</p>
+<pre>
+test_ok(`echo foobar` == &quot;foobar\n&quot;)
+</pre>
+<p>
+を実行するところだった。もっと簡単に`ls`でもだめだった。
+gdbで見てみるとpipe_exec()がreturnするときなので、
+スタックが壊れている可能性が高い。
+</p>
+
+<p>
+原因がわかれば-D__USE_CRTIMPじゃない方法で解決できると思うんだけど。
+</p>
+<!-- section end -->
+</div>
+<!-- 2003/05/14 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/05/15 start -->
+<h2><a name="20030515" href="200305b.html#20030515">2003-05-15 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="200305151" title="200305151" href="200305b.html#200305151">■</a> 
+[Ruby] 1.6</h3>
+<p>
+1.6に変更が入った。先月以来だ。
+例の件を試すと全然問題ない。
+pipe_exec()を比較してみると1.6と.18では違いがない。
+ということはここから呼ばれる別の関数でスタックを壊すやつがいるのか？
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200305152" title="200305152" href="200305b.html#200305152">■</a> 
+spam</h3>
+<p>
+今月はすでに600通を越えてる。
+</p>
+<!-- section end -->
+</div>
+<!-- 2003/05/15 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/05/16 start -->
+<h2><a name="20030516" href="200305b.html#20030516">2003-05-16 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="200305161" title="200305161" href="200305b.html#200305161">■</a> 
+[Linux] 空白が`へ化ける</h3>
+<p>
+GCC 3.3が出たので早速会社のLinux BOXで試したが、
+なぜかgcc/cp/call.cがエラーになってしまった。
+</p>
+<pre>
+&amp;&amp; !`DECL_CONSTRUCTOR_P (fn));
+</pre>
+<p>
+と`が入ってる。別の場所で展開しなおしてみるとそこは
+</p>
+<pre>
+&amp;&amp; ! DECL_CONSTRUCTOR_P (fn));
+</pre>
+<p>
+だった。うー。
+diffを取ってみると違うのはそこだけだったが、ディスクがやばいか？
+</p>
+
+<p>
+compareでなにかわかると思うが、時間切れ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2003/05/16 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/05/17 start -->
+<h2><a name="20030517" href="200305b.html#20030517">2003-05-17 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="200305171" title="200305171" href="200305b.html#200305171">■</a> 
+<a href="http://gcc.gnu.org/">[GNU] GCC 3.3</a></h3>
+<p>
+今回はちょっと趣向を変えて、--disable-sharedをつけた。
+</p>
+<pre>
+% CFLAGS=-Os CXXFLAGS=-Os CC=/usr/bin/gcc ../configure \
+         --enable-languages=c,c++ --with-system-zlib \
+         --enable-sjlj-exceptions --enable-threads \
+         --disable-version-specific-runtime-libs --disable-nls \
+         --without-included-gettext --without-catgets --disable-shared
+% make bootstrap
+libstdc++をconfigureしはじめたら^C
+% vi Makefile
+TARGET_CONFIGARGSから--disble-sahredを削除
+% make bootstrap
+</pre>
+<p>
+と変な手順で。
+つまりlibstdc++はenable shared、libgcc_sは作らないという意味。
+libstdc++だけに--enable-sharedを渡せればいいんだけど。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200305172" title="200305172" href="200305b.html#200305172">■</a> 
+地震</h3>
+<p>
+また震源は千葉県北東部だ。同じ場所か？
+</p>
+<!-- section end -->
+</div>
+<!-- 2003/05/17 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/05/18 start -->
+<h2><a name="20030518" href="200305b.html#20030518">2003-05-18 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="200305181" title="200305181" href="200305b.html#200305181">■</a> 
+<a href="http://lart.info/~bwachter/projects/dietlinux/">[Linux] DietLinux</a></h3>
+<p>
+<a href="http://www.fefe.de/dietlibc/">dietlibc</a>をスタティックにリンクしたdistroらしい。
+ISOイメージは用意されてないが、それを作る
+<a href="http://lart.info/~bwachter/projects/download/dietlinux/current/Makefile">Makefile</a>は用意されてる。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200305182" title="200305182" href="200305b.html#200305182">■</a> 
+[GNU] gcc -V</h3>
+<pre>
+% gcc -V 3.2.2 -v
+gcc: couldn't run `i586-pc-linux-gnu-gcc-3.2.2': No such file or directory
+</pre>
+<p>
+なんでこんな仕様にしたんだろう？
+<a href="http://gcc.gnu.org/gcc-3.3/changes.html">changes</a>を見てもその点については書いてない。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200305183" title="200305183" href="200305b.html#200305183">■</a> 
+<a href="http://xstow.sf.net/">XStow</a></h3>
+<p>
+C++で書かれた
+<a href="http://www.gnu.org/software/stow/">Stow</a>。Perlは必要ない。XはX11とは関係ない。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200305184" title="200305184" href="200305b.html#200305184">■</a> 
+<a href="http://raa.ruby-lang.org/project/tmail/">[Ruby] TMail 0.10.7</a></h3>
+<p>
+更新。
+</p>
+<!-- section end -->
+</div>
+<!-- 2003/05/18 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/05/19 start -->
+<h2><a name="20030519" href="200305b.html#20030519">2003-05-19 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="200305191" title="200305191" href="200305b.html#200305191">■</a> 
+<a href="http://lftp.yar.ru/">[Cygwin] lftp 2.6.5</a></h3>
+<p>
+そのままconfigureしてmakeすると
+_WinMain@16がundefined errorになるのは相変わらずだが、
+ふとsrc/.libsを見るとcygintl-2.dll-defなんてのがあって、
+そんなもんを作ろうとしているのかとなんとなく原因がわかってきた。
+試しに--disable-nlsしてみたら通った。
+もともと--disable-nls派だから、これで問題なしだ。
+</p>
+
+<p>
+ぐぐってみると
+<a href="http://etree.org/software/lftp-2.6.5-cygwin.tar.gz">ここ</a>にバイナリはあるようだ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200305192" title="200305192" href="200305b.html#200305192">■</a> 
+[Cygwin] Ruby 1.6.8-2</h3>
+<p>
+-2になってるけど、何が変わったんだろう？
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200305193" title="200305193" href="200305b.html#200305193">■</a> 
+<a href="http://www.osk.3web.ne.jp/~nyasu/diary/200305.html#20030518_1">[Ruby] mallocの謎</a></h3>
+<p>
+robjをvolatileにすればいけるはずです。
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-ext/2053">ここ</a>から始まるのスレッドが参考になると思います。
+</p>
+<!-- section end -->
+</div>
+<!-- 2003/05/19 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/05/20 start -->
+<h2><a name="20030520" href="200305b.html#20030520">2003-05-20 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="200305201" title="200305201" href="200305b.html#200305201">■</a> 
+<a href="http://www.osk.3web.ne.jp/~nyasu/diary/200305.html#20030519_0">mallocの謎の2</a></h3>
+<p>
+Windows 2000だとmalloc, freeを2回ずつ呼ぶテストプログラムは正常に動きます。
+Win98というのがかなりやばいんじゃないかなあ。
+</p>
+
+<p>
+heap_chunk_in_mbの設定を試してみるぐらいしか思いつきません。
+<a href="http://www.cygwin.com/ml/cygwin/2003-02/threads.html#00225">このあたり</a>の話が役に立つかも。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200305202" title="200305202" href="200305b.html#200305202">■</a> 
+[Ruby] syck</h3>
+<p>
+bcc32でエラーになるのを放っておくのもまずいので、
+1.6対応して強制commit。さてwhy君はどういう反応を見せるか？
+</p>
+<!-- section end -->
+</div>
+<!-- 2003/05/20 end -->
+
+<hr>
+<div>
+<a href="200305a.html">&lt;Prev(,)</a> | 
+<a href="200305c.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

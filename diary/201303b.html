@@ -1,0 +1,388 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2013-3-b</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="201303a.html">
+<link rel="next" href="201303c.html">
+
+<link rel="stylesheet" type="text/css" href="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.css">
+<script async type="text/javascript" src="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.js"></script>
+<script type="text/javascript">
+<!--       
+$(document).ready(function() {
+  prettyPrint();
+});
+-->
+</script>
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2013年3月中旬〜</p>
+<hr>
+<div>
+<a href="201303a.html" accesskey=",">&lt;Older(,)</a> | 
+<a href="201303c.html" accesskey=".">Newer(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2013/03/11 start -->
+<h2><a name="20130311" href="201303b.html#20130311">2013-03-11 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="201303111" title="201303111" href="201303b.html#201303111">■</a> 
+configureで使うシェルを指定するには環境変数CONFIG_SHELLで</h3>
+<p>
+つまりksh ./configureとかじゃだめなのである。<br>
+なぜかというとconfigureはbashとか自分に都合のいいシェルをまず探して、<br>
+見つかるとそっちにスイッチしてしまうから。<br>
+だから/bin/bashが存在するだけで使われてしまう。<br>
+というわけでkshを使わせたければ
+</p>
+<pre>
+% CONFIG_SHELL=/bin/ksh ./configure
+</pre>
+<p>
+のように指定してやる必要がある。
+</p>
+<!-- section end -->
+</div>
+<!-- 2013/03/11 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/03/12 start -->
+<h2><a name="20130312" href="201303b.html#20130312">2013-03-12 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="201303121" title="201303121" href="201303b.html#201303121">■</a> 
+<a href="http://apollon.issp.u-tokyo.ac.jp/~watanabe/sample/sudoku/index_j.html">sudoku</a></h3>
+<p>
+自分でも解いてみるかと思ってsudokuを入れた。sudo aptitude install sudokuでok。<br>
+consoleアプリ。移動はviのようにhjklで。cでクリアして数字を入力すればいい。<br>
+fでfixして念の為sで保存しておく。その問題で立ち上げるときは
+</p>
+<pre>
+% /usr/games/sudoku -n board
+</pre>
+<p>
+-nをつけて新たな問題を作らないようにする。
+</p>
+<p>
+まあ、まだ解けないんだけどね。
+</p>
+<!-- section end -->
+</div>
+<!-- 2013/03/12 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/03/13 start -->
+<h2><a name="20130313" href="201303b.html#20130313">2013-03-13 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="201303131" title="201303131" href="201303b.html#201303131">■</a> 
+crontabの罠</h3>
+<p>
+週末の停電に備えて忘れないようにcrontabで書いておくかと安易に
+</p>
+<pre>
+0 0 16 3 * shutdown -h now
+</pre>
+<p>
+みたいに残しておくと1年後にひどい目にあう。<br>
+忘れないようにというか、忘れるからcrontabに書いてるわけで、<br>
+1年後なんか絶対に覚えてない。<br>
+まあ、法令点検はまた1年後にやってくるのでそこで気づくかもしれないが。
+</p>
+<p>
+それはそれとしてcrontabの機能では解決できないので、dateで見るようにした。
+</p>
+<pre>
+0 0 16 3 * test &quot;`date +\%Y`&quot; = 2013 &amp;&amp; shutdown -h now
+</pre>
+<p>
+どうでもいい話だが、
+</p>
+<pre>
+test &quot;`date '+\%Y'`&quot; = 2013
+</pre>
+<p>
+としてしまうとshellで実行すると\が残るので失敗する。
+</p>
+<pre>
+test &quot;`date +\%Y`&quot; = 2013
+</pre>
+<p>
+という書き方ならcrontab内でもshellでもどっちでもいける。<br>
+ほんとにこれでいけるかテストする際にわざわざ\を消す必要なくなるので便利。
+</p>
+<!-- section end -->
+</div>
+<!-- 2013/03/13 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/03/14 start -->
+<h2><a name="20130314" href="201303b.html#20130314">2013-03-14 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="201303141" title="201303141" href="201303b.html#201303141">■</a> 
+Google Reader終了の件</h3>
+<p>
+とても残念である。LDRユーザーではあるが、Google Readerも使ってる。<br>
+なんと言ってもGoogle ReaderはGoogleなので検索が強力。<br>
+おれのフィードのみの検索できるわけで、なかなかすばらしい。<br>
+最近どこかで読んだけど何だったっけかななんて時にたいてい見つかるのである。<br>
+検索するとだいたい最近のが上位に出てくるのでものすごく都合がいい。<br>
+だからLDRで登録してあるのはもちろん読まないフィードも登録してある。
+</p>
+<p>
+この機能はさすがに他のreaderではありそうもない。
+</p>
+<!-- section end -->
+</div>
+<!-- 2013/03/14 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/03/15 start -->
+<h2><a name="20130315" href="201303b.html#20130315">2013-03-15 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="201303151" title="201303151" href="201303b.html#201303151">■</a> 
+upxでスクリプトを圧縮</h3>
+<p>
+man upxしてたら面白い記述を見つけた。
+</p>
+<pre>
+         - UPX can compress all executables, be it AOUT, ELF, libc4, libc5,
+           libc6, Shell/Perl/Python/... scripts, standalone Java .class
+           binaries, or whatever...
+           All scripts and programs will work just as before.
+
+</pre>
+<p>
+なんとスクリプトまで対応してるとは。実験してみる。せっかくだから大きいのがいいな。
+</p>
+<pre>
+% file /usr/bin/*(.)|grep Perl|cut -d: -f1|xargs stat -c &quot;%10s %n&quot;|sort -r|head
+    854168 /usr/bin/texi2html
+    385217 /usr/bin/ripit
+    260054 /usr/bin/automake-1.11
+    136795 /usr/bin/foomatic-configure
+    127039 /usr/bin/bts
+    118756 /usr/bin/ckbcomp
+     94517 /usr/bin/winemaker
+     66958 /usr/bin/lintian
+     65102 /usr/bin/uscan
+     60558 /usr/bin/h2xs
+</pre>
+<p>
+というわけで、texi2htmlで試す。
+</p>
+<pre>
+% upx --best -o t /usr/bin/texi2html
+                       Ultimate Packer for eXecutables
+                          Copyright (C) 1996 - 2011
+UPX 3.08        Markus Oberhumer, Laszlo Molnar &amp; John Reiser   Dec 12th 2011
+
+        File size         Ratio      Format      Name
+   --------------------   ------   -----------   -----------
+    854168 -&gt;    178165   20.86%    linux/386    t                             
+
+Packed 1 file.
+% ./t --version
+1.82
+</pre>
+<p>
+ちゃんと動いてるね。まあでもスクリプトはそんな大きくなることはないのであまり使うことはないか。
+</p>
+<!-- section end -->
+</div>
+<!-- 2013/03/15 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/03/16 start -->
+<h2><a name="20130316" href="201303b.html#20130316">2013-03-16 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="201303161" title="201303161" href="201303b.html#201303161">■</a> 
+<a href="https://chrome.google.com/webstore/detail/local-rss-reader/cemddjmmnfebpkpkonmbkdmakilpkcid">Local Rss Reader</a></h3>
+<p>
+ローカルのクライアントサイドで動くGoogle Chrome拡張のRSS Reader。<br>
+見た目はGoogle Readerそっくり。ショートカットキーも使える。<br>
+ただ、import/export機能がないので移行はつらい。1個1個追加するしかない。<br>
+登録してるフィード数が少なくてローカルでいいなら候補になりそう。<br>
+逆に社内とかのRSSを見るときには便利かもしれない。
+</p>
+<!-- section end -->
+</div>
+<!-- 2013/03/16 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/03/17 start -->
+<h2><a name="20130317" href="201303b.html#20130317">2013-03-17 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="201303171" title="201303171" href="201303b.html#201303171">■</a> 
+upx --lzma</h3>
+<p>
+またupxの話題なんだけど、
+<a href="http://cygwin.com/ml/cygwin-announce/2013-03/msg00020.html">cygwin-announce</a>で気になる記述を見つけた。
+</p>
+<pre>
+- upx now includes LZMA support (via LZMA SDK v4.65)
+</pre>
+<p>
+なんとlzmaが使えるらしい。3.09からなのかは不明。Ubuntuはまだ3.08だった。<br>
+man upxしてlzmaで検索してもヒットしないので使えないと思ったが、<br>
+versionを確認したときに出てたよ。
+</p>
+<pre>
+% upx --version
+upx 3.08
+UCL data compression library 1.03
+LZMA SDK version 9.22 beta
+後略
+</pre>
+<p>
+つまり使えるわけだ。だとしたらオプションは--lzmaだろうと思ってやってみるとビンゴ。
+</p>
+<pre>
+-rwxr-xr-x 1 eban eban  3675564 2013-03-01 10:31:16 ruby-trunk-upx
+-rwxr-xr-x 1 eban eban  3048076 2013-03-01 10:31:16 ruby-trunk-upx-lzma-3.08
+-rw-r--r-- 1 eban eban  4031778 2013-03-01 10:31:16 ruby-trunk.gz
+-rwxrwxrwx 1 eban eban 12723572 2013-03-01 10:31:16 ruby-trunk
+</pre>
+<p>
+思ったよりデフォルトのUCLが頑張ってるんだなという印象。<br>
+展開はUCLが爆速なのでこのくらいの差ならデフォルトのほうがいいかもしれない。
+</p>
+<!-- section end -->
+</div>
+<!-- 2013/03/17 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/03/18 start -->
+<h2><a name="20130318" href="201303b.html#20130318">2013-03-18 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="201303181" title="201303181" href="201303b.html#201303181">■</a> 
+ぽすれん</h3>
+<p>
+結構長いこと使ってきたが、月2000円ぐらいで8本だと近所のGEOに負けている。<br>
+最近だとTSUTAYAでも100円で借りられるし、そろそろ潮時か？<br>
+DISCASでキャンペーンやってるからそっちにして様子見するか。
+</p>
+<!-- section end -->
+</div>
+<!-- 2013/03/18 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/03/19 start -->
+<h2><a name="20130319" href="201303b.html#20130319">2013-03-19 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="201303191" title="201303191" href="201303b.html#201303191">■</a> 
+tidyreadにつながらないのでreadabilityを使い始めた</h3>
+<p>
+最近bookmarkletの調子が悪いなと思っていたら、そもそもtidyread.comに全然つながらない。<br>
+しょうがないので、readability.comのREAD NOWを使い始めた。<br>
+サイドバーとか不要な部分を取り除いてくれるので便利なんだけど、<br>
+それされちゃかなわないとかサイト側の事情もあるよな、やっぱ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2013/03/19 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/03/20 start -->
+<h2><a name="20130320" href="201303b.html#20130320">2013-03-20 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="201303201" title="201303201" href="201303b.html#201303201">■</a> 
+終電</h3>
+<p>
+昨日は湘南新宿ラインの最終で帰ったんだが、大宮駅の直前で緊急停止ボタンが押されたらしく止まった。<br>
+この後野田線の最終に丁度いい感じで乗り換えられるので非常にあせった。<br>
+2分ぐらいで復旧したのでちょっと余裕があるくらいで乗り換えられたが、<br>
+さすがにこういう場合は融通利かせてくれるようで、10分ぐらい待っていた。<br>
+まあ、そうだよなあと思いつつ、でもそんなことに気づかずにタクシー乗り場に行ってしまう人もいるんだろうな。
+</p>
+<!-- section end -->
+</div>
+<!-- 2013/03/20 end -->
+
+<hr>
+<div>
+<a href="201303a.html">&lt;Older(,)</a> | 
+<a href="201303c.html">Newer(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

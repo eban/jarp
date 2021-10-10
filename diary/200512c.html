@@ -1,0 +1,750 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2005-12-c</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="200512b.html">
+<link rel="next" href="200601a.html">
+
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2005年12月下旬〜</p>
+<hr>
+<div>
+<a href="200512b.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="200601a.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2005/12/21 start -->
+<h2><a name="20051221" href="200512c.html#20051221">2005-12-21 (Wed)</a></h2>
+<!-- 2005-12-22 16:06:41 -->
+
+<div class="entry1">
+<h3><a name="200512211" title="200512211" href="200512c.html#200512211">■</a> 
+冬休み</h3>
+<p>
+突入。さっそくテイルズ(ryをやるかじゃなくて、なぜかyumと戯れてたり。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200512212" title="200512212" href="200512c.html#200512212">■</a> 
+[FC4] yumでFC4自体をインストール</h3>
+<p>
+
+<a href="http://www-06.ibm.com/jp/developerworks/linux/050408/j_l-xen.html">Xenの記事</a>
+を見てて、いま遊んでる/dev/hda3(40GB)にFC4をインストールできないかと画策。
+とりあえずはBaseをインストールしてみよう。
+</p>
+<pre>
+% sudo mount /dev/hda3 /mnt
+% sudo yum -y --installroot=/mnt groupinstall Base
+&lt;中略&gt;
+Cannot find a valid baseurl for repo: freshrpms
+Error: Cannot find a valid baseurl for repo: freshrpms
+</pre>
+<p>
+と文句を言われた。うーむ。いろいろぐぐってみたら
+<a href="http://fedoranews.yanbaru.dyndns.org/creativecommons/xenquickstart/index.html">Fedora Xen Quickstart</a>
+
+を発見。-cで設定ファイルを指定したほうがよさげ。
+そのまま使えそうな設定ファイルなので
+</p>
+<pre>
+% sudo yum -y -c 'http://people.redhat.com/~katzj/yum-xen.conf' \
+  --installroot=/mnt groupinstall Base
+</pre>
+<p>
+としたら進んだ。でも
+</p>
+<pre>
+/var/tmp/rpm-tmp.16317: line 1: /dev/null: そのようなファイルやディレクトリはありません
+警告: /etc/fstab がオープンできません: そのようなファイルやディレクトリはありません
+</pre>
+<p>
+と警告だらけ。そういえばMAKEDEVしろとか/mnt/etc/fstabを作れって書いてあったのを無視してた。
+あらかじめやっとくべきだったな。
+</p>
+
+<p>
+MAKEDEVしてfstabはこんな感じでやりなおし。
+</p>
+<pre>
+/dev/hda3               /                       ext3    defaults 1 1
+none                    /dev/pts                devpts  gid=5,mode=620 0 0
+none                    /dev/shm                tmpfs   defaults 0 0
+none                    /proc                   proc    defaults 0 0
+none                    /sys                    sysfs   defaults 0 0
+</pre>
+<p>
+あとはすんなり進んだ。終了時には
+</p>
+<pre>
+% sudo umount /mnt/proc
+% sudo umount /mnt
+</pre>
+<p>
+とする。procもmountされてるので注意。
+</p>
+
+<p>
+起動させるにはgrub.confに書いとかないといけない。
+今使ってるFC4の/boot/grub/grub.confに
+</p>
+<pre>
+title Fedora Core hda3 (2.6.14-1.1653_FC4)
+        root (hd0,2)
+        kernel /boot/vmlinuz-2.6.14-1.1653_FC4 ro root=/dev/hda3 selinux=0
+        initrd /boot/initrd-2.6.14-1.1653_FC4.img
+</pre>
+<p>
+を追加。これで起動できた。
+念のため/dev/hda3にもgrubを入れとこう。
+/mnt/boot/grub/grub.confに
+</p>
+<pre>
+default=0
+timeout=5
+splashimage=(hd0,2)/boot/grub/splash.xpm.gz
+hiddenmenu
+title Fedora Core hda3 (2.6.14-1.1653_FC4)
+        root (hd0,2)
+        kernel /boot/vmlinuz-2.6.14-1.1653_FC4 ro root=/dev/hda3 selinux=0
+        initrd /boot/initrd-2.6.14-1.1653_FC4.img
+</pre>
+<p>
+と書いて
+</p>
+<pre>
+% sudo grub-install --root-directory=/mnt /dev/hda3
+</pre>
+<p>
+と実行。chainloaderでいけてるようだ。
+</p>
+
+<p>
+FC5もこんな感じでインストールできるんなら楽なんだけど。
+会社のPlamoもyumをインストールして遊んでるパーティションに入れてみよう。
+って冬休みになる前に思い付けよ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2005/12/21 end -->
+
+
+
+<hr class="hide">
+<!-- 2005/12/22 start -->
+<h2><a name="20051222" href="200512c.html#20051222">2005-12-22 (Thu)</a></h2>
+<!-- 2005-12-23 12:28:46 -->
+
+<div class="entry1">
+<h3><a name="200512221" title="200512221" href="200512c.html#200512221">■</a> 
+[Firefox] ForecastfoxのOmiya</h3>
+<p>
+埼玉の大宮だとばかり思っていたが、今日なにげなくtooltipを見てみるとNow in Omiya, Shizuoka Japanと表示されてた。
+夏あたりから感じていた食い違いに納得。
+今頃気づくのも間抜けだが、静岡かよ。明日は雪らしいよ。
+</p>
+
+<p>
+omiya, japanで検索してみたらIbaraki,Saitama,Shizuoka,Tochigiと4つ出た。
+こんなにあるんだ。前検索したときは1個しか出なかったのに。
+まあ、でも大宮という地名は全国どこにでもありそうな名前だ。
+大きな神社があるとことか。
+</p>
+
+<p>
+これでちゃんとした現在の天気と気温が表示されるよ。ああ、すっきり。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200512222" title="200512222" href="200512c.html#200512222">■</a> 
+<a href="http://qdbm.sf.net/">[Soft] QDBM: Quick DataBase Manager 1.8.36</a></h3>
+<blockquote><dl>
+<dt>
+Changes:
+<dd>
+The free block pool was enhanced and ballooning was reduced. Some
+command line tools were enhanced.
+</dl></blockquote>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200512223" title="200512223" href="200512c.html#200512223">■</a> 
+<a href="http://www.sqlite.org/">[Soft] SQLite 3.2.8</a></h3>
+<blockquote><dl>
+<dt>
+Changes:
+<dd>
+An obscure bug was fixed that can cause database corruption under
+the following unusual circumstances: a large INSERT or UPDATE statement
+which is part of an even larger transaction fails due to a uniqueness
+contraint but the containing transaction commits. 
+</dl></blockquote>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200512224" title="200512224" href="200512c.html#200512224">■</a> 
+<a href="http://www.vmware.com/support/player/doc/releasenotes_player.html#new">[VMware] VMware 1.0.1 Build 19317 (Player)</a></h3>
+<blockquote><dl>
+<dt>
+Changes:
+<dd>
+This release addresses a serious security vulnerability in
+vmnat.exe/vmnet-natd, making it possible for a malicious guest using a NAT
+networking configuration to execute unwanted code on the host machine.
+Updating is recommended. 
+</dl></blockquote>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200512225" title="200512225" href="200512c.html#200512225">■</a> 
+<a href="http://www.vmware.com/support/ws55/doc/releasenotes_ws55.html#551">[VMware] - VMware 5.5.1 Build 19175 (Workstation)</a></h3>
+<blockquote><dl>
+<dt>
+Changes:
+<dd>
+This release addresses a serious security vulnerability in
+vmnat.exe/vmnet-natd, making it possible for a malicious guest using a NAT
+networking configuration to execute unwanted code on the host machine.
+Updating is recommended. 
+</dl></blockquote>
+<!-- section end -->
+</div>
+<!-- 2005/12/22 end -->
+
+
+
+<hr class="hide">
+<!-- 2005/12/23 start -->
+<h2><a name="20051223" href="200512c.html#20051223">2005-12-23 (Fri)</a></h2>
+<!-- 2005-12-24 03:48:17 -->
+
+<div class="entry1">
+<h3><a name="200512231" title="200512231" href="200512c.html#200512231">■</a> 
+[PS2] R3ボタン</h3>
+<p>
+なんだそれと思ったら、右スティックが押せる。知らなかったよ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200512232" title="200512232" href="200512c.html#200512232">■</a> 
+[FC4] /dev/hd3のその後</h3>
+<p>
+ふと気になって、yum updateしてみる。
+</p>
+<pre>
+% sudo yum -y -c yum-xen.conf --installroot=/mnt update
+</pre>
+<p>
+caching-nameserverの一個だけ更新された。ってことは最新がインストールされてるのか。
+便利だな。ISOイメージからだとyum updateの時間も馬鹿にならないし。
+あ、でもBaseだけだから更新されるパッケージ数も少ないか。
+とりあえずyum grouplistの結果から何を入れるか決めよう。
+</p>
+<pre>
+% sudo yum grouplist
+Setting up Group Process
+Setting up repositories
+Installed Groups:
+   Administration Tools
+   Authoring and Publishing
+   Compatibility Arch Development Support
+   Compatibility Arch Support
+   DNS Name Server
+   Editors
+   Engineering and Scientific
+   GNOME Desktop Environment
+   GNOME Software Development
+   Games and Entertainment
+   Graphical Internet
+   Graphics
+   KDE (K Desktop Environment)
+   KDE Software Development
+   Legacy Network Server
+   Mail Server
+   MySQL Database
+   Network Servers
+   Office/Productivity
+   PostgreSQL Database
+   Printing Support
+   Server Configuration Tools
+   Sound and Video
+   System Tools
+   Text-based Internet
+   Web Server
+   Windows File Server
+   X Software Development
+   X Window System
+Available Groups:
+   Development Tools
+   Eclipse
+   FTP Server
+   Java Development
+   Language Support
+   Legacy Software Development
+   News Server
+   XFCE
+   XFCE Software Development
+Done
+</pre>
+<p>
+結構悩ましい。
+</p>
+
+<!-- section end -->
+</div>
+<!-- 2005/12/23 end -->
+
+
+
+<hr class="hide">
+<!-- 2005/12/24 start -->
+<h2><a name="20051224" href="200512c.html#20051224">2005-12-24 (Sat)</a></h2>
+<!-- 2005-12-25 03:06:28 -->
+
+<div class="entry1">
+<h3><a name="200512241" title="200512241" href="200512c.html#200512241">■</a> 
+<a href="http://www.ruby-lang.org/ja/20051224.html">[Ruby] Ruby 1.8.4 released</a></h3>
+<p>
+今頃ではあるが、1.8.3のバイナリを作ってないことに気づいた。
+Cygwinが用意してるし誰も文句言わないしもう要らないんだろうな。
+といいつつも1.8.4はアップロードしとこう。
+</p>
+<!-- section end -->
+</div>
+<!-- 2005/12/24 end -->
+
+
+
+<hr class="hide">
+<!-- 2005/12/25 start -->
+<h2><a name="20051225" href="200512c.html#20051225">2005-12-25 (Sun)</a></h2>
+<!-- 2005-12-26 02:24:52 -->
+
+<div class="entry1">
+<h3><a name="200512251" title="200512251" href="200512c.html#200512251">■</a> 
+[Comic] イブの眠り</h3>
+<p>
+1,2巻を借りたが、その前に忘れてしまったYASHAを読み直すことにしよう。
+</p>
+<!-- section end -->
+</div>
+<!-- 2005/12/25 end -->
+
+
+
+<hr class="hide">
+<!-- 2005/12/26 start -->
+<h2><a name="20051226" href="200512c.html#20051226">2005-12-26 (Mon)</a></h2>
+<!-- 2005-12-27 01:16:01 -->
+
+<div class="entry1">
+<h3><a name="200512261" title="200512261" href="200512c.html#200512261">■</a> 
+<a href="http://qdbm.sf.net/">[Soft] QDBM: Quick DataBase Manager 1.8.37</a></h3>
+<blockquote><dl>
+<dt>
+Changes:
+<dd>
+The efficiency of the free block pool was enhanced. Functions to
+set the size of the free block pool were added. Commands line tools were
+enhanced.
+</dl></blockquote>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200512262" title="200512262" href="200512c.html#200512262">■</a> 
+<a href="http://ch.tudelft.nl/~arthur/svn2cl/">[Soft] svn2cl 0.5</a></h3>
+<blockquote><dl>
+<dt>
+About:
+<dd>
+svn2cl is an XSLT script that generates a clasic GNU-style
+changelog file from Subversion log messages. It generates a
+friendly-looking changelog from Subversion log messages like cvs2cl does
+for CVS (although this is a lot simpler with subversion).
+</dl></blockquote><p>
+XSLTってとこがなんか珍しい。xsltprocを使ってるようだ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200512263" title="200512263" href="200512c.html#200512263">■</a> 
+[Comic] 吉田秋生</h3>
+<p>
+ゲーム三昧のつもりが吉田秋生ばかり読んでる。
+なぜかBANANA FISHまで押し入れから引っ張りだしてきて。
+評判のテイルズ(ryがあまり面白く感じないからではあるが。
+</p>
+<!-- section end -->
+</div>
+<!-- 2005/12/26 end -->
+
+
+
+<hr class="hide">
+<!-- 2005/12/27 start -->
+<h2><a name="20051227" href="200512c.html#20051227">2005-12-27 (Tue)</a></h2>
+<!-- 2005-12-28 02:37:23 -->
+
+<div class="entry1">
+<h3><a name="200512271" title="200512271" href="200512c.html#200512271">■</a> 
+[Bloglines] Email Subscription</h3>
+<p>
+最近BloglinesのEmail Subscriptionが表に出てこなくなって不便。
+見に行くとちゃんと更新されてるんだけどなあ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200512272" title="200512272" href="200512c.html#200512272">■</a> 
+<a href="http://sonic64.com/2005-12-25.html">[Google] Google Analytics のタグ位置が body の末尾に変更</a></h3>
+<p>
+うそー。面倒だな。でもちょうど年末だし、
+</p>
+<pre>
+% nsmm 200{1..5}/{1..12}/{a,b,c}
+</pre>
+<p>
+で済むか。
+</p>
+<!-- section end -->
+</div>
+<!-- 2005/12/27 end -->
+
+
+
+<hr class="hide">
+<!-- 2005/12/28 start -->
+<h2><a name="20051228" href="200512c.html#20051228">2005-12-28 (Wed)</a></h2>
+<!-- 2005-12-29 02:28:43 -->
+
+<div class="entry1">
+<h3><a name="200512281" title="200512281" href="200512c.html#200512281">■</a> 
+<a href="http://msmtp.sf.net/">[Soft] msmtp 1.4.5</a></h3>
+<blockquote><dl>
+<dt>
+Changes:
+<dd>
+A few minor tweaks were made.
+</dl></blockquote>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200512282" title="200512282" href="200512c.html#200512282">■</a> 
+[Windows 2000] Windows Update</h3>
+<p>
+昨日久し振りにVMware上のWindows 2000でWindows Updateしたら、DirectX 9のセキュリティ更新とかなんとかで止まって先に進まなくなった。
+3,4時間程放っといてさすがに変だと思い、
+タスクマネージャで怪しげなプログラムを探すと、
+cygrunsrv.exeとsshd.exeがCPUを喰ってた。
+今はsshでログインしてないのでかなり怪しい。
+こいつらを殺したらUpdateも進んだ。その後3分で終わった。
+なんでそんなとこに引っ掛かる？
+</p>
+
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200512283" title="200512283" href="200512c.html#200512283">■</a> 
+[VS2005] VC++ 2005 EE</h3>
+<p>
+でその後にVC++ 2005 EEをインストールしたんだけど、あまりに重くて2日がかりだったり。
+うーむ。なんかVMwareが遅くなってる気がしないでもない。気のせい？
+</p>
+<!-- section end -->
+</div>
+<!-- 2005/12/28 end -->
+
+
+
+<hr class="hide">
+<!-- 2005/12/29 start -->
+<h2><a name="20051229" href="200512c.html#20051229">2005-12-29 (Thu)</a></h2>
+<!-- 2005-12-30 13:01:46 -->
+
+<div class="entry1">
+<h3><a name="200512291" title="200512291" href="200512c.html#200512291">■</a> 
+厄年</h3>
+<p>
+とある人のblogを見てて今年は大厄であることが判明。
+なんというか今年もあと2日というこんなときに気づくのはある意味ラッキーとも言える。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200512292" title="200512292" href="200512c.html#200512292">■</a> 
+[Ruby] Ruby 1.9のRange#===</h3>
+<p>
+この日記のファイル名は上中下旬でa,b,cになってるわけだけど、
+</p>
+<pre>
+case x
+when '01'..'10' then 'a'
+when '11'..'20' then 'b'
+when '21'..'31' then 'c'
+end
+</pre>
+<p>
+という感じで処理してたら、1.9ではいつのまにか使えなくなってた。
+Range#===じゃなくてRange#cover?を使えってことらしいが、
+case whenで使いたいときはaliasするしかないよねえ。
+</p>
+<pre>
+class Range
+  if method_defined? :cover?
+    alias :=== :cover?
+  end
+end
+</pre>
+<p>
+を入れるのもなんだし、
+</p>
+<pre>
+case x.to_i
+when 1..10 then 'a'
+when 11..20 then 'b'
+when 21..31 then 'c'
+end
+</pre>
+<p>
+としよう。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200512293" title="200512293" href="200512c.html#200512293">■</a> 
+[Ruby] remove global functions work on $_</h3>
+<p>
+Ruby 1.9ではこういうのが使えなくなった。宴会で作業してたってやつだな。
+</p>
+<pre>
+% echo foo | ruby -vpe 'sub(/foo/, &quot;bar&quot;)'
+ruby 1.9.0 (2005-12-29) [i386-linux]
+-e:1: undefined method `sub' for main:Object (NoMethodError)
+</pre>
+<p>
+明示的に$_とsub!を使う必要あり。
+</p>
+<pre>
+% echo foo | ruby -vpe '$_.sub!(/foo/, &quot;bar&quot;)'
+ruby 1.9.0 (2005-12-29) [i386-linux]
+bar
+</pre>
+
+<!-- section end -->
+</div>
+<!-- 2005/12/29 end -->
+
+
+
+<hr class="hide">
+<!-- 2005/12/30 start -->
+<h2><a name="20051230" href="200512c.html#20051230">2005-12-30 (Fri)</a></h2>
+<!-- 2005-12-31 01:29:42 -->
+
+<div class="entry1">
+<h3><a name="200512301" title="200512301" href="200512c.html#200512301">■</a> 
+rrr忘年会</h3>
+<p>
+馬場のShakey'sで。ピザとパスタの忘年会。公開内緒話はよくわからん。
+と去年とほとんど同じことを書いてみる。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200512302" title="200512302" href="200512c.html#200512302">■</a> 
+[Ruby] Ruby 1.9でgem</h3>
+<p>
+久し振りにgemをいじってみたら怒られた。
+</p>
+<pre>
+% gem update
+Upgrading RubyGems...
+ERROR:  While executing gem ... (NoMethodError)
+    private method `specification_version=' called for #&lt;Gem::Specification:0xb7cfac4c @rubygems_version=&quot;0.8.11&quot;&gt;
+</pre>
+<p>
+ええと、
+<a href="http://www.ruby-lang.org/ja/man/?cmd=view;name=ruby+1.9+feature#a2005-08-30">これか</a>
+
+って4ヶ月前だよ。
+</p>
+<pre>
+2005-08-30
+
+Object#send, Object#__send__ [ruby][change]
+
+    レシーバを指定した呼び出しではprivateメソッドを呼び出せなくなりました。
+</pre>
+<p>
+しかたないのでrubygems.rbに
+</p>
+<pre>
+alias :send :funcall if method_defined? :funcall
+</pre>
+<p>
+を追加。こんどは
+</p>
+<pre>
+undefined method `&lt;=&gt;' for nil:NilClass
+</pre>
+<p>
+と言われる。なんだか情報量が落ちててわからんが、
+--debugしたり適当に変数を表示させたりしたら、
+&quot;-&quot;という名前のゴミパッケージがインストールされていて、
+その名前がnilになってるのが原因とわかった。
+それを削除して再度挑戦するも
+</p>
+<pre>
+undefined method `each' for nil:NilClass
+</pre>
+<p>
+とどこかでnilになってるようだ。ここで面倒になって断念。もう
+</p>
+<pre>
+% sed -i '1s/ruby/ruby-1.8/' =gem
+</pre>
+<p>
+でいいや。なげやり。
+</p>
+<!-- section end -->
+</div>
+<!-- 2005/12/30 end -->
+
+
+
+<hr class="hide">
+<!-- 2005/12/31 start -->
+<h2><a name="20051231" href="200512c.html#20051231">2005-12-31 (Sat)</a></h2>
+<!-- 2006-01-01 04:34:05 -->
+
+<div class="entry1">
+<h3><a name="200512311" title="200512311" href="200512c.html#200512311">■</a> 
+<a href="http://openfacts.berlios.de/index-en.phtml?title=lxdvdrip">[Soft] lxdvdrip 1.51</a></h3>
+<blockquote><dl>
+<dt>
+About:
+<dd>
+lxdvdrip is a command line tool to make a copy from a video DVD. It
+automates the process of ripping, authoring, previewing, and burning the
+DVD. It uses tools like mplayer, transcode, streamdvd, dvdauthor, and
+growisofs. You can backup the main feature or the whole DVD.
+</dl></blockquote>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200512312" title="200512312" href="200512c.html#200512312">■</a> 
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-talk/173171">[VS2005] アドインを作る</a></h3>
+<p>
+アドインを作るには
+<a href="http://www.devexpress.com/Downloads/NET/DXCore/">DXCore</a>を使うといいらしい。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200512313" title="200512313" href="200512c.html#200512313">■</a> 
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-talk/173116">[Ruby] 数独solver</a></h3>
+<p>
+確かに短い。
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-talk/173186">パッチ</a>。
+</p>
+<!-- section end -->
+</div>
+<!-- 2005/12/31 end -->
+
+<hr>
+<div>
+<a href="200512b.html">&lt;Prev(,)</a> | 
+<a href="200601a.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

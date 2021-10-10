@@ -1,0 +1,425 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2014-2-b</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="201402a.html">
+<link rel="next" href="201402c.html">
+
+<link rel="stylesheet" type="text/css" href="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.css">
+<script type="text/javascript" src="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.js"></script>
+<script type="text/javascript">
+<!--       
+$(document).ready(function() {
+  prettyPrint();
+});
+-->
+</script>
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2014年2月中旬〜</p>
+<hr>
+<div>
+<a href="201402a.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="201402c.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2014/02/11 start -->
+<h2><a name="20140211" href="201402b.html#20140211">2014-02-11 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="201402111" title="201402111" href="201402b.html#201402111">■</a> 
+<a href="http://codegolf.stackexchange.com/questions/20545/string-of-alphanumeric-characters-to-a-sorted-list-of-comma-separated-ranges">code golf - String of alphanumeric characters to a sorted list of comma-separated ranges</a></h3>
+<p>
+このRubyの解なんだけど、与えられた文字以外を改行($/)に変換するという発想がすばらしい。
+</p>
+<pre>
+puts [*?0..?Z].join.tr('^ABC321STPpJqZZr0'.upcase,' ').gsub(/\B\w+\B/,?-).scan(/\S+/)*', '
+puts [*?0..?Z].join.tr('^ABC321STPpJqZZr0'.upcase,$/).gsub(/\B\w+\B/,?-).scan(/.+/)*', '
+puts [*?0..?Z].join.tr('^ABC321STPpJqZZr0'.upcase,$/).gsub(/\B.+\B/,?-).scan(/.+/)*', '
+$&gt;&lt;&lt;[*?0..?Z].join.gsub(/[^ABC321STPpJqZZr0]/i,$/).gsub(/\B.+\B/,?-).split*', '
+</pre>
+<p>
+と変遷していったが、改行じゃなくてまとめて全部直接&quot;, &quot;に変換しちゃえばもうちょっと短くなる。
+</p>
+<pre>
+$&gt;&lt;&lt;[*?0..?Z].join.gsub(/[^ABC321STPpJqZZr0]+/i,&quot;, &quot;).gsub /\B\w+\B/,?-
+</pre>
+<p>
+結果は 0-3, A-C, J, P-T, Z となる。これをbashとGNU sedで解くとこんな感じ。
+</p>
+<pre>
+% bash -c 'echo {0..9} {A..Z}|sed &quot;s/ //g;s/[^ABC321STPpJqZZr0]\+/, /gi;s/\B\w\+\B/-/g&quot;'
+0-3, A-C, J, P-T, Z
+</pre>
+<p>
+{A..Z}の部分がzshだと展開されない。printfを使う手もあるか。
+</p>
+<pre>
+% bash -c 'printf %s {0..9} {A..Z}|sed &quot;s/[^ABC321STPpJqZZr0]\+/, /gi;s/\B\w\+\B/-/g&quot;'
+</pre>
+<!-- section end -->
+</div>
+<!-- 2014/02/11 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/02/12 start -->
+<h2><a name="20140212" href="201402b.html#20140212">2014-02-12 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="201402121" title="201402121" href="201402b.html#201402121">■</a> 
+文字列のビット演算</h3>
+<p>
+CodeIQ MAGAZINEってログインしないと見られないが、なぜかRSSは全文読めるようになっている。<br>
+<a href="https://codeiq.jp/magazine/2014/02/5613/">「暗号を解いて総額10万円あてよう！」問題解説～真の解答に辿りつけたのは…？単なるROT13にあらず。｜CodeIQ MAGAZINE</a><br>
+ビット演算は面倒だけど、perlだと
+</p>
+<pre>
+% perl -le 'print &quot;sunny&quot; &amp; &quot;windy&quot;'
+sandy
+</pre>
+<p>
+みたいに簡単にできてしまう。rubyだとやはりちょっと面倒。
+</p>
+<pre>
+% ruby -e 'puts &quot;sunny&quot;.bytes.zip(&quot;windy&quot;.bytes).map{|x,y|x&amp;y}.pack(&quot;C*&quot;)'
+sandy
+</pre>
+<!-- section end -->
+</div>
+<!-- 2014/02/12 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/02/13 start -->
+<h2><a name="20140213" href="201402b.html#20140213">2014-02-13 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="201402131" title="201402131" href="201402b.html#201402131">■</a> 
+<a href="https://chrome.google.com/webstore/detail/iwillril-unnoficial-pocke/bbabbdijmipkeilehcnbopedgbjejbmb">IwillriL - Unnoficial Pocket Client</a></h3>
+<p>
+Pocketの未読数を表示する拡張が欲しくて入れてみた。<br>
+Mark items as read when you click on themはなぜか既読ならないことが多い。<br>
+100個越えるとちょっと対処できないので、結局読んだことにしてしまうが。
+</p>
+<!-- section end -->
+</div>
+<!-- 2014/02/13 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/02/14 start -->
+<h2><a name="20140214" href="201402b.html#20140214">2014-02-14 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="201402141" title="201402141" href="201402b.html#201402141">■</a> 
+またssh -ttの出番</h3>
+<p>
+sudoもttyを必要とするようで。
+</p>
+<pre>
+% printf &quot;%s\n&quot; foo bar | xargs -I@ ssh host sudo cp -av /tmp/@ /root/@.hoge
+sudo: sorry, you must have a tty to run sudo
+sudo: sorry, you must have a tty to run sudo
+% printf &quot;%s\n&quot; foo bar | xargs -I@ ssh -t host sudo cp -av /tmp/@ /root/@.hoge
+Pseudo-terminal will not be allocated because stdin is not a terminal.
+sudo: sorry, you must have a tty to run sudo
+Pseudo-terminal will not be allocated because stdin is not a terminal.
+sudo: sorry, you must have a tty to run sudo
+% printf &quot;%s\n&quot; foo bar | xargs -I@ ssh -tt host sudo cp -av /tmp/@ /root/@.hoge
+`/tmp/foo' -&gt; `/root/foo.hoge'
+Shared connection to host closed.
+`/tmp/bar' -&gt; `/root/bar.hoge'
+Shared connection to host closed.
+</pre>
+<p>
+このもう1個-tを足す件を忘れていて、
+<a href="201304b.html#20130419">自分の日記を読み返した。</a></p>
+<!-- section end -->
+</div>
+<!-- 2014/02/14 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/02/15 start -->
+<h2><a name="20140215" href="201402b.html#20140215">2014-02-15 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="201402151" title="201402151" href="201402b.html#201402151">■</a> 
+<a href="http://blog.ueda.asia/?p=2024">【問題集】第9回寒中シェル芸勉強会 | 上田ブログ</a></h3>
+<p>
+とりあえず第6問。seq 100を変形するんだろうなやっぱ。<br>
+Rubyなら&quot;a/&quot;*100で済むところだが。
+</p>
+<pre>
+% seq 100|awk '$0=&quot;a/&quot;' ORS=
+</pre>
+<p>
+こんな感じか。ああ、seq -sを使えばもうちょっと短くなるか。
+</p>
+<pre>
+% seq -sa/ 101|tr -d 0-9
+</pre>
+<p>
+-sはセパレータなので101にする必要あり。
+</p>
+<p>
+zshならrepeatが使えるのでこれでいいんだけど。
+</p>
+<pre>
+% repeat 100 printf a/
+</pre>
+<p>
+いやいやもっと簡単に表示もしないで
+</p>
+<pre>
+% mkdir -p ${(l:200::a/:)}
+</pre>
+<p>
+でokだ。
+</p>
+<pre>
+% echo ${(l:200::a/:)}|grep -o a/|wc -l
+100
+</pre>
+<p>
+なぜ200かというと%200s的な意味なので。
+</p>
+<!-- section end -->
+</div>
+<!-- 2014/02/15 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/02/16 start -->
+<h2><a name="20140216" href="201402b.html#20140216">2014-02-16 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="201402161" title="201402161" href="201402b.html#201402161">■</a> 
+先頭の2文字を抜き出す</h3>
+<p>
+bashやzshなら${foo:0:2}でいいんだけど、
+</p>
+<pre>
+% bash -c 'foo=abcde;echo ${foo:0:2}'
+ab
+% zsh -c 'foo=abcde;echo ${foo:0:2}' 
+ab
+</pre>
+<p>
+dashでは使えないのでコマンドでって話になるが、逆に選択肢が多すぎて困る。<br>
+想定される文字は英数字のみ。
+</p>
+<pre>
+% expr substr abcde 1 2
+ab
+% expr abcde : '\(..\)'
+ab
+% echo abcde | cut -b-2
+ab
+% echo abcde | grep -o \^..
+ab
+% echo abcde | sed 's/\(..\).*/\1/'
+ab
+% echo abcde | awk '$0=substr($0,1,2)'
+ab
+% printf %.2s abcde
+ab% echo abcde | dd bs=1 count=2 2&gt; /dev/null
+ab% echo abcde | head -c2
+ab
+</pre>
+<p>
+と、ここで変な方法を思い付いた。
+</p>
+<pre>
+% dash -c 'foo=abcde;echo ${foo%${foo#??}}' 
+ab
+</pre>
+<p>
+先頭の2文字を消した文字列を作り出してから、改めてその文字列を使って消す。
+</p>
+<!-- section end -->
+</div>
+<!-- 2014/02/16 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/02/17 start -->
+<h2><a name="20140217" href="201402b.html#20140217">2014-02-17 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="201402171" title="201402171" href="201402b.html#201402171">■</a> 
+要素の検証での小技</h3>
+<p>
+Google Chromeのコンテキストメニューに要素の検証が一番下にあるが、<br>
+これを選ぶ前に知りたいところを選択しておくと対応する部分がハイライトされる。<br>
+これは開いた後でも何回も使えるので覚えておこう。
+</p>
+<p>
+<img src="../images/chrome-inspection.png" alt="">
+</p>
+<!-- section end -->
+</div>
+<!-- 2014/02/17 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/02/18 start -->
+<h2><a name="20140218" href="201402b.html#20140218">2014-02-18 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="201402181" title="201402181" href="201402b.html#201402181">■</a> 
+zshとbashのインクリメンタルサーチの違い</h3>
+<p>
+どこかで設定してるんだなんだかわからないけど、<br>
+zshは大文字小文字区別しないが、bashは区別する。<br>
+man bashしてみたら補完は
+</p>
+<pre>
+set completion-ignore-case on
+</pre>
+<p>
+でいけるようだが、これは違うし。
+</p>
+<!-- section end -->
+</div>
+<!-- 2014/02/18 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/02/19 start -->
+<h2><a name="20140219" href="201402b.html#20140219">2014-02-19 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="201402191" title="201402191" href="201402b.html#201402191">■</a> 
+qmv</h3>
+<p>
+massrenが話題だが同じようなツールとしてqmvがある。<br>
+Ubuntuならrenameutilsを入れればok。<br>
+<a href="http://www.nongnu.org/renameutils/">renameutils home</a><br>
+正直これを見ても使い方がわからないが、<br>
+いろいろぐぐると実行例があるので参考に。<br>
+<a href="http://mylinuxbook.com/qmv-qcp-copy-rename-files-quickly/">qmv &amp; qcp - Copy/Rename Files Quickly By Editing File Names In Text Editor | MyLinuxBook</a><br>
+こんな感じで左右同じものが2つ出てくるので、右側だけ編集して名前を変えて保存。<br>
+vaildなら名前が変わる。<br>
+左側をいじるとinvalidになって会話モードに勝手に突入するので注意。<br>
+不用意に行削除とかしてもinvalidなのでまあちょっと安全なのかな。
+</p>
+<!-- section end -->
+</div>
+<!-- 2014/02/19 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/02/20 start -->
+<h2><a name="20140220" href="201402b.html#20140220">2014-02-20 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="201402201" title="201402201" href="201402b.html#201402201">■</a> 
+sudoersのcommentとdirectiveの罠</h3>
+<p>
+/etc/sudoersの最後に
+</p>
+<pre>
+#includedir /etc/sudoers.d
+</pre>
+<p>
+とあるので、これってコメント外さないと使えないよなあ毎回編集するたびに思っていたが、<br>
+ふと上を見ると
+</p>
+<pre>
+# See sudoers(5) for more information on &quot;#include&quot; directives:
+</pre>
+<p>
+と書いてあった。&quot;#include&quot;と#つきだ。ってことはコメントじゃないのか？<br>
+man sudoers見たら#includeと#includedirだけはdirectiveでありコメントではないとのこと。<br>
+なんだそういうことかよ。<br>
+というわけでもうvisudoで/etc/sudoersをいじるのはやめて/etc/sudoers.d/ebanを作ることにした。<br>
+</p>
+<pre>
+# vi /etc/sudoers.d/eban
+</pre>
+<p>
+でもいいが、気づかずにエラーのまま保存してしまうとsudoできなくなってしまう。<br>
+やはりここもvisudo経由で。ちゃんとチェックしてくれるので安心だ。<br>
+</p>
+<pre>
+# visudo -f /etc/sudoers.d/eban
+</pre>
+<p>
+のように実行すればok。
+</p>
+<!-- section end -->
+</div>
+<!-- 2014/02/20 end -->
+
+<hr>
+<div>
+<a href="201402a.html">&lt;Prev(,)</a> | 
+<a href="201402c.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

@@ -1,0 +1,264 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2013-2-c</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="201302b.html">
+<link rel="next" href="201303a.html">
+
+<link rel="stylesheet" type="text/css" href="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.css">
+<script type="text/javascript" src="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.js"></script>
+<script type="text/javascript">
+<!--       
+$(document).ready(function() {
+  prettyPrint();
+});
+-->
+</script>
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2013年2月下旬〜</p>
+<hr>
+<div>
+<a href="201302b.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="201303a.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2013/02/21 start -->
+<h2><a name="20130221" href="201302c.html#20130221">2013-02-21 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="201302211" title="201302211" href="201302c.html#201302211">■</a> 
+<a href="http://help.fitbit.com/customer/portal/articles/888797-what-is-beginner-mode-and-how-long-does-it-stay-on-for-">What is Beginner Mode, and how long does it stay on for?</a></h3>
+<p>
+というわけで、ビギナーモードだったとわかった。<br>
+これは5回サイクルを繰り返すとノーマルモードに戻る。<br>
+納得。
+</p>
+<p>
+でもなぜビギナーモードになったのかが不明。<br>
+リセットしたわけでもないのに。
+</p>
+<!-- section end -->
+</div>
+<!-- 2013/02/21 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/02/22 start -->
+<h2><a name="20130222" href="201302c.html#20130222">2013-02-22 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="201302221" title="201302221" href="201302c.html#201302221">■</a> 
+空白区切りで並べる</h3>
+<p>
+カンマ区切りで並べるにはpaste -sd,が便利だが、空白の場合は実はもっと簡単な方法がある。<br>
+xargsを使えばいい。
+</p>
+<pre>
+% seq 3 | paste -sd' '
+1 2 3
+% seq 3 | xargs echo  
+1 2 3
+</pre>
+<p>
+さらにxargsはコマンドを省略すると/bin/echoを呼ぶのでechoすら不要。
+</p>
+<pre>
+% seq 3 | xargs     
+1 2 3
+</pre>
+<p>
+いくつ並べるかは-nで指定できる。
+</p>
+<pre>
+% seq 9 | xargs -n3
+1 2 3
+4 5 6
+7 8 9
+</pre>
+<p>
+デフォルトはシステムが許すぎりぎりまで並べる。まあそのためのxargsなので。
+</p>
+<!-- section end -->
+</div>
+<!-- 2013/02/22 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/02/23 start -->
+<h2><a name="20130223" href="201302c.html#20130223">2013-02-23 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="201302231" title="201302231" href="201302c.html#201302231">■</a> 
+<a href="http://ruby20th.herokuapp.com/">Ruby20周年記念パーティ</a></h3>
+<p>
+祝辞がなぜかLTになっていていきなりドラを鳴らされて楽天の人が強制的に終了させられた。<br>
+なぜかみんなプレゼン資料を用意してるわけだが、<br>
+石塚さんに至ってはどう考えてもまだ導入部で終了してしまい、<br>
+本当は2/23がRubyの誕生日なんだよという爆弾発言があったんじゃないかと邪推。<br>
+とても気になる。<br>
+うささんも不惑だそうで。ネコ、うさ、Rubyと覚えよう。
+</p>
+<p>
+とにかくおめでとうございます。
+</p>
+<!-- section end -->
+</div>
+<!-- 2013/02/23 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/02/24 start -->
+<h2><a name="20130224" href="201302c.html#20130224">2013-02-24 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="201302241" title="201302241" href="201302c.html#201302241">■</a> 
+<a href="http://www.ruby-lang.org/ja/news/2013/02/24/ruby-2-0-0-p0-is-released/">Ruby 2.0.0</a></h3>
+<p>
+Vaporwareと言われてたRuby 2.0.0が出るなんて冗談みたいな雰囲気だったが、ついにこの日が。<br>
+本当にリリースされてしまったんだなあ。<br>
+常にtrunkを使ってるのでしばらく前から2.0.0だったわけだけど、やはり感慨深い。
+</p>
+<!-- section end -->
+</div>
+<!-- 2013/02/24 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/02/25 start -->
+<h2><a name="20130225" href="201302c.html#20130225">2013-02-25 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="201302251" title="201302251" href="201302c.html#201302251">■</a> 
+zapierやめてifftに</h3>
+<p>
+zapierは変更してない過去のRSSをなぜかダブってポストしてしまうことがあったのでやめた。<br>
+iftttは短縮URLを無効にできるし、15分間隔なのでもうiftttにした。この日記は。
+</p>
+<!-- section end -->
+</div>
+<!-- 2013/02/25 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/02/26 start -->
+<h2><a name="20130226" href="201302c.html#20130226">2013-02-26 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="201302261" title="201302261" href="201302c.html#201302261">■</a> 
+RSSだけちょっと短めなURLで</h3>
+<p>
+iftttで短縮URLを無効にしたのはいいが、やっぱこの日記のURLは長い。<br>
+どうせRSSからtwitterへ流してるので、RSSの中のURLだけちょっと短めにしてみた。
+</p>
+<!-- section end -->
+</div>
+<!-- 2013/02/26 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/02/27 start -->
+<h2><a name="20130227" href="201302c.html#20130227">2013-02-27 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="201302271" title="201302271" href="201302c.html#201302271">■</a> 
+X11 forwarding request failed</h3>
+<p>
+CentOSへssh -XしてもX11 forwarding request failedと言われてしまう。<br>
+ぐぐってみたらxorg-x11-xauthを入れろということで。そういうことだったのか。
+</p>
+<!-- section end -->
+</div>
+<!-- 2013/02/27 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/02/28 start -->
+<h2><a name="20130228" href="201302c.html#20130228">2013-02-28 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="201302281" title="201302281" href="201302c.html#201302281">■</a> 
+AC_DISABLE_OPTION_CHECKING</h3>
+<p>
+--with-fooするとWARNING: Unrecognized options: --with-fooと言われる件を調べてたら、<br>
+AC_DISABLE_OPTION_CHECKINGでチェックを無効にできるとinfo autoconfに書いてあった。<br>
+で、いつから使えるのか調べると2.62とある。<br>
+現在はAC_PREREQ(2.60)なので、まずはそのままのconfigure.inをautoconf 2.60,2.61,2.62の3つで試してみたら、<br>
+2.60ではすでにだめで、2.61以上が必要な状態であることが判明。<br>
+どっちにしてもAC_PREREQを上げる必要があるので、2.62にしてAC_DISABLE_OPTION_CHECKINGを入れた。
+</p>
+<p>
+久し振りのcommitだったな。
+</p>
+<!-- section end -->
+</div>
+<!-- 2013/02/28 end -->
+
+<hr>
+<div>
+<a href="201302b.html">&lt;Prev(,)</a> | 
+<a href="201303a.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

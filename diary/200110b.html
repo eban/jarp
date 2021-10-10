@@ -1,0 +1,487 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2001-10-b</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="200110a.html">
+<link rel="next" href="200110c.html">
+
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2001年10月中旬〜</p>
+<hr>
+<div>
+<a href="200110a.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="200110c.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2001/10/11 start -->
+<h2><a name="20011011" href="200110b.html#20011011">2001-10-11 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="200110111" title="200110111" href="200110b.html#200110111">■</a> 
+BIND 8.2.5</h3>
+<p>
+で、allow-update{};で受けつけるようにしたら、
+zone fileが書き換わるようになった。
+これって別にできるのかなあ？
+hash化されて書き換わるので、順番がばらばらになって固定の部分を手で修正しにくい。てゆか修正していいのか？いや修正するよ、普通。
+</p>
+
+<p>
+そもそもそういう使いかたが間違ってるのか。
+でもDHCP clientになれないような古いマシンもあるしなあ。
+</p>
+
+<p>
+ひょっとして
+</p>
+<pre>
+host foo {
+   hardware ethernet xx:xx:xx:xx:xx:xx;
+   fixed-address 192.168.1.2;
+}
+</pre>
+<p>
+じゃなくて、MACアドレスを指定しない
+</p>
+<pre>
+host foo {
+   fixed-address 192.168.1.2;
+}
+</pre>
+<p>
+ってあり？ってどう考えても無理そうだな。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200110112" title="200110112" href="200110b.html#200110112">■</a> 
+引越し</h3>
+<p>
+BINDとかいじってるのは会社でちょっとした引越しがあるからなんだが、
+Rubyのほうは今ちょっといじってる余裕がない。
+</p>
+
+<p>
+次はqmailとNISの設定だ。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2001/10/11 end -->
+
+
+
+<hr class="hide">
+<!-- 2001/10/12 start -->
+<h2><a name="20011012" href="200110b.html#20011012">2001-10-12 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="200110121" title="200110121" href="200110b.html#200110121">■</a> 
+Linux 2.4.12</h3>
+<p>
+で、結局のところ2.4.12は大丈夫なの？
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200110122" title="200110122" href="200110b.html#200110122">■</a> 
+MAILHOST</h3>
+<p>
+qmail-injectはMAILHOSTを見る。
+なぜか余計なしかも自分じゃないホスト名がつくと思ったら、そういうことか。
+movemailのために設定してたんだよね。
+</p>
+
+<p>
+man -M/var/qmail/man qmail-injectを見ると環境変数だらけだ。
+とりあえず
+</p>
+<pre>
+export QMAILUSER=eban
+export QMAILHOST=os.rim.or.jp
+export QMAILNAME='WATANABE Hirofumi'
+</pre>
+<p>
+としとこう。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2001/10/12 end -->
+
+
+
+<hr class="hide">
+<!-- 2001/10/13 start -->
+<h2><a name="20011013" href="200110b.html#20011013">2001-10-13 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="200110131" title="200110131" href="200110b.html#200110131">■</a> 
+qmail</h3>
+<p>
+家にも入れてみたが、
+考えてみたら自前のRubyスクリプトでメールは送ってるので、
+全く意味がない。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2001/10/13 end -->
+
+
+
+<hr class="hide">
+<!-- 2001/10/14 start -->
+<h2><a name="20011014" href="200110b.html#20011014">2001-10-14 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="200110141" title="200110141" href="200110b.html#200110141">■</a> 
+Linux 2.4.12</h3>
+<p>
+なぜかmodule関係が全滅。早く2.5へforkして欲しいな。とりあえず2.4.10-ac12を試してみよう。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200110142" title="200110142" href="200110b.html#200110142">■</a> 
+Linux 2.4.10-ac12</h3>
+<pre>
+Stats in /proc/fs/reiserfs (CONFIG_REISERFS_PROC_INFO) [N/y/?] (NEW)
+CMS file system support (EXPERIMENTAL) (CONFIG_CMS_FS) [N/y/m/?] (NEW)
+Ext3 journalling file system support (EXPERIMENTAL) (CONFIG_EXT3_FS) [N/y/m/?] (NEW)
+</pre>
+<p>
+あたりが目につく。Ext3も入ってるのか。
+</p>
+
+<p>
+2.4.12-ac2が出たらこっちも試そう。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2001/10/14 end -->
+
+
+
+<hr class="hide">
+<!-- 2001/10/15 start -->
+<h2><a name="20011015" href="200110b.html#20011015">2001-10-15 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="200110151" title="200110151" href="200110b.html#200110151">■</a> 
+Linux 2.4.12-ac2</h3>
+<p>
+早速試す。今回はmoduleも問題ない。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200110152" title="200110152" href="200110b.html#200110152">■</a> 
+nullmailer 1.00RC5</h3>
+<p>
+いつになったら1.00になるんだろう？
+defaultでは1分間隔でretryするようで、
+これだけ短いとダイアルアップ中に転送完だ。
+が、なぜかエラーになってしまう。
+</p>
+<pre>
+Starting delivery, 2 message(s) in queue.
+Starting delivery: protocol: smtp host: smtphost file: 1003075452.9348
+Sending failed: Permanent error in sending the message
+Delivery complete, 2 message(s) remain.
+</pre>
+<p>
+じゃ、原因がさっぱりわからないし。
+smtp.cにsyslog()を仕込んで様子を見てみよう。
+</p>
+
+<p>
+ドメイン名かな？
+</p>
+<pre>
+% domainname
+(none)
+</pre>
+<p>
+はかなりまずそう。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2001/10/15 end -->
+
+
+
+<hr class="hide">
+<!-- 2001/10/16 start -->
+<h2><a name="20011016" href="200110b.html#20011016">2001-10-16 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="200110161" title="200110161" href="200110b.html#200110161">■</a> 
+nullmailer</h3>
+<p>
+やっぱそういうことなのか。むりやり
+</p>
+<pre>
+% sudo domainname localdomain
+</pre>
+<p>
+してみたら
+</p>
+<pre>
+Rescanning queue.
+Starting delivery, 2 message(s) in queue.
+Starting delivery: protocol: smtp host: smtphost file: 1003075452.9348
+Sent file.
+Starting delivery: protocol: smtp host: smtphost file: 1003153504.4009
+Sent file.
+Delivery complete, 0 message(s) remain.
+</pre>
+<p>
+となった。/etc/rc.d/rc.Mあたりに入れとこう。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2001/10/16 end -->
+
+
+
+<hr class="hide">
+<!-- 2001/10/17 start -->
+<h2><a name="20011017" href="200110b.html#20011017">2001-10-17 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="200110171" title="200110171" href="200110b.html#200110171">■</a> 
+qmailとyoubin</h3>
+<p>
+qmailにするとyoubinが使えなくて困る。
+どうせ/var/spool/mailは使わないから
+</p>
+<pre>
+% cat /usr/local/bin/qyoubin
+#!/bin/sh
+echo &gt;&gt; /var/spool/mail/$USER
+chmod 0600 /var/spool/mail/$USER
+/usr/local/bin/sendto localhost biff $USER@0
+% cat ~/.qmail
+| /usr/local/bin/qyoubin
+./Maildir/
+</pre>
+<p>
+なんてのを用意して見た。でもこれだと旗は立つが寝てくれない。
+/var/spool/mail/$USERを消すかtruncateしないと
+</p>
+<pre>
+% /usr/local/bin/sendto localhost biff &quot;U $USER&quot;
+</pre>
+<p>
+してもだめだ。Uはupdateの意味か。
+強制的に寝かせる命令はないのかなあ。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2001/10/17 end -->
+
+
+
+<hr class="hide">
+<!-- 2001/10/18 start -->
+<h2><a name="20011018" href="200110b.html#20011018">2001-10-18 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="200110181" title="200110181" href="200110b.html#200110181">■</a> 
+引越し</h3>
+<p>
+明日引越しのため今日はいろんなものを梱包というか捨てたというか、一日仕事にならず。
+明日はそれを出して並べて、準備していたサーバの面倒を見たりで、また仕事にならないな。
+年末は長い休みを取るので、こういう時にしか整理する機会がなかったりで。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200110182" title="200110182" href="200110b.html#200110182">■</a> 
+nullmailer</h3>
+<p>
+/etc/rc.d/rc.Mでnullmailer-sendを起動するようにしたら、
+間違えて&amp;をつけ忘れたらしい。
+今日立ち上げたらそこで止まってしまいにっちもさっちもいかなくなった。
+しょうがないのでCtrl-Alt-DeleteしてGrubのeditでinit=/bin/sbashを追加し、
+remountして/etc/rc.d/rc.Mを修正。このくらいならrescue diskもいらんか。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200110183" title="200110183" href="200110b.html#200110183">■</a> 
+eruby 0.9.7</h3>
+<pre>
+% tar xfvz eruby-0.9.7.tar.gz
+% cd eruby-0.9.7
+% mkdir cygwin mingw32
+
+% cd cygwin
+% i386-cygwin-ruby ../configure \
+  --includedir=$HOME/dist/i386-cygwin/usr/local/include
+% make
+% i686-pc-cygwin-strip eruby.exe
+% upx eruby.exe
+% make site-install
+
+% cd ../mingw32
+% i386-mingw32-ruby ../configure \
+  --includedir=$HOME/dist/i386-mingw32/usr/local/include
+% make
+% i686-pc-cygwin-strip eruby.exe
+% upx eruby.exe
+% make site-install
+
+% make -f ../Makefile.pack PACKAGE=eruby VERSION=0.9.7 \
+  TARGET=i386-cygwin
+% make -f ../Makefile.pack PACKAGE=eruby VERSION=0.9.7 \
+  TARGET=i386-mingw32
+</pre>
+
+
+<!-- section end -->
+</div>
+<!-- 2001/10/18 end -->
+
+
+
+<hr class="hide">
+<!-- 2001/10/19 start -->
+<h2><a name="20011019" href="200110b.html#20011019">2001-10-19 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="200110191" title="200110191" href="200110b.html#200110191">■</a> 
+引越し</h3>
+<p>
+疲れた〜。もう寝る。
+</p>
+<!-- section end -->
+</div>
+<!-- 2001/10/19 end -->
+
+
+
+<hr class="hide">
+<!-- 2001/10/20 start -->
+<h2><a name="20011020" href="200110b.html#20011020">2001-10-20 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="200110201" title="200110201" href="200110b.html#200110201">■</a> 
+17:00</h3>
+<p>
+起きたら薄暗い。朝の5:00だと思ったらすでに夕方だった。
+本当に疲れていたらしい。16時間も寝るなよ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200110202" title="200110202" href="200110b.html#200110202">■</a> 
+Linux 2.4.12 ac3</h3>
+<p>
+ちょっと遅れたが2.4.12-ac3を入れた。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200110203" title="200110203" href="200110b.html#200110203">■</a> 
+Mean Machine</h3>
+<p>
+Ayumiは「スワロウテイル」のあの女の子？
+Charaがらみか？
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2001/10/20 end -->
+
+<hr>
+<div>
+<a href="200110a.html">&lt;Prev(,)</a> | 
+<a href="200110c.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

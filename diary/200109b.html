@@ -1,0 +1,682 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2001-9-b</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="200109a.html">
+<link rel="next" href="200109c.html">
+
+<link rel="stylesheet" type="text/css" href="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.css">
+<script type="text/javascript" src="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.js"></script>
+<script type="text/javascript">
+<!--       
+$(document).ready(function() {
+  prettyPrint();
+});
+-->
+</script>
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2001年9月中旬〜</p>
+<hr>
+<div>
+<a href="200109a.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="200109c.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2001/09/11 start -->
+<h2><a name="20010911" href="200109b.html#20010911">2001-09-11 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="200109111" title="200109111" href="200109b.html#200109111">■</a> 
+2001年9月9日問題</h3>
+<p>
+Perl的にはブロックなしのsortではまった人が多いらしい
+<a href="#20010911F1"><sup><small>*1</small></sup></a>。
+ブロックなしだとcmpなので
+</p>
+<pre>
+% perl -e 'print join(&quot;\n&quot;, sort(1e9-1,1e9)), &quot;\n&quot;'
+1000000000
+999999999
+</pre>
+<p>
+となる。
+</p>
+<pre>
+% perl -e 'print join(&quot;\n&quot;, sort{$a&lt;=&gt;$b}(1e9-1,1e9)), &quot;\n&quot;'
+999999999
+1000000000
+</pre>
+<p>
+のように明示的に&lt;=&gt;を使わないといけないわけだ。
+&quot;&quot;で括ってないから数値だと思うよね、ふつう。
+</p>
+
+<hr align="left" width="40%">
+<div>
+<a name="20010911F1" href="200109b.html#20010911F1"><small>*1</small></a>:
+たぶんYahooの掲示板とか。
+</div>
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200109112" title="200109112" href="200109b.html#200109112">■</a> 
+同時多発テロ</h3>
+<p>
+日記書いてる場合じゃなくなった。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2001/09/11 end -->
+
+
+
+<hr class="hide">
+<!-- 2001/09/12 start -->
+<h2><a name="20010912" href="200109b.html#20010912">2001-09-12 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="200109121" title="200109121" href="200109b.html#200109121">■</a> 
+Kernel panic</h3>
+<p>
+会社のマシン、今日は3回もパニックだよ。
+それも決まってssh hogeとかCVS_RSH=sshしてるcvs coとか、
+他のホストからftpで~/.ssh/authorized_keysをgetしてるときとか、
+とにかく~/.ssh/をアクセスしたときにパニックになってる。
+原因はメモリじゃなくてディスクにあるようだ。
+</p>
+
+<h4><a name="200109121S1" href="200109b.html#200109121S1">_</a> <strong>バックアップ</strong>: </h4>
+<div class="sub">
+<p>
+というわけで、/homeパーティションを-rでremountし、
+まずはバックアップを取ることにした。
+/homeパーティションは4GBほどだが、実際は200MBぐらいしか使ってない。
+幸い1GBのディスクが手元に余ってたので、これをまるごと/homeにあてることにした。
+バックアップ自体はパニックなることもなく無事終了。
+</p>
+
+</div>
+<h4><a name="200109121S2" href="200109b.html#200109121S2">_</a> <strong>badblocks</strong>: </h4>
+<div class="sub">
+<p>
+次に不良ブロックがあるかどうか検査したいところだが、
+そんなコマンドってあったっけ？
+mke2fsには-cはあるけど、これじゃまっさらになるし。
+いやバックアップ取ってるんだから、まっさらになっても問題ない。
+</p>
+
+<p>
+ほどなくman mke2fsの最後にbadblocks(8)を発見。おお、まさにこれだ。
+なるほど。これをやってみよう。時間がかかりそうなので
+</p>
+<pre>
+# badblocks -w -o /tmp/hda4.badblocks /dev/hda4
+</pre>
+<p>
+と実行したまま帰る。結果は明日だ。
+</p>
+
+
+</div>
+<!-- section end -->
+</div>
+<!-- 2001/09/12 end -->
+
+
+
+<hr class="hide">
+<!-- 2001/09/13 start -->
+<h2><a name="20010913" href="200109b.html#20010913">2001-09-13 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="200109131" title="200109131" href="200109b.html#200109131">■</a> 
+不良ブロックはなし</h3>
+<p>
+badblocksした結果不良ブロックはなかった。うーむ。memtest86してみるか。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200109132" title="200109132" href="200109b.html#200109132">■</a> 
+Illegal instruction</h3>
+<p>
+さすがに3度もパニックしたせいか、
+cmailでC-cC-cでメールを送るときに一緒にemacsが死んでしまうようになった。
+Linux 2.2.xではstraceはもはやmakeできないのでltraceすると
+</p>
+<pre>
+% ltrace -S -L emacs
+&lt;途中略&gt;
+SYS_write(3, &quot;\n/home/watanabe/#*mail*#698vlA#\n&quot;, 32) = 32
+SYS_close(3)                                      = 0
+SYS_munmap(0x4031f000, 4096)                      = 0
+SYS_rt_sigaction(29, 0xbfff9260, 0xbfff91d4, 8, 29) = 0
+SYS_rt_sigprocmask(1, 0xbfff9408, 0xbfff9374, 8, 1) = 0
+SYS_getpid()                                      = 698
+--- SIGILL (Illegal instruction) ---
++++ killed by SIGILL +++
+</pre>
+<p>
+ということらしい。emacs自体が壊れたか。
+emacs 21.0.105をmake installしたら直った。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200109133" title="200109133" href="200109b.html#200109133">■</a> 
+<a href="http://cygwin.com/ml/cygwin-announce/2001/msg00112.html">Updated: cygwin-1.3.3</a></h3>
+<p>
+1.3.3が出た。例によって
+<a href="http://www.jaist.ac.jp/~fujieda/cygwin/#new">Cygwin情報</a>
+を見ると出来は相変わらずのようで。
+ま、不安定なのは昔からだしね。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200109134" title="200109134" href="200109b.html#200109134">■</a> 
+<a href="http://cygwin.com/ml/cygwin-announce/2001/msg00113.html">Inaccuracy in cygwin 1.3.3 release announcement</a></h3>
+<p>
+dumper.exeの使いかたが書かれている。
+gdbが読めるcoreが吐ける。じゃんじゃん吐こう。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2001/09/13 end -->
+
+
+
+<hr class="hide">
+<!-- 2001/09/14 start -->
+<h2><a name="20010914" href="200109b.html#20010914">2001-09-14 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="200109141" title="200109141" href="200109b.html#200109141">■</a> 
+<a href="http://people.freebsd.org/~jdp/s1g/">Updates to Fix the CVSup 1000000000 Second Bug</a></h3>
+<p>
+CVSupにも2001年9月9日問題があったか。
+</p>
+<pre>
+・ Debian GNU/Linux i386 potato, contributed by Akinori Musha
+    □ cvsup-16.1d-LINUXLIBC6-gui.tar.gz (i386: GUI version of cvsup, cvsupd,
+       and cvpasswd)
+    □ cvsup-16.1d-LINUXLIBC6-nogui.tar.gz (i386: non-GUI version of cvsup,
+       cvsupd, and cvpasswd; untar and install manually)
+</pre>
+<p>
+おお、knuさんだ。早速入れ換えたら
+</p>
+<pre>
+% cvsup -L2 ~ruby/cvs-ruby.sup
+Parsing supfile &quot;/home/ruby/cvs-ruby.sup&quot;
+Connecting to cvs.ruby-lang.org
+Connected to cvs.ruby-lang.org
+Server software version: SNAP_16_1d
+Negotiating file attribute support
+Exchanging collection information
+Establishing multiplexed-mode data connection
+Running
+Updating collection src-all/cvs
+ Touch lib/metaruby/doc/LGram.txt,v
+ Touch lib/metaruby/lgram/Marshal.rb,v
+ ...
+</pre>
+<p>
+のようtouchされた。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200109142" title="200109142" href="200109b.html#200109142">■</a> 
+<a href="http://homepage1.nifty.com/~tetsu/ruby/diary/0109.html#12">cmail</a></h3>
+<p>
+cmail-remake-folder-headings(M-r)でsummaryは復活します。<br>
+その際にも先頭の^_^Lは必要だけど。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200109143" title="200109143" href="200109b.html#200109143">■</a> 
+Kernel panic</h3>
+<p>
+くー。またssh hogeでパニックだ。memtest86は通ってるしなあ。
+/usrパーティションか？来週だな。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2001/09/14 end -->
+
+
+
+<hr class="hide">
+<!-- 2001/09/15 start -->
+<h2><a name="20010915" href="200109b.html#20010915">2001-09-15 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="200109151" title="200109151" href="200109b.html#200109151">■</a> 
+<a href="http://www.jaist.ac.jp/~fujieda/cygwin/#news">Cygwin情報 Snapshot NEWS</a></h3>
+<p>
+うーむ。1.3.3はやっぱまずいね。
+せめてcygwin1-20010914.dll.bz2を使うべきか？
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200109152" title="200109152" href="200109b.html#200109152">■</a> 
+似て蝶(声)</h3>
+<p>
+徳光和夫と英語を話さないクリス・ペプラー。
+</p>
+
+
+
+
+<!-- section end -->
+</div>
+<!-- 2001/09/15 end -->
+
+
+
+<hr class="hide">
+<!-- 2001/09/16 start -->
+<h2><a name="20010916" href="200109b.html#20010916">2001-09-16 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="200109161" title="200109161" href="200109b.html#200109161">■</a> 
+RubyUnit 0.4.1, win32ole 0.2.9, 0.3.0</h3>
+<p>
+更新。と思ったらもうwin32ole 0.3.0が出てる。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200109162" title="200109162" href="200109b.html#200109162">■</a> 
+<a href="http://www.MysticWALL.com/software/wyvern/wyvern.html">Wyvern</a></h3>
+<p>
+1.0.4をgcc 3.0.1でコンパイルするとエラーだらけになる。
+調べてみると多用されてる##の使いかたが間違っているのが原因だった。
+というか使う必要がないんだよね。
+</p>
+<pre>
+% cat foo.c   
+#define FOO &quot;foo&quot;
+#define BAR &quot;bar&quot;
+#define FOO_BAR &quot;foo&quot; ## BAR
+
+char s[] = FOO_BAR;
+% gcc -E foo.c
+# 5 &quot;foo.c&quot;
+foo.c:5:12: warning: pasting &quot;&quot;foo&quot;&quot; and &quot;BAR&quot; does not give \
+  a valid preprocessing token
+char s[] = &quot;foo&quot;BAR;
+% /usr/bin/gcc -E foo.c |sed '/^$/d'
+# 1 &quot;foo.c&quot;
+char s[] = &quot;foo&quot;&quot;bar&quot;  ;
+</pre>
+<p>
+gccが3.0.1で/usr/bin/gccが2.95.3。
+</p>
+<pre>
+% cat foo.c | sed 's/## //' |gcc -E -
+# 5 &quot;&lt;stdin&gt;&quot;
+char s[] = &quot;foo&quot; &quot;bar&quot;;
+% cat foo.c | sed 's/## //' |/usr/bin/gcc -E - |sed '/^$/d'
+# 1 &quot;&quot;
+char s[] = &quot;foo&quot; &quot;bar&quot;  ;
+</pre>
+
+
+
+
+<!-- section end -->
+</div>
+<!-- 2001/09/16 end -->
+
+
+
+<hr class="hide">
+<!-- 2001/09/17 start -->
+<h2><a name="20010917" href="200109b.html#20010917">2001-09-17 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="200109171" title="200109171" href="200109b.html#200109171">■</a> 
+<a href="http://cygwin.com/ml/cygwin/2001-09/msg00840.html">[Cygwin] cvs+ssh (client on Win98) hangs when finished</a></h3>
+<p>
+Chris曰く、
+</p>
+<pre>
+ssh on Windows 9x has had a hanging problem for some time.  Sorry.
+</pre>
+<p>
+だそうだ。やはりWin9xは捨てだな。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200109172" title="200109172" href="200109b.html#200109172">■</a> 
+<a href="http://cygwin.com/ml/cygwin/2001-09/msg00882.html">Cygwin/XFree86 Build Speedup with Cygwin 1.3.3</a></h3>
+<p>
+1.3.3のsymlinkは速いらしい。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200109173" title="200109173" href="200109b.html#200109173">■</a> 
+XREA.COM</h3>
+<p>
+あれ？入れないなあ。
+</p>
+<pre>
+% ssh s1            
+ssh_exchange_identification: Connection closed by remote host
+</pre>
+
+
+
+
+<!-- section end -->
+</div>
+<!-- 2001/09/17 end -->
+
+
+
+<hr class="hide">
+<!-- 2001/09/18 start -->
+<h2><a name="20010918" href="200109b.html#20010918">2001-09-18 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="200109181" title="200109181" href="200109b.html#200109181">■</a> 
+<a href="http://cygwin-lite.sourceforge.net/">cygwin-lite</a></h3>
+<p>
+1.1.8だけど、フロッピー1枚に収まるサイズになってる。
+インストーラはWinampで使われている
+<a href="http://nsis.sourceforge.net/Main_Page">NSIS</a>
+だそうだ。これもopen source。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200109182" title="200109182" href="200109b.html#200109182">■</a> 
+[DJGPP] gcc2953s.zip</h3>
+<p>
+結局必要な変更はすでにgcc2953s.zipに入っているので、
+そのまま進めればいい。
+ただ、パーミッションがパーミッションなだけに
+</p>
+<pre>
+% chmod +x **/config* **/move-if-change **/symlink-tree
+</pre>
+<p>
+ぐらいしとかないとpermission deniedの嵐になる。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2001/09/18 end -->
+
+
+
+<hr class="hide">
+<!-- 2001/09/19 start -->
+<h2><a name="20010919" href="200109b.html#20010919">2001-09-19 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="200109191" title="200109191" href="200109b.html#200109191">■</a> 
+Ruby 1.6.5</h3>
+<p>
+出た。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200109192" title="200109192" href="200109b.html#200109192">■</a> 
+Nimda</h3>
+<p>
+サイバーテロとか言ってるし。
+</p>
+
+<p>
+うちにもreadme.exeが来た。
+というかこいつは感染経路が複数あるし、
+もうあちこちで大変なことになってるね。
+拡がるだけでほとんど何もしないようだが、
+IIS攻撃は1回のアタックに16回アクセスするからCodeRedより性質が悪い。
+</p>
+
+<p>
+/scripts/root.exeをダミーで用意すればその後のアタックはやめるとか？
+そんなに甘くはなさそうだな。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200109193" title="200109193" href="200109b.html#200109193">■</a> 
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-talk/21378">[ruby-talk:21378] Path walking on windows</a></h3>
+<p>
+Cygwinはstatが遅いからこういう結果になっても不思議じゃないかも。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200109194" title="200109194" href="200109b.html#200109194">■</a> 
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-talk/21388">[ruby-talk:21388] ANN: FormatR 0.9</a></h3>
+<p>
+おお、formatだ。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2001/09/19 end -->
+
+
+
+<hr class="hide">
+<!-- 2001/09/20 start -->
+<h2><a name="20010920" href="200109b.html#20010920">2001-09-20 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="200109201" title="200109201" href="200109b.html#200109201">■</a> 
+Nimda</h3>
+<p>
+nimdaって
+</p>
+<pre>
+% ruby -e 'puts &quot;nimda&quot;.reverse'
+admin
+</pre>
+<p>
+ということか。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200109202" title="200109202" href="200109b.html#200109202">■</a> 
+<a href="http://www5d.biglobe.ne.jp/~munemasa/n/200109.html#19_t1_6">Nimda(2)</a></h3>
+<pre>
+#!/bin/sh
+sleep 10
+</pre>
+<p>
+というroot.exeを用意して待つという作戦を考えてというか、
+実際にしかけておいてみたが、社内にはもう飛びかっていなかったというか、
+access_logを見るとどうもthreadで同時にやってるような感じだったので、
+無駄だとは思っていたんだけど。
+</p>
+
+<p>
+それにしてもこれだけやられてもまだ使い続ける人がいるというのも不気味だ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200109203" title="200109203" href="200109b.html#200109203">■</a> 
+mingw</h3>
+<p>
+CygwinのパッケージとしてのmingwのメンテはもうCygwin Projectではなく
+MinGW projectに任せた。それに伴い、mingwはmingw-runtimeと名前を変えた。
+そのあたりのアナウンスは
+
+<a href="http://cygwin.com/ml/cygwin-announce/2001/msg00116.html">こちら</a> に。
+updateするにはまず
+</p>
+<pre>
+mingw-20010917-1
+</pre>
+<p>
+をインストールして
+</p>
+<pre>
+mingw-runtime-1.1-1
+</pre>
+<p>
+をインストールしないといけないらしい。
+</p>
+<pre>
+% tar tfvz latest/mingw/mingw-20010917-1.tar.gz 
+drwxr-xr-x BoydE/Administrators 0 2001-09-18 01:22 include/
+drwxr-xr-x BoydE/Administrators 0 2001-09-18 01:22 lib/
+</pre>
+<p>
+だからアンインストールという意味か？
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200109204" title="200109204" href="200109b.html#200109204">■</a> 
+[Cygwin] winsup/cinstall/temp</h3>
+<p>
+cvs updateすると途中でやたら時間がかかってるファイルがある。
+</p>
+<pre>
+U winsup/cinstall/temp/packages
+U winsup/cinstall/temp/rh
+U winsup/cinstall/temp/setup.ini
+U winsup/cinstall/temp/setup.ini.base
+U winsup/cinstall/temp/setup.ini.rpm
+</pre>
+<p>
+のpackagesなんだけど
+</p>
+<pre>
+% ls -l winsup/cinstall/temp
+total 3001
+drwxr-xr-x    2 watanabe ruby          128 Sep 20 22:08 CVS
+-rw-r--r--    1 watanabe ruby      2976482 Sep 20 11:11 packages
+-rwxr-xr-x    1 watanabe ruby        14227 Sep 20 11:38 rh
+-rw-r--r--    1 watanabe ruby        25793 Sep 20 11:38 setup.ini
+-rw-r--r--    1 watanabe ruby        18836 Sep 20 11:38 setup.ini.base
+-rw-r--r--    1 watanabe ruby        27385 Sep 20 11:11 setup.ini.rpm
+</pre>
+<p>
+うぐ。3MB近いじゃん。中身はdebianの.debに関係するものみたいなんだけど、
+何を企んでるんだろう？rhはrpm関係のPerlのスクリプト、setup.ini.rpmも気になる。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2001/09/20 end -->
+
+<hr>
+<div>
+<a href="200109a.html">&lt;Prev(,)</a> | 
+<a href="200109c.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

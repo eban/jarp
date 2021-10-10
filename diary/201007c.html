@@ -1,0 +1,434 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2010-7-c</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="201007b.html">
+<link rel="next" href="201008a.html">
+
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2010年7月下旬〜</p>
+<hr>
+<div>
+<a href="201007b.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="201008a.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2010/07/21 start -->
+<h2><a name="20100721" href="201007c.html#20100721">2010-07-21 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="201007211" title="201007211" href="201007c.html#201007211">■</a> 
+[Golf] wakeの$&lt;</h3>
+<p>
+shinhさんから教えてもらった。wakeの$&lt;は何度でも参照できる。<br>
+wake golfは楽しい。sed好きな人ならはまる。
+</p>
+<!-- section end -->
+</div>
+<!-- 2010/07/21 end -->
+
+
+
+<hr class="hide">
+<!-- 2010/07/22 start -->
+<h2><a name="20100722" href="201007c.html#20100722">2010-07-22 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="201007221" title="201007221" href="201007c.html#201007221">■</a> 
+[Git] 指定した日時でgit checkout</h3>
+<p>
+znzさんにman git-rev-parseせよと教えてもらった。<br>
+'master@{日付}'でいいらしいんだが、なぜかcloneした時点から先には遡れない。
+</p>
+<pre>
+% git checkout 'master@{2007-01-01}'
+warning: Log for 'master' only goes back to Fri, 23 Jul 2010 00:32:02 +0900.
+&lt;後略&gt;
+</pre>
+<p>
+どうしたもんかねえ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2010/07/22 end -->
+
+
+
+<hr class="hide">
+<!-- 2010/07/23 start -->
+<h2><a name="20100723" href="201007c.html#20100723">2010-07-23 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="201007231" title="201007231" href="201007c.html#201007231">■</a> 
+[Git] 指定した日時でgit checkout一応できた</h3>
+<p>
+git logで地道に探すしかないのかなと、まずはタイムスタンプの形式を変えるオプションを見始めた。<br>
+とかなんとかしてるうちに--beforeを発見。これでいけるじゃん。<br>
+最終的にはcommit hashだけわかればいいので、
+</p>
+<pre>
+% git --no-pager log --before='{2007-01-01}' -n1 --pretty=tformat:%h
+e7a9936
+</pre>
+<p>
+を使ってcheckoutすればいける。
+</p>
+<!-- section end -->
+</div>
+<!-- 2010/07/23 end -->
+
+
+
+<hr class="hide">
+<!-- 2010/07/24 start -->
+<h2><a name="20100724" href="201007c.html#20100724">2010-07-24 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="201007241" title="201007241" href="201007c.html#201007241">■</a> 
+<a href="http://golf.shinh.org/p.rb?Roman+numeral">[Golf] Roman numeral</a></h3>
+<p>
+<a href="http://stackoverflow.com/questions/1839079/">ネタ元</a>と同じ解がちらほら。IVとかの処理が面倒だが、%でうまいこと回避できるのがミソなんだよね。<br>
+あと
+<a href="http://www.perlmonks.org/?node_id=600665">このPerl gofl</a>も参考になる。
+</p>
+<!-- section end -->
+</div>
+<!-- 2010/07/24 end -->
+
+
+
+<hr class="hide">
+<!-- 2010/07/25 start -->
+<h2><a name="20100725" href="201007c.html#20100725">2010-07-25 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="201007251" title="201007251" href="201007c.html#201007251">■</a> 
+<a href="http://www.commandlinefu.com/commands/view/6110/">Create an animated gif from a Youtube video</a></h3>
+<p>
+これは便利。
+</p>
+<pre>
+% mplayer video.flv -ss 00:23 -endpos 6 -vo gif89a:fps=5:output=output.gif -vf scale=400:300
+</pre>
+<p>
+でvidoe.flvの23秒目から6秒間をアニメーションGIFに変換できる。<br>
+でも画質はひどい。減色処理がひどすぎるな。<br>
+1フレームごと1枚ずつPNG画像にしてからpngquantあたりで減色したほうがよさげ。<br>
+つづく。
+</p>
+<!-- section end -->
+</div>
+<!-- 2010/07/25 end -->
+
+
+
+<hr class="hide">
+<!-- 2010/07/26 start -->
+<h2><a name="20100726" href="201007c.html#20100726">2010-07-26 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="201007261" title="201007261" href="201007c.html#201007261">■</a> 
+[Image] もうちょっときれいなアニメーションGIF画像</h3>
+<p>
+mplayerには-vo pngで各フレームを指定したディレクトリに保存する機能がある。<br>
+これを使うと間にpngquantでの減色処理をはさめるのでちょっとはましな画質になる。
+</p>
+<pre>
+% ./youtube-dl -o ninja-cat.flv http://www.youtube.com/watch\?v\=v71Dtj2W7pw
+% mplayer ninja-cat.flv -endpos 3 -vo gif89a:output=ninja-cat.gif
+</pre>
+<p>
+これで一応昨日のやつができあがり。
+</p>
+<pre>
+% mplayer ninja-cat.flv -endpos 3 -vo png:outdir=cat
+% cd cat
+% ls
+00000001.png  00000011.png  00000021.png  00000031.png	00000041.png  00000051.png  00000061.png  00000071.png
+00000002.png  00000012.png  00000022.png  00000032.png	00000042.png  00000052.png  00000062.png  00000072.png
+00000003.png  00000013.png  00000023.png  00000033.png	00000043.png  00000053.png  00000063.png  00000073.png
+00000004.png  00000014.png  00000024.png  00000034.png	00000044.png  00000054.png  00000064.png  00000074.png
+00000005.png  00000015.png  00000025.png  00000035.png	00000045.png  00000055.png  00000065.png  00000075.png
+00000006.png  00000016.png  00000026.png  00000036.png	00000046.png  00000056.png  00000066.png  00000076.png
+00000007.png  00000017.png  00000027.png  00000037.png	00000047.png  00000057.png  00000067.png
+00000008.png  00000018.png  00000028.png  00000038.png	00000048.png  00000058.png  00000068.png
+00000009.png  00000019.png  00000029.png  00000039.png	00000049.png  00000059.png  00000069.png
+00000010.png  00000020.png  00000030.png  00000040.png	00000050.png  00000060.png  00000070.png
+% pngquant 256 *.png
+% ls
+00000001-fs8.png  00000014-fs8.png  00000027-fs8.png  00000040-fs8.png	00000053-fs8.png  00000066-fs8.png
+00000001.png	  00000014.png	    00000027.png      00000040.png	00000053.png	  00000066.png
+00000002-fs8.png  00000015-fs8.png  00000028-fs8.png  00000041-fs8.png	00000054-fs8.png  00000067-fs8.png
+00000002.png	  00000015.png	    00000028.png      00000041.png	00000054.png	  00000067.png
+00000003-fs8.png  00000016-fs8.png  00000029-fs8.png  00000042-fs8.png	00000055-fs8.png  00000068-fs8.png
+00000003.png	  00000016.png	    00000029.png      00000042.png	00000055.png	  00000068.png
+00000004-fs8.png  00000017-fs8.png  00000030-fs8.png  00000043-fs8.png	00000056-fs8.png  00000069-fs8.png
+00000004.png	  00000017.png	    00000030.png      00000043.png	00000056.png	  00000069.png
+00000005-fs8.png  00000018-fs8.png  00000031-fs8.png  00000044-fs8.png	00000057-fs8.png  00000070-fs8.png
+00000005.png	  00000018.png	    00000031.png      00000044.png	00000057.png	  00000070.png
+00000006-fs8.png  00000019-fs8.png  00000032-fs8.png  00000045-fs8.png	00000058-fs8.png  00000071-fs8.png
+00000006.png	  00000019.png	    00000032.png      00000045.png	00000058.png	  00000071.png
+00000007-fs8.png  00000020-fs8.png  00000033-fs8.png  00000046-fs8.png	00000059-fs8.png  00000072-fs8.png
+00000007.png	  00000020.png	    00000033.png      00000046.png	00000059.png	  00000072.png
+00000008-fs8.png  00000021-fs8.png  00000034-fs8.png  00000047-fs8.png	00000060-fs8.png  00000073-fs8.png
+00000008.png	  00000021.png	    00000034.png      00000047.png	00000060.png	  00000073.png
+00000009-fs8.png  00000022-fs8.png  00000035-fs8.png  00000048-fs8.png	00000061-fs8.png  00000074-fs8.png
+00000009.png	  00000022.png	    00000035.png      00000048.png	00000061.png	  00000074.png
+00000010-fs8.png  00000023-fs8.png  00000036-fs8.png  00000049-fs8.png	00000062-fs8.png  00000075-fs8.png
+00000010.png	  00000023.png	    00000036.png      00000049.png	00000062.png	  00000075.png
+00000011-fs8.png  00000024-fs8.png  00000037-fs8.png  00000050-fs8.png	00000063-fs8.png  00000076-fs8.png
+00000011.png	  00000024.png	    00000037.png      00000050.png	00000063.png	  00000076.png
+00000012-fs8.png  00000025-fs8.png  00000038-fs8.png  00000051-fs8.png	00000064-fs8.png
+00000012.png	  00000025.png	    00000038.png      00000051.png	00000064.png
+00000013-fs8.png  00000026-fs8.png  00000039-fs8.png  00000052-fs8.png	00000065-fs8.png
+00000013.png	  00000026.png	    00000039.png      00000052.png	00000065.png
+% mkdir org
+% mv &lt;-&gt;.png org
+% ls
+00000001-fs8.png  00000014-fs8.png  00000027-fs8.png  00000040-fs8.png	00000053-fs8.png  00000066-fs8.png
+00000002-fs8.png  00000015-fs8.png  00000028-fs8.png  00000041-fs8.png	00000054-fs8.png  00000067-fs8.png
+00000003-fs8.png  00000016-fs8.png  00000029-fs8.png  00000042-fs8.png	00000055-fs8.png  00000068-fs8.png
+00000004-fs8.png  00000017-fs8.png  00000030-fs8.png  00000043-fs8.png	00000056-fs8.png  00000069-fs8.png
+00000005-fs8.png  00000018-fs8.png  00000031-fs8.png  00000044-fs8.png	00000057-fs8.png  00000070-fs8.png
+00000006-fs8.png  00000019-fs8.png  00000032-fs8.png  00000045-fs8.png	00000058-fs8.png  00000071-fs8.png
+00000007-fs8.png  00000020-fs8.png  00000033-fs8.png  00000046-fs8.png	00000059-fs8.png  00000072-fs8.png
+00000008-fs8.png  00000021-fs8.png  00000034-fs8.png  00000047-fs8.png	00000060-fs8.png  00000073-fs8.png
+00000009-fs8.png  00000022-fs8.png  00000035-fs8.png  00000048-fs8.png	00000061-fs8.png  00000074-fs8.png
+00000010-fs8.png  00000023-fs8.png  00000036-fs8.png  00000049-fs8.png	00000062-fs8.png  00000075-fs8.png
+00000011-fs8.png  00000024-fs8.png  00000037-fs8.png  00000050-fs8.png	00000063-fs8.png  00000076-fs8.png
+00000012-fs8.png  00000025-fs8.png  00000038-fs8.png  00000051-fs8.png	00000064-fs8.png  org
+00000013-fs8.png  00000026-fs8.png  00000039-fs8.png  00000052-fs8.png	00000065-fs8.png
+% cd ..
+% mplayer &quot;mf://cat/*.png&quot; -vo gif89a:output=ninja-cat-pngquant.gif 
+</pre>
+<p>
+とこんな感じでできあがり。zshでは&lt;-&gt;は数字だけを意味するので簡単に仕分けることが可能。<br>
+<img src="../files/ninja-cat.gif" alt="mplayerで減色処理">
+<img src="../files/ninja-cat-pngquant.gif" alt="pngquantで減色処理">
+</p>
+<!-- section end -->
+</div>
+<!-- 2010/07/26 end -->
+
+
+
+<hr class="hide">
+<!-- 2010/07/27 start -->
+<h2><a name="20100727" href="201007c.html#20100727">2010-07-27 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="201007271" title="201007271" href="201007c.html#201007271">■</a> 
+[Gif] convertでアニメーションGIF</h3>
+<p>
+ImageMagickのconvertを使う方法もある。<br>
+各フレームをばらばらにPNGへmplayerで落とし込むとこまでは同じ。<br>
+まずはdelayの計算。3秒を枚数で割って100すると10msec単位のdelayが出る。
+</p>
+<pre>
+% echo $[3.0 / `ls | wc -l` * 100]
+3.9473684210526314
+</pre>
+<p>
+これを使って一気にGIFに変換。
+</p>
+<pre>
+% convert -delay 4 *.png ninja-cat-convert.gif
+% ls -o ninja-cat*.gif   
+-rw-r--r-- 1 eban 3947147 2010-07-28 00:36 ninja-cat-convert.gif
+-rw-r--r-- 1 eban  587975 2010-07-27 00:15 ninja-cat-pngquant.gif
+-rw-r--r-- 1 eban  457208 2010-07-27 00:12 ninja-cat.gif
+</pre>
+<p>
+できあがりがなんかでかいな。その分きれいだけど。
+<img src="../files/ninja-cat-convert.gif" alt="convertで減色処理">
+</p>
+<!-- section end -->
+</div>
+<!-- 2010/07/27 end -->
+
+
+
+<hr class="hide">
+<!-- 2010/07/28 start -->
+<h2><a name="20100728" href="201007c.html#20100728">2010-07-28 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="201007281" title="201007281" href="201007c.html#201007281">■</a> 
+[Gif] mplayerとconvertで作ったアニメーションGIFの違い</h3>
+<p>
+昨日サイズがやけに違うなで終わったが一応調べてみた。<br>
+ImageMagickのidentifyで見てみるとmplayerで作った画像は
+</p>
+<pre>
+% identify ninja-cat.gif        
+ninja-cat.gif[0] GIF 320x240 320x240+0+0 8-bit PseudoClass 256c 446KiB 0.000u 0:00.000
+ninja-cat.gif[1] GIF 320x240 320x240+0+0 8-bit PseudoClass 256c 446KiB 0.000u 0:00.000
+ninja-cat.gif[2] GIF 320x240 320x240+0+0 8-bit PseudoClass 256c 446KiB 0.000u 0:00.000
+ninja-cat.gif[3] GIF 320x240 320x240+0+0 8-bit PseudoClass 256c 446KiB 0.000u 0:00.000
+ninja-cat.gif[4] GIF 320x240 320x240+0+0 8-bit PseudoClass 256c 446KiB 0.000u 0:00.000
+ninja-cat.gif[5] GIF 320x240 320x240+0+0 8-bit PseudoClass 256c 446KiB 0.000u 0:00.000
+ninja-cat.gif[6] GIF 320x240 320x240+0+0 8-bit PseudoClass 256c 446KiB 0.000u 0:00.000
+ninja-cat.gif[7] GIF 320x240 320x240+0+0 8-bit PseudoClass 256c 446KiB 0.000u 0:00.000
+ninja-cat.gif[8] GIF 320x240 320x240+0+0 8-bit PseudoClass 256c 446KiB 0.000u 0:00.000
+ninja-cat.gif[9] GIF 320x240 320x240+0+0 8-bit PseudoClass 256c 446KiB 0.000u 0:00.000
+ninja-cat.gif[10] GIF 320x240 320x240+0+0 8-bit PseudoClass 256c 446KiB 0.000u 0:00.000
+ninja-cat.gif[11] GIF 320x240 320x240+0+0 8-bit PseudoClass 256c 446KiB 0.000u 0:00.000
+ninja-cat.gif[12] GIF 320x240 320x240+0+0 8-bit PseudoClass 256c 446KiB 0.000u 0:00.000
+ninja-cat.gif[13] GIF 320x240 320x240+0+0 8-bit PseudoClass 256c 446KiB 0.000u 0:00.000
+ninja-cat.gif[14] GIF 320x240 320x240+0+0 8-bit PseudoClass 256c 446KiB 0.000u 0:00.000
+</pre>
+<p>
+のように3秒間で15枚。一方convertのほうは76枚。単にこの違いだった。<br>
+mplayerのdefaultは5fpsなんだな、ってman mplayerに書いてあった。<br>
+だからきれいに見えたのか。
+</p>
+<!-- section end -->
+</div>
+<!-- 2010/07/28 end -->
+
+
+
+<hr class="hide">
+<!-- 2010/07/29 start -->
+<h2><a name="20100729" href="201007c.html#20100729">2010-07-29 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="201007291" title="201007291" href="201007c.html#201007291">■</a> 
+[Gmail] spamを監視して1ヶ月</h3>
+<p>
+やっとGmailのspam問題も落ち着いてきた。もうspamフォルダを監視しなくてもよさげだ。
+
+</p>
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="201007292" title="201007292" href="201007c.html#201007292">■</a> 
+<a href="http://golf.shinh.org/p.rb?delete+duplicate+lines">[Golf] delete duplicate linesの秘密</a></h3>
+<p>
+sort | uniq -cしてみたら利用できそうな規則性が。
+<a href="http://golf.shinh.org/p.rb?delete+duplicate+lines#wake">wake</a>で使ってみた。
+</p>
+<p>
+してみたらなどと他人事のように書いているが、おれが出した問題なんだよなあ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2010/07/29 end -->
+
+
+
+<hr class="hide">
+<!-- 2010/07/30 start -->
+<h2><a name="20100730" href="201007c.html#20100730">2010-07-30 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="201007301" title="201007301" href="201007c.html#201007301">■</a> 
+<a href="http://rakudo.org/announce/rakudo-star/2010.07">[Perl6] Rakudo star</a></h3>
+<p>
+起動するまでが遅い。parrotがそういうもんなんだっけ？
+</p>
+<pre>
+% time ./perl6 -v              
+
+This is Rakudo Perl 6, version 2010.07-47-g9fd5eaa built on parrot 2.6.0
+
+Copyright 2008-2010, The Perl Foundation
+
+./perl6 -v  0.55s user 0.04s system 100% cpu 0.588 total
+</pre>
+<p>
+Rubyと同じ書き方もできる。
+</p>
+<pre>
+% ./perl6 -e 'print &quot;a b c&quot;.split(&quot; &quot;).join(&quot;:&quot;), &quot;\n&quot;'     
+a:b:c
+% ruby -e 'print &quot;a b c&quot;.split(&quot; &quot;).join(&quot;:&quot;), &quot;\n&quot;'
+a:b:c
+</pre>
+<p>
+というかもうまったく別の言語だよね。<br>
+s///とかy///もチェーンできればなあ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2010/07/30 end -->
+
+
+
+<hr class="hide">
+<!-- 2010/07/31 start -->
+<h2><a name="20100731" href="201007c.html#20100731">2010-07-31 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="201007311" title="201007311" href="201007c.html#201007311">■</a> 
+<a href="http://ubuntu-tweak.com/">[Ubuntu] Ubuntu Tweak</a></h3>
+<p>
+パッケージクリーナーが便利。なるほど。PPAってのがあるんだな。
+</p>
+<!-- section end -->
+</div>
+<!-- 2010/07/31 end -->
+
+<hr>
+<div>
+<a href="201007b.html">&lt;Prev(,)</a> | 
+<a href="201008a.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

@@ -1,0 +1,610 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2013-10-b</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="201310a.html">
+<link rel="next" href="201310c.html">
+
+<link rel="stylesheet" type="text/css" href="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.css">
+<script type="text/javascript" src="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.js"></script>
+<script type="text/javascript">
+<!--       
+$(document).ready(function() {
+  prettyPrint();
+});
+-->
+</script>
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2013年10月中旬〜</p>
+<hr>
+<div>
+<a href="201310a.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="201310c.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2013/10/11 start -->
+<h2><a name="20131011" href="201310b.html#20131011">2013-10-11 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="201310111" title="201310111" href="201310b.html#201310111">■</a> 
+Android版rubyを作る</h3>
+<p>
+akrさんからmake-standalone-toolchain.shすれば--sysroot不要との情報を得た。
+</p>
+<pre>
+% $NDK_ROOT/build/tools/make-standalone-toolchain.sh --install-dir=$HOME/android/arm-linux-androideabi
+</pre>
+<p>
+として、PATHに$HOME/android/arm-linux-androideabi/binを加えればok。
+</p>
+<p>
+rubyはtrunkを使うのでtrunk版rubyもインストールしておく。<br>
+あとはこんな感じで。
+</p>
+<pre>
+% trunk=/some/where/ruby/trunk
+% mkdir trunk-android
+% cd trunk-android
+% ac_cv_func_getpgrp_void=yes ac_cv_func_setpgrp_void=yes \
+  $trunk/configure \
+  --target=arm-linux-android --host=arm-linux-androideabi --build=i686-linux \
+  -C --disable-rubygems --prefix=/data/local/tmp/ruby
+% make main
+% make DESTDIR=/tmp/dest install-nodoc
+% arm-linux-androideabi-strip --strip-unneeded /tmp/dest/data/local/tmp/ruby/{bin/ruby,lib/**/*.so}
+% rm /tmp/dest/data/local/tmp/ruby/lib/libruby-static.a
+% tar cfvz ~/ruby-android.tar.gz -C /tmp/dest/data/local/tmp ruby
+% ls -oh ~/ruby-android.tar.gz
+-rw-r--r-- 1 eban 4.5M 2013-10-11 21:23:46 /home/eban/ruby-android.tar.gz
+% adb push ~/ruby-android.tar.gz /data/local/tmp
+</pre>
+<p>
+あとはadb shellでtarballを展開すればいいが、tarがないのでbusyboxを使う。<br>
+<a href="http://www.busybox.net/downloads/binaries/">Index of /downloads/binaries</a></p>
+<pre>
+% wget http://www.busybox.net/downloads/binaries/1.21.1/busybox-armv7l
+% chmod +x busybox-armv7l
+% adb push busybox-armv7l /data/local/tmp
+% adb shell /data/local/tmp/busybox-armv7l tar xfv /data/local/tmp/ruby-android.tar.gz -C /data/local/tmp
+% adb shell /data/local/tmp/ruby/bin/ruby -v                       
+ruby 2.1.0dev (2013-10-11 trunk 43254) [arm-linux-android]
+</pre>
+<p>
+できあがり。
+</p>
+<!-- section end -->
+</div>
+<!-- 2013/10/11 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/10/12 start -->
+<h2><a name="20131012" href="201310b.html#20131012">2013-10-12 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="201310121" title="201310121" href="201310b.html#201310121">■</a> 
+Ubuntuでadb</h3>
+<p>
+本家からもろもろダウンロードしてもいいが、<br>
+Ubuntuならもっと簡単にandroid-tools-adbをインストールすればok。<br>
+あとはdeviceに合わせて/lib/udev/rules.dの下に設定ファイルを用意する。<br>
+/var/log/syslogかlsusbコマンドでidVendorを確認すればいい。
+</p>
+<pre>
+% lsusb | grep Google
+Bus 002 Device 008: ID 18d1:4e41 Google Inc.
+% echo 'SUBSYSTEM==&quot;usb&quot;, SYSFS{idVendor}==&quot;18d1&quot;, MODE=&quot;0666&quot;' | sudo tee /lib/udev/rules.d/51-android.rules
+SUBSYSTEM==&quot;usb&quot;, SYSFS{idVendor}==&quot;18d1&quot;, MODE=&quot;0666&quot;
+</pre>
+<p>
+これでdeviceをつなげばadbが使えるようになる。
+</p>
+<pre>
+% adb devices
+* daemon not running. starting it now on port 5037 *
+* daemon started successfully *
+List of devices attached 
+015d256851181c0e	device
+</pre>
+<p>
+permissionがどうのうこうの出るときはkill-serverしてsudoで。
+</p>
+<pre>
+% adb devices
+* daemon not running. starting it now on port 5037 *
+* daemon started successfully *
+List of devices attached
+????????????	no permissions
+
+% adb shell
+error: insufficient permissions for device
+% adb kill-server
+% sudo adb start-server
+% adb devices
+* daemon not running. starting it now on port 5037 *
+* daemon started successfully *
+List of devices attached
+EP7321C0J4	device
+</pre>
+<!-- section end -->
+</div>
+<!-- 2013/10/12 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/10/13 start -->
+<h2><a name="20131013" href="201310b.html#20131013">2013-10-13 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="201310131" title="201310131" href="201310b.html#201310131">■</a> 
+adb shellの引数の扱い</h3>
+<p>
+いったいどうなっているのか？
+</p>
+<pre>
+% adb shell /data/local/tmp/ruby/bin/ruby -e 'puts &quot;Hello, world!&quot;'
+-e:1: syntax error, unexpected end-of-input
+</pre>
+<p>
+これじゃわからないのでARGVを使って表示してみる。
+</p>
+<pre>
+% adb shell /data/local/tmp/ruby/bin/ruby -e 'p ARGV' -- -e 'puts &quot;Hello, world!&quot;'
+[&quot;-e&quot;, &quot;puts Hello,&quot;, &quot;world!&quot;]
+</pre>
+<p>
+かなり予想外だ。まあ、これじゃsyntax errorになるわけだ。ソース探して見てみるか。
+</p>
+<!-- section end -->
+</div>
+<!-- 2013/10/13 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/10/14 start -->
+<h2><a name="20131014" href="201310b.html#20131014">2013-10-14 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="201310141" title="201310141" href="201310b.html#201310141">■</a> 
+Sony Readerのタイトル順</h3>
+<p>
+Reader Storeで買った書籍をタイトル順でソートすると謎の順番になるが、<br>
+何の順番かやっとわかった。シリーズ物14冊の場合。
+</p>
+<pre>
+タイトル1
+タイトル9
+タイトル5
+タイトル3
+タイトル10
+タイトル11
+タイトル13
+タイトル12
+タイトル14
+タイトル7
+タイトル2
+タイトル8
+タイトル4
+タイトル6
+</pre>
+<p>
+いち、きゅう、ご、さん、って数字を50音順で並べてたんだな。1枚クイズか。<br>
+ってそんなソートされて誰が喜ぶのか。
+</p>
+<!-- section end -->
+</div>
+<!-- 2013/10/14 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/10/15 start -->
+<h2><a name="20131015" href="201310b.html#20131015">2013-10-15 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="201310151" title="201310151" href="201310b.html#201310151">■</a> 
+1.9.3以降のrubyでwarning: mismatched indentationsを黙らせる</h3>
+<p>
+マジコメで対応可能。
+</p>
+<pre>
+% cat &gt; foo.rb
+  if true
+p :hoge
+end
+% ruby -w foo.rb
+foo.rb:3: warning: mismatched indentations at 'end' with 'if' at 1
+:hoge
+% echo '# -*- warn-indent: false -*-' | cat - foo.rb &gt; bar.rb
+% cat bar.rb
+# -*- warn-indent: false -*-
+  if true
+p :hoge
+end
+% ruby -w bar.rb
+:hoge
+</pre>
+<p>
+こんな感じで # -*- warn-indent: false -*- を入れればいい。defaultはtrueになっている。<br>
+何度でも使えるのである範囲内だけ黙らせることも可能。
+</p>
+<p>
+実はindentのcheckは対応するものだけしか見てない。<br>
+その中身のindentがどうなっていようが関係ない。
+</p>
+<pre>
+% cat foo.rb
+  if true
+p :hoge
+    p :hoge
+  end
+% ruby -w foo.rb
+:hoge
+:hoge
+</pre>
+<!-- section end -->
+</div>
+<!-- 2013/10/15 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/10/16 start -->
+<h2><a name="20131016" href="201310b.html#20131016">2013-10-16 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="201310161" title="201310161" href="201310b.html#201310161">■</a> 
+<a href="http://d.hatena.ne.jp/eel3/20131014/1381684451">tac(1)やtail -rの代替品</a></h3>
+<p>
+行番号つけてsort -nrして行番号を外すのが簡単かな。
+</p>
+<pre>
+nl -ba -s:|sort -nr|sed 's/[^:]*://'
+</pre>
+<p>
+-baしないと空行に番号がつかない。<br>
+区切りはタブのままでもいいが、BSDのsedは\tが使えないので生のタブを使うことになる。
+</p>
+<p>
+sort -sk0.0,0.0rでいけるかと思ったが、さすがに0は受け付けてくれなかった。<br>
+幅0で全部同じものとしてソートするがstableなのでそのままになり-rで逆順にする作戦。<br>
+まあ、そもそも-sをつけると-rが無効になるようなので全然だめだめなんだけど。
+</p>
+<!-- section end -->
+</div>
+<!-- 2013/10/16 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/10/17 start -->
+<h2><a name="20131017" href="201310b.html#20131017">2013-10-17 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="201310171" title="201310171" href="201310b.html#201310171">■</a> 
+<a href="http://www.m-on.jp/chart/karaoke-countdown20/">M-ON! カラオケカウントダウン 20</a></h3>
+<p>
+2年ぐらい見てて思ったんだけど、順位に変動はあっても毎週ほとんど同じ曲がランクインしてる気がする。<br>
+どんなもんか調べてみるかとweb page見に行ったら、なんとTSV形式でデータが置いてあった。<br>
+やるなM-ON!。<br>
+過去2年分ぐらいを取ってくるスクリプトを作るか。
+</p>
+<!-- section end -->
+</div>
+<!-- 2013/10/17 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/10/18 start -->
+<h2><a name="20131018" href="201310b.html#20131018">2013-10-18 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="201310181" title="201310181" href="201310b.html#201310181">■</a> 
+カラオケランキングを集計してみた</h3>
+<p>
+残念ながら過去30週のデータしか残ってなかった。<br>
+データをダウンロードするスクリプトはこんな感じ。<br>
+例によって\Kを使ってgrepで抜き出している。<br>
+（追記) やっぱりやめて抜き出したものをそのまま使うようにした。<br>
+あと
+<a href="201310a.html#201310051">-Jオプション</a>が大事。
+</p>
+<pre>
+% cat m-on.sh
+#! /bin/bash
+
+base='http://www.m-on.jp'
+cd20='chart/karaoke-countdown20'
+tsv='chart/download'
+path=$cd20
+for i in {1..50}; do
+  echo &quot;$base/$path/&quot;
+  ids=($(curl -s &quot;$base/$path/&quot; | grep -Po &quot;chart/(karaoke-countdown20|download)/\d+&quot;))
+  curl -JORC- &quot;$base/${ids[0]}/&quot;
+  path=&quot;${ids[1]}&quot;
+  if [ -z &quot;$path&quot; ]; then
+    echo no data
+    break
+  fi
+done
+% ls *.tsv
+karaoke-countdown20_20130320.tsv  karaoke-countdown20_20130605.tsv  karaoke-countdown20_20130814.tsv
+karaoke-countdown20_20130327.tsv  karaoke-countdown20_20130612.tsv  karaoke-countdown20_20130821.tsv
+karaoke-countdown20_20130403.tsv  karaoke-countdown20_20130619.tsv  karaoke-countdown20_20130828.tsv
+karaoke-countdown20_20130410.tsv  karaoke-countdown20_20130626.tsv  karaoke-countdown20_20130904.tsv
+karaoke-countdown20_20130417.tsv  karaoke-countdown20_20130703.tsv  karaoke-countdown20_20130911.tsv
+karaoke-countdown20_20130424.tsv  karaoke-countdown20_20130710.tsv  karaoke-countdown20_20130918.tsv
+karaoke-countdown20_20130501.tsv  karaoke-countdown20_20130717.tsv  karaoke-countdown20_20130925.tsv
+karaoke-countdown20_20130515.tsv  karaoke-countdown20_20130724.tsv  karaoke-countdown20_20131002.tsv
+karaoke-countdown20_20130522.tsv  karaoke-countdown20_20130731.tsv  karaoke-countdown20_20131009.tsv
+karaoke-countdown20_20130529.tsv  karaoke-countdown20_20130807.tsv  karaoke-countdown20_20131016.tsv
+% iconv -fcp932 karaoke-countdown20_20131016.tsv
+順位	前週	動き	曲名	アーティスト
+1	1	stay	恋するフォーチュンクッキー	AKB48
+2	2	stay	女々しくて	ゴールデンボンバー
+3	3	stay	ハナミズキ	一青 窈
+4	4	stay	栄光の架橋	ゆず
+5	5	stay	キセキ	GReeeeN
+6	6	stay	チェリー	スピッツ
+7	7	stay	天体観測	BUMP OF CHICKEN
+8	9	up	366日	HY
+9	8	down	Story	AI
+10	10	stay	奏（かなで）	スキマスイッチ
+11	19	up	愛をこめて花束を	Superfly
+12		up	雪の華	中島美嘉
+13	12	down	ヘビーローテーション	AKB48
+14	14	stay	純恋歌	湘南乃風
+15	16	up	シングルベッド	シャ乱Ｑ
+16	17	up	愛のうた	倖田來未
+17	18	up	睡蓮花	湘南乃風
+18	13	down	愛唄	GReeeeN
+19	22	up	三日月	絢香
+20	23	up	I LOVE YOU	尾崎豊
+</pre>
+<p>
+これを全部まとめて順位は無視してカウントする。
+</p>
+<pre>
+% cat *.tsv | iconv -fcp932 | cut -f4,5 | grep -v $'^曲名\t' | sort | uniq -c | sort -nr | nl
+     1	     30 純恋歌	湘南乃風
+     2	     30 栄光の架橋	ゆず
+     3	     30 女々しくて	ゴールデンボンバー
+     4	     30 ヘビーローテーション	AKB48
+     5	     30 ハナミズキ	一青 窈
+     6	     30 チェリー	スピッツ
+     7	     30 キセキ	GReeeeN
+     8	     30 Story	AI
+     9	     30 366日	HY
+    10	     29 愛唄	GReeeeN
+    11	     29 愛のうた	倖田來未
+    12	     29 天体観測	BUMP OF CHICKEN
+    13	     25 シングルベッド	シャ乱Ｑ
+    14	     23 睡蓮花	湘南乃風
+    15	     17 花火	三代目J Soul Brothers
+    16	     13 行くぜっ！怪盗少女	ももいろクローバー
+    17	     12 奏（かなで）	スキマスイッチ
+    18	     12 フライングゲット	AKB48
+    19	     12 RPG	SEKAI NO OWARI
+    20	     11 桜	コブクロ
+    21	     11 スターラブレイション	ケラケラ
+    22	     11 I LOVE YOU	尾崎豊
+    23	     10 道	EXILE
+    24	      9 夏祭り	Whiteberry
+    25	      9 3月9日	レミオロメン
+    26	      7 最後の雨	中西保志
+    27	      7 インベーダーインベーダー	きゃりーぱみゅぱみゅ
+    28	      6 涙そうそう	夏川りみ
+    29	      6 恋するフォーチュンクッキー	AKB48
+    30	      6 夏色	ゆず
+    31	      5 三日月	絢香
+    32	      5 にんじゃりばんばん	きゃりーぱみゅぱみゅ
+    33	      4 島人ぬ宝	BEGIN
+    34	      4 さくら	ケツメイシ
+    35	      4 SUMMER NUDE '13	山下智久
+    36	      3 粉雪	レミオロメン
+    37	      3 桜坂	福山雅治
+    38	      3 会いたくて 会いたくて	西野カナ
+    39	      2 愛をこめて花束を	Superfly
+    40	      2 Lovers Again	EXILE
+    41	      1 雪の華	中島美嘉
+</pre>
+<p>
+うむ。やはりカラオケはあまり変化しないんだな。30週連続が9曲もある。
+</p>
+<!-- section end -->
+</div>
+<!-- 2013/10/18 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/10/19 start -->
+<h2><a name="20131019" href="201310b.html#20131019">2013-10-19 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="201310191" title="201310191" href="201310b.html#201310191">■</a> 
+zshの配列アクセス方法をbashと同じようにする</h3>
+<p>
+bashとzshでは配列のインデックスの始まりが違う。
+</p>
+<pre>
+% bash -c 'foo=(a b c);echo ${foo[0]}' 
+a
+% zsh -c 'foo=(a b c);echo ${foo[1]}' 
+a
+</pre>
+<p>
+使ってて1から始まるのは結構使いづらい。<br>
+大抵こういうときはksh_なんとかってやつでsetoptできるようになってる。<br>
+この場合はksh_arraysだ。
+</p>
+<pre>
+% zsh -c 'setopt ksh_arrays;foo=(a b c);echo ${foo[0]}'
+a
+</pre>
+<p>
+これで0から始まるようになる。
+</p>
+<!-- section end -->
+</div>
+<!-- 2013/10/19 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/10/20 start -->
+<h2><a name="20131020" href="201310b.html#20131020">2013-10-20 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="201310201" title="201310201" href="201310b.html#201310201">■</a> 
+adb shellの引数処理</h3>
+<p>
+ソースを見たら引数に空白が含まれていたら、その引数を&quot;&quot;で囲むという処理になっていた。<br>
+だからさらに&quot;が含まれていたら当然おかしなことになる。なんとも中途半端だな。
+</p>
+<p>
+<pre>
+% adb shell /data/local/tmp/ruby/bin/ruby -e 'puts &quot;Hello, world!&quot;'
+-e:1: syntax error, unexpected end-of-input
+</pre>
+</p>
+<p>
+これは以下のように実行したのと同じ結果になる。
+</p>
+<pre>
+% sh -c 'ruby -e &quot;puts &quot;Hello, world&quot;&quot;'  
+-e:1: syntax error, unexpected end-of-input
+</pre>
+<p>
+環境変数ABD_TRACEで一応確認できる。<br>
+rubyじゃなくても同じなのでechoで
+</p>
+<pre>
+% ADB_TRACE=1 adb shell echo 'puts &quot;Hello, world!&quot;'
+adb.c::main():Handling commandline()
+commandline.c::adb_commandline():interactive shell loop. buff=shell:echo &quot;puts &quot;Hello, world!&quot;&quot;
+adb_client.c::_adb_connect():_adb_connect: host:version
+transport.c::writex():writex: fd=3 len=4: 30303063 000c
+transport.c::writex():writex: fd=3 len=12: 686f73743a76657273696f6e host:version
+transport.c::readx():readx: fd=3 wanted=4
+transport.c::readx():readx: fd=3 wanted=4 got=4
+4f4b4159 OKAY
+adb_client.c::_adb_connect():_adb_connect: return fd 3
+adb_client.c::adb_connect():adb_connect: service shell:echo &quot;puts &quot;Hello, world!&quot;&quot;
+transport.c::readx():readx: fd=3 wanted=4
+transport.c::readx():readx: fd=3 wanted=4 got=4
+30303034 0004
+transport.c::readx():readx: fd=3 wanted=4
+transport.c::readx():readx: fd=3 wanted=4 got=4
+30303166 001f
+adb_client.c::_adb_connect():_adb_connect: shell:echo &quot;puts &quot;Hello, world!&quot;&quot;
+transport.c::writex():writex: fd=3 len=4: 30303132 0012
+transport.c::writex():writex: fd=3 len=18: 686f73743a7472616e73706f72742d61 host:transport-a
+adb_client.c::switch_socket_transport():Switch transport in progress
+transport.c::readx():readx: fd=3 wanted=4
+transport.c::readx():readx: fd=3 wanted=4 got=4
+4f4b4159 OKAY
+adb_client.c::switch_socket_transport():Switch transport success
+transport.c::writex():writex: fd=3 len=4: 30303231 0021
+transport.c::writex():writex: fd=3 len=33: 7368656c6c3a6563686f202270757473 shell:echo &quot;puts
+transport.c::readx():readx: fd=3 wanted=4
+transport.c::readx():readx: fd=3 wanted=4 got=4
+4f4b4159 OKAY
+adb_client.c::_adb_connect():_adb_connect: return fd 3
+adb_client.c::adb_connect():adb_connect: return fd 3
+commandline.c::adb_commandline():about to read_and_dump(fd=3)
+commandline.c::read_and_dump():read_and_dump(): pre adb_read(fd=3)
+commandline.c::read_and_dump():read_and_dump(): post adb_read(fd=3): len=20
+puts Hello, world!
+commandline.c::read_and_dump():read_and_dump(): pre adb_read(fd=3)
+commandline.c::read_and_dump():read_and_dump(): post adb_read(fd=3): len=0
+commandline.c::adb_commandline():read_and_dump() done.
+commandline.c::adb_commandline():interactive shell loop. return r=0
+</pre>
+<p>
+echo &quot;puts &quot;Hello, world!&quot;&quot; となっている。
+</p>
+<p>
+以上のことから
+</p>
+<pre>
+% adb shell /data/local/tmp/ruby/bin/ruby -e 'puts \&quot;Hello, world!\&quot;'
+Hello, world!
+</pre>
+<p>
+とすればいいわけだけど、わかりにくい。&quot;&quot;が出てこないように常に%q()とかを使うのはありだな。
+</p>
+<pre>
+% adb shell /data/local/tmp/ruby/bin/ruby -e 'puts %q(Hello, world!)'
+Hello, world!
+</pre>
+<!-- section end -->
+</div>
+<!-- 2013/10/20 end -->
+
+<hr>
+<div>
+<a href="201310a.html">&lt;Prev(,)</a> | 
+<a href="201310c.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

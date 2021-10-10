@@ -1,0 +1,604 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2002-11-b</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="200211a.html">
+<link rel="next" href="200211c.html">
+
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2002年11月中旬〜</p>
+<hr>
+<div>
+<a href="200211a.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="200211c.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2002/11/11 start -->
+<h2><a name="20021111" href="200211b.html#20021111">2002-11-11 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="200211111" title="200211111" href="200211b.html#200211111">■</a> 
+<a href="http://kt-www.jaist.ac.jp/~ttate/d/?date=20021110#p01">[Ruby] Ruby/DL</a></h3>
+<p>
+こちらではgcc 3.2でもサンプルはSEGVになりません({getch,msgbox{,2}}.rb)。
+1.7のほうはmake testでminiruby.exeが起動されるのでSEGVになりますが、
+これはruby.exeを使えば問題なし。
+Cygwin DLLの違いかなあ。
+</p>
+<pre>
+% cygcheck -c |egrep 'cygwin|gcc'
+cygwin              1.3.15-1            
+cygwin-doc          1.2-1               
+gcc                 3.2-1               
+gcc-mingw           3.2-20020817-1      
+gcc2                2.95.3-10           
+</pre>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200211112" title="200211112" href="200211b.html#200211112">■</a> 
+<a href="http://cygwin.com/">[Cygwin] Cygwin 1.3.15-2</a></h3>
+<p>
+いつの間にかcygwin-1.3.15-2が出てる。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/11/11 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/11/12 start -->
+<h2><a name="20021112" href="200211b.html#20021112">2002-11-12 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="200211121" title="200211121" href="200211b.html#200211121">■</a> 
+[vim-jp] rubydo, perldo</h3>
+<p>
+vimの正規表現がわからんという人がいた。そういう人は
+</p>
+<pre>
+:rubydo gsub(/foo/, &quot;bar&quot;)
+</pre>
+<p>
+とするといいかも。
+</p>
+<pre>
+:perldo s/foo/bar/g
+</pre>
+<p>
+のほうがよりらしい気もするが。
+どっちにしてもvimに静的にリンクするのは無駄なので、
+rubyは--enable-sharedで、perlはuseshrplib=trueで作っておいたほうがいい。
+vimを作るときは
+</p>
+<pre>
+--enable-rubyinterp --enable-perlinterp
+</pre>
+<p>
+が必要。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200211122" title="200211122" href="200211b.html#200211122">■</a> 
+<a href="http://znz.s1.xrea.com/t/?date=20021112#p02">[Ruby] Ruby/libcurl</a></h3>
+<p>
+extconf.rbがまずいです。
+</p>
+<pre>
+require 'mkmf'
+have_library('curl') and create_makefile(&quot;curl&quot;)
+</pre>
+<p>
+ぐらいかな。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/11/12 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/11/13 start -->
+<h2><a name="20021113" href="200211b.html#20021113">2002-11-13 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="200211131" title="200211131" href="200211b.html#200211131">■</a> 
+[Ruby] Ruby/GTK 0.30</h3>
+<p>
+mingw版を催促される。なんで作ってないかというと、
+-fnative-struct対応のgcc 3.xを待っていたからだ。
+</p>
+<pre>
+% touch foo.c       
+% i686-pc-cygwin-gcc -c -fnative-struct foo.c
+cc1: unrecognized option `-fnative-struct'
+% i686-pc-cygwin-gcc -dumpversion            
+3.2
+</pre>
+<p>
+cygwin MLでも何度か
+<a href="http://sources.redhat.com/ml/cygwin/2002-07/msg00229.html">話題</a>になっているようだが、未だ対応してない。
+しょうがないからクロスのほうもgcc 2.95.3を復活させよう。
+</p>
+
+<p>
+-fnative-structに対応してないとどうなるかというと
+<a href="200102a.html#2001020413S4">こう</a>なる。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200211132" title="200211132" href="200211b.html#200211132">■</a> 
+JARH</h3>
+<pre>
+print *&quot;Just another Ruby hacker,&quot;..&quot;Just another Ruby hacker,&quot;
+</pre>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/11/13 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/11/14 start -->
+<h2><a name="20021114" href="200211b.html#20021114">2002-11-14 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="200211141" title="200211141" href="200211b.html#200211141">■</a> 
+[Cygwin] gcc 2.95.3の復活</h3>
+<pre>
+% prefix=/usr/local/cygwin
+% old_prefix=/usr/local/cygwin-1.3.12
+% cp -av $old_prefix/bin/i686-pc-cygwin-gcc $prefix/bin/gcc-2.95.3
+% cp -av $old_prefix/lib/gcc-lib/i686-pc-cygwin/2.95.3-5 \
+  $prefix/lib/gcc-lib/i686-pc-cygwin/
+% i686-pc-cygwin-gcc-2.95.3 -v
+Reading specs from /usr/local/cygwin/lib/gcc-lib/i686-pc-cygwin/2.95.3-5/specs
+gcc version 2.95.3-5 (cygwin special)
+% echo 'main(){}' &gt;foo.c      
+% i686-pc-cygwin-gcc-2.95.3 foo.c
+</pre>
+<p>
+よさそう。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/11/14 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/11/15 start -->
+<h2><a name="20021115" href="200211b.html#20021115">2002-11-15 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="200211151" title="200211151" href="200211b.html#200211151">■</a> 
+<a href="http://www.ruby-lang.org/en/raa-list.rhtml?name=Ruby%2FGTK">[Ruby] Ruby/GTK 0.30</a></h3>
+<p>
+普通にpkgーconfigを使ってextconf.rbを実行。
+</p>
+<pre>
+% PKG_CONFIG_PATH=/usr/local/win32/gtk/lib/pkgconfig \
+  i386-cygwin-ruby extconf.rb \
+  --with-gtk-config='pkg-config gtk+-1.3-win32-production --define-variable=prefix=/usr/local/win32/gtk'
+</pre>
+<p>
+ってあまり普通じゃないね。
+できあがったsrc/MakefileのCCとLDSHAREDのi686-pc-cygwin-gccをi686-pc-cygwin-gcc-2.95.3へ変更してmake。
+</p>
+<pre>
+% make AR=i686-pc-cygwin-ar RANLIB=i686-pc-cygwin-ranlib
+</pre>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/11/15 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/11/16 start -->
+<h2><a name="20021116" href="200211b.html#20021116">2002-11-16 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="200211161" title="200211161" href="200211b.html#200211161">■</a> 
+[GNU] autoconf 2.56</h3>
+<p>
+2.55のconfig/install-shのpermisionにxが立ってなかったようで、
+2.56がすぐに出た。Rubyも問題なし。
+</p>
+<pre>
+- Spurious warnings caused by config.status.
+  This bug is benign, but painful: on some systems (typically
+  FreeBSD), warnings such as:
+
+     config.status: creating Makefile
+     mv: Makefile: set owner/group (was: 1357/0): Operation not permitted
+
+  could be issued.  This is fixed.
+</pre>
+<p>
+これってautoconfが原因だったのか。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200211162" title="200211162" href="200211b.html#200211162">■</a> 
+一青窈(ひとと・よう)/もらい泣き</h3>
+<p>
+なぜか今日はこの歌が頭の中をぐるぐる回っていた。
+一度しか聞いたことないのに。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/11/16 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/11/17 start -->
+<h2><a name="20021117" href="200211b.html#20021117">2002-11-17 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="200211171" title="200211171" href="200211b.html#200211171">■</a> 
+<a href="http://www.ruby-lang.org/en/raa-list.rhtml?name=ERB">[Ruby] ERB 2.0</a></h3>
+<p>
+更新。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200211172" title="200211172" href="200211b.html#200211172">■</a> 
+[Linux] prelink</h3>
+<p>
+glibc 2.3もインストールしたことだし試してみたけど、あまり速くなった気がしないなあ。
+<a href="http://gcc.gnu.org/ml/gcc/2001-05/msg01670.html">konqueror</a>だけすごい効果があるような。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200211173" title="200211173" href="200211b.html#200211173">■</a> 
+<a href="http://www.ruby-lang.org/en/raa-list.rhtml?name=bdb">[Ruby] bdb 0.3.6</a></h3>
+<p>
+更新。Berkeley DBも4.1.24に上げた。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200211174" title="200211174" href="200211b.html#200211174">■</a> 
+<a href="http://upx.sf.net/">[Linux] UPX 1.24</a></h3>
+<p>
+上げてみた。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200211175" title="200211175" href="200211b.html#200211175">■</a> 
+[VIM] -dで差分</h3>
+<p>
+vim -d foo.c~ foo.cって便利なんだけど、
+defaultの色使いはもうちょっとなんとかならかったんだろうか？
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/11/17 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/11/18 start -->
+<h2><a name="20021118" href="200211b.html#20021118">2002-11-18 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="200211181" title="200211181" href="200211b.html#200211181">■</a> 
+<a href="http://cvs.m17n.org/elisp/SEMI/">[Emacs] SEMI 1.14.5</a></h3>
+<p>
+更新。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200211182" title="200211182" href="200211b.html#200211182">■</a> 
+[Emacs] SKKとviper-mode</h3>
+<p>
+SKKとviperの組み合わせは非常に遅くなることがわかった。
+大して速くない俺の入力速度についてこれないんだから、かなり遅いと言える。
+viperをやめると嘘のように速くなる。
+SEMIとかの相性も悪い気もするしviperはやめるか？
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200211183" title="200211183" href="200211b.html#200211183">■</a> 
+[Mail] OutlookとPGP</h3>
+<p>
+OutlookだとPGP/MIMEは受け付けてくれないのか？
+cmail+SEMIで行こうと思ったのに。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200211184" title="200211184" href="200211b.html#200211184">■</a> 
+[Emacs] cmailとPGP</h3>
+<p>
+ちなむとGnuPGがインストールされてればdafault状態で
+</p>
+<pre>
+C-c C-x s (mime-edit-set-sign)
+C-c C-x e (mime-edit-set-encrypt)
+</pre>
+<p>
+で送信時にgpgが呼び出されて、署名や暗号化してくれる。
+<a href="http://mailcrypt.sf.net/">MailCrypt</a>でPGP ascii armor形式に変換するには
+</p>
+<pre>
+(setq cmail-use-mailcrypt t)
+(setq cmail-crypt-default-version &quot;GPG&quot;)
+</pre>
+<p>
+としといて
+</p>
+<pre>
+C-c / s (mc-sign)
+C-c / e (mc-encrypt)
+</pre>
+<p>
+でいける。verifyは勝手にやってくれる。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200211185" title="200211185" href="200211b.html#200211185">■</a> 
+[Emacs] viperをやめてみる</h3>
+<p>
+ほとんど違和感なく日記が書けてるなあ。
+でもついESCだの\だのを押してしまう癖はなくならない。*scratch*が\だらけだ。
+emacsのキーバインドはtcshを使ってるうちに覚えてしまったというのは内緒だ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200211186" title="200211186" href="200211b.html#200211186">■</a> 
+[VIM] &lt;C-G&gt;で日本語文字コードを表示</h3>
+<p>
+誰か書いてたけど、jvim3で&lt;C-G&gt;を押すと[E]とか[J]とか表示されて非常に便利だった。
+vim6にはないんだよね。
+echo &amp;fencでもいいけどどうせなら自前の&lt;C-G&gt;を作ってみるのも悪くない。
+というわけで
+<a href="../files/jvim3-c-g.vim">jvim3-c-g.vim</a>をでっちあげてみた。
+chの16進コードも出したかったが、vimで16進に変換する方法がわからず。
+しょうがないからif_rubyに頼るか？
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200211187" title="200211187" href="200211b.html#200211187">■</a> 
+<a href="http://www.rim.or.jp/support/announce/service/2002/nov18-1.html">[rimnet] shellサービス仕様変更のご連絡</a></h3>
+<p>
+待ってたらそのままアクセスできない仕様にしてしまうとは。
+これでrimを使う意味がなくなったよ、うむ。
+問題はメールアドレスだけだ。あ、200円コースにすればいいのか。
+あ、ほとんど見てないNetNewsもあったんだ。これって200円の場合はどうなるのか？
+明日調べよう。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/11/18 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/11/19 start -->
+<h2><a name="20021119" href="200211b.html#20021119">2002-11-19 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="200211191" title="200211191" href="200211b.html#200211191">■</a> 
+<a href="http://sources.redhat.com/bzip2/">[MinGW] bzip2 1.0.2</a></h3>
+<pre>
+--- bzip2.c~	2002-01-25 01:38:36.000000000 +0000
++++ bzip2.c	2002-11-19 13:59:50.000000000 +0000
+@@ -222,3 +222,3 @@
+ #   include &lt;fcntl.h&gt;
+-#   include &lt;sys\stat.h&gt;
++#   include &lt;sys/stat.h&gt;
+</pre>
+<p>
+と修正してmake。
+</p>
+<pre>
+% make CC='i686-pc-cygwin-gcc -mno-cygwin' \
+       AR=i686-pc-cygwin-ar \
+       RANLIB=i686-pc-cygwin-ranlib \
+       PREFIX=/usr/local/mingw
+</pre>
+<p>
+あ、./bzip2を実行するなあ。wine --でやってみるか。okだ。
+</p>
+<pre>
+% make PREFIX=/usr/local/mingw install
+</pre>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200211192" title="200211192" href="200211b.html#200211192">■</a> 
+<a href="http://www.ruby-lang.org/en/raa-list.rhtml?name=BZ2">[Ruby] BZ2 0.1.1</a></h3>
+<p>
+MinGWのほうはBZ2_bzWriteOpenをチェックするときにbzlib.hをincludeしないとundefinedになってしまう。
+have_libraryとhave_funcに分けよう。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200211193" title="200211193" href="200211b.html#200211193">■</a> 
+<a href="http://cygwin.com/ml/cygwin-announce/2002-11/msg00028.html">[Cygwin] Updated: binutils-20021117-1</a></h3>
+<p>
+将来def fileが要らなくなるらしい。
+</p>
+<pre>
+I've made a new version of binutils available for download.  This is
+just a refresh from sources.redhat.com.  A notable change is the
+addition of Egor Duda's --enable-runtime-pseudo-reloc option which
+allows almost transparent linking of dll's without the need of a def
+file.  However, this option requires functionality in the cygwin DLL
+which is not yet present.  Stay tuned.
+</pre>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/11/19 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/11/20 start -->
+<h2><a name="20021120" href="200211b.html#20021120">2002-11-20 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="200211201" title="200211201" href="200211b.html#200211201">■</a> 
+[VIM] if_ruby版</h3>
+<p>
+結局vim6で16進に変換する方法がわからず。
+作ってもいいけどif_rubyのほうが簡単そうなので全部rubyで書いてみる。
+ほとんどそのまま置き換えたのが
+<a href="../files/jvim3-c-g-ruby.vim">これ</a>だ。
+かなりいい加減だ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200211202" title="200211202" href="200211b.html#200211202">■</a> 
+[PGP] GnuPG</h3>
+<p>
+無造作にimportとするのものなんだし、keyringをそれなりに分類しようと思った。
+--keyringで指定する前に--no-default-keyringがないと意味がないようだ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200211203" title="200211203" href="200211b.html#200211203">■</a> 
+<a href="http://gcc.gnu.org/gcc-3.2/">[GNU] GCC 3.2.1</a></h3>
+<p>
+makeは明日だな。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/11/20 end -->
+
+<hr>
+<div>
+<a href="200211a.html">&lt;Prev(,)</a> | 
+<a href="200211c.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

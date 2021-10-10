@@ -1,0 +1,450 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2014-9-a</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="201408c.html">
+<link rel="next" href="201409b.html">
+
+<link rel="stylesheet" type="text/css" href="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.css">
+<script async type="text/javascript" src="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.js"></script>
+<script type="text/javascript">
+<!--       
+$(document).ready(function() {
+  prettyPrint();
+});
+-->
+</script>
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2014年9月上旬〜</p>
+<hr>
+<div>
+<a href="201408c.html" accesskey=",">&lt;Older(,)</a> | 
+<a href="201409b.html" accesskey=".">Newer(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2014/09/01 start -->
+<h2><a name="20140901" href="201409a.html#20140901">2014-09-01 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="201409011" title="201409011" href="201409a.html#201409011">■</a> 
+convertでものすごく重くなる処理をなんとかする</h3>
+<p>
+convertはとにかく画像を全部読み込もうとする。<br>
+圧縮されてるものは伸長される。<br>
+だから数が多いと途中から他のプロセスにも影響が出るくらい遅くなる。<br>
+ということはメモリに読み込ませなければいいわけで、<br>
+-limit area 8kとかで制限すればとりあえず回避できる。<br>
+mmapになるから遅くなるけど、確実に進む。-debug cacheでその様子がわかる。
+</p>
+<!-- section end -->
+</div>
+<!-- 2014/09/01 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/09/02 start -->
+<h2><a name="20140902" href="201409a.html#20140902">2014-09-02 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="201409021" title="201409021" href="201409a.html#201409021">■</a> 
+90度回転を改善</h3>
+<p>
+ページ数が増えると使い物にならなかった
+<a href="201406b.html#201406171">偶数奇数処理</a>だけど、<br>
+昨日の件を考えると-limit area 8kで一応解決する。<br>
+しかし遅い。368枚で4分。
+</p>
+<pre>
+% convert *.png -format &quot;convert %f -rotate %[fx:t%2?90:-90] -verbose /tmp/%f&quot; info:
+</pre>
+<p>
+よく見ると画像の内容はどうでもよくてscene numberのtとファイル名のfしか使ってない。<br>
+というわけで1画素だけ読み込むことにする。これでメモリの消費量を抑えられるはずだ。
+</p>
+<pre>
+% convert &quot;*.png[1x1+0+0]&quot; -format &quot;convert %f -rotate %[fx:t%2?90:-90] -verbose /tmp/%f&quot; info:
+</pre>
+<p>
+8秒ほどで終了した！
+</p>
+<pre>
+% convert *.png -crop 1x1+0+0 -format &quot;convert %f -rotate %[fx:t%2?90:-90] -verbose /tmp/%f&quot; info:
+</pre>
+<p>
+ではだめ。同じように見える処理だが、こちらは結局全部読み込んでから-cropの処理が走るので後の祭り。
+</p>
+<!-- section end -->
+</div>
+<!-- 2014/09/02 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/09/03 start -->
+<h2><a name="20140903" href="201409a.html#20140903">2014-09-03 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="201409031" title="201409031" href="201409a.html#201409031">■</a> 
+resizeとgeometryとextractとthumbnail</h3>
+<p>
+ImageMagickのconvertの話。<br>
+実はみんなサイズ指定した場合はresizeだったりするが、これってどう違うのか？<br>
+たとえば80%とか指定するとちゃんとみんな80%になる。<br>
+マニュアルを見るとextractとresizeは同じと書いてある。<br>
+geometryはあまりにもあっさりとした説明でよくわからない。<br>
+thumbnailはとにかく速いということだが、resizeと大して速さは変わらない。<br>
+一方GraphicsMagickだとthumbnailはめちゃくちゃ速い。resizeの倍ぐらい。<br>
+というわけで、GraphicsMagickでスキャン画像を-resizeするなら-thumbnailにしたほうがいい。<br>
+ただ文字の太さというか濃さがかなり違うように思うんだけど、フィルタかなにかが違うのか？
+</p>
+<pre>
+% gm benchmark -iterations 100 convert 100.pbm -resize 60% -crop 300x200+100+100 -strip resize-60.png
+Results: 1 threads 100 iter 10.25s user 10.26s total 9.747 iter/s 9.756 iter/cpu
+% gm benchmark -iterations 100 convert 100.pbm -thumbnail 60% -crop 300x200+100+100 -strip thumbnail-60.png
+Results: 1 threads 100 iter 4.13s user 4.88s total 20.492 iter/s 24.213 iter/cpu
+</pre>
+<p>
+<img src="../images/resize-60.png" alt="">
+<img src="../images/thumbnail-60.png" alt="">
+</p>
+<p>
+ImageMagickだとどちらも20秒以上かかっている。結果は同じ。
+</p>
+<pre>
+% convert -bench 100 100.pbm -resize 60% -crop 300x200+100+100 -strip resize-60.png      
+Performance[1]: 100i 4.871ips 1.000e 20.430u 0:20.530
+convert -bench 100 100.pbm -thumbnail 60% -crop 300x200+100+100 -strip thumbnail-60.png
+Performance[1]: 100i 4.666ips 1.000e 21.340u 0:21.430
+% cmp resize-60.png thumbnail-60.png
+% 
+</pre>
+<!-- section end -->
+</div>
+<!-- 2014/09/03 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/09/04 start -->
+<h2><a name="20140904" href="201409a.html#20140904">2014-09-04 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="201409041" title="201409041" href="201409a.html#201409041">■</a> 
+Morphology</h3>
+<p>
+<a href="http://www.imagemagick.org/Usage/morphology/">Morphology of Shapes</a>が面白い。スキャン画像に適用するには文字を太くしたいときに使えそう。<br>
+たとえばDilateメソッドで拡大させればいい。<br>
+kernelとしては十字1画素がまずは無難。<br>
+いろんなkernelの最小がこれになるのでどれでもいいが、<br>
+デフォルトが1になってるDiamondがいいかな。
+</p>
+<pre>
+% convert foo.png -negate -morphology Dilate Diamond -negate foo-mor.png
+</pre>
+<p>
+こんな感じでok。-morphologyは白が主なので黒い文字を拡大したければ-negateする必要がある。
+</p>
+<p>
+<img src="../images/foo-mor-append.png" alt="">
+</p>
+<p>
+なかなかいい感じ。ただ単位が画素なのでdpiが低い画像だとつぶれる。
+</p>
+<!-- section end -->
+</div>
+<!-- 2014/09/04 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/09/05 start -->
+<h2><a name="20140905" href="201409a.html#20140905">2014-09-05 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="201409051" title="201409051" href="201409a.html#201409051">■</a> 
+Google Chrome 要素の検証 Copy as cURL</h3>
+<p>
+要素の検証のNetworkはよく使うが、リンクの部分を右クリックするとCopy as cURLなんてものが！
+</p>
+<pre>
+curl 'https://www.google.co.jp/search?q=hoge&amp;hl=ja&amp;ie=UTF-8&amp;btnG=Google+%E6%A4%9C%E7%B4%A2&amp;domains=jarp.does.notwork.org&amp;sitesearch=jarp.does.notwork.org&amp;gws_rd=ssl' \
+-H 'accept-encoding: gzip,deflate,sdch' \
+-H 'accept-language: ja,en-US;q=0.8,en;q=0.6' \
+-H 'user-agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/33.0.1736.3 Safari/537.36' \
+-H 'accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8' \
+-H 'referer: http://jarp.does.notwork.org/diary/' \
+-H 'cookie: SID=&lt;省略&gt;' \
+-H 'x-client-data: CJa2yQEIpLbJAQiptskBCMaIygE=' \
+--compressed
+</pre>
+<p>
+一番下のGoogle 検索でhogeを検索させたのがこれ。<br>
+ボタンを押す前にPreserve logはチェックしておこう。画面が変わってもログが残る。<br>
+cookieが長いと大変なことになりそうだが、これは便利だ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2014/09/05 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/09/06 start -->
+<h2><a name="20140906" href="201409a.html#20140906">2014-09-06 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="201409061" title="201409061" href="201409a.html#201409061">■</a> 
+Morphology Erode</h3>
+<p>
+低解像度ではDilateだと穴がやはりつぶれ気味でなんとかならないかなとErodeを試してみた。<br>
+Erodeは白を縮小するが逆にいうと黒を拡大するわけで、-negateする必要もない。<br>
+</p>
+<p>
+でやってみたのが下図だが、なぜかいい感じにDilateよりも抑え気味な変換になっている。
+</p>
+<p>
+<img src="../images/100-erode-dilate.png" alt="">
+</p>
+<pre>
+% convert 100.pbm -crop 200x300+400+300 \
+  \( +clone -morphology erode diamond \) \
+  \( +clone -negate -morphology dilate diamond -negate \) \
+  -bordercolor gray -border 1x2 +append \
+  \( -gravity center -size 200x30 label:{Origial,Erode,Dilate} -border 1x2 +append \) \
+  -append 100-erode-dilate.png
+</pre>
+<p>
+単純に逆というわけでもないんだな。面白い。
+</p>
+<!-- section end -->
+</div>
+<!-- 2014/09/06 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/09/07 start -->
+<h2><a name="20140907" href="201409a.html#20140907">2014-09-07 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="201409071" title="201409071" href="201409a.html#201409071">■</a> 
+驚くほどきれいな本文</h3>
+<p>
+あばれるの困るが逆にきれいにそろってしまうのも困る。
+</p>
+<p>
+<img src="../images/new.png" alt="">
+</p>
+<p>
+これは100枚ほど重ねたわけだけど、だめだったようで。<br>
+そこでerodeで黒を拡大してみる。ちょっと派手目にdiamond:3にしてみた。<br>
+これでくっついた。
+</p>
+<p>
+<img src="../images/new-diamond3.png" alt="">
+</p>
+<p>
+縦方向にくっつくとまたやっかいなのでrectangle:7x1とかがいいかも。
+</p>
+<p>
+<img src="../images/new-rect7x1.png" alt="">
+</p>
+<!-- section end -->
+</div>
+<!-- 2014/09/07 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/09/08 start -->
+<h2><a name="20140908" href="201409a.html#20140908">2014-09-08 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="201409081" title="201409081" href="201409a.html#201409081">■</a> 
+今日のお題ring</h3>
+<p>
+こんな感じで80行ほどのファイルがある。5行でも同じなので5行で。
+</p>
+<pre>
+A
+B
+C
+D
+E
+</pre>
+<p>
+これを
+</p>
+<pre>
+A B
+B C
+C D
+D E
+E A
+</pre>
+<p>
+とするにはどうしたらいいかというのが今日のお題。<br>
+ちなみ今これをどうやって作ったかというと、<br>
+vimでまず:%s/$/ /で空白を足しといて、<br>
+BからEまでCTRL+Vで選択してyして<br>
+&quot;A &quot;の空白へカーソルを移動してpして最後にAを追加。<br>
+実は意外に簡単にできちゃって唖然としてたりするがまあいいか。<br>
+本当はawkでやろうと思ってたんだけど。
+</p>
+<!-- section end -->
+</div>
+<!-- 2014/09/08 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/09/09 start -->
+<h2><a name="20140909" href="201409a.html#20140909">2014-09-09 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="201409091" title="201409091" href="201409a.html#201409091">■</a> 
+昨日のお題ring</h3>
+<p>
+やっぱawkでやってみるよ。
+</p>
+<pre>
+% printf &quot;A\nB\nC\nD\nE\n&quot; | awk '{if(l)print l,$0;else f=$0;l=$0}END{print $0,f}'    
+A B
+B C
+C D
+D E
+E A
+</pre>
+<p>
+配列にしようかと思ったが、最初だけ覚えておけばいいのであった。<br>
+だったらこれでもいいのか。
+</p>
+<pre>
+% printf &quot;A\nB\nC\nD\nE\n&quot; | sed '1h;1!p;$G' | paste -d' ' - - 
+A B
+B C
+C D
+D E
+E A
+</pre>
+<p>
+pasteで- -を指定する技はちょくちょく出てくる。
+</p>
+<!-- section end -->
+</div>
+<!-- 2014/09/09 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/09/10 start -->
+<h2><a name="20140910" href="201409a.html#20140910">2014-09-10 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="201409101" title="201409101" href="201409a.html#201409101">■</a> 
+<a href="http://emasaka.blog65.fc2.com/blog-entry-1260.html">「1から100の整数ただし5つの異なる方法」</a></h3>
+<p>
+zshにはrepeatがあるので。
+</p>
+<pre>
+% repeat 100 echo $[++i]
+</pre>
+<p>
+あとはzshじゃなくてもbashでもいける。{1..100}を変換する。<br>
+xargsはコマンドを指定しないと/bin/echoが呼ばれる。
+</p>
+<pre>
+% echo {1..100} | xargs -n1
+</pre>
+<p>
+awkで変換。
+</p>
+<pre>
+% echo {1..100} | awk '(OFS=RS)&amp;&amp;$1=$1'
+</pre>
+<p>
+trじゃなくてもsedで。
+</p>
+<pre>
+% echo {1..100} | sed 'y/ /\n/'
+</pre>
+<p>
+/etcからじゃなくて乱数で。
+</p>
+<pre>
+% repeat 1000 { echo $[RANDOM%100+1] } | sort -nu | head -100
+</pre>
+<p>
+最後に最近熱いconvertで。
+</p>
+<pre>
+% convert null: -duplicate 99 -scene 1 -format %s info:
+</pre>
+
+<!-- section end -->
+</div>
+<!-- 2014/09/10 end -->
+
+<hr>
+<div>
+<a href="201408c.html">&lt;Older(,)</a> | 
+<a href="201409b.html">Newer(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

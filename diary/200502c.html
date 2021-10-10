@@ -1,0 +1,398 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2005-2-c</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="200502b.html">
+<link rel="next" href="200503a.html">
+
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2005年2月下旬〜</p>
+<hr>
+<div>
+<a href="200502b.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="200503a.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2005/02/21 start -->
+<h2><a name="20050221" href="200502c.html#20050221">2005-02-21 (Mon)</a></h2>
+<!-- 2005-03-19 21:41:50 -->
+
+<div class="entry1">
+<h3><a name="200502211" title="200502211" href="200502c.html#200502211">■</a> 
+<a href="http://nbenoit.tuxfamily.org/projects.php?rq=mmsrip">[Soft] MMS Ripper 0.4.0</a></h3>
+<p>
+About:
+</p><blockquote><p>
+MMSRIP is a client for the proprietary protocol MMS://.
+It saves the content being streamed to a file. 
+</p></blockquote><p>
+お、これは便利かも。早速
+<a href="http://www.ketsume.com/index.html">ケツメイシの「さくら」</a>
+
+で試すとちゃんと保存できた。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200502212" title="200502212" href="200502c.html#200502212">■</a> 
+[Music] MP3ファイルをOGGファイルへ変換</h3>
+<p>
+MP3ファイルのタグをutf8へ変換したら、なぜかplayerでの表示が化ける。
+で、今日は試しにgripでrippingするときにoggencを使ってみたら全然化けない。
+もちろんutf8にしてる。しかもサイズは小さいし言うことなし。
+oggencの-q 3でおいらの耳には違いがわからないんだからこれで十分だ。
+高性能の耳じゃなくてよかった。
+</p>
+
+<p>
+MP3ファイルをOGGファイルへ変換するには
+
+<a href="http://www.mpg123.org/">mpg123</a>
+か
+
+<a href="http://mpg321.sf.net/">mpg321</a>
+か
+
+<a href="http://www.underbit.com/products/mad/">madplay</a>
+のどれかと
+
+<a href="http://www.vorbis.com/">oggenc</a>
+を使うのがよさそう。
+</p>
+<pre>
+% mpg123 -s -q foo.mp3 | oggenc -r -o foo.ogg -
+</pre>
+<p>
+でfoo.mp3をfoo.oggに変換できる。oggencの音質は-qで指定できる。
+デフォルトは-q 3。madplayを使うときは
+</p>
+<pre>
+% madplay --output=wav:- foo.mp3 | oggenc -o foo.ogg -
+</pre>
+<p>
+という感じ。
+</p>
+
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200502213" title="200502213" href="200502c.html#200502213">■</a> 
+<a href="http://iorcc.dyndns.org/">[Ruby] International Obfuscated Ruby Code Contest</a></h3>
+<p>
+さてコンテストの始まりだ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2005/02/21 end -->
+
+
+
+<hr class="hide">
+<!-- 2005/02/22 start -->
+<h2><a name="20050222" href="200502c.html#20050222">2005-02-22 (Tue)</a></h2>
+<!-- 2005-02-22 23:24:21 -->
+
+<div class="entry1">
+<h3><a name="200502221" title="200502221" href="200502c.html#200502221">■</a> 
+体調悪し</h3>
+<p>
+熱っぽい。相変わらずjin.gr.jpも調子悪いし、もう寝る。
+PayPalを調べるのを忘れてた。でも寝る。
+</p>
+<!-- section end -->
+</div>
+<!-- 2005/02/22 end -->
+
+
+
+<hr class="hide">
+<!-- 2005/02/23 start -->
+<h2><a name="20050223" href="200502c.html#20050223">2005-02-23 (Wed)</a></h2>
+<!-- 2005-02-23 23:54:06 -->
+
+<div class="entry1">
+<h3><a name="200502231" title="200502231" href="200502c.html#200502231">■</a> 
+<a href="http://internet.watch.impress.co.jp/cda/news/2005/02/21/6518.html">[Mail] 米Google、Gmailの招待状を初めて直接送付〜正式公開に向けた動きか？</a></h3>
+<p>
+なるほど。「Gmailの最新情報を得るために登録した人々」ってのに相当するわけだ。
+たしかにメールアドレスを登録した覚えはある。
+しかしこれまでに情報が来てないような。いきなり招待？
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200502232" title="200502232" href="200502c.html#200502232">■</a> 
+<a href="http://www.mytrashmail.com/meiwakume-ru.aspx?language=jp">[Mail] 迷惑メール Service</a></h3>
+<p>
+登録不要な無料Webメールサービス。
+しかし「迷惑メールService」という名前だとなんかspamを投げてきそうな響きだ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2005/02/23 end -->
+
+
+
+<hr class="hide">
+<!-- 2005/02/24 start -->
+<h2><a name="20050224" href="200502c.html#20050224">2005-02-24 (Thu)</a></h2>
+<!-- 2005-02-24 20:04:14 -->
+
+<div class="entry1">
+<h3><a name="200502241" title="200502241" href="200502c.html#200502241">■</a> 
+[Web] ライブドア</h3>
+<p>
+なんとなく
+<a href="http://livedoor.com">ライブドア</a>へ行ってログインしてみると、いまだに有効だった。かなりびっくり。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200502242" title="200502242" href="200502c.html#200502242">■</a> 
+[rrr] jin.gr.jpが調子悪すぎ</h3>
+<p>
+さすがにどこかへ引っ越さないとやばそう。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200502243" title="200502243" href="200502c.html#200502243">■</a> 
+体調最悪</h3>
+<p>
+明日休むことにした。寝込む。
+</p>
+<!-- section end -->
+</div>
+<!-- 2005/02/24 end -->
+
+
+
+<hr class="hide">
+<!-- 2005/02/25 start -->
+<h2><a name="20050225" href="200502c.html#20050225">2005-02-25 (Fri)</a></h2>
+<!-- 2005-02-25 21:33:40 -->
+
+<div class="entry1">
+<h3><a name="200502251" title="200502251" href="200502c.html#200502251">■</a> 
+寝込み中</h3>
+<p>
+ずっと寝てるのも疲れる。熱は上がったり下がったりと小康状態。
+</p>
+<!-- section end -->
+</div>
+<!-- 2005/02/25 end -->
+
+
+
+<hr class="hide">
+<!-- 2005/02/26 start -->
+<h2><a name="20050226" href="200502c.html#20050226">2005-02-26 (Sat)</a></h2>
+<!-- 2005-02-27 00:00:22 -->
+
+<div class="entry1">
+<h3><a name="200502261" title="200502261" href="200502c.html#200502261">■</a> 
+[Diary] http://jarp.does.notwork.org/diary/</h3>
+<p>
+もうjarp.jin.gr.jpは駄目らしいので、ゆうぞうさんのところへお世話になることになった。
+ありがとうございます。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200502262" title="200502262" href="200502c.html#200502262">■</a> 
+[Last.FM] -2 days of Personal Radio Trial left</h3>
+<p>
+体調が悪くて放っておいたLast.FMの表示がマイナスになってる。
+このままカウントダウンが進むのか？
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200502263" title="200502263" href="200502c.html#200502263">■</a> 
+<a href="http://msmtp.sf.net/">[Soft] msmtp 1.3.8</a></h3>
+<p>
+Changes:
+</p><blockquote><p>
+No new features, but many small improvements, cleanups, and fixes in
+preparation for the 1.4.0 release.
+</p></blockquote>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200502264" title="200502264" href="200502c.html#200502264">■</a> 
+[Firefox] smooth scroll</h3>
+<p>
+1.0.1になったらおれの嫌いなsmooth scrollになってしまった。
+prefs.jsに
+</p>
+<pre>
+user_pref(&quot;general.smoothScroll&quot;, false);
+</pre>
+<p>
+を追加。いやabout:configで検索したほうが楽だ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200502265" title="200502265" href="200502c.html#200502265">■</a> 
+体調</h3>
+<p>
+やっと回復。
+</p>
+<!-- section end -->
+</div>
+<!-- 2005/02/26 end -->
+
+
+
+<hr class="hide">
+<!-- 2005/02/27 start -->
+<h2><a name="20050227" href="200502c.html#20050227">2005-02-27 (Sun)</a></h2>
+<!-- 2005-02-28 01:32:00 -->
+
+<div class="entry1">
+<h3><a name="200502271" title="200502271" href="200502c.html#200502271">■</a> 
+[Web] Ajaxの読み方</h3>
+<p>
+
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-talk/132378">[ruby-talk:132378]</a>によれば「あやっくす」らしい。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200502272" title="200502272" href="200502c.html#200502272">■</a> 
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-talk/132455">[Ruby] RubyGems 0.8.5</a></h3>
+<p>
+一度インストールしてあれば
+</p>
+<pre>
+% gem install rubygems-update
+% update_rubygems
+</pre>
+<p>
+という感じで更新可能と。
+</p>
+<!-- section end -->
+</div>
+<!-- 2005/02/27 end -->
+
+
+
+<hr class="hide">
+<!-- 2005/02/28 start -->
+<h2><a name="20050228" href="200502c.html#20050228">2005-02-28 (Mon)</a></h2>
+<!-- 2005-03-01 02:22:29 -->
+
+<div class="entry1">
+<h3><a name="200502281" title="200502281" href="200502c.html#200502281">■</a> 
+[Web] 検索エンジン</h3>
+<p>
+なにがすごいって、すでにYahooから検索されてる。君達早過ぎ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200502282" title="200502282" href="200502c.html#200502282">■</a> 
+<a href="http://www.amazon.co.jp/exec/obidos/ASIN/4873112192/">[Book] CSSクックブック</a></h3>
+<p>
+今日発売ということで、早速注文。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200502283" title="200502283" href="200502c.html#200502283">■</a> 
+<a href="http://sl33p3r.free.fr/hobix-tutorials/hobix-tutorials.html">[Blog] Hobix Tutorials</a></h3>
+<p>
+Hobixのテンプレートの仕組みがなんとなくわかった。結構面白いな。
+しかし、author: youの件はいただけない。
+</p>
+<!-- section end -->
+</div>
+<!-- 2005/02/28 end -->
+
+<hr>
+<div>
+<a href="200502b.html">&lt;Prev(,)</a> | 
+<a href="200503a.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

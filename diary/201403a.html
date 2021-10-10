@@ -1,0 +1,426 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2014-3-a</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="201402c.html">
+<link rel="next" href="201403b.html">
+
+<link rel="stylesheet" type="text/css" href="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.css">
+<script async type="text/javascript" src="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.js"></script>
+<script type="text/javascript">
+<!--       
+$(document).ready(function() {
+  prettyPrint();
+});
+-->
+</script>
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2014年3月上旬〜</p>
+<hr>
+<div>
+<a href="201402c.html" accesskey=",">&lt;Older(,)</a> | 
+<a href="201403b.html" accesskey=".">Newer(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2014/03/01 start -->
+<h2><a name="20140301" href="201403a.html#20140301">2014-03-01 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="201403011" title="201403011" href="201403a.html#201403011">■</a> 
+またRD-H1から異音が発生</h3>
+<p>
+J:COMのスマートTVへ変更の日が1週間後に決まったせいか、<br>
+RD-H1がヘソを曲げたようで。<br>
+もうちょっとだけがんばってくれ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2014/03/01 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/03/02 start -->
+<h2><a name="20140302" href="201403a.html#20140302">2014-03-02 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="201403021" title="201403021" href="201403a.html#201403021">■</a> 
+J:COMのサービスを変更</h3>
+<p>
+今やってるキャンペーンだとタブレットが無料とかいってるが、HUAWEIだったりする。<br>
+まあ、その時点でどうでもよくなったが、よく調べてみるといろいろ組み合わせることできるようで。<br>
+チャンネル数を少なくしてネットは160Mにすれば今と大して変わない料金で済む。<br>
+しかも2番組同時録画機能までつく。<br>
+というわけで申し込んだわけだけど、なかなか人気のようで1ヶ月ほど待たされた。<br>
+次の週末が楽しみだ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2014/03/02 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/03/03 start -->
+<h2><a name="20140303" href="201403a.html#20140303">2014-03-03 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="201403031" title="201403031" href="201403a.html#201403031">■</a> 
+<a href="https://codeiq.jp/magazine/2014/03/6633/">コード美人</a></h3>
+<p>
+これって
+<a href="http://golf.shinh.org/p.rb?A005836">anarchy golf - A005836</a>なんだよねえ。<br>
+zshの解は
+<a href="201303a.html#201303071">これを</a>ちょっと変更して
+</p>
+<pre>
+% repeat 100 a=$[[#2]++i]&amp;&amp;echo $[${a/2/3}]
+</pre>
+<p>
+となる。変数を使わないなら
+</p>
+<pre>
+% repeat 100 echo $[${${:-$[[#2]++i]}/2/3}]
+</pre>
+<p>
+と書けるが、奇しくもサイズは同じだ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2014/03/03 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/03/04 start -->
+<h2><a name="20140304" href="201403a.html#20140304">2014-03-04 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="201403041" title="201403041" href="201403a.html#201403041">■</a> 
+<a href="http://www.cygwin.com/ml/cygwin-announce/2014-03/msg00001.html">New package: tmux-1.9a-1</a></h3>
+<p>
+Cygwinにtmuxが入ったようだ。これは地味にうれしい。<br>
+.tmux.confもlinuxで使ってるいるのがそのまま動いた。
+</p>
+<!-- section end -->
+</div>
+<!-- 2014/03/04 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/03/05 start -->
+<h2><a name="20140305" href="201403a.html#20140305">2014-03-05 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="201403051" title="201403051" href="201403a.html#201403051">■</a> 
+bashの1文字オプションと長いオプション</h3>
+<p>
+まあ、bashなんてオプションつけて手で動かすことはほとんどないと思うが、<br>
+なぜか必要に迫られたりする。<br>
+sshでログイン先もzshなんだけど、ちょっとbashを使いたいななんてときに
+</p>
+<pre>
+% ssh host bash
+
+</pre>
+<p>
+とするとbashはインタラクティブだと思ってくれないのでプロンプトが出ない。<br>
+そこで-iをつけて実行してみると
+</p>
+<pre>
+% ssh host bash -i
+bash: 端末プロセスグループを設定できません (-1): デバイスに対する不適切なioctlです
+bash: このシェルではジョブ制御が無効になっています
+$ 
+</pre>
+<p>
+と言われてしまう。これは例のssh -tのなので、最終的には
+<pre>
+% ssh -t host bash -i
+$ 
+</pre>
+</p>
+<p>
+となる。で話はここからで、相手側は~/.bashrcではなく~/eban/.bashrcを読んで欲しい。<br>
+--rcfileでよさそうなので、実行してみるとなぜかエラーになってしまう。
+</p>
+<pre>
+% ssh -t host bash -i --rcfile ~/eban/.bashrc 
+bash: --: 無効なオプション
+&lt;後略&gt;
+</pre>
+<p>
+これはいったい？man bashしてみると書いてあった。
+</p>
+</p><blockquote><p>
+Bash also interprets a number of multi-character options.<br>
+These options must appear on the command line before the<br>
+single-character options to be recognized.
+</p></blockquote><p>
+<p>
+なんと長いオプションは1文字オプションよりも先に書かないといけないらしい。
+</p>
+<pre>
+% ssh -t host bash --rcfile ~/eban/.bashrc -i                
+$ 
+</pre>
+<p>
+これは意外だというか、なんでそんな仕様に？実装上の都合か？
+</p>
+<!-- section end -->
+</div>
+<!-- 2014/03/05 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/03/06 start -->
+<h2><a name="20140306" href="201403a.html#20140306">2014-03-06 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="201403061" title="201403061" href="201403a.html#201403061">■</a> 
+bashでshared history</h3>
+<p>
+zshのshared_historyのような挙動にさせたいときに、bashでは
+</p>
+<pre>
+HISTCONTROL=ignoredups:erasedups
+shopt -s histappend
+PROMPT_COMMAND=&quot;history -a; history -c; history -r; $PROMPT_COMMAND&quot;
+</pre>
+<p>
+のような設定にするのが定番らしい。<br>
+つまりプロンプトが出る前にヒストリーの差分をファイルへ保存(-a)、<br>
+現在のヒストリーをクリア(-c)、ファイルから読み込む(-r)というわけだ。<br>
+キモは-aで差分だけを保存することこうすれば他の端末でも差分が保存されるわけでうまいこといく。<br>
+なかなか富豪だ。
+</p>
+<p>
+それはそれとして-cは必要なのか？-rで全部上書きされると思ったけど、確認してみたら追加だった。
+</p>
+<p>
+小ネタ。history -acrとは書けない。
+</p>
+<pre>
+$ history -acr
+bash: history: cannot use more than one of -anrw
+</pre>
+<p>
+history -acとは書ける。ただしクリアされてから保存されるので意味がない。
+</p>
+<!-- section end -->
+</div>
+<!-- 2014/03/06 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/03/07 start -->
+<h2><a name="20140307" href="201403a.html#20140307">2014-03-07 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="201403071" title="201403071" href="201403a.html#201403071">■</a> 
+月末の日付again</h3>
+<p>
+以前calの結果を加工して
+<a href="201008b.html#201008132">月末の日付を得る</a>という話を書いたが、<br>
+<a href="http://qiita.com/FmtWeisszwerg/items/78a8ad7e71c4157703cf">Qiitaにdateを2回使う方法</a>があった。<br>
+</p>
+<pre>
+% date +'%Y-%m-%d' -d &quot;1 days ago `date +%Y%m01 -d '+1 month'`&quot;
+2014-03-31
+</pre>
+<p>
+なるほど。翌月の1日の前日とすればよかったんだ。<br>
+ただこれだとたとえば3/31に実行すると破綻する。<br>
+GNU dateでは3/31の1ヶ月後は5/1なので。
+</p>
+<pre>
+% date +'%Y-%m-%d' -d &quot;1 days ago `date +%Y%m01 -d '+1 month 3/31'`&quot;
+2014-04-30
+% date +%-m/%-d -d '+1 month 3/31'
+5/1
+</pre>
+<p>
+4/31は存在しないので5/1になってしまうようだ。
+</p>
+<p>
+で、どうするかだが、いきなり翌月(-d '+1 month')としてしまうのがまずいわけで、<br>
+今月の1日の1ヶ月後の前日とすればok。
+</p>
+<pre>
+% date +'%Y-%m-%d' -d &quot;1 days ago +1 month `date +'%Y%m01'`&quot; 
+2014-03-31
+% date +'%Y-%m-%d' -d &quot;1 days ago +1 month `date +'%Y%m01' -d 3/31`&quot;
+2014-03-31
+</pre>
+<p>
++1 monthを外に出しただけ。もっと短く
+</p>
+<pre>
+% date +'%Y-%m-%d' -d &quot;-1day month `date +'%Y%m01'`&quot;        
+2014-03-31
+</pre>
+<p>
+でもいい。念の為31日になったらまた試そう。
+</p>
+<!-- section end -->
+</div>
+<!-- 2014/03/07 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/03/08 start -->
+<h2><a name="20140308" href="201403a.html#20140308">2014-03-08 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="201403081" title="201403081" href="201403a.html#201403081">■</a> 
+<a href="http://www.jcom.co.jp/services/tv/smart/jcom_box.html">Smart J:COM Box</a></h3>
+<p>
+工事も無事終わり新たなチューナーに。<br>
+録画機能もついている。M-ON TVだけ見られればいいのでチャンネル数は減らした。<br>
+そのおかげで月々の料金は前とほぼ同じ。ああ、あとネットは160Mに。<br>
+そんなに出ないと思うが。<br>
+ああ、あとルータと無線LANもついてきたのはいいが、ポートフォワーディング機能がない。<br>
+これはちょっと困った。こちら側からもトンネルを掘る必要がある。
+</p>
+<p>
+一番面喰らったのはRFリモコンの癖。<br>
+RFなのはいいんだけど爪とかじゃ反応しないタイプで、<br>
+正しくボタンの真ん中あたりを押さないとだめ。<br>
+ペアリングを切れば赤外線も使えるらしいので、学習型リモコンにするべきか。<br>
+それと早見のときは1.2倍速と遅いのが気に入らない。
+</p>
+<p>
+チューナーをLANにつなげばDLNAもokだ。PS3から見えるようになる。<br>
+録画した番組も再生できた。こっちなら1.5倍速になるのでこれで見るようにするかな。<br>
+ただし、2倍以上にしないとエラーになる。<br>
+で、2倍以上を選ぶと圧縮は後で行なわれるので待たないといけない。<br>
+オンデマンドでは圧縮できないってことか。CPU的に余裕がないんだろうな。
+</p>
+<p>
+毎週繰り返し予約にすると予約リストにタイトルが出なくなるのはだめだめだろう。<br>
+これはまだ完成してないな。
+</p>
+<!-- section end -->
+</div>
+<!-- 2014/03/08 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/03/09 start -->
+<h2><a name="20140309" href="201403a.html#20140309">2014-03-09 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="201403091" title="201403091" href="201403a.html#201403091">■</a> 
+<a href="http://www.jcom.co.jp/notice/_52193.html">Smart J:COM Boxご利用時のご注意</a></h3>
+<p>
+A4のぺらいちの注意書きを見たら最初に躓いた件がだいたい書いてあった。<br>
+ネットにも
+<a href="http://www.jcom.co.jp/notice/_52193.html">置いてあった</a>。変換待ちや停止したところから再生してくれないとか、<br>
+番組名が出ないとか、赤丸とか。そのうち対応してくれるといいんだが。
+</p>
+<p>
+あと圧縮2倍以上選んじゃうと変換しない限り削除できないというのがかなりうっとうしい。<br>
+かといって圧縮なしにしちゃうとPS3で見られないし。<br>
+ああ音楽番組は早見するわけじゃないので圧縮なしにしてSTBで見ればいいのか。ふむ。
+</p>
+<p>
+追記: 最初から圧縮なしにしておけばPS3でもちゃんと見られた。<br>
+変換待ちと圧縮なしは形式が違うようだ。<br>
+@aibieliku0821さんご指摘感謝。
+</p>
+<!-- section end -->
+</div>
+<!-- 2014/03/09 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/03/10 start -->
+<h2><a name="20140310" href="201403a.html#20140310">2014-03-10 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="201403101" title="201403101" href="201403a.html#201403101">■</a> 
+Smart J:COM Box: DLNA越しでのフォルダの見えかた</h3>
+<p>
+またSmartなんちゃらネタ。<br>
+一括操作で複数の動画を消せるけど、<br>
+2TBもあるんだから消さなくてもいいかなと思い、<br>
+適当にフォルダを作って見終わった番組はそこへ移動するようにした。<br>
+こうしておけばすっきりするし一括操作じゃなくても簡単にフォルダごと消せる。
+</p>
+<p>
+それはそれとして、PS3だとどう見えるのか確認してみたら何の変化もなかった。<br>
+フォルダはなくフラットのまま。結構興味深い。<br>
+いやいや増えると見辛くなるよな。そうなる前に消す必要があるか。
+</p>
+<!-- section end -->
+</div>
+<!-- 2014/03/10 end -->
+
+<hr>
+<div>
+<a href="201402c.html">&lt;Older(,)</a> | 
+<a href="201403b.html">Newer(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

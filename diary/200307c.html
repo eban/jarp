@@ -1,0 +1,584 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2003-7-c</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="200307b.html">
+<link rel="next" href="200308a.html">
+
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2003年7月下旬〜</p>
+<hr>
+<div>
+<a href="200307b.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="200308a.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2003/07/21 start -->
+<h2><a name="20030721" href="200307c.html#20030721">2003-07-21 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="200307211" title="200307211" href="200307c.html#200307211">■</a> 
+[Linux] gentoo mouse</h3>
+<p>
+このマシンはシリアルマウスなので/etc/devfsd.confのmisc/psauxをttyS1に変更。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200307212" title="200307212" href="200307c.html#200307212">■</a> 
+[Linux] gentoo X</h3>
+<p>
+Xを終了すると画面が乱れたままだな。
+setfontも利かない。
+ま、たいていはshutdownかrebootだからほとんど問題ないんだけど、ちょっと気持ち悪い。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200307213" title="200307213" href="200307c.html#200307213">■</a> 
+[Ruby] Array#to_h</h3>
+<p>
+結局はHash[]に帰着するんだけど、でも
+</p>
+<pre>
+[1, 2, 3].to_h { |n| n**n } #=&gt; {1=&gt;1, 2=&gt;4, 3=&gt;9}
+</pre>
+<p>
+というのが欲しくなるのは、
+cacheというかあらかじめ計算しておくというか、
+なんかto_hという名前とは違う気がする。
+</p>
+<!-- section end -->
+</div>
+<!-- 2003/07/21 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/07/22 start -->
+<h2><a name="20030722" href="200307c.html#20030722">2003-07-22 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="200307221" title="200307221" href="200307c.html#200307221">■</a> 
+[VAIO] 今日の発見</h3>
+<p>
+まったく役に立たないばかりか邪魔なジョグダイアルランチャをアンインストールしたら、
+Fn+F7でのVGA出力切り替えができなくなった。
+また、おれの嫌いなリカバリCDのお世話になる。
+ついでに、使わないアプリケーションをインストールしないように、
+3枚目はインストールを省略。
+</p>
+
+<p>
+インストールしないとログオンするたびにインストールが終了してないとポップアップするが、
+レジストリ
+</p>
+<pre>
+\HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Run
+</pre>
+<p>
+を見てそれらしい値を削除。いいようだ。
+</p>
+
+<p>
+よく見るとここにJOGSERV2.EXEってのがある。これかー。renameしとこう。
+HKSERV.EXEがFn+F7とかの機能を提供しているようだ。
+これだけあればよさそうだよな。なぜジョグダイアルランチャと関係する？
+再リカバリして試してみるか。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200307222" title="200307222" href="200307c.html#200307222">■</a> 
+<a href="http://www.rubyforge.org/">[Ruby] RubyForge.org</a></h3>
+<p>
+始まった。
+</p>
+<!-- section end -->
+</div>
+<!-- 2003/07/22 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/07/23 start -->
+<h2><a name="20030723" href="200307c.html#20030723">2003-07-23 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="200307231" title="200307231" href="200307c.html#200307231">■</a> 
+[Win32API] GetTempPath</h3>
+<p>
+<a href="http://www.microsoft.com/japan/developer/library/jpwinpf/_win32_gettemppath.htm">ここ</a>を見ると順番にTMP, TEMP, Windowsのディレクトリを調べるとあるが、
+実際にWindows 2000 Pro.で試したらTMP, TEMP, USERPROFILE, C:\WINNTとなった。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200307232" title="200307232" href="200307c.html#200307232">■</a> 
+[Windows 2000] 今日のトリビア</h3>
+<p>
+インストール時はコンピュータ名を大文字にしか設定できないが、
+[マイコンピュータ]-[プロパティ]-[ネットワークID]-[プロパティ]で変更すれば小文字にできる。
+</p>
+<!-- section end -->
+</div>
+<!-- 2003/07/23 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/07/24 start -->
+<h2><a name="20030724" href="200307c.html#20030724">2003-07-24 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="200307241" title="200307241" href="200307c.html#200307241">■</a> 
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-dev/20870">[Ruby] 0とNULL</a></h3>
+<p>
+intが32ビットで、ポインタが64ビットってことか。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200307242" title="200307242" href="200307c.html#200307242">■</a> 
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-talk/76904">[Ruby] site_ruby</a></h3>
+<p>
+以前インストールした古いREXMLが残っているので、
+いつまで経ってもsite_rubyのほうがrequireされてしまうわけだ。
+Perlが
+</p>
+<pre>
+% perl -V |sed -n '/@INC/,$p'
+  @INC:
+    /usr/local/lib/perl5/5.8.0/i586-linux
+    /usr/local/lib/perl5/5.8.0
+    /usr/local/lib/perl5/site_perl/5.8.0/i586-linux
+    /usr/local/lib/perl5/site_perl/5.8.0
+    /usr/local/lib/perl5/site_perl/5.6.1
+    /usr/local/lib/perl5/site_perl
+    .
+</pre>
+<p>
+のようにsite_perlが後になっている理由はこれか？
+でも、新しいのがsite_perlにインストールされて、
+古いほうばかりuseで呼ばれると文句を言ってるPerlユーザもいるから、
+どっちもどっちか。
+</p>
+
+<p>
+それはそれとして、アンインストールできないとまずい状況になりつつある。
+</p>
+<!-- section end -->
+</div>
+<!-- 2003/07/24 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/07/25 start -->
+<h2><a name="20030725" href="200307c.html#20030725">2003-07-25 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="200307251" title="200307251" href="200307c.html#200307251">■</a> 
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-talk/76946">[Ruby] st_data_t</a></h3>
+<p>
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-dev/20884">咳さんのメール</a>にも出てきてるなあ。
+typedef unsinged long st_data_t; にするのが変更が少なくて済みそうだ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200307252" title="200307252" href="200307c.html#200307252">■</a> 
+[Windows 2000] Windows Update</h3>
+<p>
+なぜか失敗続きだったWindows Updateが今日になって急にちゃんと更新できるようになった。
+さっぱり理由はわからないんだけど。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200307253" title="200307253" href="200307c.html#200307253">■</a> 
+[Ruby] pkg-config</h3>
+<p>
+クロスの環境だとpkg-configはちょっとまずい。
+mingwでは-lgdi32も必要なので、
+</p>
+<pre>
+prefix=/usr/local/mingw
+exec_prefix=${prefix}
+libdir=${exec_prefix}/lib
+includedir=${prefix}/include
+
+Name: OpenSSL
+Description: Secure Sockets Layer and cryptography libraries and tools
+Version: 0.9.6h
+Requires: 
+Libs: -L${libdir} -lssl -lcrypto -lwsock32 -lgdi32
+Cflags: -I${includedir} 
+</pre>
+<p>
+というopenssl.pcを/usr/local/mingw/lib/pkgconfigに用意して
+</p>
+<pre>
+% PKG_CONFIG_PATH=/usr/local/mingw/lib/pkgconfig make
+</pre>
+<p>
+としてみた。
+</p>
+
+<p>
+0.9.6hだとrubyのmissing.hのcryptのプロトタイプ宣言がぶつかる。
+missing.hのほうを
+</p>
+<pre>
+extern char *crypt _((const char *, const char *));
+</pre>
+<p>
+にすべきか。
+</p>
+<!-- section end -->
+</div>
+<!-- 2003/07/25 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/07/26 start -->
+<h2><a name="20030726" href="200307c.html#20030726">2003-07-26 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="200307261" title="200307261" href="200307c.html#200307261">■</a> 
+[Ruby][MinGW][Cygwin] OpenSSL 0.9.7b</h3>
+<p>
+./Configure --prefix=/usr/local/mingw mingwしてmakeすればできあがり。
+make installしてものをtarballにまとめてLinux boxで展開。
+これでopenssl.pcもちゃんと/usr/local/mingw/lib/pkgconfigにできるので、
+でっちあげる必要もなし。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200307262" title="200307262" href="200307c.html#200307262">■</a> 
+[Video] T.R.Y.</h3>
+<p>
+借りた。
+</p>
+<!-- section end -->
+</div>
+<!-- 2003/07/26 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/07/27 start -->
+<h2><a name="20030727" href="200307c.html#20030727">2003-07-27 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="200307271" title="200307271" href="200307c.html#200307271">■</a> 
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-talk/77045">[Ruby] Quick way to find all drives in a windows box</a></h3>
+<p>
+Win32APIは使いたくないらしい。
+単純に何も考えなければ26個調べればいいわけだが、mingw版rubyで
+</p>
+<pre>
+drives = []
+for i in 'a'..'z'
+  drives &lt;&lt; i + ':' if File.exist?(i + ':')
+end
+</pre>
+<p>
+だと、
+</p>
+<pre>
+ドライブにディスクがありません。
+ディスクをドライブ\Device\Harddisk1\DR0に挿入してください。
+</pre>
+<p>
+と警告がpopupする。cygwin版だと出ない。不思議。
+ま、だめだってことに変わりはないんだけど。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200307272" title="200307272" href="200307c.html#200307272">■</a> 
+[Ruby] pkg-config</h3>
+<p>
+CygwinでMinGW版rubyを作るときにもpkg-config問題が発生することがわかった。
+ext/openssl/extconfig.rbにpkg-configを使う変更が入ったのはRed Hat対策のためなので、
+pkg-configを後にするというのはたぶん解決にならない。
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-dev/20874">これ</a>を見ると#include &lt;openssl/ssl.h&gt;が失敗してるようなので、
+</p>
+<pre>
+have_header(&quot;openssl/crypto&quot;)
+</pre>
+<p>
+よりも
+</p>
+<pre>
+have_header(&quot;openssl/ssl.h&quot;)
+</pre>
+<p>
+のほうがよさそうだ。これが失敗したらpkg-configを実行する。
+</p>
+
+<p>
+これでRed Hatを救済できるはずだが、
+どうもそもそもこのpkg-config作戦では解決になってないという噂もIRCで耳にした。
+うーむ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2003/07/27 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/07/28 start -->
+<h2><a name="20030728" href="200307c.html#20030728">2003-07-28 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="200307281" title="200307281" href="200307c.html#200307281">■</a> 
+[Ruby][Vim] rb_defout</h3>
+<p>
+Ruby 1.8.0-preview5をインストールすると、
+--enable-rubyinterpしたvimが立ち上がらなくなってしまった。
+</p>
+<pre>
+% vi
+vi: relocation error: vi: undefined symbol: rb_defout
+</pre>
+<p>
+vimのほうでrb_defoutを参照してるんだよね。これは困った。
+しかたない。if_ruby.cを
+<a href="../files/if_ruby.c-1.8.0-preview5.diff">書き換えよう。</a></p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200307282" title="200307282" href="200307c.html#200307282">■</a> 
+[LL土曜] X-Mailer: LL Saturday announce version 1.0 (Perl script)</h3>
+<p>
+だからどうしてContent-Type: text/plain; charset=iso2022-jpなのだ？
+iso-2022-jpにしてくれー。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200307283" title="200307283" href="200307c.html#200307283">■</a> 
+<a href="http://images-jp.amazon.com/images/P/B00005G3R9.09.LZZZZZZZ.jpg">LOVEマシーンの法則</a></h3>
+<p>
+つまり、このジャケ写の右から順に脱退している。
+中澤までは偶然だよなあ。
+後藤からはつんくが意図的にこの順番で脱退させてる？
+</p>
+<!-- section end -->
+</div>
+<!-- 2003/07/28 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/07/29 start -->
+<h2><a name="20030729" href="200307c.html#20030729">2003-07-29 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="200307291" title="200307291" href="200307c.html#200307291">■</a> 
+<a href="http://www.yoshidam.net/diary/200307.html#28_t2_1">[Ruby] ranlib</a></h3>
+<p>
+タイムスタンプを保存すればよさそうなので、
+FileUtils::installにpreserveを追加。
+ついでに拡張ライブラリ側のインストールもFileUtilsを使うように、
+un.rbを導入。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200307292" title="200307292" href="200307c.html#200307292">■</a> 
+<a href="http://raa.ruby-lang.org/project/bdb/">[Ruby] bdb 0.4.7</a></h3>
+<p>
+src/common.cには
+</p>
+<pre>
+bdb_test_error(dbp-&gt;stat(dbp, &amp;bdb_stat, 0));
+dbp-&gt;close(dbp, 0);
+bdb_test_error(dbst-&gt;dbp-&gt;rename(dbst-&gt;dbp, name, subname, newname, 0));
+</pre>
+<p>
+というようなコードがある。関数へのポインタだったのか。だめだ。
+増えちゃったよ。
+やっぱここで#undefしないと、win32/win32.hのstat,close,renameとぶつかる。
+</p>
+
+<p>
+そうか。closeがrb_w32_closeという名前にすべて変更されれば問題ない。
+引数までつけてしまうと数が合わないからエラーになる。うーむ。
+普通の変数は救われるからいいか。
+</p>
+<pre>
+_,lib_dir = dir_config(&quot;db&quot;, &quot;/usr&quot;)
+</pre>
+<p>
+というデフォルトはやだなあ。クロスでは必ず--with-db-dirを指定しなきゃいけないじゃん。
+</p>
+<!-- section end -->
+</div>
+<!-- 2003/07/29 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/07/30 start -->
+<h2><a name="20030730" href="200307c.html#20030730">2003-07-30 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="200307301" title="200307301" href="200307c.html#200307301">■</a> 
+[Ruby] 標準添付</h3>
+<p>
+標準添付になっているRuby Binaries 1.8のライブラリは
+</p>
+<pre>
+bigdecimal(bigfloat), csv, date2, drb, ossl, ruby-zlib, rexml, xmlrpc4r
+</pre>
+<p>
+といったところかな。Cygwin版は空のパッケージにしておこう。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200307302" title="200307302" href="200307c.html#200307302">■</a> 
+[Ruby] -W option</h3>
+<p>
+-W0で警告を出さない設定ができるようになった。
+</p>
+<pre>
+% ruby -e 'p &quot;a.b&quot;.sub(&quot;.&quot;, &quot;#&quot;)'  
+-e:1: warning: string pattern instead of regexp; \
+  metacharacters no longer effective
+&quot;a#b&quot;
+% ruby -W0 -e 'p &quot;a.b&quot;.sub(&quot;.&quot;, &quot;#&quot;)'
+&quot;a#b&quot;
+</pre>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200307303" title="200307303" href="200307c.html#200307303">■</a> 
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-talk/77243">[Ruby] MSYS</a></h3>
+<p>
+そりゃむりだって。
+</p>
+<!-- section end -->
+</div>
+<!-- 2003/07/30 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/07/31 start -->
+<h2><a name="20030731" href="200307c.html#20030731">2003-07-31 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="200307311" title="200307311" href="200307c.html#200307311">■</a> 
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-talk/77549">[Ruby] stable sort</a></h3>
+<p>
+すぐに思いつくのは
+</p>
+<pre>
+i = 0
+a.sort_by {|e| [e, i += 1]}
+</pre>
+<p>
+だけど、このi = 0が気に入らない人が多いようだ。
+で、その後はwith_indexな話に突入する。
+</p>
+<!-- section end -->
+</div>
+<!-- 2003/07/31 end -->
+
+<hr>
+<div>
+<a href="200307b.html">&lt;Prev(,)</a> | 
+<a href="200308a.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

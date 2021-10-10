@@ -1,0 +1,527 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2014-3-c</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="201403b.html">
+<link rel="next" href="201404a.html">
+
+<link rel="stylesheet" type="text/css" href="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.css">
+<script async type="text/javascript" src="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.js"></script>
+<script type="text/javascript">
+<!--       
+$(document).ready(function() {
+  prettyPrint();
+});
+-->
+</script>
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2014年3月下旬〜</p>
+<hr>
+<div>
+<a href="201403b.html" accesskey=",">&lt;Older(,)</a> | 
+<a href="201404a.html" accesskey=".">Newer(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2014/03/21 start -->
+<h2><a name="20140321" href="201403c.html#20140321">2014-03-21 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="201403211" title="201403211" href="201403c.html#201403211">■</a> 
+RD-H1がメールを受け取ってくれない</h3>
+<p>
+新たな環境になってからRD-H1のネットワーク設定は放置状態だったが、<br>
+まあ、192.168.0.0/24なのは変わりないし問題ないだろうと思ったら、<br>
+メールを受け取ってくれない。しかも時計がちょっとずれてる。<br>
+ということは全然外とつながってないわけで見直してみると、<br>
+今回新たに設置されたルータにはDNS機能がないということがわかった。<br>
+RD-H1はHTTPサーバが内蔵していてもろもろブラウザから設定できたりするので、<br>
+DHCPではなく固定IPアドレスで運用していたが、それが仇になった形。<br>
+面倒なので8.8.8.8にしようかと思ったが、最近あんなことがあっただけに、<br>
+DHCPが配ってるDNSにした。これでメールもNTPもok。
+</p>
+<p>
+2015年でデジアナ変換は終了するらしいが、それ以降もまだまだ使えてしまうな。
+</p>
+<!-- section end -->
+</div>
+<!-- 2014/03/21 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/03/22 start -->
+<h2><a name="20140322" href="201403c.html#20140322">2014-03-22 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="201403221" title="201403221" href="201403c.html#201403221">■</a> 
+zshのhistoryのmetafy</h3>
+<p>
+<a href="201402c.html#201402231">先日zshのhistory fileのunmetafy</a>について書いた。<br>
+これで変換すれば修正できるが元に戻すにはmetafyする必要がある。<br>
+というわけでRubyで書いてみた。
+</p>
+<pre>
+% cat zsh_history-unmetafy 
+HISTSIZE=3
+echo あいうえお
+echo 今、咲き誇る花たちよ
+% ruby -EASCII-8BIT -pe 'gsub(/[\0\x83-\x9d\xa0]/n){&quot;\x83&quot;.b+($&amp;.ord^32).chr}' zsh_history-unmetafy &gt; zsh_history-metafy
+% od -tx1z zsh_history-metafy
+0000000 48 49 53 54 53 49 5a 45 3d 33 0a 65 63 68 6f 20  &gt;HISTSIZE=3.echo &lt;
+0000020 e3 81 82 e3 81 83 a4 e3 81 83 a6 e3 81 83 a8 e3  &gt;................&lt;
+0000040 81 83 aa 0a 65 63 68 6f 20 e4 bb 83 aa e3 80 81  &gt;....echo .......&lt;
+0000060 e5 83 b2 b2 e3 81 83 ad e8 aa 83 a7 e3 82 83 ab  &gt;................&lt;
+0000100 e8 83 aa b1 e3 81 9f e3 81 a1 e3 82 83 a8 0a     &gt;...............&lt;
+0000117
+</pre>
+<p>
+[\0\x83-\x9d\xa0]という文字が来たら^32して\x83をprefixすればいい。<br>
+Perlなら
+</p>
+<pre>
+% perl -pe 's/[\0\x83-\x9d\xa0]/\x83@{[$&amp;^&quot; &quot;]}/g' zsh_history-unmetafy &gt; zsh_history-metafy
+</pre>
+<p>
+という感じ。文字列のxorができるのでそのあたりはすっきりする。
+</p>
+<!-- section end -->
+</div>
+<!-- 2014/03/22 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/03/23 start -->
+<h2><a name="20140323" href="201403c.html#20140323">2014-03-23 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="201403231" title="201403231" href="201403c.html#201403231">■</a> 
+今年は平成何年？</h3>
+<p>
+正月過ぎるともう平成何年だかよくわからなくなる。<br>
+2014年の14に12を足せばいいんだけど、<br>
+実はdateコマンドでもわかる。
+</p>
+<pre>
+% date +%EY
+平成26年
+</pre>
+<p>
+Eをつければいろんなものが日本仕様に。
+</p>
+<pre>
+% for i in y c x X;date +%E$i
+26
+平成26年03月23日 22時50分35秒
+平成26年03月23日
+22時50分35秒
+</pre>
+<p>
+昭和とかもちゃんといける。
+</p>
+<pre>
+% date +%Ex -d 1926-12-24
+大正15年12月24日
+% date +%Ex -d 1926-12-25
+昭和元年12月25日
+% date +%Ex -d 1989-01-07 
+昭和64年01月07日
+% date +%Ex -d 1989-01-08
+平成元年01月08日
+</pre>
+<p>
+ちゃんと元年になるんだな。<br>
+libcのstrftime(3)が対応してるかどうかなので、gawkでもいける。
+</p>
+<pre>
+% gawk 'BEGIN{print strftime(&quot;%EY&quot;)}'
+平成26年
+</pre>
+<p>
+Rubyのように自前でstrftimeを用意してたりすると使えない。
+</p>
+<pre>
+% ruby -e 'p Time.now.strftime(&quot;%EY&quot;)'
+&quot;2014&quot;
+</pre>
+<!-- section end -->
+</div>
+<!-- 2014/03/23 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/03/24 start -->
+<h2><a name="20140324" href="201403c.html#20140324">2014-03-24 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="201403241" title="201403241" href="201403c.html#201403241">■</a> 
+J:COMのリモコンの決定が押せなかったり、DLNAエラーだったり</h3>
+<p>
+決定ボタンを押すとかなりの確率で下ボタンになってしまう。<br>
+これは再生中は停止ボタンなわけで、<br>
+押してしまうとresume機能がないので元に戻れない。<br>
+しかたなく最初から100倍速で早送りする、<br>
+だいたい見ていたところにきたら決定ボタン押す、<br>
+一時停止になるので解除するために決定ボタンを押す、<br>
+残念停止ボタンでした、<br>
+ってのを3回ぐらい繰り返す。ちゃぶ台を引っくり返す。<br>
+という展開が繰り広げられる。
+</p>
+<p>
+だからDLNA経由のPS3で見るわけだけど、<br>
+こっちも不安定でやたらエラー起こす。<br>
+まだPS3ならresume機能があるのでましだが、<br>
+でもエラー起こすと最初に戻ったりするし、<br>
+□ボタンで5分間隔でのジャンプも結構エラーになる。<br>
+いやー、困ったもんだよ実際。<br>
+もう見るんだったらノンストップで最後まで見る覚悟で再生しないと。<br>
+まじで学習リモコン考えないとだめかも。
+</p>
+<!-- section end -->
+</div>
+<!-- 2014/03/24 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/03/25 start -->
+<h2><a name="20140325" href="201403c.html#20140325">2014-03-25 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="201403251" title="201403251" href="201403c.html#201403251">■</a> 
+シェルスクリプトの処理時間を計る</h3>
+<p>
+そとからならtime script.shでいいわけだが、結構timeを忘れる。<br>
+スクリプトの中に入れたい。そこでpsコマンドだ。
+</p>
+<pre>
+% cat test.sh
+#! /bin/sh
+sleep 5
+ps ho etime $$
+% sh test.sh
+      00:05
+</pre>
+<p>
+スクリプトの最後に ps ho etime $$ を置けばいい。<br>
+hはheaderを表示しないという意味だが、BSDだと効かない。<br>
+そのあたりはsed 1dとかで。
+</p>
+<!-- section end -->
+</div>
+<!-- 2014/03/25 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/03/26 start -->
+<h2><a name="20140326" href="201403c.html#20140326">2014-03-26 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="201403261" title="201403261" href="201403c.html#201403261">■</a> 
+テレビ王国での検索結果をメールで受け取る</h3>
+<p>
+<a href="http://tv.so-net.ne.jp/">テレビ王国</a>では番組の検索ができて、しかもその結果をRSSで受け取れる。<br>
+ということはこれをIFTTTで連携すればメールで受け取ることが可能。<br>
+メールじゃなくてもtwitterへポストするとか好きなように通知できる。<br>
+このおかげで世界ネコ歩きも逃さず見ることができるわけだが、ここ重要。
+</p>
+<!-- section end -->
+</div>
+<!-- 2014/03/26 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/03/27 start -->
+<h2><a name="20140327" href="201403c.html#20140327">2014-03-27 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="201403271" title="201403271" href="201403c.html#201403271">■</a> 
+Firefoxでbookmarklet呼び出しが動かない</h3>
+<p>
+今はkeyconfigじゃなくてkeysnailを使ってるが本質的には変わらない。<br>
+ここ半年ほど
+<a href="200606b.html#200606201">この設定</a>が動かなくなってる点を調べてみたら、<br>
+なんとgetShortcutOrURIが以前とは違う挙動になってしまっているとのこと。
+</p><blockquote><p>
+getShortcutOrURI 内で非同期の getCharsetForURI
+が使われるようになりました。これにより getShortcutOrURI 関数が非同期の
+getShortcutOrURIAndPostData に置き換えられました。また urlbarBindings.xml 内の
+_canonizeURL 関数も併せて非同期に変更されています。
+</p></blockquote><p>
+なんかさらっと書かれているが、これのおかげでgetShortcutOrURIが使えないらしい。<br>
+代わりにPlacesUtils.getURLAndPostDataForKeywordを使えばいい。
+</p>
+<pre>
+PlacesUtils.getURLAndPostDataForKeyword(&quot;keyword&quot;)[0]
+</pre>
+<p>
+<a href="http://forums.mozillazine.org/viewtopic.php?f=48&amp;t=72994&amp;start=2610">keyconfig 20110522</a>を参考。
+</p>
+<p>
+keysnailだったら~/.keysnail.jsに
+</p>
+<pre>
+function getShortcutOrURI(k, d) {
+    return PlacesUtils.getURLAndPostDataForKeyword(k)[0];
+}
+</pre>
+<p>
+を追加してしまえばいいのかも。
+</p>
+<!-- section end -->
+</div>
+<!-- 2014/03/27 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/03/28 start -->
+<h2><a name="20140328" href="201403c.html#20140328">2014-03-28 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="201403281" title="201403281" href="201403c.html#201403281">■</a> 
+<a href="http://blog.ueda.asia/?p=2417">Excelファイルをシェル芸でほじくる(便乗xml-coreutils編)</a></h3>
+<p>
+xml-coreutilsのxml-findを使うとこんな感じでできる。
+</p>
+<pre>
+% unzip -p Book1.xlsx xl/worksheets/sheet1.xml | tidy -qi -xml
+&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; standalone=&quot;yes&quot;?&gt;
+&lt;worksheet xmlns=&quot;http://schemas.openxmlformats.org/spreadsheetml/2006/main&quot;
+xmlns:r=&quot;http://schemas.openxmlformats.org/officeDocument/2006/relationships&quot;
+xmlns:mc=&quot;http://schemas.openxmlformats.org/markup-compatibility/2006&quot;
+mc:Ignorable=&quot;x14ac&quot;
+xmlns:x14ac=&quot;http://schemas.microsoft.com/office/spreadsheetml/2009/9/ac&quot;&gt;
+
+  &lt;dimension ref=&quot;A1:A5&quot; /&gt;
+  &lt;sheetViews&gt;
+    &lt;sheetView tabSelected=&quot;1&quot; workbookViewId=&quot;0&quot;&gt;
+      &lt;selection activeCell=&quot;A6&quot; sqref=&quot;A6&quot; /&gt;
+    &lt;/sheetView&gt;
+  &lt;/sheetViews&gt;
+  &lt;sheetFormatPr defaultRowHeight=&quot;13.5&quot; x14ac:dyDescent=&quot;0.15&quot; /&gt;
+  &lt;sheetData&gt;
+    &lt;row r=&quot;1&quot; spans=&quot;1:1&quot; x14ac:dyDescent=&quot;0.15&quot;&gt;
+      &lt;c r=&quot;A1&quot;&gt;
+        &lt;v&gt;1&lt;/v&gt;
+      &lt;/c&gt;
+    &lt;/row&gt;
+    &lt;row r=&quot;2&quot; spans=&quot;1:1&quot; x14ac:dyDescent=&quot;0.15&quot;&gt;
+      &lt;c r=&quot;A2&quot;&gt;
+        &lt;v&gt;10&lt;/v&gt;
+      &lt;/c&gt;
+    &lt;/row&gt;
+    &lt;row r=&quot;3&quot; spans=&quot;1:1&quot; x14ac:dyDescent=&quot;0.15&quot;&gt;
+      &lt;c r=&quot;A3&quot;&gt;
+        &lt;v&gt;100&lt;/v&gt;
+      &lt;/c&gt;
+    &lt;/row&gt;
+    &lt;row r=&quot;4&quot; spans=&quot;1:1&quot; x14ac:dyDescent=&quot;0.15&quot;&gt;
+      &lt;c r=&quot;A4&quot;&gt;
+        &lt;v&gt;1000&lt;/v&gt;
+      &lt;/c&gt;
+    &lt;/row&gt;
+    &lt;row r=&quot;5&quot; spans=&quot;1:1&quot; x14ac:dyDescent=&quot;0.15&quot;&gt;
+      &lt;c r=&quot;A5&quot;&gt;
+        &lt;v&gt;-1&lt;/v&gt;
+      &lt;/c&gt;
+    &lt;/row&gt;
+  &lt;/sheetData&gt;
+  &lt;phoneticPr fontId=&quot;1&quot; /&gt;
+  &lt;pageMargins left=&quot;0.7&quot; right=&quot;0.7&quot; top=&quot;0.75&quot; bottom=&quot;0.75&quot;
+  header=&quot;0.3&quot; footer=&quot;0.3&quot; /&gt;
+&lt;/worksheet&gt;
+% unzip -p Book1.xlsx xl/worksheets/sheet1.xml | xml-find -name 'row' -exec xml-printf '%s %s\n' '{-}' ://c@r ://v \;
+A1 1
+A2 10
+A3 100
+A4 1000
+A5 -1
+</pre>
+<!-- section end -->
+</div>
+<!-- 2014/03/28 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/03/29 start -->
+<h2><a name="20140329" href="201403c.html#20140329">2014-03-29 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="201403291" title="201403291" href="201403c.html#201403291">■</a> 
+calの結果に色をつける</h3>
+<p>
+Ubuntuのcalは今日の日付だけ反転するが、むしろ土曜と日曜に色をつけたい。
+</p>
+<pre>
+% cal -h | sed '1!{s/\(..\)\(.\{16\}\)\(..\)\(  \|$\)/\x1b[1;31m\1\x1b[m\2\x1b[1;34m\3\x1b[m\4/g}'
+     March 2014       
+<span style="color:red;font-weight:bold;">Su</span> Mo Tu We Th Fr <span style="color:blue;font-weight:bold;">Sa</span>  
+<span style="color:red;font-weight:bold;">  </span>                <span style="color:blue;font-weight:bold;"> 1</span>  
+<span style="color:red;font-weight:bold;"> 2</span>  3  4  5  6  7 <span style="color:blue;font-weight:bold;"> 8</span>  
+<span style="color:red;font-weight:bold;"> 9</span> 10 11 12 13 14 <span style="color:blue;font-weight:bold;">15</span>  
+<span style="color:red;font-weight:bold;">16</span> 17 18 19 20 21 <span style="color:blue;font-weight:bold;">22</span>  
+<span style="color:red;font-weight:bold;">23</span> 24 25 26 27 28 <span style="color:blue;font-weight:bold;">29</span>  
+<span style="color:red;font-weight:bold;">30</span> 31             <span style="color:blue;font-weight:bold;">  </span>  
+</pre>
+<p>
+とこんな感じでどうだろう。3ヶ月表示でもok。
+</p>
+<pre>
+% cal -h3 | sed '1!{s/\(..\)\(.\{16\}\)\(..\)\(  \|$\)/\x1b[1;31m\1\x1b[m\2\x1b[1;34m\3\x1b[m\4/g}'
+   February 2014           March 2014            April 2014       
+<span style="color:red;font-weight:bold;">Su</span> Mo Tu We Th Fr <span style="color:blue;font-weight:bold;">Sa</span>  <span style="color:red;font-weight:bold;">Su</span> Mo Tu We Th Fr <span style="color:blue;font-weight:bold;">Sa</span>  <span style="color:red;font-weight:bold;">Su</span> Mo Tu We Th Fr <span style="color:blue;font-weight:bold;">Sa</span>  
+<span style="color:red;font-weight:bold;">  </span>                <span style="color:blue;font-weight:bold;"> 1</span>  <span style="color:red;font-weight:bold;">  </span>                <span style="color:blue;font-weight:bold;"> 1</span>  <span style="color:red;font-weight:bold;">  </span>     1  2  3  4 <span style="color:blue;font-weight:bold;"> 5</span>  
+<span style="color:red;font-weight:bold;"> 2</span>  3  4  5  6  7 <span style="color:blue;font-weight:bold;"> 8</span>  <span style="color:red;font-weight:bold;"> 2</span>  3  4  5  6  7 <span style="color:blue;font-weight:bold;"> 8</span>  <span style="color:red;font-weight:bold;"> 6</span>  7  8  9 10 11 <span style="color:blue;font-weight:bold;">12</span>  
+<span style="color:red;font-weight:bold;"> 9</span> 10 11 12 13 14 <span style="color:blue;font-weight:bold;">15</span>  <span style="color:red;font-weight:bold;"> 9</span> 10 11 12 13 14 <span style="color:blue;font-weight:bold;">15</span>  <span style="color:red;font-weight:bold;">13</span> 14 15 16 17 18 <span style="color:blue;font-weight:bold;">19</span>  
+<span style="color:red;font-weight:bold;">16</span> 17 18 19 20 21 <span style="color:blue;font-weight:bold;">22</span>  <span style="color:red;font-weight:bold;">16</span> 17 18 19 20 21 <span style="color:blue;font-weight:bold;">22</span>  <span style="color:red;font-weight:bold;">20</span> 21 22 23 24 25 <span style="color:blue;font-weight:bold;">26</span>  
+<span style="color:red;font-weight:bold;">23</span> 24 25 26 27 28 <span style="color:blue;font-weight:bold;">  </span>  <span style="color:red;font-weight:bold;">23</span> 24 25 26 27 28 <span style="color:blue;font-weight:bold;">29</span>  <span style="color:red;font-weight:bold;">27</span> 28 29 30       <span style="color:blue;font-weight:bold;">  </span>  
+<span style="color:red;font-weight:bold;">  </span>                <span style="color:blue;font-weight:bold;">  </span>  <span style="color:red;font-weight:bold;">30</span> 31             <span style="color:blue;font-weight:bold;">  </span>  <span style="color:red;font-weight:bold;">  </span>                <span style="color:blue;font-weight:bold;">  </span>  
+</pre>
+<!-- section end -->
+</div>
+<!-- 2014/03/29 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/03/30 start -->
+<h2><a name="20140330" href="201403c.html#20140330">2014-03-30 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="201403301" title="201403301" href="201403c.html#201403301">■</a> 
+<a href="http://qiita.com/mollifier/items/42ae46ff4140251290a7">zshで(N-/)を使うとき</a></h3>
+<p>
+また便乗ネタだけど、(N-/)をつけるという方法はなかなかナイスではあるが、<br>
+これを全ディレクトリに指定するのも面倒。<br>
+元々のpathに存在しないディレクトリがあった場合にも対処したい。<br>
+たとえばわざと存在しないディレクトリをpathに追加して
+</p>
+<pre>
+% path=(/not_exist $path /hoge)
+% echo $path
+/not_exist /home/eban/bin /home/eban/jarp/bin /usr/local/bin /usr/bin /bin /usr/sbin /sbin /hoge
+</pre>
+<p>
+これに対して全要素に対して(N-/)を処理させたい。それには$^pathを使うとうまくいく。
+</p>
+<pre>
+% echo $^path(N-/)
+/home/eban/bin /home/eban/jarp/bin /usr/local/bin /usr/bin /bin /usr/sbin /sbin
+</pre>
+<p>
+$path(N-/)としてしまうと最後の1個だけにつくのでまずい。
+</p>
+<pre>
+% echo $path(N-/) 
+/not_exist /home/eban/bin /home/eban/jarp/bin /usr/local/bin /usr/bin /bin /usr/sbin /sbin
+</pre>
+<p>
+というわけで
+</p>
+<pre>
+% path=($^path(N-/))
+% echo $path
+/home/eban/bin /home/eban/jarp/bin /usr/local/bin /usr/bin /bin /usr/sbin /sbin
+</pre>
+<p>
+とすればpathには存在するディレクトリだけが残る。
+</p>
+<!-- section end -->
+</div>
+<!-- 2014/03/30 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/03/31 start -->
+<h2><a name="20140331" href="201403c.html#20140331">2014-03-31 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="201403311" title="201403311" href="201403c.html#201403311">■</a> 
+Xvieリモートアプリ</h3>
+<p>
+なんかUSBケーブルつないでも追い付けないくらい、<br>
+やたらと電気食うのであまり使ってなかったんだが、<br>
+今日試したらそうでもない。<br>
+すぐ接続が切れちゃうのは変わらないが。<br>
+それはそれとして、変換待ちのままもう10日経つ番組があるんだけど、<br>
+なぜか変換終了しないと消せない仕様になっていて非常に困る。<br>
+もう全部予約はDRにしちゃったから今後は変換待ちにはならないが、<br>
+3つ番組が残ってしまった。いくら待っても変換されない。<br>
+もう見たので消したい。<br>
+ふとXvieリモートの録画リストを見てみるとこちらはグレーアウトされてない。<br>
+消してみるとなんと消えた。こんなとこに違いが。<br>
+ああ、あとこのXvieリモートのリモコン再生中だと現在の位置がわかるのでよろしい。<br>
+押し間違いもないし。接続が安定すればいうことないんだが。
+</p>
+<!-- section end -->
+</div>
+<!-- 2014/03/31 end -->
+
+<hr>
+<div>
+<a href="201403b.html">&lt;Older(,)</a> | 
+<a href="201404a.html">Newer(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

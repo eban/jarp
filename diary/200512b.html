@@ -1,0 +1,443 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2005-12-b</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="200512a.html">
+<link rel="next" href="200512c.html">
+
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2005年12月中旬〜</p>
+<hr>
+<div>
+<a href="200512a.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="200512c.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2005/12/11 start -->
+<h2><a name="20051211" href="200512b.html#20051211">2005-12-11 (Sun)</a></h2>
+<!-- 2005-12-12 02:14:02 -->
+
+
+<div class="entry1">
+<h3><a name="200512111" title="200512111" href="200512b.html#200512111">■</a> 
+[FC4] Error: Missing Dependency: libpostproc.so.0 is needed by package ffmpeg</h3>
+<p>
+yum updateするとまた依存関係でエラーになる。
+とりあえずエラーの元であるffmpregをyum removeしてみると
+</p>
+<pre>
+Removed: ffmpeg.i386 0:0.4.9-0.20050427.1.1.fc3
+Dependency Removed: ffmpeg-devel.i386 0:0.4.9-0.20050427.1.1.fc3
+Complete!
+</pre>
+<p>
+と出た。fc3かよ。そうか、これのせいで依存関係がおかしくなるんだな。
+その後mencoderとかもエラーになったので、
+まとめてremoveして全部インストールし直しで修復完了。
+</p>
+
+<p>
+ほかにfc3がないか確認。
+</p>
+<pre>
+% rpm -qa | grep fc3
+libid3tag-0.15.1b-3.1.fc3.fr
+xmms-mp3-1.2.10-9.1.1.fc3.fr
+wine-20041201-1fc3winehq
+avidemux2-2.0.36-2.1.fc3.rf
+</pre>
+<p>
+たぶんこれらはどこからrpmも持ってきて手でインストールしたやつか。
+ほとんど使ってないから問題なさげ。
+</p>
+
+<p>
+FC5が出たらまっさらな状態からインストールしたほうがよさそうだな。
+</p>
+<!-- section end -->
+</div>
+<!-- 2005/12/11 end -->
+
+
+
+<hr class="hide">
+<!-- 2005/12/12 start -->
+<h2><a name="20051212" href="200512b.html#20051212">2005-12-12 (Mon)</a></h2>
+<!-- 2005-12-13 02:45:55 -->
+
+<div class="entry1">
+<h3><a name="200512121" title="200512121" href="200512b.html#200512121">■</a> 
+[Ruby] Cygwinのforkとwaitとremove</h3>
+<p>
+Ruby 1.8のtest-allのGDBMのエラーの原因はremoveの延期のような気がする。
+fork,wait後にteardownで後始末のファイル削除をしてるわけだけど、
+その次のsetupでGDBM.newが失敗する。
+まるでまだDBファイルがまだ存在するかのような振舞い。
+なんとなくopenしたままでremoveしたらプロセスの終了まで延期されるCygwinの特有の例のあれなんじゃないかな、と。
+試しにProcess.waitの後にsleep 5とか入れると通ったりする。
+</p>
+
+<p>
+困ったねえ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2005/12/12 end -->
+
+
+
+<hr class="hide">
+<!-- 2005/12/13 start -->
+<h2><a name="20051213" href="200512b.html#20051213">2005-12-13 (Tue)</a></h2>
+<!-- 2005-12-14 01:37:58 -->
+
+<div class="entry1">
+<h3><a name="200512131" title="200512131" href="200512b.html#200512131">■</a> 
+[Ruby] Cygwinのforkとwaitとpid</h3>
+<p>
+Ruby 1.9のtest-allだと昨日の該当する場所でエラーにならないことがわかった。
+違いはProcess.wait pidとpidを指定してるとこだけ。
+たしかに1.8もpidを指定すればエラーにならない。うーむ。
+ええと、ということはCのレベルではwaitpidに-1かpidを指定したときの挙動の違いに帰着するわけか。
+</p>
+<pre>
+% ruby -e 'fork{sleep 1;exit 123};p $?;Process.wait;p $?'
+nil
+#&lt;Process::Status: pid=788,exited(123)&gt;
+</pre>
+<p>
+のように待ってないわけじゃないんだよねえ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2005/12/13 end -->
+
+
+
+<hr class="hide">
+<!-- 2005/12/14 start -->
+<h2><a name="20051214" href="200512b.html#20051214">2005-12-14 (Wed)</a></h2>
+<!-- 2005-12-15 21:21:23 -->
+
+<div class="entry1">
+<h3><a name="200512141" title="200512141" href="200512b.html#200512141">■</a> 
+[Ruby] test_gdbm.rb</h3>
+<p>
+結局1.9のbackportのような形でcommit。
+</p>
+
+<p>
+今になってforkじゃなくてthreadでもいいかなと思ったり。
+そうすればmswin32のようにforkがない環境でもある程度のテストもできるし。
+って、だったらthreadである必要もない。単にopenしたままopenすればよさそうな。
+</p>
+
+<p>
+まあ、でもlock,nolockのテストだから別プロセスじゃないとあまり意味がないよねえ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200512142" title="200512142" href="200512b.html#200512142">■</a> 
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-talk/170571">[Ruby] Puby 1.0 Release!</a></h3>
+<p>
+本当にドメイン取ってリダイレクトまでしてくれれば完璧だったのに。
+そういえば
+<a href="http://cygwin.com/ml/cygwin-apps/2002-04/msg00233.html">CAMP(Cygwin Apache MySQL PHP)</a>なんてのもあったな。
+</p>
+<!-- section end -->
+</div>
+<!-- 2005/12/14 end -->
+
+
+
+<hr class="hide">
+<!-- 2005/12/15 start -->
+<h2><a name="20051215" href="200512b.html#20051215">2005-12-15 (Thu)</a></h2>
+<!-- 2005-12-16 02:49:16 -->
+
+<div class="entry1">
+<h3><a name="200512151" title="200512151" href="200512b.html#200512151">■</a> 
+<a href="http://mail.google.com/support/bin/answer.py?ctx=%67mail&amp;hl=en&amp;answer=25922">[Mail] Gmail: Help Center - How do I set up an automatic vacation response?</a></h3>
+<p>
+Gmailもvacationの設定ができるらしいが、使う人どれだけいるんだろうか。
+むしろそんな設定できなくていいんだけどねえ。
+返ってきてもうっとうしいし、MLへ返されても迷惑だし。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200512152" title="200512152" href="200512b.html#200512152">■</a> 
+[GDS] Google Desktop Search 2</h3>
+<p>
+さっそく更新。
+ステータスを見るとGmailもインデックスするとか言ってるが、
+492MBもあるメールをダウンロードしてくるんだろうか？
+それともGmail側ですでにインデックスはできてるだろうから、それを取ってくるだけ？
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200512153" title="200512153" href="200512b.html#200512153">■</a> 
+[SBS] del.icio.us</h3>
+<p>
+長いことダウンされるととても困ることに気づいた。
+バックアップ取っとこ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2005/12/15 end -->
+
+
+
+<hr class="hide">
+<!-- 2005/12/16 start -->
+<h2><a name="20051216" href="200512b.html#20051216">2005-12-16 (Fri)</a></h2>
+<!-- 2005-12-17 03:03:10 -->
+
+<div class="entry1">
+<h3><a name="200512161" title="200512161" href="200512b.html#200512161">■</a> 
+<a href="http://cppunit.sourceforge.net/">[Test] CppUnit</a></h3>
+<p>
+なぜかCppUnitに手を出してる今日この頃。
+MinGWの対応状況はどうかなと
+<a href="http://cppunit.sourceforge.net/cppunit-wiki/BuildingCppUnit1">BuildingCppUnit1</a>
+
+を見るも何もなし。
+clでも作りたかったからVC++のほうも見てみたが、.dswになっててMakefileがよくわからん。
+BCC対応もあるみたいなので、そっちから攻めてみよう。
+とりあえずMinGWはconfigureすればなんとかなる気もするといったとこで今週は終了。
+</p>
+<!-- section end -->
+</div>
+<!-- 2005/12/16 end -->
+
+
+
+<hr class="hide">
+<!-- 2005/12/17 start -->
+<h2><a name="20051217" href="200512b.html#20051217">2005-12-17 (Sat)</a></h2>
+<!-- 2005-12-18 02:28:22 -->
+
+<div class="entry1">
+<h3><a name="200512171" title="200512171" href="200512b.html#200512171">■</a> 
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-talk/171269">[Mail] GmailとReply-To</a></h3>
+<p>
+これを見て思ったのが、ひょっとしたらGmailでruby-talk MLへ投稿すると2通受け取るという問題は、FMLがつけてるReply-Toヘッダが原因じゃないかという疑念。
+
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-talk/171267">他のMLでは起きない</a>らしいし。
+とりあえず
+<a href="http://arch.bluegate.org/reply-to-harmful.html">harmful</a>とか
+
+<a href="http://arch.bluegate.org/reply-to.html">useful</a>とかいう議論は置いとく。
+でもほんとにそれが原因なのかな。実験しづらいのが難点だ。
+</p>
+
+<p>
+考えてみると
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-talk/171100">FAQ的な答え</a>も本当なのかよくわからない。
+以前操作ミスで全文引用だけのメールをGmailでruby-talk MLへ送ってしまったことがあるが、
+今見直しても2通ないしなあ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200512172" title="200512172" href="200512b.html#200512172">■</a> 
+[Mail] Sent Mail</h3>
+<p>
+上記の件でSent Mailを見てて気づいた。
+SettingsのAccountでAdd another email addressしたアドレスから出した昔のメールまでがSent Mailに出てきてる。
+</p>
+<!-- section end -->
+</div>
+<!-- 2005/12/17 end -->
+
+
+
+<hr class="hide">
+<!-- 2005/12/18 start -->
+<h2><a name="20051218" href="200512b.html#20051218">2005-12-18 (Sun)</a></h2>
+<!-- 2005-12-19 01:14:02 -->
+
+<div class="entry1">
+<h3><a name="200512181" title="200512181" href="200512b.html#200512181">■</a> 
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-core/06941">[Ruby] バージョン番号</a></h3>
+<p>
+1.A.xにできない理由としてはRUBY_VERSION_CODEがある。
+</p>
+<pre>
+% grep RUBY_VERSION_CODE **/*.[ch]
+ext/dl/ptr.c:#if RUBY_VERSION_CODE &lt; 171
+ext/strscan/strscan.c:#if (RUBY_VERSION_CODE &lt; 150)
+version.h:#define RUBY_VERSION_CODE 184
+</pre>
+<p>
+同じ理由で何度か提案があった1.8.3.1なんてのも実は破綻してしまう。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200512182" title="200512182" href="200512b.html#200512182">■</a> 
+<a href="http://ft3.sourceforge.net">[Soft] Full Text for SQLite3 0.2.1</a></h3>
+<blockquote><dl>
+<dt>
+About:
+<dd>
+Full Text for SQLite3 is a full text indexer for data stored into a
+sqlite3 database. The text fields stored in the database can be split
+word-by-word and stored in a form suitable for lookup. 
+</dl></blockquote>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200512183" title="200512183" href="200512b.html#200512183">■</a> 
+<a href="http://www.harbaum.org/till/nanovm/">[Soft] NanoVM 20051217</a></h3>
+<blockquote><dl>
+<dt>
+About:
+<dd>
+NanoVM is a tiny (less than 8 kB of code including simple native
+classes and a bootloader) implementation of the Java VM. It currently runs
+on Linux and the AVR microcontroller family. Unix/Linux is supported as the
+main development and testing platform, whereas the VM is primarily intended
+to be used on tiny embedded devices such as the AVR. The VM can very easily
+be ported for other targets.
+</dl></blockquote>
+<!-- section end -->
+</div>
+<!-- 2005/12/18 end -->
+
+
+
+<hr class="hide">
+<!-- 2005/12/19 start -->
+<h2><a name="20051219" href="200512b.html#20051219">2005-12-19 (Mon)</a></h2>
+<!-- 2005-12-20 01:45:49 -->
+
+<div class="entry1">
+<h3><a name="200512191" title="200512191" href="200512b.html#200512191">■</a> 
+[Game] TALES OF THE ABYSS</h3>
+<p>
+なんか評判いいので買ってみた。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200512192" title="200512192" href="200512b.html#200512192">■</a> 
+[TV] フィギュアスケート</h3>
+<p>
+どこのお調子者かと思ったら佐野稔だった。こんな人だったっけ？
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200512193" title="200512193" href="200512b.html#200512193">■</a> 
+<a href="http://blog.del.icio.us/blog/2005/12/continued_hiccu.html">[Del.icio.us] continued hiccups</a></h3>
+<p>
+かなりやばめ？
+おいらもバックアップ取ってないよ。
+あ、そういえば
+<a href="http://www.flock.com/">flock</a>を試したときになんかsyncしてたような気がする。
+~/.mozilla/flock/xxxxxxxx.default/flock_favorites.rdfか。
+これでとりあえず10/24までのはなんとかなるか。
+</p>
+<!-- section end -->
+</div>
+<!-- 2005/12/19 end -->
+
+
+
+<hr class="hide">
+<!-- 2005/12/20 start -->
+<h2><a name="20051220" href="200512b.html#20051220">2005-12-20 (Tue)</a></h2>
+<!-- 2005-12-21 23:13:45 -->
+
+<div class="entry1">
+<h3><a name="200512201" title="200512201" href="200512b.html#200512201">■</a> 
+[Del.icio.us] 復活</h3>
+<p>
+さてバックアップはどうやって取ろうかなと思ったら、settingsにexportがあった。
+APIを調べてできればインクリメンタルに取りたいな。
+</p>
+<!-- section end -->
+</div>
+<!-- 2005/12/20 end -->
+
+<hr>
+<div>
+<a href="200512a.html">&lt;Prev(,)</a> | 
+<a href="200512c.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

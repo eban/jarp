@@ -1,0 +1,828 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2001-11-c</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="200111b.html">
+<link rel="next" href="200112a.html">
+
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2001年11月下旬〜</p>
+<hr>
+<div>
+<a href="200111b.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="200112a.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2001/11/21 start -->
+<h2><a name="20011121" href="200111c.html#20011121">2001-11-21 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="200111211" title="200111211" href="200111c.html#200111211">■</a> 
+<a href="http://homepage1.nifty.com/markey/memo/200111.html#nov1902">w3m</a></h3>
+<p>
+oして
+</p>
+<pre>
+q での終了時に確認する                             ( )ON  (*)OFF
+</pre>
+<p>
+を調べるべし。~/.w3m/config的にはconfirm_qqの値。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200111212" title="200111212" href="200111c.html#200111212">■</a> 
+Linux 2.4.15-pre8</h3>
+<p>
+更新。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200111213" title="200111213" href="200111c.html#200111213">■</a> 
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-talk/25952">[ruby-talk:25952]</a></h3>
+<p>
+比較的大きいRUBY NEWSGROUP FAQにreplyし、しかも全文引用すると、
+結局自分の首を絞めることになると思うが。というかなぜ当該する記事にreplyしない？
+繰り返されてるとするとbodyを送ってる途中でtimeoutしてるとか？
+</p>
+
+<p>
+最近やっぱ配送が乱れてるなあ。今回の原因はrimじゃないようだ。
+heliumでmailqするとまだ残ってたりするし。何が原因だろう？
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200111214" title="200111214" href="200111c.html#200111214">■</a> 
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-talk/25969">irbsh</a></h3>
+<p>
+あ、Daveさんがirbshを使ってる。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200111215" title="200111215" href="200111c.html#200111215">■</a> 
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-talk/25982">Hello World considered harmful</a></h3>
+<p>
+どうも反応を見てるとまじめに考える人が多い。jokeだよ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200111216" title="200111216" href="200111c.html#200111216">■</a> 
+cygwin 1.1.8</h3>
+<p>
+実は消してない。.htaccessで見えないようにしてるだけ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200111217" title="200111217" href="200111c.html#200111217">■</a> 
+<a href="http://cygwin.com/ml/cygwin-announce/2001/msg00153.html">cURL</a></h3>
+<p>
+CygwinにcURLが加わった。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200111218" title="200111218" href="200111c.html#200111218">■</a> 
+__func__</h3>
+<p>
+fj.comp.lang.cから: C99には__func__があるらしい。
+</p>
+<pre>
+% cat &gt; foo.c
+#include &lt;stdio.h&gt;
+const char *foo()
+{
+    return __func__;
+}
+
+main()
+{
+    printf(&quot;%s\n&quot;, foo());
+}
+% gcc foo.c
+% ./a.out
+foo
+</pre>
+<p>
+なるほど。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2001/11/21 end -->
+
+
+
+<hr class="hide">
+<!-- 2001/11/22 start -->
+<h2><a name="20011122" href="200111c.html#20011122">2001-11-22 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="200111221" title="200111221" href="200111c.html#200111221">■</a> 
+配送の乱れ</h3>
+<p>
+[ruby-list:32475] [ruby-list:32476] の2つが今日になってやっと来た。
+Daveさんのjokeでしたメールも昼になってからだったし。うーむ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200111222" title="200111222" href="200111c.html#200111222">■</a> 
+<a href="http://www.thismetalsky.org/projects/dhcp_dns.html">Dynamic DNS from DHCP</a></h3>
+<p>
+tinydnsとDHCP 3.0でDynamic DNSしたい場合はどうすればいいんだろう？
+googleでtinydns dynamic dns dhcpをキーに引いてみると
+
+<a href="http://www.thismetalsky.org/projects/dhcp_dns.html">Dynamic DNS from DHCP</a>
+が見つかった。
+</p>
+
+<p>
+うーむ。単にdhcpd.leasesを見張ってるだけなのか。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200111223" title="200111223" href="200111c.html#200111223">■</a> 
+<a href="http://www.bzimage.org/">bzimage.org</a></h3>
+<p>
+testingのincrementalなpatchも用意し始めたようだ。
+
+<a href="http://www.bzimage.org/kernel-patches/v2.4/testing/">ここ</a> にある。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200111224" title="200111224" href="200111c.html#200111224">■</a> 
+INSTALL_PATHとINSTALL_MOD_PATH</h3>
+<p>
+非力なmachineの代わりに高速なmachineでkernelをmakeしたいってことはよくある話だ。
+できあがったらmoduleと共にtarballにしたくなるよね。
+Makefileを見るとINSTALL_PATHとINSTALL_MOD_PATHを設定すればいいようだ。
+</p>
+
+<p>
+実際やってみると/sbin/liloを実行しにいくのが気に入らない。
+これだとrootにならないと作れないじゃん。って失敗した画面をよく見ると
+</p>
+<pre>
++ '[' -x /home/watanabe/bin/installkernel ']'
+</pre>
+<p>
+という感じで調べている。なるほどこれを用意しとけばなんとでもなるわけか。
+早速arch/i386/boot/install.shを元に~/bin/installkernelを用意した。
+単に
+</p>
+<pre>
+if [ -x ~/bin/installkernel ]; then exec ~/bin/installkernel &quot;$@&quot;; fi
+if [ -x /sbin/installkernel ]; then exec /sbin/installkernel &quot;$@&quot;; fi
+</pre>
+<p>
+と
+</p>
+<pre>
+if [ -x /sbin/lilo ]; then /sbin/lilo; else /etc/lilo/install; fi
+</pre>
+<p>
+をcomment outしただけ。これで
+</p>
+<pre>
+% mkdir ~/kernel
+% make install modules_install \
+  INSTALL_PATH=$HOME/kernel INSTALL_MOD_PATH=$HOME/kernel
+</pre>
+<p>
+と実行すれば~/kernelにインストールされるわけだ。
+あとは適当にtarballを作るだけ。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2001/11/22 end -->
+
+
+
+<hr class="hide">
+<!-- 2001/11/23 start -->
+<h2><a name="20011123" href="200111c.html#20011123">2001-11-23 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="200111231" title="200111231" href="200111c.html#200111231">■</a> 
+Linux 2.4.15</h3>
+<p>
+2.4.15は今年中に出るんだろうか？と書いたらもう出てるし。
+</p>
+<pre>
+EXTRAVERSION =-greased-turkey
+</pre>
+<p>
+ってなに？
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200111232" title="200111232" href="200111c.html#200111232">■</a> 
+Cygwin</h3>
+<p>
+VMwareのLinux上なのでまっさらな状態。
+one treeにするとbinutilsもi686-pc-cygwinが外れてしまうので、
+先にインストールしておく。
+</p>
+<pre>
+% tar xfv binutils-20011002-1-src.tar.bz2 --us=bzip2
+% cd binutils-20011002-1
+% CFLAGS=-Os ./configure --prefix=/usr/local/cygwin \
+  --target=i686-pc-cygwin
+% make
+% make install
+% cd ..
+</pre>
+<p>
+次にcygwinとgccはone treeで。
+</p>
+<pre>
+% tar xfv cygwin-1.3.5-3-src.tar.bz2 --us=bzip2
+% tar xfv gcc-2.95.3-5-src.tar.bz2 --us=bzip2
+% cd cygwin-1.3.5-3
+% ln -s ../gcc-2.95.3-5/{gcc,libio,libstdc++} .
+% mkdir obj; cd obj
+% CFLAGS=-Os CXXFLAGS=-Os ../configure \
+  --prefix=/usr/local/cygwin  \
+  --target=i686-pc-cygwin \
+  --enable-languages=c,c++
+% make tooldir=/usr/local/cygwin
+(snip)
+In file included from .../libio/stdio/stdio.h:29,
+               from .../winsup/cygwin/assert.cc:18:
+.../libio/libio.h:30: _G_config.h: No such file or directory
+</pre>
+<p>
+だめじゃん。stdio.hはそこをincludeしちゃいかんだろう。
+しかもここで終わらずにmingwをmakeしに行っちゃうのも変だよね。
+i686-pc-cygwin/winsup/Makefileが
+</p>
+<pre>
+$(SUBDIRS):
+        @if cd $@ 2&gt;/dev/null; then \
+            $(MAKE) all; \
+        fi || exit 0
+</pre>
+<p>
+となってるからか。見過ごすとこだったよ。
+</p>
+
+<p>
+どうも-nostdincの後の-Iが足りないようだ。古いバージョンで試す必要があるな。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2001/11/23 end -->
+
+
+
+<hr class="hide">
+<!-- 2001/11/24 start -->
+<h2><a name="20011124" href="200111c.html#20011124">2001-11-24 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="200111241" title="200111241" href="200111c.html#200111241">■</a> 
+Cygwin</h3>
+<p>
+cygwin-1.3.2-1とgcc-2.95.3-5の組み合わせで試すと
+</p>
+<pre>
+Making version.o and winver.o
+Version 1.3.5
+sh: i686-pc-cygwin-gcc: command not found
+i686-pc-cygwin-windres: no resources
+make[2]: *** [winver_stamp] Error 1
+</pre>
+<p>
+といつものとこでこけるので、昨日のとこは無事に通っていることがわかる。
+winsup/Makefile.commonが怪しいとあたりをつけ、
+これだけ1.3.2-1のものと取り替えてみる。ビンゴ。
+diffを取ってみると
+</p>
+<pre>
+ifeq (,${findstring $(newlib_source)/libc/include,$(CFLAGS) $(CXXFLAGS) $(CXX) $(CC)})
+newlib_include:=-I$(newlib_source)/libc/include
+endif
+</pre>
+<p>
+という感じで、
+$(CFLAGS) $(CXXFLAGS) $(CXX) $(CC)のいずれかになかったら追加したかったようだ。
+でも、実際は-nostdinc++ -nostdincで無効になってしまうので、
+必ずnewlib_includeを足す必要がある。こっちは-nostdinc++ -nostdincの後にあるので有効。
+</p>
+
+<p>
+もっと簡単にしてみると
+</p>
+<pre>
+CC=gcc -I/path/to/include
+ifeq (,${findstring /path/to,$(CC)})
+newlib_include:=-I/path/to/include
+endif
+
+COMPILE_CC=$(CC) -nostdinc $(newlib_include)
+</pre>
+<p>
+という感じになっている。これでは/path/to/includeが結局含まれない。
+-nostdincがそれより前で指定した-Iをご破算にしてしまうからだ。
+</p>
+
+<p>
+てゆか、これじゃcygwin1.dllを作れないと思うんだけど、どうやって作ってるんだ？
+</p>
+
+<p>
+最終的には
+<a href="../files/cygwin-1.3.5-3.diff">この変更</a> と、
+windres問題のために~/binにdummyのi686-pc-cygwin-gccを用意した。
+なぜかクロスのときはw32api/へ分割しないようになっているけど、
+分けないと-mno-cygwin指定時に困ったことになるのでその対策も入っている。
+</p>
+<pre>
+% ln -s =gcc ~/bin/i686-pc-cygwin-gcc
+% make -e tooldir=/usr/local/cygwin \
+  T_CPPFLAGS='-DCYGWIN_CROSS_DIR=\&quot;/usr/local/cygwin\&quot;'
+% make -e tooldir=/usr/local/cygwin \
+  T_CPPFLAGS='-DCYGWIN_CROSS_DIR=\&quot;/usr/local/cygwin\&quot;' install
+% rm ~/bin/i686-pc-cygwin-gcc
+</pre>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200111242" title="200111242" href="200111c.html#200111242">■</a> 
+DARK ANGEL 1</h3>
+<p>
+なぜか1巻が無料だったので借りる。
+まんまとレンタルビデオ屋の策略にはまったようだ。
+X-Files 8も6巻まで見てしまったのでちょうどいいか。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200111243" title="200111243" href="200111c.html#200111243">■</a> 
+DIGITAL DREAM LIVE 2000</h3>
+<p>
+鈴木あみとか去年の今頃はまだいたんだなあ。なつかしい。
+</p>
+<!-- section end -->
+</div>
+<!-- 2001/11/24 end -->
+
+
+
+<hr class="hide">
+<!-- 2001/11/25 start -->
+<h2><a name="20011125" href="200111c.html#20011125">2001-11-25 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="200111251" title="200111251" href="200111c.html#200111251">■</a> 
+[Cygwin] syslog</h3>
+<pre>
+% grep LOG_PERROR syslog.cc
+%
+</pre>
+<p>
+全くやる気なしかい！syslog.hにあるのは飾りか。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200111252" title="200111252" href="200111c.html#200111252">■</a> 
+Linux 2.4.16-pre1</h3>
+<p>
+2.4.15はなんかかなりまずいらしい。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200111253" title="200111253" href="200111c.html#200111253">■</a> 
+RubyUnit 0.4.7</h3>
+<p>
+更新。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200111254" title="200111254" href="200111c.html#200111254">■</a> 
+<a href="http://debian-cygwin.sourceforge.net/">Debian GNU/w32</a></h3>
+<p>
+いきなりクロスの環境の説明があるあたり期待できそう？
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2001/11/25 end -->
+
+
+
+<hr class="hide">
+<!-- 2001/11/26 start -->
+<h2><a name="20011126" href="200111c.html#20011126">2001-11-26 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="200111261" title="200111261" href="200111c.html#200111261">■</a> 
+<a href="http://www.fefe.de/dietlibc/">diet libc</a></h3>
+<p>
+入れてみた。まずはfileutils 4.1で試そうと思うんだけど、
+なかなかうまくいかない。
+だましだましmakeを通してみたが、dfだけは
+</p>
+<pre>
+./df: cannot read table of mounted filesystems
+</pre>
+<p>
+となってしまう。あとで調べよう。
+</p>
+
+<p>
+strip後のサイズは、
+</p>
+<pre>
+% ls -l ls
+-rwxr-xr-x    1 watanabe ruby        69344 Nov 26 00:43 ls
+</pre>
+<p>
+とかなり小さい。もちろん
+</p>
+<pre>
+% ldd ls
+        not a dynamic executable
+</pre>
+<p>
+だ。glibcをstaticにlinkしたものは
+</p>
+<pre>
+% upx -l /bin/ls
+                     Ultimate Packer for eXecutables
+            Copyright (C) 1996, 1997, 1998, 1999, 2000, 2001
+UPX 1.07         Markus F.X.J. Oberhumer &amp; Laszlo Molnar        Feb 20th 2001
+
+        File size         Ratio      Format      Name
+   --------------------   ------   -----------   -----------
+    440084 -&gt;    192398   43.71%    linux/386    /bin/ls
+</pre>
+<p>
+と段違いだ。
+</p>
+
+<p>
+printfを使うと怒られてしまう。
+</p>
+<pre>
+% printf '#include &lt;stdio.h&gt;\nmain(){printf(&quot;hello\\n&quot;);}\n' &gt;foo.c
+% diet gcc foo.c
+/opt/diet/lib-i386/libc.a(vprintf.o): In function `vprintf':
+vprintf.o(.text+0x52): warning: the printf functions add several kilobytes of bloat.
+</pre>
+<p>
+stdioも使うと怒られる。なかなか面白い。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200111262" title="200111262" href="200111c.html#200111262">■</a> 
+P4W</h3>
+<p>
+CVS repositoryを探してみた。
+
+<a href="http://sourceforge.net/projects/p4w/">ここ</a> からたどれるようだ。
+
+<a href="http://p4w.sourceforge.net/">P4W Home</a> に書いといて欲しいなあ。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2001/11/26 end -->
+
+
+
+<hr class="hide">
+<!-- 2001/11/27 start -->
+<h2><a name="20011127" href="200111c.html#20011127">2001-11-27 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="200111271" title="200111271" href="200111c.html#200111271">■</a> 
+Linux 2.4.16</h3>
+<p>
+更新。速いマシンでtarballを作ってみた。
+が、owner/groupがwatanabe/rubyじゃ文句言われちゃって全然だめだ。
+つうわけで、tarballを作るときに
+</p>
+<pre>
+--owner=root --group=root
+</pre>
+<p>
+を追加。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200111272" title="200111272" href="200111c.html#200111272">■</a> 
+vmware-config.pl</h3>
+<p>
+他のマシンでmakeするとvmware-config.plできなくなるので、
+ソースだけ展開してmake symlinksしておく。
+でも、これだけだとversion.hがないと言われてまだだめ。
+</p>
+<pre>
+The path &quot;/usr/src/linux/include&quot; is a kernel header file directory,
+but it does not contain the file &quot;linux/version.h&quot; as expected.  This
+can happen if the kernel has never been built, or if you have invoked
+the &quot;make mrproper&quot; command in your kernel directory.  In any case,
+you may want to rebuild your kernel.
+</pre>
+<p>
+make oldconfig depも必要だ。ひょっとしたら
+</p>
+<pre>
+make symlinks include/linux/version.h
+</pre>
+<p>
+だけでもいいのかな？
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2001/11/27 end -->
+
+
+
+<hr class="hide">
+<!-- 2001/11/28 start -->
+<h2><a name="20011128" href="200111c.html#20011128">2001-11-28 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="200111281" title="200111281" href="200111c.html#200111281">■</a> 
+また配送の乱れ</h3>
+<p>
+うーむ。
+
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-list/32588">[ruby-list:32588]</a> ,
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-list/32591">[ruby-list:32591]</a>
+が来ない。っておれの書いたメールだけなぜに？
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200111282" title="200111282" href="200111c.html#200111282">■</a> 
+Ruby 1.6.6</h3>
+<p>
+今日は出なかった。まつもとさんは29,30と東京らしいのでやっぱ来月か？
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200111283" title="200111283" href="200111c.html#200111283">■</a> 
+libcygwin-ruby16.dll.a</h3>
+<p>
+-wの状態だったので、+wした。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200111284" title="200111284" href="200111c.html#200111284">■</a> 
+<a href="http://www.dm4lab.to/~usa/dekigoto/200111c.html#id20011127_P1_2">syslog</a></h3>
+<p>
+RegisterEventSource, ReportEvent, DeregisterEvnetSourceってな感じ。
+syslog.ccは400行程度なのでちらっと見てください。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2001/11/28 end -->
+
+
+
+<hr class="hide">
+<!-- 2001/11/29 start -->
+<h2><a name="20011129" href="200111c.html#20011129">2001-11-29 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="200111291" title="200111291" href="200111c.html#200111291">■</a> 
+RubyUnit 0.4.8</h3>
+<p>
+更新。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200111292" title="200111292" href="200111c.html#200111292">■</a> 
+<a href="http://homepage1.nifty.com/markey/memo/diary.html#nov2203">w3m vs emacs-w3m</a></h3>
+<p>
+おぉ。勘違いでしたね。
+emacs-w3mと言えば、JとKがw3mと逆なのがすごく気になる。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2001/11/29 end -->
+
+
+
+<hr class="hide">
+<!-- 2001/11/30 start -->
+<h2><a name="20011130" href="200111c.html#20011130">2001-11-30 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="200111301" title="200111301" href="200111c.html#200111301">■</a> 
+--enable-sharedとi386</h3>
+<p>
+cygwinとmingw32ではdefaultが--enable-sharedでi386固定とした。
+i386にするのはs/i.86/i386/するだけだから簡単だが、
+--enable-sharedをdefaultにするにはどうすればいいのか？
+単に
+</p>
+<pre>
+enable_shared=yes
+</pre>
+<p>
+と予め設定しとけばいいかというと、これだと--enable-shared固定になってしまう。
+--disable-sharedしてもここでyesになってしまう。
+つまり、--disable-sharedを指定した場合、
+それ以前にenable_sharedは設定されているわけで、
+</p>
+<pre>
+if [ x&quot;$enable_shared&quot; = x ]; then
+   enable_shared=yes
+end
+</pre>
+<p>
+としないといけない。というわけで
+</p>
+<pre>
+: ${enable_shared=yes}
+</pre>
+<p>
+となっている。あ、
+</p>
+<pre>
+: ${enable_shared:=yes}
+</pre>
+<p>
+のほうがいいのかもしれない。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200111302" title="200111302" href="200111c.html#200111302">■</a> 
+rimのメール配送遅延</h3>
+<p>
+ったく、どうなってんだよ？調べると
+
+<a href="http://www.rim.or.jp/support/announce/trouble/2001/nov30-1.html">アナウンス</a>
+があった。
+</p>
+<pre>
+○発生原因:　　以下の状況が重なるためのメールサーバの高負荷　
+ 
+・お客様宛に頻繁に無差別大量メールが着信していること　
+・「BADTRANS.B」「Aliz」などのウィルス氾濫により、お客様宛に　
+  頻繁にウィルスメールが着信していること　
+
+このため、サーバの処理能力を超え、配送待ちメールが多数に上り、　
+遅延が発生いたしております。
+</pre>
+<p>
+まったく。Outlookなんか捨てろよ。
+無差別大量メールに関しては
+
+<a href="http://www.rim.or.jp/support/announce/trouble/2001/nov21-1.html">21日</a>
+にもあるから、しばらくは続くのか？
+</p>
+
+<p>
+で、例によって
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-dev/15324">[ruby-dev:15324]</a> が来ない。
+なぜおれのメールが集中して遅れる？
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2001/11/30 end -->
+
+<hr>
+<div>
+<a href="200111b.html">&lt;Prev(,)</a> | 
+<a href="200112a.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

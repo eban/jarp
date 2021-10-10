@@ -1,0 +1,390 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2008-10-c</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="200810b.html">
+<link rel="next" href="200811a.html">
+
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2008年10月下旬〜</p>
+<hr>
+<div>
+<a href="200810b.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="200811a.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2008/10/21 start -->
+<h2><a name="20081021" href="200810c.html#20081021">2008-10-21 (Tue)</a></h2>
+<!-- 2008-10-22 01:52:36 -->
+
+<div class="entry1">
+<h3><a name="200810211" title="200810211" href="200810c.html#200810211">■</a> 
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-talk/318224">[Ruby] Ruby way to take some action only once in a loop?</a></h3>
+<p>
+なんかとても謎な技だ。ループの中だと
+</p>
+
+<pre>
+if (first=true)..false and first
+  ...
+end
+</pre>
+<p>
+が一度だけ真になる。この場合の..はフリップフロップで、<br>
+2度目以降のループでfirstがnilになるのがミソ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200810212" title="200810212" href="200810c.html#200810212">■</a> 
+<a href="http://jp.techcrunch.com/archives/20081018googles-destruction-of-bloglines-now-complete/">[Bloglines] Bloglines、完璧に崩壊—ファウンダーさえGoogle Readerに乗り換えか？</a></h3>
+<p>
+最近Bloglines調子悪いと思っていたら、結構やばいことになってたんだなあ。<br>
+一応
+<a href="http://jp.techcrunch.com/archives/20081020bloglines-gets-a-band-aid-and-we-hear-its-still-for-sale/">直ったようだけど。</a>
+</p>
+<!-- section end -->
+</div>
+<!-- 2008/10/21 end -->
+
+
+
+<hr class="hide">
+<!-- 2008/10/22 start -->
+<h2><a name="20081022" href="200810c.html#20081022">2008-10-22 (Wed)</a></h2>
+<!-- 2008-10-23 01:11:37 -->
+
+<div class="entry1">
+<h3><a name="200810221" title="200810221" href="200810c.html#200810221">■</a> 
+[ニコニコ動画] cookies.txtを使ってflvのURLを得る</h3>
+<p>
+先日のExport Cookiesを使ってcookies.txtを保存して
+</p>
+
+<pre>
+% curl -b ~/cookies.txt 'http://www.nicovideo.jp/api/getflv?v=sm4987720'|&amp;\
+  tr \&amp; \\n|ruby -rcgi -ne 'puts CGI.unescape($_) if /url/'
+url=http://smile-pso51.nicovideo.jp/smile?v=4987720.34488
+</pre>
+<p>
+となるので
+</p>
+
+<pre>
+% curl -v -b ~/cookies.txt -o foo.flv \
+  'http://smile-pso51.nicovideo.jp/smile?v=4987720.34488'
+</pre>
+<p>
+でいけるのかと思ったら、案外403 Forbiddenだったりする。<br>
+なかなか難しいね。
+</p>
+<!-- section end -->
+</div>
+<!-- 2008/10/22 end -->
+
+
+
+<hr class="hide">
+<!-- 2008/10/23 start -->
+<h2><a name="20081023" href="200810c.html#20081023">2008-10-23 (Thu)</a></h2>
+<!-- 2008-10-24 02:21:14 -->
+
+<div class="entry1">
+<h3><a name="200810231" title="200810231" href="200810c.html#200810231">■</a> 
+[ニコニコ動画] cookies.txtを使ってflvをダウンロード</h3>
+<p>
+watchのURLでクッキーを更新しないといけないようだ。<br>
+取得するのはヘッダ部分だけ(-I)でOK。
+</p>
+
+<pre>
+% curl -b ~/cookies.txt 'http://www.nicovideo.jp/api/getflv?v=sm4987720'|&amp;\
+  tr \&amp; \\n|ruby -rcgi -ne 'puts CGI.unescape($_) if /url/'
+url=http://smile-pso51.nicovideo.jp/smile?v=4987720.34488
+% curl -v -I -b ~/cookies.txt -c tmp.txt http://www.nicovideo.jp/watch/sm4987720
+% curl -v -b tmp.txt -o foo.flv \
+  'http://smile-pso51.nicovideo.jp/smile?v=4987720.34488'
+</pre>
+<p>
+てな感じでダウンロード可能。<br>
+しばらく放っておくとすぐに403 Forbiddenになるので注意。<br>
+また
+</p>
+
+<pre>
+% mplayer -cookies -cookies-file tmp.txt \
+  'http://smile-pso51.nicovideo.jp/smile?v=4987720.34488'
+</pre>
+<p>
+とすることでmplayerでも再生できる。nmな動画は当然だめだけど。<br>
+あ、リストを用意しておいて-vo nullでvideo部分を非表示にすれば作業用BGMのできあがりだ。<br>
+ちょっと面白いかも。あとで考えよう。
+</p>
+<!-- section end -->
+</div>
+<!-- 2008/10/23 end -->
+
+
+
+<hr class="hide">
+<!-- 2008/10/24 start -->
+<h2><a name="20081024" href="200810c.html#20081024">2008-10-24 (Fri)</a></h2>
+<!-- 2008-10-25 03:51:50 -->
+
+<div class="entry1">
+<h3><a name="200810241" title="200810241" href="200810c.html#200810241">■</a> 
+[Work] 引越し</h3>
+<p>
+半年ごとにやってる気がするが。今回は引越しといっても違う机に移動する程度。<br>
+でもごっそり動かさないといけないからやっぱ手間はあまり変わらないよなあ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2008/10/24 end -->
+
+
+
+<hr class="hide">
+<!-- 2008/10/25 start -->
+<h2><a name="20081025" href="200810c.html#20081025">2008-10-25 (Sat)</a></h2>
+<!-- 2008-10-26 02:28:21 -->
+
+<div class="entry1">
+<h3><a name="200810251" title="200810251" href="200810c.html#200810251">■</a> 
+<a href="http://ftp.mozilla.org/pub/mozilla.org/firefox/nightly/latest-trunk/">[Firefox] Minefield</a></h3>
+<p>
+またFirfoxのNightlyのsnapshotを使い始めたんだけど、<br>
+1日経ったらちゃんとsoftware updateで知らせてくれて更新できるのに感心した。
+</p>
+
+<p>
+そういえばFLDRはあの後すぐに3.1B1対応していた。早い。
+</p>
+<!-- section end -->
+</div>
+<!-- 2008/10/25 end -->
+
+
+
+<hr class="hide">
+<!-- 2008/10/26 start -->
+<h2><a name="20081026" href="200810c.html#20081026">2008-10-26 (Sun)</a></h2>
+<!-- 2008-10-27 00:29:42 -->
+
+<div class="entry1">
+<h3><a name="200810261" title="200810261" href="200810c.html#200810261">■</a> 
+[Comic] 太陽の黙示録</h3>
+<p>
+董藤という名前が出てきて初めて主要な登場人物の名前の由来は三国志なんだと気づいた。<br>
+気づくの遅すぎ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200810262" title="200810262" href="200810c.html#200810262">■</a> 
+[TV] ブラッディ・マンデイ</h3>
+<p>
+あんなわかりやすい縦読みが出てくるとは思わなかった。
+</p>
+<!-- section end -->
+</div>
+<!-- 2008/10/26 end -->
+
+
+
+<hr class="hide">
+<!-- 2008/10/27 start -->
+<h2><a name="20081027" href="200810c.html#20081027">2008-10-27 (Mon)</a></h2>
+<!-- 2008-10-28 00:12:27 -->
+
+<div class="entry1">
+<h3><a name="200810271" title="200810271" href="200810c.html#200810271">■</a> 
+[ニコニコ動画] ニコニコ動画ランキングのURLリストを取得</h3>
+<p>
+ニコニコ動画のランキングは認証いらずなのでクッキーは必要ない。<br>
+またRSSも吐いてるのでこっちを使ったほうが処理は楽。<br>
+</p>
+
+<pre>
+% curl -s http://www.nicovideo.jp/ranking/mylist/daily/music\?rss\=2.0|\
+  grep -o 'http://www\.nicovideo\.jp/watch/sm[0-9]\+'|head
+http://www.nicovideo.jp/watch/sm5054636
+http://www.nicovideo.jp/watch/sm5051538
+http://www.nicovideo.jp/watch/sm4841649
+http://www.nicovideo.jp/watch/sm5034618
+http://www.nicovideo.jp/watch/sm4980109
+http://www.nicovideo.jp/watch/sm5029301
+http://www.nicovideo.jp/watch/sm5048787
+http://www.nicovideo.jp/watch/sm5047991
+http://www.nicovideo.jp/watch/sm4914089
+http://www.nicovideo.jp/watch/sm5055012
+</pre>
+<p>
+あ、でもこの正規表現だとあまり変わらないか。
+</p>
+
+<pre>
+% curl -s http://www.nicovideo.jp/ranking/mylist/daily/music|\
+  grep -o 'http://www\.nicovideo\.jp/watch/sm[0-9]\+'|head 
+http://www.nicovideo.jp/watch/sm5054636
+http://www.nicovideo.jp/watch/sm5054636
+http://www.nicovideo.jp/watch/sm5051538
+http://www.nicovideo.jp/watch/sm5051538
+http://www.nicovideo.jp/watch/sm4841649
+http://www.nicovideo.jp/watch/sm4841649
+http://www.nicovideo.jp/watch/sm5034618
+http://www.nicovideo.jp/watch/sm5034618
+http://www.nicovideo.jp/watch/sm4980109
+http://www.nicovideo.jp/watch/sm4980109
+</pre>
+<p>
+なんか2個ずつ出てくるようだ。やっぱRSSのほうが楽か。
+</p>
+<!-- section end -->
+</div>
+<!-- 2008/10/27 end -->
+
+
+
+<hr class="hide">
+<!-- 2008/10/28 start -->
+<h2><a name="20081028" href="200810c.html#20081028">2008-10-28 (Tue)</a></h2>
+<!-- 2008-10-29 02:21:54 -->
+
+<div class="entry1">
+<h3><a name="200810281" title="200810281" href="200810c.html#200810281">■</a> 
+[Firefox] Minefield</h3>
+<p>
+今日のはちょっと不安定。Google Readerで落ちるかハングする。<br>
+クラッシュ後立ち上げ時に読まないタブを指定できるのでセッション管理も楽。
+</p>
+
+<p>
+それにしてもMinefieldだのShredderだのすごい名前をつけるよな。
+</p>
+
+<!-- section end -->
+</div>
+<!-- 2008/10/28 end -->
+
+
+
+<hr class="hide">
+<!-- 2008/10/29 start -->
+<h2><a name="20081029" href="200810c.html#20081029">2008-10-29 (Wed)</a></h2>
+<!-- 2008-10-30 01:26:38 -->
+
+<div class="entry1">
+<h3><a name="200810291" title="200810291" href="200810c.html#200810291">■</a> 
+[Linux] comix</h3>
+<p>
+comixだとzipやrarファイルの中にある画像ファイルも扱える。
+</p>
+<!-- section end -->
+</div>
+<!-- 2008/10/29 end -->
+
+
+
+<hr class="hide">
+<!-- 2008/10/30 start -->
+<h2><a name="20081030" href="200810c.html#20081030">2008-10-30 (Thu)</a></h2>
+<!-- 2008-10-31 02:20:46 -->
+
+<div class="entry1">
+<h3><a name="200810301" title="200810301" href="200810c.html#200810301">■</a> 
+[Firefox] MinefieldでGoogle Reader</h3>
+<p>
+復活した。今日のは大丈夫。うれしい。
+</p>
+<!-- section end -->
+</div>
+<!-- 2008/10/30 end -->
+
+
+
+<hr class="hide">
+<!-- 2008/10/31 start -->
+<h2><a name="20081031" href="200810c.html#20081031">2008-10-31 (Fri)</a></h2>
+<!-- 2008-11-01 01:50:47 -->
+
+<div class="entry1">
+<h3><a name="200810311" title="200810311" href="200810c.html#200810311">■</a> 
+[Firefox] リンク先をデスクトップへダウンロード</h3>
+<p>
+ふだんは~/downloadへダウンロードしてるんだけど、<br>
+たまに違うとこへダウンロードしたくなるときがある。<br>
+でもnautiusは立ち上がるのが遅いしディレクトリの選択にはあまり使いたくない。<br>
+デスクトップに置きたければ、リンクをデスクトップへD&amp;Dすればいいんだな。<br>
+今日気づいた。
+</p>
+<!-- section end -->
+</div>
+<!-- 2008/10/31 end -->
+
+<hr>
+<div>
+<a href="200810b.html">&lt;Prev(,)</a> | 
+<a href="200811a.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

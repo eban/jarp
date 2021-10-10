@@ -1,0 +1,425 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2004-1-c</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="200401b.html">
+<link rel="next" href="200402a.html">
+
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2004年1月下旬〜</p>
+<hr>
+<div>
+<a href="200401b.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="200402a.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2004/01/21 start -->
+<h2><a name="20040121" href="200401c.html#20040121">2004-01-21 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="200401211" title="200401211" href="200401c.html#200401211">■</a> 
+<a href="http://www.microsoft.com/japan/windows/sfu/">[Interix] Windows Services for UNIX 3.5日本語版</a></h3>
+<p>
+とりあえずconfigure.inだけ対応した。
+これで拡張ライブラリは動く。
+でもmake中はwarningやassertion failだらけ。
+</p>
+
+<p>
+digest/sha2は64ビット整数の型が見つからないらしい。要調査。
+</p>
+
+<p>
+それにしても.NET Passportはなんだって勤務先住所だの電話番号だの欲しがるんだ？
+</p>
+<!-- section end -->
+</div>
+<!-- 2004/01/21 end -->
+
+
+
+<hr class="hide">
+<!-- 2004/01/22 start -->
+<h2><a name="20040122" href="200401c.html#20040122">2004-01-22 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="200401221" title="200401221" href="200401c.html#200401221">■</a> 
+[Zsh] share_history</h3>
+<p>
+SFUでもやっぱzshだよねというわけで、4.0.9をインストール。
+普通にインストールできた。
+でCygwinと$HOMEを共有してみたら、
+~/.zshrcも読み込まれてshare_historyの状態に。
+InterixとCygwinでヒストリの共有ってのはなかなか面白い。
+でもlockはどうなってるんだ？
+</p>
+<!-- section end -->
+</div>
+<!-- 2004/01/22 end -->
+
+
+
+<hr class="hide">
+<!-- 2004/01/23 start -->
+<h2><a name="20040123" href="200401c.html#20040123">2004-01-23 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="200401231" title="200401231" href="200401c.html#200401231">■</a> 
+<a href="http://www.thekelleys.org.uk/dnsmasq/doc.html">[Soft] Dnsmasq 2.0</a></h3>
+<p>
+dhcp-optionが少しましになって、テキストが書けるようになった。
+ドメインネームをつけてみよう。/etc/dnsmasq.confを修正。
+</p>
+<pre>
+# default gateway
+dhcp-option=3,192.168.11.1
+# broadcast address
+dhcp-option=28,192.168.11.255
+# subnet mask
+dhcp-option=1,255.255.255.0
+# domain name
+dhcp-option=15,localdomain
+</pre>
+<p>
+RFC 2132を調べなきゃいけないってとこが面倒ではあるが、
+一応やりたいことは一通りできる。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200401232" title="200401232" href="200401c.html#200401232">■</a> 
+[w3m] rfc.cgi</h3>
+<p>
+w3m rfc:2132でRFC 2132が読めるようにしてみた。
+</p>
+<pre>
+% echo 'rfc: file:///cgi-bin/rfc.cgi?%s' &gt;&gt; ~/.w3m/urimethodmap
+% cat &gt; ~/.w3m/cgi-bin/rfc.cgi
+#! /bin/sh
+echo w3m-control: GOTO http://www.rfc-editor.org/rfc/${QUERY_STRING/:/}.txt
+echo w3m-control: DELETE_PREVBUF
+% chmod +x ~/.w3m/cgi-bin/rfc.cgi
+</pre>
+
+<!-- section end -->
+</div>
+<!-- 2004/01/23 end -->
+
+
+
+<hr class="hide">
+<!-- 2004/01/24 start -->
+<h2><a name="20040124" href="200401c.html#20040124">2004-01-24 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="200401241" title="200401241" href="200401c.html#200401241">■</a> 
+<a href="http://lftp.yar.ru/">[Soft] lftp 2.6.12</a></h3>
+<pre>
+Changes: This release fixes put over HTTPS, spinning in bg mode when
+an external program was still running at the time of moving to the
+background, and compilation with the IRIX MIPSPro compiler.
+</pre>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200401242" title="200401242" href="200401c.html#200401242">■</a> 
+新年会</h3>
+<p>
+今年のbug of the yearが決定した。
+</p>
+<!-- section end -->
+</div>
+<!-- 2004/01/24 end -->
+
+
+
+<hr class="hide">
+<!-- 2004/01/25 start -->
+<h2><a name="20040125" href="200401c.html#20040125">2004-01-25 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="200401251" title="200401251" href="200401c.html#200401251">■</a> 
+[Ruby] WEBrick</h3>
+<p>
+jarp.jin.gr.jpはApacheからWEBrickへProxyPassされるようになったのでよろしく(なにがだ)。
+</p>
+<!-- section end -->
+</div>
+<!-- 2004/01/25 end -->
+
+
+
+<hr class="hide">
+<!-- 2004/01/26 start -->
+<h2><a name="20040126" href="200401c.html#20040126">2004-01-26 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="200401261" title="200401261" href="200401c.html#200401261">■</a> 
+[WWW] .htaccess問題</h3>
+<p>
+なんだかんだで.htaccessに依存していることがわかった。
+WEBrickに移行するには、まあそれなりのリスクもあるわけで。
+とはいうもののjarp.jin.gr.jpは特に困らないので、このまま突っ走ることにした。
+</p>
+<!-- section end -->
+</div>
+<!-- 2004/01/26 end -->
+
+
+
+<hr class="hide">
+<!-- 2004/01/27 start -->
+<h2><a name="20040127" href="200401c.html#20040127">2004-01-27 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="200401271" title="200401271" href="200401c.html#200401271">■</a> 
+[Worm] MyDoom</h3>
+<p>
+20通ほど来た。早速
+<a href="http://agriroot.aua.gr/~nikant/nkvir/">YAVR</a>を最新に。てゆかいいかげん各社名前を統一しろよ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200401272" title="200401272" href="200401c.html#200401272">■</a> 
+[Mail] 遅延</h3>
+<p>
+MyDoomのせいでメールが遅れる遅れる。
+</p>
+<!-- section end -->
+</div>
+<!-- 2004/01/27 end -->
+
+
+
+<hr class="hide">
+<!-- 2004/01/28 start -->
+<h2><a name="20040128" href="200401c.html#20040128">2004-01-28 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="200401281" title="200401281" href="200401c.html#200401281">■</a> 
+<a href="http://raa.ruby-lang.org/project/rss/">[Ruby] RSS Parser</a></h3>
+<p>
+いきなり入った。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200401282" title="200401282" href="200401c.html#200401282">■</a> 
+[Mail] MyDoomとYAVR</h3>
+<p>
+今日のMyDoomは30通ほど。なぜかYAVRをすり抜けてしまうものがある。
+それより警告メールのほうが数が多い。
+もはやそっちのほうが迷惑メールと言ってもいいな。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200401283" title="200401283" href="200401c.html#200401283">■</a> 
+[HTML] favicon.ico</h3>
+<p>
+linkが必要らしいので、この日記にも
+</p>
+<pre>
+&lt;link href=&quot;favicon.ico&quot; rel=&quot;icon&quot; type=&quot;image/x-icon&quot;/&gt;
+</pre>
+<p>
+を追加してみる。
+</p>
+<!-- section end -->
+</div>
+<!-- 2004/01/28 end -->
+
+
+
+<hr class="hide">
+<!-- 2004/01/29 start -->
+<h2><a name="20040129" href="200401c.html#20040129">2004-01-29 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="200401291" title="200401291" href="200401c.html#200401291">■</a> 
+<a href="http://arton.no-ip.info/diary/20040127.html#p01">[Ruby] autoconf</a></h3>
+<p>
+autoconfでconfigure.inからconfigureが作られるので、touchじゃだめです。
+まさにsignal 11のあたりを直しているので。
+autoconfを用意してください。もしくはsnapshot.tar.gzで試してください。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200401292" title="200401292" href="200401c.html#200401292">■</a> 
+[Worm] 名前の統一</h3>
+<p>
+MyDoomに統一されたようだ。
+<a href="200401c.html#200401271">言ってみるもんだな</a>(おまえじゃない。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200401293" title="200401293" href="200401c.html#200401293">■</a> 
+[Mail] エラーメール</h3>
+<p>
+wormのエラーメールがruby-talk MLに届いてしまう。
+これをブロックするのは難しい。
+やはりmembersとcomp.lang.rubyから来るものだけを通すようにすべきか。
+たぶんnews gatewayでspamとvirusチェックをしてるはずだから、
+spamassassinも必要なくなるはず(ほんとか？)。
+週末にでも考えよう。
+</p>
+<!-- section end -->
+</div>
+<!-- 2004/01/29 end -->
+
+
+
+<hr class="hide">
+<!-- 2004/01/30 start -->
+<h2><a name="20040130" href="200401c.html#20040130">2004-01-30 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="200401301" title="200401301" href="200401c.html#200401301">■</a> 
+[Mail] MyDoomの仕業</h3>
+<p>
+それにしても、いろんなパターンのエラーメールがやってくる。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200401302" title="200401302" href="200401c.html#200401302">■</a> 
+<a href="http://www.xmms.org/">[Soft] XMMS 1.2.9</a></h3>
+<pre>
+Changes: This release fixes various problems with the ALSA output
+plugin.  Some annoyances with regards to resizing of windows and
+some other bugs were fixed.
+</pre>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200401303" title="200401303" href="200401c.html#200401303">■</a> 
+<a href="http://arton.no-ip.info/diary/20040131.html#p01">[Ruby] 1.8と1.9</a></h3>
+<p>
+configure.in, ext/extmk.rb, lib/mkmf.rbあたりはお互い依存しているので、
+1.8の環境に1.9のconfigure.inだけを持ってきてもまずだめです。
+どうしても1.8でやりたければ
+<a href="http://www.ruby-lang.org/cgi-bin/cvsweb.cgi/ruby/configure.in?cvsroot=src&amp;r1=1.219&amp;r2=1.220">configure.inの差分</a>をあてればうまくいくかもしれません。
+そのうち1.8にもbackportします。
+</p>
+
+<p>
+nkf.soは再現しました。これは調査が必要ですね。
+</p>
+<!-- section end -->
+</div>
+<!-- 2004/01/30 end -->
+
+
+
+<hr class="hide">
+<!-- 2004/01/31 start -->
+<h2><a name="20040131" href="200401c.html#20040131">2004-01-31 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="200401311" title="200401311" href="200401c.html#200401311">■</a> 
+<a href="http://www.thekelleys.org.uk/dnsmasq/doc.html">[Soft] Dnsmasq 2.2</a></h3>
+<pre>
+Changes: This release fixes a brown-bag bug in version 2.1 The bug
+disabled all DHCP functionality on Linux systems which have IPv6
+enabled in the kernel.
+</pre>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200401312" title="200401312" href="200401c.html#200401312">■</a> 
+<a href="http://cygwin.com/ml/cygwin-announce/2004-01/msg00020.html">[Cygwin] Updated: cygwin-1.5.7-1</a></h3>
+<p>
+いろいろバグが直っているので、
+<a href="200401b.html#200401202">ccache問題</a>も直ってるかなと試したら全く問題なし。
+なんとなく会社の環境のほうがなんかおかしい気もする。
+月曜日に確認しよう。
+</p>
+<!-- section end -->
+</div>
+<!-- 2004/01/31 end -->
+
+<hr>
+<div>
+<a href="200401b.html">&lt;Prev(,)</a> | 
+<a href="200402a.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

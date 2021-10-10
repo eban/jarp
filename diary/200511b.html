@@ -1,0 +1,439 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2005-11-b</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="200511a.html">
+<link rel="next" href="200511c.html">
+
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2005年11月中旬〜</p>
+<hr>
+<div>
+<a href="200511a.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="200511c.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2005/11/11 start -->
+<h2><a name="20051111" href="200511b.html#20051111">2005-11-11 (Fri)</a></h2>
+<!-- 2005-11-12 03:05:56 -->
+
+<div class="entry1">
+<h3><a name="200511111" title="200511111" href="200511b.html#200511111">■</a> 
+<a href="http://www.bigbold.com/snippets/posts/show/880">[Ruby] Escape single quotes in Ruby strings</a></h3>
+<p>
+Snipetsに挙げられるくらい面倒ってことなのかな。
+なんで5個必要なのかがわかりにくいもんな。
+確かに
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-talk/165255">Nightmare with gsub &amp; friends</a>
+という記事もあるぐらいだし。
+</p>
+
+<p>
+ところで
+</p>
+<pre>
+gsub(/'/, '\\\\\'')
+</pre>
+<p>
+だと5個のbackslashが必要になるけど
+</p>
+<pre>
+gsub(/'/, &quot;\\\\'&quot;)
+</pre>
+<p>
+とすれば1個減らせる。
+普通は&quot;&quot;で囲んだほうがquoteする量が増えるから気がつきにくい。
+</p>
+<!-- section end -->
+</div>
+<!-- 2005/11/11 end -->
+
+
+
+<hr class="hide">
+<!-- 2005/11/12 start -->
+<h2><a name="20051112" href="200511b.html#20051112">2005-11-12 (Sat)</a></h2>
+<!-- 2005-11-17 00:30:52 -->
+
+<div class="entry1">
+<h3><a name="200511121" title="200511121" href="200511b.html#200511121">■</a> 
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-talk/165384">[Mail] Re: AW: Antw: Re: fork windows</a></h3>
+<p>
+内容は関係なくてsubjectの話。
+AWはデンマーク語、Antwはドイツ語なんだけど、これってfmlで対処すべきかな。
+それにしてもこの話題にだけ偶然集まったのは興味深い。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200511122" title="200511122" href="200511b.html#200511122">■</a> 
+<a href="http://bulabula.org/femail/">[soft] femail 0.97</a></h3>
+<blockquote><dl>
+<dt>
+About:
+<dd>
+femail provides a sendmail-compatible commandline interface and
+forwards mail via SMTP. Unlike many other implementations, it is fully RFC
+2821 and 2822 compatible. It embeds extra environment information from
+Apache in the header, if present, to help with tracking down abuse. It is
+written with security as a main design goal. 
+</dl></blockquote>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200511123" title="200511123" href="200511b.html#200511123">■</a> 
+<a href="http://iftpd.sf.net/">[Soft] Independent FTP Daemon 1.0</a></h3>
+<blockquote><dl>
+<dt>
+About:
+<dd>
+iFTPd is an FTP server that features platform independence, system
+independence, ruggedness, and a virtual file system. The target audience
+is those admins that need to be able to share files without having to
+install several other programs and databases, and without having to
+configure the rest of the system.
+</dl></blockquote>
+<!-- section end -->
+</div>
+<!-- 2005/11/12 end -->
+
+
+
+<hr class="hide">
+<!-- 2005/11/13 start -->
+<h2><a name="20051113" href="200511b.html#20051113">2005-11-13 (Sun)</a></h2>
+<!-- 2005-11-14 02:32:08 -->
+
+<div class="entry1">
+<h3><a name="200511131" title="200511131" href="200511b.html#200511131">■</a> 
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-talk/165465">[Ruby] Mailing list &lt;-&gt; web forum gateway</a></h3>
+<p>
+さてどうしたもんだろうな。
+c.l.rubyへ流すなら特にどうすることもないか。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200511132" title="200511132" href="200511b.html#200511132">■</a> 
+[Mail] Gmailでブロックできないspam</h3>
+<p>
+stock関係と出会い系とロシア語。どうもこの3つが目立つ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200511133" title="200511133" href="200511b.html#200511133">■</a> 
+[Mail] scam</h3>
+<p>
+それにしても[ruby-talk:165303]は一体全体なにを考えてわざわざruby-talk MLへ転送するかな。
+危ないからリンクはしない。
+</p>
+<!-- section end -->
+</div>
+<!-- 2005/11/13 end -->
+
+
+
+<hr class="hide">
+<!-- 2005/11/14 start -->
+<h2><a name="20051114" href="200511b.html#20051114">2005-11-14 (Mon)</a></h2>
+<!-- 2005-11-15 02:25:18 -->
+
+<div class="entry1">
+<h3><a name="200511141" title="200511141" href="200511b.html#200511141">■</a> 
+[FC4] カーネルの更新</h3>
+<p>
+kernelが上がるたびにntfsとvmwareの更新を手動でやるのはやっぱ面倒だな。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200511142" title="200511142" href="200511b.html#200511142">■</a> 
+[FC4] xfce</h3>
+<p>
+yum updateでxfceが更新されたが、一度も使ってないので削除。
+yum grouplistしてみるとXFCEとXFCE Software Developmentらしい。
+</p>
+<pre>
+% sudo yum groupremove XFCE 'XFCE Software Development'
+</pre>
+<p>
+としてみたらgnomeまで消そうとするので
+</p>
+<pre>
+% sudo yum groupremove XFCE
+</pre>
+<p>
+としてみる。消えてもいい感じのリストだ。いきなり-yつけないでよかった。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200511143" title="200511143" href="200511b.html#200511143">■</a> 
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-talk/165595">[Ruby] [ANN] Ruby Forum</a></h3>
+<p>
+まあ、なんていうか、気づかれてしまったわけで。
+やっぱ簡単にわかるよなあ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2005/11/14 end -->
+
+
+
+<hr class="hide">
+<!-- 2005/11/15 start -->
+<h2><a name="20051115" href="200511b.html#20051115">2005-11-15 (Tue)</a></h2>
+<!-- 2005-11-16 01:13:00 -->
+
+<div class="entry1">
+<h3><a name="200511151" title="200511151" href="200511b.html#200511151">■</a> 
+<a href="http://bashdb.sourceforge.net/remake/">[Soft] remake 0.3</a></h3>
+<blockquote><dl>
+<dt>
+About:
+<dd>
+remake is a patched and modernized version of GNU  make utility
+that adds improved error reporting, the  ability to trace execution in a
+comprehensible way,  and a debugger. The debugger lets you set 
+breakpoints on targets, show and set variables,  inspect target
+descriptions, and see the target call  stack. 
+</dl></blockquote><p>
+make debbugerってのはなんかうれしい。
+あ、素のmake -dって結構詳しく情報が出るんだな。知らなかった。
+
+<a href="http://bashdb.sourceforge.net/remake/makedb.html/Sample-Session.html">Sample Session - GNU Make Debugger</a>
+
+を見るとbreakとかあるし、本当にdebuggerだ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2005/11/15 end -->
+
+
+
+<hr class="hide">
+<!-- 2005/11/16 start -->
+<h2><a name="20051116" href="200511b.html#20051116">2005-11-16 (Wed)</a></h2>
+<!-- 2005-11-17 00:30:16 -->
+
+<div class="entry1">
+<h3><a name="200511161" title="200511161" href="200511b.html#200511161">■</a> 
+[Mail] 迷惑メール届いてませんか？</h3>
+<p>
+というsubjectの迷惑メールが届いてるわけなんだけど、迷惑な話だ。
+また山下香穂だし。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200511162" title="200511162" href="200511b.html#200511162">■</a> 
+<a href="http://www.google.com/analytics/ja-JP/">[Web] Google Analytics</a></h3>
+<p>
+遅れ馳せながら。
+</p>
+<!-- section end -->
+</div>
+<!-- 2005/11/16 end -->
+
+
+
+<hr class="hide">
+<!-- 2005/11/17 start -->
+<h2><a name="20051117" href="200511b.html#20051117">2005-11-17 (Thu)</a></h2>
+<!-- 2005-11-18 01:08:32 -->
+
+<div class="entry1">
+<h3><a name="200511171" title="200511171" href="200511b.html#200511171">■</a> 
+[Web] Google Analytics</h3>
+<p>
+昼間はちゃんとデータが表示されてたが、夜になったらサインインするといきなりwww.google.co.jpへ飛ばされるようになってしまった。
+なにがどうなってんだ？
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200511172" title="200511172" href="200511b.html#200511172">■</a> 
+<a href="http://www.blosxonomy.com/">[Ruby] blosxonomy It's a Zen thing...</a></h3>
+<p>
+blosxomもどきらしいんだけど、今つながんないや。
+</p>
+<!-- section end -->
+</div>
+<!-- 2005/11/17 end -->
+
+
+
+<hr class="hide">
+<!-- 2005/11/18 start -->
+<h2><a name="20051118" href="200511b.html#20051118">2005-11-18 (Fri)</a></h2>
+<!-- 2005-11-19 02:00:38 -->
+
+<div class="entry1">
+<h3><a name="200511181" title="200511181" href="200511b.html#200511181">■</a> 
+[Web] Google Analytics</h3>
+<p>
+見えるようになったが、1日分データが取れてない模様。
+まだ安定するまでには時間がかかるか？
+</p>
+
+<p>
+直接
+<a href="https://www.google.com/analytics/home/?et=reset&amp;hl=ja-JP">設定のページ</a>
+
+をブックマークしとこう。これならパスワードがexpireするまで入れなくてもいいし。
+</p>
+
+<p>
+それにしてもレポートビューは重すぎる。
+</p>
+<!-- section end -->
+</div>
+<!-- 2005/11/18 end -->
+
+
+
+<hr class="hide">
+<!-- 2005/11/19 start -->
+<h2><a name="20051119" href="200511b.html#20051119">2005-11-19 (Sat)</a></h2>
+<!-- 2005-11-20 02:42:29 -->
+
+<div class="entry1">
+<h3><a name="200511191" title="200511191" href="200511b.html#200511191">■</a> 
+[Linux] mencoder</h3>
+<p>
+mencoderのmp3lameの調子がなんかいつまにか悪くなっていたので、FC4のを使うことにした。
+</p>
+<pre>
+% sudo yum install mplayer mplayer-skins mplayer-fonts mencoder
+</pre>
+<p>
+ついでにmplayer関連も。
+</p>
+<!-- section end -->
+</div>
+<!-- 2005/11/19 end -->
+
+
+
+<hr class="hide">
+<!-- 2005/11/20 start -->
+<h2><a name="20051120" href="200511b.html#20051120">2005-11-20 (Sun)</a></h2>
+<!-- 2005-11-21 02:27:52 -->
+
+<div class="entry1">
+<h3><a name="200511201" title="200511201" href="200511b.html#200511201">■</a> 
+[Web] Google Analytics</h3>
+<p>
+なんか1日分なかった過去のデータが今頃反映されたかと思ったら、昨日今日はデータなかったりで、なかなか向こうも苦労してるんだろうなと思ったり。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200511202" title="200511202" href="200511b.html#200511202">■</a> 
+[DOS] FreeDOSとDJGPP</h3>
+<p>
+
+<a href="http://www.freedos.org/">FreeDOS</a>で
+
+<a href="http://www.delorie.com/djgpp/">DJGPP</a>は動くのか調べてみたら
+
+<a href="http://freedos-32.sourceforge.net/showdoc.php?page=howto-djgpp">動くらしい</a>
+。
+と思ったら、これは
+</p><blockquote><p>
+The project started in August 2000 as a DJGPP port of the FreeDOS kernel by Sven Dehmlow.
+</p></blockquote><p>
+って
+<a href="http://freedos-32.sourceforge.net/showdoc.php?page=faq#s1q2">ことらしい</a>
+。
+本家FreeDOSとは別物か。
+</p>
+
+<p>
+なんかよくわからんけど、本家FreeDOSをVMware Playerで試してみよう。
+</p>
+<!-- section end -->
+</div>
+<!-- 2005/11/20 end -->
+
+<hr>
+<div>
+<a href="200511a.html">&lt;Prev(,)</a> | 
+<a href="200511c.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

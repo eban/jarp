@@ -1,0 +1,398 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2011-12-c</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="201112b.html">
+<link rel="next" href="201201a.html">
+
+<link rel="stylesheet" type="text/css" href="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.css">
+<script type="text/javascript" src="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.js"></script>
+<script type="text/javascript">
+<!--       
+$(document).ready(function() {
+  prettyPrint();
+});
+-->
+</script>
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2011年12月下旬〜</p>
+<hr>
+<div>
+<a href="201112b.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="201201a.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2011/12/21 start -->
+<h2><a name="20111221" href="201112c.html#20111221">2011-12-21 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="201112211" title="201112211" href="201112c.html#201112211">■</a> 
+15ヶ月保つと謳っているワイヤレスマウスを使い出して1年</h3>
+<p>
+ふと気づくと1年経ったわけだが、まったく問題なし。<br>
+おまけの電池のままだ。ほんとにあと3ヶ月ぐらいはいけそうだな。
+</p>
+<!-- section end -->
+</div>
+<!-- 2011/12/21 end -->
+
+
+
+<hr class="hide">
+<!-- 2011/12/22 start -->
+<h2><a name="20111222" href="201112c.html#20111222">2011-12-22 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="201112221" title="201112221" href="201112c.html#201112221">■</a> 
+<a href="http://www.mobileread.com/forums/showthread.php?p=1889086">PRS-T1 Instapaper epubs - MobileRead Forums</a></h3>
+<p>
+なんか解決法みたいなことが書かれてる気がするんだが、よくわからない。<br>
+archiveしてrestoreしても同じように、目次しか出てこない。<br>
+Android版でもだめだから、というかSony ReaderもAndroidだし同じもんか。
+</p>
+<p>
+ああ、restoreするもの以外に本当に読みたいものも置いとくのか。<br>
+なるほど。確かに出てきた。<br>
+ただ日本語が化けるのは困ったもんだな。Wifi使えば直接ダウンロードできるからすげー便利なのに。
+</p>
+<p>
+ちゃんと中身を解析するしないか。
+</p>
+<!-- section end -->
+</div>
+<!-- 2011/12/22 end -->
+
+
+
+<hr class="hide">
+<!-- 2011/12/23 start -->
+<h2><a name="20111223" href="201112c.html#20111223">2011-12-23 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="201112231" title="201112231" href="201112c.html#201112231">■</a> 
+ImageMagickのconvertでキャプションをつける</h3>
+<p>
+キャプションだから-captionだと思うんだが、これがなんか違う。<br>
+何も出ない。調べるとpolaroidすると出る。でも見た目もほんとにポラロイドっぽくなってしまう。
+</p>
+<pre class="prettyprint">
+% convert 20111223_2356865.gif -font 梅ゴシックS5-Medium \
+  -caption '惚れさせ７７５ 「なあなあ　なあ」' +polaroid 775-polaroid.gif
+</pre>
+<p>
+<img src="../images/775-polaroid.gif" alt="惚れさせ７７５ 「なあなあ　なあ」 polaroid">
+</p>
+<p>
+そんな効果は要らないのでまたまた調べてみるとlable:でいけるようだ。上に出したければこんな感じで。
+</p>
+<pre class="prettyprint">
+% convert 20111223_2356865.gif -font 梅ゴシックS5-Medium \
+  -background khaki label:'惚れさせ７７５ 「なあなあ　なあ」' \
+  +swap -gravity center -append 775-1.gif 
+</pre>
+<p>
+<img src="../images/775-1.gif" alt="惚れさせ７７５ 「なあなあ　なあ」 label">
+</p>
+<p>
+あと画像の下部に埋め込みたければこんな感じ。
+</p>
+<pre class="prettyprint">
+% convert 20111223_2356865.gif -font 梅ゴシックS5-Medium \
+  -fill white -undercolor '#00000080' -gravity South \
+  -annotate +0+5 '惚れさせ７７５ 「なあなあ　なあ」' 775-2.gif
+</pre>
+<p>
+<img src="../images/775-2.gif" alt="惚れさせ７７５ 「なあなあ　なあ」 annotate">
+</p>
+<!-- section end -->
+</div>
+<!-- 2011/12/23 end -->
+
+
+
+<hr class="hide">
+<!-- 2011/12/24 start -->
+<h2><a name="20111224" href="201112c.html#20111224">2011-12-24 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="201112241" title="201112241" href="201112c.html#201112241">■</a> 
+zipでまとめた画像ファイルを簡単にCalibreに取り込む</h3>
+<p>
+.zipを.cbzにrenameするだけ。あとはClibreでcbzファイルを指定して本を追加すればok。<br>
+順番は単純にsortされたものになる。スキャンすれば自ずとそうなるので問題ない。<br>
+ZipComicServerとか考えるとzip -rじゃなくてsortして格納しておいたほうがいいかもしれない。
+</p>
+<!-- section end -->
+</div>
+<!-- 2011/12/24 end -->
+
+
+
+<hr class="hide">
+<!-- 2011/12/25 start -->
+<h2><a name="20111225" href="201112c.html#20111225">2011-12-25 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="201112251" title="201112251" href="201112c.html#201112251">■</a> 
+サイズの不思議</h3>
+<p>
+radikoでカウントダウン番組を録音してるんだけど、このサイズが不気味なほどそろっている。
+</p>
+<pre>
+% stat -c '%n %s' *.flv
+DHC-COUNTDOWN-jp_2011-11-26.flv 19843452
+DHC-COUNTDOWN-jp_2011-12-03.flv 19843442
+DHC-COUNTDOWN-jp_2011-12-10.flv 19843442
+DHC-COUNTDOWN-jp_2011-12-17.flv 19843438
+DHC-COUNTDOWN-jp_2011-12-24.flv 19843449
+</pre>
+<p>
+最大で14バイトしか差がない。FLVだが中身はAAC。<br>
+一方radiruのエレうたはmp3に変換してるせいか結構差がある。
+</p>
+<pre>
+% stat -c '%n %s' *.mp3
+eleuta-2011-10-29.mp3 22553109
+eleuta-2011-11-26.mp3 22499610
+eleuta-2011-12-03.mp3 22551855
+eleuta-2011-12-24.mp3 22535137
+</pre>
+<p>
+じゃあ、mp3に変換してみたらどうなるか。
+</p>
+<pre>
+% for i in DHC*.flv;do ffmpeg -i $i -vn -ab 128k $i.mp3;done
+% stat -c '%n %s' DHC*.mp3
+DHC-COUNTDOWN-jp_2011-11-26.flv.mp3 25439456
+DHC-COUNTDOWN-jp_2011-12-03.flv.mp3 25439456
+DHC-COUNTDOWN-jp_2011-12-10.flv.mp3 25439456
+DHC-COUNTDOWN-jp_2011-12-17.flv.mp3 25439456
+DHC-COUNTDOWN-jp_2011-12-24.flv.mp3 25439456
+</pre>
+<p>
+すごいことになっちゃったよ。全部同じサイズだ。ここまでとは予想してなかった。
+</p>
+<pre>
+% md5sum DHC*.mp3
+dfd1e639e7deeb73c915a7c070d7e65c  DHC-COUNTDOWN-jp_2011-11-26.flv.mp3
+8fa29e0966da56f0c487193bf67ad020  DHC-COUNTDOWN-jp_2011-12-03.flv.mp3
+093d9248efc7e76a8fa214874c5b2b93  DHC-COUNTDOWN-jp_2011-12-10.flv.mp3
+692a0d44e51b565a249d8ccdd93eb25b  DHC-COUNTDOWN-jp_2011-12-17.flv.mp3
+b8226970978d739ba4db827ee2fb744d  DHC-COUNTDOWN-jp_2011-12-24.flv.mp3
+</pre>
+<p>
+全部内容は違うファイルだから操作ミスでもない。<br>
+だいたいcrontabで起動してるとはいえ、つながるまでの時間はまちまちで始まりは一定ではない。<br>
+この番組は音楽を流してる時間よりトークの時間のほうが圧倒的に長いんだけど、それが原因なのか？<br>
+興味深い。
+</p>
+<!-- section end -->
+</div>
+<!-- 2011/12/25 end -->
+
+
+
+<hr class="hide">
+<!-- 2011/12/26 start -->
+<h2><a name="20111226" href="201112c.html#20111226">2011-12-26 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="201112261" title="201112261" href="201112c.html#201112261">■</a> 
+RD-H1の入力自動録画</h3>
+<p>
+またまた今頃になって見つけた。<br>
+ライン入力から信号があると勝手に電源ONして録画してくれるという機能。<br>
+そんな便利もんがあったんかいと思ったが、<br>
+実際使ってみるとCATVチューナーの電源を入れるたびに録画が始まってしまい、<br>
+結構うっとうしい。<br>
+タイトルも結局は後からつけてやらないといけない。<br>
+信号は予約の2分ぐらい前から出てるようで、始まりに遅れることはなさそう。<br>
+チューナー側で予約するだけで確実に録画されるところはかなりポイント高い。<br>
+でも、総合すると使いづらいねえ。<br>
+なかなか難しい。
+</p>
+<!-- section end -->
+</div>
+<!-- 2011/12/26 end -->
+
+
+
+<hr class="hide">
+<!-- 2011/12/27 start -->
+<h2><a name="20111227" href="201112c.html#20111227">2011-12-27 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="201112271" title="201112271" href="201112c.html#201112271">■</a> 
+<a href="http://golf.shinh.org/p.rb?HTML+paragraph">HTML paragraph</a></h3>
+<p>
+転んでもただでは起きないって感じの問題。<br>
+<a href="http://golf.shinh.org/p.rb?A+Japanese+counting+system">A Japanese counting system</a>のレイアウトがくずれたので、<br>
+それを問題にしてしまうという逆転の発想。
+</p>
+<!-- section end -->
+</div>
+<!-- 2011/12/27 end -->
+
+
+
+<hr class="hide">
+<!-- 2011/12/28 start -->
+<h2><a name="20111228" href="201112c.html#20111228">2011-12-28 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="201112281" title="201112281" href="201112c.html#201112281">■</a> 
+CalibreでcbzをePubに変換すると余白の削除をしてくれる</h3>
+<p>
+なんちゃってindex.htmlと違いはないと思っていたが、<br>
+なぜかcbzからePubに変換にすると余白を削除してくれるようで。<br>
+お手軽ではあるけど、やっぱり自動なのでちょっと余裕のない設定になっている。<br>
+/opt/calibre/lib以下を見るとCalibreもImageMagickを使ってるようなので、<br>
+どんなオプションか調べてみるか。
+</p>
+<!-- section end -->
+</div>
+<!-- 2011/12/28 end -->
+
+
+
+<hr class="hide">
+<!-- 2011/12/29 start -->
+<h2><a name="20111229" href="201112c.html#20111229">2011-12-29 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="201112291" title="201112291" href="201112c.html#201112291">■</a> 
+ruby-talkにメールが逆流</h3>
+<p>
+Lucaのはspamじゃなくてメーラーの設定ミスだと思うんだけど、<br>
+気づいたのが夜中だったのですでにunsubscribe済みにされてた。<br>
+もう一人同じようなprefixをSubjectにつけてる人がいるので、<br>
+そいつも念の為退会してもらった。<br>
+あれ？ってことはなんか質の悪いvirusでも流行ってんのかな。<br>
+I:は禁止しとくか。検索してみたらI:なんてつけてるのは今回の騒動のときだけのようだし。
+</p>
+<!-- section end -->
+</div>
+<!-- 2011/12/29 end -->
+
+
+
+<hr class="hide">
+<!-- 2011/12/30 start -->
+<h2><a name="20111230" href="201112c.html#20111230">2011-12-30 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="201112301" title="201112301" href="201112c.html#201112301">■</a> 
+忘年会</h3>
+<p>
+馬場のShakey'sでピザとパスタの毎年恒例の忘年会。<br>
+16時から始めたが17時から夜のバイキングだった。<br>
+ひとり1180円って安すぎ。
+</p>
+<p>
+いきなり公開内緒話。おーぷんささる。<br>
+転職。名刺。師匠のような新人。<br>
+hashDoSとかJRubyのNokogiriとかPTとか。<br>
+SamsungのiPhoneとか。Vitaとか。57%引きのデジカメとか。<br>
+マカロンうまかった。ありがとう。
+</p>
+<p>
+それと会長に偶然会ったのは去年の忘年会ではなく7月の
+<a href="201107a.html#201107021">忘年会</a>だった。
+</p>
+<!-- section end -->
+</div>
+<!-- 2011/12/30 end -->
+
+
+
+<hr class="hide">
+<!-- 2011/12/31 start -->
+<h2><a name="20111231" href="201112c.html#20111231">2011-12-31 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="201112311" title="201112311" href="201112c.html#201112311">■</a> 
+スキャンは横向きで</h3>
+<p>
+これは盲点だった。
+<a href="http://machine.livedoor.biz/archives/51436399.html">横向きでスキャン</a>か。<br>
+実際にやってみたら、最初はいい感じかと思ったが数が増えるにつれあまり縦向きと変わらないような感触。<br>
+それよりもローディング量が減るのでスキャン時間が短くなる点のほうが有利。<br>
+画像は横向きになるので90度回転させる処理が必要なのはちょっと面倒。<br>
+しかも両面だとプラマイが逆になる。そのあたりは
+</p>
+<pre>
+% r=90
+% for i in *.png;do convert $i -rotate $[r*=-1] r90-$i; done
+</pre>
+<p>
+のようにまあ交互にすることでなんとかなるか。
+</p>
+<p>
+あ、90度じゃなくて91度にすると丁度傾き補正もかかるような？いやそんなに甘くはない。
+</p>
+<!-- section end -->
+</div>
+<!-- 2011/12/31 end -->
+
+<hr>
+<div>
+<a href="201112b.html">&lt;Prev(,)</a> | 
+<a href="201201a.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

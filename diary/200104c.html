@@ -1,0 +1,881 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2001-4-c</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="200104b.html">
+<link rel="next" href="200105a.html">
+
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2001年4月下旬〜</p>
+<hr>
+<div>
+<a href="200104b.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="200105a.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2001/04/21 start -->
+<h2><a name="20010421" href="200104c.html#20010421">2001-04-21 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="200104211" title="200104211" href="200104c.html#200104211">■</a> 
+[Cygwin] ntea と ntsec</h3>
+<p>
+CygwinでUnixのpermissionをemulateするにはふたつ方法がある。
+nteaとntsecだ。名前の通りWin9x/MEじゃなくてWinNTとWin2kのみ有効。
+</p>
+
+<h4><a name="200104211S1" href="200104c.html#200104211S1">_</a> <strong>ntea</strong>: </h4>
+<div class="sub">
+<p>
+歴史的にはnteaが先に実装されたので、ずーっとこれを使っていた。
+NTFSならNT Extended Attributesってとこにその情報が収まるので特に問題はない。
+だがFATな領域になにか書き込むと&quot;EA DATA. SF&quot;という属性専用のファイルをroot directoryに作る。
+これがどんどん大きくなる。
+いつのまにか10MBを越えてたりする。
+全部NTFSで使っていればいいんだけど、MOはやっぱそういうわけにもいかない。
+特にMOで10MBが無駄になるのは大きい。
+</p>
+
+</div>
+<h4><a name="200104211S2" href="200104c.html#200104211S2">_</a> <strong>ntsec</strong>: </h4>
+<div class="sub">
+<p>
+というわけでntsecだ。
+あ、どうやって設定するかというと環境変数CYGWINに追加する。
+</p>
+<pre>
+% export CYGWIN='tty binmode ntea'
+</pre>
+<p>
+とか
+</p>
+<pre>
+% export CYGWIN='tty binmode ntsec'
+</pre>
+<p>
+のように。どっちにしても
+</p>
+<pre>
+% chmod 0600 ~/.netrc
+</pre>
+<p>
+もちゃんと設定できるようになる。
+ただntsecに変えた直後はすべて0777に見える。
+これはアクセス権がEveryoneに対してフルコントロールになってるから。
+getfacl commandを実行するとわかる
+<a href="#20010421F1"><sup><small>*1</small></sup></a>。
+</p>
+<pre>
+ruby:/d/gcc-2.95.2 % ls -l
+total 37
+drwxrwxrwx   3 watanabe ruby         4096 May 28  2000 bin
+drwxrwxrwx   2 watanabe ruby        69632 Apr  4  2000 doc
+drwxrwxrwx   4 watanabe ruby            0 Apr  4  2000 i386-mingw32msvc
+drwxrwxrwx   3 watanabe ruby            0 Apr  4  2000 include
+drwxrwxrwx   3 watanabe ruby            0 Apr  4  2000 lib
+-rwxrwxrwx   1 watanabe ruby          260 Apr  4  2000 mingw32.bat
+-rwxrwxrwx   1 watanabe ruby          304 Apr  4  2000 mingw32.sh
+ruby:/d/gcc-2.95.2 % getfacl mingw32.bat
+# file: mingw32.bat
+# owner: 1000
+# group: 513
+user::---
+group::---
+mask::---
+other::rwx
+ruby:/d/gcc-2.95.2 % id
+uid=1000(watanabe) gid=513(ruby) groups=513(ruby)
+ruby:/d/gcc-2.95.2 % chmod 0644 mingw32.bat
+ruby:/d/gcc-2.95.2 % ls -l mingw32.bat
+-rw-r--r--   1 watanabe ruby          260 Apr  4  2000 mingw32.bat
+ruby:/d/gcc-2.95.2 % getfacl mingw32.bat
+# file: mingw32.bat
+# owner: 1000
+# group: 513
+user::rw-
+group::r--
+mask::r--
+other::r--
+ruby:/d/gcc-2.95.2 %
+</pre>
+<p>
+これはext/pty/script.rbの&quot;/bin/csh&quot;のとこを変更して取った。<br>
+この状態で
+</p>
+<pre>
+Everyone -- 特殊なアクセス権(R)
+watanabe(WATANABE Hirofumi) -- 特殊なアクセス権(RWDPO)
+なし -- 特殊なアクセス権(R)
+</pre>
+<p>
+という感じになる。そのまま
+</p>
+<pre>
+watanabeがuser
+なしがgroup
+Everyoneがother
+</pre>
+<p>
+に相当すると考えられる。
+</p>
+
+</div>
+<h4><a name="200104211S3" href="200104c.html#200104211S3">_</a> <strong>administrator</strong>: </h4>
+<div class="sub">
+<p>
+administratorの権限をつけてるとファイルの所有者はadministratorになってしまう。
+が、WinNTでつけないで使ってる人などいない気もする。
+Win2kならrunasがあるからつける必要はないんだけど。
+Cygwinしか使ってないおいらの場合はつけてない。
+</p>
+
+</div>
+<hr align="left" width="40%">
+<div>
+<a name="20010421F1" href="200104c.html#20010421F1"><small>*1</small></a>:
+もちろんExpolorerでファイルのアクセス権を表示してもいい。
+</div>
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200104212" title="200104212" href="200104c.html#200104212">■</a> 
+JARH</h3>
+<pre>
+print 'Just another Ruby hacker,'.scan(/./).pack'a'*25
+</pre>
+<!-- section end -->
+</div>
+<!-- 2001/04/21 end -->
+
+
+
+<hr class="hide">
+<!-- 2001/04/22 start -->
+<h2><a name="20010422" href="200104c.html#20010422">2001-04-22 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="200104221" title="200104221" href="200104c.html#200104221">■</a> 
+[Cygwin] ntsec</h3>
+<p>
+0777のままじゃいやだよね。ってわけで
+</p>
+<pre>
+% find ~ -type d | xargs chmod -v 0755
+% find ~ -type f | xargs chmod -v 0644
+</pre>
+<p>
+として、~/binは+xし直したりした。その他の必要なとこは個別にchmodし直し。
+ついでに/usr/localも同じようにchmodした。
+c:/cygwinから一気にやってもいいんだけど、
+それなら再インストールしたほうがよさそう。こっちはいずれ。
+</p>
+
+<h4><a name="200104221S1" href="200104c.html#200104221S1">_</a> <strong>DLL</strong>: </h4>
+<div class="sub">
+<p>
+ここで
+</p>
+<pre>
+% ruby -rsocket -e0
+</pre>
+<p>
+がエラーになることに気づく。
+straceしてみるとLoadLibrary自体がエラーになっている。
+違いはsocket.soを0644に変えただけ。試しにchmod +xしてみたら問題ない。
+そうか、そんなとこまで関係するのか。なかなか奥が深い。
+実を言うとmodruby-ja MLのX-Mail-Count: 00019はそういう意味だったりする。
+</p>
+
+</div>
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200104222" title="200104222" href="200104c.html#200104222">■</a> 
+eruby 0.9.1</h3>
+<p>
+というわけでそのパッチをあてて更新。
+小さいから--enable-sharedにしてもあまり意味がないと思う。
+Apache 1.3.20が出たら考えよう。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200104223" title="200104223" href="200104c.html#200104223">■</a> 
+Debian</h3>
+<p>
+UNIX USERにDebianがついてきたので、試そうかと思ったらDVDだった。
+2枚組にどうやって収めたんだと疑問だったがそういうことか。
+ってDVD-ROM driveなんてうちにはないよ。
+いいかげんPCの買い換え時か。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200104224" title="200104224" href="200104c.html#200104224">■</a> 
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-dev/13018">[ruby-dev:13018]</a></h3>
+<p>
+Alphaなマシンには縁がないのになぜに？と、改めて
+
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-dev/10646">これ</a> を見て納得。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200104225" title="200104225" href="200104c.html#200104225">■</a> 
+<a href="http://www.google.com/">Google </a></h3>
+<p>
+oが地球になってる。
+<a href="http://www.google.com/search?q=Earth+Day">Google</a>
+自体がちゃんとhrefになってる。Earth Dayなんて初めて知ったよ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200104226" title="200104226" href="200104c.html#200104226">■</a> 
+<a href="http://www9.xdsl.ne.jp/~aamine/ja/diary/200104.html#22">HTTP basic auth </a></h3>
+<p>
+え？一ヶ月前に実装したよね。
+</p>
+<pre>
+date: 2001/03/13 05:48:58;  author: aamine;  state: Exp;  lines: +5 -2
+aamine
+* lib/net/http.rb: add HTTPRequest#basic_auth.
+</pre>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200104227" title="200104227" href="200104c.html#200104227">■</a> 
+JARH</h3>
+<pre>
+'Just another Ruby hacker,'.send 'yalpsid'.reverse.intern
+</pre>
+<!-- section end -->
+</div>
+<!-- 2001/04/22 end -->
+
+
+
+<hr class="hide">
+<!-- 2001/04/23 start -->
+<h2><a name="20010423" href="200104c.html#20010423">2001-04-23 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="200104231" title="200104231" href="200104c.html#200104231">■</a> 
+[Cygwin] smbntsec</h3>
+<p>
+samba上のファイルがいったい誰のファイルなんだ状態になって困る。
+</p>
+<pre>
+% ls -l hoge
+-rw-r--r--   1 3232     Administ        0 Apr 23 13:18 hoge
+</pre>
+<p>
+これはLinux上ではおいらのファイルなんだけど、
+てゆうかnteaでは問題なく書き込めてたんだけど、なじぇ？
+調べてみるとsmbntsecってのがあってnoにすればいいらしい。
+</p>
+<pre>
+% CYGWIN='ntsec nosmbntsec' ls -l hoge
+-rw-r--r--   1 watanabe ruby            0 Apr 23 13:18 hoge
+</pre>
+<p>
+なるほど。もちろんsmb.confでは
+</p>
+<pre>
+sucurity = server
+</pre>
+<p>
+にしてる。あ、いや、もちろんでもないが。と思ったら
+</p>
+<pre>
+sucurity = DOMAIN
+</pre>
+<p>
+になってた。いつのまにそんな設定にしてたんだ、おれは。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200104232" title="200104232" href="200104c.html#200104232">■</a> 
+INNER CHILD</h3>
+<p>
+センチバっていつのまにか解散したのか？
+hitomiのINNER CHILDが
+<strong>元</strong>センチバのアキノリの作曲と紹介されてた。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200104233" title="200104233" href="200104c.html#200104233">■</a> 
+JARH</h3>
+<pre>
+print %w.Just another Ruby Ruby Ruby hacker,..uniq.join ' '
+</pre>
+<!-- section end -->
+</div>
+<!-- 2001/04/23 end -->
+
+
+
+<hr class="hide">
+<!-- 2001/04/24 start -->
+<h2><a name="20010424" href="200104c.html#20010424">2001-04-24 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="200104241" title="200104241" href="200104c.html#200104241">■</a> 
+rashworth</h3>
+<p>
+
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-talk/13926">こ</a> 
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-talk/13926">の</a>
+あたりから不気味だったけど、
+
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-talk/14014">そ</a> 
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-talk/14127">う</a>
+
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-talk/14128">き</a> 
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-talk/14129">た</a>
+か。
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-talk/14131">Dave</a> さんは優しいなあ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200104242" title="200104242" href="200104c.html#200104242">■</a> 
+[Cygwin] gcc-2.95.3-3</h3>
+<p>
+
+<a href="200104a.html#200104081">-no-cygwin</a>
+問題は直ってる。<br>
+
+<a href="../files/gcc-2.95.3-2-2.95.3-3.diff">diff</a>
+を取ってみるとspecs関係が結構変更されてる。
+.winnt.c.swpとか残しとかないように。<br>
+-2に比べて小さくなったなと思ったら、
+objcがごっそりなくなってる。いいのかそれで？
+おいらは使わないからいいけど、というより使ったことがない。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200104243" title="200104243" href="200104c.html#200104243">■</a> 
+JARH</h3>
+<pre>
+{}.fetch(:x){'Just another Ruby hacker,'}.display
+</pre>
+<!-- section end -->
+</div>
+<!-- 2001/04/24 end -->
+
+
+
+<hr class="hide">
+<!-- 2001/04/25 start -->
+<h2><a name="20010425" href="200104c.html#20010425">2001-04-25 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="200104251" title="200104251" href="200104c.html#200104251">■</a> 
+<a href="http://cgi.NetLaputa.ne.jp/~kose/diary/index.cgi?200104c&amp;to=200104241#200104241">setup.exe </a></h3>
+<p>
+Cygwinのsetup.exeのソースは 
+<a href="http://cygwin.com/cvs.html">CVS</a>
+か、snapshotsのcygwin-src-xxxxxxxx.tar.bz2の中にしかないです。
+cinstallというディレクトリがそれ。<br>
+たしかにこれを使うのはけっこういいかもしれないなあ。
+まねしちゃおうかな。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200104252" title="200104252" href="200104c.html#200104252">■</a> 
+Cygwin 1.3.1</h3>
+<p>
+なぜかいきなり1.3.1に。mingw, w32apiもやっと更新された。
+/usr/lib/mingw/libstdc++.aは忘れさられたようだ。
+お約束の如くRubyも通らなくなった。
+</p>
+
+<h4><a name="200104252S1" href="200104c.html#200104252S1">_</a> <strong>strftime.c</strong>: </h4>
+<div class="sub">
+<p>
+missing/strftime.cはどうしようかな。
+ほんとはこれを使う必要もないんだけど。
+defines.hに#undef HAVE_TZNAMEを入れるのがいいかと思ったら、
+strftime.cはこれをincludeしてない。
+configure.inでac_cv_var_tzname=noするしかないか。
+</p>
+
+</div>
+<h4><a name="200104252S2" href="200104c.html#200104252S2">_</a> <strong>dllwrap</strong>: </h4>
+<div class="sub">
+<p>
+dllwrapは内部的に-nostartfilesしてるから
+-L/usr/lib -L/usr/lib/w32apiが指定されなくなる。
+よって-luser32が見つからない。
+もうちょっとテストしてからリリースしてよ。
+</p>
+<pre>
+% dllwrap -o foo.dll
+</pre>
+<p>
+でわかるし。
+--target=mingwのときは-nostartfilesしてないから、
+そもそもそんなオプションをつけなくてもいいんだよね。
+とはいうもののdllwrap自体は元々そういう仕様だったし、
+gccの挙動が変わったのか？<br>
+対策としては-L/usr/lib/w32apiをつけるのが簡単。
+根本的にはgcc -sharedでDLLを作るのがいいんだろう。<br>
+Ruby 1.6.4に入れるべき？
+</p>
+
+</div>
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200104253" title="200104253" href="200104c.html#200104253">■</a> 
+JARH</h3>
+<pre>
+{}.delete(:x){'Just another Ruby hacker,'}.display
+</pre>
+<!-- section end -->
+</div>
+<!-- 2001/04/25 end -->
+
+
+
+<hr class="hide">
+<!-- 2001/04/26 start -->
+<h2><a name="20010426" href="200104c.html#20010426">2001-04-26 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="200104261" title="200104261" href="200104c.html#200104261">■</a> 
+出張</h3>
+<p>
+だいたいけりはついた。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200104262" title="200104262" href="200104c.html#200104262">■</a> 
+[Cygwin] gcc-2.95.3-4, binutils-20010425-1</h3>
+<p>
+出たみたいだ。試せるのは明日だな。
+</p>
+<pre>
+The new gcc release fixes a problem where /usr/local/lib was not being
+searched by default.  It also forces a search of /usr/lib/w32api when
+linking regardless of whether -nostdlib is specified or not.
+
+binutils is basically an update release but there is one additional
+feature.  'ld' searches both /usr/lib and /usr/lib/w32api by default.
+Hopefully, this will rectify some of the dlltool problems that are
+being reported.
+</pre>
+<p>
+とりあえずRubyのほうはconfigure.inだけいじっとこう。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200104263" title="200104263" href="200104c.html#200104263">■</a> 
+<a href="http://www.jp.playstation.com/linux/">PS2 Linux Kit </a></h3>
+<p>
+ついに出たか。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200104264" title="200104264" href="200104c.html#200104264">■</a> 
+JARH</h3>
+<pre>
+print [:x].map{'Just another Ruby hacker,'}
+</pre>
+<!-- section end -->
+</div>
+<!-- 2001/04/26 end -->
+
+
+
+<hr class="hide">
+<!-- 2001/04/27 start -->
+<h2><a name="20010427" href="200104c.html#20010427">2001-04-27 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="200104271" title="200104271" href="200104c.html#200104271">■</a> 
+[Cygwin] gcc-2.95.3-4, binutils-20010425-2</h3>
+<p>
+Rubyは無事makeできた。
+binutilsはまだ不具合あったらしく早くも-2へ。
+Cygwin 1.3.2も近々出るらしい。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200104272" title="200104272" href="200104c.html#200104272">■</a> 
+JARH</h3>
+<pre>
+{'Ruby hacker,'=&gt;'Just another'}.each{|x|print x.reverse.join ' '}
+</pre>
+<!-- section end -->
+</div>
+<!-- 2001/04/27 end -->
+
+
+
+<hr class="hide">
+<!-- 2001/04/28 start -->
+<h2><a name="20010428" href="200104c.html#20010428">2001-04-28 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="200104281" title="200104281" href="200104c.html#200104281">■</a> 
+<a href="http://www.ogis-ri.co.jp/otc/objday2001/index_NN.html">OBJECT DAY 2001 </a></h3>
+<p>
+O1, B1, D2, A3で申し込んで受講票が来た。来たのは25日だが。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200104282" title="200104282" href="200104c.html#200104282">■</a> 
+VAIO</h3>
+<p>
+会社に置いといても遊んでるだけなので、連休中は家で遊ぶことにした。
+どっちにしても遊んでる。
+それはそれとして、ここには最新のCygwinを入れることにしよう。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200104283" title="200104283" href="200104c.html#200104283">■</a> 
+JARH</h3>
+<pre>
+print [].unshift('Ruby hacker,').unshift('Just another').join ' '
+</pre>
+<!-- section end -->
+</div>
+<!-- 2001/04/28 end -->
+
+
+
+<hr class="hide">
+<!-- 2001/04/29 start -->
+<h2><a name="20010429" href="200104c.html#20010429">2001-04-29 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="200104291" title="200104291" href="200104c.html#200104291">■</a> 
+ruby-talk ML</h3>
+<p>
+最近多すぎる。原因はmascotか。基本的にどうでもいい話で盛り上がってる。
+ruby-talkが多いとなぜかruby-listに書くのを控えたくなる。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200104292" title="200104292" href="200104c.html#200104292">■</a> 
+DHCP</h3>
+<p>
+VAIOのためにDHCP serverを立ち上げた。
+1台しかないから常に固定なんだけど、
+てゆうかクロスケーブルだから1台しかつながらないんだけど、
+いちいち手動で設定すると再起動しろとか言われそうだし。<br>
+/var/log/messageを見ると5分に1回の頻度でリクエストを出している。
+ちと多すぎないか？あ、
+</p>
+<pre>
+default-lease-time 600;
+</pre>
+<p>
+のせいか。
+</p>
+<pre>
+default-lease-time 1200;
+</pre>
+<p>
+にしたら10分になった。なぜ半分の時間なのかは依然として謎ではあるが。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200104293" title="200104293" href="200104c.html#200104293">■</a> 
+[Cygwin] OpenGL</h3>
+<p>
+/usr/include/GL/gl.hには
+</p>
+<pre>
+/* Version */
+#define GL_VERSION_1_1                    1
+#define GL_VERSION_1_2                    1
+</pre>
+<p>
+とあるが、opengl-1.1.0-3.tar.gzという名前からわかるようにどう考えても
+1.2ではない。
+</p>
+
+<p>
+<!-- アルハンブラのおもいで -->
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200104294" title="200104294" href="200104c.html#200104294">■</a> 
+JARH</h3>
+<pre>
+{3=&gt;'Ruby ',2=&gt;'another ',4=&gt;'hacker,',1=&gt;'Just '}.indexes(1,2,3,4).display
+</pre>
+<!-- section end -->
+</div>
+<!-- 2001/04/29 end -->
+
+
+
+<hr class="hide">
+<!-- 2001/04/30 start -->
+<h2><a name="20010430" href="200104c.html#20010430">2001-04-30 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="200104301" title="200104301" href="200104c.html#200104301">■</a> 
+[Cygwin] rbogl</h3>
+<p>
+そのまま作ると/bin/glut32.dllに依存したものができあがる。
+つまりopengl-1.1.0-3.tar.gzもインストールしてくれって話になる。
+もう静的にリンクするとかやめようかな。
+opengl-1.1.0-3-src.tar.gzはとっても面倒なソースになってるし。
+<!-- てゆうかjperlに続いてまたしても使わないものをメンテしてる気もする。 -->
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200104302" title="200104302" href="200104c.html#200104302">■</a> 
+[Cygwin] binutils-20010425-2</h3>
+<pre>
+% tar xfvz binutils-20010425-2-src.tar.gz
+% cd binutils-20010425-2
+% mkdir obj; cd obj
+% CFLAGS=-Os CXXFLAGS=-Os \
+  ../configure \
+  --target=i686-pc-cygwin \
+  --prefix=/usr/local/cygwin
+% make
+% sudo make install
+</pre>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200104303" title="200104303" href="200104c.html#200104303">■</a> 
+[Cygwin] gcc-2.95.3-4</h3>
+<pre>
+% tar xfvz gcc-2.95.3-4-src.tar.gz
+% cd gcc-2.95.3-4
+% mkdir obj; cd obj
+% CFLAGS=-Os CXXFLAGS=-Os \
+  ../configure \
+  --target=i686-pc-cygwin \
+  --prefix=/usr/local/cygwin \
+  --enable-languages=c,c++
+% make
+&lt;途中略&gt;
+_muldi3
+../../gcc/libgcc2.c:41: stdlib.h: No such file or directory
+../../gcc/libgcc2.c:42: unistd.h: No such file or directory
+make[1]: *** [libgcc2.a] Error 1
+</pre>
+<p>
+う？-I/usr/local/cygwin/i686-pc-cygwin/includeが原因か。前回は
+</p>
+<pre>
+% make install tooldir=/usr/local/cygwin
+</pre>
+<p>
+したので/usr/local/cygwin/i686-pc-cygwin/includeは存在しない。
+しょうがない。cygwin-1.1.8-2を使おう。
+</p>
+<pre>
+% tar xfvz cygwin-1.1.8-2-src.tar.gz
+% mkdir build; cd build
+% lndir ../cygwin-1.1.8-2
+% ln -s ../gcc-2.95.3-4/{gcc,libio,libstdc++} .
+% mkdir obj; cd obj
+% CFLAGS=-Os CXXFLAGS=-Os \
+  ../configure \
+  --target=i686-pc-cygwin \
+  --prefix=/usr/local/cygwin \
+  --enable-languages=c,c++
+</pre>
+<p>
+今回はこうしてみた。
+</p>
+<pre>
+% make build_tooldir=/usr/local/cygwin \
+  FLAGS_FOR_TARGET='\
+  -L$$r/$(TARGET_SUBDIR)/winsup \
+  -L$$r/$(TARGET_SUBDIR)/winsup/cygwin \
+  -L$$r/$(TARGET_SUBDIR)/winsup/w32api/lib \
+  -isystem $$s/winsup/include \
+  -isystem $$s/winsup/cygwin/include \
+  -isystem $$s/winsup/w32api/include \
+  -isystem $$s/newlib/libc/sys/cygwin \
+  -isystem $$s/newlib/libc/sys/cygwin32 \
+  -nostdinc \
+  -B$$r/$(TARGET_SUBDIR)/newlib/ \
+  -isystem $$r/$(TARGET_SUBDIR)/newlib/targ-include \
+  -isystem $$s/newlib/libc/include \
+  -B$(prefix)/i686-pc-cygwin/bin/ \
+  -B$(build_tooldir)/lib/ \
+  -isystem $(build_tooldir)/include'
+</pre>
+<p>
+なにが違うかというとbuild_tooldir=/usr/local/cygwinにして
+</p>
+<pre>
+-B$(build_tooldir)/bin/ \
+</pre>
+<p>
+を
+</p>
+<pre>
+-B$(prefix)/i686-pc-cygwin/bin/ \
+</pre>
+<p>
+に変更してちゃんとbinutilsが使われるようにした。
+でもだめだった。やっぱbinutilsもいっしょにmakeすることにしよう。
+ひょっとしたらcygwin-1.3.1を使わないとだめかなあ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200104304" title="200104304" href="200104c.html#200104304">■</a> 
+M:I-2, パーフェクト・ストーム</h3>
+<p>
+正月にもらった無料レンタル券2枚が今日期限切れになることが判明。
+よく今日気づいたな。
+というわけでM:I-2とパーフェクト・ストームだ。
+M:I-2は最後の一本だった。ラッキー。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200104305" title="200104305" href="200104c.html#200104305">■</a> 
+JARH</h3>
+<pre>
+class Symbol;def -(*)end end
+def M(*)print'Just another Ruby hacker,'end
+M:I-2
+</pre>
+
+<p>
+<!-- polinky.com -->
+</p>
+<!-- section end -->
+</div>
+<!-- 2001/04/30 end -->
+
+<hr>
+<div>
+<a href="200104b.html">&lt;Prev(,)</a> | 
+<a href="200105a.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

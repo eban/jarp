@@ -1,0 +1,478 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2015-5-b</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="201505a.html">
+<link rel="next" href="201505c.html">
+
+<link rel="stylesheet" type="text/css" href="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.css">
+<script async type="text/javascript" src="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.js"></script>
+<script type="text/javascript">
+<!--       
+$(document).ready(function() {
+  prettyPrint();
+});
+-->
+</script>
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2015年5月中旬〜</p>
+<hr>
+<div>
+<a href="201505a.html" accesskey=",">&lt;Older(,)</a> | 
+<a href="201505c.html" accesskey=".">Newer(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2015/05/11 start -->
+<h2><a name="20150511" href="201505b.html#20150511">2015-05-11 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="201505111" title="201505111" href="201505b.html#201505111">■</a> 
+grcat - read from standard input, colourise it and write to standard output</h3>
+<p>
+色の指定を自由に定義できてなかなか楽しい。
+</p>
+<pre>
+% cat date.conf
+regexp=(\d\d):(\d\d):(\d\d)
+colours=,red,yellow,cyan
+% date | grcat date.conf
+Mon May 11 <span style="color:red;">22</span>:<span style="color:olive;">23</span>:<span style="color:teal;">37</span> JST 2015
+</pre>
+<p>
+groupingの()とcoloursが対応している。
+</p>
+<!-- section end -->
+</div>
+<!-- 2015/05/11 end -->
+
+
+
+<hr class="hide">
+<!-- 2015/05/12 start -->
+<h2><a name="20150512" href="201505b.html#20150512">2015-05-12 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="201505121" title="201505121" href="201505b.html#201505121">■</a> 
+grcatの設定ファイル</h3>
+<p>
+色は複数指定可能で、=とか記号を区切りにすればいい。<br>
+たとえばcalで日曜を赤、土曜を青にしたければこんな感じになる。
+</p>
+<pre>
+% cat ~/.grc/conf.cal
+regexp=^ ?\d{1,2}
+colours=white on_red
+
+===
+
+regexp=\d{1,2}  $
+colours=white on_blue
+% cal | grcat conf.cal
+      May 2015        
+Su Mo Tu We Th Fr Sa  
+                1  <span style="color:gray;"></span><span style="color:gray;background-color:blue;">2  </span>
+<span style="color:gray;"></span><span style="color:gray;background-color:red;"> 3</span>  4  5  6  7  8  <span style="color:gray;"></span><span style="color:gray;background-color:blue;">9  </span>
+<span style="color:gray;"></span><span style="color:gray;background-color:red;">10</span> 11 12 13 14 15 <span style="color:gray;"></span><span style="color:gray;background-color:blue;">16  </span>
+<span style="color:gray;"></span><span style="color:gray;background-color:red;">17</span> 18 19 20 21 22 <span style="color:gray;"></span><span style="color:gray;background-color:blue;">23  </span>
+<span style="color:gray;"></span><span style="color:gray;background-color:red;">24</span> 25 26 27 28 29 <span style="color:gray;"></span><span style="color:gray;background-color:blue;">30  </span>
+<span style="color:gray;"></span><span style="color:gray;background-color:red;">31</span>                    
+</pre>
+<p>
+空白まで色をつけなくていいならこんな感じ。
+</p>
+<pre>
+% cat ~/.grc/conf.cal
+regexp=^ ?(\d{1,2})
+colours=,white on_red
+
+===
+
+regexp=(\d{1,2})  $
+colours=,white on_blue
+% cal | grcat conf.cal
+      May 2015        
+Su Mo Tu We Th Fr Sa  
+                1  <span style="color:gray;"></span><span style="color:gray;background-color:blue;">2</span>  
+ <span style="color:gray;"></span><span style="color:gray;background-color:red;">3</span>  4  5  6  7  8  <span style="color:gray;"></span><span style="color:gray;background-color:blue;">9</span>  
+<span style="color:gray;"></span><span style="color:gray;background-color:red;">10</span> 11 12 13 14 15 <span style="color:gray;"></span><span style="color:gray;background-color:blue;">16</span>  
+<span style="color:gray;"></span><span style="color:gray;background-color:red;">17</span> 18 19 20 21 22 <span style="color:gray;"></span><span style="color:gray;background-color:blue;">23</span>  
+<span style="color:gray;"></span><span style="color:gray;background-color:red;">24</span> 25 26 27 28 29 <span style="color:gray;"></span><span style="color:gray;background-color:blue;">30</span>  
+<span style="color:gray;"></span><span style="color:gray;background-color:red;">31</span>                    
+</pre>
+<p>
+なんか見辛い。反転しないで太字で出したほうがいいか。
+</p>
+<pre>
+% cat ~/.grc/conf.cal
+regexp=^ ?(\d{1,2})
+colours=,red bold
+
+===
+
+regexp=(\d{1,2})  $
+colours=,blue bold
+% cal -h | grcat conf.cal
+      May 2015        
+Su Mo Tu We Th Fr Sa  
+                1  <span style="color:blue;"></span><span style="color:blue;font-weight:bold;">2</span>  
+ <span style="color:red;"></span><span style="color:red;font-weight:bold;">3</span>  4  5  6  7  8  <span style="color:blue;"></span><span style="color:blue;font-weight:bold;">9</span>  
+<span style="color:red;"></span><span style="color:red;font-weight:bold;">10</span> 11 12 13 14 15 <span style="color:blue;"></span><span style="color:blue;font-weight:bold;">16</span>  
+<span style="color:red;"></span><span style="color:red;font-weight:bold;">17</span> 18 19 20 21 22 <span style="color:blue;"></span><span style="color:blue;font-weight:bold;">23</span>  
+<span style="color:red;"></span><span style="color:red;font-weight:bold;">24</span> 25 26 27 28 29 <span style="color:blue;"></span><span style="color:blue;font-weight:bold;">30</span>  
+<span style="color:red;"></span><span style="color:red;font-weight:bold;">31</span>                    
+</pre>
+<!-- section end -->
+</div>
+<!-- 2015/05/12 end -->
+
+
+
+<hr class="hide">
+<!-- 2015/05/13 start -->
+<h2><a name="20150513" href="201505b.html#20150513">2015-05-13 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="201505131" title="201505131" href="201505b.html#201505131">■</a> 
+プロセス名を変更する</h3>
+<p>
+tmuxのステータスラインにshとかbashとか出ても、
+スクリプトなのかよくわからんのでプロセス名を変更する方法を調べみた。
+zshだとjobs -Z nameで可能。<br>
+ただzshでスクリプトはあんまり書かないのでどうでもいい。<br>
+bashでの方法が知りたかったが、<br>
+man bashしたらexec -a name fooでいけそう。<br>
+でもexecしないといけないわけで、それってwrapperだよな。<br>
+ってことはexec -aするだけのwrapperスクリプトを作っておけばいいのか。
+</p>
+<pre>
+#! /bin/bash
+
+name=&quot;$1&quot;
+shift
+exec -a &quot;$name&quot; &quot;$@&quot;
+</pre>
+<p>
+chpname.shと名前をつけた。これを日記を書くスクリプトに適用してみる。
+</p>
+<pre>
+#! /bin/sh
+date=&quot;${1--12 hour}&quot;
+exec chpname.sh nikki vim ~/jarp/diary/$(date -d &quot;$date&quot; +&quot;%Y/d%Y%m%d.hnf&quot;)
+</pre>
+<p>
+おお、できた。ちゃんとnikkiと表示されるようになった。
+</p>
+<!-- section end -->
+</div>
+<!-- 2015/05/13 end -->
+
+
+
+<hr class="hide">
+<!-- 2015/05/14 start -->
+<h2><a name="20150514" href="201505b.html#20150514">2015-05-14 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="201505141" title="201505141" href="201505b.html#201505141">■</a> 
+かなりもっさりしていたJ:COMが蘇った</h3>
+<p>
+最近再生直後は反応しなかったり、予約した番組が録画されなかったり、<br>
+消せない番組が出てきたり、そもそも遅かったりと、<br>
+ひどい症状だったSmart J:COM Boxさんをリセットしてみたら全部解消された。<br>
+やっぱ電源ボタン押してOFFにしても動き続けてるんだよね。<br>
+起動だけはやたらと速いし。<br>
+たぶんシステムアップデートが最近ないので再起動もかからないから、<br>
+長時間動き続けてメモリリークといったところか。
+</p>
+<!-- section end -->
+</div>
+<!-- 2015/05/14 end -->
+
+
+
+<hr class="hide">
+<!-- 2015/05/15 start -->
+<h2><a name="20150515" href="201505b.html#20150515">2015-05-15 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="201505151" title="201505151" href="201505b.html#201505151">■</a> 
+<a href="https://twitter.com/nobkz/status/598687411850256384">お題「数字を使わずに、1から10まで和を、出力するコードを書いてください」を #シェル芸 で考えてみた</a></h3>
+<p>
+LisperというくらいだからLispでというのが前提にあるんだと思うが、<br>
+まあいろんな言語で考えるのも一興。というわけでシェル芸だ。
+</p>
+<pre>
+% echo|awk '{for(;i&lt;length(&quot;abcdefghij&quot;);)s+=++i;print s}'
+55
+% id|awk '{for(;i&lt;length(&quot;abcdefghij&quot;);)s+=++i;print s}'
+55
+% seq `(cal;id;id)|wc -l`|paste -sd+|bc
+55
+% seq -s+ `(cal;id;id)|wc -l`|bc       
+55
+% seq -s+ `echo|od -An -td`|bc  
+55
+% seq -s+ `echo|od -iAn`|bc
+55
+</pre>
+<p>
+となぜかゴルフしてる。<br>
+calは8行、idは1行しか出力しないことを前提にしている。<br>
+&quot;\n&quot;はASCIIコードで10なのでodでダンプするときに10進にすれば10を得られる。
+</p>
+<p>
+bashだと{a..j}でa b c d e f g h i jを表わすので10回繰り返しも結構簡単。
+</p>
+<pre>
+$ a= s=;for i in {a..j};do ((s+=++a));done;echo $s                                                  
+55
+</pre>
+<p>
+10じゃなくて100とか1000だとこういう方法はなかなか使えないので、<br>
+もうちょっと大きいほうがよかったのかもしれない。
+</p>
+<!-- section end -->
+</div>
+<!-- 2015/05/15 end -->
+
+
+
+<hr class="hide">
+<!-- 2015/05/16 start -->
+<h2><a name="20150516" href="201505b.html#20150516">2015-05-16 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="201505161" title="201505161" href="201505b.html#201505161">■</a> 
+まったりとしたFizzBuzz</h3>
+<p>
+<a href="http://qiita.com/suin/items/eca21ed935115e5da2e8">Go: 計算なしのFizzBuzz - Qiita</a>を見て感心したのでbashへ移植。<br>
+微調整は10msecじゃ無理だったので100msecで。
+</p>
+<pre>
+#! /bin/bash
+
+if [ -n &quot;$1&quot; ]; then
+  while :; do
+    sleep $1; echo -n $2 &gt;&gt; fizzbuzz.txt
+  done
+fi
+
+trap 'trap - SIGTERM &amp;&amp; kill 0' SIGINT SIGTERM EXIT
+
+: &gt; fizzbuzz.txt
+
+exec bash $0 3 Fizz &amp;
+sleep 0.1
+exec bash $0 5 Buzz &amp;
+sleep 0.1
+
+for i in {1..100}; do
+  sleep 1
+  if [ -s fizzbuzz.txt ]; then
+    i=
+  fi
+  cat fizzbuzz.txt
+  echo $i
+  : &gt; fizzbuzz.txt
+done
+</pre>
+<p>
+これは正確に3秒とか5秒間隔にはならないので、数を増やせばそのうち破綻する。
+</p>
+<!-- section end -->
+</div>
+<!-- 2015/05/16 end -->
+
+
+
+<hr class="hide">
+<!-- 2015/05/17 start -->
+<h2><a name="20150517" href="201505b.html#20150517">2015-05-17 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="201505171" title="201505171" href="201505b.html#201505171">■</a> 
+parallelで使えない文字</h3>
+<p>
+日本語のファイル名をつけたPDFをparallelで扱っているとなぜかエラーになる現象にぶちあたった。
+</p>
+<pre>
+% parallel echo ワ{} ::: 1
+parallel: Error: Command cannot contain the character �. Use a function for that.
+</pre>
+<p>
+前にもあったので確認してみると「ワ」「ク」あたりが含まれていると起こるようで。
+</p>
+<pre>
+% echo -n ワク | od -tx1  
+0000000 e3 83 af e3 82 af
+0000006
+</pre>
+<p>
+afが怪しい。e3 81 afで試してみる。
+</p>
+<pre>
+% echo '\xe3\x81\xaf'          
+は
+m:scan/1505 % parallel echo は{} ::: 1
+parallel: Error: Command cannot contain the character �. Use a function for that.
+</pre>
+<p>
+当たっているようだ。そういえばparallelはperlで書かれてたはずなので直接見てみた。
+</p>
+<pre>
+    # Replace replacement strings with {= perl expr =}
+    # Protect matching inside {= perl expr =}
+    # by replacing {= and =} with \257&lt; and \257&gt;
+    for(@command) {
+	if(/\257/) {
+	    ::error(&quot;Command cannot contain the character \257. Use a function for that.\n&quot;);
+	    ::wait_and_exit(255);
+	}
+	s/\Q$Global::parensleft\E(.*?)\Q$Global::parensright\E/\257&lt;$1\257&gt;/gx;
+    }
+</pre>
+<p>
+\257は\xafなのでまさにこれが原因だ。<br>
+どうも内部的に一旦置き換えて処理してるようで回避不可っぽい。<br>
+とりあえずxargs -Pでもいけるのでそっちで対処した。
+</p>
+<!-- section end -->
+</div>
+<!-- 2015/05/17 end -->
+
+
+
+<hr class="hide">
+<!-- 2015/05/18 start -->
+<h2><a name="20150518" href="201505b.html#20150518">2015-05-18 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="201505181" title="201505181" href="201505b.html#201505181">■</a> 
+gsでPDFを画像へ</h3>
+<p>
+convert foo.pdf foo.pngすると内部的にgsが起動されるが、<br>
+例のやたらと重くなる問題でほとんど使えない。<br>
+じゃ直接gsを起動するとどうなるのか？
+</p>
+<pre>
+% gs -q -dNOPAUSE -r300 -dBATCH -sDEVICE=png256 -sOutputFile=%03d.png foo.pdf
+</pre>
+<p>
+ちょっとオプションがうるさいが、処理は速い。<br>
+重くもならない。
+ページの範囲も -dFirstPage=0 -dLastPage=99 のように指定できるし、<br>
+これで十分かも。
+</p>
+<!-- section end -->
+</div>
+<!-- 2015/05/18 end -->
+
+
+
+<hr class="hide">
+<!-- 2015/05/19 start -->
+<h2><a name="20150519" href="201505b.html#20150519">2015-05-19 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="201505191" title="201505191" href="201505b.html#201505191">■</a> 
+VENOM</h3>
+<p>
+さくらからVENOM対応のメールが来た。<br>
+VMの再起動が必要になるので放置してさくら側に任せるか自分でやるかだが、<br>
+コンパネにも最近ログインしてないのでやってみた。<br>
+VPS側はshutdown -h nowしたが停止にならないので、強制的にVMを停止して起動。<br>
+これで一応対応完のはず。
+</p>
+<p>
+奇しくもCPIも同じようなタイミングだった。
+</p>
+<!-- section end -->
+</div>
+<!-- 2015/05/19 end -->
+
+
+
+<hr class="hide">
+<!-- 2015/05/20 start -->
+<h2><a name="20150520" href="201505b.html#20150520">2015-05-20 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="201505201" title="201505201" href="201505b.html#201505201">■</a> 
+Googleの2段階認証</h3>
+<p>
+電話は面倒だと思ってやってなかったけど、タブレットでも可能だと聞いてやっと設定した。<br>
+それは1ヶ月ほど前だったが、今日久し振りにThunderbirdでメールを書いたら送れない。<br>
+そこで2段階認証を思い出した。ってこれどうするんだ？Thunderbirdは対応してない。<br>
+調べてみるとアプリ用に別のアクセスキー的なパスワードを発行せよとのこと。<br>
+それをパスワードに使えば2段階認証を回避できる。<br>
+簡単にrevokeできるからいいってことか。
+</p>
+<p>
+cf: 
+<a href="https://support.google.com/accounts/answer/185833?hl=ja">アプリ パスワードでログイン - Google アカウント ヘルプ</a></p>
+<!-- section end -->
+</div>
+<!-- 2015/05/20 end -->
+
+<hr>
+<div>
+<a href="201505a.html">&lt;Older(,)</a> | 
+<a href="201505c.html">Newer(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

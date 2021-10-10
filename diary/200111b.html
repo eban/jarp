@@ -1,0 +1,767 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2001-11-b</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="200111a.html">
+<link rel="next" href="200111c.html">
+
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2001年11月中旬〜</p>
+<hr>
+<div>
+<a href="200111a.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="200111c.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2001/11/11 start -->
+<h2><a name="20011111" href="200111b.html#20011111">2001-11-11 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="200111111" title="200111111" href="200111b.html#200111111">■</a> 
+dnscache</h3>
+<p>
+心持ち速くなった気がする。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200111112" title="200111112" href="200111b.html#200111112">■</a> 
+RubyUnit 0.4.5</h3>
+<p>
+更新。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200111113" title="200111113" href="200111b.html#200111113">■</a> 
+gcc 3.0.x</h3>
+<p>
+--enable-c-mbcharなんだけど、これって全然使いものにならない気がする。
+というか、LANG=ja_JP.eucJPという設定でもリテラルなEUC-JPな文字列も化ける。
+w3mをmakeし直して気づいた。
+</p>
+
+<p>
+-Sしてみるとすでに全然違う文字列だもんなあ。
+</p>
+<pre>
+% echo 'char *foo = &quot;あいうえお&quot;;' |gcc -xc - -S -o - |grep string
+        .string &quot;BDFHJ&quot;
+</pre>
+<p>
+第2バイト目の最上位ビットを寝かせてるものかと思ったら-0x60してある感じだ。
+</p>
+
+<p>
+gcc的にはsourceを見るとLANG=C-EUCJPのようだが、これでも化ける。
+第2バイト目だけ拾ってる感じだ。
+</p>
+<pre>
+% echo 'char *foo = &quot;あいうえお&quot;;' |LANG=C-EUCJP gcc -xc - -S -o - \
+ |grep string
+        .string &quot;\242\244\246\250\252&quot;
+</pre>
+<p>
+実際とは違うLANGにするとwarningにはなるが、そのまま出力される。
+こうなって欲しいんだけどなあ。
+</p>
+<pre>
+% echo 'char *foo = &quot;あいうえお&quot;;' |LANG=C gcc -xc - -S -o - |grep string
+&lt;stdin&gt;:1: warning: Ignoring invalid multibyte character
+&lt;stdin&gt;:1: warning: Ignoring invalid multibyte character
+&lt;stdin&gt;:1: warning: Ignoring invalid multibyte character
+&lt;stdin&gt;:1: warning: Ignoring invalid multibyte character
+&lt;stdin&gt;:1: warning: Ignoring invalid multibyte character
+&lt;stdin&gt;:1: warning: Ignoring invalid multibyte character
+&lt;stdin&gt;:1: warning: Ignoring invalid multibyte character
+&lt;stdin&gt;:1: warning: Ignoring invalid multibyte character
+&lt;stdin&gt;:1: warning: Ignoring invalid multibyte character
+&lt;stdin&gt;:1: warning: Ignoring invalid multibyte character
+        .string &quot;\244\242\244\244\244\246\244\250\244\252&quot;
+</pre>
+<p>
+--enable-c-mbcharをやめるとちゃんと出力される。
+</p>
+<pre>
+% echo 'char *foo = &quot;あいうえお&quot;;' |gcc -xc - -S -o -  |grep string
+       .string &quot;\244\242\244\244\244\246\244\250\244\252&quot;
+</pre>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200111114" title="200111114" href="200111b.html#200111114">■</a> 
+Clip-On</h3>
+<p>
+どうもモーニング娘。の動きにはついていけてないようだ。
+バックの格子模様電飾の所為かもしれんが。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2001/11/11 end -->
+
+
+
+<hr class="hide">
+<!-- 2001/11/12 start -->
+<h2><a name="20011112" href="200111b.html#20011112">2001-11-12 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="200111121" title="200111121" href="200111b.html#200111121">■</a> 
+dnscache</h3>
+<p>
+off-line時に引けるのと引けないのとあるんだけど、これは何の違いだろう？
+</p>
+<pre>
+% host -a homepage1.nifty.com
+Trying null domain
+Trying domain &quot;&quot;
+Host not found, try again.
+% host -a www.ruby-lang.org  
+Trying null domain
+rcode = 0 (Success), ancount=1
+The following answer is not authoritative:
+The following answer is not verified as authentic by the server:
+www.ruby-lang.org       49128 IN        CNAME   helium.ruby-lang.org
+rcode = 0 (Success), ancount=1
+The following answer is not authoritative:
+The following answer is not verified as authentic by the server:
+helium.ruby-lang.org    49128 IN        A       210.251.121.214
+</pre>
+<p>
+on-line時に引いてみればいいのか。なるほどTTLが短いわけね。
+</p>
+<pre>
+% host -a homepage1.nifty.com
+Trying null domain
+rcode = 0 (Success), ancount=1
+The following answer is not authoritative:
+The following answer is not verified as authentic by the server:
+homepage1.nifty.com     3600 IN A       202.219.63.7
+</pre>
+<p>
+off-lineにしてちょっと経ってからやってみると減ってる。
+</p>
+<pre>
+% host -a homepage1.nifty.com
+Trying null domain
+rcode = 0 (Success), ancount=1
+The following answer is not authoritative:
+The following answer is not verified as authentic by the server:
+homepage1.nifty.com     3159 IN A       202.219.63.7
+</pre>
+<p>
+で、3600秒経つと最初に戻るわけね。たしかにwww.ruby-lang.orgはでかい。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200111122" title="200111122" href="200111b.html#200111122">■</a> 
+w3m noproxy_netaddr</h3>
+<p>
+で、w3mもその影響でなぜかタイムアウト待ちするようになった。
+ltraceしてみるとgethostbyname(&quot;homepage1.nifty.com&quot;)で待ってる。
+proxyでwwwoffleが動いてるlocalhostを指定してるのになぜそれを引きに行くかな？
+</p>
+
+<p>
+grepしてみてわかった。
+no_proxyでもip addressで指定できるからgethostbynameする必要があるわけか。
+で、ちゃんとそれを殺す指定もあった。oして
+</p>
+<pre>
+ネットワークアドレスでプロキシ除外のチェック       ( )ON  (*)OFF
+</pre>
+<p>
+てな感じだ。OFFにしたらokだ。
+</p>
+
+<p>
+昨日のw3mのmakeし直しってのはこのあたりをいろいろいじってた。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200111123" title="200111123" href="200111b.html#200111123">■</a> 
+<a href="http://cygwin.com/ml/cygwin-announce/2001/msg00140.html">Cygwin 1.3.5-1</a></h3>
+<p>
+出たね。一日使ってみたけど特に問題はないようだ。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2001/11/12 end -->
+
+
+
+<hr class="hide">
+<!-- 2001/11/13 start -->
+<h2><a name="20011113" href="200111b.html#20011113">2001-11-13 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="200111131" title="200111131" href="200111b.html#200111131">■</a> 
+Cygwin 1.3.5-2</h3>
+<p>
+日刊化してる。今は手を出さないほうがよさそう。
+といいつつ、使っているが。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200111132" title="200111132" href="200111b.html#200111132">■</a> 
+CC='gcc -mno-cygwin'</h3>
+<p>
+cvs upしてみると、CC='gcc -mno-cygwin'してるのになぜか
+</p>
+<pre>
+checking for gcc... gcc
+</pre>
+<p>
+と表示される。何が変わったかdiffを取ってみる。
+</p>
+<pre>
+% cvs diff -u1 -r1.68.2.1{8,9} configure.in
+Index: configure.in
+===================================================================
+RCS file: /src/ruby/configure.in,v
+retrieving revision 1.68.2.18
+retrieving revision 1.68.2.19
+diff -u -1 -r1.68.2.18 -r1.68.2.19
+--- configure.in        7 Nov 2001 09:01:30 -0000       1.68.2.18
++++ configure.in        13 Nov 2001 08:22:26 -0000      1.68.2.19
+@@ -19,3 +19,5 @@
+                without_gcc=$withval;;
+-       esac], [without_gcc=no])
++       esac], [
++         CC=gcc
++         without_gcc=no])
+ dnl If the user switches compilers, we can't believe the cache
+</pre>
+<p>
+このCC=gccが犯人か。
+</p>
+<pre>
+: ${CC=gcc}
+</pre>
+<p>
+としとこう。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200111133" title="200111133" href="200111b.html#200111133">■</a> 
+libcygwin-ruby16.a</h3>
+<p>
+つうわけでln -sしてみた。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2001/11/13 end -->
+
+
+
+<hr class="hide">
+<!-- 2001/11/14 start -->
+<h2><a name="20011114" href="200111b.html#20011114">2001-11-14 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="200111141" title="200111141" href="200111b.html#200111141">■</a> 
+-Wl,-soname,libruby.so.1.6.5</h3>
+<p>
+%Rubyでもちらっと先週ぼやいてみたが、
+Linuxではsonameがlibruby.so.1.6なため、
+過去のバージョンであるlibruby.so.1.6.{1,2,3,4}はゴミとなる。
+FreeBSDはlibruby.so.16だし、libruby.so.1.6でも十分なのだが、
+結構ちょっと前のバージョンの挙動を見たくなるときもあるし、
+せっかく残ってるんだから活用したいでしょ、やっぱ。
+バグ報告の内容を再現させるときとか便利だと思うし。
+というか、ずらーっとruby 1.0から並べてみるのもいい。
+</p>
+
+<p>
+で、結局makefileを用意して
+</p>
+<pre>
+include Makefile
+DLDFLAGS = -Wl,-soname,lib$(RUBY_INSTALL_NAME).so.$(MAJOR).$(MINOR).$(TEENY)
+install-link: install
+	ln -f $(DESTDIR)$(prefix)/bin/$(PROGRAM) \
+	  $(DESTDIR)$(prefix)/bin/$(PROGRAM)-$(MAJOR).$(MINOR).$(TEENY)
+</pre>
+<p>
+とすることにした。このmakefileはconfigureを実行するスクリプトに仕込んどく。
+mkmf.rbとかそういうのはこの際考えないことにする。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200111142" title="200111142" href="200111b.html#200111142">■</a> 
+Linux 2.2.15-pre4</h3>
+<p>
+もう-acは出ないので2.2.15-pre4を試す。
+が、いきなりエラーを喰らう。
+</p>
+<pre>
+setup.c: In function `c_start':
+setup.c:2791: subscripted value is neither array nor pointer
+setup.c:2792: warning: control reaches end of non-void function
+</pre>
+<p>
+実際のコードは
+</p>
+<pre>
+static void *c_start(struct seq_file *m, loff_t *pos)
+{
+        return *pos &lt; NR_CPUS ? &amp;cpu_data[*pos] : NULL;
+}
+</pre>
+<p>
+で&amp;cpu_data[*pos]が怪しい。
+grep -w cpu_data include/**/*.hしてみるとinclude/asm-i386/processor.hにある。
+</p>
+<pre>
+extern struct cpuinfo_x86 boot_cpu_data;
+extern struct tss_struct init_tss[NR_CPUS];
+
+#ifdef CONFIG_SMP
+extern struct cpuinfo_x86 cpu_data[];
+#define current_cpu_data cpu_data[smp_processor_id()]
+#else
+#define cpu_data &amp;boot_cpu_data
+#define current_cpu_data boot_cpu_data
+#endif
+</pre>
+<p>
+なるほど。これが原因か。()がないのがまずいね。
+</p>
+<pre>
+#define cpu_data (&amp;boot_cpu_data)
+</pre>
+<p>
+としてmakeし直し。って全部かよ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200111143" title="200111143" href="200111b.html#200111143">■</a> 
+VMware</h3>
+<p>
+結局gcc 3.0.xでコンパイルしたkernelだと動かない。
+それはそれとして、まだ2週間しか経ってないのに
+</p>
+<pre>
+Your evaluation serial number will expire in 2 day(s).
+</pre>
+<p>
+とはどういうことだ？30日じゃなかったの？
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2001/11/14 end -->
+
+
+
+<hr class="hide">
+<!-- 2001/11/15 start -->
+<h2><a name="20011115" href="200111b.html#20011115">2001-11-15 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="200111151" title="200111151" href="200111b.html#200111151">■</a> 
+[Cygwin] setup.exe 2.125.2.5</h3>
+<p>
+デフォルトはカテゴリーごとに表示されるようになった。
+ちょっと面喰らった。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200111152" title="200111152" href="200111b.html#200111152">■</a> 
+OSS/Free</h3>
+<p>
+ALSAからkernel付属のOSS/Freeに変えたら、音が途切れなくなった。
+いちいちalsa-driverを別にmakeするのも面倒になったので、
+OSS/Freeでいいや。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200111153" title="200111153" href="200111b.html#200111153">■</a> 
+bdb 0.25</h3>
+<p>
+ruby-talkに出てきたので久し振りに更新しようと思ったら、かなり変更されてる。
+もう簡単にはクロスでmakeできない。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2001/11/15 end -->
+
+
+
+<hr class="hide">
+<!-- 2001/11/16 start -->
+<h2><a name="20011116" href="200111b.html#20011116">2001-11-16 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="200111161" title="200111161" href="200111b.html#200111161">■</a> 
+Linux 2.4.15-pre5</h3>
+<p>
+今回は何の問題もなくmakeできた。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200111162" title="200111162" href="200111b.html#200111162">■</a> 
+VMware</h3>
+<p>
+予告通りに切れた。
+登録したメールアドレスとパスワードでそのまま進めると、
+また新しいserial numberが送られてきた。太っ腹だな。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200111163" title="200111163" href="200111b.html#200111163">■</a> 
+タモリ倶楽部</h3>
+<p>
+24人の阿藤海。そうか加藤あいとはアナグラムの関係か。
+って改名しちゃったよ。阿藤快。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2001/11/16 end -->
+
+
+
+<hr class="hide">
+<!-- 2001/11/17 start -->
+<h2><a name="20011117" href="200111b.html#20011117">2001-11-17 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="200111171" title="200111171" href="200111b.html#200111171">■</a> 
+配送の乱れ</h3>
+<p>
+最近また配送の乱れが目立つ。
+headerを見るとrimまではさくっと来てるから、rim内のトラブルか？
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200111172" title="200111172" href="200111b.html#200111172">■</a> 
+ruby-talk ML</h3>
+<p>
+爆発してると思ったら逆流してるらしい。Postedを見ると6月とか7月の記事だ。
+すでにnews gatewayは止まっているが、
+たぶん日付でfilteringすることになるんだろう。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200111173" title="200111173" href="200111b.html#200111173">■</a> 
+<a href="http://p4w.sourceforge.net/">P4W - Posix4Windows</a></h3>
+<p>
+面白そう。始めたのがEarnie Boydだから期待できる。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200111174" title="200111174" href="200111b.html#200111174">■</a> 
+libcygwin-ruby16.dll.a</h3>
+<p>
+libruby.aじゃだめだめだよね。
+で、
+<a href="200111a.html#200111102">Andyさんへの返事</a> も間違っていたことがわかった。
+</p>
+<pre>
+% ln -s ../bin/cygwin-ruby16.dll libcygwin-ruby16.a
+</pre>
+<p>
+だと、
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-dev/15175">[ruby-dev:15175]</a>
+にあるようにundefined referenceになってしまう。ここは
+
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-dev/15183">[ruby-dev:15183]</a>
+に書いたように
+</p>
+<pre>
+% ln -s ../bin/cygwin-ruby16.dll .
+</pre>
+<p>
+とするか、これだとあまりlibraryらしくないので
+</p>
+<pre>
+% ln -s ../bin/cygwin-ruby16.dll libcygwin-ruby16.dll.a
+</pre>
+<p>
+とする必要がある。tarballはこっちにしよう。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200111175" title="200111175" href="200111b.html#200111175">■</a> 
+Windows XP</h3>
+<p>
+あ、すっかり忘れてたが、出てたのか。あまり盛り上がってない気も。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2001/11/17 end -->
+
+
+
+<hr class="hide">
+<!-- 2001/11/18 start -->
+<h2><a name="20011118" href="200111b.html#20011118">2001-11-18 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="200111181" title="200111181" href="200111b.html#200111181">■</a> 
+ALSAのbeta版</h3>
+<p>
+glibcの所為だとばかり思っていた
+
+<a href="200111b.html#200111152">XMMSの音の途切れの原因がALSAだった</a>
+ようで、じゃ最新のALSAはどうなんだろうと0.9.0beta9のbeta版を使ってみることにした。
+</p>
+
+<p>
+だめだ。make installするとdepmod -aのとこでなにをやってるのかわからんが、
+返ってこない。というかmodutilsが古くないか？
+</p>
+<pre>
+% insmod -V |&amp; head -1
+insmod version 2.3.23
+</pre>
+<p>
+全然古いよ。おかしいな。Linux 2.4.xに挑戦するときに上げたはずなんだが。
+あ、それは古い環境か。
+</p>
+<pre>
+% /old/sbin/insmod -V |&amp; head -1 
+insmod version 2.4.6
+</pre>
+<p>
+やっぱり。
+</p>
+
+<p>
+modutils 2.4.11をインストールしたら、するっとdepmod -aもokだ。
+</p>
+
+<p>
+でもconfigいまいちよくわからない。やっぱOSS/Freeでいいや。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200111182" title="200111182" href="200111b.html#200111182">■</a> 
+<a href="http://znz.s1.xrea.com/t/?date=20011117#p01">ハードリンク</a></h3>
+<p>
+cygwinのlnでも可能。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200111183" title="200111183" href="200111b.html#200111183">■</a> 
+RubyUnit 0.4.6</h3>
+<p>
+更新。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2001/11/18 end -->
+
+
+
+<hr class="hide">
+<!-- 2001/11/19 start -->
+<h2><a name="20011119" href="200111b.html#20011119">2001-11-19 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="200111191" title="200111191" href="200111b.html#200111191">■</a> 
+libcygwin-ruby16.dll.a</h3>
+<p>
+だめじゃん。おかしいなあ。金曜日に試したときはうまくいったと思ったのに、
+また、undefined referenceだ。やっぱ
+</p>
+<pre>
+% ln -s ../bin/cygwin-ruby16.dll .
+</pre>
+<p>
+にしとこう。あ、でもlibcygwin-ruby16.dll.aとか残ってしまうなあ。
+順番はどうなっているかというと、
+</p>
+<pre>
+% i686-pc-cygwin-gcc -L. -lfoo -Wl,--verbose
+</pre>
+<p>
+を実行するとわかる。
+</p>
+<pre>
+attempt to open ./libfoo.dll.a failed
+attempt to open ./foo.dll.a failed
+attempt to open ./libfoo.a failed
+attempt to open ./cygfoo.dll failed
+attempt to open ./libfoo.dll failed
+attempt to open ./foo.dll failed
+attempt to open ./libfoo.a failed
+</pre>
+<p>
+という感じ
+<a href="#20011119F1"><sup><small>*1</small></sup></a>。
+つまり、libcygwin-ruby16.dll.aが真っ先に優先される。
+symlinkじゃなくてちゃんとimport libraryを用意することにしよう。
+</p>
+
+
+<hr align="left" width="40%">
+<div>
+<a name="20011119F1" href="200111b.html#20011119F1"><small>*1</small></a>:
+なぜかlibfoo.aが2個あるなあ。
+</div>
+<!-- section end -->
+</div>
+<!-- 2001/11/19 end -->
+
+
+
+<hr class="hide">
+<!-- 2001/11/20 start -->
+<h2><a name="20011120" href="200111b.html#20011120">2001-11-20 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="200111201" title="200111201" href="200111b.html#200111201">■</a> 
+-bmingwとlibmingw32-ruby16.dll.a</h3>
+<p>
+どうしてこううまくいかないんだろうね。
+-bmingwをつけるとgccは.dll.aを探さなくなる。
+と思ったらbinutilsが古い所為か？
+cygwin-1.3.5-3, binutils-20011002-1, gcc-2.95.3-5で作り直したらちゃんと探すようになった。
+実はone treeにしたらなんか面倒なことになったんだが、
+それはまた別の日にでも書こう。
+</p>
+
+<p>
+というわけで今日から最新になるのでよろしく。
+cygwin 1.1.8のcygwin1.dllではもう動かない。
+</p>
+
+<p>
+cygwin1-1.1.8-2関係は消しとこう。
+</p>
+<!-- section end -->
+</div>
+<!-- 2001/11/20 end -->
+
+<hr>
+<div>
+<a href="200111a.html">&lt;Prev(,)</a> | 
+<a href="200111c.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

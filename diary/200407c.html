@@ -1,0 +1,582 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2004-7-c</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="200407b.html">
+<link rel="next" href="200408a.html">
+
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2004年7月下旬〜</p>
+<hr>
+<div>
+<a href="200407b.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="200408a.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2004/07/21 start -->
+<h2><a name="20040721" href="200407c.html#20040721">2004-07-21 (Wed)</a></h2>
+
+
+<div class="entry1">
+<h3><a name="200407211" title="200407211" href="200407c.html#200407211">■</a> 
+[Ruby] lilyをWEBrickのservelet化する</h3>
+<p>
+まずはrequireできるようにln -s lily.cgi lily.rbしておく。
+sample/webrick/hello.rbを参考にすると、
+res.bodyに入れとけってことなので、
+</p>
+<pre>
+require 'lily'
+require 'webrick'
+
+class LilyContent &lt; Lily
+  def webrick_body=(body)
+    @content = body
+  end
+  def print(*s)
+    @content &lt;&lt; s.join(&quot;&quot;) unless s[0] =~ /Content-type:/
+  end
+end
+</pre>
+<p>
+としてみる。幸いなことにlilyはprintしか使ってないので、
+printをここで定義した。
+ちゃんとやるなら$stdout.writeを定義すべき。
+</p>
+
+<p>
+続いてcgi.rbを使うのもなんだし、
+lilyではCGI#path_infoとCGI#[]しか使ってないので、
+そのあたりをでっちあげてみる。
+</p>
+<pre>
+class LCGI
+  attr_reader :params
+  def initialize(req)
+    @req = req
+    @params = {}
+    req.query.each do |key, value|
+      @params[key] = Array(value)
+    end
+  end
+  def path_info
+    @req.path_info
+  end
+  def [](name)
+    @params[name]
+  end
+end
+</pre>
+<p>
+以上準備できたのでdo_GETを作ってmountする。
+POSTもGETと同じでいい。
+</p>
+<pre>
+class Lilylet &lt; WEBrick::HTTPServlet::AbstractServlet
+  def do_GET(req, res)
+    res[&quot;content-type&quot;] = &quot;text/html&quot;
+    lily = LilyContent.new(LCGI.new(req), load_env)
+    lily.webrick_body = res.body
+    lily.disp
+  end
+  alias do_POST do_GET
+end
+
+httpd = WEBrick::HTTPServer.new(:DocumentRoot=&gt;Dir.pwd, :Port=&gt;10080)
+httpd.mount(&quot;/lily&quot;, Lilylet)
+trap(:INT) do
+  httpd.shutdown
+end
+httpd.start
+</pre>
+<p>
+これでhttp://localhost:10080/lily/でアクセスできる。    
+</p>
+<!-- section end -->
+</div>
+<!-- 2004/07/21 end -->
+
+
+
+<hr class="hide">
+<!-- 2004/07/22 start -->
+<h2><a name="20040722" href="200407c.html#20040722">2004-07-22 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="200407221" title="200407221" href="200407c.html#200407221">■</a> 
+<a href="http://www.xpjug.org/event/20040726maturi/">[XP] XP祭り2004</a></h3>
+<p>
+咳さんのプレゼン資料の表紙に笑う。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200407222" title="200407222" href="200407c.html#200407222">■</a> 
+[Ruby] WEBrick serveletで$stdoutを置き換え</h3>
+<p>
+
+<a href="200407c.html#200407211">昨日の続き</a>。print以外が使えるように$stdoutを置き換えてみる。
+</p>
+<pre>
+class Stdout
+  def initialize(body)
+    @body = body
+  end
+  def write(*s)
+    @body &lt;&lt; s.join(&quot;&quot;) unless s[0] =~ /Content-type:/
+  end
+end
+</pre>
+<p>
+というクラスを作っておいて、do_GETの中で
+</p>
+<pre>
+$stdout = Stdout.new(res.body)
+</pre>
+<p>
+とすれば一応目的は達成できるけど、いまいち。
+直接$stdout.writeを定義しようとすると、
+res.bodyをどうやって渡すか悩むし。
+</p>
+
+<p>
+lily.cgiのほうを手を加えないで済むうまい手をもうちょっと摸索してみよう。
+</p>
+<!-- section end -->
+</div>
+<!-- 2004/07/22 end -->
+
+
+
+<hr class="hide">
+<!-- 2004/07/23 start -->
+<h2><a name="20040723" href="200407c.html#20040723">2004-07-23 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="200407231" title="200407231" href="200407c.html#200407231">■</a> 
+[Ruby] WEBrick serveletで$stdoutを置き換え</h3>
+<p>
+
+<a href="200407c.html#200407222">さらに続き</a>。わざわざクラスを作らなくてもres.bodyにwriteメソッドを追加しちゃうのはどうだろう？
+</p>
+<pre>
+class &lt;&lt; res.body
+  def write(*s)
+    self &lt;&lt; s.join(&quot;&quot;) unless s[0] =~ /Content-type:/
+  end
+end
+$stdout = res.body
+</pre>
+<p>
+それはそれとして、lily.cfgでurlを設定していないときは
+CGI#server_nameとCGI#script_nameが必要だった。
+</p>
+<pre>
+def server_name
+  @req.host
+end
+def server_port
+  @req.port
+end
+def script_name
+  @req.script_name
+end
+</pre>
+<p>
+以上をまとめて
+<a href="../files/lilylet.rb">lilylet.rb</a>という名前で置いとこう。
+</p>
+<!-- section end -->
+</div>
+<!-- 2004/07/23 end -->
+
+
+
+<hr class="hide">
+<!-- 2004/07/24 start -->
+<h2><a name="20040724" href="200407c.html#20040724">2004-07-24 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="200407241" title="200407241" href="200407c.html#200407241">■</a> 
+[Ruby] Lilyletで複数のblog</h3>
+<p>
+WEBrickでservlet化したのはいいが、これだと1つしか動かせない。
+lily自身はnewして複数起動できるわけだし、lily.cfgを切り替えれば対応できそうな気がする。
+</p>
+
+<p>
+というわけで、こんなのを考えてみた。
+</p>
+<pre>
+def load_config(dir)
+  config = {}
+  open(File.join(dir, &quot;lily.cfg&quot;)) do |f|
+    f.grep(/^([a-z_:]+)\s+(.*)/) do
+      key, val = $1, $2 || &quot;&quot;
+      val = File.join(dir, val) if /dir$/ =~ key &amp;&amp; /^\// !~ val
+      config[key] = val
+    end
+  end
+  config
+end
+</pre>
+<p>
+として、datadir, flavordir, plugindirを絶対パスに変換してしまう。あとは
+</p>
+<pre>
+lily = Lily.new(LCGI.new(req), load_config(@options[0]))
+</pre>
+<p>
+のようにload_envの代わりにload_configを使い
+</p>
+<pre>
+httpd.mount(&quot;/foo/lily&quot;, Lilylet, &quot;/home/foo/lily&quot;)
+httpd.mount(&quot;/bar/lily&quot;, Lilylet, &quot;/home/bar/lily&quot;)
+</pre>
+<p>
+と好きなだけmountしとけば
+</p>
+<pre>
+http://localhost:10080/foo/lily/で/home/foo/lilyに
+http://localhost:10080/bar/lily/で/home/bar/lilyに
+</pre>
+<p>
+アクセスできる。
+</p>
+<!-- section end -->
+</div>
+<!-- 2004/07/24 end -->
+
+
+
+<hr class="hide">
+<!-- 2004/07/25 start -->
+<h2><a name="20040725" href="200407c.html#20040725">2004-07-25 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="200407251" title="200407251" href="200407c.html#200407251">■</a> 
+[Ruby] $stdoutを排他制御</h3>
+<p>
+考えてみたら$stdoutを別のものに置き換えたらthread safeにならない。
+だめじゃん。ちゃんと排他制御しよう。
+</p>
+<pre>
+require 'thread'
+module Stdout
+  @@mutex = Mutex.new
+  def redirect
+    @@mutex.synchronize do
+      stdout = $stdout.dup
+      $stdout = self
+      yield
+      $stdout = stdout
+    end
+  end
+  def write(*s)
+    self &lt;&lt; s.join(&quot;&quot;) unless s[0] =~ /Content-type:/
+  end
+end
+</pre>
+<p>
+のようなmoduleを作って
+</p>
+<pre>
+(res.body.extend Stdout).redirect do
+  lily.disp
+end
+</pre>
+<p>
+というようにextendすればよさげだ。
+</p>
+
+<p>
+
+<a href="../files/lilylet.rb">lilylet.rb</a>
+</p>
+<!-- section end -->
+</div>
+<!-- 2004/07/25 end -->
+
+
+
+<hr class="hide">
+<!-- 2004/07/26 start -->
+<h2><a name="20040726" href="200407c.html#20040726">2004-07-26 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="200407261" title="200407261" href="200407c.html#200407261">■</a> 
+[Worm] ruby-lang.orgへwormが来襲</h3>
+<p>
+それはもうすごい数。いったい何が起きたんだ？
+とりあえず明日の朝までruby-*-ctl@ruby-lang.org宛てのメールは/dev/nullに捨てるんでよろしく。
+</p>
+
+<p>
+追記: 大元で対処したので、現在ruby-*-ctlは復活してます。
+</p>
+<!-- section end -->
+</div>
+<!-- 2004/07/26 end -->
+
+
+
+<hr class="hide">
+<!-- 2004/07/27 start -->
+<h2><a name="20040727" href="200407c.html#20040727">2004-07-27 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="200407271" title="200407271" href="200407c.html#200407271">■</a> 
+[Mail] fmlのREJECT_COMMAND_HANDLERのなぞ</h3>
+<p>
+-ctl宛てにvirusやらspamが来たときに、REJECT_COMMAND_HANDLERがauto_registだと非常にやっかいなことになる。
+もはやconfirm mailを送り返しても迷惑なだけだろう。
+</p>
+
+<p>
+今朝ignoreにしたらなぜか投稿自体が流れなくなるという自体になったらしい。
+どうにも納得いかないよねえ。
+</p>
+<pre>
+MAIL_LIST                       ruby-talk@$DOMAINNAME
+PERMIT_POST_FROM                members_only
+REJECT_POST_HANDLER             reject
+
+CONTROL_ADDRESS                 ruby-talk-ctl@$DOMAINNAME
+PERMIT_COMMAND_FROM             members_only
+REJECT_COMMAND_HANDLER          ignore
+</pre>
+<p>
+じゃだめなのかな。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200407272" title="200407272" href="200407c.html#200407272">■</a> 
+[Worm] 現在の~/.procmailrc</h3>
+<p>
+zipとexeのような添付はもう全部要らないってわけで、~/.procmailrcで
+</p>
+<pre>
+:0 B
+* ^(UEsDBAoAA[AQ]AAA|TV[qo][QA]AA[ME]AAAA[EC]AAAA)
+junk/.
+</pre>
+<p>
+としている。もう2,3ヶ月ぐらい経つと思うけど、この設定で全然問題ないなあ。
+こんな正規表現でいいならprocmailやめられるか。
+</p>
+
+<p>
+それはそれとして、Mydoom.M祭りのわりには今日は32通と思ったよりも少ない。
+ruby-lang.orgにvirus scanが入ったおかげか。
+</p>
+<!-- section end -->
+</div>
+<!-- 2004/07/27 end -->
+
+
+
+<hr class="hide">
+<!-- 2004/07/28 start -->
+<h2><a name="20040728" href="200407c.html#20040728">2004-07-28 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="200407281" title="200407281" href="200407c.html#200407281">■</a> 
+<a href="http://www.thekelleys.org.uk/dnsmasq/doc.html">[Soft] Dnsmasq 2.10</a></h3>
+<p>
+Changes:
+</p><blockquote class="cite"><p>
+Highlights of this release include support for DNS queries over
+TCP and minimal support for DNSSEC and EDNS. The DHCP server now pushes
+configuration changes out to existing clients better. There are some minor
+bugfixes and a new &quot;contrib&quot; section, which has a utility that produces an
+page showing the contents of the DHCP lease pool.
+</p></blockquote><p>
+<!-- section end -->
+</div>
+<!-- 2004/07/28 end -->
+
+
+
+<hr class="hide">
+<!-- 2004/07/29 start -->
+<h2><a name="20040729" href="200407c.html#20040729">2004-07-29 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="200407291" title="200407291" href="200407c.html#200407291">■</a> 
+<a href="http://www.fefe.de/dietlibc/">[Soft] diet libc 0.27</a></h3>
+<p>
+Changes:
+</p><blockquote class="cite"><p>
+diet can now use $DIETHOME to locate the installation. Some BSD
+backwards compatibility cruft was added. A few bugfixes were made.
+</p></blockquote><p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200407292" title="200407292" href="200407c.html#200407292">■</a> 
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-talk/107798">[Ruby] AltGr問題解決</a></h3>
+<p>
+というわけでAltGr問題はinputrcで解決したようだ。
+</p>
+<pre>
+&quot;\M-[&quot;: &quot;[&quot;
+&quot;\M-]&quot;: &quot;]&quot;
+&quot;\M-{&quot;: &quot;{&quot;
+&quot;\M-}&quot;: &quot;}&quot;
+&quot;\M-\\&quot;: &quot;\\&quot;
+&quot;\M-|&quot;: &quot;|&quot;
+&quot;\M-@&quot;: &quot;@&quot;
+&quot;\M-~&quot;: &quot;~&quot;
+</pre>
+
+<!-- section end -->
+</div>
+<!-- 2004/07/29 end -->
+
+
+
+<hr class="hide">
+<!-- 2004/07/30 start -->
+<h2><a name="20040730" href="200407c.html#20040730">2004-07-30 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="200407301" title="200407301" href="200407c.html#200407301">■</a> 
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-talk/107878">[Ruby] gsub.gsub.gsub...</a></h3>
+<p>
+Perlではこうだけど、Rubyではどう？という質問はありがちだけど、その逆はあまり見たことがない。ちょっと新鮮。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200407302" title="200407302" href="200407c.html#200407302">■</a> 
+<a href="http://www.forest.impress.co.jp/article/2004/07/30/arcsecurity.html">[Soft] 多くの解凍ソフトに指定外の場所へファイルが解凍されてしまう脆弱性が存在</a></h3>
+<p>
+うーむ。なんか気になる。他のソフトでもありうる話なのかな。
+すぐ思いつくのはdot-dot-slash攻撃だけど単純すぎか(あややじゃないよ)。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200407303" title="200407303" href="200407c.html#200407303">■</a> 
+[Security] Port 135</h3>
+<p>
+昼ぐらいからPort 135へのアクセスが急増。なんか流行り始めてる？
+</p>
+<!-- section end -->
+</div>
+<!-- 2004/07/30 end -->
+
+
+
+<hr class="hide">
+<!-- 2004/07/31 start -->
+<h2><a name="20040731" href="200407c.html#20040731">2004-07-31 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="200407311" title="200407311" href="200407c.html#200407311">■</a> 
+<a href="http://www.clamav.net/">[Soft] Clam AntiVirus 0.75.1</a></h3>
+<p>
+ruby-lang.orgにも導入されたClam AntiVirusを入れてみた。
+どのくらいの実力なのか~/Mail/virusで試す。
+</p>
+<pre>
+% clamscan -m ~/Mail/virus
+&lt;...&gt;
+----------- SCAN SUMMARY -----------
+Known viruses: 23051
+Scanned directories: 1
+Scanned files: 9881
+Infected files: 9872
+Data scanned: 255.07 MB
+I/O buffer size: 131072 bytes
+Time: 156.649 sec (2 m 36 s)
+</pre>
+<p>
+OKになってしまったファイルを調べてみると、
+zipとpifファイルが添付されたメールだった。
+これらはvirusかどうかも不明だしねえ。
+結構すごいね。
+</p>
+
+<p>
+これで種類がわかりやすくはなったが、なんか名前が他とは違うような。
+NetskyがSomeFoolだったりで。でもそういう目的なら
+<a href="http://www.gietl.com/test-clamav/">online scanner</a>で十分か。
+</p>
+<!-- section end -->
+</div>
+<!-- 2004/07/31 end -->
+
+<hr>
+<div>
+<a href="200407b.html">&lt;Prev(,)</a> | 
+<a href="200408a.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

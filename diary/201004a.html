@@ -1,0 +1,360 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2010-4-a</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="201003c.html">
+<link rel="next" href="201004b.html">
+
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2010年4月上旬〜</p>
+<hr>
+<div>
+<a href="201003c.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="201004b.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2010/04/01 start -->
+<h2><a name="20100401" href="201004a.html#20100401">2010-04-01 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="201004011" title="201004011" href="201004a.html#201004011">■</a> 
+3月のspam</h3>
+<p>
+3500通ほど。また増えだしたのか？
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="201004012" title="201004012" href="201004a.html#201004012">■</a> 
+nikki</h3>
+<p>
+ちょっと変形したら使い勝手がよくなった。
+</p>
+<pre>
+#! /bin/bash
+date=&quot;${1--6 hour}&quot;
+vim ~/jarp/diary/$(date -d &quot;$date&quot; +&quot;%Y/d%Y%m%d.hnf&quot;)
+</pre>
+<p>
+引数を省略したらだいたい今日で、nikki 3/31とかすればdateが適当に解釈してくれる。<br>
+nikki 'last year'でちゃんと去年の日記にもアクセスできるってわけだ。<br>
+あ、nikki '-1 year', nikki '-2 year'も可能か。結構賢いというかいいかげんというか。
+</p>
+<!-- section end -->
+</div>
+<!-- 2010/04/01 end -->
+
+
+
+<hr class="hide">
+<!-- 2010/04/02 start -->
+<h2><a name="20100402" href="201004a.html#20100402">2010-04-02 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="201004021" title="201004021" href="201004a.html#201004021">■</a> 
+電車遅延</h3>
+<p>
+今週は電車遅れまくりの週だったな。まあ人身事故や強風はどうしようもないが。<br>
+それにしても4月になったけどあまり混んでる感じがしない。<br>
+まだ学校が休みだからか。
+</p>
+<!-- section end -->
+</div>
+<!-- 2010/04/02 end -->
+
+
+
+<hr class="hide">
+<!-- 2010/04/03 start -->
+<h2><a name="20100403" href="201004a.html#20100403">2010-04-03 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="201004031" title="201004031" href="201004a.html#201004031">■</a> 
+CPANがそろそろ8GBに</h3>
+<p>
+CPANをミラーするのも一苦労、古いファイルを消してくれと泣き付かれた。<br>
+よし消すかとPAUSEにログインしようとするもなんかパスワードが違う。<br>
+もう何年もログインしてないし、消されたかと思ったが一応モノは残っている。<br>
+ふと思いついたパスワードを入れてみたらビンゴ。ああ、これだったか。<br>
+で、サイズを見ると全部で1MBもない。<br>
+あまり貢献できそうもないが最新だけ残して消した。<br>
+</p><blockquote><p>
+Scheduled for deletion (due at Wed, 07 Apr 2010 01:30:15 GMT)
+</p></blockquote>
+<p>
+らしい。
+</p>
+<p>
+jperlも役目を終えたし全部消しちゃっても問題ない気もするが。
+</p>
+<!-- section end -->
+</div>
+<!-- 2010/04/03 end -->
+
+
+
+<hr class="hide">
+<!-- 2010/04/04 start -->
+<h2><a name="20100404" href="201004a.html#20100404">2010-04-04 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="201004041" title="201004041" href="201004a.html#201004041">■</a> 
+[PC] デスクトップPC今日も起動せず</h3>
+<p>
+1週間放置してみたがやはり起動せず。最後の一撃が致命的だったようだ。買い替え決定。<br>
+とりあえず使えそうな部品を外した。といってもHDDぐらいだが。これは大丈夫かな？<br>
+起動できるLinuxなマシンが手元にないからわからないんだよな。<br>
+いやWindows上でLinuxをUSBにインストールできればなんとなりそうだ。<br>
+探してみよう。
+</p>
+<!-- section end -->
+</div>
+<!-- 2010/04/04 end -->
+
+
+
+<hr class="hide">
+<!-- 2010/04/05 start -->
+<h2><a name="20100405" href="201004a.html#20100405">2010-04-05 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="201004051" title="201004051" href="201004a.html#201004051">■</a> 
+[Golf] BC_LINE_LENGTH=9999</h3>
+ゴルフ場のbcで70バイトで\が入る例のうっとうしい挙動がなくなったので早速
+<a href="http://golf.shinh.org/p.rb?e">e</a>を解くかと思ったら、<br>
+すごく大変なことが判明。&quot;.&quot;を取り除けない。解いてる人も35Bだしなあ。
+<!-- section end -->
+</div>
+<!-- 2010/04/05 end -->
+
+
+
+<hr class="hide">
+<!-- 2010/04/06 start -->
+<h2><a name="20100406" href="201004a.html#20100406">2010-04-06 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="201004061" title="201004061" href="201004a.html#201004061">■</a> 
+<a href="http://www.linuxliveusb.com/">Linux Live USB Creator : Powerful and easy Live USB Creator</a></h3>
+<p>
+有名どことしてはunetbootinだろうけど、奇抜なインストーラに目を引かれて
+<a href="http://www.linuxliveusb.com/">Linux Live USB Creator</a>を試した。<br>
+<a href="http://www.linuxliveusb.com/en/step2.html">こちらも対応してるdistroの数がすごい</a>。今回はなんとなくMint 8を入れてみた。<br>
+FAT32へインストールされる。<br>
+ファイルシステムとしてはSquashfsが使われている。
+</p>
+<pre>
+% ls -lh /h/casper/filesystem.squashfs
+-rw-r--r-- 1 eban eban 670M Nov 27 03:42 /h/casper/filesystem.squashfs
+% file /h/casper/filesystem.squashfs
+/h/casper/filesystem.squashfs: Squashfs filesystem, little endian, version 4.0, 179040890367 bytes, 119186 inodes, blocksize: 41 bytes, created: Wed Apr  6 19:54:56 1949
+</pre>
+<p>
+Mint 8については可もなく不可もなくといった感じで、外観はWindowsに似せているようだ。
+</p>
+<p>
+Linux Live USB Creatorはなかなか面白い仕組みだな。<br>
+2MBほどのインストーラをダウンロードすれば始められるのでお手軽だ。
+
+</p>
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="201004062" title="201004062" href="201004a.html#201004062">■</a> 
+エラー出まくりだったHDDのゆくえ</h3>
+<p>
+Linuxが起動したので早速例のエラー出まくりだった
+<a href="http://jarp.does.notwork.org/diary/200812c.html#200812311">HDDをつないで</a>みると、なんと問題なくmountできる。<br>
+とりあえずバックアップを取ってみたらこれもまた問題ない。<br>
+データは全部残っていたのはラッキーだが、ってことはHDDが原因じゃなくて本体のほうが駄目になったんだな。
+</p>
+<p>
+IDE-USBケーブルがこんなところで役に立とうとは思いもよらなかったよ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2010/04/06 end -->
+
+
+
+<hr class="hide">
+<!-- 2010/04/07 start -->
+<h2><a name="20100407" href="201004a.html#20100407">2010-04-07 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="201004071" title="201004071" href="201004a.html#201004071">■</a> 
+[Soft] Cygwin 1.7のgrep</h3>
+<p>
+Cygwin 1.7ではLANGがC.UTF-8になっているため例のgrepの挙動が発動して非常に遅くなる。<br>
+と会社では思ったがもっとスペックの低い家のノートPCでやってみると全然遅くない。<br>
+何が違うんだ？
+</p>
+<p>
+よくわからないので環境変数で比較してみるか。
+</p>
+<!-- section end -->
+</div>
+<!-- 2010/04/07 end -->
+
+
+
+<hr class="hide">
+<!-- 2010/04/08 start -->
+<h2><a name="20100408" href="201004a.html#20100408">2010-04-08 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="201004081" title="201004081" href="201004a.html#201004081">■</a> 
+[Perforce] PerforceのRCSキーワード拡張</h3>
+<p>
+ちょっと余裕ができたので
+<a href="201003b.html#201003163">先日のPerforceのキーワード展開</a>について調べた。<br>
+PerforceではRCSキーワード拡張というらしい。<br>
+拡張というだけあったIdやDateのほかにもいろいろ増えてる。<br>
+その中にFileがある。先日のはコピペがちょっと正しくなくて、
+</p>
+<pre>
+$File::Find::name =~ m,(?:$hoge)/(.+),;
+</pre>
+<p>
+のように先頭に$がある。$File$でそのファイル名に展開される。<br>
+まさしくぴったりあてはまってしまう。<br>
+だから=~の後ろに改行入れれば回避されるわけだ。
+</p>
+<p>
+で、まったく展開したくなければこのファイルタイプを変えてやる必要がある。
+</p>
+<pre>
+% p4 edit -t text foo.pl
+</pre>
+<p>
+のようにすればok。
+
+</p>
+<!-- section end -->
+</div>
+<!-- 2010/04/08 end -->
+
+
+
+<hr class="hide">
+<!-- 2010/04/09 start -->
+<h2><a name="20100409" href="201004a.html#20100409">2010-04-09 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="201004091" title="201004091" href="201004a.html#201004091">■</a> 
+[Admin] ci.ruby-lang.orgでdisk full</h3>
+<p>
+commitできないという知らせを受けて見に行ってみるとdisk fullだった。<br>
+2時間ほどかけてbackupを取り、さて消すかと思ったらなぜか消えない。
+</p>
+<pre>
+% sudo rm 11428.bz2
+rm: 11428.bz2 not removed: No space left on device
+</pre>
+<p>
+消すのに残り容量が必要ってそんな馬鹿な仕様だれが考えたんだ。<br>
+IRCで文句言ったらtruncateせよと命じられたので
+</p>
+<pre>
+# : &gt; *.bz2
+</pre>
+<p>
+した。zshばんざい。
+</p>
+<pre>
+# for i in *.bz2;do : &gt; $i; done
+</pre>
+<p>
+と同じ意味。これでファイルも消せるようになった。
+</p>
+<p>
+原因はincrementalでのsvnadmin dumpをリポジトリと同じパーティションに置いていたこと。<br>
+incremental dumpはやめたい。復元させるとしたら順にリストアするわけで、<br>
+15000個もあったらどんだけ時間がかかることやら。
+</p>
+<!-- section end -->
+</div>
+<!-- 2010/04/09 end -->
+
+
+
+<hr class="hide">
+<!-- 2010/04/10 start -->
+<h2><a name="20100410" href="201004a.html#20100410">2010-04-10 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="201004101" title="201004101" href="201004a.html#201004101">■</a> 
+<a href="http://userstyles.org/styles/1990">[Firefox] AutoHide Menubar (20px icon)</a></h3>
+<p>
+自前で用意してると違うマシンに導入するときに面倒なのでできあいのを利用することにした。<br>
+だいたい満足。
+</p>
+<!-- section end -->
+</div>
+<!-- 2010/04/10 end -->
+
+<hr>
+<div>
+<a href="201003c.html">&lt;Prev(,)</a> | 
+<a href="201004b.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

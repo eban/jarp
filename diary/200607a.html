@@ -1,0 +1,545 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2006-7-a</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="200606c.html">
+<link rel="next" href="200607b.html">
+
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2006年7月上旬〜</p>
+<hr>
+<div>
+<a href="200606c.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="200607b.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2006/07/01 start -->
+<h2><a name="20060701" href="200607a.html#20060701">2006-07-01 (Sat)</a></h2>
+<!-- 2006-07-02 00:29:00 -->
+
+<div class="entry1">
+<h3><a name="200607011" title="200607011" href="200607a.html#200607011">■</a> 
+6月のspam</h3>
+<p>
+700通ほど。Gmail側約5500スレッド。
+なんかGmailのspam判定が甘くなってきてるようだ。すりぬけるのが多い。
+しかも教えてやっても全然ブロックしてくれないし。うーむ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200607012" title="200607012" href="200607a.html#200607012">■</a> 
+[Mail] PayPalからのメール</h3>
+<p>
+またphishingかと思ったら本物だった。
+たまに本物が来ても疑ってしまうわけで、根本的な解決を図ることにした。
+違うメールアドレスにしちゃえばいいんだよね。
+Gmailで+つけてランダムな文字列を付加してできたメールアドレスを登録。
+これでもまだphishingが届くようなら、PayPal側で情報が漏れてるとしか言いようがない。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200607013" title="200607013" href="200607a.html#200607013">■</a> 
+「夢あざみ」と「夢花火」</h3>
+<p>
+Mステによると井上陽水の「少年時代」に出てくる「夢あざみ」は井上陽水自身の造語らしい。
+ぐぐってみると「夢花火」も造語のようだ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2006/07/01 end -->
+
+
+
+<hr class="hide">
+<!-- 2006/07/02 start -->
+<h2><a name="20060702" href="200607a.html#20060702">2006-07-02 (Sun)</a></h2>
+<!-- 2006-07-03 01:30:52 -->
+
+<div class="entry1">
+<h3><a name="200607021" title="200607021" href="200607a.html#200607021">■</a> 
+<a href="http://weblog.rubyonrails.org/2006/6/30/rails-1-1-4-security-fix-without-breakage">[Ruby] Rails 1.1.4: Security fix without breakage</a></h3>
+<p>
+というわけで更新。
+</p>
+<pre>
+% gem up -y rails
+Updating installed gems...
+Need to update 24 gems from http://gems.rubyforge.org
+........................
+complete
+Attempting remote update of rails
+Successfully installed rails-1.1.4
+Successfully installed actionpack-1.12.3
+Successfully installed actionmailer-1.2.3
+Successfully installed actionwebservice-1.1.4
+Installing ri documentation for actionpack-1.12.3...
+Installing ri documentation for actionmailer-1.2.3...
+Installing ri documentation for actionwebservice-1.1.4...
+Installing RDoc documentation for actionpack-1.12.3...
+Installing RDoc documentation for actionmailer-1.2.3...
+Installing RDoc documentation for actionwebservice-1.1.4...
+Gems: [rails] updated
+</pre>
+
+<!-- section end -->
+</div>
+<!-- 2006/07/02 end -->
+
+
+
+<hr class="hide">
+<!-- 2006/07/03 start -->
+<h2><a name="20060703" href="200607a.html#20060703">2006-07-03 (Mon)</a></h2>
+<!-- 2006-07-04 01:51:16 -->
+
+<div class="entry1">
+<h3><a name="200607031" title="200607031" href="200607a.html#200607031">■</a> 
+[Firefox] Keyconfigとbookmarkletでdel.icio.usへポスト</h3>
+<p>
+「あとで読む」しといてあとでbookmarkしようと思ってもやらないわけで、
+なら一度にdel.icio.usへポストしたほうがいいよねえ。
+というわけで、例のKeyconfigの定義に加えてみる。
+del.icio.usのbookmarkletにdel.icio.usというキーワードを設定して
+</p>
+<pre>
+if(window.loadURI) {
+  loadURI(getShortcutOrURI('atode',{}));
+  loadURI(getShortcutOrURI('del.icio.us',{}));
+}
+</pre>
+<p>
+とすれば両方呼び出せる。やっぱ便利だ。
+</p>
+
+<p>
+del.icio.usのポストは
+
+<a href="http://www.quickonlinetips.com/archives/2005/02/posticious-quicker-posts-in-delicious/">Post.icio.us - Quicker Posts in Del.icio.us</a>
+を使ってる。タグは&amp;tags=toreadという感じで、&amp;shared=noをつけるとプライベートになるようだ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200607032" title="200607032" href="200607a.html#200607032">■</a> 
+[Ruby] ruby-talk ML 20万通</h3>
+<p>
+とうとう20万通。すげえ数だよなあ。
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-talk/200000">[ruby-talk:200000]</a>
+</p>
+<!-- section end -->
+</div>
+<!-- 2006/07/03 end -->
+
+
+
+<hr class="hide">
+<!-- 2006/07/04 start -->
+<h2><a name="20060704" href="200607a.html#20060704">2006-07-04 (Tue)</a></h2>
+<!-- 2006-07-05 01:41:38 -->
+
+<div class="entry1">
+<h3><a name="200607041" title="200607041" href="200607a.html#200607041">■</a> 
+[Bookmarklet] del.icio.usに一発ブックマークする</h3>
+<p>
+最近
+<a href="http://la.ma.la/blog/diary_200604122345.htm">この方法</a>だと
+</p>
+<pre>
+Sorry, please try again.
+A required security token was not received with your form data.
+Trying again should fix it. If the problem persists please contact support@del.icio.us. Thanks!
+</pre>
+<p>
+というエラーになってしまう。
+まあ、それで
+<a href="200607a.html#200607031">昨日は違う方法</a>をぐぐって見つけたわけだが、
+これがちょっと格好悪い。
+ロケーションバーにポストしたURLは残るし空白のページが開かれたままになる。
+imgタグを使うのミソらしいのでちょっと改造してみる。
+もともとは
+</p>
+<pre>
+javascript:
+  location.href='https://api.del.icio.us/v1/posts/add?description='+
+  encodeURIComponent(document.title)+'&amp;url='+window.location.href;
+</pre>
+<p>
+という感じになってたのでlocation.href=の部分を(new Image).src=に置き換える。
+ついでに無名関数化してtoreadというタグをつける。
+</p>
+<pre>
+javascript:(function(){
+  (new Image).src='https://api.del.icio.us/v1/posts/add?description='+
+  encodeURIComponent(document.title)+
+  '&amp;url='+location.href+'&amp;tags=toread';})()
+</pre>
+<p>
+これで快適になった。
+</p>
+
+<p>
+bookmarkletエディタは
+
+<a href="http://subsimple.com/bookmarklets/jsbuilder.htm">Bookmarklet Builder</a>
+を使ってる。これでCompressすれば余計な改行空白等取り除いてくれる。
+あとはリンクをツールバーへD&amp;Dすればok。
+</p>
+<!-- section end -->
+</div>
+<!-- 2006/07/04 end -->
+
+
+
+<hr class="hide">
+<!-- 2006/07/05 start -->
+<h2><a name="20060705" href="200607a.html#20060705">2006-07-05 (Wed)</a></h2>
+<!-- 2006-07-07 01:26:19 -->
+
+<div class="entry1">
+<h3><a name="200607051" title="200607051" href="200607a.html#200607051">■</a> 
+[Bookmarklet] del.icio.usに一発ブックマークする(livedoor Readerからも)</h3>
+<p>
+
+<a href="200607a.html#200607041">昨日のbookmarklet</a>を使っているとついlivedoor Readerでも押してしまう。
+ここでまた専用のbookmarkletを用意すればいいんだけど、いちいち違うbookmarkletを呼び出すのも面倒。
+だったら1つで済ませてしまおうというのが今日のお題。
+</p>
+
+<p>
+window.get_active_itemがあるかどうかでlivedoor Readerから呼ばれているかわかるから、これで判断すればいいかな。
+</p>
+<pre>
+javascript:
+(function(){
+  var t=document.title,l=location.href;
+  if(window.get_active_item){
+    var i=get_active_item(1);
+    t=i.title;
+    l=i.link;
+  }
+  (new Image).src='https://api.del.icio.us/v1/posts/add?description='+
+    encodeURIComponent(t)+'&amp;url='+encodeURIComponent(l)+'&amp;tags=toread';
+}
+)()
+</pre>
+<p>
+いちおうD&amp;D用にリンクも用意。
+<a href="javascript:(function()var%20t=document.title,l=location.href;if(window.get_active_item)var%20i=get_active_item(1);t=i.title;l=i.link;(new%20Image).src='https://api.del.icio.us/v1/posts/add?description='+encodeURIComponent(t)+'&amp;url='+encodeURIComponent(l)+'&amp;tags=toread';)()">post to del.icio.us</a></p>
+<!-- section end -->
+</div>
+<!-- 2006/07/05 end -->
+
+
+
+<hr class="hide">
+<!-- 2006/07/06 start -->
+<h2><a name="20060706" href="200607a.html#20060706">2006-07-06 (Thu)</a></h2>
+<!-- 2006-07-07 01:25:38 -->
+
+<div class="entry1">
+<h3><a name="200607061" title="200607061" href="200607a.html#200607061">■</a> 
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-talk/200383">[Ruby] わたし は かわいい です ほんと</a></h3>
+<p>
+どこからそんな例文を持ってきたんだ？
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200607062" title="200607062" href="200607a.html#200607062">■</a> 
+[LDR] livedoor Readerの登録リンク</h3>
+<p>
+はてぶとかのRSSをlivedoor Readerで見ると登録というリンクが現われる。
+どういう条件なんだと思っていたが、
+RSSを配信してるサイトとは違うサイトがリンクになってる場合に登録リンクが出現するようだ。
+あと、わかりづらいがタイトルもリンクになってることに気づいた。
+「元記事」ってのと同じ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2006/07/06 end -->
+
+
+
+<hr class="hide">
+<!-- 2006/07/07 start -->
+<h2><a name="20060707" href="200607a.html#20060707">2006-07-07 (Fri)</a></h2>
+<!-- 2006-07-07 23:45:11 -->
+
+<div class="entry1">
+<h3><a name="200607071" title="200607071" href="200607a.html#200607071">■</a> 
+[Ruby] Symbol#to_procの起源</h3>
+<p>
+お手玉演算子(&amp;:)の起源はどこにあるのか調べてみた。
+_whyの
+<a href="http://redhanded.hobix.com/cult/symbolTo_procExonerated.html">Symbol#to_proc Exonerated</a>
+
+を見るとDave Thomasの
+<a href="http://blogs.pragprog.com/cgi-bin/pragdave.cgi/Tech/Ruby/ToProc.rdoc">Symbol#to_proc</a>
+
+で、さらに
+<a href="http://extensions.rubyforge.org/rdoc/index.html">Ruby Extensions Project</a>
+
+に行きつく。
+
+<a href="http://extensions.rubyforge.org/rdoc/classes/Symbol.html">このライブラリ</a>
+
+が大元？
+</p>
+<!-- section end -->
+</div>
+<!-- 2006/07/07 end -->
+
+
+
+<hr class="hide">
+<!-- 2006/07/08 start -->
+<h2><a name="20060708" href="200607a.html#20060708">2006-07-08 (Sat)</a></h2>
+<!-- 2006-07-09 03:22:47 -->
+
+<div class="entry1">
+<h3><a name="200607081" title="200607081" href="200607a.html#200607081">■</a> 
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-talk/200573">[Ruby] Gateway Restored</a></h3>
+<p>
+ruby-talk news gatewayが復活した。
+流量を調べてみると、先週の土曜日よりはやはり増えてるようだ。
+</p>
+<pre>
+% grep -o '^Date: ..., . ...' ruby-talk.0607 |sort -n -k3 |uniq -c 
+    103 Date: Sat, 1 Jul
+     59 Date: Sun, 2 Jul
+     86 Date: Mon, 3 Jul
+    136 Date: Tue, 4 Jul
+    121 Date: Wed, 5 Jul
+    146 Date: Thu, 6 Jul
+    195 Date: Fri, 7 Jul
+    190 Date: Sat, 8 Jul
+     33 Date: Sun, 9 Jul
+</pre>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200607082" title="200607082" href="200607a.html#200607082">■</a> 
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-talk/200235">[Ruby] Automatic Ruby to JavaScript conversion</a></h3>
+<p>
+なんかすごいな。
+ParseTreeが必要なので、あらかじめgem up -y parsetreeしておく。
+</p>
+<pre>
+require 'rb2js'
+
+class Demo
+
+  def initialize
+    @clicks = 0
+    3.times{ self.puts('Hello! I am a Ruby script!') }
+  end
+
+  def puts(str)
+    document.getElementById('debug')['innerHTML'] = 
+      document.getElementById('debug')['innerHTML'] + str + &quot;\n&quot;
+  end
+
+  def clicked
+    @clicks += 1
+    self.puts(&quot;Click number &quot; + @clicks.to_s)
+  end
+
+end
+
+puts RB2JS.class_to_js(Demo, :pretty_print =&gt; true)
+</pre>
+<p>
+これを実行すると
+</p>
+<pre>
+function Demo(){
+  self=this;
+  self.instanceVariables={};
+  self.instanceVariables['@clicks']=Number(0);
+  Number(3).times(function(){
+    self.puts(&quot;Hello! I am a Ruby script!&quot;)
+  })
+}
+Demo.prototype = {
+  clicked: function(){
+    self=this;
+    self.instanceVariables['@clicks']=self.instanceVariables['@clicks']+Number(1);
+    self.puts(&quot;Click number &quot;+self.instanceVariables['@clicks'].toString())
+  },
+  puts: function(str){
+    self=this;
+    document.getElementById(&quot;debug&quot;)[&quot;innerHTML&quot;]=document.getElementById(&quot;debug&quot;)[&quot;innerHTML&quot;]+str+&quot;\n&quot;
+  }
+}
+</pre>
+<p>
+となる。
+</p>
+<!-- section end -->
+</div>
+<!-- 2006/07/08 end -->
+
+
+
+<hr class="hide">
+<!-- 2006/07/09 start -->
+<h2><a name="20060709" href="200607a.html#20060709">2006-07-09 (Sun)</a></h2>
+<!-- 2006-07-10 01:19:03 -->
+
+<div class="entry1">
+<h3><a name="200607091" title="200607091" href="200607a.html#200607091">■</a> 
+[Linux] yum install yum-fastestmirror</h3>
+<p>
+早速入れた。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200607092" title="200607092" href="200607a.html#200607092">■</a> 
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-talk/200915">[Ruby] irbへのこだわり</a></h3>
+<p>
+pythonの実行結果を載せるのにわざわざirbから抜けてirbへ帰るとこまでコピペするこの人の変なこだわりに笑った。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200607093" title="200607093" href="200607a.html#200607093">■</a> 
+<a href="http://zsync.moria.org.uk/">[Soft] zsync 0.4.3</a></h3>
+<blockquote><dl>
+<dt>
+About:
+<dd>
+zsync is a implementation of rsync over HTTP. It allows updating of
+files from a remote Web server without requiring a full download or a
+special remote server application. It uses a metafile, which is created on
+the server, to determine which parts of a file the user already has; it
+then downloads the remaining parts via HTTP. No special server or Web
+server module is needed. It also works with gzip files, and content on the
+server can be compressed to further reduce download times. 
+</dl></blockquote>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200607094" title="200607094" href="200607a.html#200607094">■</a> 
+<a href="http://cygwin.com/ml/cygwin-announce/2006-07/msg00000.html">[Cygwin] CYGWIN=transparent_exe</a></h3>
+<p>
+Cygwin 1.5.20-1からCYGWIN=transparent_exeオプションが新設されたらしい。
+</p><blockquote><p>
+corinna: Implement CYGWIN environment variable &quot;transparent_exe&quot; option
+which causes files which end in .exe to be used by appropriate functions
+when an input filename is specified with no extension.
+</p></blockquote>
+<!-- section end -->
+</div>
+<!-- 2006/07/09 end -->
+
+
+
+<hr class="hide">
+<!-- 2006/07/10 start -->
+<h2><a name="20060710" href="200607a.html#20060710">2006-07-10 (Mon)</a></h2>
+<!-- 2006-07-11 22:15:28 -->
+
+<div class="entry1">
+<h3><a name="200607101" title="200607101" href="200607a.html#200607101">■</a> 
+<a href="http://jimweirich.umlcoop.net/index.cgi/Tech/Ruby/DeleteYourCache.red">[Ruby] Delete Your RubyGems Cache</a></h3>
+<p>
+やっぱ
+<a href="200606c.html#200606291">消す</a>のか。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200607102" title="200607102" href="200607a.html#200607102">■</a> 
+[LDR] livedoor Readerのpreが変？</h3>
+<p>
+preのインデントが崩れるのはCSSが変なのかと思ったら、preのデータそのものが変だった。
+道理でCSSをいじっても変化しないわけだ。
+CSS切って初めて理解した。
+</p>
+<!-- section end -->
+</div>
+<!-- 2006/07/10 end -->
+
+<hr>
+<div>
+<a href="200606c.html">&lt;Prev(,)</a> | 
+<a href="200607b.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

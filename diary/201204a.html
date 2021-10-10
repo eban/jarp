@@ -1,0 +1,363 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2012-4-a</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="201203c.html">
+<link rel="next" href="201204b.html">
+
+<link rel="stylesheet" type="text/css" href="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.css">
+<script type="text/javascript" src="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.js"></script>
+<script type="text/javascript">
+<!--       
+$(document).ready(function() {
+  prettyPrint();
+});
+-->
+</script>
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2012年4月上旬〜</p>
+<hr>
+<div>
+<a href="201203c.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="201204b.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2012/04/01 start -->
+<h2><a name="20120401" href="201204a.html#20120401">2012-04-01 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="201204011" title="201204011" href="201204a.html#201204011">■</a> 
+Googleの検索設定</h3>
+<p>
+検索結果は必ず中クリックしてるのでGoogleになんか設定ないかと「歯車」-「検索設定」してみたら、<br>
+</p>
+<pre>
+結果ウィンドウ
+選択された各結果を新しいブラウザ ウィンドウで開く。
+</pre>
+<p>
+てのを発見。これだ。<br>
+中クリックってホイールなのでたまに勢い余ってリンクじゃないとこをクリックしてたりするので、<br>
+普通に左クリックで済ませたかった。
+</p>
+<!-- section end -->
+</div>
+<!-- 2012/04/01 end -->
+
+
+
+<hr class="hide">
+<!-- 2012/04/02 start -->
+<h2><a name="20120402" href="201204a.html#20120402">2012-04-02 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="201204021" title="201204021" href="201204a.html#201204021">■</a> 
+3月のspam</h3>
+<p>
+1800通ほど。ちょっと減った。
+
+</p>
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="201204022" title="201204022" href="201204a.html#201204022">■</a> 
+Tabtterが有料化</h3>
+<p>
+全然知らなかったわけなんだけど、まあ、丁度いいので別なのを探す。<br>
+<a href="http://code.google.com/p/gfeedline/">GFeedLine</a>を使い始めた。notifyを有効にするとSEGV多発で困る。<br>
+面倒なので死んだらまた立ち上げるようにした。いいのか、それで。
+</p>
+<!-- section end -->
+</div>
+<!-- 2012/04/02 end -->
+
+
+
+<hr class="hide">
+<!-- 2012/04/03 start -->
+<h2><a name="20120403" href="201204a.html#20120403">2012-04-03 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="201204031" title="201204031" href="201204a.html#201204031">■</a> 
+爆弾低気圧</h3>
+<p>
+夕方電車止まりそうということで、13時半に早くも帰宅命令が出た。<br>
+昨年、帰宅困難な状況が何度かあったので決断が早まったようで。<br>
+電車が止まりだしてから帰れと言われてもどうしようもないしねえ。<br>
+電車はすでに混んでいたが、まだ風雨もそれほどでもないので混乱なく帰宅できた。
+</p>
+<!-- section end -->
+</div>
+<!-- 2012/04/03 end -->
+
+
+
+<hr class="hide">
+<!-- 2012/04/04 start -->
+<h2><a name="20120404" href="201204a.html#20120404">2012-04-04 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="201204041" title="201204041" href="201204a.html#201204041">■</a> 
+よくわからないCygwinの/dev/clipboardというかdate?</h3>
+<p>
+Cygwinでdateを/dev/clipboardへリダイレクトするとなぜか書き込みエラーになってしまう。
+</p>
+<pre>
+% date &gt; /dev/clipboard
+date: 書き込みエラー: Bad file descriptor
+zsh: exit 1     date &gt; /dev/clipboard
+% date | putclip
+% cat /dev/clipboard
+cat: /dev/clipboard: Bad address
+zsh: exit 1     cat /dev/clipboard
+% echo hoge &gt; /dev/clipboard
+% date &gt; /dev/clipboard
+date: 書き込みエラー: Bad file descriptor
+zsh: exit 1     date &gt; /dev/clipboard
+% cat /dev/clipboard
+hoge
+% echo `date` &gt; /dev/clipboard
+% cat /dev/clipboard
+Wed Apr 4 14:13:04 JST 2012
+</pre>
+<p>
+catもできない。でもechoするといける。<br>
+メッセージから判断するとdateが余計なチェックしてるってことか？
+</p>
+<!-- section end -->
+</div>
+<!-- 2012/04/04 end -->
+
+
+
+<hr class="hide">
+<!-- 2012/04/05 start -->
+<h2><a name="20120405" href="201204a.html#20120405">2012-04-05 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="201204051" title="201204051" href="201204a.html#201204051">■</a> 
+Sony Reader T1をアップデート</h3>
+<p>
+これは盲点だった。ずっとLinuxにつないでたらアップデートできない。<br>
+更新するにはWindowsかMacでeBookなんとかってのを実行しないといけないようで。<br>
+CD-ROMを探したが全然見つからない。それもそのはずで最初からついてないのであった。<br>
+で、説明書読んだらなんとReader自身のメモリ内に存在すると。<br>
+なるほど。1.5GBもあるんだからCD-ROMなんて要らないわけだな。<br>
+というわけで無事更新完了した。
+</p>
+<p>
+古い256MBしか本体メモリがないWindows XPではインストールすらできなかったが、<br>
+まあそれはそれ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2012/04/05 end -->
+
+
+
+<hr class="hide">
+<!-- 2012/04/06 start -->
+<h2><a name="20120406" href="201204a.html#20120406">2012-04-06 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="201204061" title="201204061" href="201204a.html#201204061">■</a> 
+Cygwinの/dev/clipboardの不思議</h3>
+<p>
+特にdateがだめというわけじゃなくて、echoしか受け付けないようで。<br>
+ほとんどのコマンドがエラーになる。いや全部かな。<br>
+rubyやperlだとエラーメッセージは出てないが書き込めてなかった。<br>
+Cygwin 1.7.13が出たので上げてみたけど変わりなし。<br>
+zshのせいかと思ってbashで試してみたが、やはりechoのみ成功する。<br>
+しかも内部コマンドのecho。/bin/echoでは失敗する。どういうこと？
+</p>
+<p>
+つまり内部ならいいってことか。
+</p>
+<pre>
+% awk 'BEGIN{print &quot;hogehoge&quot; &gt; &quot;/dev/clipboard&quot;}'
+% cat /dev/clipboard
+hogehoge
+</pre>
+<p>
+いけちゃったよ。
+</p>
+<pre>
+% echo foo &gt; foo
+% cp foo /dev/clipboard
+% cat /dev/clipboard
+foo
+% date &gt; /dev/clipboard
+date: 書き込みエラー: Bad file descriptor
+% date | tee /dev/clipboard
+2012年 4月  7日 土曜日 01:10:15 JST
+% cat /dev/clipboard
+2012年 4月  7日 土曜日 01:10:15 JST
+</pre>
+<p>
+どうやらそういうことのようだ。
+</p>
+<p>
+結論: コマンド自身がopenすればいけるが、shellのリダイレクトだとだめ
+</p>
+<!-- section end -->
+</div>
+<!-- 2012/04/06 end -->
+
+
+
+<hr class="hide">
+<!-- 2012/04/07 start -->
+<h2><a name="20120407" href="201204a.html#20120407">2012-04-07 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="201204071" title="201204071" href="201204a.html#201204071">■</a> 
+ruby-list MLのspam</h3>
+<p>
+連日通ってしまっているので対処。ここに出てくるebanはruby-list MLには登録してないアドレスなので、<br>
+Fromに含まれていたらブロックすることに。その後ログを見たらブロックされていたのでokだろう。
+</p>
+<!-- section end -->
+</div>
+<!-- 2012/04/07 end -->
+
+
+
+<hr class="hide">
+<!-- 2012/04/08 start -->
+<h2><a name="20120408" href="201204a.html#20120408">2012-04-08 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="201204081" title="201204081" href="201204a.html#201204081">■</a> 
+twitterのリスト名</h3>
+<p>
+twitterでリストを作るとhttps://twitter.com/#!/ユーザ名/リスト名でアクセスできる。<br>
+しかし複数同じリスト名を作るとa, a-11, a-12,...とかURL上の違いで区別されるようになる。<br>
+名前としてはaがいっぱいできている。<br>
+これに気づかずに最初にaを作ってもう1個aを作って、ああ2つ作っちゃったってことで、<br>
+マージして片方消してとやったらa-11のほうが残った。<br>
+なんで-11なんかついてるのか不思議だったがこういうことだったようで。<br>
+でもいまbでやってみたら-12から始まってるな。まあいいか。
+</p>
+<p>
+何を言いたいかというとGFeedLineで指定するにはこのURLのほうの名前を使わないといけない。<br>
+紛らわしいので一旦別の名前に変えて元に戻したほうがいい。そうすれば両方ともaになる。
+</p>
+<!-- section end -->
+</div>
+<!-- 2012/04/08 end -->
+
+
+
+<hr class="hide">
+<!-- 2012/04/09 start -->
+<h2><a name="20120409" href="201204a.html#20120409">2012-04-09 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="201204091" title="201204091" href="201204a.html#201204091">■</a> 
+順番大事2</h3>
+<p>
+convertの-depth 4にはいつも泣かされるが、これを最後に置くとだいたいうまくいくようだ。
+</p>
+<p>
+オリジナル<br>
+<img src="../images/852.gif" alt="オリジナル">
+</p>
+<p>
+% convert 852.gif -depth 4 -type grayscale 852-1.png<br>
+<img src="../images/852-1.png" alt="% convert 852.gif -depth 4 -type grayscale 852-1.png">
+</p>
+<p>
+% convert 852.gif -type grayscale -depth 4 852-2.png<br>
+<img src="../images/852-2.png" alt="% convert 852.gif -type grayscale -depth 4 852-2.png">
+</p>
+<!-- section end -->
+</div>
+<!-- 2012/04/09 end -->
+
+
+
+<hr class="hide">
+<!-- 2012/04/10 start -->
+<h2><a name="20120410" href="201204a.html#20120410">2012-04-10 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="201204101" title="201204101" href="201204a.html#201204101">■</a> 
+Google Groupsは先週あたりからList-Id:フィールドつきメールを受け付けなくなった</h3>
+<p>
+Gmailに届く全メール(spamを除く)をプライベートなGoogle Groupsへ転送してるんだけど、<br>
+先週からMLだけ届かなくなった。MLだけということで特定のフィールドがあやしいと1個ずつ地道に調べたら、<br>
+List-Id:がついてるとだめだとわかった。って、MLにそのフィールドはつきもんだよなあ。<br>
+Gmailは削りながら転送なんてできないし。困ったな。<br>
+まあ、Google Groupsをバックアップ代わりに使うほうが悪いが。<br>
+もう1個Gmailのアカウントを取るか。
+</p>
+<p>
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-talk/394469">ruby-talkのmirror</a>もそういうことなんだろうな。
+</p>
+<!-- section end -->
+</div>
+<!-- 2012/04/10 end -->
+
+<hr>
+<div>
+<a href="201203c.html">&lt;Prev(,)</a> | 
+<a href="201204b.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

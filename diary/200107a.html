@@ -1,0 +1,896 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2001-7-a</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="200106c.html">
+<link rel="next" href="200107b.html">
+
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2001年7月上旬〜</p>
+<hr>
+<div>
+<a href="200106c.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="200107b.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2001/07/01 start -->
+<h2><a name="20010701" href="200107a.html#20010701">2001-07-01 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="200107011" title="200107011" href="200107a.html#200107011">■</a> 
+[Linux] ReiserFS</h3>
+<p>
+で、Plamo2.2に移行したのかというと実はまだで、
+やっぱReiserFSにインストールしたいのだよ、うん。<br>
+まずは今の環境でReiserFSが使えるようにする。
+kernelはPlamo 2.2にパッチがあたった2.2.19があるのでそれを使う。
+mkreiserfsとかのツールは
+http://www.namesys.com/
+から
+
+<a href="ftp://ftp.namesys.com/pub/reiserfsprogs/reiserfsprogs-3.x.0j.tar.gz">reiserfsprogs</a>
+を取ってきた。
+</p>
+
+<h4><a name="200107011S1" href="200107a.html#200107011S1">_</a> <strong>mkreiserfs</strong>: </h4>
+<div class="sub">
+<p>
+まずはMOで実験だ。
+</p>
+<pre>
+% su
+# fdisk /dev/sda
+  全部sda1に割り当てる。
+# mkreiserfs /dev/sda1
+# mount -t reiserfs /dev/sda1 /mnt
+mount: wrong fs type, bad option, bad superblock on /dev/sda1,
+       or too many mounted file systems
+</pre>
+<p>
+うーむ。なぜかだめだ。fsckしてみても別に悪いとこはなさそう。
+</p>
+<pre>
+# reiserfsck /dev/sda1
+
+&lt;-------------reiserfsck, 2001-------------&gt;
+reiserfsprogs 3.x.0j
+could not setrlimit: Invalid argument
+Will read-only check consistency of the partition
+Will put log info to 'stderr'
+Do you want to run this program?[N/Yes] (note need to type Yes):Yes
+Analyzing journal..nothing to replay \
+ (no transactions older than last flushed one found)
+Fetching on-disk bitmap..done
+Checking S+tree..ok
+Comparing bitmaps..ok
+Checking Semantic tree...ok 
+</pre>
+<p>
+setrlimitはまあ無視してもいいだろう。<br>
+</p>
+
+</div>
+<h4><a name="200107011S2" href="200107a.html#200107011S2">_</a> <strong>mkreiserfs.8</strong>: </h4>
+<div class="sub">
+<p>
+しょうがない。まずはmkreiserfsのマニュアルを見てみよう
+</p>
+<pre>
+% man mkreiserfs
+No manual entry for mkreiserfs
+</pre>
+<p>
+なぬ？source treeにはちゃんと
+</p>
+<pre>
+mkreiserfs/mkreiserfs.8
+</pre>
+<p>
+はある。mkreiserfs/Makefileを見ると
+</p>
+<pre>
+prefix = /
+...
+mandir = ${prefix}/man
+</pre>
+<p>
+となってる。これじゃ/manにインストールされちゃうねえ。
+</p>
+<pre>
+% ls /man/man8 
+debugreiserfs.8  mkreiserfs.8  reiserfsck.8  resize_reiserfs.8
+</pre>
+<p>
+とりあえず
+</p>
+<pre>
+% sudo make mandir=/usr/man install
+</pre>
+<p>
+してインストールしなおした。
+</p>
+
+</div>
+<h4><a name="200107011S3" href="200107a.html#200107011S3">_</a> <strong>-v 1, -v 2</strong>: </h4>
+<div class="sub">
+<p>
+man mkreiserfsしてみて気になるのは-vオプションだ。
+</p>
+<pre>
+-v 1 | 2
+       This specifies format new filsystem has to be of.
+</pre>
+<p>
+ofはoffだと思うが、ってことはdefaultはnewだな。
+newは2.4.xでしか使えないと聞いたことがあるから、
+-v 1が必要と見た。
+</p>
+<pre>
+# mkreiserfs -v 1 /dev/sda1
+# mount -t reiserfs /dev/sda1 /mnt
+</pre>
+<p>
+なるほど。
+</p>
+
+</div>
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200107012" title="200107012" href="200107a.html#200107012">■</a> 
+Plamo 2.2</h3>
+<p>
+あらかじめ/dev/hdbにReiserFSのファイルシステムを作っておけば、
+Plamoをそこにインストールできるかも。README.EUCには
+</p>
+<pre>
+・Linux Kernel : PC 用では kernel 2.2.19 に ide patch と reiserfs
+ patch を当てたカーネルを使っています．
+</pre>
+<p>
+とあるのでmountできるはず。
+</p>
+
+<p>
+試してみたらインストール用のkernelはReiserFS対応じゃなくてだめ。
+どうしよっかな。
+kernelはここにあるしこれをセットアップディスクにコピーすればいけるか？
+configオプションが違いすぎて面倒だな。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200107013" title="200107013" href="200107a.html#200107013">■</a> 
+loop, chroot</h3>
+<p>
+どっちにしろ全然別のパーティションにインストールする予定だし、
+今動いてるこの環境でsetupを動かせばいいんじゃないかと気づく。
+いろんな設定ファイルもあるはずなので、
+initrdをloopでmountしたらどうだろう？
+なんとなく書き換えられない気もするので内容をコピーしてchrootすることにした。
+</p>
+<pre>
+# mount -o loop initrd /mnt
+# mkdir plamo
+# cp -av /mnt/* plamo
+# umount /mnt
+# chroot plamo /bin/sh
+chroot: cannot execute /bin/sh: Exec format error
+</pre>
+<p>
+なぜに？
+</p>
+<pre>
+# file plamo/bin/sh
+plamo/bin/sh: Linux/i386 demand-paged executable (ZMAGIC), stripped
+</pre>
+<p>
+おお、a.outか。まさかそうくるとは。
+</p>
+<pre>
+# cp plamo/lib/libc.so.4* /lib
+# ldconfig
+# insmod binfmt_aout
+Using /lib/modules/2.2.19/fs/binfmt_aout.o
+# chroot plamo /bin/sh
+#
+</pre>
+<p>
+これで一応setupが動く環境になった。/etc/profileをsourceしておこう。
+</p>
+<pre>
+# . /etc/profile
+</pre>
+<p>
+あらかじめmountしておく。
+</p>
+<pre>
+# mount -t reiserfs /dev/hdb3 /mnt
+# mkdir /mnt/boot
+# mount /dev/hdb1 /mnt/boot
+</pre>
+<p>
+あとはふつうにsetupを起動してインストールする。
+終わったら/etc/fstabを編集してext2をreiserfsに変更。
+これやっとかないとmountできないから意味なし。<br>
+/bootをext2fsで別に用意してみたが、
+grubは0.95からReiserFSをサポートしてるのでなくてもよかったかも。
+/dev/hdb3は20GBほどある。これをext2にするのはちといやだよね。
+</p>
+
+<p>
+とりあえずこれでちゃんと立ち上がるようになった。で/manはどうかというと
+</p>
+<pre>
+% ls /man/man8 
+debugreiserfs.8  mkreiserfs.8  reiserfsck.8  resize_reiserfs.8
+</pre>
+<p>
+やっぱそうか。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2001/07/01 end -->
+
+
+
+<hr class="hide">
+<!-- 2001/07/02 start -->
+<h2><a name="20010702" href="200107a.html#20010702">2001-07-02 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="200107021" title="200107021" href="200107a.html#200107021">■</a> 
+NetBSD 1.5</h3>
+<p>
+なかなか1.5.1が出ないらしいが、
+と書いて調べたら
+<a href="http://www.daemonnews.org/200107/netbsd151.html">出てる</a> し。
+とりあえずBSD MAGAZINEについてきたNetBSD 1.5をインストールした。
+あ、会社での話。マシンはVAIOのノートだ。
+以前家のマシンにインストールしたのは1.3の頃だったかな？
+</p>
+
+<h4><a name="200107021S1" href="200107a.html#200107021S1">_</a> <strong>CD-ROM</strong>: </h4>
+<div class="sub">
+<p>
+同僚からCD-ROMドライブを借りてbootしてみると、
+わりとあっけなく立ち上がる。
+その後もさくさく進み、NetBSDも随分簡単になったなあと感心してたり。
+が、実際にCD-ROMからファイルを取ってこようとするとこで、
+なぜかCD-ROMドライブが見つからないというエラーになってしまう。
+立ち上げ時もTOSHIBAなんちゃらってちゃんとメッセージが出てたのになあ。
+</p>
+
+</div>
+<h4><a name="200107021S2" href="200107a.html#200107021S2">_</a> <strong>FTP</strong>: </h4>
+<div class="sub">
+<p>
+面倒なのでi386ごとLinux上へコピー。ftpでインストールだ。
+二度目はさらにさくさく進む。
+sourceのとこでftpを選ぶとDHCPがどーのこーのと出てくる。
+お、気が効いてるね。これでDNSもokさ。
+それ以前にちゃんとNICが認識されてるじゃん。
+調べるのも忘れてたが、使えてラッキー。
+</p>
+
+</div>
+<h4><a name="200107021S3" href="200107a.html#200107021S3">_</a> <strong>MBR</strong>: </h4>
+<div class="sub">
+<p>
+再起動してみるとWindows 2000が立ち上がってしまう。
+途中でMBRにブートセレクタをインストールした気になっていたが、
+調子に乗っていたらしい。CD-ROMでbootして
+</p>
+<pre>
+boot wd0a:netbsd
+</pre>
+<p>
+で立ち上がることを確認。
+ま、ここまでくればGRUBでもいれればなんとでもなるだろう。
+</p>
+
+
+</div>
+<!-- section end -->
+</div>
+<!-- 2001/07/02 end -->
+
+
+
+<hr class="hide">
+<!-- 2001/07/03 start -->
+<h2><a name="20010703" href="200107a.html#20010703">2001-07-03 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="200107031" title="200107031" href="200107a.html#200107031">■</a> 
+Linux 2.4.5</h3>
+<p>
+試しにmakeしてみようと思ったんだが、make depだけで12分以上かかってる。
+どうもGCC 3.0が遅いんだかなんだかわからんが、
+</p>
+<pre>
+make dep CC=gcc-2.95.3
+</pre>
+<p>
+なら4分ぐらい。やっぱGCC 3.0は遅いのか？<br>
+それ以前にGCC 3.0でkernelをcompileするのはやばいに決まってるから、
+素直にCC=gcc-2.95.3でmakeしよう。
+</p>
+
+<h4><a name="200107031S1" href="200107a.html#200107031S1">_</a> <strong>egcs 1.1.2</strong>: </h4>
+<div class="sub">
+<p>
+Documentation/Changesを見ると未だにegcs 1.1.2を推奨してる。
+GCC 2.95.xですら問題が起こるかもしんないとか脅してる。<br>
+実は/usr/bin/gccにちゃんと推奨GCCも残してあったりする。
+</p>
+<pre>
+% /usr/bin/gcc -v
+Reading specs from /usr/lib/gcc-lib/i686-pc-linux-gnu/egcs-2.91.66/specs
+gcc version egcs-2.91.66 19990314 (egcs-1.1.2 release)
+</pre>
+
+</div>
+<h4><a name="200107031S2" href="200107a.html#200107031S2">_</a> <strong>reboot</strong>: </h4>
+<div class="sub">
+<p>
+hdc5なんてわからん、ちゃんとroot=で指定しろとパニクられる。
+うむむ。調べよう。ひょっとしてlableが使えるのか？
+</p>
+
+</div>
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200107032" title="200107032" href="200107a.html#200107032">■</a> 
+NetBSD 1.5</h3>
+<p>
+で、ブート問題はどうしたかというと
+
+<a href="http://www.jp.netbsd.org/ja/Ports/i386/faq.html">NetBSD/i386 FAQ</a> を見て、
+</p>
+<pre>
+# fdisk -i -c /usr/mdec/mbr_bootsel
+# fdisk -B
+</pre>
+<p>
+してブートメニューをインストールした。
+で、こんな感じかと確認して、
+</p>
+<pre>
+# fdisk -if
+</pre>
+<p>
+でそれはやめて
+</p>
+<pre>
+# dd if=/dev/rwd0a of=nbsd0.bb count=1 bs=512
+</pre>
+<p>
+してnbsd0.bbをWindows 2000のC:/へコピーしboot.iniを編集した。
+まったくもってFAQのままだ。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2001/07/03 end -->
+
+
+
+<hr class="hide">
+<!-- 2001/07/04 start -->
+<h2><a name="20010704" href="200107a.html#20010704">2001-07-04 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="200107041" title="200107041" href="200107a.html#200107041">■</a> 
+Linux 2.4.6</h3>
+<p>
+実にタイミングよく2.4.6が出る。そのままGCC 3.0でやってみよう。
+</p>
+<pre>
+make dep bzImage modules  5154.16s user 598.56s system 96% cpu \
+  1:39:20.51 total
+</pre>
+<p>
+うむ。
+6年程前、386SX 20MHzでLinux 1.1.59をmakeしたときに、
+このくらいの時間がかかってた気が。<br>
+AXマシンを使ってたんだよねえ。
+setup.Sをいじってkonを使わなくてもSJISは表示できるようにしてたり。
+ディスクが40MBしかなかったら、konに使うフォントが惜しかった。
+</p>
+
+<p>
+それはそれとして昨日の情けないエラーは
+</p>
+<pre>
+CONFIG_IDE is not set
+</pre>
+<p>
+が原因だ。をいをい。make oldconfigは勢いNにしがちだよね。
+てゆかそこは以前と変わんないんだから聞いてこないで欲しいよ、切に。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2001/07/04 end -->
+
+
+
+<hr class="hide">
+<!-- 2001/07/05 start -->
+<h2><a name="20010705" href="200107a.html#20010705">2001-07-05 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="200107051" title="200107051" href="200107a.html#200107051">■</a> 
+[Linux] modutils 2.4.6</h3>
+<p>
+/lib/modules/2.4.6/modules.depのサイズが0になってる。
+modutilsが古いようだ。考えてみるとrequirementsを全然守ってないな。
+既にmodutils 2.4.6をインストールしてしまったので、何が入っていたかは不明。
+これでちゃんとloadできるだろう。
+</p>
+
+<p>
+Linux 2.4.6はGCC 3.0でも大丈夫だね。例のmulti-line strings警告がうざいけど。
+というわけで週末はReiserFS V2にしてPlamo 2.2をインストールだ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200107052" title="200107052" href="200107a.html#200107052">■</a> 
+川平慈温、謙慈、慈英</h3>
+<p>
+間にもう一人いたのか。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2001/07/05 end -->
+
+
+
+<hr class="hide">
+<!-- 2001/07/06 start -->
+<h2><a name="20010706" href="200107a.html#20010706">2001-07-06 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="200107061" title="200107061" href="200107a.html#200107061">■</a> 
+[Linux] ethertap</h3>
+<p>
+Linux 2.4.6でPPxPを使いたければethertapを使う必要がある。
+userlinkが2.4.xに対応してないからだ。
+なんて書いているが、ほんとは今まで全然知らなかったんだよね、まったく。
+っつーわけで
+</p>
+<pre>
+CONFIG_NETLINK=y
+CONFIG_NETLINK_DEV=m
+CONFIG_ETHERTAP=m
+</pre>
+<p>
+とした。CONFIG_NETLINKはmoduleにはできない。
+あとは/etc/modules.confに
+</p>
+<pre>
+alias tap0 ethertap
+above ethertap netlink_dev
+</pre>
+<p>
+を追加すればいい。
+ethertap用のデバイスファイルはすでにできてた。ないときは
+</p>
+<pre>
+# mknod /dev/tap0 c 36 16
+</pre>
+<p>
+で作る。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2001/07/06 end -->
+
+
+
+<hr class="hide">
+<!-- 2001/07/07 start -->
+<h2><a name="20010707" href="200107a.html#20010707">2001-07-07 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="200107071" title="200107071" href="200107a.html#200107071">■</a> 
+[NetBSD] VAIOのMemory Stick</h3>
+<p>
+NetBSD メモリスティック vaioをキーにgoogleすると、
+メモリスティックはUSB接続だと出てくる。
+bsd-nomad MLにFreeBSD用のパッチがあるということもわかった。
+で、
+<a href="http://www.clave.gr.jp/">ここ</a> にはBSD系のMLが集中してるので
+</p>
+<pre>
+NetBSD USB VAIO site:www.clave.gr.jp
+</pre>
+<p>
+をキーにしてgoogleすると
+<a href="http://www.clave.gr.jp/ml/bsd-nomads/200008/msg00083.html">[bsd-nomads:14224]</a> が見つかった。dmesgには
+</p>
+<pre>
+uhci0 at pci0 dev 7 function 2: \
+  Intel 82371AB USB Host Controller (PIIX4) (rev. 0x01)
+pci_intr_map: no mapping for pin D
+uhci0: couldn't map interrupt
+</pre>
+<p>
+とあったのでまずは割り込みが割り当てられるように
+</p>
+<pre>
+options PCIBIOS
+options PCIBIOS_INTR_FIXUP
+</pre>
+<p>
+でreconfigしてみよう。正解だ。
+</p>
+<pre>
+umass0 at uhub1 port 1 configuration 1 interface 0
+umass0: Sony USB Memory Stick Slot, rev 1.10/1.31, addr 3
+umass0: using UFI over CBI-I
+</pre>
+<p>
+ちゃんと認識された。こんどはメモリスティックを差しといてから再起動。
+</p>
+<pre>
+scsibus0 at umass0: 2 targets, 1 luns per target
+scsibus0: waiting 2 seconds for devices to settle...
+sd0 at scsibus0 target 1 lun 0: &lt;, , &gt; SCSI0 0/direct fixed
+sd0: could not mode sense (4/5); using fictitious geometry
+sd0: 7920 KB, 7 cyl, 64 head, 32 sec, 512 bytes/sect x 15840 sectors
+</pre>
+<p>
+SCSIデバイスとして認識される。
+</p>
+<pre>
+# disklable /dev/sd0 | tail -5
+8 partitions:
+#        size   offset     fstype   [fsize bsize   cpg]
+  d:    15840        0     unused        0     0         # (Cyl.    0 - 7*)
+  e:    15783       25      MSDOS                        # (Cyl.    0*- 7*)
+</pre>
+<p>
+なので
+</p>
+<pre>
+# mount -t msdos /dev/sd0e /mnt
+</pre>
+<p>
+でマウントもok。<br>
+ついでにmtoolsもインストールしてみた。/etc/mtools.confに
+</p>
+<pre>
+drive m: file=&quot;/dev/sd0e&quot;
+mtools_skip_check=1
+</pre>
+<p>
+を追加したらばっちり。
+</p>
+<pre>
+# mdir m:
+ Volume in drive M has no label
+ Volume Serial Number is 0000-0000
+Directory for M:/
+
+FOO                  4 07-04-2001   8:27 
+        1 file                    4 bytes
+                          8 052 736 bytes free
+# mtype m:/foo
+foo
+</pre>
+<p>
+抜くと
+</p>
+<pre>
+# mdir m:
+Can't open /dev/sd0e: Operation not supported by device
+Cannot initialize 'M:'
+</pre>
+<p>
+となる。<br>
+つぎは抜いたままで再起動して同じ実験。
+</p>
+<pre>
+# mdir m:
+Can't open /dev/sd0e: Device not configured
+Cannot initialize 'M:'
+</pre>
+<p>
+あ、だめだ。勝手に認識されないな。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2001/07/07 end -->
+
+
+
+<hr class="hide">
+<!-- 2001/07/08 start -->
+<h2><a name="20010708" href="200107a.html#20010708">2001-07-08 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="200107081" title="200107081" href="200107a.html#200107081">■</a> 
+入れ換え</h3>
+<p>
+いよいよ総入れ換えだよ。
+/usr/localに入ってたものは全部makeしなおそうと思っているから、
+GCC 3.0をbootstrapだ。って4時間半もかかったよ。
+なにを入れたかというと
+</p>
+<pre>
+ 1. gcc 3.0
+ 2. zsh 4.0.2
+ 3. icewm 1.0.3
+ 4. emacs 20.7
+ 5. jvim.2.0
+ 6. ppxp 991209
+ 7. openssl 0.9.6
+ 8. w3m 0.2.1
+ 9. wwwoffle 2.6d
+10. tcl 8.3.1
+11. tk 8.3.1
+12. ruby 1.6.4 2001-07-06
+13. openssh 2.3.0p1
+14. leafnode+-2.10
+15. ltrace-0.3.10
+16. dbskkd-cdb-0.52-BETA
+17. skkinput 2.03
+18. apel 10.2
+19. limit 1.13.4
+20. semi 1.13.7
+21. skk 10.56
+</pre>
+<p>
+だ。手元にあるものを入れたので、ちと古いものもある。
+あ、クロスの環境はまだなので、というかcvsも入れなきゃな。
+それよりrsyncを入れなきゃこの日記が更新できないじゃん。
+あしただな。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200107082" title="200107082" href="200107a.html#200107082">■</a> 
+[Linux] Linux 2.4.6</h3>
+<p>
+なぜかaic7xxxがうまいことロードされぬ。2.2.xでは/etc/modules.confに
+</p>
+<pre>
+alias scsi_hostadapter aic7xxx
+</pre>
+<p>
+と書いとけば勝手にロードされたんだけどなあ。
+また、勢いでNにしたとこがあるのか？
+しょうがないから
+</p>
+<pre>
+% sudo modprobe aic7xxx
+</pre>
+<p>
+してからMOをmountしたり。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200107083" title="200107083" href="200107a.html#200107083">■</a> 
+[NetBSD] Memory Stick</h3>
+<p>
+probeできないと立ち上げ時に必ずメモリスティックを差しておかないといけないわけで、
+それはどうなんだ？使いづらいよね、やっぱ。FreeBSDなら
+</p>
+<pre>
+# camcontrol rescan da0
+</pre>
+<p>
+てな具合にできるらしい。
+</p>
+
+<p>
+man -k scsiしてみたらscsictl(8)というコマンドが見つかる。
+なんかいかにもという感じだ。man scsictlしてみると
+</p>
+<pre>
+# scsictl device scan target lun
+</pre>
+<p>
+とまさに探していたものだよ、こりゃ。さっそく実行すると
+</p>
+<pre>
+# scsictl sd0 scan any any
+scsictl: sd0: Device not configured
+</pre>
+<p>
+うむ。sd0は確かにまだないしそうだよね。
+なにを指定すればいいんだ？dmesgをじっと見ると
+</p>
+<pre>
+scsibus0 at umass0: 2 targets, 1 luns per target
+scsibus0: waiting 2 seconds for devices to settle...
+</pre>
+<p>
+とある。/dev/scsibus0なんてほんとにあるのか？
+</p>
+<pre>
+# ls -l /dev/scsibus0
+crw-r--r--  1 root  wheel  61, 0 Jul  3 04:14 /dev/scsibus0
+</pre>
+<p>
+あるね。ってことはこれか。
+</p>
+<pre>
+# scsictl scsibus0 scan any any
+sd0 at scsibus0 target 1 lun 0: &lt;, , &gt; SCSI0 0/direct fixed
+sd0: could not mode sense (4/5); using fictitious geometry
+sd0: 7920 KB, 7 cyl, 64 head, 32 sec, 512 bytes/sect x 15840 sectors
+</pre>
+<p>
+やったね。認識したじゃん。  
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2001/07/08 end -->
+
+
+
+<hr class="hide">
+<!-- 2001/07/09 start -->
+<h2><a name="20010709" href="200107a.html#20010709">2001-07-09 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="200107091" title="200107091" href="200107a.html#200107091">■</a> 
+今日インストールしたものリスト</h3>
+<pre>
+ 1. texinfo 4.0 + EUC patch
+ 2. grub CVS版
+ 3. cvs 1.11.1p1
+ 4. rsync 2.4.6
+ 5. cvsup(コピーしただけ)
+</pre>
+<p>
+これでだいたい元の状態に復帰した。
+ってクロスの環境がまだじゃん。
+今週末にはPS2 LinuxKitも来るし、こっちに作ろうかな。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2001/07/09 end -->
+
+
+
+<hr class="hide">
+<!-- 2001/07/10 start -->
+<h2><a name="20010710" href="200107a.html#20010710">2001-07-10 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="200107101" title="200107101" href="200107a.html#200107101">■</a> 
+[Linux] scsi_hostadapter</h3>
+<p>
+昨日カーネルをreconfigしなおしてそのままシャットダウンしたわけだが、
+今日立ち上げてみたらmodprobeしなくてもokだ。結局
+</p>
+<pre>
+--- /usr/src/linux/.config.old	Mon Jul  9 22:48:37 2001
++++ /usr/src/linux/.config	Mon Jul  9 22:56:04 2001
+@@ -311,4 +311,4 @@
+ #
+-CONFIG_SCSI=y
+-CONFIG_BLK_DEV_SD=y
++CONFIG_SCSI=m
++CONFIG_BLK_DEV_SD=m
+ CONFIG_SD_EXTRA_DEVS=40
+@@ -317,3 +317,3 @@
+ # CONFIG_BLK_DEV_SR is not set
+-# CONFIG_CHR_DEV_SG is not set
++CONFIG_CHR_DEV_SG=m
+ # CONFIG_SCSI_DEBUG_QUEUES is not set
+</pre>
+<p>
+のどれかが効いた模様。
+CONFIG_SCSI=yなのにCONFIG_SCSI_AIC7XXX=mにしてるんだから、
+そもそもそこが変だったんじゃない？
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200107102" title="200107102" href="200107a.html#200107102">■</a> 
+<a href="http://cygwin.com/ml/cygwin/2001-07/msg00484.html">Re: chinese input at cygwin1-20010625.dll/Win2000</a></h3>
+<p>
+Subjectの件はこの際どうでもいいんだけど、rxvtの日本語パッチの情報がある。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2001/07/10 end -->
+
+<hr>
+<div>
+<a href="200106c.html">&lt;Prev(,)</a> | 
+<a href="200107b.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

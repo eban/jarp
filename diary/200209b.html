@@ -1,0 +1,951 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2002-9-b</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="200209a.html">
+<link rel="next" href="200209c.html">
+
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2002年9月中旬〜</p>
+<hr>
+<div>
+<a href="200209a.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="200209c.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2002/09/11 start -->
+<h2><a name="20020911" href="200209b.html#20020911">2002-09-11 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="200209111" title="200209111" href="200209b.html#200209111">■</a> 
+<a href="http://www.ruby-lang.org/en/raa-list.rhtml?name=Ruby%2FGoogle">[Ruby] Ruby/Google 0.4.2</a></h3>
+<p>
+更新。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200209112" title="200209112" href="200209b.html#200209112">■</a> 
+<a href="http://homepage1.nifty.com/markey/memo/200209.html#091101">Vimの共存</a></h3>
+<p>
+共存は無理なので.jvimrc(JVim 3.0用)と.vimrcを使い分けます。
+</p>
+<!-- section end -->
+</div>
+<!-- 2002/09/11 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/09/12 start -->
+<h2><a name="20020912" href="200209b.html#20020912">2002-09-12 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="200209121" title="200209121" href="200209b.html#200209121">■</a> 
+<a href="http://www.ruby-lang.org/en/raa-list.rhtml?name=RubyInline">[Ruby] RubyInline</a></h3>
+<p>
+なんかよくわからないけど、結構人気があるようだ。
+コンパイルする環境があるならmakeも当然あるはずで、
+実行時間を気にしなければmkmf.rbでMakefileを作ってmakeすればいい気もする。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200209122" title="200209122" href="200209b.html#200209122">■</a> 
+[Ruby] mkmf.rb</h3>
+<p>
+RUBY_PLATFORMで判断してるものは、できるだけrbconfig.rbへ追い出せば、少しはすっきりするかな。
+</p>
+
+<p>
+create_makefileは連休中にでもゆっくり考えよう。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200209123" title="200209123" href="200209b.html#200209123">■</a> 
+[Ruby] ruby-talk</h3>
+<p>
+50000を越えた。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/09/12 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/09/13 start -->
+<h2><a name="20020913" href="200209b.html#20020913">2002-09-13 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="200209131" title="200209131" href="200209b.html#200209131">■</a> 
+[Cygwin] GCC 3.2</h3>
+<p>
+なぜか/usr/local/libがlibrary pathから外れてる。これはちょっといやだな。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200209132" title="200209132" href="200209b.html#200209132">■</a> 
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-dev/18278">[Ruby] OP_ASGN_OR warning</a></h3>
+<p>
+実は過去2回程この件でメール書こうと思ったんだけど、
+何か意味があるような気がしてやめてたりする。
+で、今回も
+</p>
+<pre>
+$INSTALLFILES ||= nil
+</pre>
+<p>
+と最初に書いてwarningくらって今日こそはメール書くかと思ったが、
+そのまま会議に突入してしまったのであった。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200209133" title="200209133" href="200209b.html#200209133">■</a> 
+<a href="http://tamura.tdiary.net/20020907.html#p01">[Ruby] --target</a></h3>
+<p>
+CygwinとMinGWはi386に正規化してます。
+</p>
+<pre>
+case &quot;$target_os&quot; in
+cygwin*|mingw*)
+    AC_CHECK_TOOL(NM, nm)
+    AC_CHECK_TOOL(WINDRES, windres)
+    AC_CHECK_TOOL(DLLWRAP, dllwrap)
+    target_cpu=`echo $target_cpu | sed s/i.86/i386/`
+    : ${enable_shared=yes}
+    ;;
+esac
+</pre>
+<p>
+program_prefixも対処したので、今は--program-prefix=''しなくてもruby.exeになります。
+</p>
+
+<p>
+mswin32もi386になるかのかとwin32/README.win32を見ると、
+configure時に指定しなきゃいけない？
+それじゃ、i386-msvcrt化計画もちょっとまずいような。
+</p>
+<!-- section end -->
+</div>
+<!-- 2002/09/13 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/09/14 start -->
+<h2><a name="20020914" href="200209b.html#20020914">2002-09-14 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="200209141" title="200209141" href="200209b.html#200209141">■</a> 
+[Ruby] ${CPP} -o conftest.i conftest.c</h3>
+<p>
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-dev/18288">[ruby-dev:18288]</a>で宣言したように考えることにする。
+AC_PROG_CPPの後でこんな感じでcheckかな。
+</p>
+<pre>
+echo 'foo(){}' &gt; conftest.c
+if ${CPP} -o conftest.i conftest.c &gt;/dev/null 2&gt;&amp;1; then
+  CPPOUTFILE='-o conftest.i'
+else
+  CPPOUTFILE='&gt; conftest.i'
+fi
+AC_SUBST(CPPOUTFILE)
+</pre>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200209142" title="200209142" href="200209b.html#200209142">■</a> 
+カメラはビルの中にいた</h3>
+<p>
+ビデオに録っておいたものを今日見た。くー。続きは「きょうの出来事」でってどーゆーことよ？
+</p>
+<!-- section end -->
+</div>
+<!-- 2002/09/14 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/09/15 start -->
+<h2><a name="20020915" href="200209b.html#20020915">2002-09-15 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="200209151" title="200209151" href="200209b.html#200209151">■</a> 
+[Linux] Linux 2.5.34</h3>
+<p>
+久し振りにbk pullしてみるとarch/um/ができてる。
+<a href="http://user-mode-linux.sourceforge.net/">User-Mode Linux</a>が取り込まれたらしい。でもいきなりinit/main.cがエラーになってしまう。
+あ、oldconfig時にARCH=umを忘れてた。同じだな。うーむ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200209152" title="200209152" href="200209b.html#200209152">■</a> 
+[Ruby] mkmf.rb: RUBY_PLATFORMでの判断</h3>
+<p>
+できるだけrbconfig.rbへ追い出そうと思う。一個ずつ見ていこう。
+</p>
+
+<h4><a name="200209152S1" href="200209b.html#200209152S1">_</a> <strong>if /mswin32|bccwin32|mingw/ =~ RUBY_PLATFORM and ENV[&quot;CONFIGURE_ARGS&quot;]</strong>: </h4>
+<div class="sub">
+<p>
+これって特に限定する必要はない気がする。外そう。
+</p>
+
+</div>
+<h4><a name="200209152S2" href="200209b.html#200209152S2">_</a> <strong>if RUBY_PLATFORM == &quot;m68k-human&quot;</strong>: </h4>
+<div class="sub">
+<pre>
+CFLAGS=&quot;$CFLAGS -fansi-only -cc1-stack=262144 -cpp-stack=2694144&quot;
+</pre>
+<p>
+の-cc1-stack, -cc2-stackを削除してる。これはこのままかな。
+</p>
+
+</div>
+<h4><a name="200209152S3" href="200209b.html#200209152S3">_</a> <strong>elsif RUBY_PLATFORM =~ /-nextstep|-rhapsody|-darwin/</strong>: </h4>
+<div class="sub">
+<p>
+fat-binary関係する-archを削除している。これもこのまま残そう。
+</p>
+
+</div>
+<h4><a name="200209152S4" href="200209b.html#200209152S4">_</a> <strong>OUTFLAG, CPPOUTFILE</strong>: </h4>
+<div class="sub">
+<p>
+configure.in, */Makefile.subで対応。
+</p>
+
+</div>
+<h4><a name="200209152S5" href="200209b.html#200209152S5">_</a> <strong>ENV['LIB']</strong>: </h4>
+<div class="sub">
+<p>
+mswin32は/libpathを使い、bccwin32は-Lを使う。
+あれ？一部bccwin32では-Lを使ってるなあ。
+それはそれとしてLIBPATHFLAGを新設しよう。
+</p>
+
+</div>
+<h4><a name="200209152S6" href="200209b.html#200209152S6">_</a> <strong>rm_f &quot;c0x32*&quot;</strong>: </h4>
+<div class="sub">
+<p>
+bccwin32のときの一時ファイル。bcc32は余計なファイルを作りすぎる。
+これはしょうがないから残そう。。
+</p>
+
+</div>
+<h4><a name="200209152S7" href="200209b.html#200209152S7">_</a> <strong>lib + &quot;.lib &quot; + libs</strong>: </h4>
+<div class="sub">
+<p>
+これはどうすべきかな？
+$libsは-lfooのままで、Makefileを書き出すときに変換するのはどうかな。
+mswin32のほうも-libpathを使えば、
+</p>
+<pre>
+gsub(/-l(.+)(?:\s)/, '\1.lib') if /^cl/ =~ Config::CONFIG['CC']
+gsub(/-L/, '-libpath:') if /^cl/ =~ Config::CONFIG['CC']
+</pre>
+<p>
+という感じでうまくいかないかなあ。
+</p>
+
+</div>
+<h4><a name="200209152S8" href="200209b.html#200209152S8">_</a> <strong>have_library</strong>: </h4>
+<div class="sub">
+<p>
+-lmが独立していない処理系では無条件でtrueを返したい。
+-lmだけとも限らないのでrbconfig.rbにそのライブラリリストをHashで用意する？
+</p>
+
+<p>
+さらに例の#include &quot;ruby.h&quot;を入れよう。
+とすれば前半部分は共通になるはず。
+srcの最後に\nがない場合は追加する処理も入れよう。
+</p>
+
+</div>
+<h4><a name="200209152S9" href="200209b.html#200209152S9">_</a> <strong>find_library</strong>: </h4>
+<div class="sub">
+<p>
+あれ？ここはwin32用の処理に分かれてないね。
+</p>
+
+</div>
+<h4><a name="200209152S10" href="200209b.html#200209152S10">_</a> <strong>have_func</strong>: </h4>
+<div class="sub">
+<p>
+結局のところhave_library, find_library, have_funcの共通項をくくり出さないといかんですな。
+</p>
+
+</div>
+<h4><a name="200209152S11" href="200209b.html#200209152S11">_</a> <strong>create_makefile</strong>: </h4>
+<div class="sub">
+<p>
+これはとりあえず後。
+</p>
+
+</div>
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200209153" title="200209153" href="200209b.html#200209153">■</a> 
+[Ruby] rbconfig.rb: Config::CONFIG['MAKE']</h3>
+<p>
+makeぐらいはrbconfig.rbで用意すべきか？
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200209154" title="200209154" href="200209b.html#200209154">■</a> 
+[Ruby] mkmf.rb: わかりやすいログ</h3>
+<p>
+autoconfのように失敗したソースもlogに残そう。いや、常に残そう。
+ついでに何のcheckなのかも。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200209155" title="200209155" href="200209b.html#200209155">■</a> 
+[Ruby] 今日のcommit</h3>
+<p>
+OUTFLAGとCPPOUTFILEとわかりやすいログを中心に変更。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/09/15 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/09/16 start -->
+<h2><a name="20020916" href="200209b.html#20020916">2002-09-16 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="200209161" title="200209161" href="200209b.html#200209161">■</a> 
+<a href="200209b.html#200209142">[NTV] 0911 カメラはビルの中にいた</a></h3>
+<p>
+<a href="http://www.ntv.co.jp/">http://www.ntv.co.jp/</a>によると10月6日(日)24:25から再放送するらしい。
+「熱いご要望」とか書いてあるが、苦情が殺到したに違いない。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200209162" title="200209162" href="200209b.html#200209162">■</a> 
+[Ruby] mkmf.rb: LINK, CC, CPP</h3>
+<p>
+定数へ戻すことにしよう。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200209163" title="200209163" href="200209b.html#200209163">■</a> 
+[Ruby] mkmf.rb: $LIBPATH関連</h3>
+<p>
+$LIBPATH, ENV['LIB'], ORIG_LIBPATH, $LDFLAGSといっぱいからんでるねえ。
+$LIBPATHはディレクトリを要素にもつ配列なので、
+実際に使うときは-Lをprefixさせる必要がある。
+</p>
+<pre>
+$LDFLAGS &lt;&lt; $LIBPATH.join(&quot; -L&quot;)
+</pre>
+<p>
+じゃ最初の要素には-Lがつかないのでだめ。というわけで
+</p>
+<pre>
+$LIBPATH.each {|d| $LDFLAGS &lt;&lt; &quot; -L&quot; + d}
+</pre>
+<p>
+となっているけど、
+</p>
+<pre>
+$LDFLAGS &lt;&lt; ([&quot;&quot;] + $LIBPATH).join(&quot; -L&quot;)
+</pre>
+<p>
+というのはどうだろう？なら最初から$LIBPATHに入れとけって？ごもっとも。
+というわけで
+</p>
+<pre>
+$LIBPATH = [&quot;&quot;]
+</pre>
+<p>
+と初期化しとくといいかも。
+find_libraryがあるからだめだ。
+やっぱ[&quot;&quot;] +で我慢するか。
+</p>
+
+<p>
+-libpathを使えばENV['LIB'], ORIG_LIBPATHをいじる必要はない。
+VC++がないだけにcheckできないとこが齒痒い。
+clとlinkとlib command wrapperを作るべきか？
+どこかにありそうだな。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200209164" title="200209164" href="200209b.html#200209164">■</a> 
+[Ruby] mkmf.rb: try_link0のrefactoring</h3>
+<p>
+順番に見て行く。
+</p>
+<pre>
+src = &quot;/* begin */\n#{src}/* end */\n&quot;
+</pre>
+<p>
+これはわかりやすいログ対応なので、ログだけにしよう。
+</p>
+<pre>
+src += &quot;\n&quot; unless /\n\z/ =~ src
+</pre>
+<p>
+に変更。
+</p>
+<pre>
+cfile = open(&quot;conftest.c&quot;, &quot;w&quot;)
+cfile.print src
+cfile.close
+</pre>
+<p>
+try_compile, try_cpp, egrep_cppに共通なので、
+create_tmpsrcというmethodにして外へ出す。
+ついでにCONFTEST_C = &quot;conftest.c&quot;とする。
+</p>
+<pre>
+def create_tmpsrc(src)
+  open(CONFTEST_C, &quot;w&quot;) do |cfile|
+    cfile.print src
+  end
+end
+</pre>
+<p>
+次がENV['LIB']と$LDFLAGSをいじってるとこだけど、
+</p>
+<pre>
+ldflags = $LDFLAGS
+if /mswin32|bccwin32/ =~ RUBY_PLATFORM and !$LIBPATH.empty?
+  ENV['LIB'] = ($LIBPATH + [ORIG_LIBPATH]).compact.join(';')
+else
+  $LDFLAGS = ldflags.dup
+  $LIBPATH.each {|d| $LDFLAGS &lt;&lt; &quot; -L&quot; + d}
+end
+</pre>
+<p>
+ENV['LIB']はいじる必要ないので削除。&quot; -L&quot;じゃなくてLIBPATHFLAGを使う。
+</p>
+<pre>
+ldflags = $LDFLAGS
+$LDFLAGS = ldflags.dup
+$LIBPATH.each {|d| $LDFLAGS &lt;&lt; LIBPATHFLAG + d}
+</pre>
+<p>
+なんかldflagsと$LDFLAGSの関係が変だね。そもそも$LDFLAGSは次の
+</p>
+<pre>
+xsystem(format($LINK, $INCFLAGS, $CPPFLAGS, $CFLAGS, $LDFLAGS, opt, $LOCAL_LIBS))
+</pre>
+<p>
+へ渡すためにあるんだけど、ここで引数になってるので$LDFLAGSである必要もない。
+ensureで元に戻してるくらいだし。
+$LIBPATHの内容を反映させればいいだけなので
+</p>
+<pre>
+ldflags = $LDFLAGS + ([&quot;&quot;] + $LIBPATH).join(&quot; &quot; + LIBPATHFLAG)
+xsystem(format(LINK, $INCFLAGS, $CPPFLAGS, $CFLAGS, ldflags, opt, $LOCAL_LIBS))
+</pre>
+<p>
+で十分だろう。最後にログにcheckしたソースを残す処理だけど、
+</p>
+<pre>
+  Logging::message &lt;&lt;&quot;EOM&quot;
+checked program was:
+#{src}
+EOM
+</pre>
+<p>
+は外に出してmethodとする。
+</p>
+<pre>
+def log_src(src)
+  Logging::message &lt;&lt;&quot;EOM&quot;
+checked program was:
+/* begin */
+#{src}/* end */
+
+EOM
+end
+</pre>
+<p>
+最終的にtry_link0はこうなった。
+</p>
+<pre>
+def try_link0(src, opt=&quot;&quot;)
+  src += &quot;\n&quot; unless /\n\z/ =~ src
+  create_tmpsrc(src) 
+  ldflags = $LDFLAGS + ([&quot;&quot;] + $LIBPATH).join(&quot; &quot; + LIBPATHFLAG)
+  xsystem(format(LINK, $INCFLAGS, $CPPFLAGS, $CFLAGS, ldflags, opt, $LOCAL_LIBS))
+ensure
+  log_src(src)
+end
+</pre>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200209165" title="200209165" href="200209b.html#200209165">■</a> 
+[Ruby] mkmf.rb: try_compile, try_cpp, egrep_cpp</h3>
+<p>
+基本的に同じ変更。
+</p>
+<pre>
+begin
+  src += &quot;\n&quot; unless /\n\z/ =~ src
+  create_tmpsrc(src) 
+  ...
+ensure
+  log_src(src)
+end
+</pre>
+<p>
+の構造は同じなので、try_doとしてmethodへ。
+</p>
+<pre>
+def try_do(src, command)
+  src += &quot;\n&quot; unless /\n\z/ =~ src
+  create_tmpsrc(src)
+  xsystem(command)
+ensure
+  log_src(src)
+end
+</pre>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200209166" title="200209166" href="200209b.html#200209166">■</a> 
+[Ruby] mkmf.rb: try_run</h3>
+<p>
+xsystemはsystemの戻り値と同じでtrueとfalseを返す。よって
+</p>
+<pre>
+if xsystem(&quot;./conftest&quot;)
+  true
+else
+  false
+end
+</pre>
+<p>
+は冗長。
+</p>
+<pre>
+xsystem(&quot;./conftest&quot;)
+</pre>
+<p>
+だけでいい。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200209167" title="200209167" href="200209b.html#200209167">■</a> 
+[Ruby] mkmf.rb: LINK</h3>
+<p>
+LINK定数はformatへ渡すために%sがあるが、これがわかりにくい要因になってるようだ。
+</p>
+<pre>
+LINK=&quot;#{CONFIG['CC']} #{OUTFLAG}conftest %s -I#{$hdrdir} %s \
+#{CFLAGS} %s #{CONFIG['LDFLAGS']} %s #{CONFTEST_C} %s %s \
+#{CONFIG['LIBS']}&quot;
+</pre>
+<p>
+LINKが使われているのはtry_link0の中で
+</p>
+<pre>
+xsystem(format(LINK, $INCFLAGS, $CPPFLAGS, $CFLAGS, ldflags, opt, $LOCAL_LIBS))
+</pre>
+<p>
+という感じ。この引数とLINKの関係が離れているのもわかりにくい。
+%sの数と引数の数が合ってるかどうかも不安だし(引数のほうが多い場合はエラーにならない)。
+かといってLINK =をtry_link0の前に置いたところであまり改善された気がしない。
+このグローバル変数をLINKの中にしまいこむにはどうすればいいのか？
+methodにして
+</p>
+<pre>
+def link_format
+  &quot;#{CONFIG['CC']} #{OUTFLAG}conftest #$INCFLAGS -I#{$hdrdir} &quot; +
+  &quot;#$CPPFLAGS #{CFLAGS} $CFLAGS #{CONFIG['LDFLAGS']} %s &quot; +
+  &quot;#{CONFTEST_C} %s #$LOCAL_LIBS #{CONFIG['LIBS']}&quot;
+end
+</pre>
+<p>
+という手はあるね。これで
+</p>
+<pre>
+xsystem(format(link_format, ldflags, opt))
+</pre>
+<p>
+と書ける。でも、それならformatもなくして
+</p>
+<pre>
+def link_command(ldflags, opt=&quot;&quot;)
+  &quot;#{CONFIG['CC']} #{OUTFLAG}conftest #$INCFLAGS -I#{$hdrdir} &quot; +
+  &quot;#$CPPFLAGS #{CFLAGS} $CFLAGS #{CONFIG['LDFLAGS']} #{ldflags} &quot; +
+  &quot;#{CONFTEST_C} #{opt} #$LOCAL_LIBS #{CONFIG['LIBS']}&quot;
+end
+xsystem(link_command(ldflags, opt))
+</pre>
+<p>
+のほうがいいか。あ、$LDFLAGSも中に入れちゃえばいいんだ。
+</p>
+<pre>
+def link_command(ldflags, opt=&quot;&quot;)
+  &quot;#{CONFIG['CC']} #{OUTFLAG}conftest #$INCFLAGS -I#{$hdrdir} &quot; +
+  &quot;#$CPPFLAGS #{CFLAGS} #$CFLAGS #{CONFIG['LDFLAGS']} #$LDFLAGS &quot; +
+  &quot;#{ldflags} #{CONFTEST_C} #{opt} #$LOCAL_LIBS #{CONFIG['LIBS']}&quot;
+end
+
+def try_link0(src, opt=&quot;&quot;)
+  try_do(src, link_command(([&quot;&quot;] + $LIBPATH).join(&quot; &quot; + LIBPATHFLAG), opt))
+end
+</pre>
+<p>
+となる。このjoinもよく出てくるので外に出す。
+</p>
+<pre>
+def libpathflag
+  ([&quot;&quot;] + $LIBPATH).join(&quot; &quot; + LIBPATHFLAG)
+end
+
+def try_link0(src, opt=&quot;&quot;)
+  try_do(src, link_command(libpathflag, opt))
+end
+</pre>
+<p>
+Config::expandで展開されるのでCONFIG['CC']は$(CC)にしてみよう。
+</p>
+
+<p>
+結局PLATFORM依存の処理は残るので
+</p>
+<pre>
+$mswin = /mswin/ =~ RUBY_PLATFORM 
+$bccwin = /bccwin/ =~ RUBY_PLATFORM
+$mingw = /mingw/ =~ RUBY_PLATFORM
+$cygwin = /cygwin/ =~ RUBY_PLATFORM
+$human = /human/ =~ RUBY_PLATFORM
+</pre>
+<p>
+を用意した。
+</p>
+
+<p>
+bccwin32では-Lc:/foo/barじゃなくて-L&quot;c:/foo/bar&quot;にしないと、
+/barというオプションとみなされるようだ。
+</p>
+<pre>
+def libpathflag
+  q = $bccwin ? '&quot;' : ''
+  $LIBPATH.map do |x| &quot; #{LIBPATHFLAG}#{q}#{x}#{q}&quot; end.join
+end
+</pre>
+<p>
+空白を含むディレクトリを考えると$bccwinに限った話でもないか。
+</p>
+<pre>
+def libpathflag
+  $LIBPATH.map do |x| %Q[ #{LIBPATHFLAG}&quot;#{x}&quot;] end.join
+end
+</pre>
+<p>
+というわけで、空白を含む作業ディレクトリでmakeしてみよう。
+あ、全然だめだ。これは後だね。
+</p>
+
+<p>
+commitはまだだな。もうちょっと別の環境で試そう。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/09/16 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/09/17 start -->
+<h2><a name="20020917" href="200209b.html#20020917">2002-09-17 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="200209171" title="200209171" href="200209b.html#200209171">■</a> 
+[Ruby] mswin32: target </h3>
+<p>
+なるほど。win32/Makefile.subを見ると
+</p>
+<pre>
+ARCH = i386
+</pre>
+<p>
+になってますね。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200209172" title="200209172" href="200209b.html#200209172">■</a> 
+<a href="http://www.dm4lab.to/~usa/ruby/d/200209b.html#id20020917_P3_2">[Ruby] mkmf.rb: -libpath:</a></h3>
+<p>
+基本的には-Lの代わりに-link -libpath:にするだけと思っているので、
+対応も何もないというか、あ、/を\へ変換ぐらいはするかもしれない。
+makeの機能だとhave_libraryの時に対応できないので、
+rubyで変換するしかないかなあ。
+というのもあって、昨日の-L&quot;c:/foo/bar&quot;の話になるのであった。
+変換しないで済むなら済ませたいというか。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/09/17 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/09/18 start -->
+<h2><a name="20020918" href="200209b.html#20020918">2002-09-18 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="200209181" title="200209181" href="200209b.html#200209181">■</a> 
+[Linux] Linux 2.5.36</h3>
+<p>
+bk pullがやけに長い。XFSが入ったのか。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200209182" title="200209182" href="200209b.html#200209182">■</a> 
+<a href="http://www.dm4lab.to/~usa/ruby/d/200209b.html#id20020918_P2">[Ruby] mkmf.rb: -libpath:</a></h3>
+<p>
+うーむ。それはちょっと予想外の展開です。
+gccの-Wlと同じで、-Lは-link -libpath:で置き換え可能だと思っていたのに。
+commitしなくて正解だった。
+</p>
+
+<p>
+#{CONFIG['LDFLAGS']}, #$LDFLAGS, ldflagsを後ろに移動して
+</p>
+<pre>
+def link_command(ldflags, opt=&quot;&quot;)
+  ldflags = &quot;-link &quot; + ldflags if $mswin
+  &quot;$(CC) #{OUTFLAG}conftest #$INCFLAGS -I#{$hdrdir} &quot; +
+  &quot;#$CPPFLAGS $(CFLAGS) #$CFLAGS #{CONFTEST_C} #{opt} &quot; +
+  &quot;#$LOCAL_LIBS $(LIBS) #{ldflags} $(LDFLAGS) #$LDFLAGS&quot;
+end
+</pre>
+<p>
+としようかな(以前とはまたちょっと形が違ってますが)。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/09/18 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/09/19 start -->
+<h2><a name="20020919" href="200209b.html#20020919">2002-09-19 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="200209191" title="200209191" href="200209b.html#200209191">■</a> 
+virus?(PR#406)</h3>
+<p>
+ruby-bugsもサイズ制限して欲しい。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200209192" title="200209192" href="200209b.html#200209192">■</a> 
+[Ruby] mkmf.rb: $local_flags</h3>
+<p>
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-talk/50636">RubyInline 1.0.6</a>の
+</p>
+<pre>
+- Added some compatibility code for windows.
+</pre>
+<p>
+が気になってinline.rbを見てみた。単にmkmf.rbから抜き出しただけだ。
+なぜ-linkなんだと思ったら、既に$local_flagsで-linkしてたのであった。
+これも考慮しないといけないなあ。
+</p>
+
+<p>
+まずはENV['LIB']のままrefactoringを進めるべきか。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200209193" title="200209193" href="200209b.html#200209193">■</a> 
+[Ruby] mkmf.rb: lib/*.rb</h3>
+<p>
+mkmf.rbでlib/*.rbだけの場合に対応しとくとそれなりに便利かも。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/09/19 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/09/20 start -->
+<h2><a name="20020920" href="200209b.html#20020920">2002-09-20 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="200209201" title="200209201" href="200209b.html#200209201">■</a> 
+[Cygwin] perl 5.8.0とbinary mount</h3>
+<p>
+cygwinでautoconfするとなぜかconfigureがDOS line endingsになってしまう。
+もちろんbinary mountしてるのにもかかわらずだ。
+追ってみると最終的にはautom4teがconfigureを作っているが、
+これはperl scriptになっている。この中で
+</p>
+<pre>
+$out-&gt;open($output, O_CREAT | O_WRONLY | O_TRUNC, oct ($mode));
+</pre>
+<p>
+と実行してる。
+ということはCygwinのperlはmount modeに関係なくtext modeで書くのか？
+実にいやな仕様だな。
+</p>
+<pre>
+% ruby -e 'print &quot;\n&quot;' |od -c
+0000000  \n
+0000001
+% perl -e 'print &quot;\n&quot;' |od -c
+0000000  \r  \n
+0000002
+</pre>
+<p>
+メンテナのGerrit P. Haase氏の趣味だろうか？
+と思ったら5.6.1はちゃんとmount modeに従っている。
+</p>
+<pre>
+% perl5.6.1 -e 'print &quot;\n&quot;' |od -c
+0000000  \n
+0000001
+</pre>
+<p>
+5.8.0での変更のようだ。Cygwin MLを調べる必要があるな。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/09/20 end -->
+
+<hr>
+<div>
+<a href="200209a.html">&lt;Prev(,)</a> | 
+<a href="200209c.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

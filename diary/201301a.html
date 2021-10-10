@@ -1,0 +1,314 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2013-1-a</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="201212c.html">
+<link rel="next" href="201301b.html">
+
+<link rel="stylesheet" type="text/css" href="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.css">
+<script type="text/javascript" src="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.js"></script>
+<script type="text/javascript">
+<!--       
+$(document).ready(function() {
+  prettyPrint();
+});
+-->
+</script>
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2013年1月上旬〜</p>
+<hr>
+<div>
+<a href="201212c.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="201301b.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2013/01/01 start -->
+<h2><a name="20130101" href="201301a.html#20130101">2013-01-01 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="201301011" title="201301011" href="201301a.html#201301011">■</a> 
+猫物語(黒)</h3>
+<p>
+Tokyo MXで録画したのを観たので、ニコ動のコメントも見るかーと行ってみたらなぜか
+</p><blockquote><p>
+予約中	 (2013/01/04(金)23:00 からご利用いただけます )
+</p></blockquote><p>
+となっている。<br>
+調べてみたら
+<a href="http://togetter.com/li/432299">猫物語(黒)のタイムシフトが止まって見られない皆さんの反応と解決策 - Togetter</a>ってのが見つかった。<br>
+なんかトラブってるようで。最後の10分ぐらいって、これはひどい。
+</p>
+<!-- section end -->
+</div>
+<!-- 2013/01/01 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/01/02 start -->
+<h2><a name="20130102" href="201301a.html#20130102">2013-01-02 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="201301021" title="201301021" href="201301a.html#201301021">■</a> 
+imapfilterのsubscribeの件</h3>
+<p>
+ちゃんと自動的に新たなmailboxが作られた。
+</p>
+<pre>
+% imapfilter 
+37 messages, 8 recent, 35 unseen, in username@imap-server/INBOX.
+2 messages marked seen in username@imap-server/INBOX.
+imapfilter: IMAP (4): 1015 NO [TRYCREATE] Mailbox doesn't exist: 9:Backups.2013.Log
+2 messages moved from username@imap-server/INBOX to eban@localhost/9:Backups/2013/Log.
+</pre>
+<p>
+imapfilterはLuaで書かれてるわけでなく、Luaを組み込んでいるようだ。
+</p>
+<pre>
+% ldd =imapfilter | grep lua
+	liblua5.2.so.0 =&gt; /usr/lib/i386-linux-gnu/liblua5.2.so.0 (0xb7779000)
+</pre>
+<!-- section end -->
+</div>
+<!-- 2013/01/02 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/01/03 start -->
+<h2><a name="20130103" href="201301a.html#20130103">2013-01-03 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="201301031" title="201301031" href="201301a.html#201301031">■</a> 
+Google ChromeでRefControl</h3>
+<p>
+しばらく前に調べたときはなかったが、日本人が作ったようだ。<br>
+<a href="http://img5.blogs.yahoo.co.jp/ybi/1/ea/c5/wth_map/folder/1342924/img_1342924_62006386_0?1357203675">リファラコントロール</a><br>
+</p><blockquote><p>
+fireFoxのRefControlの書き出しファイルとの互換性を削除
+</p></blockquote><p>
+とのことで、残念ながらそのまま書き出してimportというわけにはいかないが、<br>
+とりあえずLDRでyahoo! blogだけ見れればいいかなとさくっとルールを作った。
+</p>
+<pre>
+{&quot;matchingUrl&quot;:&quot;http://*.blogs.yahoo.co.jp/*&quot;,&quot;newRefType&quot;:&quot;static&quot;,&quot;newRefData&quot;:{&quot;staticString&quot;:&quot;&quot;},&quot;accessType&quot;:[]}
+</pre>
+<p>
+これをコピペしてimportすればok。
+</p>
+<!-- section end -->
+</div>
+<!-- 2013/01/03 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/01/04 start -->
+<h2><a name="20130104" href="201301a.html#20130104">2013-01-04 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="201301041" title="201301041" href="201301a.html#201301041">■</a> 
+Ubuntuでfitbitと思ったが失敗</h3>
+<p>
+<a href="http://www.paulburton.eu/projects/fitbitd/">こんなページ</a>を見つけてしまったので、さっそくPPAを追加してみたが、肝心のindicator-fitbitが検索しても出てこない。<br>
+PPAの該当ページを直接見てみたが空だった。残念。<br>
+アップロードするためだけに1日1回Windows立ち上げるのも面倒だなあ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2013/01/04 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/01/05 start -->
+<h2><a name="20130105" href="201301a.html#20130105">2013-01-05 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="201301051" title="201301051" href="201301a.html#201301051">■</a> 
+マウスの電池</h3>
+<p>
+全然切れる予兆もない。調べてみると
+<a href="201201a.html#201201041">昨日でちょうど1年</a>。<br>
+おまけの電池で1年以上保ったわけで、eneloopだとどんだけ保つんだ?<br>
+あと3ヶ月で謳い文句通り15ヶ月だな。
+</p>
+<!-- section end -->
+</div>
+<!-- 2013/01/05 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/01/06 start -->
+<h2><a name="20130106" href="201301a.html#20130106">2013-01-06 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="201301061" title="201301061" href="201301a.html#201301061">■</a> 
+10KBという制限がなかなか妥当</h3>
+<p>
+本当はWordだのExcelだのの添付ファイル除けのつもりだったが、見事にspam除けになっていた。
+</p>
+<pre>
+% mail -A large                                                  
+Heirloom mailx version 12.5 6/20/10.  Type ? for help.
+&quot;imap://eban@localhost/INBOX&quot;: 17 messages
+&lt;中略&gt;
+? folder imap://eban@localhost/9:Backups.2013.Large
+&quot;imap://eban@localhost/9:Backups.2013.Large&quot;: 5 messages 5 new
+? h
+&gt;N  1 Ross-Simons        Tue Jan  1 02:35     /50301 Raymond, Last Chance for Clearance Savings
+ N  2 Norm Thompson      Tue Jan  1 06:15     /24447 New Year SAVINGS! Winter Clearance is on + $4.95 shipping
+ N  3 DHC for Beauty and Wed Jan  2 03:04     /24191 We've Got Your New Year's Resolution Solutions
+ N  4 Norm Thompson      Sat Jan  5 06:20     /28137 One Day Only! Extra 15% OFF Outlet prices...don't miss out.
+ N  5 Norm Thompson      Thu Jan  3 06:19     /25935 Up to 50% OFF! New Year, BIG bargains, $4.95 shipping.
+? x
+</pre>
+<p>
+Heirloom mailxだとimapも読めて便利。<br>
+参照: 
+<a href="201002b.html#201002131">[Mail] Heirloom MailxでGmailのIMAPSへアクセス</a></p>
+<!-- section end -->
+</div>
+<!-- 2013/01/06 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/01/07 start -->
+<h2><a name="20130107" href="201301a.html#20130107">2013-01-07 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="201301071" title="201301071" href="201301a.html#201301071">■</a> 
+Google Chromeのdiigo拡張V2.0</h3>
+<p>
+やっとshortcut対応が入った。<br>
+<a href="http://www.diigo.com/extension/chrome/new.html?v=2.0">Welcome to the brand new Diigo Extension!</a><br>
+いい感じ。これで
+<a href="201208b.html#201208191">bookmarklet</a>を使わなくてもいいかも。
+</p>
+<!-- section end -->
+</div>
+<!-- 2013/01/07 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/01/08 start -->
+<h2><a name="20130108" href="201301a.html#20130108">2013-01-08 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="201301081" title="201301081" href="201301a.html#201301081">■</a> 
+12月のspam</h3>
+<p>
+500通ほど。12/12のgmail側の変更で激減している。この調子だと今月はもっと減りそう。<br>
+そのせいか日本語(仮登録完了とかいうやつ)のspamが非常に目立つ。<br>
+あとYouTube Administrationがすげー多いな。<br>
+どちらもgmailが
+</p><blockquote><p>
+このメッセージにはご注意ください。同様のメッセージが、個人情報を騙し取るのに使用されていました。信頼できる送信者でない限り、リンクをクリックしたり、個人情報を返信したりしないでください。
+</p></blockquote><p>
+と警告してくれるが。
+</p>
+<!-- section end -->
+</div>
+<!-- 2013/01/08 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/01/09 start -->
+<h2><a name="20130109" href="201301a.html#20130109">2013-01-09 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="201301091" title="201301091" href="201301a.html#201301091">■</a> 
+Firefox18</h3>
+<p>
+またJavaScriptが速くなったらしいが、特に感じず。<br>
+ついでにThunderbirdもやっと16から17へ。<br>
+なんか上部がやたらと青いんだけどこれでいいのか？
+</p>
+<!-- section end -->
+</div>
+<!-- 2013/01/09 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/01/10 start -->
+<h2><a name="20130110" href="201301a.html#20130110">2013-01-10 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="201301101" title="201301101" href="201301a.html#201301101">■</a> 
+Fresh Green Leaves</h3>
+<p>
+Thunerbirdが青すぎる。というより境界がないのから違和感を感じるんだろうな。<br>
+これはテーマを変えろというメッセージだと受け取り、Fresh Green Leavesを入れた。<br>
+いい感じになった。
+</p>
+<!-- section end -->
+</div>
+<!-- 2013/01/10 end -->
+
+<hr>
+<div>
+<a href="201212c.html">&lt;Prev(,)</a> | 
+<a href="201301b.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

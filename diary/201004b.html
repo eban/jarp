@@ -1,0 +1,325 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2010-4-b</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="201004a.html">
+<link rel="next" href="201004c.html">
+
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2010年4月中旬〜</p>
+<hr>
+<div>
+<a href="201004a.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="201004c.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2010/04/11 start -->
+<h2><a name="20100411" href="201004b.html#20100411">2010-04-11 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="201004111" title="201004111" href="201004b.html#201004111">■</a> 
+[Linux] GRUB for DOS</h3>
+<p>
+やっぱHDDにLinux入れたいので試しに余ってるHDDをまたIDE-USBケーブルでつないで、<br>
+Fedora 12のLiveCDをインストールしてみた。<br>
+途中boot loaderを/dev/sdaのMBRへ入れるのは、<br>
+あとで面倒なことになりそうなのでIDE-USBケーブル接続の/dev/sdb1に入れた。<br>
+しかしそうするとbootできないわけで。<br>
+これをどうするかというと最近では
+<a href="https://gna.org/projects/grub4dos">GRUB for DOS</a>という便利なものがある。これのgrldrを使うとbootできてしまう。<br>
+具体的にはgrldrをc:\grdlrに置いてc:\boot.iniの最後に
+</p>
+<pre>
+C:\grldr=&quot;Linux&quot;
+</pre>
+<p>
+と書く。これで運がよければインストールしたLinuxのmenu.lstを読んでくれる。<br>
+だめだったら
+</p>
+<pre>
+title Linux
+    rootnoverify (hd1,0)
+    chainloader +1
+</pre>
+<p>
+と書いたc:\menu.lstを用意すれば、/dev/sdb1にインストールしたgrubを起動できる。
+</p>
+<!-- section end -->
+</div>
+<!-- 2010/04/11 end -->
+
+
+
+<hr class="hide">
+<!-- 2010/04/12 start -->
+<h2><a name="20100412" href="201004b.html#20100412">2010-04-12 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="201004121" title="201004121" href="201004b.html#201004121">■</a> 
+<a href="http://shop.epson.jp/pc/np11/">[PC] Endeavor NP11</a></h3>
+<p>
+なんかCPUとか決められない。まあここまできたらノートPCでもそれほど困らないしなあ。<br>
+今日ふと目にしたNP11を発注した。小さくてよさげだ。下旬まで在庫がないとは。売れてんだな。
+</p>
+<!-- section end -->
+</div>
+<!-- 2010/04/12 end -->
+
+
+
+<hr class="hide">
+<!-- 2010/04/13 start -->
+<h2><a name="20100413" href="201004b.html#20100413">2010-04-13 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="201004131" title="201004131" href="201004b.html#201004131">■</a> 
+<a href="https://help.ubuntu.com/community/Installation/FromWindows#The%20CD%20image%20approach">UbuntuのインストールCDイメージをWindowsのNTFSに置いたまま起動する</a></h3>
+<p>
+NetBookのようにCDドライブがなかったりするとLinuxのインストールCDを起動させるのに苦労するが、<br>
+Ubuntuの場合はGRUB for DOSを使うことでNTFSにインストールCDのイメージを置いたまま起動できる。<br>
+Ubuntu 9.10の場合は
+<a href="http://archive.ubuntu.com/ubuntu/dists/karmic/main/installer-i386/current/images/hd-media/initrd.gz">initrd.gz</a>と
+<a href="http://archive.ubuntu.com/ubuntu/dists/karmic/main/installer-i386/current/images/hd-media/vmlinuz">vmlinuz</a>と
+<a href="http://ftp.jaist.ac.jp/pub/Linux/ubuntu-releases/9.10/ubuntu-9.10-alternate-i386.iso">ubuntu-9.10-alternate-i386.iso</a>をC:\hd-imageに置いて、C:\menu.lstに
+</p>
+<pre>
+title Install Ubuntu
+kernel   (hd0,0)/hd-media/vmlinuz root=/dev/ram0 ramdisk_size=128000
+initrd   (hd0,0)/hd-media/initrd.gz
+</pre>
+<p>
+と記述し、C:\boot.iniに
+</p>
+<pre>
+C:\grldr=&quot;GRUB for DOS&quot;
+</pre>
+<p>
+のような感じで追加し、再起動してGRUB for DOSを選びInstall Ubuntuを選べばあとはふつうにインストールできる。<br>
+alternate CDはCドライブのどこかにあればだいたい探してくれるようだ。
+</p><blockquote><p>
+Note: This method only works with the Alternate Ubuntu install CD.
+</p></blockquote><p>
+という話なのでGUIのインストーラだとだめらしい。
+</p>
+<!-- section end -->
+</div>
+<!-- 2010/04/13 end -->
+
+
+
+<hr class="hide">
+<!-- 2010/04/14 start -->
+<h2><a name="20100414" href="201004b.html#20100414">2010-04-14 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="201004141" title="201004141" href="201004b.html#201004141">■</a> 
+<a href="http://diddy.boot-land.net/grub4dos/files/map.htm#hd32">Grub4dos Guide - Map Command</a></h3>
+<p>
+またまたGRUB for DOSだけど、kernelとか用意しなくてもISOイメージだけで起動できるらしい。<br>
+やってみた。小さいほうがやりすいのでUbuntuの
+<a href="http://archive.ubuntu.com/ubuntu/dists/karmic/main/installer-i386/current/images/netboot/mini.iso">netboot用のmini.iso</a>で。12MBほど。適当にC:\mini.isoを用意して再起動してGRUB for DOSを選びcでpromptへ抜ける。そこで<br>
+</p>
+<pre>
+map --mem (hd0,0)/mini.iso (hd32)
+map --hook
+root (hd32)
+chainloader (hd32)
+boot
+</pre>
+<p>
+と打つとなんと本当にインストーラが起動された。<br>
+そのまま最小構成でインストールしてみるとXなしの環境ができた。あ、これサーバ用にいいな。<br>
+しかも最初から最新になってるのでaptitude upgradeとかいらないし。
+</p>
+<!-- section end -->
+</div>
+<!-- 2010/04/14 end -->
+
+
+
+<hr class="hide">
+<!-- 2010/04/15 start -->
+<h2><a name="20100415" href="201004b.html#20100415">2010-04-15 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="201004151" title="201004151" href="201004b.html#201004151">■</a> 
+[Cygwin] p4 loginをCygwinで使う</h3>
+<p>
+Windows版p4をCygwinで使うとp4 loginでパスワードが丸見えになりちょっと間抜けだ。<br>
+そこでこんなshell scriptを作った。
+</p>
+<pre>
+#! /bin/bash
+read -s -p &quot;Password: &quot;
+echo
+echo $REPLY | p4 login 2&gt;&amp;1 | grep -v 'Enter password:'
+</pre>
+<p>
+bashのreadは-sでnoechoになる。
+</p>
+<!-- section end -->
+</div>
+<!-- 2010/04/15 end -->
+
+
+
+<hr class="hide">
+<!-- 2010/04/16 start -->
+<h2><a name="20100416" href="201004b.html#20100416">2010-04-16 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="201004161" title="201004161" href="201004b.html#201004161">■</a> 
+[Browse] Google Chrome</h3>
+<p>
+思ったほど速く感じない。<br>
+最近つけで飲んでるせい？<br>
+逆にニコ動はBarTabがないといっぱい開けないしなあ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2010/04/16 end -->
+
+
+
+<hr class="hide">
+<!-- 2010/04/17 start -->
+<h2><a name="20100417" href="201004b.html#20100417">2010-04-17 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="201004171" title="201004171" href="201004b.html#201004171">■</a> 
+霰</h3>
+<p>
+朝5時半ごろ窓を叩く音で目覚める。何の音かと見に行くと霰が窓を打つ音だった。<br>
+辺りは一面雪化粧。前日ニュースで降るとは言ってたまさか本当に降るとは。<br>
+5月の連休あたりも寒波が来るらしいよ。温暖化はどこ行ったんだ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2010/04/17 end -->
+
+
+
+<hr class="hide">
+<!-- 2010/04/18 start -->
+<h2><a name="20100418" href="201004b.html#20100418">2010-04-18 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="201004181" title="201004181" href="201004b.html#201004181">■</a> 
+<a href="http://gcc.gnu.org/gcc-4.5/">GCC 4.50</a></h3>
+<p>
+いつの間にか4.5か。最近自分でgccをmakeしてないからちょっと疎くなったな。
+</p><blockquote><dl>
+<dt>
+Changes:
+<dd>
+Optimizations for Intel Atom processors were added, and the support for
+other processors was enhanced. The MPC library was integrated for more
+accurate compile time arithmetic evaluation. A new link-time optimizer
+was added, to allow for inter-procedural optimizations. Many
+optimizations were improved. The C compilers now exit immediately on a
+missing header file. The experimental support for C++0x was improved. An
+experimental C++ profile mode was added. Many other changes were made.
+</dl></blockquote>
+<!-- section end -->
+</div>
+<!-- 2010/04/18 end -->
+
+
+
+<hr class="hide">
+<!-- 2010/04/19 start -->
+<h2><a name="20100419" href="201004b.html#20100419">2010-04-19 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="201004191" title="201004191" href="201004b.html#201004191">■</a> 
+[Comic] テルマエ・ロマエ</h3>
+<p>
+マンガ大賞らしいので発注した。赤い手拭いがいい感じだな。<br>
+まだ1話しか読んでないが面白い。
+</p>
+<!-- section end -->
+</div>
+<!-- 2010/04/19 end -->
+
+
+
+<hr class="hide">
+<!-- 2010/04/20 start -->
+<h2><a name="20100420" href="201004b.html#20100420">2010-04-20 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="201004201" title="201004201" href="201004b.html#201004201">■</a> 
+[Firefox] またprofileを新しく作った</h3>
+<p>
+LDR Full Feedがなぜか動かなくなったので新規作りなおし。<br>
+about:configでdom.popup_maximumを100に、<br>
+browser.tabs.loadDivertedInBackgroundをtrueに。<br>
+また調べまくったのでこれだけは書いておく。
+
+</p>
+<!-- section end -->
+</div>
+<!-- 2010/04/20 end -->
+
+<hr>
+<div>
+<a href="201004a.html">&lt;Prev(,)</a> | 
+<a href="201004c.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

@@ -1,0 +1,387 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2014-2-a</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="201401c.html">
+<link rel="next" href="201402b.html">
+
+<link rel="stylesheet" type="text/css" href="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.css">
+<script type="text/javascript" src="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.js"></script>
+<script type="text/javascript">
+<!--       
+$(document).ready(function() {
+  prettyPrint();
+});
+-->
+</script>
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2014年2月上旬〜</p>
+<hr>
+<div>
+<a href="201401c.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="201402b.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2014/02/01 start -->
+<h2><a name="20140201" href="201402a.html#20140201">2014-02-01 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="201402011" title="201402011" href="201402a.html#201402011">■</a> 
+気象庁のアメダス観測データからRSS</h3>
+<p>
+気象庁アメダス観測データはtenki.jpとは違い、<br>
+<a href="http://www.jma.go.jp/jp/amedas_h/today-43241.html">毎正時の観測データ</a>が新しい順には並んでないので、<br>
+Y!Pipesで最新のデータへアクセスするにはどうすればいいのかわからなかったが、<br>
+気温に数値が含まれてるtableだけを取り出してtailすればいいと気づいた。<br>
+これならXPathとFilterとTailでできる。<br>
+作ってみたのがこれ。<br>
+<a href="http://pipes.yahoo.com/pipes/pipe.info?_id=a87e20d570d5ae2ed7d40742bf5c6331">Pipes: jma amedas</a><br>
+descriptionはimgタグだけにしてみたが、<br>
+なるほど確かにIFTTTのEntryImageUrlはこれを拾っているようだ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2014/02/01 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/02/02 start -->
+<h2><a name="20140202" href="201402a.html#20140202">2014-02-02 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="201402021" title="201402021" href="201402a.html#201402021">■</a> 
+1月のspam</h3>
+<p>
+280通ほど。
+
+</p>
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="201402022" title="201402022" href="201402a.html#201402022">■</a> 
+オフラインGmail</h3>
+<p>
+chrome://appsするとオフラインGmailというアプリがあるので、<br>
+Gmail調子が悪いときに使ってるんだけど、<br>
+これが曲者で読んでアーカイブしてもなぜか未読のままだったりする。<br>
+今日何気なく確認してみたら700通の謎の未読があって<br>
+なにかと思ったらオフラインGmailで処理したものだった。<br>
+裏でやってくれるのはいいが、これじゃ使えないな。
+</p>
+<!-- section end -->
+</div>
+<!-- 2014/02/02 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/02/03 start -->
+<h2><a name="20140203" href="201402a.html#20140203">2014-02-03 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="201402031" title="201402031" href="201402a.html#201402031">■</a> 
+105円の時計</h3>
+<p>
+<a href="201203b.html#201203171">すでに2年経つ</a>わけだけど、アナログの時計の電池が久し振りに切れた。<br>
+充電してる間数時間ふと何回も動いてない時計を見てしまう。<br>
+結構依存してるんだなと思った。
+</p>
+<!-- section end -->
+</div>
+<!-- 2014/02/03 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/02/04 start -->
+<h2><a name="20140204" href="201402a.html#20140204">2014-02-04 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="201402041" title="201402041" href="201402a.html#201402041">■</a> 
+<a href="http://stackoverflow.com/questions/20671525/yahoo-pipes-copy-items-from-one-feed-into-another">Y!Pipesで各itemにtitleを入れる</a></h3>
+<p>
+どういうことかというとXPath Fetch Pageはitemを返すので、<br>
+/html/head/titleで得たデータはそのままでは使えない。<br>
+別のモジュールにするしかないらしい。
+</p>
+<p>
+具体的には気象庁のアメダスのページで年月日を抜き出して、<br>
+毎時のデータに突っ込みたいという話。<br>
+YQLを使えばいけそうな気もするが、どうもうまくいかない。
+</p>
+<!-- section end -->
+</div>
+<!-- 2014/02/04 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/02/05 start -->
+<h2><a name="20140205" href="201402a.html#20140205">2014-02-05 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="201402051" title="201402051" href="201402a.html#201402051">■</a> 
+動物界の限りなく真実に近い情報</h3>
+<p>
+なんのことかさっぱりわからない情報がfitbitからやってきた。<br>
+いっぱい歩いたよってことなんだろうな。抜群です!
+</p>
+<p>
+<img src="../images/fitbit-activity.png" alt="">
+</p>
+<!-- section end -->
+</div>
+<!-- 2014/02/05 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/02/06 start -->
+<h2><a name="20140206" href="201402a.html#20140206">2014-02-06 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="201402061" title="201402061" href="201402a.html#201402061">■</a> 
+s3fsでさくらのBASE Storageをmount</h3>
+<p>
+s3fsはごにょごにょというわけでUbuntuのパッケージが存在しないので自分でmakeする。<br>
+</p>
+<pre>
+% sudo aptitude install build-essential libfuse-dev libcurl4-openssl-dev libxml2-dev mime-support
+% wget http://s3fs.googlecode.com/files/s3fs-1.74.tar.gz
+% tar xf s3fs-1.74.tar.gz
+% cd s3fs-1.74
+% ./configure
+% make all install
+</pre>
+<p>
+設定は/etc/fuse.confの最終行のuser_allow_otherを活かして、permissionを確認。<br>
+0640あたりなら0644にするとかsudo gpasswd -a fuse ebanとかしておく。<br>
+あとはアカウント名とアクセストークンを書き込む。
+</p>
+<pre>
+% echo 'username:access-token' &gt; ~/.passwd-s3fs
+% chmod 0600 ~/.passwd-s3fs
+</pre>
+<p>
+mountはs3fsコマンドで。
+</p>
+<pre>
+% mkdir ~/sakura
+% s3fs eban0 ~/sakura -o url=http://b.storage.sakura.ad.jp -o allow_other,default_acl=public-read
+</pre>
+<p>
+umountはumount ~/sakuraなんだけど、これはroot権限が必要。<br>
+fusermount -u ~/sakuraなら一般ユーザーでもumountできる。
+</p>
+<!-- section end -->
+</div>
+<!-- 2014/02/06 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/02/07 start -->
+<h2><a name="20140207" href="201402a.html#20140207">2014-02-07 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="201402071" title="201402071" href="201402a.html#201402071">■</a> 
+jpegをgifへ変換するときの落とし穴</h3>
+<p>
+forを使うとかいろいろツールを組み合わせるとかあるけど、<br>
+</p>
+<pre>
+% convert '*.jpg' -set filename:t '%t' -verbose '%[filename:t].gif'
+</pre>
+<p>
+でいいんじゃないかと思ったら思わぬ落とし穴が。<br>
+これだとアニメーションGIFになってしまう。
+</p>
+<pre>
+% convert '*.jpg' -set filename:t '%t' -verbose '%[filename:t].gif'
+011.jpg=&gt;011.gif[0] JPEG 1081x714 1081x714+0+0 8-bit PseudoClass 256c 1.11MB 0.090u 0:00.089
+% identify 011.gif 
+011.gif[0] GIF 1081x714 1081x714+0+0 8-bit PseudoClass 256c 1.113MB 0.000u 0:00.000
+011.gif[1] GIF 1081x714 1081x714+0+0 8-bit PseudoClass 256c 1.113MB 0.000u 0:00.000
+011.gif[2] GIF 1081x714 1081x714+0+0 8-bit PseudoClass 256c 1.113MB 0.000u 0:00.000
+011.gif[3] GIF 1081x714 1081x714+0+0 8-bit PseudoClass 256c 1.113MB 0.000u 0:00.000
+011.gif[4] GIF 1081x714 1081x714+0+0 8-bit PseudoClass 256c 1.113MB 0.000u 0:00.000
+</pre>
+<p>
+pngへ変換なら1個ずつ別々に処理される。
+</p>
+<pre>
+% convert '*.jpg' -set filename:t '%t' -verbose '%[filename:t].png'
+011.jpg=&gt;011.png[0] JPEG 1081x714 1081x714+0+0 8-bit PseudoClass 256c 238KB 0.220u 0:00.220
+012.jpg=&gt;012.png[1] JPEG 1081x714 1081x714+0+0 8-bit PseudoClass 256c 209KB 0.370u 0:00.369
+013.jpg=&gt;013.png[2] JPEG 1081x714 1081x714+0+0 8-bit PseudoClass 256c 201KB 0.520u 0:00.529
+014.jpg=&gt;014.png[3] JPEG 1081x714 1081x714+0+0 8-bit PseudoClass 256c 233KB 0.690u 0:00.690
+015.jpg=&gt;015.png[4] JPEG 1081x714 1081x714+0+0 8-bit PseudoClass 256c 209KB 0.860u 0:00.849
+</pre>
+<p>
+では、アニメーションGIFへの変換をやめさせるにはどうすればいいのか？<br>
++adjoinで個別に処理される。
+</p>
+<pre>
+% convert '*.jpg' -set filename:t '%t' +adjoin -verbose '%[filename:t].gif'
+011.jpg=&gt;011.gif[0] JPEG 1081x714 1081x714+0+0 8-bit PseudoClass 256c 238KB 0.060u 0:00.059
+012.jpg=&gt;012.gif[1] JPEG 1081x714 1081x714+0+0 8-bit PseudoClass 256c 213KB 0.050u 0:00.050
+013.jpg=&gt;013.gif[2] JPEG 1081x714 1081x714+0+0 8-bit PseudoClass 256c 205KB 0.060u 0:00.050
+014.jpg=&gt;014.gif[3] JPEG 1081x714 1081x714+0+0 8-bit PseudoClass 256c 238KB 0.060u 0:00.050
+015.jpg=&gt;015.gif[4] JPEG 1081x714 1081x714+0+0 8-bit PseudoClass 256c 213KB 0.060u 0:00.050
+</pre>
+<!-- section end -->
+</div>
+<!-- 2014/02/07 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/02/08 start -->
+<h2><a name="20140208" href="201402a.html#20140208">2014-02-08 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="201402081" title="201402081" href="201402a.html#201402081">■</a> 
+大雪</h3>
+<p>
+16年とか20年振りの大雪ということで20cm以上積った。<br>
+気象情報で埼玉の積雪は熊谷ばかり出てくるのはなぜかと思ったら、<br>
+そもそも積雪深観測は熊谷と秩父しかやってない。<br>
+<a href="http://www.jma.go.jp/jp/amedas_h/map29.html">気象庁 | アメダス(表形式)</a>を見て納得した。<br>
+<a href="http://www.tenki.jp/amedas/3/14/43241.html">tenki.jpのさいたまのアメダス実況</a>の積雪深も無意味というわけか。<br>
+まあ、みんな同じフォーマットにすればそうなるよね。
+</p>
+<!-- section end -->
+</div>
+<!-- 2014/02/08 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/02/09 start -->
+<h2><a name="20140209" href="201402a.html#20140209">2014-02-09 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="201402091" title="201402091" href="201402a.html#201402091">■</a> 
+sqlite3でregexp</h3>
+<p>
+Ubuntuだとsqlite3-pcreパッケージをインストールして、
+</p>
+<pre>
+.load /usr/lib/sqlite3/pcre.so
+</pre>
+<p>
+とすれば使えるようになる。
+</p>
+<pre>
+sqlite&gt; .load /usr/lib/sqlite3/pcre.so
+sqlite&gt; select artist,title from music where title like '%恋%';
+AKB48|恋するフォーチュンクッキー
+湘南乃風|純恋歌
+AAA|恋音と雨空
+ベイビーレイズ|恋はパニック
+マキシマム ザ ホルモン|恋のメガラバ
+May'n|今日に恋色
+山崎あおい|恋の予感
+sqlite&gt; select artist,title from music where title regexp '恋';
+AKB48|恋するフォーチュンクッキー
+湘南乃風|純恋歌
+AAA|恋音と雨空
+ベイビーレイズ|恋はパニック
+マキシマム ザ ホルモン|恋のメガラバ
+May'n|今日に恋色
+山崎あおい|恋の予感
+sqlite&gt; select artist,title from music where title regexp '^恋';
+AKB48|恋するフォーチュンクッキー
+AAA|恋音と雨空
+ベイビーレイズ|恋はパニック
+マキシマム ザ ホルモン|恋のメガラバ
+山崎あおい|恋の予感
+</pre>
+<p>
+いけてるようだけど、.とか使うとなんか変だ。
+</p>
+<pre>
+sqlite&gt; select artist,title from music where title like '_恋%';
+湘南乃風|純恋歌
+sqlite&gt; select artist,title from music where title regexp '^.恋';
+sqlite&gt; 
+</pre>
+<p>
+なぜかヒットしない。まさかmultibyte対応してない？
+</p>
+<pre>
+sqlite&gt; select artist,title from music where title regexp &quot;^...恋&quot;;
+湘南乃風|純恋歌
+</pre>
+<p>
+そういうことか。UTF-8だから3バイトってわけで。なんか懐しい挙動だ。<br>
+likeかglobを駆使したほうがよさげだな。
+</p>
+<!-- section end -->
+</div>
+<!-- 2014/02/09 end -->
+
+<hr>
+<div>
+<a href="201401c.html">&lt;Prev(,)</a> | 
+<a href="201402b.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

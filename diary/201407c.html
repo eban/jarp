@@ -1,0 +1,388 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2014-7-c</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="201407b.html">
+<link rel="next" href="201408a.html">
+
+<link rel="stylesheet" type="text/css" href="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.css">
+<script async type="text/javascript" src="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.js"></script>
+<script type="text/javascript">
+<!--       
+$(document).ready(function() {
+  prettyPrint();
+});
+-->
+</script>
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2014年7月下旬〜</p>
+<hr>
+<div>
+<a href="201407b.html" accesskey=",">&lt;Older(,)</a> | 
+<a href="201408a.html" accesskey=".">Newer(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2014/07/21 start -->
+<h2><a name="20140721" href="201407c.html#20140721">2014-07-21 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="201407211" title="201407211" href="201407c.html#201407211">■</a> 
+Smart J:COM Boxの変なバグ</h3>
+<p>
+いきなり関係ない番組を延々と録り続けるというなんとも迷惑なバグ。<br>
+2番組同時録画可能だが、そのタイミングで起こると先に録画してるほうが勝つので、<br>
+予約録画キャンセルされてしまう。停止も不可能でもうリセットするしかない。<br>
+これたまたま目の前で起こったからわかったが、不在の時だと困るよなあ。<br>
+容量の問題もあるし。
+</p>
+<!-- section end -->
+</div>
+<!-- 2014/07/21 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/07/22 start -->
+<h2><a name="20140722" href="201407c.html#20140722">2014-07-22 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="201407221" title="201407221" href="201407c.html#201407221">■</a> 
+<a href="http://www.daniloaz.com/en/617/systems/high-cpu-load-when-converting-images-with-imagemagick/">High CPU load when converting images with ImageMagick</a></h3>
+<p>
+convertを使ってるとすごく重くなるときがあるが、<br>
+export MAGICK_THREAD_LIMIT=1<br>
+で解決するかもしれない。
+</p>
+<p>
+自炊データだと300枚とか400枚になるが、
+</p>
+<pre>
+% convert *.png ...
+</pre>
+<p>
+には無力だった。load averageが40ぐらいになる。<br>
+というわけで、
+<a href="201406b.html#201406171">偶奇処理</a>で挙げた例は実は数が少ないときにしか使えない。
+</p>
+<!-- section end -->
+</div>
+<!-- 2014/07/22 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/07/23 start -->
+<h2><a name="20140723" href="201407c.html#20140723">2014-07-23 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="201407231" title="201407231" href="201407c.html#201407231">■</a> 
+xsaneやscanimageの起動を速くする</h3>
+<p>
+/etc/sane.d/dll.confに書いてあるデバイスを順に試すようなので、<br>
+使ってるものだけを残してあとはコメントアウトする。<br>
+ScanSnapだったらfujitsuだけ残す。
+</p>
+<pre>
+% time scanimage -L           
+device `fujitsu:ScanSnap S1500:106607' is a FUJITSU ScanSnap S1500 scanner
+scanimage -L  0.13s user 0.30s system 7% cpu 5.770 total
+% sudo vi /etc/sane.d/dll.conf
+% time scanimage -L           
+device `fujitsu:ScanSnap S1500:106607' is a FUJITSU ScanSnap S1500 scanner
+scanimage -L  0.01s user 0.01s system 24% cpu 0.098 total
+</pre>
+<p>
+これだけ違う。フィーダーがジャムるとxsaneの再起動が必要になるが、<br>
+なんか気楽に再起動できそうというかさっきからあまりの速さに繰り返し再起動してる。
+</p>
+<!-- section end -->
+</div>
+<!-- 2014/07/23 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/07/24 start -->
+<h2><a name="20140724" href="201407c.html#20140724">2014-07-24 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="201407241" title="201407241" href="201407c.html#201407241">■</a> 
+findのprintfで秒数の不要な小数点以下を消したい</h3>
+<p>
+どういうことかというと整数だけで十分なわけで。
+</p>
+<pre>
+% find foo -printf &quot;%h/%f %AY-%Am-%Ad %AT\n&quot;
+./foo 2014-07-24 23:15:04.5202391880
+</pre>
+<p>
+1000ファイルぐらいあるのでなるべくなら不要な小数点以下は消したい。<br>
+man findしてもno fractional partは%Acぐらいしかない。
+</p>
+<pre>
+% find foo -printf &quot;%h/%f %Ac\n&quot;
+./foo Thu Jul 24 23:15:04 2014
+</pre>
+<p>
+この形式はソートするときに面倒なのであまり好きじゃない。sedで削るのもなあ。<br>
+いやprintfなんだから文字数指定できるんじゃないかと試すといけた。
+</p>
+<pre>
+% find foo -printf &quot;%h/%f %AY-%Am-%Ad %.8AT\n&quot;
+./foo 2014-07-24 23:15:04
+</pre>
+<p>
+これでいいからふんだんに使われているのか。
+</p>
+<!-- section end -->
+</div>
+<!-- 2014/07/24 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/07/25 start -->
+<h2><a name="20140725" href="201407c.html#20140725">2014-07-25 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="201407251" title="201407251" href="201407c.html#201407251">■</a> 
+なぜかFeed Trigger Errorになるレシピ</h3>
+<p>
+例のIFTTTのネコ歩きレシピがなぜか発火しない。<br>
+ログを見るとFeed Trigger Errorだらけになってるが、<br>
+原因がさっぱりわからない。<br>
+そのまま放置しておいたら忘れたころに成功した。<br>
+つまりレシピは問題なかったわけだよなあ。<br>
+その後はまたエラーになってるので何が原因なんだか。
+</p>
+<!-- section end -->
+</div>
+<!-- 2014/07/25 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/07/26 start -->
+<h2><a name="20140726" href="201407c.html#20140726">2014-07-26 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="201407261" title="201407261" href="201407c.html#201407261">■</a> 
+竹シーツの出番</h3>
+<p>
+すっかり忘れてたよ。あまりに暑くて思い出した。<br>
+今使わないでいつ使う。
+</p>
+<p>
+しかし23時になってやっと30度を切ったけど、<br>
+暑すぎるだろう。
+</p>
+<!-- section end -->
+</div>
+<!-- 2014/07/26 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/07/27 start -->
+<h2><a name="20140727" href="201407c.html#20140727">2014-07-27 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="201407271" title="201407271" href="201407c.html#201407271">■</a> 
+scanimageでauto-crop</h3>
+<p>
+xsaneでしかスキャンしてなかったから気づかなかったが、<br>
+scanimageだと-swcropでauto-cropが可能だ。<br>
+そういえばWindows版のソフトはそんな感じだったなと思い出した。<br>
+で、これの出来が微妙というかかなりアグレッシブでギリギリまで攻めてくる。<br>
+その調整はできない。時間もかかる。<br>
+それよりも問題なのが定型を外しているからなのか、<br>
+小さなサイズになるとその余った部分が黒くなってしまうこと。
+</p>
+<p>
+<img src="../images/han-ochi-001.png" alt="">
+</p>
+<p>
+まあ、convertでchopなりcropすればいいだけではあるが、なんでそこだけ?
+</p>
+<p>
+今使ってるscanimageのパラメータ。
+</p>
+<pre>
+% scanimage --resolution 400 --source 'ADF Duplex' -p --df-action Stop --brightness 20 \
+  --mode lineart --batch=%03d.pbm --swcrop
+</pre>
+<p>
+それぞれ、400dpi、両面、ページ数表示、じゃむったら停止、ブライト20、(コントラストはデフォルトの0)、<br>
+モノクロ画像、バッチモードでファイル名は001.pbm、auot-cropという意味。<br>
+じゃむったりしたら--batch-start=$[$(ls *.pbm|wc -l)+1]もつけて再開。
+</p>
+<p>
+あ、そうそう。-swdeskewで傾き補正ってのもあるが、これは使いものにならない。<br>
+傾き補正はちょっと考えている案があるのでまたいずれ。
+</p>
+
+<!-- section end -->
+</div>
+<!-- 2014/07/27 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/07/28 start -->
+<h2><a name="20140728" href="201407c.html#20140728">2014-07-28 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="201407281" title="201407281" href="201407c.html#201407281">■</a> 
+傾き補正</h3>
+<p>
+convertの-deskewでの傾き補正は便利であるが、<br>
+行数の少ないページや挿絵のページがあるととんでもなく傾く。<br>
+そんなページはどうせなら補正しないで欲しいぐらい。<br>
+つまり傾きだけ教えてくれるコマンドがあればいいわけで、<br>
+netpbmに含まれる
+<a href="http://netpbm.sourceforge.net/doc/pamtilt.html">pamtiltコマンド</a>だとそれが可能。<br>
+あとは自分で判断して、たとえば3度を超えてたらなにもしないとかできる。
+</p>
+<p>
+ただ、Ubuntuのnetpbmはなぜかかなり古くてpamtiltが入ってない。<br>
+sourceforgeからdebを取ってくるか自前でmakeするしかない<br>
+</p>
+<p>
+convertにもpercent escapeに%[deskew:angle]があるので、<br>
+</p>
+<pre>
+% convert foo.png -deskew 40% -format %[deskew:angle]\n&quot; info:
+</pre>
+<p>
+のようにすればいけるはずだが、<br>
+UbuntuのImageMagickは古くて対応してない。なんとも残念な話だ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2014/07/28 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/07/29 start -->
+<h2><a name="20140729" href="201407c.html#20140729">2014-07-29 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="201407291" title="201407291" href="201407c.html#201407291">■</a> 
+Logicool Wireless Mouse M185</h3>
+<p>
+M505がチャタるようになって勝手にダブルクリックする。<br>
+ハチりそうなので安いM185を買った。1400円ほど。<br>
+M505が単三電池2本に対して1本なので軽い。<br>
+とりあえず不満なし。<br>
+これは12ヶ月電池が保つらしい。<br>
+さておまけの電池はいつまで保つか。
+</p>
+<!-- section end -->
+</div>
+<!-- 2014/07/29 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/07/30 start -->
+<h2><a name="20140730" href="201407c.html#20140730">2014-07-30 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="201407301" title="201407301" href="201407c.html#201407301">■</a> 
+ScanSnapのスキャン枚数</h3>
+<p>
+scanimage -Lの謎の数字はスキャン枚数ではないか?
+</p>
+<pre>
+% scanimage -L
+device `fujitsu:ScanSnap S1500:106607' is a FUJITSU ScanSnap S1500 scanner
+</pre>
+<p>
+変化ない。残念。違ったか。Linuxでは知る方法はないのか？
+</p>
+<!-- section end -->
+</div>
+<!-- 2014/07/30 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/07/31 start -->
+<h2><a name="20140731" href="201407c.html#20140731">2014-07-31 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="201407311" title="201407311" href="201407c.html#201407311">■</a> 
+<a href="http://www.imagemagick.org/Usage/color_basics/#floodfill_draw">Floodfill Draw</a></h3>
+<p>
+囲まれた領域を塗り潰す機能。これの2番目の方法が面白い。<br>
+四隅は分かれている領域なので本来なら4回処理が必要だが、<br>
+あらかじめ1ピクセル大きめで白く囲んであげればつながるので、<br>
+1回塗り潰せば済む。あとはshaveで1ピクセル削る。これは賢いな。
+</p>
+<!-- section end -->
+</div>
+<!-- 2014/07/31 end -->
+
+<hr>
+<div>
+<a href="201407b.html">&lt;Older(,)</a> | 
+<a href="201408a.html">Newer(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

@@ -1,0 +1,414 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2015-1-b</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="201501a.html">
+<link rel="next" href="201501c.html">
+
+<link rel="stylesheet" type="text/css" href="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.css">
+<script async type="text/javascript" src="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.js"></script>
+<script type="text/javascript">
+<!--       
+$(document).ready(function() {
+  prettyPrint();
+});
+-->
+</script>
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2015年1月中旬〜</p>
+<hr>
+<div>
+<a href="201501a.html" accesskey=",">&lt;Older(,)</a> | 
+<a href="201501c.html" accesskey=".">Newer(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2015/01/11 start -->
+<h2><a name="20150111" href="201501b.html#20150111">2015-01-11 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="201501111" title="201501111" href="201501b.html#201501111">■</a> 
+発熱</h3>
+<p>
+目を開けているのがつらい。<br>
+36.6度しかないが、平熱が35度台なので結構つらいのである。<br>
+折角の3連休が。
+</p>
+<!-- section end -->
+</div>
+<!-- 2015/01/11 end -->
+
+
+
+<hr class="hide">
+<!-- 2015/01/12 start -->
+<h2><a name="20150112" href="201501b.html#20150112">2015-01-12 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="201501121" title="201501121" href="201501b.html#201501121">■</a> 
+熱がさらに上がる</h3>
+<p>
+1日中寝てた。38度を超えるなんて久し振りだ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2015/01/12 end -->
+
+
+
+<hr class="hide">
+<!-- 2015/01/13 start -->
+<h2><a name="20150113" href="201501b.html#20150113">2015-01-13 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="201501131" title="201501131" href="201501b.html#201501131">■</a> 
+インフルエンザ</h3>
+<p>
+これだけ上がればもうインフルエンザに違いないので休日空け早速病院行ってみると案の定。<br>
+下ってから2日は外に出られないということで今週はもうだめだめっぽい。
+</p>
+<!-- section end -->
+</div>
+<!-- 2015/01/13 end -->
+
+
+
+<hr class="hide">
+<!-- 2015/01/14 start -->
+<h2><a name="20150114" href="201501b.html#20150114">2015-01-14 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="201501141" title="201501141" href="201501b.html#201501141">■</a> 
+なぜか電源管理がアンインストールされていた</h3>
+<p>
+Ubuntuはアップグレードするたびにスクリーンセーバーをアンインストールするのはなぜか。<br>
+いやがらせか。<br>
+面倒だから放置しといたが、やっぱ10分でモニターオフされるのは短すぎるのでこれだけはなんとかしたい。<br>
+設定やら設定マネージャーを探してそれらしいものがない。<br>
+おかしいなとぐぐってみると時間の設定は電源管理にあるらしい。その電源管理が見つからない。<br>
+他のマシンでlsしてみるとxfce4-power-managerだ。なぜ消えている？<br>
+インストールして30分に設定しておいた。<br>
+この電源管理ってやつはマウスの充電率までわかるようで便利じゃないか。
+</p>
+<!-- section end -->
+</div>
+<!-- 2015/01/14 end -->
+
+
+
+<hr class="hide">
+<!-- 2015/01/15 start -->
+<h2><a name="20150115" href="201501b.html#20150115">2015-01-15 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="201501151" title="201501151" href="201501b.html#201501151">■</a> 
+マウスの充電率を表示する</h3>
+<p>
+毎回電源管理から見るんじゃ面倒だし、crontabで監視もしたい。<br>
+というわけでコマンドラインからその情報を得たい。<br>
+例によってぐぐってみるとupowerというコマンドがあることがわかった。<br>
+使い方は基本2回実行する。-eでobject pathを得て-iでそれを指定する。<br>
+-eは複数ある場合もあるが、path名から判断する。
+</p>
+<pre>
+% upower -e
+/org/freedesktop/UPower/devices/mouse_0003o046DoC52Fx0002
+% upower -i /org/freedesktop/UPower/devices/mouse_0003o046DoC52Fx0002                                   
+  native-path:          /sys/devices/pci0000:00/0000:00:1a.0/usb1/1-1/1-1.1/1-1.1:1.1/0003:046D:C52F.0002
+  vendor:               Logitech, Inc.
+  model:                M185
+  serial:               03E8C0B4
+  power supply:         no
+  updated:              Thu Jan 16 22:57:14 2015 (0 seconds ago)
+  has history:          yes
+  has statistics:       no
+  mouse
+    present:             yes
+    rechargeable:        yes
+    state:               discharging
+    percentage:          70%
+
+</pre>
+<p>
+最後のpercentageが充電率だ。あとはgrepなりsedなりawkなりで抜き出せばいい。
+</p>
+<pre>
+% upower -i `upower -e` | awk '/percentage/&amp;&amp;$0=+$2'      
+70
+</pre>
+<!-- section end -->
+</div>
+<!-- 2015/01/15 end -->
+
+
+
+<hr class="hide">
+<!-- 2015/01/16 start -->
+<h2><a name="20150116" href="201501b.html#20150116">2015-01-16 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="201501161" title="201501161" href="201501b.html#201501161">■</a> 
+goo天気のRSSがなぜかEUC-JPになった</h3>
+<p>
+そうなるとYahoo Pipesで化けてしまうのだった。<br>
+HTMLはUTF-8なのになんでわざわざEUC-JPにするのか？<br>
+しょうがないのでRSS使うのやめてHTMLをparseすることにした。<br>
+その結果使ってる天気アイコンが微妙に違っていて、<br>
+大きくなりわかりやすくなった。こっちのほうがいいじゃないか。
+</p>
+<!-- section end -->
+</div>
+<!-- 2015/01/16 end -->
+
+
+
+<hr class="hide">
+<!-- 2015/01/17 start -->
+<h2><a name="20150117" href="201501b.html#20150117">2015-01-17 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="201501171" title="201501171" href="201501b.html#201501171">■</a> 
+2014年M-ONで聴いた曲TOP10</h3>
+<p>
+昨日のMステで恋うたランキング1位に小さな恋のうた(MONGOL800)が入っていたが、<br>
+M-ONで地味にいっぱいかかっているのである。
+</p>
+<pre>
+     1	130	レット・イット・ゴー ～ありのままで～ / 松たか子
+     2	106	366日 / HY
+     3	96	ハナミズキ / 一青窈
+     4	84	奏(かなで) / スキマスイッチ
+     5	79	小さな恋のうた / MONGOL800
+     6	77	RPG / SEKAI NO OWARI
+     7	73	恋するフォーチュンクッキー / AKB48
+     8	55	栄光の架橋 / ゆず
+     9	53	手紙 〜拝啓 十五の君へ〜 / アンジェラ・アキ
+    10	51	Story / AI
+</pre>
+<p>
+これら上位はほぼカラオケランキングと思ってもよく、それほど意外でもなかったりする。
+</p>
+<!-- section end -->
+</div>
+<!-- 2015/01/17 end -->
+
+
+
+<hr class="hide">
+<!-- 2015/01/18 start -->
+<h2><a name="20150118" href="201501b.html#20150118">2015-01-18 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="201501181" title="201501181" href="201501b.html#201501181">■</a> 
+週刊少年マガジン電子版</h3>
+<p>
+7号を買おうかと思ったらお試し版の0号が無料であったので試してみた。
+</p>
+<p>
+まずはSony Readerだけど16階調とはいえまあまあ読める。<br>
+が、七つの大罪だけは色付きなためだめだめ。<br>
+コントラストなり明るさなり調整しないと見れたもんじゃない。<br>
+というわけでSony Reader実機ではかなり無理がある。<br>
+これはKindleでも同じかもしれない。
+</p>
+<p>
+次にNexus7(2013)上のandroidアプリ。<br>
+Kindleアプリはなぜか目次がない。これが0号だけならいいんだが。<br>
+小説ならなくても順番に読めばいいのでそれほど不便にも思わないかもしれないが、<br>
+週刊マンガならお目当ての漫画だけ読むとかあると思うし目次なしはつらいと思う。
+</p>
+<p>
+次に楽天koboアプリ。<br>
+こちらは目次もありまあ普通に読める。
+</p>
+<p>
+最後にSony Readerアプリ。<br>
+目次あり。さらに目次のお目当ての絵にタッチすればそのマンガに飛ぶ。一番よくできている。
+</p>
+<p>
+Nexus7ですら色付きは読みづらいのでこれだけはなんとかしたほうがいい。<br>
+0号だけかもしれない。
+</p>
+<p>
+ああ、それと0号とは関係なく巻頭グラビアとはじめの一歩の掲載はない。<br>
+これはかなり痛いんじゃなかろうか。
+</p>
+<!-- section end -->
+</div>
+<!-- 2015/01/18 end -->
+
+
+
+<hr class="hide">
+<!-- 2015/01/19 start -->
+<h2><a name="20150119" href="201501b.html#20150119">2015-01-19 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="201501191" title="201501191" href="201501b.html#201501191">■</a> 
+xargsとsedでFizzBuzz #シェル芸</h3>
+<p>
+<a href="https://twitter.com/papiron/status/557204665788411904">これ</a>を見ていてなるほどと思ったので便乗。
+</p>
+<pre>
+% seq 100 | \
+  paste - - - | sed 's/$/Fizz/' | tr '\t' '\n' | \
+  paste - - - - - | sed 's/$/Buzz/' | tr '\t' '\n' | \
+  sed '/zz/s/[0-9]*//' | head -n 100
+</pre>
+<p>
+pasteで3つずつとか5つずつ並べるという発想。<br>
+これで割り算や余りとかの計算しなくて済む。
+</p>
+<pre>
+% seq 10 | paste - - -
+1	2	3
+4	5	6
+7	8	9
+10		
+</pre>
+<p>
+pasteでもいいけど、xargsを使うとタブを改行に置き換える処理も不要になる。
+</p>
+<pre>
+% seq 15|xargs -n3
+1 2 3
+4 5 6
+7 8 9
+10 11 12
+13 14 15
+% seq 15|xargs -n3|sed 's/[^ ]*$/Fizz/'
+1 2 Fizz
+4 5 Fizz
+7 8 Fizz
+10 11 Fizz
+13 14 Fizz
+% seq 15|xargs -n3|sed 's/[^ ]*$/Fizz/'|xargs -n5
+1 2 Fizz 4 5
+Fizz 7 8 Fizz 10
+11 Fizz 13 14 Fizz
+% seq 15|xargs -n3|sed 's/[^ ]*$/Fizz/'|xargs -n5|sed 's/[0-9]*$/Buzz/'
+1 2 Fizz 4 Buzz
+Fizz 7 8 Fizz Buzz
+11 Fizz 13 14 FizzBuzz
+% seq 15|xargs -n3|sed 's/[^ ]*$/Fizz/'|xargs -n5|sed 's/[0-9]*$/Buzz/'|xargs -n1
+1
+2
+Fizz
+4
+Buzz
+Fizz
+7
+8
+Fizz
+Buzz
+11
+Fizz
+13
+14
+FizzBuzz
+</pre>
+<p>
+100のときはFizzの部分をちょっと変える必要あり。's/ [^ ]*$/ Fizz/' のように空白を入れる。
+</p>
+<!-- section end -->
+</div>
+<!-- 2015/01/19 end -->
+
+
+
+<hr class="hide">
+<!-- 2015/01/20 start -->
+<h2><a name="20150120" href="201501b.html#20150120">2015-01-20 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="201501201" title="201501201" href="201501b.html#201501201">■</a> 
+xargsとawkでFizzBuzz #シェル芸</h3>
+<p>
+昨日のは最後に言い訳したりしてるが実は15の倍数以外は全然だめだめだ。<br>
+というわけでsedじゃなくてawkで。
+</p>
+<pre>
+% seq 16|xargs -n3|awk '$3{$3=&quot;Fizz&quot;}1'|xargs -n5|awk '$5{sub(/[0-9]*$/,&quot;Buzz&quot;)}1'|xargs -n1
+1
+2
+Fizz
+4
+Buzz
+Fizz
+7
+8
+Fizz
+Buzz
+11
+Fizz
+13
+14
+FizzBuzz
+16
+</pre>
+
+<!-- section end -->
+</div>
+<!-- 2015/01/20 end -->
+
+<hr>
+<div>
+<a href="201501a.html">&lt;Older(,)</a> | 
+<a href="201501c.html">Newer(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

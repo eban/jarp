@@ -1,0 +1,479 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2007-1-c</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="200701b.html">
+<link rel="next" href="200702a.html">
+
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2007年1月下旬〜</p>
+<hr>
+<div>
+<a href="200701b.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="200702a.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2007/01/21 start -->
+<h2><a name="20070121" href="200701c.html#20070121">2007-01-21 (Sun)</a></h2>
+<!-- 2007-01-22 01:47:50 -->
+
+<div class="entry1">
+<h3><a name="200701211" title="200701211" href="200701c.html#200701211">■</a> 
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-talk/234434">[Ruby] RubyGems 0.9.1</a></h3>
+<p>
+書いてある通りに更新。
+</p>
+<pre>
+% gem update --system
+% gem pristine --all
+</pre>
+<p>
+試しにrailsを1.2.1に上げてみる。
+</p>
+<pre>
+% gem up -y rails
+Updating installed gems...
+Need to update 1 gems from http://gems.rubyforge.org
+.
+complete
+Attempting remote update of rails
+Successfully installed rails-1.2.1
+Successfully installed activesupport-1.4.0
+Successfully installed activerecord-1.15.1
+Successfully installed actionpack-1.13.1
+Successfully installed actionmailer-1.3.1
+Successfully installed actionwebservice-1.2.1
+Installing ri documentation for activesupport-1.4.0...
+Installing ri documentation for activerecord-1.15.1...
+Installing ri documentation for actionpack-1.13.1...
+Installing ri documentation for actionmailer-1.3.1...
+Installing ri documentation for actionwebservice-1.2.1...
+Installing RDoc documentation for activesupport-1.4.0...
+Installing RDoc documentation for activerecord-1.15.1...
+Installing RDoc documentation for actionpack-1.13.1...
+Installing RDoc documentation for actionmailer-1.3.1...
+Installing RDoc documentation for actionwebservice-1.2.1...
+Gems: [rails] updated
+</pre>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200701212" title="200701212" href="200701c.html#200701212">■</a> 
+[TV] あるある</h3>
+<p>
+Clip-OnのEPGだと来週はやる予定になってる。<br>
+気になってテレビ番組表を見ると同じだった。<br>
+単に更新されてないだけか、本当にやるのか？
+</p>
+<!-- section end -->
+</div>
+<!-- 2007/01/21 end -->
+
+
+
+<hr class="hide">
+<!-- 2007/01/22 start -->
+<h2><a name="20070122" href="200701c.html#20070122">2007-01-22 (Mon)</a></h2>
+<!-- 2007-01-23 21:13:44 -->
+
+<div class="entry1">
+<h3><a name="200701221" title="200701221" href="200701c.html#200701221">■</a> 
+[VMware] VMwareへFreeDOSをインストール</h3>
+<p>
+FreeDOSでdjgppが動くかどうか確かめるために、<br>
+VMwareへFreeDOSをインストールしてみた。
+</p>
+
+<p>
+fdfullcd.isoを取ってきてあとは普通にマウント。<br>
+2GBのバーチャルディスクを作ったら勝手にFAT32になった。<br>
+ちゃんとサポートしてるんだな。でもフォーマットに時間がかかりすぎ。<br>
+1GBにしとけばよかったか。
+</p>
+
+<p>
+その後rebootするよと聞かれたからyesと応えたら、<br>
+Invalid Operating System!と言われて立ち上がらない。<br>
+なんだそれは。
+</p>
+<!-- section end -->
+</div>
+<!-- 2007/01/22 end -->
+
+
+
+<hr class="hide">
+<!-- 2007/01/23 start -->
+<h2><a name="20070123" href="200701c.html#20070123">2007-01-23 (Tue)</a></h2>
+<!-- 2007-01-24 01:32:48 -->
+
+<div class="entry1">
+<h3><a name="200701231" title="200701231" href="200701c.html#200701231">■</a> 
+[Linux] subversionがhttp(s) schemeに対応してなかった</h3>
+<p>
+
+<a href="http://redhanded.hobix.com/inspect/superredclothAsAChild.html">SuperRedCloth</a>
+がRedClothの10倍速いというので早速試そうとsvn coしたら<br>
+svn: Unrecognized URL schemeと言われた。<br>
+svn --versionして確認すると確かにra_davがない。<br>
+作ったときの作業ディレクトリが残ってたのでconfig.logを見てみたら<br>
+result: no suitable neon foundと言われてた。<br>
+全然気づいてなかった。<br>
+configure.inを見ると使ったneon 0.26.2が新しすぎで<br>
+NEON_ALLOWED_LISTに含まれてなかった。<br>
+これに0.26.2を追加してautoconfし直してもいいけど、<br>
+--disable-neon-version-checkというオプションがあったのでそれでsvnを作り直し。<br>
+これでやっとsvn coできた。
+</p>
+
+<p>
+この時点でSuperRedClothなんてもうどうでもよくなってたり。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200701232" title="200701232" href="200701c.html#200701232">■</a> 
+[Ruby] gem pristine</h3>
+<p>
+RubyGems 0.9.0から
+</p>
+<pre>
+% rails foo
+% cd foo
+% rake -T
+</pre>
+<p>
+すると
+</p>
+<pre>
+% rake -T
+(in /tmp/foo)
+/tmp/foo/config/boot.rb:29:Warning: require_gem is obsolete.  Use gem instead.
+</pre>
+<p>
+と言われちゃうんだけど、<br>
+gem pristineってbinにインストールされてるやつだけが対象なのかな？
+</p>
+<pre>
+$(gem env gemdir)/gems/rails-1.2.1/environments/boot.rb
+</pre>
+<p>
+を直接書き換えてしまおう。
+</p>
+<!-- section end -->
+</div>
+<!-- 2007/01/23 end -->
+
+
+
+<hr class="hide">
+<!-- 2007/01/24 start -->
+<h2><a name="20070124" href="200701c.html#20070124">2007-01-24 (Wed)</a></h2>
+<!-- 2007-01-25 02:06:02 -->
+
+<div class="entry1">
+<h3><a name="200701241" title="200701241" href="200701c.html#200701241">■</a> 
+[Linux] 古いPCへFC6をインストール</h3>
+<p>
+何度試してみるもxorg-x11-driversで必ず失敗する。<br>
+しかたなしにXなしでインストールしたらあっさり成功した。<br>
+怪しいのはxorg-x11-driversのサイズがなぜか0KBと表示されること。<br>
+ひょっとしたらanacondaのバグなのかもしれない。
+</p>
+
+<p>
+ようやく無事FC6が立ち上がった。続いてXとKDEをyumでインストール。<br>
+注意する点はsudo yumすると環境変数http_proxyがリセットされちゃうので、<br>
+visudoしてenv_keepにhttp_proxyを追加しておく。あとは普通にgroupinstallする。
+</p>
+<pre>
+% sudo yum -y groupinstall 'X Window System' 'KDE (K Desktop Environment)'
+</pre>
+<p>
+200MB弱ダウンロードすると言われ、そのまま放っといたら完璧に忘れて帰ってしまった。<br>
+明日ちゃんとXが立ち上がるかどうか確認しよう。
+</p>
+<!-- section end -->
+</div>
+<!-- 2007/01/24 end -->
+
+
+
+<hr class="hide">
+<!-- 2007/01/25 start -->
+<h2><a name="20070125" href="200701c.html#20070125">2007-01-25 (Thu)</a></h2>
+<!-- 2007-01-26 01:19:25 -->
+
+<div class="entry1">
+<h3><a name="200701251" title="200701251" href="200701c.html#200701251">■</a> 
+[Linux] 古いPCが甦った</h3>
+<p>
+/etc/inittabを書き換えてrunlevelを5にしてreboot。<br>
+おお、ちゃんとXが立ち上がった。KDEだ。<br>
+Xはなんの設定もしてないけど、便利になったもんだな。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200701252" title="200701252" href="200701c.html#200701252">■</a> 
+[Ruby] 128MBのメモリでmake install-doc</h3>
+<p>
+その古いPCはPenIII 1GHz 128MBなんだけど、<br>
+Rubyのtrunkをmake install-docするとElapsed: 55736.435sと表示される。<br>
+15時間だよ。<br>
+で別のマシン(PenIII 600MHz 192MB)だとElapsed: 659.108sだ。11分。<br>
+64MBでこんなに差が出るもんなのか。あ、KDEなんか立ち上げておくからかも。<br>
+また暇なときにでもXなしでやってみよう。
+</p>
+<!-- section end -->
+</div>
+<!-- 2007/01/25 end -->
+
+
+
+<hr class="hide">
+<!-- 2007/01/26 start -->
+<h2><a name="20070126" href="200701c.html#20070126">2007-01-26 (Fri)</a></h2>
+<!-- 2007-01-27 21:02:55 -->
+
+<div class="entry1">
+<h3><a name="200701261" title="200701261" href="200701c.html#200701261">■</a> 
+[VMware] VMwareへFreeDOSをインストール</h3>
+<p>
+
+<a href="200701c.html#200701221">前回</a>のつづき。<br>
+夜中の3時に作業していたためか寝惚けてた。<br>
+rebootはフォーマット直後に必要だったらしく、<br>
+その後にインストール作業が始まるのであった。<br>
+VMwareのbiosの設定がHDD優先になってるのが原因。
+インストールしたらいろいろあって一応立ち上がることは立ち上がったが、<br>
+defaultだとIllegal Instructionで落ちる。<br>
+なかなかうまくいかないな。
+</p>
+<!-- section end -->
+</div>
+<!-- 2007/01/26 end -->
+
+
+
+<hr class="hide">
+<!-- 2007/01/27 start -->
+<h2><a name="20070127" href="200701c.html#20070127">2007-01-27 (Sat)</a></h2>
+<!-- 2007-01-28 02:24:12 -->
+
+<div class="entry1">
+<h3><a name="200701271" title="200701271" href="200701c.html#200701271">■</a> 
+<a href="http://p7zip.sf.net/">[Soft] p7zip 4.44</a></h3>
+<blockquote><dl>
+<dt>
+Changes:
+<dd>
+Speed optimizations for LZMA, Deflate, BZip2, and unRAR.
+Preliminary support for HP-UX. Some fixes.
+</dl></blockquote>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200701272" title="200701272" href="200701c.html#200701272">■</a> 
+<a href="http://www.ntv.co.jp/sekaju/">[TV] 世界一受けたい授業</a></h3>
+<p>
+収録はいつだったのか？
+</p><blockquote><dl>
+<dt>
+柴田理恵
+<dd>
+「よくあの健康ブームで健康にいいこれは痩せるとかこれは何にいい
+とかいうのが出ると、わーっとみんなで行って、そうすっと必ずその後であれ
+は体に本当はよくないんだという記事がわーっと出て、それで、これは本当は
+どうなのか？」
+</dl></blockquote><p>
+司会は堺正章というのも皮肉というか。明日結局またスタ☆メン拡大らしいよ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2007/01/27 end -->
+
+
+
+<hr class="hide">
+<!-- 2007/01/28 start -->
+<h2><a name="20070128" href="200701c.html#20070128">2007-01-28 (Sun)</a></h2>
+<!-- 2007-01-29 00:58:31 -->
+
+<div class="entry1">
+<h3><a name="200701281" title="200701281" href="200701c.html#200701281">■</a> 
+<a href="http://mkerbiquet.free.fr/asm-xml/">[Soft] AsmXml 0.1</a></h3>
+<blockquote><p>
+AsmXml is a very fast XML parser and decoder for x86 platforms. It achieves
+high speed by using the following features:
+<ul>
+<li>Support of an XML subset only
+<li>Written in pure assembler
+<li>Optimized memory accesses
+<li>Parsing and decoding at the same time
+</ul>
+To give an idea of the relative speed of AsmXml, the fastest open source XML
+parsers process between 10 and 30 MBs of XML per seconds while AsmXml
+processes around 200 MBs per seconds (tested on an Athlon XP 1800+).
+</p></blockquote><p>
+そこまでするか。
+</p>
+<!-- section end -->
+</div>
+<!-- 2007/01/28 end -->
+
+
+
+<hr class="hide">
+<!-- 2007/01/29 start -->
+<h2><a name="20070129" href="200701c.html#20070129">2007-01-29 (Mon)</a></h2>
+<!-- 2007-01-30 21:50:04 -->
+
+<div class="entry1">
+<h3><a name="200701291" title="200701291" href="200701c.html#200701291">■</a> 
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-talk/236687">[Ruby] FastRI 0.3.0: standalone mode (qri, DRb not needed), additional</a></h3>
+<p>
+qriの速いこと速いこと。すばらしい。<br>
+サーバは肝心なときに立ち上がってなかったりするしね。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200701292" title="200701292" href="200701c.html#200701292">■</a> 
+[Mail] spam除けspam</h3>
+<p>
+URLに*を含んでいてRemove &quot;*&quot; to make the link working!と書いてあるspam。<br>
+何の冗談だ？spamに困っているspammer?
+</p>
+<!-- section end -->
+</div>
+<!-- 2007/01/29 end -->
+
+
+
+<hr class="hide">
+<!-- 2007/01/30 start -->
+<h2><a name="20070130" href="200701c.html#20070130">2007-01-30 (Tue)</a></h2>
+<!-- 2007-01-31 02:05:33 -->
+
+<div class="entry1">
+<h3><a name="200701301" title="200701301" href="200701c.html#200701301">■</a> 
+<a href="http://busybox.net/">[Soft] BusyBox 1.3.2</a></h3>
+<blockquote><dl>
+<dt>
+Changes:
+<dd>
+This release has a CONFIG_DESKTOP option which enables features
+needed for busybox usage on a desktop machine. For example, several less
+frequently used options are enabled in find, chmod, and chown, and od is
+significantly bigger but matches GNU coreutils. It is intended to
+eventually make busybox a viable alternative for &quot;standard&quot; utilities for
+slightly adventurous desktop users. 
+</dl></blockquote>
+<!-- section end -->
+</div>
+<!-- 2007/01/30 end -->
+
+
+
+<hr class="hide">
+<!-- 2007/01/31 start -->
+<h2><a name="20070131" href="200701c.html#20070131">2007-01-31 (Wed)</a></h2>
+<!-- 2007-02-12 22:03:43 -->
+
+<div class="entry1">
+<h3><a name="200701311" title="200701311" href="200701c.html#200701311">■</a> 
+<a href="http://golf.shinh.org/">[CodeGolf] anarchy golf</a></h3>
+<p>
+意外にawkが楽しい。sedは入力がないとどうにもならないのが残念。<br>
+sedに有利な空行を消すという問題を上げといた。<br>
+やっぱ簡単な問題があるといいよね。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200701312" title="200701312" href="200701c.html#200701312">■</a> 
+<a href="http://shinh.skr.jp/m/?date=20070201#p01">[CodeGolf] CRLF</a></h3>
+<p>
+w3mでアップロードしたんだけど、それがまずかったのかな。<br>
+実は自分で作ったスクリプトがfailしてて困ってた。<br>
+対応ありがとうございます。
+</p>
+<!-- section end -->
+</div>
+<!-- 2007/01/31 end -->
+
+<hr>
+<div>
+<a href="200701b.html">&lt;Prev(,)</a> | 
+<a href="200702a.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

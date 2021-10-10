@@ -1,0 +1,329 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2011-11-c</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="201111b.html">
+<link rel="next" href="201112a.html">
+
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2011年11月下旬〜</p>
+<hr>
+<div>
+<a href="201111b.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="201112a.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2011/11/21 start -->
+<h2><a name="20111121" href="201111c.html#20111121">2011-11-21 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="201111211" title="201111211" href="201111c.html#201111211">■</a> 
+RSS生成スクリプトが旬の境界に対応してなかった</h3>
+<p>
+先日.htaccessで設定して未来の日記を消したわけだけど、<br>
+その存在を前提にしていたRSS生成スクリプトがエラーになった。<br>
+なんか、たまにリンク先が未来のあれになってるって件はこれが原因だったのかもしれない。<br>
+これで直ったんなら幸い。
+</p>
+<!-- section end -->
+</div>
+<!-- 2011/11/21 end -->
+
+
+
+<hr class="hide">
+<!-- 2011/11/22 start -->
+<h2><a name="20111122" href="201111c.html#20111122">2011-11-22 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="201111221" title="201111221" href="201111c.html#201111221">■</a> 
+2日連続で帰りの電車が止まる</h3>
+<p>
+昨日は乗った途端に1時間止まるとアナウンス。はっきり言うのは珍しい。<br>
+会社に戻るかと思ったが、SUICAだと入った駅から出られないんだよなあ。<br>
+駅員に何とかしてもらおうと思ったら、すでにものすごい行列ができあがってた。<br>
+まあ、その直後山手内回りが動き出したからなんとかなったが。
+</p>
+<p>
+で、今日は運良く座れたので気持ちよく寝てたんだけど、<br>
+なんか異様な雰囲気で起きたら、この電車はこのまま回送になるとかアナウンス。<br>
+なんだよそれー。またか。まあ、まだ選択肢がいろいろある赤羽だったのはよかったが。
+</p>
+<!-- section end -->
+</div>
+<!-- 2011/11/22 end -->
+
+
+
+<hr class="hide">
+<!-- 2011/11/23 start -->
+<h2><a name="20111123" href="201111c.html#20111123">2011-11-23 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="201111231" title="201111231" href="201111c.html#201111231">■</a> 
+Perlのglobのquoteの仕方ではまった</h3>
+<p>
+空白を含むパスでglobブレース展開するにはquoteしてやらないといけないが、<br>
+安易に&quot;&quot;とか使ったら空白を含まないファイル名ではまった。
+</p>
+<pre>
+% perl -E '$x=&quot;a b&quot;;say join $/, glob qq($x/{foo,bar})'
+a
+b/foo
+b/bar
+% perl -E '$x=&quot;a b&quot;;say join $/, glob qq(&quot;$x&quot;/{foo,bar})'
+a b/foo
+a b/bar
+</pre>
+<p>
+と、&quot;&quot;を使えばうまいこといくようだと思ったら、空白を含まないと
+</p>
+<pre>
+% perl -E '$x=&quot;ab&quot;;say join $/, glob qq(&quot;$x&quot;/{foo,bar})' 
+&quot;ab&quot;/foo
+&quot;ab&quot;/bar
+</pre>
+<p>
+のように&quot;&quot;が残ってしまう。なんで空白のありなしで挙動が変わるのか。<br>
+とりあえずはquotemeta(\Q, \E)で回避可能。
+</p>
+<pre>
+% perl -E '$x=&quot;a b&quot;;say join $/, glob qq(\Q$x\E/{foo,bar})'
+a b/foo
+a b/bar
+% perl -E '$x=&quot;ab&quot;;say join $/, glob qq(\Q$x\E/{foo,bar})' 
+ab/foo
+ab/bar
+</pre>
+<!-- section end -->
+</div>
+<!-- 2011/11/23 end -->
+
+
+
+<hr class="hide">
+<!-- 2011/11/24 start -->
+<h2><a name="20111124" href="201111c.html#20111124">2011-11-24 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="201111241" title="201111241" href="201111c.html#201111241">■</a> 
+cygwinでMy Documentsにアクセスしやすくする</h3>
+<p>
+ln -sでもいいと思うけど、mountで。/etc/fstab.d/$USERへ
+</p>
+<pre>
+C:/Documents\040and\040Settings/ユーザー名/My\040Documents /home/eban/md ntfs binary,auto 0 0
+</pre>
+<p>
+のように書けば~/mdでいける。注意する点は空白は\040のように8進数で表現すること。<br>
+\x20のような16進数では認識してくれない。\がディレクトリの区切りとみなされてしまう。
+</p>
+<!-- section end -->
+</div>
+<!-- 2011/11/24 end -->
+
+
+
+<hr class="hide">
+<!-- 2011/11/25 start -->
+<h2><a name="20111125" href="201111c.html#20111125">2011-11-25 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="201111251" title="201111251" href="201111c.html#201111251">■</a> 
+Ubuntu 11.10でFirefox8に更新したらなぜかメニューが英語に</h3>
+<p>
+firefox-locale-jaは当然入っている。なんでそうなるのかよくよく調べてみる。<br>
+[Tools]-[Add-ons]-[Languages]を見るとJapanese language packがdisableになってた。<br>
+というわけで確認してみるといいよ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2011/11/25 end -->
+
+
+
+<hr class="hide">
+<!-- 2011/11/26 start -->
+<h2><a name="20111126" href="201111c.html#20111126">2011-11-26 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="201111261" title="201111261" href="201111c.html#201111261">■</a> 
+<a href="http://calibre-ebook.com/download_linux">Calibre</a></h3>
+<p>
+なんとなくSony Reader PRS-T1買って話題のCalibreを使ってるわけだけど、これは便利だな。<br>
+Ubuntuにもパッケージはあるが、さすがにまだ対応してないので
+<a href="http://calibre-ebook.com/download_linux">calibre - Download for linux</a>に従って進めた。<br>
+とりあえずは日本語のニュース系フィードが最初からあるのでこれを取り込んでいる。<br>
+本文も取ってきてるので読むのが楽だ。あちこちばけばけではあるが。
+</p>
+<!-- section end -->
+</div>
+<!-- 2011/11/26 end -->
+
+
+
+<hr class="hide">
+<!-- 2011/11/27 start -->
+<h2><a name="20111127" href="201111c.html#20111127">2011-11-27 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="201111271" title="201111271" href="201111c.html#201111271">■</a> 
+<a href="http://www.atdot.net/~ko1/file/ruby/193oiwai/list">Ruby 1.9.3 リリースをお祝いする会</a></h3>
+<p>
+笹田研研究発表会から出席。結局Rubyの話なので楽しんだ。<br>
+笹田先生の異様なテンションに圧倒された。<br>
+17:15ぐらいから座談会。1.9.3とか2.0とか。
+</p>
+<p>
+なんか後半予想で盛り上がる。まあ、あれはネタなので本気にしないように。
+</p>
+<!-- section end -->
+</div>
+<!-- 2011/11/27 end -->
+
+
+
+<hr class="hide">
+<!-- 2011/11/28 start -->
+<h2><a name="20111128" href="201111c.html#20111128">2011-11-28 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="201111281" title="201111281" href="201111c.html#201111281">■</a> 
+Firefoxでタブの検索</h3>
+<p>
+ロケーションバーで&quot;gmail&quot;とか入力すると、<br>
+補完候補に他のタブで開いているgmailが「タブを表示」という感じで現われるようになってた。<br>
+いつからできるようになったか不明だが地味に便利だな、これ。<br>
+その機能のために入れていた
+<a href="https://addons.mozilla.org/ja/firefox/addon/265081/">TabFind</a>はもはや必要なくなったので消す。<br>
+ついでにキーバインドがぶつかっていたXUL/Migemoを戻すか。
+</p>
+<!-- section end -->
+</div>
+<!-- 2011/11/28 end -->
+
+
+
+<hr class="hide">
+<!-- 2011/11/29 start -->
+<h2><a name="20111129" href="201111c.html#20111129">2011-11-29 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="201111291" title="201111291" href="201111c.html#201111291">■</a> 
+<a href="http://www.commandlinefu.com/commands/view/9772/prettier-cal-command">prettier &quot;cal&quot; command</a></h3>
+<p>
+Ubuntuでもテストしたとか書いてあるが、元々ハイライト表示してるのでcal -hじゃないとだめ。<br>
+それよりも1日になると+%dは01になるから破綻する。単に+%eじゃ&quot; 1&quot;に色がつくのでやっぱだめ。<br>
+</p>
+<pre>
+% cal -h | egrep -C7 --color=auto &quot;(^| )$(date +%e)&quot;
+</pre>
+<p>
+ぐらいかな。
+</p>
+<p>
+いや
+</p>
+<pre>
+% cal -h | egrep -C7 --color=auto -w $(date +%e)
+</pre>
+<p>
+で十分か。
+</p>
+<!-- section end -->
+</div>
+<!-- 2011/11/29 end -->
+
+
+
+<hr class="hide">
+<!-- 2011/11/30 start -->
+<h2><a name="20111130" href="201111c.html#20111130">2011-11-30 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="201111301" title="201111301" href="201111c.html#201111301">■</a> 
+地獄の9up</h3>
+<p>
+地獄のミサワの画像は240x320なので、4upでもまだあまる。9upにしてみた。
+</p>
+<pre>
+% montage -geometry x247 -type GrayScale -tile 3x3 -frame 2x2 -mattecolor black images/00[1-9]*.gif 001-009.jpg
+</pre>
+<p>
+これを84回繰り返せばいいが、とても面倒くさい。
+</p>
+<pre>
+% for i in `seq -f &quot;%03g&quot; 1 9 756`;do j=`printf &quot;%03d&quot; $[i+8]`;echo $j;montage -frame 2x2 -mattecolor black -geometry x247 -type GrayScale -tile 3x3 images/{$i..$j}*.gif jigokuno-9up/$i-$j.jpg;done
+</pre>
+<p>
+それにしても012だけなんで231x302なんだよ!
+</p>
+<p>
+参考:
+<a href="http://june29.jp/2010/12/17/glamorous-rubysappororecipe/">地獄のRuby札幌の「女に惚れさす逆引きレシピ集」 - 準二級.jp</a></p>
+<!-- section end -->
+</div>
+<!-- 2011/11/30 end -->
+
+<hr>
+<div>
+<a href="201111b.html">&lt;Prev(,)</a> | 
+<a href="201112a.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

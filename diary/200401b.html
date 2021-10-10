@@ -1,0 +1,457 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2004-1-b</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="200401a.html">
+<link rel="next" href="200401c.html">
+
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2004年1月中旬〜</p>
+<hr>
+<div>
+<a href="200401a.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="200401c.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2004/01/11 start -->
+<h2><a name="20040111" href="200401b.html#20040111">2004-01-11 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="200401111" title="200401111" href="200401b.html#200401111">■</a> 
+[Windows] Windows Media Encoder 9</h3>
+<p>
+1日遊ぶ。テレビをリアルタイムで録画するなら、
+品質ベースVBR, 640x480, キーフレーム間隔4, ビデオ品質70あたりで十分。
+Windows Meida Playerは1.4, 2倍速で再生できて便利だ。
+</p>
+
+<p>
+DivXと大して変わらないし、WME9でもいいのかもしれない。
+それにしても自分でインストールした覚えがないのはどうしたことか？
+</p>
+<!-- section end -->
+</div>
+<!-- 2004/01/11 end -->
+
+
+
+<hr class="hide">
+<!-- 2004/01/12 start -->
+<h2><a name="20040112" href="200401b.html#20040112">2004-01-12 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="200401121" title="200401121" href="200401b.html#200401121">■</a> 
+<a href="http://www.gnu.org/software/sed/">[GNU] sed 4.0.9</a></h3>
+<p>
+例によってmultibyte対応をoff。
+</p>
+<pre>
+% ac_cv_header_wchar_h=no ac_cv_func_mbrtowc=no \
+  CC='/usr/i386-linux-uclibc/usr/bin/gcc -static' \
+  CFLAGS=-Os CXXFLAGS=-Os ./configure \
+  --disable-dependency-tracking --disable-nls --prefix=/usr
+% make all check
+% sudo make install
+</pre>
+
+<!-- section end -->
+</div>
+<!-- 2004/01/12 end -->
+
+
+
+<hr class="hide">
+<!-- 2004/01/13 start -->
+<h2><a name="20040113" href="200401b.html#20040113">2004-01-13 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="200401131" title="200401131" href="200401b.html#200401131">■</a> 
+<a href="http://raa.ruby-lang.org/project/eruby/">[Ruby] eruby 1.0.5</a></h3>
+<p>
+今頃気づいて更新。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200401132" title="200401132" href="200401b.html#200401132">■</a> 
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-core/2254">[Ruby] install-doc問題</a></h3>
+<pre>
+1. minirubyではsyck.soをrequireできない(Windows等)
+2. rubyを動かすにはlibuby.soの場所を環境変数で指定する必要がある
+  (rubytest.rbを参照)
+3. インストールしてからrubyを起動するのは、DESTDIRを考えると結局は2
+   に帰着する
+4. というわけで、一時的に拡張ライブラリをどこかにインストールしてか
+   らrdocを起動する案となる
+</pre>
+<p>
+test/runner.rbもインストールせずに実行できるという布石でもあるわけだが。
+</p>
+<!-- section end -->
+</div>
+<!-- 2004/01/13 end -->
+
+
+
+<hr class="hide">
+<!-- 2004/01/14 start -->
+<h2><a name="20040114" href="200401b.html#20040114">2004-01-14 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="200401141" title="200401141" href="200401b.html#200401141">■</a> 
+[Windows][Ruby] Borland make</h3>
+<p>
+また忘れてしまうので書いとこう。
+</p>
+<pre>
+% echo 'all:' &gt;Makefile
+% nmake
+% bmake
+MAKE Version 5.2  Copyright (c) 1987, 2000 Borland
+Fatal: 'all' does not exist - don't know how to make it
+% echo 'all: Makefile' &gt;Makefile
+% bmake
+MAKE Version 5.2  Copyright (c) 1987, 2000 Borland
+% printf 'all:\n\trem\n' &gt;Makefile
+% bmake
+MAKE Version 5.2  Copyright (c) 1987, 2000 Borland
+        rem
+</pre>
+<p>
+のようにBorland makeは依存するファイルかアクションを書かないとエラーになってしまう。
+これがext/の下でdummyのMakefileを作るときにMakefileが依存の対象になってる理由。
+Makefileじゃなくてもいいんだけど、必ず存在するファイルとしては確実。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200401142" title="200401142" href="200401b.html#200401142">■</a> 
+<a href="http://www.holonlinux.com/products/linuxdrive/linuxdrive/">[Linux][Windows] LinuxDrive for Windows</a></h3>
+<p>
+Windowsからext2/ext3のファイルシステムにアクセスするツール。
+Sofmapで1380円だったので買ってみた。
+ここ2週間ほど山積みのままであまり売れてない様子なのが気になった。
+定価が9800円だもんなあ。逆に安すぎて躊躇する。
+</p>
+
+<p>
+まずはVMware上のWindowsで試す。
+新たに1GBほどのディスクを追加して、
+LinuxDriveでext3を指定してフォーマットしてみる。
+それをマウントするとlost+foundが存在してる。
+mkdir tmpもokだ。でもこれって本当にext3なのか？
+どうやって確認しよう。
+そうだ。KNOPPIX 3.3をそのVMware上で起動してマウントすればわかるな。
+そもそもKNOPPIXがVMware上で動くかどうかも疑問だが、やってみよう。
+あっさりKDEまでというか音も出てる。
+マウントしてみるとext3になってた。
+使えてるようだ。いやーやっぱKNOPPIXすばらしいよ(ってそっちじゃない。
+</p>
+<!-- section end -->
+</div>
+<!-- 2004/01/14 end -->
+
+
+
+<hr class="hide">
+<!-- 2004/01/15 start -->
+<h2><a name="20040115" href="200401b.html#20040115">2004-01-15 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="200401151" title="200401151" href="200401b.html#200401151">■</a> 
+<a href="http://www-6.ibm.com/jp/developerworks/linux/031226/j_l-cpinv.html">[Perl] PerlでのInversionリスト</a></h3>
+<p>
+あとで読もう。なんか「ビット・チャネル」という文字が見えるが
+<a href="http://i.loveruby.net/w/BitChannel.html">BitChannel</a>とは関係ない(たぶん)。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200401152" title="200401152" href="200401b.html#200401152">■</a> 
+<a href="http://znz.jin.gr.jp/samidare/">五月雨</a></h3>
+<p>
+名前がないのも寂しいので
+</p>
+<pre>
+&lt;meta name=&quot;author&quot; content=&quot;わたなべひろふみ&quot;&gt;
+</pre>
+<p>
+を追加。
+</p>
+<!-- section end -->
+</div>
+<!-- 2004/01/15 end -->
+
+
+
+<hr class="hide">
+<!-- 2004/01/16 start -->
+<h2><a name="20040116" href="200401b.html#20040116">2004-01-16 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="200401161" title="200401161" href="200401b.html#200401161">■</a> 
+<a href="http://www.kuroutoshikou.com/products/drive/gachan-alset.html">[PC] リムーバブルHDDケース</a></h3>
+<p>
+大宮に新しくできたビックカメラに寄ったついでに、
+玄人志向のリムーバブルHDDケースを買ってみた。1980円。
+古いマシンに13GB, 20GB, 40GBのHDDがあったんだけど、
+どうしようか悩んでいたんだよね。
+これで簡単に交換できる。
+あ、底にファンもついてる。意外とやるじゃん。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200401162" title="200401162" href="200401b.html#200401162">■</a> 
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-talk/90000">[Ruby] ruby-talk 90000</a></h3>
+<p>
+90000を越えた。80000から5ヶ月。
+</p>
+<!-- section end -->
+</div>
+<!-- 2004/01/16 end -->
+
+
+
+<hr class="hide">
+<!-- 2004/01/17 start -->
+<h2><a name="20040117" href="200401b.html#20040117">2004-01-17 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="200401171" title="200401171" href="200401b.html#200401171">■</a> 
+<a href="http://www.gnu.org/software/autoconf/">[GNU] Autoconf 2.59</a></h3>
+<p>
+更新。Rubyも問題なし。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200401172" title="200401172" href="200401b.html#200401172">■</a> 
+[Ruby][Cygwin] RUBYLIB</h3>
+<p>
+なぜかCygwinで
+</p>
+<pre>
+% RUBYLIB=/tmp:/lib ./ruby -ve 'p $:[0]'
+ruby 1.9.0 (2004-01-17) [i386-cygwin]
+&quot;/tmp:/lib&quot;
+</pre>
+<p>
+のように分割されないことに気づく。調査した結果、defines.hで
+</p>
+<pre>
+#ifdef __CYGWIN__
+#undef _WIN32
+#endif
+</pre>
+<p>
+となってるのはいいが、
+DOSISHマクロを定義する後にあるのがまずいことがわかった。
+というわけで、前に移動。
+</p>
+<!-- section end -->
+</div>
+<!-- 2004/01/17 end -->
+
+
+
+<hr class="hide">
+<!-- 2004/01/18 start -->
+<h2><a name="20040118" href="200401b.html#20040118">2004-01-18 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="200401181" title="200401181" href="200401b.html#200401181">■</a> 
+[Ruby][Cygwin] translate_char()</h3>
+<p>
+Cygwinで
+</p>
+<pre>
+% ruby -e 'p $:[0]'
+&quot;./lib/ruby/site_ruby/1.9&quot;
+</pre>
+<p>
+のようになってしまうとなひさんから報告があった。
+これはruby.cでGetModuleFileName()した結果をtanslate_char()で変換してないからで、
+<a href="200401b.html#200401172">昨日の変更</a>の副作用。DOSISHと同じようにCygwinも変換するように変更。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200401182" title="200401182" href="200401b.html#200401182">■</a> 
+<a href="http://www.spamassassin.org/">[Mail] SpamAssassion 2.62</a></h3>
+<p>
+heliumのSpamAssassinを更新。
+</p>
+<!-- section end -->
+</div>
+<!-- 2004/01/18 end -->
+
+
+
+<hr class="hide">
+<!-- 2004/01/19 start -->
+<h2><a name="20040119" href="200401b.html#20040119">2004-01-19 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="200401191" title="200401191" href="200401b.html#200401191">■</a> 
+[Worm] WORM_BAGLE.A</h3>
+<p>
+9通来た。なぜBEAGLEじゃないのだ？
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200401192" title="200401192" href="200401b.html#200401192">■</a> 
+<a href="http://cygwin.com/ml/cygwin-announce/2004-01/msg00010.html">[Cygwin] [ANNOUNCEMENT] Updated: cygwin-1.5.6-1</a></h3>
+<pre>
+- Implement mknod.  (Christopher Faylor)
+</pre>
+<p>
+ってのはなんか怪しいな。
+</p>
+<pre>
+- Implement getprogname, setprogname.  (Corinna Vinschen)
+</pre>
+<p>
+これで、
+<a href="200301a.html#200301054">Rubyの例の問題</a>は解決するかな？
+</p>
+<pre>
+- Implement flock. (Nicholas Wourms)
+</pre>
+<p>
+おぉ。flockも実装されたか。
+</p>
+<!-- section end -->
+</div>
+<!-- 2004/01/19 end -->
+
+
+
+<hr class="hide">
+<!-- 2004/01/20 start -->
+<h2><a name="20040120" href="200401b.html#20040120">2004-01-20 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="200401201" title="200401201" href="200401b.html#200401201">■</a> 
+<a href="http://use.perl.org/articles/04/01/16/189250.shtml">[Perl] Perl 5.8.3</a></h3>
+<p>
+やっとインストール。
+</p>
+<pre>
+% ./configure.gnu -Dcc=gcc -Dccflags=-DDEBUGGING
+% make -j2 all test install
+make -j2 all test install  585.54s user 35.43s system 118% cpu 8:44.50 total
+</pre>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200401202" title="200401202" href="200401b.html#200401202">■</a> 
+[Ruby][Cygwin][MinGW] Cygwin 1.5.6とccache</h3>
+<p>
+Cygwin 1.5.6の環境でMinGW版rubyの検証。
+--with-gcc='ccache gcc -mno-cygwin'を指定してのconfigureは問題なし。
+でもmakeするとext/cursesの-ltinfoのチェックで止まってしまう。
+どうもhave_headerは大丈夫なんだけど、have_libraryがだめみたいだ。
+うーむ。ccacheを外せば問題ないんだよなあ。
+</p>
+
+<p>
+gdbでattach pidしてみると
+getprogname()を呼んだあたりで止まってることはわかったんだけど、
+それ以上はよくわからず。
+</p>
+
+<p>
+で試しにrbconfig.rbを書き換えて
+</p>
+<pre>
+ccache strace -o strace.log gcc -mno-cygwin
+</pre>
+<p>
+のようにstraceで様子を見てみようと思ったら、進んでしまったのだよ、これが。
+しかもstraceは常に真を返すからチェックにならない。
+それにしてもccacheってこんな感じでもちゃんと動くんだな。
+</p>
+<!-- section end -->
+</div>
+<!-- 2004/01/20 end -->
+
+<hr>
+<div>
+<a href="200401a.html">&lt;Prev(,)</a> | 
+<a href="200401c.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

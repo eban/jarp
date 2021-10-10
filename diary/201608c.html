@@ -1,0 +1,409 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2016-8-c</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="201608b.html">
+<link rel="next" href="201609a.html">
+
+<link rel="stylesheet" type="text/css" href="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.css">
+<script async type="text/javascript" src="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.js"></script>
+<script type="text/javascript">
+<!--       
+$(document).ready(function() {
+  prettyPrint();
+});
+-->
+</script>
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2016年8月下旬〜</p>
+<hr>
+<div>
+<a href="201608b.html" accesskey=",">&lt;Older(,)</a> | 
+<a href="201609a.html" accesskey=".">Newer(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2016/08/27 start -->
+<h2><a name="20160827" href="201608c.html#20160827">2016-08-27 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="201608271" title="201608271" href="201608c.html#201608271">■</a> 
+第24回シェル芸勉強会にリモートで参加</h3>
+<p>
+<a href="https://blog.ueda.asia/?p=8639">【問題のみ】第24回◯◯o◯裏番組シェル芸勉強会 – 上田ブログ</a><br>
+8月だから暑いと思い、出掛けるのが面倒という理由で申し込まなかったら、<br>
+8月とは思えないほど涼しい日となった。
+
+</p>
+<h4><a name="201608271S1" href="201608c.html#201608271S1">_</a> <strong>Q1 玉子と卵の数</strong>: </h4>
+<div class="sub">
+<p>
+これのキモは連想配列の初期化にある。<br>
+もともとのawkだと配列はdeleteできないが、gawkやmawkだといける。
+</p>
+<pre>
+% cat Q1 | gawk '{for(i=1;i&lt;=NF;i++)a[$i]++;for(k in a)printf &quot;%s &quot;, k&quot;:&quot;a[k];print &quot;&quot;;delete a}'
+玉子:5 卵:1 
+玉子:3 卵:3 
+玉子:4 卵:2 
+玉子:1 卵:5 
+玉子:2 卵:1 
+</pre>
+<p>
+mawkはdelete(a)とは書けない。
+</p>
+<p>
+gsubは置換した数を返すので、数えるのにも使える。
+</p>
+<pre>
+% cat Q1 | awk '{print &quot;玉子:&quot; gsub(&quot;玉子&quot;,&quot;&quot;), &quot;卵:&quot; gsub(&quot;卵&quot;,&quot;&quot;)}' 
+玉子:5 卵:1
+玉子:3 卵:3
+玉子:4 卵:2
+玉子:1 卵:5
+玉子:2 卵:1
+</pre>
+<p>
+まあ、これでいいのかもしれない。
+</p>
+<p>
+同じことをRubyで。
+</p>
+<pre>
+% cat Q1 | ruby -lne 'print &quot;玉子:&quot;, $_.count(&quot;玉&quot;), &quot; 卵:&quot;, $_.count(&quot;卵&quot;)'  
+玉子:5 卵:1
+玉子:3 卵:3
+玉子:4 卵:2
+玉子:1 卵:5
+玉子:2 卵:1
+</pre>
+<p>
+count(&quot;玉子&quot;)としてしまうと、&quot;玉&quot;と&quot;子&quot;の数の合計になるので2倍になってしまう。
+</p>
+<p>
+そういう方針だとこれでもいいのか。
+</p>
+<pre>
+% cat Q1 | while read a;do echo 玉子:$(echo $a|grep -o .|grep -c 玉) 卵:$(echo $a|grep -o .|grep -c 卵);done
+玉子:5 卵:1
+玉子:3 卵:3
+玉子:4 卵:2
+玉子:1 卵:5
+玉子:2 卵:1
+</pre>
+<p>
+最後に無理矢理uniq -cを使う方法。
+</p>
+<pre>
+% cat Q1 | while read a; do echo $a | grep -o '玉子\|卵' | sort | uniq -c | xargs -n4; done | awk '{print $2 &quot;:&quot; $1, $4 &quot;:&quot; $3}'
+% cat Q1 | xargs -L1 sh -c 'echo &quot;$@&quot; | grep -o &quot;玉子\|卵&quot; | sort | uniq -c' - | xargs -n4 | awk '{print $2 &quot;:&quot; $1, $4 &quot;:&quot; $3}'
+% cat Q1 | sed 's/.*/echo &amp; | grep -o &quot;玉子\\|卵&quot; | sort | uniq -c/' | sh | xargs -n4 | awk '{print $2 &quot;:&quot; $1, $4 &quot;:&quot; $3}
+</pre>
+<p>
+sedで変換してshに食わせるほうがちょっと短い。
+</p>
+</div>
+<!-- section end -->
+</div>
+<!-- 2016/08/27 end -->
+
+
+
+<hr class="hide">
+<!-- 2016/08/28 start -->
+<h2><a name="20160828" href="201608c.html#20160828">2016-08-28 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="201608281" title="201608281" href="201608c.html#201608281">■</a> 
+<a href="https://blog.ueda.asia/?p=8639">Q2 へのへのもへじのuniq #シェル芸</a></h3>
+<p>
+sortせずにuniqする。awkでは有名なテクニック。
+</p>
+<pre>
+% grep -o . Q2 | awk '!a[$0]++'
+へ
+の
+も
+じ
+% grep -o . Q2 | awk '!a[$0]++' | paste -sd ''
+へのもじ
+</pre>
+<p>
+といわけで縦を横にする方法をいくつか。<br>
+tr -d '\n'では最後の改行も消えてちょっと見栄えが悪い。<br>
+そこでpaste -sd ''となる。<br>
+次にORS=&quot;&quot;で改行が消えることを利用する方法。
+</p>
+<pre>
+% grep -o . Q2 | awk '!a[$0]++' ORS= | xargs
+へのもじ
+</pre>
+<p>
+xargsで改行を追加している。awk 1でもok。
+</p>
+<pre>
+% grep -o . Q2 | awk '!a[$0]++' ORS= | awk 1
+へのもじ
+</pre>
+<p>
+xargsでひとまとめにして、空白を削除。
+</p>
+<pre>
+% grep -o . Q2 | awk '!a[$0]++' | xargs | tr -d ' '
+へのもじ
+</pre>
+<p>
+コマンド置換を利用して、空白削除。
+</p>
+<pre>
+% echo $(grep -o . Q2 | awk '!a[$0]++') | tr -d ' '
+へのもじ
+</pre>
+<p>
+Rubyで。Rubyは-F &quot;&quot;とはできないので小細工が必要。
+</p>
+<pre>
+% ruby -F\| -pale '$_=$F.uniq*&quot;&quot;' Q2
+へのもじ
+</pre>
+<p>
+nlで元の順番を保存してsort -uする方法。
+<pre>
+% grep -o . Q2 | nl | sort -uk2,2 | sort -n | cut -f2 | paste -sd ''
+へのもじ
+</pre>
+</p>
+<p>
+sedで。
+</p>
+<pre>
+% sed -r ':;s/((.).*)\2/\1/;t' Q2 
+へのもじ
+</pre>
+<p>
+最後にPerlで。なにやってるのかよくわからないと思うが、おれもよくわからない。
+</p>
+<pre>
+% perl -Mopen=:utf8 -CIO -pe 's/./$&amp;x~$`!~~$&amp;/ge' Q2
+へのもじ
+</pre>
+<p>
+$`がマッチ文字列の前の部分なのでそこにマッチしたものがなければx1して、<br>
+あったらx0して消してるという感じがするが、それだと~が多すぎる気がする。
+</p>
+<!-- section end -->
+</div>
+<!-- 2016/08/28 end -->
+
+
+
+<hr class="hide">
+<!-- 2016/08/29 start -->
+<h2><a name="20160829" href="201608c.html#20160829">2016-08-29 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="201608291" title="201608291" href="201608c.html#201608291">■</a> 
+<a href="https://blog.ueda.asia/?p=8639">Q3 金 #シェル芸</a></h3>
+<p>
+基本的には模範解答と同じ。
+</p>
+<pre>
+% sort Q3 | awk 'l!=$1{print &quot;%%&quot;;l=$1};1'; echo %%
+%%
+キム タオル
+キム ワイプ
+%%
+金 正男
+金 正日
+金 日成
+%%
+</pre>
+<p>
+あまり別解を思いつかなかったので、jq 1.5で。
+</p>
+<pre>
+% jq -srR 'split(&quot;\n&quot;)|group_by(split(&quot; &quot;)[0])|&quot;%%&quot;,.[1][],&quot;%%&quot;,.[2][],&quot;%%&quot;' Q3 
+%%
+キム ワイプ
+キム タオル
+%%
+金 日成
+金 正日
+金 正男
+%%
+</pre>
+<p>
+なんか順番違うけど気にしない。<br>
+意外にわかりやすい。<br>
+例のバグっぽい仕様を考慮して1.4でも動くようにすると、こんな感じ。
+</p>
+<pre>
+% jq -s -r -R 'split(&quot;\n&quot;)|group_by(split(&quot; &quot;)[0])|reverse|&quot;%%&quot;,.[1][],&quot;%%&quot;,.[0][],&quot;%%&quot;' Q3
+%%
+キム ワイプ
+キム タオル
+%%
+金 日成
+金 正日
+金 正男
+%%
+</pre>
+<!-- section end -->
+</div>
+<!-- 2016/08/29 end -->
+
+
+
+<hr class="hide">
+<!-- 2016/08/30 start -->
+<h2><a name="20160830" href="201608c.html#20160830">2016-08-30 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="201608301" title="201608301" href="201608c.html#201608301">■</a> 
+<a href="https://blog.ueda.asia/?p=8639">Q4 xlsxファイル #シェル芸</a></h3>
+<p>
+xlsxファイルはxmlファイル等をzipで圧縮したものなので、<br>
+結局はxmlファイルを扱うことになる。
+</p>
+<pre>
+% unzip -p Q4/Q4.xlsx xl/worksheets/sheet1.xml | awk '/A1/{print $NF}' FS='&lt;v&gt;' RS='&lt;/v&gt;'
+114514
+</pre>
+<p>
+xmlやhtmlで処理するときの定番。
+</p>
+<p>
+debian系にはxlsxファイルをCSVに変換するコマンドが存在する。<br>
+xlsx2csvとまさにそのままの名前だが、これを使うとお手軽。
+</p>
+<pre>
+% xlsx2csv Q4/Q4.xlsx                      
+114514,シェル芸バイブ
+危険シェル芸,ドラゴン曲線
+キュアエンジニア,素数
+エクシェル芸,変態シェル芸
+</pre>
+<p>
+あとはもうふつうにawkで。
+</p>
+<pre>
+% xlsx2csv Q4/Q4.xlsx | awk -F, 'NR==1{print $1}'
+114514
+% xlsx2csv Q4/Q4.xlsx | awk -F, 'NR==4{print $1}'
+エクシェル芸
+</pre>
+
+<!-- section end -->
+</div>
+<!-- 2016/08/30 end -->
+
+
+
+<hr class="hide">
+<!-- 2016/08/31 start -->
+<h2><a name="20160831" href="201608c.html#20160831">2016-08-31 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="201608311" title="201608311" href="201608c.html#201608311">■</a> 
+<a href="https://blog.ueda.asia/?p=8592">Q5 数式 #シェル芸</a></h3>
+<p>
+sedでxを置き換えるよりは題意の通り代入したほうが簡単。
+</p>
+<pre>
+% echo x=2 | cat - Q5 | bc -l
+6
+2.50000000000000000000
+8
+% cat &lt;(&lt;&lt;&lt;x=2) Q5 | bc -l
+6
+2.50000000000000000000
+8
+</pre>
+<p>
+というわけでecho 2で始めても同じ方針でいける。
+</p>
+<pre>
+% echo 2 | sed 's/^/x=/;r Q5' | bc -l
+6
+2.50000000000000000000
+8
+</pre>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="201608312" title="201608312" href="201608c.html#201608312">■</a> 
+台風10号進路図</h3>
+<p>
+<a href="http://www.tenki.jp/bousai/typhoon/">tenki.jp</a>から台風10号の進路をanimation gifにしてまとめてみた。<br>
+<img src="../images/typhoon1610.gif" alt=""><br>
+<pre>
+% convert -loop 0 -delay 50 -verbose japan_near_2016-08-{19..30}*.jpg -fuzz 5% -layers optimize typhoon1610.gif
+</pre>
+</p>
+<!-- section end -->
+</div>
+<!-- 2016/08/31 end -->
+
+<hr>
+<div>
+<a href="201608b.html">&lt;Older(,)</a> | 
+<a href="201609a.html">Newer(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

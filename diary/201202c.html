@@ -1,0 +1,325 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2012-2-c</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="201202b.html">
+<link rel="next" href="201203a.html">
+
+<link rel="stylesheet" type="text/css" href="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.css">
+<script type="text/javascript" src="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.js"></script>
+<script type="text/javascript">
+<!--       
+$(document).ready(function() {
+  prettyPrint();
+});
+-->
+</script>
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2012年2月下旬〜</p>
+<hr>
+<div>
+<a href="201202b.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="201203a.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2012/02/21 start -->
+<h2><a name="20120221" href="201202c.html#20120221">2012-02-21 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="201202211" title="201202211" href="201202c.html#201202211">■</a> 
+FizzBuzz.rbの50Bに別解か？</h3>
+<p>
+teebeeさんが
+<a href="http://golf.shinh.org/p.rb?FizzBuzz#Ruby">50B</a>に到達。Statisticsが結構違う。別解か？
+</p>
+<!-- section end -->
+</div>
+<!-- 2012/02/21 end -->
+
+
+
+<hr class="hide">
+<!-- 2012/02/22 start -->
+<h2><a name="20120222" href="201202c.html#20120222">2012-02-22 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="201202221" title="201202221" href="201202c.html#201202221">■</a> 
+さいたま市の気温をtwitterへ</h3>
+<p>
+tenki.jpで
+<a href="http://tenki.jp/component/static_api/rss/amedas/point-516.xml">RSS</a>が使えるなら、その結果をtwitterへ送るのは簡単にできるのでやってみた。<br>
+まずはtwitterのアカウントを別に用意(@saitamashi_bot)。<br>
+RSS-&gt;twitterだといろいろあるが、
+<a href="http://ifttt.com">ifttt</a>が気になったので試してみた。これは「いふと」と読むらしい。<br>
+if this then thatの略だ。この場合thisとthatの部分がRSSとtwitterになる。<br>
+設定は簡単でまあそのまま埋めていけばいい。<br>
+twitterの複数アカウントには対応してないので、<br>
+botごとにiftttのアカウントも必要になる。ここがちょっと惜しいところ。<br>
+フィルタ機能もあるので「気温」というtitleのitemだけ抽出も可能。<br>
+最短は15分毎のポーリング。時刻も安定している。<br>
+URLは勝手にbitlyで短縮される。<br>
+思ったより簡単にできた。
+</p>
+<p>
+つづいて
+<a href="http://dlvr.it">dlvr</a>で。こっちはこの日記でも使っている。<br>
+フィルタ機能もあるし、twitterの複数アカウントにも対応しているので、<br>
+いくつもdlvrアカウントを用意する必要はない。そこは利点。<br>
+できることはRSS専用だけあってiftttよりも高機能。<br>
+ソースのRSSをいくつも登録できるので、twitterでRSS Reader的な使い方も可能。<br>
+こちらも最短は15分のポーリング。でも安定しない。30分ぐらいの幅がある。<br>
+でもPuSHを使えば瞬時にいけるはず。この場合は自分でRSSを吐いてるわけじゃないから無理だけど。<br>
+短縮URLはdlvrとbitlyといろいろ選べるが、短縮しない方法がわからなかった。
+</p>
+<p>
+どちらもボタン1つでの停止機能があるので、設定だけしておいて予備として用意しておくのもありだろう。<br>
+時刻が安定しているiftttにするかな。
+</p>
+<!-- section end -->
+</div>
+<!-- 2012/02/22 end -->
+
+
+
+<hr class="hide">
+<!-- 2012/02/23 start -->
+<h2><a name="20120223" href="201202c.html#20120223">2012-02-23 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="201202231" title="201202231" href="201202c.html#201202231">■</a> 
+ChainLPをWineで動かそうと調べたら.Net Framework 4.0が必要だった</h3>
+<p>
+今のところWineで.Net Framework 4.0をインストールするのは無理っぽい情勢ではあるが、<br>
+本家の
+<a href="http://appdb.winehq.org/objectManager.php?sClass=version&amp;iId=17886">最新情報</a>によると1.4-rc2ではいけそうな雰囲気だ。<br>
+Ubuntuのはwine-1.3.28だけど、12.04には間に合わなそう。野良ビルドしてみるか。
+</p>
+<!-- section end -->
+</div>
+<!-- 2012/02/23 end -->
+
+
+
+<hr class="hide">
+<!-- 2012/02/24 start -->
+<h2><a name="20120224" href="201202c.html#20120224">2012-02-24 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="201202241" title="201202241" href="201202c.html#201202241">■</a> 
+この日記の短縮URL</h3>
+<p>
+この日記のURLは長い上に冗長だ。2/24だとURLは
+</p>
+<pre>
+http://jarp.does.notwork.org/diary/201202c.html#20120224
+</pre>
+<p>
+になるわけだけど、せめて
+</p>
+<pre>
+http://jarp.does.notwork.org/20120224
+</pre>
+<p>
+でいけるようにしてみた。ホスト名がそもそも長いし、大して短くなってないが。<br>
+しかしこれどこにもリンクとして存在しないのでまったく意味がないな。
+</p>
+<p>
+まあ、それはそれとして.htaccessの設定はこんな感じ。
+</p>
+<pre>
+RewriteRule ^(\d{4})-?(\d\d)-?(0\d|10)-?(\d?)/?$ /diary/$1$2a.html#$1$2$3$4 [NE,L,R]
+RewriteRule ^(\d{4})-?(\d\d)-?(1\d|20)-?(\d?)/?$ /diary/$1$2b.html#$1$2$3$4 [NE,L,R]
+RewriteRule ^(\d{4})-?(\d\d)-?([23]\d)-?(\d?)/?$ /diary/$1$2c.html#$1$2$3$4 [NE,L,R]
+</pre>
+<p>
+上、中、下旬の正規表現で場合分けしてるだけ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2012/02/24 end -->
+
+
+
+<hr class="hide">
+<!-- 2012/02/25 start -->
+<h2><a name="20120225" href="201202c.html#20120225">2012-02-25 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="201202251" title="201202251" href="201202c.html#201202251">■</a> 
+<a href="https://chrome.google.com/webstore/detail/egnjhciaieeiiohknchakcodbpgjnchh">Tab Wrangler</a></h3>
+<p>
+Google ChromeにTab Wranglerを入れた。<br>
+他のワークスペースで作業して戻ったらカレントタブ以外が消えていた。<br>
+いや、まあ、そういう仕様の拡張なんだからそれでいいんだけど、<br>
+期待してたのはグレーアウトされたタブがぼんやり残るみたいな<br>
+Firefoxでありがちなやつだったので驚いた。<br>
+一応ボタンがあって消えた履歴みたいなのが残ってるので復元は可能。<br>
+ただこれ履歴なのでクローズしたタブの情報が重複し放題。<br>
+この履歴もどのくらい残るのか不明だし、ちょっと怖くて使えないな。
+</p>
+<!-- section end -->
+</div>
+<!-- 2012/02/25 end -->
+
+
+
+<hr class="hide">
+<!-- 2012/02/26 start -->
+<h2><a name="20120226" href="201202c.html#20120226">2012-02-26 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="201202261" title="201202261" href="201202c.html#201202261">■</a> 
+Feed43でHTMLからRSSを生成しようとして挫折した</h3>
+<p>
+<a href="http://feed43.com/">Feed43</a>を使うとHTMLからRSSを生成できるので、例によってtenki.jpで試してみた。<br>
+パターンを自分で指定できるので、柔軟な対応が可能。<br>
+{%}や{*}のようなmacroを使うだけなので使うのは簡単なんだけど、<br>
+間違って削除ボタンを押したら確認もなしに消されてしまった。<br>
+これはかなり痛い。<br>
+まあ、無料アカウントの更新は6時間置きということなので、<br>
+最初からtenki.jpのように1時間置きに更新してるサイトには<br>
+使えかったんだよということで納得することにした。<br>
+</p>
+<p>
+RSSを吐いてないサイトで試そう。
+</p>
+<!-- section end -->
+</div>
+<!-- 2012/02/26 end -->
+
+
+
+<hr class="hide">
+<!-- 2012/02/27 start -->
+<h2><a name="20120227" href="201202c.html#20120227">2012-02-27 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="201202271" title="201202271" href="201202c.html#201202271">■</a> 
+1ヶ月振りに自炊</h3>
+<p>
+今月はちょっとさぼりすぎた。もう月末だ。リハビリも兼ねて日経Linuxをやってみた。<br>
+これが結構大変で、輝度だとかコントラストを調整しないと全然読めない。<br>
+黒地に白や中間色だの結構階調が必要なようで、文庫本とは訳が違う。<br>
+それなりにでかくなるので、100dpiにしてみた。元々字も大きめなのでこれでいけそう。<br>
+勢い余ってまだ全然読んでない最新号まで自炊しちゃったのはあれだけど。
+</p>
+<p>
+なんとか今月中に+34冊で300の大台にいければ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2012/02/27 end -->
+
+
+
+<hr class="hide">
+<!-- 2012/02/28 start -->
+<h2><a name="20120228" href="201202c.html#20120228">2012-02-28 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="201202281" title="201202281" href="201202c.html#201202281">■</a> 
+Thunderbirdの日付</h3>
+<p>
+ls -lもそうだけど、なんである期間ごとに形式を変えるかな。<br>
+というわけでThunderbirdの日付全部長い形式にした。<br>
+<a href="http://kb.mozillazine.org/Date_display_format">Date display format</a>を参考に
+</p>
+<pre>
+mail.ui.display.dateformat.default
+mail.ui.display.dateformat.thisweek
+mail.ui.display.dateformat.today
+</pre>
+<p>
+を全部1に。
+</p>
+<p>
+あと~/.thunderbird/init.d/S00Locale.shにexport LC_TIME=en_DKと書けば、<br>
+ISO 8601 date format (YYYY-MM-DD)になると書いてあるが、全然効果なし。<br>
+非常に惜しい。wrapperを用意するしかないか。
+</p>
+<!-- section end -->
+</div>
+<!-- 2012/02/28 end -->
+
+
+
+<hr class="hide">
+<!-- 2012/02/29 start -->
+<h2><a name="20120229" href="201202c.html#20120229">2012-02-29 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="201202291" title="201202291" href="201202c.html#201202291">■</a> 
+自炊300冊突破</h3>
+<p>
+先月までで266冊だったので、この3日で34冊自炊すれば300冊だ、おーということで無理矢理達成。<br>
+おまけの1冊を加えて301冊。
+</p>
+<p>
+しかし全然減った気がしない。おれはいったい何冊本を持っているのか。
+</p>
+<!-- section end -->
+</div>
+<!-- 2012/02/29 end -->
+
+<hr>
+<div>
+<a href="201202b.html">&lt;Prev(,)</a> | 
+<a href="201203a.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

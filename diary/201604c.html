@@ -1,0 +1,335 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2016-4-c</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="201604b.html">
+<link rel="next" href="201605a.html">
+
+<link rel="stylesheet" type="text/css" href="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.css">
+<script async type="text/javascript" src="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.js"></script>
+<script type="text/javascript">
+<!--       
+$(document).ready(function() {
+  prettyPrint();
+});
+-->
+</script>
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2016年4月下旬〜</p>
+<hr>
+<div>
+<a href="201604b.html" accesskey=",">&lt;Older(,)</a> | 
+<a href="201605a.html" accesskey=".">Newer(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2016/04/21 start -->
+<h2><a name="20160421" href="201604c.html#20160421">2016-04-21 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="201604211" title="201604211" href="201604c.html#201604211">■</a> 
+J:COMが突然使えなくなる</h3>
+<p>
+23時ぐらいからテレビもネットも電話もだめ。<br>
+いやこうなるともうどうしようもないので早めに寝た。
+</p>
+<!-- section end -->
+</div>
+<!-- 2016/04/21 end -->
+
+
+
+<hr class="hide">
+<!-- 2016/04/22 start -->
+<h2><a name="20160422" href="201604c.html#20160422">2016-04-22 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="201604221" title="201604221" href="201604c.html#201604221">■</a> 
+J:COM障害は火災が原因だった</h3>
+<p>
+なるほど。それじゃしょうがない。<br>
+<a href="http://information.myjcom.jp/outage/6975.html">【埼玉県さいたま市】火災影響によるサービス障害のお知らせ</a><br>
+1時すぎには復旧していたようでカバネリの最初がちょっと間に合わなかったぐらい。
+</p>
+<!-- section end -->
+</div>
+<!-- 2016/04/22 end -->
+
+
+
+<hr class="hide">
+<!-- 2016/04/23 start -->
+<h2><a name="20160423" href="201604c.html#20160423">2016-04-23 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="201604231" title="201604231" href="201604c.html#201604231">■</a> 
+東京防災のPDF</h3>
+<p>
+評判の東京防災のPDFだけど、なぜか別々のPDFで構成されている。<br>
+<a href="http://www.metro.tokyo.jp/INET/OSHIRASE/2015/08/20p8l300.htm">「東京防災」の作成について｜東京都</a><br>
+pdftkなら簡単に1つまとめられる。
+</p>
+<pre>
+% mkdir tmp; cd tmp
+% curl -L -O http://www.metro.tokyo.jp/INET/OSHIRASE/2015/08/DATA/20p7o4'[00-27]'.pdf
+% pdftk *.pdf cat output ../Tokyo-Bousai.pdf
+</pre>
+<!-- section end -->
+</div>
+<!-- 2016/04/23 end -->
+
+
+
+<hr class="hide">
+<!-- 2016/04/24 start -->
+<h2><a name="20160424" href="201604c.html#20160424">2016-04-24 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="201604241" title="201604241" href="201604c.html#201604241">■</a> 
+メタ情報が貧弱すぎるAWS ECR</h3>
+<p>
+AWS ECRでDockerのイメージを置けるのはいいが、日付情報がまったくないので困る。<br>
+タグをつけることができるが、同じタグでpushすると古いイメージは上書きされるのではなく、<br>
+タグが取れて名無しのイメージとして残る。<br>
+これの扱いに困る。情報としてはhash値しか残らない。<br>
+pullしてくればDockerイメージとしての情報はdocker inspectとかで取れるが、<br>
+いちいちpullしなきゃいけないんじゃ意味がない。<br>
+というわけで、名無しを消すだけなら
+<a href="201603b.html#201603181">以前書いた方法で消せ</a>ばいいが、バックアップとして使うならタグにタイムスタンプ的なもの入れる必要あり。
+</p>
+<!-- section end -->
+</div>
+<!-- 2016/04/24 end -->
+
+
+
+<hr class="hide">
+<!-- 2016/04/25 start -->
+<h2><a name="20160425" href="201604c.html#20160425">2016-04-25 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="201604251" title="201604251" href="201604c.html#201604251">■</a> 
+VNCでタブが使えない</h3>
+<p>
+なんだかんだでsuper ctrl-tabが悪さをしているということなので、<br>
+dconf-editorを立ち上げてorg.gnome.desktop.wm.keybindingsで&lt;Super&gt;&lt;Ctrl&gt;&lt;Tab&gt;を消す。
+</p>
+<!-- section end -->
+</div>
+<!-- 2016/04/25 end -->
+
+
+
+<hr class="hide">
+<!-- 2016/04/26 start -->
+<h2><a name="20160426" href="201604c.html#20160426">2016-04-26 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="201604261" title="201604261" href="201604c.html#201604261">■</a> 
+Vinagreのフルスクリーン</h3>
+<p>
+ショートカットキーのチェックを外してからフルスクリーンにしてしまうと、<br>
+元に戻れなくてすごく困る。F11だけは覚えておく
+</p>
+<!-- section end -->
+</div>
+<!-- 2016/04/26 end -->
+
+
+
+<hr class="hide">
+<!-- 2016/04/27 start -->
+<h2><a name="20160427" href="201604c.html#20160427">2016-04-27 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="201604271" title="201604271" href="201604c.html#201604271">■</a> 
+rm -rf /</h3>
+<p>
+記事には
+</p>
+<pre>
+rm -rf {foo}/{bar}
+</pre>
+<p>
+とあったが、元々はやはり${foo}と${bar}だと思う。<br>
+ってことは
+</p>
+<pre>
+rm -rf ${foo:?}/${bar:?}
+</pre>
+<p>
+のように書くとすこしはましなのかもしれない。<br>
+fooやbarが定義されてないもしくは空のときはエラーになる。
+</p>
+<pre>
+% sh -c 'echo ${foo:?}; date'
+sh: 1: foo: parameter not set or null
+</pre>
+<!-- section end -->
+</div>
+<!-- 2016/04/27 end -->
+
+
+
+<hr class="hide">
+<!-- 2016/04/28 start -->
+<h2><a name="20160428" href="201604c.html#20160428">2016-04-28 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="201604281" title="201604281" href="201604c.html#201604281">■</a> 
+英語の月の名前を列挙 #シェル芸</h3>
+<p>
+dateに聞くのがいいようで。
+</p>
+<pre>
+% seq 12 | xargs -I@ date +%B -d 2016-@-1
+January
+February
+March
+April
+May
+June
+July
+August
+September
+October
+November
+December
+</pre>
+<!-- section end -->
+</div>
+<!-- 2016/04/28 end -->
+
+
+
+<hr class="hide">
+<!-- 2016/04/29 start -->
+<h2><a name="20160429" href="201604c.html#20160429">2016-04-29 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="201604291" title="201604291" href="201604c.html#201604291">■</a> 
+git wild-and-tough</h3>
+<p>
+git-wild-and-toughコマンドを用意するよりはaliasを定義するほうが簡単だった
+</p>
+<pre>
+% mkdir tmp; cd tmp
+% git init
+% git config alias.wild-and-tough '!echo ひとりでは解けない愛のパズルを抱いて' 
+% git wild-and-tough
+ひとりでは解けない愛のパズルを抱いて
+</pre>
+<!-- section end -->
+</div>
+<!-- 2016/04/29 end -->
+
+
+
+<hr class="hide">
+<!-- 2016/04/30 start -->
+<h2><a name="20160430" href="201604c.html#20160430">2016-04-30 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="201604301" title="201604301" href="201604c.html#201604301">■</a> 
+<a href="https://blog.ueda.asia/?p=8073">第22回シェル芸勉強会に参加した #シェル芸</a></h3>
+<p>
+今回は麹町までお出かけ。<br>
+EeePCがLinuxマシンに生まれ変わったので、<br>
+ノートPCを借りる必要がなくなった。<br>
+上田さん。お気遣いありがとうございます。<br>
+それはそれとして家のPCのディスククラッシュのせいで、<br>
+この日記が更新できてなかったわけだけど、<br>
+なんとかしたので再開。<br>
+とりあえずは1問だけ。
+</p>
+
+<h4><a name="201604301S1" href="201604c.html#201604301S1">_</a> <strong>Q1 中央値。データ数が偶数なら中央の2つの値の平均を中央値とする。</strong>: </h4>
+<div class="sub">
+<p>
+awkで考える。フィールドは1から数える。<br>
+つまり偶数のときは$(NF/2)と$(NF/2+1)が中央の2つの値になる。<br>
+実はawkではフィールド番号が小数ときは切り捨てた整数値が使われる。<br>
+ということは$(NF/2+0.5)と$(NF/2+1)を使えば、<br>
+偶数のときは中央の2つ値、奇数のときはどちらもど真ん中の値になる。
+</p>
+<pre>
+% awk 'BEGIN{print int(8/2+0.5),int(8/2+1)}'
+4 5
+% awk 'BEGIN{print int(7/2+0.5),int(7/2+1)}'
+4 4
+</pre>
+<p>
+intしなくてもいいのでそのまま使えばいい。
+</p>
+<pre>
+% cat a | sort -n | paste -s | awk '{print ($(NF/2+.5) + $(NF/2+1))/2}'
+3.5
+% cat b | sort -n | paste -s | awk '{print ($(NF/2+.5) + $(NF/2+1))/2}'
+3.4
+</pre>
+</div>
+<!-- section end -->
+</div>
+<!-- 2016/04/30 end -->
+
+<hr>
+<div>
+<a href="201604b.html">&lt;Older(,)</a> | 
+<a href="201605a.html">Newer(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

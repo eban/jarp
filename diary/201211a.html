@@ -1,0 +1,389 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2012-11-a</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="201210c.html">
+<link rel="next" href="201211b.html">
+
+<link rel="stylesheet" type="text/css" href="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.css">
+<script type="text/javascript" src="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.js"></script>
+<script type="text/javascript">
+<!--       
+$(document).ready(function() {
+  prettyPrint();
+});
+-->
+</script>
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2012年11月上旬〜</p>
+<hr>
+<div>
+<a href="201210c.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="201211b.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2012/11/01 start -->
+<h2><a name="20121101" href="201211a.html#20121101">2012-11-01 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="201211011" title="201211011" href="201211a.html#201211011">■</a> 
+iftttでPocketからDiigoへ</h3>
+<p>
+Pocketで既読になったアイテムをiftttを使うとDiigoへ送れるとわかったので、<br>
+しばらく試してみた。その前段階としてはHototでRead Laterするというのがあるんだけど、<br>
+これはtwitterでリンクのあるtweetをPocketへ送るという連携。<br>
+bitlyとか使っていればそのまま短いままのURLがPocketへ登録される。<br>
+Pocketでそのリンクを踏めば既読になるので30分のポーリングでDiigoに送られる。<br>
+このときはちゃんと展開して長いURLになるようだ。<br>
+つまり最終的にDiigoには本来のURLが登録される。<br>
+その後DiigoのDelicious連携でdeliciousへ送られる。<br>
+長いな。<br>
+Hotot-&gt;Pocoket-&gt;iftttを介してDiigo-&gt;Deliciousというわけだが、<br>
+iftttにはDeliciousのレシピもあるのでPocketからDeliciousへ登録したほうがいいのかもしれない。<br>
+<a href="201210c.html#201210261">例の件</a>があるだけに。
+</p>
+<!-- section end -->
+</div>
+<!-- 2012/11/01 end -->
+
+
+
+<hr class="hide">
+<!-- 2012/11/02 start -->
+<h2><a name="20121102" href="201211a.html#20121102">2012-11-02 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="201211021" title="201211021" href="201211a.html#201211021">■</a> 
+rubyのconfigureで不要な拡張モジュールを無効にする</h3>
+<p>
+--with-out-extオプションを使う。tkが不要なら
+</p>
+<pre>
+% ./configure --with-out-ext=tk\*
+</pre>
+<p>
+こんな感じ。*がないとtk/tkutilは無効にならないのでチェックされる。
+</p>
+<pre>
+configuring tk/tkutil
+Failed to configure tk/tkutil. It will not be installed.
+</pre>
+<p>
+また、複数指定するときはカンマで区切る。win32oleも不要なら
+</p>
+<pre>
+% ./configure --with-out-ext=tk\*,win32ole
+</pre>
+<p>
+でいい。すでにconfigure済みの場合は
+</p>
+<pre>
+% make EXTS=--without-ext=tk\*,win32ole
+</pre>
+<p>
+とする。こっちは--with-out-extでは無視されてしまうな。<br>
+どっちも受け付けるようにしたんじゃなかったっけ？
+</p>
+<!-- section end -->
+</div>
+<!-- 2012/11/02 end -->
+
+
+
+<hr class="hide">
+<!-- 2012/11/03 start -->
+<h2><a name="20121103" href="201211a.html#20121103">2012-11-03 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="201211031" title="201211031" href="201211a.html#201211031">■</a> 
+なぜか2度実行される</h3>
+<p>
+テレビ王国のiepgで番組予約できるようになったんだけど、最近なぜかボタンを押すと2回実行される。<br>
+.tvpiの他に.tvpidもあったのでcase文で*.tvpi*)にしたからだと思うがよくわからないのでログを取ってみた。
+</p>
+<pre>
+23:34:14 2012-11-03: /home/eban/Downloads/iepg.tvpi.crdownload IN_MOVED_TO
+23:34:14 2012-11-03: /home/eban/Downloads/iepg.tvpi IN_MOVED_TO
+</pre>
+<p>
+なるほど。iepg.tvpi.crdownloadという一時ファイル名もIN_MOVED_TOになるんだな。<br>
+*.tvpi{,d})にしとこう。ってshじゃだめだ。bashにしないと。
+</p>
+<!-- section end -->
+</div>
+<!-- 2012/11/03 end -->
+
+
+
+<hr class="hide">
+<!-- 2012/11/04 start -->
+<h2><a name="20121104" href="201211a.html#20121104">2012-11-04 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="201211041" title="201211041" href="201211a.html#201211041">■</a> 
+9月のエレうたが台風17号情報のため延期になっていたことに今気づいた</h3>
+<p>
+エレうた自体8月から聞いてなかったので、<br>
+確認してみるとなんと9/30分は台風情報でやってなかったよ。<br>
+後日改めて放送すると言われても、今さら遅いのであった。<br>
+crontabに登録してるだけだと、録音はされるが全然気づかないという問題がある。<br>
+録音したらメールを送るようにしよう。
+</p>
+<!-- section end -->
+</div>
+<!-- 2012/11/04 end -->
+
+
+
+<hr class="hide">
+<!-- 2012/11/05 start -->
+<h2><a name="20121105" href="201211a.html#20121105">2012-11-05 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="201211051" title="201211051" href="201211a.html#201211051">■</a> 
+10月のspam</h3>
+<p>
+1800通ほど。そういえば例のvacationメールは1通だけspamになっていた。みんな同じなのになぜだ？
+
+</p>
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="201211052" title="201211052" href="201211a.html#201211052">■</a> 
+PocketのView Articlesがいい感じ</h3>
+<p>
+いわゆるtidy read的な表示してくれるので、記事だけ読める。<br>
+J-castニュースのように分割されてる記事もつながって読める。<br>
+これは便利。でもlivedoor newsの記事全文は対応してない。惜しい。<br>
+なんとなく全文参照できるRSSリーダーのような感覚。<br>
+LDRから直接Pocketへ送れるといいんだが。
+</p>
+<!-- section end -->
+</div>
+<!-- 2012/11/05 end -->
+
+
+
+<hr class="hide">
+<!-- 2012/11/06 start -->
+<h2><a name="20121106" href="201211a.html#20121106">2012-11-06 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="201211061" title="201211061" href="201211a.html#201211061">■</a> 
+quirky Propsが届いた</h3>
+<p>
+10/8に発注して今日届いた。実を言うとすっかり忘れていた。<br>
+発注して2日後ぐらいにshipしたよメールは来てたけど、<br>
+その後なんの音沙汰もなく、<br>
+$16ぐらいなのでだめでもいいかとあきらめていたところ。<br>
+宛先がなぜかSaiで切れている。よくこれで届いたな。<br>
+郵便番号があるから埼玉県がなくてもいいのか。<br>
+あとなぜか名前が2つある。このせいでSaiで切れたのかもしれない。<br>
+次があったらそのあたりに注意しよう。
+</p>
+<p>
+物自体は百均で売っててもおかしくない代物。<br>
+なにかで代用できそうな気もする。<br>
+<a href="http://www.quirky.com/products/254-Props-earbud-croakies">quirky - Props</a></p>
+<!-- section end -->
+</div>
+<!-- 2012/11/06 end -->
+
+
+
+<hr class="hide">
+<!-- 2012/11/07 start -->
+<h2><a name="20121107" href="201211a.html#20121107">2012-11-07 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="201211071" title="201211071" href="201211a.html#201211071">■</a> 
+wgetでリダイレクトされた先のファイル名で保存</h3>
+<p>
+UbuntuのLTSでserverを組もうかとwgetでISOイメージをダウンロードしたら、<br>
+リダイレクト先の名前で保存してしまってうっとうしい。
+</p>
+<pre>
+% wget 'http://www.ubuntu.com/start-download?distro=server&amp;bits=64&amp;release=lts' 
+--2012-11-07 22:58:13--  http://www.ubuntu.com/start-download?distro=server&amp;bits=64&amp;release=lts
+Resolving www.ubuntu.com (www.ubuntu.com)... 91.189.89.88
+Connecting to www.ubuntu.com (www.ubuntu.com)|91.189.89.88|:80... connected.
+HTTP request sent, awaiting response... 302 Moved Temporarily
+Location: http://ftp.jaist.ac.jp/pub/Linux/ubuntu-releases//precise/ubuntu-12.04.1-server-amd64.iso [following]
+--2012-11-07 10:58:14--  http://ftp.jaist.ac.jp/pub/Linux/ubuntu-releases//precise/ubuntu-12.04.1-server-amd64.iso
+Resolving ftp.jaist.ac.jp (ftp.jaist.ac.jp)... 150.65.7.130, 2001:200:141:feed::feed
+Connecting to ftp.jaist.ac.jp (ftp.jaist.ac.jp)|150.65.7.130|:80... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 689221632 (657M) [application/octet-stream]
+Saving to: `start-download?distro=server&amp;bits=64&amp;release=lts'
+</pre>
+<p>
+以前はこんな挙動じゃなかった気がするが、セキュリティとかの絡みか？<br>
+マニュアルを見る。
+</p>
+<pre>
+--trust-server-names
+    If this is set to on, on a redirect the last component of the redirection URL will be used as the
+    local file name.  By default it is used the last component in the original URL.
+</pre>
+<p>
+--trust-server-namesを指定すれば先のファイル名で保存できるようだ。<br>
+trustって名前からしてやっぱセキュリティ関連か。
+</p>
+<pre>
+% wget --trust-server-names 'http://www.ubuntu.com/start-download?distro=server&amp;bits=64&amp;release=lts'
+--2012-11-07 23:01:18--  http://www.ubuntu.com/start-download?distro=server&amp;bits=64&amp;release=lts
+Resolving www.ubuntu.com (www.ubuntu.com)... 91.189.89.88
+Connecting to www.ubuntu.com (www.ubuntu.com)|91.189.89.88|:80... connected.
+HTTP request sent, awaiting response... 302 Moved Temporarily
+Location: http://ubuntu.mithril-linux.org/releases//precise/ubuntu-12.04.1-server-amd64.iso [following]
+--2012-11-07 11:01:19--  http://ubuntu.mithril-linux.org/releases//precise/ubuntu-12.04.1-server-amd64.iso
+Resolving ubuntu.mithril-linux.org (ubuntu.mithril-linux.org)... 211.10.155.48
+Connecting to ubuntu.mithril-linux.org (ubuntu.mithril-linux.org)|211.10.155.48|:80... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 689221632 (657M) [application/x-iso9660-image]
+Saving to: `ubuntu-12.04.1-server-amd64.iso'
+</pre>
+<p>
+~/.wgetrcで指定するならtrust-server-names = onという感じで。
+</p>
+<!-- section end -->
+</div>
+<!-- 2012/11/07 end -->
+
+
+
+<hr class="hide">
+<!-- 2012/11/08 start -->
+<h2><a name="20121108" href="201211a.html#20121108">2012-11-08 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="201211081" title="201211081" href="201211a.html#201211081">■</a> 
+convertで二段組な画像を半分にして90度回転</h3>
+<p>
+というのをforで1枚ずつ処理するとファイル名が001-0.png, 001-1.png, 002-0.png, 002-1.pngとなってしまう。<br>
+やっぱ通しで連番にしたい。
+</p>
+<pre>
+% mkdir cropped
+% convert '*.png' -crop x50% -rotate -90 -type grayscale -scene 1 -verbose cropped/%03d.png
+</pre>
+<p>
+こんな感じでいける。cropped/に001.pngから連番で保存される。<br>
+-cropはXxYで指定するが省略するとそちら側はそのままのサイズになる。
+</p>
+<!-- section end -->
+</div>
+<!-- 2012/11/08 end -->
+
+
+
+<hr class="hide">
+<!-- 2012/11/09 start -->
+<h2><a name="20121109" href="201211a.html#20121109">2012-11-09 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="201211091" title="201211091" href="201211a.html#201211091">■</a> 
+convert cropの高速化</h3>
+<p>
+昨日のような分割じゃなくて切り抜きにcropを使う場合は後者のほうが速いらしいよ。
+</p>
+</p><blockquote><p>
+Inline Image Crop<br><br>
+It is sometimes convenient to crop an image as they are read. Suppose you have hundreds of large JPEG images you want to convert to a sequence of PNG thumbails:<br><br>
+$ convert '*.jpg' -crop 120x120+10+5 thumbnail%03d.png<br><br>
+Here all the images are read and subsequently cropped. It is faster and less resource-intensive to crop each image as it is read:<br><br>
+$ convert '*.jpg[120x120+10+5]' thumbnail%03d.png
+</p></blockquote><p>
+<p>
+<a href="http://www.imagemagick.org/script/command-line-processing.php">ImageMagick: Command-line Processing</a></p>
+<!-- section end -->
+</div>
+<!-- 2012/11/09 end -->
+
+
+
+<hr class="hide">
+<!-- 2012/11/10 start -->
+<h2><a name="20121110" href="201211a.html#20121110">2012-11-10 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="201211101" title="201211101" href="201211a.html#201211101">■</a> 
+Google ChromeでEmacs keybindに</h3>
+<p>
+Ubuntu 12.10でXfce4の場合。
+</p>
+<pre>
+% xfconf-query -c xsettings -p /Gtk/KeyThemeName -s Emacs
+</pre>
+<p>
+でいけた。URLをいじろるときはいつもCTRL+LしてからCTRL+Eするのが癖になってるんだけど、<br>
+Chromeは?になってしまい、しかもCTRL+Hでヒストリーへ移行してしまうので困っていた。<br>
+Firefoxはgsettings set org.gnome.desktop.interface gtk-key-theme Emacsでいけてた。
+</p>
+<!-- section end -->
+</div>
+<!-- 2012/11/10 end -->
+
+<hr>
+<div>
+<a href="201210c.html">&lt;Prev(,)</a> | 
+<a href="201211b.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

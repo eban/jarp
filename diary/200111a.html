@@ -1,0 +1,484 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2001-11-a</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="200110c.html">
+<link rel="next" href="200111b.html">
+
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2001年11月上旬〜</p>
+<hr>
+<div>
+<a href="200110c.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="200111b.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2001/11/01 start -->
+<h2><a name="20011101" href="200111a.html#20011101">2001-11-01 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="200111011" title="200111011" href="200111a.html#200111011">■</a> 
+dRubyによる分散オブジェクトプログラミング</h3>
+<p>
+やっと発送したそうだ。明日だな。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200111012" title="200111012" href="200111a.html#200111012">■</a> 
+Ruby 1.6.6</h3>
+<p>
+今月中に出る予定らしい。
+でも、3ヶ月の法則もあるし、やっぱ来月？
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2001/11/01 end -->
+
+
+
+<hr class="hide">
+<!-- 2001/11/02 start -->
+<h2><a name="20011102" href="200111a.html#20011102">2001-11-02 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="200111021" title="200111021" href="200111a.html#200111021">■</a> 
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-list/32169">eRuby のインストールに関して</a></h3>
+<p>
+erubyのほうを直すべきかもしれないが、
+やっぱdefaultを--enable-sharedにしよう。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200111022" title="200111022" href="200111a.html#200111022">■</a> 
+Linux 2.2.20</h3>
+<p>
+2.2のほうもメンテしてるんだなあ、やっぱ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200111023" title="200111023" href="200111a.html#200111023">■</a> 
+VMware</h3>
+<p>
+P5 133MHzのマシンにVMwareを入れてみようなんて誰も思わないだろうが、 入れてみた。
+どうも2.4.13-ac5なんかを使っているのがまずいのか、
+うまくconfigureできない。試しに古い環境の2.2.19だと問題ない。
+NT4.0もインストールできた。
+最新のカーネルを追い掛ける必要は全然ないのでそろそろやめるか？
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2001/11/02 end -->
+
+
+
+<hr class="hide">
+<!-- 2001/11/03 start -->
+<h2><a name="20011103" href="200111a.html#20011103">2001-11-03 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="200111031" title="200111031" href="200111a.html#200111031">■</a> 
+Linux 2.4.13-ac6</h3>
+<p>
+結局取ってきてしまった。むだなあがきだと思うが、これって何だろう？
+</p>
+<pre>
+Auto-Geometry Resizing support (CONFIG_IDEDISK_STROKE) [N/y/?] (NEW)
+</pre>
+
+<p>
+今回は念のためgcc 2.95.3を使ってみる。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200111032" title="200111032" href="200111a.html#200111032">■</a> 
+VMware</h3>
+<p>
+vmware-config.plしてみると、問題なく終了。
+昨日古いLinux 2.2.19の環境でsuspendしておいたWinNT 4.0のvirtual diskを
+コピーしてvmwareを立ち上げてresumeしてみると出てきたよ。こりゃ便利だ。
+むだなあがきではなかったようだ。
+でもcygwinはものすごく遅い。
+</p>
+<pre>
+make miniruby.exe  550.54s user 388.57s system 90% cpu 17:16.88 total
+</pre>
+<p>
+nativeのWinNT 4.0だとこんなもんだ。
+</p>
+<pre>
+make miniruby.exe  526.21s user 47.26s system 98% cpu 9:44.02 total
+</pre>
+<p>
+これを見るとsystemでやたら時間が掛かってる。
+ということは-pipeが効くかもしれない。
+</p>
+<pre>
+make miniruby.exe CC='gcc -pipe'  516.09s user 267.77s system 91% cpu 14:14.41 total
+</pre>
+<p>
+なるほどねえ。
+あれ？userも減ってるな。nativeよりも速いじゃん。なんかよくわからん。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200111033" title="200111033" href="200111a.html#200111033">■</a> 
+Ruby 1.7.2 (2001-11-02)</h3>
+<p>
+1.7.2になってる。が、最近makeできないんだよね。
+どうもglibc 2.2.4がまずいようだ。例の
+<a href="200109a.html#200109081">gcc 3.0.x</a> と
+<a href="200109a.html#200109091">error.c</a> の件にしても。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200111034" title="200111034" href="200111a.html#200111034">■</a> 
+binutils 2.11.92.0.7</h3>
+<p>
+ld.soが文句言ってるようなのでbinutilsを新しくしてみる。通っちゃったよ。
+error.cも問題なし。疑ってすまん。glibcよ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200111035" title="200111035" href="200111a.html#200111035">■</a> 
+救命救急24時</h3>
+<p>
+再放送してるのに気づく。
+しかも今日は
+<a href="200107b.html#200107172">停電</a> で見逃した第3回だよ。ラッキー。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200111036" title="200111036" href="200111a.html#200111036">■</a> 
+THE☆SCANTY</h3>
+<p>
+ジュディマリにしろヒスブルにしろ、
+佐久間正英プロデュースってみんなvocalが似てるのはなぜだ？
+趣味か？
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200111037" title="200111037" href="200111a.html#200111037">■</a> 
+体重</h3>
+<p>
+昨日から3kgも体重が落ちた。そんなに減るもんなのか？
+なにもしてないんだが。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2001/11/03 end -->
+
+
+
+<hr class="hide">
+<!-- 2001/11/04 start -->
+<h2><a name="20011104" href="200111a.html#20011104">2001-11-04 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="200111041" title="200111041" href="200111a.html#200111041">■</a> 
+RubyUnit 0.4.4</h3>
+<p>
+更新。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2001/11/04 end -->
+
+
+
+<hr class="hide">
+<!-- 2001/11/05 start -->
+<h2><a name="20011105" href="200111a.html#20011105">2001-11-05 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="200111051" title="200111051" href="200111a.html#200111051">■</a> 
+Linux 2.4.13-ac7</h3>
+<p>
+結局追っかけてる。今回もgcc 2.95.3でmake。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200111052" title="200111052" href="200111a.html#200111052">■</a> 
+<a href="http://advogato.org/article/370.html">Linux 2.4, maintenance and succession</a></h3>
+<p>
+2.5がそろそろ始まりそう。Alan Coxは安定版メンテナを退いたようだ。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2001/11/05 end -->
+
+
+
+<hr class="hide">
+<!-- 2001/11/06 start -->
+<h2><a name="20011106" href="200111a.html#20011106">2001-11-06 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="200111061" title="200111061" href="200111a.html#200111061">■</a> 
+<a href="http://cygwin.com/ml/cygwin-announce/2001/msg00136.html">Updated: cygwin-1.3.4-1</a></h3>
+<p>
+1.3.4-1が出た。mirror siteへ行ってみるとすでに1.3.4-2になってる。
+相変わらずどたばたが続いているようだ。
+</p>
+
+<p>
+kterm上でcvs updateしてrubyをmakeするくらいは全く問題ない。
+というわけで、しばらく使ってみよう。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200111062" title="200111062" href="200111a.html#200111062">■</a> 
+Linux 2.4.13-ac8とLinux 2.4.14</h3>
+<p>
+どっちを入れようかなあ。
+どうせ2.4.14-ac1がすぐに出るだろうから、-ac8にしよう。
+</p>
+
+<p>
+そういえば会社では2.4.14を入れてみたんだが、loop.oでundefinedになってしまったんだった。
+こっちもちとあやしいね。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2001/11/06 end -->
+
+
+
+<hr class="hide">
+<!-- 2001/11/07 start -->
+<h2><a name="20011107" href="200111a.html#20011107">2001-11-07 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="200111071" title="200111071" href="200111a.html#200111071">■</a> 
+Cygwin 1.3.4-3</h3>
+<p>
+また新しくなってる。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200111072" title="200111072" href="200111a.html#200111072">■</a> 
+Happy Hacking Keyboard Lite</h3>
+<p>
+今使ってるOKIのキーボードのキータッチがどうも気になるので、
+Happy Hacking Keyboard Liteを買った。当然US配列だ。
+DIPスィッチの設定はSW1,SW3をONにした。
+これでloadkeysもxmodmapもしないでいいや。
+backquoteとtildeが遠くなってしまったのがちと痛いが、そのうち慣れるでしょう。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2001/11/07 end -->
+
+
+
+<hr class="hide">
+<!-- 2001/11/08 start -->
+<h2><a name="20011108" href="200111a.html#20011108">2001-11-08 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="200111081" title="200111081" href="200111a.html#200111081">■</a> 
+Cygwin 1.3.4-4</h3>
+<p>
+また出た。
+それはそれとしてcygwin-jp MLで報告されてるtcshでのバグ。
+</p>
+<pre>
+#!/bin/tcsh
+set a = `date`
+echo $a
+</pre>
+<p>
+てなスクリプトでaが空になることがある。
+というよりloopさせてみるとほとんど空だ。
+不思議なことにsamba上で実行するとちゃんと設定される。
+bashやzshで同じようなことをさせても問題ないので、
+tcshが秘孔を突いてるようだ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200111082" title="200111082" href="200111a.html#200111082">■</a> 
+HHK Lite</h3>
+<p>
+今まで106ではCapsLockをControlに、ControlをAltに割り当ててたんだけど、
+HHKLiteのAltはやけに小さいため、すかっと空振りしてしまう。
+もうちょっとでかくしてほしかったなあ。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2001/11/08 end -->
+
+
+
+<hr class="hide">
+<!-- 2001/11/09 start -->
+<h2><a name="20011109" href="200111a.html#20011109">2001-11-09 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="200111091" title="200111091" href="200111a.html#200111091">■</a> 
+<a href="http://cygwin.com/ml/cygwin/2001-11/msg00485.html">Re: 1.3.4: read on pipe setting errno=ECHILD</a></h3>
+<p>
+
+<a href="200111a.html#200111081">例のtcsh</a> の問題はこれで直ったらしい。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2001/11/09 end -->
+
+
+
+<hr class="hide">
+<!-- 2001/11/10 start -->
+<h2><a name="20011110" href="200111a.html#20011110">2001-11-10 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="200111101" title="200111101" href="200111a.html#200111101">■</a> 
+djbdns 1.05</h3>
+<p>
+djbdnsというかdnscacheを入れてみた。
+これの不思議なとこはdefaultのまま動かして使えてしまうとこだ。
+なぜかと思ったらroot serverが/etc/dnsroots.globalに書いてあるのか。なるほど。
+wwwoffle的には127.0.0.1に固定できてなかなかよさそう。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200111102" title="200111102" href="200111a.html#200111102">■</a> 
+libcygwin-ruby16.a</h3>
+<p>
+Andyさんからまたlibcygwin-ruby16.aがないよとメールが来た。
+あれ？入れてなかったっけ？
+もう面倒なので
+</p>
+<pre>
+% cd /usr/local/lib
+% ln -s ../bin/cygwin-ruby16.dll libcygwin-ruby16.a
+</pre>
+<p>
+してねと返しといた。てゆか、tarballもそうしとくか。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2001/11/10 end -->
+
+<hr>
+<div>
+<a href="200110c.html">&lt;Prev(,)</a> | 
+<a href="200111b.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

@@ -1,0 +1,370 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2016-3-b</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="201603a.html">
+<link rel="next" href="201603c.html">
+
+<link rel="stylesheet" type="text/css" href="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.css">
+<script async type="text/javascript" src="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.js"></script>
+<script type="text/javascript">
+<!--       
+$(document).ready(function() {
+  prettyPrint();
+});
+-->
+</script>
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2016年3月中旬〜</p>
+<hr>
+<div>
+<a href="201603a.html" accesskey=",">&lt;Older(,)</a> | 
+<a href="201603c.html" accesskey=".">Newer(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2016/03/11 start -->
+<h2><a name="20160311" href="201603b.html#20160311">2016-03-11 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="201603111" title="201603111" href="201603b.html#201603111">■</a> 
+ズンドコキヨシ #シェル芸</h3>
+<p>
+bashで書いたズンドコキヨシなんだけど、
+</p>
+<pre>
+% bash -c 'a=(ズン ドコ); until [[ $s =~ (ズン ){4}ドコ ]]; do s+=&quot;${a[RANDOM%2]} &quot;; done; echo $sキ・ヨ・シ!'
+</pre>
+<p>
+これってzshでは動かない。理由は2つあって、1つは配列は0からじゃなく1から数えること。<br>
+もう1つは$sキ・ヨ・シが1つ識別子になってしまうこと。<br>
+後者は${s}にすればどっちでもokだが、前者は1個ずれるだけに面倒。<br>
+bashでもzshでも動くようにするにはどうすればいいのか。<br>
+ZSH_VERSIONを見てsetopt KSH_ARRAYSなんてことするんじゃ無粋だし。<br>
+と思ったがだったらもう1個追加しておけばいいのか。
+</p>
+<pre>
+% bash -c 'a=(ズン ドコ ズン); until [[ $s =~ (ズン ){4}ドコ ]]; do s+=&quot;${a[RANDOM%2+1]} &quot;; done; echo ${s}キ・ヨ・シ!'
+ズン ズン ドコ ズン ズン ズン ズン ズン ズン ズン ズン ドコ キ・ヨ・シ!
+% zsh -c 'a=(ズン ドコ ズン); until [[ $s =~ (ズン ){4}ドコ ]]; do s+=&quot;${a[RANDOM%2+1]} &quot;; done; echo ${s}キ・ヨ・シ!' 
+ドコ ドコ ドコ ズン ズン ドコ ズン ドコ ズン ズン ズン ズン ズン ズン ズン ズン ドコ キ・ヨ・シ!
+</pre>
+<p>
+他に方法はないかとman shufしてたらまさにぴったりの機能が。<br>
+-rで無限に生成できる。-nで個数も指定できる。
+</p>
+<pre>
+% shuf -n10 -re ズン ドコ
+ズン
+ドコ
+ズン
+ドコ
+ドコ
+ズン
+ドコ
+ズン
+ズン
+ズン
+</pre>
+<p>
+ここまでできれば後はsedで判断するだけ。
+</p>
+<pre>
+% shuf -re ズン ドコ | sed -r '1h;1!H;g;y/\n/ /;/(ズン ){4}ドコ/{s//&amp; キ・ヨ・シ!/;q};d'
+ドコ ズン ドコ ドコ ズン ドコ ズン ズン ズン ズン ドコ キ・ヨ・シ!
+</pre>
+<p>
+Hだと追加なので先頭に改行が入ってしまう。そのため1行目だけhにしている。<br>
+ここをもうちょっとなんとかできれば。
+</p>
+<!-- section end -->
+</div>
+<!-- 2016/03/11 end -->
+
+
+
+<hr class="hide">
+<!-- 2016/03/12 start -->
+<h2><a name="20160312" href="201603b.html#20160312">2016-03-12 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="201603121" title="201603121" href="201603b.html#201603121">■</a> 
+IFTTTからDiigoのchannelが消える</h3>
+<p>
+3/23で終了らしい。メールが来てた。他にもいろいろと。
+</p><blockquote><p>
+On March 23rd, the following Channels and their Recipes will be removed from
+IFTTT: App.net, BuzzFeed, Campfire, Diigo, Etsy, ffffound, Last.fm,
+Readability, Yahoo Fantasy Sports, and Yammer.
+</p></blockquote><p>
+PocketでアーカイブしたタイミングでDiigoに入れてたが、まあ、なくてもいいか。<br>
+なんか文字化けだらけでどうしようかと思ってたし。
+</p>
+<!-- section end -->
+</div>
+<!-- 2016/03/12 end -->
+
+
+
+<hr class="hide">
+<!-- 2016/03/13 start -->
+<h2><a name="20160313" href="201603b.html#20160313">2016-03-13 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="201603131" title="201603131" href="201603b.html#201603131">■</a> 
+GNU sedの変な挙動</h3>
+<p>
+bやtでLABELを省略すると次にサイクルに飛ぶのはman sedやinfo sedにも書いてあるので、<br>
+GNU sedの仕様であることは間違いない。
+</p>
+<pre>
+`b LABEL'
+     Unconditionally branch to LABEL.  The LABEL may be omitted, in
+     which case the next cycle is started.
+
+`t LABEL'
+     Branch to LABEL only if there has been a successful `s'ubstitution
+     since the last input line was read or conditional branch was taken.
+     The LABEL may be omitted, in which case the next cycle is started.
+</pre>
+<p>
+aというラベル名だと当然ながらtはそこには飛ばない。
+</p>
+<pre>
+% echo | sed ':a;s/^.\{,3\}$/&amp;foo/;t'
+foo
+</pre>
+<p>
+でも名前を省略したラベルを設定するとなぜかそこに飛ぶ。
+</p>
+<pre>
+% echo | sed ':;s/^.\{,3\}$/&amp;foo/;t' 
+foofoo
+</pre>
+<p>
+2回通っている。
+</p>
+<p>
+まあ、バグかもしれないが便利なので
+<a href="http://golf.shinh.org/">anagol</a>ではこれが多用されている。
+</p>
+<!-- section end -->
+</div>
+<!-- 2016/03/13 end -->
+
+
+
+<hr class="hide">
+<!-- 2016/03/14 start -->
+<h2><a name="20160314" href="201603b.html#20160314">2016-03-14 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="201603141" title="201603141" href="201603b.html#201603141">■</a> 
+dockerでCtrl-Pを2回押さなくてもいいようにする</h3>
+<p>
+Docker 1.10以上なら~/.docker/config.jsonに
+</p>
+<pre>
+&quot;detachKeys&quot;: &quot;ctrl-_,_&quot;
+</pre>
+<p>
+を追加すれば、Ctrl-Pを2回押さなくてもいいようになる。<br>
+Detachはしないので適当に使わなそうなキーを割り当てた。
+</p>
+<!-- section end -->
+</div>
+<!-- 2016/03/14 end -->
+
+
+
+<hr class="hide">
+<!-- 2016/03/15 start -->
+<h2><a name="20160315" href="201603b.html#20160315">2016-03-15 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="201603151" title="201603151" href="201603b.html#201603151">■</a> 
+docker imagesFormat</h3>
+<p>
+<a href="201511c.html#20151129">psFormat</a>はあったが、imagesFormatがなくて困っていたら、いつのまにか対応していた。<br>
+ECRのリポジトリが長くて見辛いのなんのって。<br>
+というわけでこんなのを~/.docker/config.jsonに追加した。
+</p>
+<pre>
+&quot;imagesFormat&quot;: &quot;table {{printf \&quot;%.20s\&quot; .Repository}}\t{{.Tag}}\t{{.ID}}\t{{printf \&quot;%.19s\&quot; .CreatedAt}}\t{{.Size}}&quot;
+</pre>
+<!-- section end -->
+</div>
+<!-- 2016/03/15 end -->
+
+
+
+<hr class="hide">
+<!-- 2016/03/16 start -->
+<h2><a name="20160316" href="201603b.html#20160316">2016-03-16 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="201603161" title="201603161" href="201603b.html#201603161">■</a> 
+マガポケ</h3>
+<p>
+3週間遅れにはなるが無料でマガジンが読める。もうこれで十分だ。<br>
+はじめの一歩と七つの大罪が読めないが、<br>
+まあこの2つは元々あまり読んでなかったので問題ない。
+</p>
+<!-- section end -->
+</div>
+<!-- 2016/03/16 end -->
+
+
+
+<hr class="hide">
+<!-- 2016/03/17 start -->
+<h2><a name="20160317" href="201603b.html#20160317">2016-03-17 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="201603171" title="201603171" href="201603b.html#201603171">■</a> 
+AWS ECRのゴミイメージ</h3>
+<p>
+ECRで同じタグ名でpushすると古いイメージはタグなしで残る。<br>
+これ最初気づかずにどんどん作ってたら100個ぐらいたまってた。<br>
+まあ見分けるのは簡単なので手動でもなんとかなったというか、<br>
+最初は削除ボタンがなかったのでどうにもならなかった記憶が。
+</p>
+<!-- section end -->
+</div>
+<!-- 2016/03/17 end -->
+
+
+
+<hr class="hide">
+<!-- 2016/03/18 start -->
+<h2><a name="20160318" href="201603b.html#20160318">2016-03-18 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="201603181" title="201603181" href="201603b.html#201603181">■</a> 
+AWS ECRのゴミイメージを消す</h3>
+<p>
+というわけでawscliで消す。
+</p>
+<pre>
+% aws --region us-east-1 ecr list-images --repository-name repository | \
+  jq -r '.imageIds[]|select(.imageTag|not).imageDigest' | \
+  sed 's/^/imageDigest=/' | \
+  xargs -r aws --region us-east-1 ecr batch-delete-image --repository-name repository --image-ids
+</pre>
+<p>
+imageTagがついてないものを抜き出してbatch-delete-imageが受け付ける形式に変換する。<br>
+実はこのままじゃ不完全。<br>
+100個ぐらいまでならこれでいいが、list-imagesは最大100個までしか返さないので、<br>
+paginationしないといけない。
+</p>
+<!-- section end -->
+</div>
+<!-- 2016/03/18 end -->
+
+
+
+<hr class="hide">
+<!-- 2016/03/19 start -->
+<h2><a name="20160319" href="201603b.html#20160319">2016-03-19 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="201603191" title="201603191" href="201603b.html#201603191">■</a> 
+Project Eulerを解くのが止まったわけ</h3>
+<p>
+実はProblem 37がまだ解けてないというすごい単純な理由だったりする。<br>
+長くなったわりに終わないという情けない状態が続いて放置している。
+</p>
+<!-- section end -->
+</div>
+<!-- 2016/03/19 end -->
+
+
+
+<hr class="hide">
+<!-- 2016/03/20 start -->
+<h2><a name="20160320" href="201603b.html#20160320">2016-03-20 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="201603201" title="201603201" href="201603b.html#201603201">■</a> 
+jqだけでなんとかする</h3>
+<p>
+先日のECRの不要なイメージを削除するシェル芸はsedが出てきてあれだが、
+</p>
+<pre>
+  jq -r '.imageIds[]|select(.imageTag|not).imageDigest' | \
+  sed 's/^/imageDigest=/' | \
+</pre>
+<p>
+を
+</p>
+<pre>
+  jq -r '&quot;imageDigest=&quot;+(.imageIds[]|select(.imageTag|not).imageDigest)'
+</pre>
+<p>
+とすればいいのであった。()が必要なんだな。
+</p>
+<!-- section end -->
+</div>
+<!-- 2016/03/20 end -->
+
+<hr>
+<div>
+<a href="201603a.html">&lt;Older(,)</a> | 
+<a href="201603c.html">Newer(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

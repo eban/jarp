@@ -1,0 +1,410 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2013-10-c</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="201310b.html">
+<link rel="next" href="201311a.html">
+
+<link rel="stylesheet" type="text/css" href="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.css">
+<script type="text/javascript" src="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.js"></script>
+<script type="text/javascript">
+<!--       
+$(document).ready(function() {
+  prettyPrint();
+});
+-->
+</script>
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2013年10月下旬〜</p>
+<hr>
+<div>
+<a href="201310b.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="201311a.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2013/10/21 start -->
+<h2><a name="20131021" href="201310c.html#20131021">2013-10-21 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="201310211" title="201310211" href="201310c.html#201310211">■</a> 
+指定したファイルがどのパッケージに含まれているか</h3>
+<p>
+Ubuntu 13.10にしたらman zshできなくなってどうなってんのか調べてみた。<br>
+やはりパッケージに含まれてなかった。apt-fileコマンドを使うと簡単。
+</p>
+<pre>
+% apt-file search /zsh.1
+manpages-pl: /usr/share/man/pl/man1/zsh.1.gz
+</pre>
+<p>
+というわけで、plだからポーランド語のmanpagesにしかないようで。<br>
+13.04ならちゃんと見つかる。
+</p>
+<pre>
+% apt-file search /zsh.1
+manpages-pl: /usr/share/man/pl/man1/zsh.1.gz
+zsh: /usr/share/man/man1/zsh.1.gz
+</pre>
+<p>
+13.10ではzshパッケージはzshとzsh-commonに分割されて、<br>
+そこで不整合が生じたようで。
+</p>
+<!-- section end -->
+</div>
+<!-- 2013/10/21 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/10/22 start -->
+<h2><a name="20131022" href="201310c.html#20131022">2013-10-22 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="201310221" title="201310221" href="201310c.html#201310221">■</a> 
+sedの-rと-Eオプション</h3>
+<p>
+extended regular expressionsのオプションはGNU sedが-rでBSD sedでは-Eと違う。<br>
+とはいうもののBSDのマニュアルにはGNU sedとの互換のために-rも使えると書いてある。<br>
+一方undocumentedではあるが、実はGNU sedでも-Eが使える。
+</p>
+<p>
+GNU sed 4.2.1のsed/sed.cより:
+</p>
+<pre>
+        /* Undocumented, for compatibility with BSD sed.  */
+        case 'E':
+        case 'r':
+          if (extended_regexp_flags)
+            usage(4);
+          extended_regexp_flags = REG_EXTENDED;
+          break;
+</pre>
+<p>
+さすがにbusyboxのsedは-rだけだった。
+</p>
+<!-- section end -->
+</div>
+<!-- 2013/10/22 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/10/23 start -->
+<h2><a name="20131023" href="201310c.html#20131023">2013-10-23 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="201310231" title="201310231" href="201310c.html#201310231">■</a> 
+xfce4-terminalでw3m</h3>
+<p>
+gnome-terminalが新しいタブを開くたびに縮むので、xfce4-terminalを使い始めた。<br>
+w3mの画像が表示されないのが困るな。gtk3対応になればいけるのか？
+</p>
+<!-- section end -->
+</div>
+<!-- 2013/10/23 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/10/24 start -->
+<h2><a name="20131024" href="201310c.html#20131024">2013-10-24 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="201310241" title="201310241" href="201310c.html#201310241">■</a> 
+xfce4-terminalのショートカットキーを変更する</h3>
+<p>
+Xfce4の[アプリケーションメニュー]-[設定]-[設定マネージャー]-[外観]-[設定]の<br>
+[メニューのショートカットを変更可能にする(D)]をチェック。<br>
+この状態でたとえばxfce4-terminalの[タブ(A)]をクリックし<br>
+[前のタブ]へマウスカーソルを移動させて好きなキーバインドを押せば変更される。<br>
+他も同様。無効にしたいときはBSかDELで。F11とF1が奪われるのがいやなので無効にした。<br>
+</p>
+<p>
+終わったら変更可能のアンチェックを忘れずに。<br>
+そのまま放置するとあまりも簡単に変更できちゃうので手違いが起こりやすい。
+</p>
+<!-- section end -->
+</div>
+<!-- 2013/10/24 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/10/25 start -->
+<h2><a name="20131025" href="201310c.html#20131025">2013-10-25 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="201310251" title="201310251" href="201310c.html#201310251">■</a> 
+Pocketでわかりやすい表示に</h3>
+<p>
+Pocketでショートカットキーがサポートされたはいいが、<br>
+リストの上下がちょっと変わるぐらいでどこが選択されてるのかわかりにくい。<br>
+というわけで、CSSをちょっといじった。
+</p>
+<pre>
+li.item.item-highlight { background: #dddddd !important; }
+</pre>
+<p>
+stylishとかで設定すれば背景が灰色になる。
+</p>
+<!-- section end -->
+</div>
+<!-- 2013/10/25 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/10/26 start -->
+<h2><a name="20131026" href="201310c.html#20131026">2013-10-26 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="201310261" title="201310261" href="201310c.html#201310261">■</a> 
+<a href="http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=645421">#645421 - xfce4-terminal: does not work with w3m-img - Debian Bug report logs</a></h3>
+<p>
+ぐぐってみたら2年前にdebianのほうで報告されていたが、解決してないようで。残念。<br>
+最後のlibvte9が原因というのは確かにあるのかも。とするとgtk3対応するまではこのままか。
+</p>
+<!-- section end -->
+</div>
+<!-- 2013/10/26 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/10/27 start -->
+<h2><a name="20131027" href="201310c.html#20131027">2013-10-27 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="201310271" title="201310271" href="201310c.html#201310271">■</a> 
+もう1個ボタンを用意</h3>
+<p>
+<a href="201310a.html#201310041">クリックが間に合わない件</a>はgenmonだけで解決せずに、<br>
+もう1個別にボタンを用意してそっちで処理すればよさげだ。<br>
+1つ前のURLをどこかに保存しておけばいいわけで。<br>
+そのボタンはgenmonでもいいけど、普通にランチャーでいい。<br>
+これでいけそうだな。
+</p>
+<!-- section end -->
+</div>
+<!-- 2013/10/27 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/10/28 start -->
+<h2><a name="20131028" href="201310c.html#20131028">2013-10-28 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="201310281" title="201310281" href="201310c.html#201310281">■</a> 
+fitbit oneのサイレントアラーム</h3>
+<p>
+半年ほど使ってるがどんな目覚ましよりも強力だ。<br>
+唯一の欠点はたまにホルダーから落ちてしまうことがあることだけだな。<br>
+さすがに外れてたら無理だ。と言っても2回しかないが。
+</p>
+<!-- section end -->
+</div>
+<!-- 2013/10/28 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/10/29 start -->
+<h2><a name="20131029" href="201310c.html#20131029">2013-10-29 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="201310291" title="201310291" href="201310c.html#201310291">■</a> 
+gnome-terminalの設定をxfce4-terminalへ反映させる</h3>
+<p>
+反映というか参考にするというか。gconfでgnome-terminalの設定を参照する。
+</p>
+<pre>
+% gconftool-2 --recursive-list /apps/gnome-terminal/profiles
+ /apps/gnome-terminal/profiles/Default:
+  scrollback_lines = 512
+  allow_bold = true
+  use_theme_colors = true
+  scrollback_unlimited = false
+  scroll_background = true
+  backspace_binding = control-h
+  cursor_shape = block
+  encoding = current
+  update_records = true
+  use_custom_default_size = true
+  login_shell = false
+  background_darkness = 0.83333299999999999
+  background_image = 
+  icon = 
+  foreground_color = #000000000000
+  delete_binding = escape-sequence
+  scrollbar_position = right
+  use_system_font = false
+  use_custom_command = false
+  scroll_on_output = false
+  background_color = #FFFFFFFFDDDD
+  word_chars = -A-Za-z0-9,./?%&amp;#:_=+@<br>
+  palette = #2E2E34343636:#CCCC00000000:#4E4E9A9A0606:#C4C4A0A00000:#34346565A4A4:#757550507B7B:#060698209A9A:#D3D3D7D7CFCF:#555557575353:#EFEF29292929:#8A8AE2E23434:#FCFCE9E94F4F:#72729F9FCFCF:#ADAD7F7FA8A8:#3434E2E2E2E2:#EEEEEEEEECEC
+  visible_name = デフォルト
+  title = 端末
+  default_show_menubar = false
+  default_size_rows = 51
+  font = 梅ゴシックO5 10
+  default_size_columns = 120
+  scroll_on_keystroke = true
+  silent_bell = false
+  exit_action = close
+  custom_command = 
+  background_type = transparent
+  bold_color = #000000000000
+  cursor_blink_mode = system
+  alternate_screen_scroll = true
+  bold_color_same_as_fg = true
+  title_mode = replace
+</pre>
+<p>
+このうちforeground_color, background_color, paletteの値をコピーして、<br>
+それぞれ~/.config/xfce4/terminal/terminalrcの<br>
+ColorForeground, ColorBackground, ColorPaletteへ反映させる。<br>
+paletteの区切りは:と;で違うの注意。16進の大文字小文字はどっちでもいい。<br>
+ファイルを変更すると瞬時に反映される。
+</p>
+<p>
+あとカーソルの色とかブリンクさせるとかいろいろいじれる。<br>
+<a href="http://docs.xfce.org/apps/terminal/advanced">Advanced Topics [Xfce Docs]</a>を参照。
+</p>
+<p>
+面倒なら
+<a href="https://github.com/sgerrand/xfce4-terminal-colors-solarized">こういう</a>のをコピーするのもあり。
+</p>
+<!-- section end -->
+</div>
+<!-- 2013/10/29 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/10/30 start -->
+<h2><a name="20131030" href="201310c.html#20131030">2013-10-30 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="201310301" title="201310301" href="201310c.html#201310301">■</a> 
+Ubuntuのruby 1.9.3</h3>
+<p>
+クロスコンパイルするときにBASERUBYにシステムのruby 1.9.3を使うと、<br>
+--prefixで/data/local/tmpとしてなぜかrubygemsが/var/libへインストールされる件を調べていたら、<br>
+Ubuntuではrubygems/defaults.rbが
+</p>
+<pre>
+  def self.default_dir
+#    path = if defined? RUBY_FRAMEWORK_VERSION then
+#             [
+#               File.dirname(ConfigMap[:sitedir]),
+#               'Gems',
+#               ConfigMap[:ruby_version]
+#             ]
+#           elsif ConfigMap[:rubylibprefix] then
+#             [
+#              ConfigMap[:rubylibprefix],
+#              'gems',
+#              ConfigMap[:ruby_version]
+#             ]
+#           else
+#             [
+#               ConfigMap[:libdir],
+#               ruby_engine,
+#               'gems',
+#               ConfigMap[:ruby_version]
+#             ]
+#           end
+#
+#    @default_dir ||= File.join(*path)
+    @default_dir ||= File.join('/', 'var', 'lib', 'gems', ConfigMap[:ruby_version])
+  end
+</pre>
+<p>
+となっていた。これはいったい。いやでもこっちがrequireされるはずないから原因は違うな。
+</p>
+<!-- section end -->
+</div>
+<!-- 2013/10/30 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/10/31 start -->
+<h2><a name="20131031" href="201310c.html#20131031">2013-10-31 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="201310311" title="201310311" href="201310c.html#201310311">■</a> 
+Google Chrome 27</h3>
+<p>
+Ubuntuのchromeは古くてClearlyがインストールできなかったので適当に上げてみた。<br>
+Clearlyも入って満足だが、以前全然入らなくてあきらめたOneTabのアイコンが出てきた。<br>
+あれ、インストールはされたけど起動しない状態だったのか。
+</p>
+<!-- section end -->
+</div>
+<!-- 2013/10/31 end -->
+
+<hr>
+<div>
+<a href="201310b.html">&lt;Prev(,)</a> | 
+<a href="201311a.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

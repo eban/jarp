@@ -1,0 +1,636 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2004-12-c</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="200412b.html">
+<link rel="next" href="200501a.html">
+
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2004年12月下旬〜</p>
+<hr>
+<div>
+<a href="200412b.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="200501a.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2004/12/21 start -->
+<h2><a name="20041221" href="200412c.html#20041221">2004-12-21 (Tue)</a></h2>
+<!-- 2004-12-22 01:44:55 -->
+
+<div class="entry1">
+<h3><a name="200412211" title="200412211" href="200412c.html#200412211">■</a> 
+<a href="http://www.rim.or.jp/support/announce/041210.html">[Mail] メールシステム機器交換に伴うサービス停止のお知らせ</a></h3>
+<p>
+そういえば、今日はあまり遅れてないような。
+明日はちょっと注意して見てみよう。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200412212" title="200412212" href="200412c.html#200412212">■</a> 
+<a href="http://lftp.yar.ru/">[Soft] lftp 3.0.13</a></h3>
+<p>
+Changes:
+</p><blockquote><p>
+The mirror option --no-symlinks has been fixed (sense was
+reversed). A core dump has been fixed.
+</p></blockquote>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200412213" title="200412213" href="200412c.html#200412213">■</a> 
+[PC] HHK</h3>
+<p>
+ruby-talk MLでHappy Hacking Keyboardが話題に。
+そんなに有名なのか。
+</p>
+
+<p>
+Link: 
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-talk/124137">[ruby-talk:124137]</a>
+</p>
+<!-- section end -->
+</div>
+<!-- 2004/12/21 end -->
+
+
+
+<hr class="hide">
+<!-- 2004/12/22 start -->
+<h2><a name="20041222" href="200412c.html#20041222">2004-12-22 (Wed)</a></h2>
+<!-- 2004-12-23 01:50:13 -->
+
+<div class="entry1">
+<h3><a name="200412221" title="200412221" href="200412c.html#200412221">■</a> 
+<a href="http://www.gnu.org/software/tar/">[GNU] tar 1.5</a></h3>
+<p>
+Changes:
+</p><blockquote><p>
+Compressed archives are now recognised automatically and it is no
+longer necessary to specify -Z, -z, or -j options to read them. When
+restoring incremental dumps, the --one-file-system option prevents
+directory hierarchies residing on different devices from being purged.
+--strip-path was renamed to --strip-components for consistency with the
+GNU convention. Skipping archive members is sped up if the archive media
+supports seeks. A new --exclude-caches option was added, which instructs
+tar to exclude cache directories automatically on archive creation.
+</p></blockquote><p>
+zとかを省略できるようになったのはいいけど、
+広まるまでは今まで通り--bz2を使ったほうがいいか。
+</p>
+<!-- section end -->
+</div>
+<!-- 2004/12/22 end -->
+
+
+
+<hr class="hide">
+<!-- 2004/12/23 start -->
+<h2><a name="20041223" href="200412c.html#20041223">2004-12-23 (Thu)</a></h2>
+<!-- 2004-12-24 03:34:34 -->
+
+<div class="entry1">
+<h3><a name="200412231" title="200412231" href="200412c.html#200412231">■</a> 
+<a href="http://www.ATComputing.nl/Tools/atop">[Soft] atop 1.14</a></h3>
+<p>
+About:
+</p><blockquote><p>
+Atop is an ASCII full-screen performance monitor, similar to the
+top command. At regular intervals, it shows system-level activity related
+to the CPU, memory, swap, disks and network layers, and it shows for every
+active process the CPU utilization in system and user mode, the virtual and
+resident memory growth, priority, username, state, and exit code. The
+process level activity is also shown for processes which finished during
+the last interval, to get a complete overview about the consumers of
+things such as CPU time. Atop only shows the active system-resources and
+processes, and only shows the deviations since the previous interval. 
+</p></blockquote>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200412232" title="200412232" href="200412c.html#200412232">■</a> 
+[FC3] SELinuxとldconfig</h3>
+<p>
+昨日yum updateしてみるとなぜかldconfigでエラーになるようになってしまった。
+そのままあまり気にもせず、今朝PCを立ち上げてみるとinboxがなぜかspamだらけに。
+調べてみるとbogofilterが動かなくなっている。
+</p><blockquote><p>
+bogofilter: error while loading shared libraries: libqdbm.so: cannot
+open shared object file: No such file or directory
+</p></blockquote><p>
+libqdbm.soは/usr/local/libにあるわけだけど、
+そういえば昨日ldconfigでエラーになっていたのは、
+全部/usr/local/libにあるものだった。
+SELinuxがあやしいと見当をつけて、
+</p>
+<pre>
+% sudo setenforce 0
+</pre>
+<p>
+でpermissiveモードにしてアクセス制御を無効にしてみると、
+ldconfigはエラーにならない。
+bogofilterもちゃんと動く。
+やはりそうか。
+</p>
+
+<p>
+ぐぐってみると
+<a href="http://www.selinux.gr.jp/documents/FC3-SELinuxmemo.html">Fedora Core3　SELinuxメモ</a>
+を発見。fixfiles relablelがキモのようだ。早速実行してみると無事解決した。
+ただしすべてのファイルのタイプラベルを変更するのでものすごく時間がかかる。
+実を言うと/var/log/messagesが50MBを越えたので途中でやめた。
+</p>
+
+<p>
+今回のように/usr/local/lib/以下とわかってるときは
+</p>
+<pre>
+% sudo setfiles -v \
+  /etc/selinux/targeted/contexts/files/file_contexts /usr/local/lib
+</pre>
+<p>
+のように直接setfilesを実行したほうがいいだろう。
+ちなみにfixfilesは単なるshell script。
+</p>
+
+<p>
+lsには-Zオプション等が追加されてるらしい。
+</p>
+<pre>
+SELINUX options:
+
+      --lcontext             Display security context.   Enable -l. Lines
+                               will probably be too wide for most displays.
+      -Z, --context          Display security context so it fits on most
+                               displays.  Displays only mode, user, group,
+                               security context and file name.
+      --scontext             Display only security context and file name.
+</pre>
+<p>
+たしかに共有ライブラリはshlib_tになってる。
+</p>
+<pre>
+% ls --scontext libqdbm.so.4.0.0
+system_u:object_r:shlib_t        libqdbm.so.4.0.0
+</pre>
+<p>
+setfilesする前はlib_tになっていたが、これがshlib_tじゃないとldconfigから見るとENOENTになってしまうようだ。
+</p>
+
+<p>
+先のfile_contextsを見ると
+</p>
+<pre>
+/usr(/.*)?/lib(64)?/.*\.so(\.[^/]*)* -- system_u:object_r:shlib_t
+</pre>
+<p>
+という設定がある。これか。
+ってことはこれからも/usr/localへ何か共有ライブラリをインストールすることがあれば、
+setfilesしないといけないわけだ。ちょっと面倒だな。
+libruby.so.2.0.0あたりになったときにも注意が必要だ。
+</p>
+
+<p>
+それはそれとして、なぜyum updateで/usr/local/lib/以下がsetfilesされなかったのかという疑問が残る。
+/etc/ld.conf.d/local.confなんてとこで指定していたからだろうか？
+</p>
+<!-- section end -->
+</div>
+<!-- 2004/12/23 end -->
+
+
+
+<hr class="hide">
+<!-- 2004/12/24 start -->
+<h2><a name="20041224" href="200412c.html#20041224">2004-12-24 (Fri)</a></h2>
+<!-- 2004-12-25 02:21:14 -->
+
+<div class="entry1">
+<h3><a name="200412241" title="200412241" href="200412c.html#200412241">■</a> 
+[FC3] shutdown時のvmware</h3>
+<p>
+shutdownするとvmwareだけどうもうまく後始末できてない。failしてしまう。
+今日ふと思いついて、
+セキュリティレベルの信頼するデバイスとしてvmnet8をチェックしてみたらうまくいった。
+なるほど、iptablesに邪魔されてたのか。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200412242" title="200412242" href="200412c.html#200412242">■</a> 
+[lily] cvs co</h3>
+<p>
+sourceforge.netとかsourceforge.jpでcvs coしようとすると、いつもmodule名に迷う。
+書いてないんだよねえ。
+viewcvsを見ればわかるというか、素直にprojectと同じ名前が多いので、
+そのまま指定すれば大抵の場合はうまくいくからいいんだけど。
+lilyももちろんlilyでok。
+</p>
+<pre>
+% cvs -d:pserver:anonymous@cvs.sourceforge.jp:/cvsroot/lily co lily
+</pre>
+<p>
+で、0.1.5が取得できる。って、
+<a href="http://www.mikihoshi.com/d/2004-12-20.html#200412202128090">0.5.1</a>
+じゃないよね？
+</p>
+<pre>
+% grep @version lily.cgi
+    @version = &quot;0.1.5&quot;
+</pre>
+<p>
+この際居直ってこれを1.0としてしまうとか。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200412243" title="200412243" href="200412c.html#200412243">■</a> 
+[DQ8] The End</h3>
+<p>
+まあ、その先があるのはいつものことだけど、The Endのあとにセーブしますかと聞かれたのにはちょっと笑った。
+隠してないじゃん。
+</p>
+<!-- section end -->
+</div>
+<!-- 2004/12/24 end -->
+
+
+
+<hr class="hide">
+<!-- 2004/12/25 start -->
+<h2><a name="20041225" href="200412c.html#20041225">2004-12-25 (Sat)</a></h2>
+<!-- 2004-12-26 04:00:18 -->
+
+<div class="entry1">
+<h3><a name="200412251" title="200412251" href="200412c.html#200412251">■</a> 
+[Windows] デフラグ</h3>
+<p>
+Adobe Reader 7を入れたはいいが、最後にデフラグして修復よろしくとか言われた。
+なんかよくわからんが、そういえばデフラグなんてしたことないのでやってみた。
+さっそく分析してみると真っ赤だった。
+29%空き容量はあるのにデフラグで使えるのは0%だと言われた。
+他のディスクを用意しろか。VMwareなので実は簡単に用意できたりする。
+4GBほど新規に作って、再度デフラグ。また0%だ。
+勝手に空いてるディスクを使ってくれるわけではないらしい。
+しかたなくSFUだのMSYSだのでかいかたまりを移動。
+15%余計に空けたらやっと進んだ。でも終了した結果を見るとあまり変化がない。
+また分析してみると最適化が必要だとぬかす。今やっただろうが!
+もう一度やってみると赤いとこが減った。また分析。最適化が必要。切りがない。
+一度でできないのか、おまえは。
+と繰り返してたら、一応最適化の必要なしというとこまでいけた。
+</p>
+
+<p>
+で、なんでデフラグしてたんだっけと、すっかり忘れてるし。
+アプリケーションの追加と削除からAdobe Reader 7を選んで変更、修復するとなにやらインストールが進んでやっと終了。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200412252" title="200412252" href="200412c.html#200412252">■</a> 
+[Ruby] Ruby 1.8.2リリース</h3>
+<p>
+どう考えてもsnapshotだな、これは。
+</p>
+<!-- section end -->
+</div>
+<!-- 2004/12/25 end -->
+
+
+
+<hr class="hide">
+<!-- 2004/12/26 start -->
+<h2><a name="20041226" href="200412c.html#20041226">2004-12-26 (Sun)</a></h2>
+<!-- 2004-12-27 01:56:28 -->
+
+<div class="entry1">
+<h3><a name="200412261" title="200412261" href="200412c.html#200412261">■</a> 
+[FC3] SELinuxとldconfigのその後</h3>
+<p>
+コピーして上書きすると、タイプラベルは保存されないならしい。
+まあ、セキュリティ上当然の話か。ldconfigがまたエラーになってる。
+</p>
+<pre>
+/sbin/ldconfig: Input file /usr/local/lib/libruby.so.1.9.0 not found.
+
+/sbin/ldconfig: Input file /usr/local/lib/libruby.so.1.8.2 not found.
+
+/sbin/ldconfig: Input file /usr/local/lib/libgc.so.1.0.2 not found.
+</pre>
+<p>
+というわけで、/usr/local/libへなにかインストールしたらその都度setfilesが必要だ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2004/12/26 end -->
+
+
+
+<hr class="hide">
+<!-- 2004/12/27 start -->
+<h2><a name="20041227" href="200412c.html#20041227">2004-12-27 (Mon)</a></h2>
+<!-- 2004-12-28 17:03:52 -->
+
+<div class="entry1">
+<h3><a name="200412271" title="200412271" href="200412c.html#200412271">■</a> 
+rrr忘年会</h3>
+<p>
+馬場のShakey'sで。ピザとパスタの忘年会。
+fingerprintを交換。
+公開内緒話はよくわからん。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200412272" title="200412272" href="200412c.html#200412272">■</a> 
+[会社] 仕事納め</h3>
+<p>
+10日まで冬休み。
+</p>
+<!-- section end -->
+</div>
+<!-- 2004/12/27 end -->
+
+
+
+<hr class="hide">
+<!-- 2004/12/28 start -->
+<h2><a name="20041228" href="200412c.html#20041228">2004-12-28 (Tue)</a></h2>
+<!-- 2004-12-29 03:51:16 -->
+
+<div class="entry1">
+<h3><a name="200412281" title="200412281" href="200412c.html#200412281">■</a> 
+<a href="http://msmtp.sourceforge.net/">[Soft] msmtp 1.3.1</a></h3>
+<p>
+試してみた。特徴は
+<ul>
+<li>SMTP authentication methods PLAIN, LOGIN and CRAM-MD5
+(and GSSAPI, DIGEST-MD5 and NTLM when compiled with GNU SASL support)
+<li>TLS encrypted connections
+(including server certificate verification and the possibility to send a
+client certificate)
+<li>IPv6 support
+<li>DSN (Delivery Status Notification) support
+<li>SMTP pipelining support (allows faster transmissions)
+<li>support for multiple accounts
+<li>sendmail compatible interface (command line options and exit codes)
+</ul>
+といったところ。
+</p>
+
+<p>
+cmailから使うには~/.msmtprcに
+</p>
+<pre>
+account default
+host smtpホスト名
+from メールアドレス
+logfile ~/log/msmtp.log
+</pre>
+<p>
+と書いて、~/.emacsに
+</p>
+<pre>
+(setq sendmail-program &quot;/usr/local/bin/msmtp&quot;)
+</pre>
+<p>
+を追加するだけでok。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200412282" title="200412282" href="200412c.html#200412282">■</a> 
+[DQ8] レベルS</h3>
+<p>
+伝説の三大巨兵がレベルSで優勝。屋上に行くと銅像が立ってた。
+</p>
+<!-- section end -->
+</div>
+<!-- 2004/12/28 end -->
+
+
+
+<hr class="hide">
+<!-- 2004/12/29 start -->
+<h2><a name="20041229" href="200412c.html#20041229">2004-12-29 (Wed)</a></h2>
+<!-- 2004-12-30 03:15:48 -->
+
+<div class="entry1">
+<h3><a name="200412291" title="200412291" href="200412c.html#200412291">■</a> 
+<a href="http://bogofilter.sf.net/">[Soft] bogofilter 0.93.3.1</a></h3>
+<p>
+Changes:
+</p><blockquote><p>
+New database maintenance options for bogoutil have been added.
+Portability fixes for Berkeley DB 3.1/3.2, OS/2 have been made. SQLite3
+3.0.8 or newer is now supported. 
+</p></blockquote>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200412292" title="200412292" href="200412c.html#200412292">■</a> 
+[DQ8] 試練</h3>
+<p>
+全部アイテムももらったし、これで終わりかと思ってもう一度行ってみると力試しとか言われた。
+しかし8連戦て。
+</p>
+
+<p>
+ちいさなメダルも110枚集めたし、
+ここまで来たらもうちょっとレベルを上げて挑戦するか。
+現在のレベルは48。
+</p>
+<!-- section end -->
+</div>
+<!-- 2004/12/29 end -->
+
+
+
+<hr class="hide">
+<!-- 2004/12/30 start -->
+<h2><a name="20041230" href="200412c.html#20041230">2004-12-30 (Thu)</a></h2>
+<!-- 2004-12-31 02:07:50 -->
+
+<div class="entry1">
+<h3><a name="200412301" title="200412301" href="200412c.html#200412301">■</a> 
+<a href="http://www.dodgeit.com/">[Mail] dodgeit   -    free.    receive-only.    email.    no set up.    rss.</a></h3>
+<p>
+早速ebanでCheck Mailしてみるとすでにwormが来てる。
+ebanはすでに辞書的単語らしい。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200412302" title="200412302" href="200412c.html#200412302">■</a> 
+<a href="http://www.appwalk.com/abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijk/">[Mail] 長いメールアドレス</a></h3>
+<p>
+つまりspamを送るソフトのほうも長すぎてエラーになる可能性があるわけだ。
+面白いかもしれない。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200412303" title="200412303" href="200412c.html#200412303">■</a> 
+[Ruby] MLのdiffの形式</h3>
+<p>
+最近どういうわけかunified diffじゃない形式が目立つ。
+だれかのまねか？
+</p>
+<!-- section end -->
+</div>
+<!-- 2004/12/30 end -->
+
+
+
+<hr class="hide">
+<!-- 2004/12/31 start -->
+<h2><a name="20041231" href="200412c.html#20041231">2004-12-31 (Fri)</a></h2>
+<!-- 2005-01-01 00:54:08 -->
+
+<div class="entry1">
+<h3><a name="200412311" title="200412311" href="200412c.html#200412311">■</a> 
+[Worm] rarファイルのworm</h3>
+<p>
+rarファイルのwormらしいメールが3通来た。なにか流行ってるんだろうか？
+早速~/.rdelirverをいじって
+</p>
+<pre>
+def virus?
+  case body.to_s.delete(&quot; \t&quot;)
+  when /^UEsDBAoAA[AQ]AAA|^TV[qo][QA]AA[ME]AAAA[EC]AAAA/
+    true
+  when /^UmFyIRoH/
+    true
+  end
+end
+</pre>
+<p>
+としてみた。
+2個目のwhenがrarの最初の部分で、&quot;Rar!032a&quot;をbase64でencodeしたもの。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200412312" title="200412312" href="200412c.html#200412312">■</a> 
+[Mail] SpamAssassinのuser_prefs</h3>
+<p>
+結構頻繁にtlecのuser_prefsがいじられていることに気づいた。
+更新しやすいようにファイルを分けることにしよう。
+</p>
+<pre>
+% cd ~/.spamassassin
+% wget -O user_prefs.tlec http://tlec.linux.or.jp/docs/user_prefs
+% touch user_prefs.local
+% echo 'include user_prefs.tlec' &gt; user_prefs
+% echo 'include user_prefs.local' &gt;&gt; user_prefs
+% vi user_prefs.local # 自分でいじるときはこのファイルで
+</pre>
+<p>
+こうしておけば、後はwgetするだけでいい。
+</p>
+
+<p>
+link: 
+<a href="http://tlec.linux.or.jp/docs/user_prefs">user_prefs</a>
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200412313" title="200412313" href="200412c.html#200412313">■</a> 
+[紅白] マツケンサンバII</h3>
+<p>
+初めて見た。びっくりした。しかしIIということはIもあるんだよね。
+いずれIIIも考えているのか？
+</p>
+<!-- section end -->
+</div>
+<!-- 2004/12/31 end -->
+
+<hr>
+<div>
+<a href="200412b.html">&lt;Prev(,)</a> | 
+<a href="200501a.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

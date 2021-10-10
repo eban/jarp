@@ -1,0 +1,592 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2014-2-c</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="201402b.html">
+<link rel="next" href="201403a.html">
+
+<link rel="stylesheet" type="text/css" href="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.css">
+<script type="text/javascript" src="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.js"></script>
+<script type="text/javascript">
+<!--       
+$(document).ready(function() {
+  prettyPrint();
+});
+-->
+</script>
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2014年2月下旬〜</p>
+<hr>
+<div>
+<a href="201402b.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="201403a.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2014/02/21 start -->
+<h2><a name="20140221" href="201402c.html#20140221">2014-02-21 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="201402211" title="201402211" href="201402c.html#201402211">■</a> 
+cygwin: ~/.ssh/configでControlPathを指定するとエラー</h3>
+<p>
+cygwinでもsshで多重接続してみたらなぜかエラーになるので調べたら、<br>
+なんかいろいろと未実装ということらしい。<br>
+<a href="http://www.cygwin.com/ml/cygwin/2012-02/msg00366.html">Corinna Vinschen - Re: Can not make port forwarding from Cygwin when ControlMaster/ControlP</a><br>
+残念。
+</p>
+<!-- section end -->
+</div>
+<!-- 2014/02/21 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/02/22 start -->
+<h2><a name="20140222" href="201402c.html#20140222">2014-02-22 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="201402221" title="201402221" href="201402c.html#201402221">■</a> 
+AmazonのURLを単純に</h3>
+<p>
+今までは
+</p>
+<pre>
+javascript:location.href='http://www.amazon.co.jp/dp/'+document.getElementById(&quot;ASIN&quot;).value;
+</pre>
+<p>
+というbookmarkletを使っていたが、どうも最近これだと変換されないときがあって調べてみると、<br>
+確かにid=&quot;ASIN&quot;がない場合があった。ないときはname=&quot;ASIN.0&quot;があるようなので
+</p>
+<pre>
+javascript:location.href='http://www.amazon.co.jp/dp/'+(document.getElementById(&quot;ASIN&quot;)||document.getElementsByName(&quot;ASIN.0&quot;)[0]).value;
+</pre>
+<p>
+でお茶を濁すことにした。<br>
+まあ、URLからASINを抜き出せばいいんだろうけど、いろいろなパターンがありそうで。
+</p>
+<!-- section end -->
+</div>
+<!-- 2014/02/22 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/02/23 start -->
+<h2><a name="20140223" href="201402c.html#20140223">2014-02-23 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="201402231" title="201402231" href="201402c.html#201402231">■</a> 
+zshのhistory fileの文字化けをなんとかする話</h3>
+<p>
+zshのhistory fileは日本語が化けるが、<br>
+historyコマンドを実行した結果は化けてない。<br>
+ということは内部でなにか変換してるわけでソースで確認してみると、<br>
+metafy/unmetafyという処理をしていた。<br>
+metafyはメタなバイトがあったら&quot;\x83&quot;を挿入して、^32する感じだ。<br>
+unmetafyはその逆の処理なので&quot;\x83&quot;があったらそれは消してその次のバイトを^32する。<br>
+</p>
+<pre>
+mod_export char *
+unmetafy(char *s, int *len)
+{
+    char *p, *t;
+
+    for (p = s; *p &amp;&amp; *p != Meta; p++);
+    for (t = p; (*t = *p++);)
+	if (*t++ == Meta)
+	    t[-1] = *p++ ^ 32;
+    if (len)
+	*len = t - s;
+    return s;
+}
+</pre>
+<p>
+Metaが0x83。これをRubyで書くと
+</p>
+<pre>
+str.gsub(/\x83(.)/n){($1.ord^32).chr}
+</pre>
+<p>
+ってことだ。実際にやってみる。
+</p>
+<pre>
+% HISTFILE=$PWD/zsh_history
+% HISTSIZE=3
+% echo あいうえお
+あいうえお
+% echo 今、咲き誇る花たちよ
+今、咲き誇る花たちよ
+</pre>
+<p>
+とここで違う端末で実行。
+</p>
+<pre>
+% od -tx1z zsh_history 
+0000000 3a 20 31 33 39 33 31 36 39 39 38 30 3a 30 3b 48  &gt;: 1393169980:0;H&lt;
+0000020 49 53 54 53 49 5a 45 3d 33 0a 3a 20 31 33 39 33  &gt;ISTSIZE=3.: 1393&lt;
+0000040 31 36 39 39 39 30 3a 30 3b 65 63 68 6f 20 e3 81  &gt;169990:0;echo ..&lt;
+0000060 82 e3 81 83 a4 e3 81 83 a6 e3 81 83 a8 e3 81 83  &gt;................&lt;
+0000100 aa 0a 3a 20 31 33 39 33 31 37 30 30 31 34 3a 30  &gt;..: 1393170014:0&lt;
+0000120 3b 65 63 68 6f 20 e4 bb 83 aa e3 80 81 e5 83 b2  &gt;;echo ..........&lt;
+0000140 b2 e3 81 83 ad e8 aa 83 a7 e3 82 83 ab e8 83 aa  &gt;................&lt;
+0000160 b1 e3 81 9f e3 81 a1 e3 82 83 a8 0a              &gt;............&lt;
+0000174
+% ruby -e 'puts File.binread(&quot;zsh_history&quot;).gsub(/\x83(.)/n){($1.ord^32).chr}'
+: 1393169980:0;HISTSIZE=3
+: 1393169990:0;echo あいうえお
+: 1393170014:0;echo 今、咲き誇る花たちよ
+</pre>
+<p>
+おお、ちゃんと表示された。確かに83がいっぱいある。
+</p>
+<!-- section end -->
+</div>
+<!-- 2014/02/23 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/02/24 start -->
+<h2><a name="20140224" href="201402c.html#20140224">2014-02-24 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="201402241" title="201402241" href="201402c.html#201402241">■</a> 
+<a href="http://xml-coreutils.sourceforge.net/">xml-coreutils</a></h3>
+<p>
+なかなか楽しいツールだ。<br>
+<a href="http://xml-coreutils.sourceforge.net/contents.html">各コマンド</a>はUnixでお馴染の名前がついているので大体挙動は予想できる。<br>
+たとえばこの日記のRSSで試すと、
+</p>
+<pre>
+% xml-ls ~/jarp/diary/index.rdf  
+&lt;?xml version=&quot;1.0&quot;?&gt;
+&lt;root&gt;
+	&lt;rdf:RDF&gt;
+		&lt;channel/&gt;
+		&lt;image/&gt;
+		&lt;item/&gt;
+		&lt;item/&gt;
+		&lt;item/&gt;
+		&lt;item/&gt;
+		&lt;item/&gt;
+	&lt;/rdf:RDF&gt;
+&lt;/root&gt;
+% xml-ls -a ~/jarp/diary/index.rdf ://item              
+&lt;?xml version=&quot;1.0&quot;?&gt;
+&lt;root&gt;
+	&lt;item rdf:about=&quot;http://jar...&quot;&gt;
+		&lt;title/&gt;
+		&lt;link/&gt;
+		&lt;description/&gt;
+		&lt;content:encoded/&gt;
+		&lt;dc:creator/&gt;
+		&lt;dc:date/&gt;
+	&lt;/item&gt;
+	&lt;item rdf:about=&quot;http://jar...&quot;&gt;
+		&lt;title/&gt;
+		&lt;link/&gt;
+		&lt;description/&gt;
+		&lt;content:encoded/&gt;
+		&lt;dc:creator/&gt;
+		&lt;dc:date/&gt;
+	&lt;/item&gt;
+	&lt;item rdf:about=&quot;http://jar...&quot;&gt;
+		&lt;title/&gt;
+		&lt;link/&gt;
+		&lt;description/&gt;
+		&lt;content:encoded/&gt;
+		&lt;dc:creator/&gt;
+		&lt;dc:date/&gt;
+	&lt;/item&gt;
+	&lt;item rdf:about=&quot;http://jar...&quot;&gt;
+		&lt;title/&gt;
+		&lt;link/&gt;
+		&lt;description/&gt;
+		&lt;content:encoded/&gt;
+		&lt;dc:creator/&gt;
+		&lt;dc:date/&gt;
+	&lt;/item&gt;
+	&lt;item rdf:about=&quot;http://jar...&quot;&gt;
+		&lt;title/&gt;
+		&lt;link/&gt;
+		&lt;description/&gt;
+		&lt;content:encoded/&gt;
+		&lt;dc:creator/&gt;
+		&lt;dc:date/&gt;
+	&lt;/item&gt;
+&lt;/root&gt;
+% xml-ls ~/jarp/diary/index.rdf ://item/title
+&lt;?xml version=&quot;1.0&quot;?&gt;
+&lt;root&gt;
+	&lt;title&gt;
+		zshのhistory fileの文字化けをなんとか��...
+	&lt;/title&gt;
+	&lt;title&gt;
+		AmazonのURLを単純に
+	&lt;/title&gt;
+	&lt;title&gt;
+		sudoersのcommentとdirectiveの罠
+	&lt;/title&gt;
+	&lt;title&gt;
+		qmv
+	&lt;/title&gt;
+	&lt;title&gt;
+		要素の検証での小技
+	&lt;/title&gt;
+&lt;/root&gt;
+% xml-printf &quot;%s\n&quot; ~/jarp/diary/index.rdf ://item/title   
+zshのhistory fileの文字化けをなんとかする話
+AmazonのURLを単純に
+sudoersのcommentとdirectiveの罠
+qmv
+要素の検証での小技
+% xml-printf &quot;%s\n&quot; ~/jarp/diary/index.rdf ://dc:date
+2014-02-24T00:48:25.487316+09:00
+2014-02-23T02:30:53.641529+09:00
+2014-02-21T03:06:19.9101+09:00
+2014-02-20T01:36:25.721897+09:00
+2014-02-18T00:29:35.515853+09:00
+% xml-printf &quot;%s\n&quot; ~/jarp/diary/index.rdf ://title  
+Just another Ruby porter,
+Just another Ruby porter,
+zshのhistory fileの文字化けをなんとかする話
+AmazonのURLを単純に
+sudoersのcommentとdirectiveの罠
+qmv
+要素の検証での小技
+% xml-printf &quot;%s\n&quot; ~/jarp/diary/index.rdf ://channel/title
+Just another Ruby porter,
+</pre>
+<p>
+とこんな感じで抜き出すことができる。<br>
+xml-sedはtextしか相手にしないとか、XPATHで場所指定できるとかいろいろ考えられている。<br>
+文字化けに関するタイトルが文字化けしちゃってるのは御愛嬌だが、まあ、許容範囲かな。<br>
+xmllint --xpathでもできるがこっちはnamespaceとか厳格すぎて使いづらい。
+</p>
+<!-- section end -->
+</div>
+<!-- 2014/02/24 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/02/25 start -->
+<h2><a name="20140225" href="201402c.html#20140225">2014-02-25 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="201402251" title="201402251" href="201402c.html#201402251">■</a> 
+xml-coreutilsでYahooトピックス</h3>
+<p>
+HTMLそのものだとさすがに処理できないが、xml-fixtags --htmlで無理矢理XMLへ変換できる。<br>
+運がよければ。tenki.jpとかnews.livedoor.comはだめだった。なんか特定のjavascriptに秘孔を突かれてる感じだ。
+</p>
+<p>
+Yahooトピックスに対してやってみたら、該当するXPathを見つけるのが大変だった。<br>
+延々とxml-lsでtable,tdを打つはめに。
+</p>
+<pre>
+% curl -s www.yahoo.co.jp | xml-fixtags --html | xml-printf &quot;%s\n&quot; ':/html/body/center/table/td/table/td/table/td/table[3]/td'
+23時9分更新
+・日米首脳が応酬 亀裂の真相
+・NHK会長 異例の再注意受ける
+・3歳長男に犬の首輪 父を逮捕
+・21人死亡 全国で「殺人ダニ」
+・ビットコイン Mt.Gox取引不能
+・ACLフォルラン出場 柿谷弾も
+・15歳平野 キッズに夢を与えた
+・岡村怒り? 天野結婚は裏切り
+最近の話題記事一覧
+</pre>
+<p>
+最初と最後がじゃまならsed '1d;$d'あたりで。
+</p>
+<!-- section end -->
+</div>
+<!-- 2014/02/25 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/02/26 start -->
+<h2><a name="20140226" href="201402c.html#20140226">2014-02-26 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="201402261" title="201402261" href="201402c.html#201402261">■</a> 
+convertでpbm(P1)へ変換する</h3>
+<p>
+convertで2値画像を01で表示させたくてpbm:と指定するんだけど、<br>
+これだとP4(binary)になってしまう。P1にするには-compress noneをつければいいらしい。
+</p>
+<pre>
+% convert 20140225010618.gif pbm: | od -tx1z
+0000000 50 34 0a 38 34 20 31 39 0a 00 00 20 00 00 38 00  &gt;P4.84 19... ..8.&lt;
+0000020 00 00 40 00 00 00 50 00 00 6e 00 00 00 a0 00 00  &gt;..@...P..n......&lt;
+0000040 00 50 00 00 c2 00 00 00 a0 00 00 c0 50 00 e0 83  &gt;.P..........P...&lt;
+0000060 01 c6 00 a0 00 00 80 50 01 f1 81 03 e2 00 a0 00  &gt;.......P........&lt;
+0000100 01 80 7c 03 73 ff c6 e3 00 f8 00 01 00 8a 02 61  &gt;..|.s..........a&lt;
+0000120 01 04 c1 01 14 00 03 00 ab 00 01 01 00 01 81 56  &gt;...............V&lt;
+0000140 00 03 00 b5 00 01 03 00 01 81 6a 00 03 01 1b 00  &gt;..........j.....&lt;
+0000160 01 fe 00 01 82 36 00 03 00 96 00 00 8c 00 01 81  &gt;.....6..........&lt;
+0000200 2c 00 03 00 92 00 00 86 00 01 81 24 00 03 00 44  &gt;,..........$...D&lt;
+0000220 00 00 c2 00 01 80 88 00 03 00 7c 00 00 76 00 01  &gt;..........|..v..&lt;
+0000240 80 f8 00 01 00 82 00 00 1c 00 01 01 04 00 01 80  &gt;................&lt;
+0000260 7c 00 00 00 00 03 00 f8 00 00 80 00 00 00 7e 00  &gt;|.............~.&lt;
+0000300 02 00 00 00 00 c0 00 00 00 00 00 06 00 00 00 00  &gt;................&lt;
+0000320 00 00 00 00 7e 00 00 00 00 00                    &gt;....~.....&lt;
+0000332
+% convert 20140225010618.gif -compress none pbm:
+P1
+84 19
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+0 0 0 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 
+0 0 0 0 0 0 0 0 1 1 0 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+1 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 1 0 0 0 0 0 0 0 
+0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+0 0 0 0 0 0 1 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 0 0 0 0 0 0 0 1 0 1 0 
+0 0 0 0 0 0 0 0 0 0 0 1 1 1 0 0 0 0 0 1 0 0 0 0 0 1 1 0 0 0 0 0 0 0 1 1 1 0 0 
+0 1 1 0 0 0 0 0 0 0 0 0 1 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 
+0 0 1 0 1 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 0 0 0 1 1 0 0 0 0 0 0 1 0 0 0 0 0 0 
+1 1 1 1 1 0 0 0 1 0 0 0 0 0 0 0 0 0 1 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 
+0 0 0 0 0 0 0 0 1 1 1 1 1 0 0 0 0 0 0 0 0 1 1 0 1 1 1 0 0 1 1 1 1 1 1 1 1 1 1 
+1 1 0 0 0 1 1 0 1 1 1 0 0 0 1 1 0 0 0 0 0 0 0 0 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 
+0 0 0 0 1 0 0 0 0 0 0 0 0 1 0 0 0 1 0 1 0 0 0 0 0 0 0 1 0 0 1 1 0 0 0 0 1 0 0 
+0 0 0 0 0 1 0 0 0 0 0 1 0 0 1 1 0 0 0 0 0 1 0 0 0 0 0 0 0 1 0 0 0 1 0 1 0 0 0 
+0 0 0 0 0 0 0 0 0 1 1 0 0 0 0 0 0 0 0 1 0 1 0 1 0 1 1 0 0 0 0 0 0 0 0 0 0 0 0 
+0 0 0 1 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 0 0 0 0 0 0 1 0 1 0 
+1 0 1 1 0 0 0 0 0 0 0 0 0 0 0 1 1 0 0 0 0 0 0 0 0 1 0 1 1 0 1 0 1 0 0 0 0 0 0 
+0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 0 0 0 0 
+0 0 1 0 1 1 0 1 0 1 0 0 0 0 0 0 0 0 0 0 0 1 1 0 0 0 0 0 0 0 1 0 0 0 1 1 0 1 1 
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+1 1 0 0 0 0 0 1 0 0 0 1 1 0 1 1 0 0 0 0 0 0 0 0 0 0 0 1 1 0 0 0 0 0 0 0 0 1 0 
+0 1 0 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 1 1 0 0 0 0 0 0 0 0 0 0 0 
+0 0 0 0 0 0 1 1 0 0 0 0 0 0 1 0 0 1 0 1 1 0 0 0 0 0 0 0 0 0 0 0 0 1 1 0 0 0 0 
+0 0 0 0 1 0 0 1 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 1 1 0 0 0 0 
+0 0 0 0 0 0 0 0 0 0 0 0 1 1 0 0 0 0 0 0 1 0 0 1 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 
+1 1 0 0 0 0 0 0 0 0 0 1 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 0 0 0 
+0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 0 0 0 0 0 0 0 1 0 0 0 1 0 0 0 0 0 0 0 
+0 0 0 0 0 0 1 1 0 0 0 0 0 0 0 0 0 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+0 0 1 1 1 0 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 0 0 0 0 0 0 0 1 1 1 1 1 0 
+0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 
+0 0 0 0 0 0 0 0 0 0 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 1 
+0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 0 0 0 0 0 0 0 0 1 1 1 1 1 0 0 0 0 0 
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 0 0 
+0 0 0 0 0 0 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 
+0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 0 0 0 0 0 
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+0 0 0 0 0 0 0 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+</pre>
+<p>
+これだとなんだかわからないが、ちょっといじってやると見易くなる。
+</p>
+<p>
+<pre>
+% convert 20140225010618.gif -compress none pbm: | sed 1,2d | xargs -n84 | tr -d ' ' | tr 01 ' #'
+                  #                       ###                            #          
+                 # #                     ## ###                         # #         
+                 # #                    ##    #                         # #         
+        ##       # #            ###     #     ##       ###   ##         # #         
+        #        # #           #####   ##      #      #####   #         # #         
+       ##        #####        ## ###  ############   ## ###   ##        #####       
+       #        #   # #       #  ##    #       #     #  ##     #       #   # #      
+      ##        # # # ##               #       #               ##      # # # ##     
+      ##        # ## # #               #      ##               ##      # ## # #     
+      ##       #   ## ##               ########                ##     #   ## ##     
+      ##        #  # ##                 #   ##                 ##      #  # ##      
+      ##        #  #  #                 #    ##                ##      #  #  #      
+      ##         #   #                  ##    #                ##       #   #       
+      ##         #####                   ### ##                ##       #####       
+       #        #     #                    ###                 #       #     #      
+       ##        #####                                        ##        #####       
+        #                                ######               #                     
+        ##                                                   ##                     
+                                         ######                                     
+</pre>
+</p>
+<!-- section end -->
+</div>
+<!-- 2014/02/26 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/02/27 start -->
+<h2><a name="20140227" href="201402c.html#20140227">2014-02-27 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="201402271" title="201402271" href="201402c.html#201402271">■</a> 
+grepが10倍速いとか200倍遅いとかを検証する</h3>
+<p>
+話を聞くと最新のgrepじゃなくても再現できそうなのでやってみる。<br>
+まとめると-i fooは[Ff][Oo][Oo]のような正規表現に置き換えると-iよりは10倍速くなるが、<br>
+euc-jpのような環境では逆に200倍遅くなってしまうことらしい。<br>
+まずは適当にでかいログを用意。/var/logを覗くとauth.log.1がでかめだったのこれを使う。<br>
+とはいえこれでも1Mほどしかないので10倍にと思ったが手違いで11倍になってしまった。
+</p>
+<pre>
+% cd /var/log
+% ls -l auth.log.1
+-rw-r----- 1 syslog adm 1064355 2014-02-23 08:06:04 auth.log.1
+% cat auth.log.1{,,,,,,,,,,} &gt; /tmp/big.log
+% ls -oh /tmp/big.log
+-rw-r--r-- 1 eban 12M 2014-02-27 10:30:38 /tmp/big.log
+% wc -l /tmp/big.log | numfmt --grouping        
+127,259 /tmp/big.log
+</pre>
+<p>
+12MBで13万行弱。LANGはja_JP.UTF-8。grepはubuntuのをそのまま使う。
+</p>
+<pre>
+% grep --version
+grep (GNU grep) 2.14
+Copyright (C) 2012 Free Software Foundation, Inc.
+License GPLv3+: GNU GPL version 3 or later &lt;http://gnu.org/licenses/gpl.html&gt;.
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.
+
+Written by Mike Haertel and others, see &lt;http://git.sv.gnu.org/cgit/grep.git/tree/AUTHORS&gt;.
+</pre>
+<p>
+まずは普通に。ヒットしても鬱陶しいので存在しないfooで検索。
+</p>
+<pre>
+% time grep foo /tmp/big.log       
+grep foo /tmp/big.log  0.00s user 0.02s system 74% cpu 0.027 total
+</pre>
+<p>
+まあ、一瞬だ。つぎに-iオプション。
+</p>
+<pre>
+% time grep -i foo /tmp/big.log       
+grep -i foo /tmp/big.log  1.99s user 0.04s system 93% cpu 2.168 total
+</pre>
+<p>
+結構時間がかかる。2秒を越えた。次は文字クラスで。
+</p>
+<pre>
+% time grep '[Ff][Oo][Oo]' /tmp/big.log 
+grep '[Ff][Oo][Oo]' /tmp/big.log  0.03s user 0.00s system 88% cpu 0.041 total
+% echo $[2.168 / 0.041]
+52.878048780487809
+</pre>
+<p>
+ほぼオプションなしと同じオーダー。これがGNU grep 2.17での10倍速くなるという変更内容。<br>
+10倍どころか50倍以上速くなった。
+</p>
+<p>
+次にeuc-jpな環境で。ないので作る。
+</p>
+<pre>
+% echo 'ja_JP.EUC-JP EUC-JP' | sudo tee -a /var/lib/locales/supported.d/local
+ja_JP.EUC-JP EUC-JP
+% sudo locale-gen
+% locale -a | grep ja
+ja_JP.eucjp
+ja_JP.utf8
+</pre>
+<p>
+これで準備ok。やってみる。
+</p>
+<pre>
+% time LANG=ja_JP.eucJP grep foo /tmp/big.log       
+LANG=ja_JP.eucJP grep foo /tmp/big.log  0.01s user 0.02s system 88% cpu 0.027 total
+% time LANG=ja_JP.eucJP grep -i foo /tmp/big.log
+LANG=ja_JP.eucJP grep -i foo /tmp/big.log  2.15s user 0.02s system 89% cpu 2.423 total
+% time LANG=ja_JP.eucJP grep '[Ff][Oo][Oo]' /tmp/big.log
+LANG=ja_JP.eucJP grep '[Ff][Oo][Oo]' /tmp/big.log  167.61s user 0.32s system 96% cpu 2:54.26 total
+% echo $[174.26 / 2.423] 
+71.919108543128345
+</pre>
+<p>
+確かに文字クラス指定だと極端に遅くなった。3分近い。70倍以上遅い。<br>
+GNU grep 2.18ではUTF-8以外は先の変換はしなくなったというが、<br>
+なんという場当たり的な対応だ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2014/02/27 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/02/28 start -->
+<h2><a name="20140228" href="201402c.html#20140228">2014-02-28 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="201402281" title="201402281" href="201402c.html#201402281">■</a> 
+trackfeed</h3>
+<p>
+いつの間にか終了だが復活だかしていたらしい。その混乱で動かなくなっていた。<br>
+1年も気づかずにいるのもどうかという気もするというか、<br>
+さらに設置したまま放置しているGoogle Analyticsがあるので、<br>
+2つも要らないだろうってことでtrackfeedは削除する。<br>
+それだとまた気づかないのでメールで通知するようにしよう。
+</p>
+<!-- section end -->
+</div>
+<!-- 2014/02/28 end -->
+
+<hr>
+<div>
+<a href="201402b.html">&lt;Prev(,)</a> | 
+<a href="201403a.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

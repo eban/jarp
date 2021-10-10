@@ -1,0 +1,1328 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2001-1-a</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="200012c.html">
+<link rel="next" href="200101b.html">
+
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2001年1月上旬〜</p>
+<hr>
+<div>
+<a href="200012c.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="200101b.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2001/01/01 start -->
+<h2><a name="20010101" href="200101a.html#20010101">2001-01-01 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="200101011" title="200101011" href="200101a.html#200101011">■</a> 
+gcc-2.95.2-6</h3>
+
+<a href="http://cygwin.com/">cygwin project</a>がいじってるgccは-5とか後ろについたりする。
+Debianもたしかそんな感じだったか。
+
+<h4><a name="200101011S1" href="200101a.html#200101011S1">_</a> </h4>
+<div class="sub">
+いつのまにか
+<a href="ftp://ftp.freesoftware.com/pub/sourceware/cygwin/latest/gcc/">gcc-2.95.2-6</a>が出てる。
+
+</div>
+<h4><a name="200101011S2" href="200101a.html#200101011S2">_</a> </h4>
+<div class="sub">
+gcc-2.95.2-5のときはversion.hの中身がgcc-2.95.2-4のままで
+/usr/local/lib/gcc-lib/i686-pc-cygwin/gcc-2.95.2-4/
+というディレクトリ名になっていて気持ち悪かった。
+クロスの環境を作るときに-5に直してmakeしたんだけど、
+bmingwでも影響してnativeの windows側ではln -s gcc-2.95.2-{4,5}
+したりして、よくわからない状況に。
+
+</div>
+<h4><a name="200101011S3" href="200101a.html#200101011S3">_</a> </h4>
+<div class="sub">
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-dev/8817">[ruby-dev:8817]</a>を見ると年越しmakeしてる。
+<a href="#20010101F1"><sup><small>*1</small></sup></a>というわけで今年も年越しmakeだ。
+Cygwin自体はCVSでupdateしてるでの常に最新のソースはある。
+一応cygwin-1.1.7-1-src.tar.gzもgetしてはあるが,cvsupdateの
+メッセージを見てると1.1.7をリリースして以来あまり更新されてない。
+
+</div>
+<h4><a name="200101011S4" href="200101a.html#200101011S4">_</a> </h4>
+<div class="sub">
+最近はこんな感じでmakeしている。
+<a href="#20010101F2"><sup><small>*2</small></sup></a><pre>
+% cd /pub/cygwin
+% tar xfvz gcc-2.95.2-6-src.tar.gz
+% mkdir build
+% cd build
+% lndir ../src # /pub/cygwin/src に cvs co してるので
+% for i in gcc libstdc++ libio
+for&gt; do
+for&gt; mkdir $i
+for&gt; cd $i
+for&gt; lndir ../../gcc-2.95.2-6/$i
+for&gt; cd ..
+for&gt; done
+% mkdir obj # これ大事
+% cd obj # この階層じゃないと make に失敗する. cygwin って変.
+% CFLAGS=-Os CXXFLAGS=-Os ../configure --target=i686-pc-cygwin \
+  --prefix=/usr/local/cygwin --enable-languages=c,c++ \
+  --enable-targets=i686-pc-cygwin,i386-msdosdjgpp
+% make
+% sudo make install
+</pre>
+<ul>
+<li>--prefixは/usr/local/{include,lib}と分けたいから。
+<li>--enable-languagesはfortranもObjective-C も要らないので必要なものだけ。
+gcc 用。
+<li>--enable-targetsにlinux
+も指定してもいいがあまり使い勝手はよくない。
+binutils 用。
+</ul>
+このままだとspecsに/usr/include
+とか入っていてまったくもってクロスのことを考えてないので
+<a href="../files/gcc-2.95.2-6-specs-cross.diff">パッチ</a>を用意してみた。
+<pre>
+% echo 'main(){}' &gt; foo.c
+% i686-pc-cygwin-gcc -v foo.c
+</pre>
+で確認を。PATHを通すのも忘れずに。
+</div>
+<hr align="left" width="40%">
+<div>
+<a name="20010101F1" href="200101a.html#20010101F1"><small>*1</small></a>:
+まだB20.1だったなあ。
+<br>
+<a name="20010101F2" href="200101a.html#20010101F2"><small>*2</small></a>:
+プロンプトは%だけどzsh。てゆうかzshのdefaultは
+PS1='%m%# 'なので%でいいじゃん。
+てゆうか、なぜかtcshは'&gt; 'だ。
+</div>
+<!-- section end -->
+</div>
+<!-- 2001/01/01 end -->
+
+
+
+<hr class="hide">
+<!-- 2001/01/02 start -->
+<h2><a name="20010102" href="200101a.html#20010102">2001-01-02 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="200101021" title="200101021" href="200101a.html#200101021">■</a> 
+bmingw(1)</h3>
+
+-bmingwと指定するからbmingwpackageなんだけど、じゃ-bmingwってなに?
+<pre>
+% gcc --help | grep -e -b
+  -b &lt;machine&gt;             Run gcc for target &lt;machine&gt;, if installed
+</pre>
+ということだ。b mingw packageでももちろんいい。
+
+<h4><a name="200101021S1" href="200101a.html#200101021S1">_</a> <strong>gcc</strong>: </h4>
+<div class="sub">
+
+binutils, gccでクロスの環境をいくつか作っていると、
+ディレクトリ構成がどうなっているのか自ずとわかってくる。
+
+<pre>
+$prefix/bin
+$prefix/include
+$prefix/lib
+$prefix/$target
+$prefix/$target/bin
+$prefix/$target/include
+$prefix/$target/lib
+</pre>
+
+ここで$prefixはdefaultだと/usr/local
+<a href="#20010102F1"><sup><small>*1</small></sup></a>、$targetはcygwinだとi686-pc-cygwinが入る。<br>
+gccは$prefix/lib/gcc-lib/$target/$versionが結構重要だ。
+このディレクトリにはcc1等がある。
+たとえば過去のバージョンを残していれば
+<pre>
+% i686-pc-cygwin-gcc -V 2.95.2-5 -v
+Reading specs from /usr/local/cygwin/lib/gcc-lib/i686-pc-cygwin/2.95.2-5/specs
+gcc driver version 2.95.2-6 19991024 (cygwin experimental) executing gcc version 2.95.2-5
+</pre>
+という感じで呼び出すことができる。
+<a href="#20010102F2"><sup><small>*2</small></sup></a><br>
+同じ$prefixで違う$targetのgccがインストールしてある場合は、
+-bオプションでtargetを切り替えることもできる。
+
+
+</div>
+<h4><a name="200101021S2" href="200101a.html#200101021S2">_</a> <strong>crtdll.dll と msvcrt.dll</strong>: </h4>
+<div class="sub">
+Cygwin用のgccでは現在-mno-cygwinというオプションでcygwin1.dll
+を必要としない実行ファイルを作ることができる。
+これはcrtdll.dllを対象にしたものだ。
+crtdll.dllはwindowsのシステムディレクトリに最初からある。
+
+</div>
+<h4><a name="200101021S3" href="200101a.html#200101021S3">_</a> </h4>
+<div class="sub">
+crtdll.dllは名前からわかる通りCのRunTimeライブラリのDLLだ。
+同じようなものにmsvcrt.dllがある。
+こちらのほうがサイズから見ても高機能。
+<a href="#20010102F3"><sup><small>*3</small></sup></a>
+</div>
+<h4><a name="200101021S4" href="200101a.html#200101021S4">_</a> </h4>
+<div class="sub">
+-mno-cygwinはcrtdll.dll固定になる。
+-lmsvcrtと指定しても、その他のlibmoldname.aやcrt?.o
+はmsvcrt.dll用のものに切り替わるわけではないので、
+正しい実行ファイルが作れない。
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-dev/10361">[ruby-dev:10361]</a><a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-dev/10362">[ruby-dev:10362]</a>
+</div>
+<h4><a name="200101021S5" href="200101a.html#200101021S5">_</a> </h4>
+<div class="sub">
+crtdll.dllを対象にした実行ファイルでも全然構わないんだけど、
+最初に移植したmingw版rubyはperlを参考にしたため、
+ばりばりmsvcrt.dllに依存している。
+というわけで、できればmsvcrt.dllを使うようにしたい。
+
+</div>
+<h4><a name="200101021S6" href="200101a.html#200101021S6">_</a> </h4>
+<div class="sub">
+libmoldname.aなどのライブラリは、
+他のディレクトリに置いといて-Lで指定すればいい。
+crt?.oを探すときは-Bで指定したディレクトリを見る。
+じゃ-mno-cygwinのようにspecsでそのように書いてあげればいいかと思うが
+これが結構悩む。
+specsを変更するということはバージョンアップするたびに
+パッチをあてる必要がある。
+配布されてるファイルをいじることにもなるし、
+メンテナンス性が悪い。
+<a href="#20010102F4"><sup><small>*4</small></sup></a>そこで-bオプションを使いディレクトリごと分けることにした。
+これでlibmoldname.aのように同じ名前のライブラリも安心して、
+違うディレクトリに置くことができる。
+実は-mno-cygwinのlibstdc++にも似たような問題があるのだが
+これも解決できる。
+
+</div>
+<h4><a name="200101021S7" href="200101a.html#200101021S7">_</a> <strong>bmingw</strong>: </h4>
+<div class="sub">
+-bオプションを指定した場合gccはtargetを切り替えて実行する。
+-bmingwと指定すればspecsは
+</p><blockquote><p>
+$prefix/lib/gcc-lib/mingw/$version/specs
+</p></blockquote><p>
+を使おうとするし、
+</p><blockquote><p>
+$prefix/mingw/bin/{as,ld}
+</p></blockquote><p>
+等を内部的に実行しようとする。ライブラリも
+</p><blockquote><p>
+$prefix/mingw/lib
+</p></blockquote><p>
+をまず探す。
+
+</div>
+<h4><a name="200101021S8" href="200101a.html#200101021S8">_</a> </h4>
+<div class="sub">
+symbolic link等を使いこれらのディレクトリに必要なものを配置する。
+これが
+<strong>mingw package</strong>だ。
+
+</div>
+<h4><a name="200101021S9" href="200101a.html#200101021S9">_</a> </h4>
+<div class="sub">
+つづく。
+</div>
+<hr align="left" width="40%">
+<div>
+<a name="20010102F1" href="200101a.html#20010102F1"><small>*1</small></a>:
+わたしは/usr/local/cygwinにしている。
+<br>
+<a name="20010102F2" href="200101a.html#20010102F2"><small>*2</small></a>:
+このspecsにはcpp, cc1, as, ldなどに渡すオプションを指定できる。
+<br>
+<a name="20010102F3" href="200101a.html#20010102F3"><small>*3</small></a>:
+てゆうかthread-safeにしたいときはmsvcrt.dllにせざるを得ないらしい。
+<br>
+<a name="20010102F4" href="200101a.html#20010102F4"><small>*4</small></a>:
+bmingw packageはnativeのcygwinも一応考えている。
+</div>
+<!-- section end -->
+</div>
+<!-- 2001/01/02 end -->
+
+
+
+<hr class="hide">
+<!-- 2001/01/03 start -->
+<h2><a name="20010103" href="200101a.html#20010103">2001-01-03 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="200101031" title="200101031" href="200101a.html#200101031">■</a> 
+bmingw(2)</h3>
+昨日からのつづきだ。
+
+<h4><a name="200101031S1" href="200101a.html#200101031S1">_</a> </h4>
+<div class="sub">
+import libraryはcygwinのものをそのまま使えばいいからsymlinkで対処。
+できれば specs で対応できればいいんだけど。
+
+</div>
+<h4><a name="200101031S2" href="200101a.html#200101031S2">_</a> </h4>
+<div class="sub">
+header fileもw32api/やmingw/をそのまま使える。
+これも以前はsymlinkを張っていたが、今はspecsで-Iを指定している。
+w32apiを分けてくれたので助かる。
+
+</div>
+<h4><a name="200101031S3" href="200101a.html#200101031S3">_</a> </h4>
+<div class="sub">
+その他msvcrt固有のファイルはmingwというディレクトリの配下に置く。
+
+</div>
+<h4><a name="200101031S4" href="200101a.html#200101031S4">_</a> </h4>
+<div class="sub">
+その作業は
+<a href="http://sourceforge.net/projects/mingw/">mingw-runtime</a>を実際にmakeしてからだな。
+<pre>
+% tar xfvz mingw-runtime-0.4-20001204.tar.gz
+% cd mingw-runtime-0.4-20001204
+% mkdir obj
+% CC=i686-pc-cygwin-gcc CFLAGS=-Os CXXFLAGS=-Os ../configure \
+  --target=i686-pc-cygwin \
+  --host=i686-pc-cygwin \
+  --build=i586-pc-linux-gnu
+% make
+</pre>
+これできたが、このままmake installしてもあまり意味がないので、
+必要なファイルだけを/usr/local/cygwin/mingw以下のコピーする。
+なにをコピーするかはCRT0SとLIBSを参考に。
+<pre>
+% sudo mkdir -p /usr/local/cygwin/mingw/lib
+% sudo cp -av crt2.o dllcrt2.o CRT_noglob.o crtmt.o crtst.o \
+  libmingw*.a libmoldname.a /usr/local/cygwin/mingw/lib/
+</pre>
+残りはcrtdll.dll用なので要らない。
+</div>
+<h4><a name="200101031S5" href="200101a.html#200101031S5">_</a> </h4>
+<div class="sub">
+bmingwという名前はなんとなく違うが気がしてきた。
+bmsvcrtにすべき?でもこれだけ子音が並ぶのもなんかやだな。
+あ、-msvcrtとできればいいのか。
+いやそれじゃspecs書き換え問題があるんだよって昨日書いたじゃん。
+</div>
+<h4><a name="200101031S6" href="200101a.html#200101031S6">_</a> </h4>
+<div class="sub">
+つづく。
+
+</div>
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200101032" title="200101032" href="200101a.html#200101032">■</a> 
+日記</h3>
+日記が流行ってる。21世紀になったことだしおいらも日記をつけてみよう。
+て、なぜ一昨日そう書かない?
+
+<h4><a name="200101032S1" href="200101a.html#200101032S1">_</a> </h4>
+<div class="sub">
+<a href="http://www.h14m.org/docs/new_features_210-j.html">hns-2.10</a>では静的にも作れるようになったらしい。h14mって
+<pre>
+% echo -n 'hypernikkisystem'|wc
+      0       1      16
+</pre>
+ということか。
+
+</div>
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200101033" title="200101033" href="200101a.html#200101033">■</a> 
+今日のCD</h3>
+やたら気に入っている。
+Last Smileのcouplingなんだけど。
+<!-- section end -->
+</div>
+<div align="right">〜LOVE PSYCHEDELICO/Wastingを聴きながら〜</div>
+<!-- 2001/01/03 end -->
+
+
+
+<hr class="hide">
+<!-- 2001/01/04 start -->
+<h2><a name="20010104" href="200101a.html#20010104">2001-01-04 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="200101041" title="200101041" href="200101a.html#200101041">■</a> 
+CVSup</h3>
+
+ruby-1.3.1-990201.tar.gzというfileがまだMO
+に保存してあったりする自分に驚いたりする
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-list/26937">[ruby-list:26937]</a>。でも、どのMOだったっけとか探したりするわけで、
+正月だしrepositoryごと欲しくなるよね?
+
+<h4><a name="200101041S1" href="200101a.html#200101041S1">_</a> </h4>
+<div class="sub">
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-dev/11887">[ruby-dev:11887]</a>を参考に
+<a href="http://www.polstra.com/projects/freeware/CVSup/">CVSup Home Page</a>からたどって、とりあえずsourceだなと
+<a href="ftp://ftp.FreeBSD.org/pub/FreeBSD/development/CVSup/">ここ</a>というか
+<a href="http://www.freebsd.org/handbook/mirrors-ftp.html">mirror</a>からsourceをgetした。Installを見るとModula-3が必要とあり
+<a href="http://m3.polymtl.ca/m3/">PM3</a>から、それもgetしようと考えた。ところがこれがとんでもなくでかい。
+tarballで25MBもある。
+Modula-3には興味ないし、正月とはいえこれを持ってくるほど豪気じゃない。
+後から追加するものは一応自分でmakeする主義なんだけどこれはやめよう。
+
+</div>
+<h4><a name="200101041S2" href="200101a.html#200101041S2">_</a> </h4>
+<div class="sub">
+というわけでさっきのmirror siteのbinariesというディレクトリを覗く。
+README.linuxを読むとcvsup.nogui-linux-ix86-libc6-16.1.tar.gz
+が目当てのpackageのようだ。
+Modula-3も静的にリンクされてるので好都合。
+てゆうか、なぜにModula-3を使うのだ、CVSupよ。
+<pre>
+ % ldd cvsup
+        libz.so.1 =&gt; /usr/lib/libz.so.1 (0x40019000)
+        libm.so.6 =&gt; /lib/libm.so.6 (0x40027000)
+        libc.so.6 =&gt; /lib/libc.so.6 (0x40043000)
+        /lib/ld-linux.so.2 =&gt; /lib/ld-linux.so.2 (0x40000000)
+</pre>
+Installに従い/usr/local/binに置く。
+
+</div>
+<h4><a name="200101041S3" href="200101a.html#200101041S3">_</a> </h4>
+<div class="sub">
+例では/home/rubyみたいな感じになっているので
+<pre>
+% sudo useradd -m ruby
+% sudo chown -R watanabe ~ruby
+% cd ~ruby
+% mkdir cvs
+% cat &gt;cvs-ruby.sup
+*default compress delete use-rel-suffix
+*default host=cvs.ruby-lang.org
+*default base=/home/ruby
+*default release=cvs
+*default prefix=/home/ruby/cvs
+cvs-ruby
+</pre>
+しておいた。準備OK。やってみよう。
+<pre>
+% cvsup -gL2 ~ruby/cvs-ruby.sup
+...
+ Create www/whats.rd,v
+ Create www/whos.rd,v
+ Create www/wwwgen.rb,v
+ SetAttrs www
+Shutting down connection to server
+Finished successfully
+</pre>
+doc, ruby, wwwの各コレクションが取ってこれた。
+15分ほどで無事終了。
+noguiを取ってきたから-gはなくてもいい。
+
+<pre>
+% du -s ~ruby
+15667   /home/ruby
+</pre>
+15MBか。
+56Kモデムだけどこれだけ速いということは結構圧縮が効いてる。
+
+</div>
+<h4><a name="200101041S4" href="200101a.html#200101041S4">_</a> </h4>
+<div class="sub">
+これで次回からは差分データのやりとりになるから速くなるわけだ。
+
+</div>
+<h4><a name="200101041S5" href="200101a.html#200101041S5">_</a> </h4>
+<div class="sub">
+実際に1999-02-01あたりのparse.yを取り出してみると
+commitされてなかった。
+そういえばあの頃はまだCVSがあまり活用されてなかった。
+</div>
+<!-- section end -->
+</div>
+<div align="right">〜ポルノグラフィティ/サボテンを聴きながら〜</div>
+<!-- 2001/01/04 end -->
+
+
+
+<hr class="hide">
+<!-- 2001/01/05 start -->
+<h2><a name="20010105" href="200101a.html#20010105">2001-01-05 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="200101051" title="200101051" href="200101a.html#200101051">■</a> 
+bmingw(3)</h3>
+すっかり忘れてたがbmingwだ。
+
+<h4><a name="200101051S1" href="200101a.html#200101051S1">_</a> </h4>
+<div class="sub">
+まだなにも設定してないので
+<pre>
+% i686-pc-cygwin-gcc -bmingw -v
+Using builtin specs.
+gcc version 2.95.2-6 19991024 (cygwin experimental)
+</pre>
+のように-bmingwをつけてもspecsはbuiltinのものが使われる。
+このチェックはちゃんと設定できたかどうかの確認にもなるで重要。
+
+</div>
+<h4><a name="200101051S2" href="200101a.html#200101051S2">_</a> </h4>
+<div class="sub">
+<pre>
+% sudo mkdir -p /usr/local/cygwin/lib/gcc-lib/mingw/2.95.2-6
+% sudo touch /usr/local/cygwin/lib/gcc-lib/mingw/2.95.2-6/specs
+% i686-pc-cygwin-gcc -bmingw -v
+Reading specs from /usr/local/cygwin/lib/gcc-lib/mingw/2.95.2-6/specs
+gcc version 2.95.2-6 19991024 (cygwin experimental)
+</pre>
+このようにspecsを置くとgccは読んでくれる。
+<!-- 実際の specs は -->
+<!-- LINK ../files/specs.bmingw ここ -->
+<!-- に置いておく。 -->
+
+</div>
+<h4><a name="200101051S3" href="200101a.html#200101051S3">_</a> </h4>
+<div class="sub">
+あとはsymlinkの設定だ。
+<pre>
+% cd /usr/local/cygwin/lib/gcc-lib/mingw/2.95.2-6
+% ln -s ../../i686-pc-cygwin/2.95.2-6/* .
+ln: ./specs: File exists
+% ls
+SYSCALLS.c.X  cc1plus   cpp      libgcc.a     specs
+cc1           collect2  include  libstdc++.a
+% cd /usr/local/cygwin/mingw
+% ln -s ../i686-pc-cygwin/bin .
+</pre>
+libgcc.a,libstdc++.aはcygwin用なのでこのままでは実はまずい。
+mingw用と差し替える必要がある。
+これはmingw用gccを作らないと得られないのだが、面倒なので
+<a href="ftp://ftp.xraylith.wisc.edu/pub/khan/gnu-win32/mingw32/snapshots/gcc-2.95.2-1/gcc-2.95.2-1-msvcrt.zip">これ</a>のlibgcc.aとlibstdc++.aを使ってる。
+今なら
+<a href="http://sourceforge.net/projects/mingw/">MingGW Project Info</a>からgccのbinaryを取ってきたほうがいいだろう。
+
+</div>
+<h4><a name="200101051S4" href="200101a.html#200101051S4">_</a> <strong>libbmingw</strong>: </h4>
+<div class="sub">
+どこから持ってきたかも忘れてしまったんだけど
+<a href="#20010105F1"><sup><small>*1</small></sup></a>、mingwにはsupplement packageというのがあった。
+これの一部を使ってrubyのext/etcが使えるようなlibraryを作った。
+<a href="#20010105F2"><sup><small>*2</small></sup></a>。それがlibbmingwだ。specsには-lbmingwが入ってる。
+
+</div>
+<h4><a name="200101051S5" href="200101a.html#200101051S5">_</a> <strong>bmingw-20000105.tar.gz</strong>: </h4>
+<div class="sub">
+<pre>
+% cd /usr/local/cygwin
+% env GZIP=-9 tar cfvz /tmp/bmingw-20010105.tar.gz lib/gcc-lib/mingw mingw
+</pre>
+これでやっとできた。
+<a href="../ruby/binaries/mingw/bmingw/bmingw-20010105.tar.gz">bmingw-20010105.tar.gz</a>はcrossじゃないnativeのcygwinでもそのまま展開すれば使えるようになっている。
+<pre>
+% cd /usr
+% tar xfvz bmingw-20010105.tar.gz
+% gcc -bmingw -v
+Reading specs from /usr/lib/gcc-lib/mingw/2.95.2-6/specs
+gcc version 2.95.2-6 19991024 (cygwin experimental)
+</pre>
+
+</div>
+<h4><a name="200101051S6" href="200101a.html#200101051S6">_</a> <strong>(cygwin) tar-1.13.18</strong>: </h4>
+<div class="sub">
+どうもcygwinのtar-1.13.18は変だ。bmingw-20001128.tar.gzの
+symlinkがちゃんと展開されない。サイズ0になってしまう。
+やっぱmakeinstallするようにしないとだめか。
+</div>
+<hr align="left" width="40%">
+<div>
+<a name="20010105F1" href="200101a.html#20010105F1"><small>*1</small></a>:
+Earnieのweb pageのような気もする。
+<br>
+<a name="20010105F2" href="200101a.html#20010105F2"><small>*2</small></a>:
+それとopendir(3)でCharPrevを使うことでmultibyte対応にしてある。
+</div>
+<!-- section end -->
+</div>
+<!-- 2001/01/05 end -->
+
+
+
+<hr class="hide">
+<!-- 2001/01/06 start -->
+<h2><a name="20010106" href="200101a.html#20010106">2001-01-06 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="200101061" title="200101061" href="200101a.html#200101061">■</a> 
+Cygwin 1.1.7-1</h3>
+
+寒い。
+
+<h4><a name="200101061S1" href="200101a.html#200101061S1">_</a> <strong>mingw-runtime</strong>: </h4>
+<div class="sub">
+なにげにCygwin1.1.7-1の/usr/lib/mingwを見てみると、
+いつのまにかmingw-runtime20001204相当のライブラリが既に入っているようだ。
+<pre>
+% ls /usr/lib/mingw
+CRT_noglob.o    crtmt.o         dllcrt2.o       libmingw32.a    libmsvcrt.a
+crt1.o          crtst.o         libcoldname.a   libmingwthrd.a  libmsvcrt20.a
+crt2.o          dllcrt1.o       libcrtdll.a     libmoldname.a   libmsvcrt40.a
+</pre>
+ということは当然crossのほうにも同じようにあるわけで、うーむ、
+一体何をやってたんだ俺は。
+<pre>
+% ls /usr/local/cygwin/i686-pc-cygwin/lib/mingw
+CRT_noglob.o  crtmt.o    dllcrt2.o      libmingw32.a    libmsvcrt.a
+crt1.o        crtst.o    libcoldname.a  libmingwthrd.a  libmsvcrt20.a
+crt2.o        dllcrt1.o  libcrtdll.a    libmoldname.a   libmsvcrt40.a
+</pre>
+
+</div>
+<h4><a name="200101061S2" href="200101a.html#200101061S2">_</a> <strong>GNU fileutils</strong>: </h4>
+<div class="sub">
+あれ? 微妙に間隔が違う。そうか、
+CygwinのほうはまだGNU fileutils 4.0にしてなかったんだ。
+<pre>
+% ls --version
+ls (GNU fileutils) 3.16
+</pre>
+気づかなかったけど、こんな違いがあるとは。
+
+</div>
+<h4><a name="200101061S3" href="200101a.html#200101061S3">_</a> <strong>bmingw</strong>: </h4>
+<div class="sub">
+ということは$prefix/mingw/libの大半は不要だな。
+specsはどうしようかな。
+native cygwinのほうはlibbmingw.aだけ残して消しちゃえばokだけど、
+crossのほうはcrt2.oがどこにあるかを指定する方法がないから、
+残すかsymlinkにするしかない。でもcrossのほうは間にi686-pc-cygwin
+というディレクトリを狭んでいるからsymlinkだとまずそう。
+native cygwinは消しても動くわけだしsymlinkでもいいかな。
+
+</div>
+<h4><a name="200101061S4" href="200101a.html#200101061S4">_</a> <strong>*multilib</strong>: </h4>
+<div class="sub">
+こういうときはやっぱ*multilibでしょ。というわけでspecsは
+<pre>
+*multilib:
+../../../../i686-pc-cygwin/lib/mingw ;
+</pre>
+にしてみた。
+
+</div>
+<h4><a name="200101061S5" href="200101a.html#200101061S5">_</a> <strong>*cross_compile</strong>: </h4>
+<div class="sub">
+まずいな。今までcross_compileを1にしてなかった。
+ということはnative cygwinと同じspecsには絶対できないじゃん。
+defaultは0にしてcrossの場合は書き換えてもらうことにしよう。
+もしくは1にしてnative cygwinでもcrt2.oが見つかるようにするか?
+結局0にしてmultilibでいくことにした。
+
+</div>
+<h4><a name="200101061S6" href="200101a.html#200101061S6">_</a> <strong>-mno-cygwin</strong>: </h4>
+<div class="sub">
+そういえばcrossのほうで-mno-cygwinが
+<pre>
+cannot open crt1.o: No such file or directory
+</pre>
+になることに今頃気づいた。こっちのspecsのmultilibも直さないとだめだ。
+<pre>
+*multilib:
+../../../../i686-pc-cygwin/lib/mingw mno-cygwin;
+</pre>
+と
+<pre>
+*multilib_matches:
+mno-cygwin mno-cygwin;
+</pre>
+を追加。
+<a href="../files/gcc-2.95.2-6-specs-cross-20010106.diff">パッチ</a>
+</div>
+<h4><a name="200101061S7" href="200101a.html#200101061S7">_</a> <strong>今日の bmingw</strong>: </h4>
+<div class="sub">
+<a href="../ruby/binaries/mingw/bmingw/bmingw-20010106.tar.gz">bmingw-20010106.tar.gz</a>は昨日のよりさらに小さくなっている。
+<pre>
+-rw-r--r--   1 watanabe ruby       173822 Jan  5 20:00 bmingw-20010105.tar.gz
+-rw-r--r--   1 watanabe ruby       164825 Jan  6 20:49 bmingw-20010106.tar.gz
+</pre>
+もっともmsvcrt.dll版rubyを作るだけなら、
+1.1.7-1ではすでに材料は揃っているわけで、
+bmingw packageは要らない気もする。
+crt2.oを指定できればいいんだけど。
+</div>
+<!-- section end -->
+</div>
+<div align="right">〜Mr.Children/NOT FOUNDを聴きながら〜</div>
+<!-- 2001/01/06 end -->
+
+
+
+<hr class="hide">
+<!-- 2001/01/07 start -->
+<h2><a name="20010107" href="200101a.html#20010107">2001-01-07 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="200101071" title="200101071" href="200101a.html#200101071">■</a> 
+ChangeLog</h3>
+Rubyは国際派なもんだから,いつのころからかChangeLogから日本語が消えた。
+英語はちょー苦手だからChangeLogを書くのは苦痛なんだけど、
+過去に似たような記述があるかどうか探して、
+怪しいコメントを書いている。
+
+<h4><a name="200101071S1" href="200101a.html#200101071S1">_</a> <strong>Change Log mode</strong>: </h4>
+<div class="sub">
+EmacsではM-xadd-change-log-entryとかすれば
+Change Log modeに移行するので楽だ。
+customで昔の形式にしてある。
+<pre>
+(custom-set-variables
+ '(add-log-time-format (quote current-time-string)))
+</pre>
+最近のEmacsだとこの変数はdefaultで
+<pre>
+'add-log-iso8601-time-string
+</pre>
+になっているので
+<pre>
+Sat Jan  6 00:17:18 2001  WATANABE Hirofumi  &lt;eban@ruby-lang.org&gt;
+</pre>
+ではなく
+<pre>
+2001-01-06  WATANABE Hirofumi  &lt;eban@ruby-lang.org&gt;
+</pre>
+という形式になる。そのうち誰かがこの形式で入れるかもしれない。
+
+</div>
+<h4><a name="200101071S2" href="200101a.html#200101071S2">_</a> <strong>Vi</strong>: </h4>
+<div class="sub">
+英語しか書かないとなるとviでもいいじゃんって思う。
+というわけで~/.jvimrcに
+<pre>
+map ch 1G:-r!env LANG=C date +&quot;\%a \%b \%e \%X \%Y  WATANABE Hirofumi  &lt;eban@ruby-lang.org&gt;&quot;^V^M
+</pre>
+と書いてある。chで日付が入るだけだから大したことはない。でも便利。
+^Vと^Mは実際は制御文字なので注意.
+<p>
+viのcommandmodeではアルファベットのほとんどが使われてしまっているので、
+mapで追加するときに悩むことがある。
+vimではさらに増えてるので特にそうだ。
+でもcとかdのように複数のstrokeが必要なcommandをprefixにして
+しまえばいいとある日気づいた。
+chはもともと一文字前をcするという意味だけど、
+10年以上viを使っていても一度もそんな操作をしたことがない。
+だから潰しても問題ない。
+vimを使うようになってv系でrangeを指定できるのも大きいかな。
+オリジナルのviでcをmappingしようとすると
+</p><blockquote><p>
+Too dangerous to map that
+</p></blockquote><p>
+と怒られる。
+</p>
+
+</div>
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200101072" title="200101072" href="200101a.html#200101072">■</a> 
+Microsoft.NET</h3>
+なんとなく.NET Framework SDKをインストールしてしまった。
+「C#で学ぶ.NETプログラミング」技術評論社
+
+<h4><a name="200101072S1" href="200101a.html#200101072S1">_</a> <strong>C# で Hello world</strong>: </h4>
+<div class="sub">
+やっぱり最初は「こんにちは世界」だ。
+<pre>
+using System;
+
+public class hello
+{
+    public static void Main()
+    {
+        Console.Write(&quot;こんにちは&quot; + &quot;世界&quot; + &quot;\n&quot;);
+    }
+}
+</pre>
+これをUnicodeでセーブして(hello.cs)、コンパイル。
+<pre>
+% csc hello.cs
+Microsoft (R) Visual C# Compiler Version 7.00.9030 [CLR version 1.00.2204.21]
+Copyright (C) Microsoft Corp 2000. All rights reserved.
+
+% ./hello
+こんにちは世界
+</pre>
+Windows 2000だとUnicodeなファイルをメモ帳で簡単に作れるけど、
+Windows 95/98/Meだとそれなりのエディタが必要かもしれない。
+
+</div>
+<h4><a name="200101072S2" href="200101a.html#200101072S2">_</a> <strong>jvim</strong>: </h4>
+<div class="sub">
+そこでjvimだ。vim3.0をベースに独自の道を歩んでいる。
+<a href="#20010107F1"><sup><small>*1</small></sup></a>これはE, S, JのほかにUnicode, UTF-8も扱える。
+<a href="#20010107F2"><sup><small>*2</small></sup></a>
+</div>
+<h4><a name="200101072S3" href="200101a.html#200101072S3">_</a> <strong>SJIS</strong>: </h4>
+<div class="sub">
+C#コンパイラのcsc.exeはUnicodeのsourcefile
+しか扱えないというような記述があった。
+じゃSJISで書いて試してみよう。
+<pre>
+  Console.Write(&quot;こんにちは&quot; + &quot;表&quot; + &quot;世界&quot; + &quot;\n&quot;);
+</pre>
+お約束の&quot;表&quot;を追加してみた(hello-sjis.cs)。
+<pre>
+% csc hello-sjis.cs
+Microsoft (R) Visual C# Compiler Version 7.00.9030 [CLR version 1.00.2204.21]
+Copyright (C) Microsoft Corp 2000. All rights reserved.
+
+% ./hello-sjis
+こんにちは表世界
+</pre>
+なんとエラーにならずにコンパイルできてしまった。
+しかもちゃんと化けずに表示されるし。
+ってことは一応マルチバイト対応もしてるんだなあ。
+
+</div>
+<h4><a name="200101072S4" href="200101a.html#200101072S4">_</a> <strong>(17:39)初雪</strong>: </h4>
+<div class="sub">
+寒いわけだ。
+</div>
+<hr align="left" width="40%">
+<div>
+<a name="20010107F1" href="200101a.html#20010107F1"><small>*1</small></a>:
+<a href="http://www.st.rim.or.jp/~ken_t/">ここ</a>からたどってね。
+<br>
+<a name="20010107F2" href="200101a.html#20010107F2"><small>*2</small></a>:
+てゆうかRuby使いならuconvかiconv拡張ライブラリで変換でしょ。
+</div>
+<!-- section end -->
+</div>
+<div align="right">〜小松未歩/未来を聴きながら〜</div>
+<!-- 2001/01/07 end -->
+
+
+
+<hr class="hide">
+<!-- 2001/01/08 start -->
+<h2><a name="20010108" href="200101a.html#20010108">2001-01-08 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="200101081" title="200101081" href="200101a.html#200101081">■</a> 
+Cygwin, MinGW</h3>
+Mingw32は当初長崎大学のColin Petersって人が始めたものだ。
+Minimalist GNU-Win32と表記していた。
+これはCygwinがまだGNU-Win32と名乗っていたからだ。
+現在はMinGW - Minimalist GNU for Windowsとなっている。
+<a href="http://sourceforge.net/projects/mingw/">MinGW</a>今流行りのsourceforgeで管理されている。
+
+<h4><a name="200101081S1" href="200101a.html#200101081S1">_</a> <strong>Mingw32</strong>: </h4>
+<div class="sub">
+最初の頃はCygwinとは別にinclude, libのディレクトリを用意して、
+GCC_EXEC_PREFIX, LIBRARY_PATH, C_INCLUDE_PATH, CPLUS_INCLUDE_PATH
+の各環境変数を設定するような感じだった。<br>
+印象的だったのは
+<pre>
+typedef void    FILE;
+</pre>
+と定義してあったことだ。なつかしい。
+
+</div>
+<h4><a name="200101081S2" href="200101a.html#200101081S2">_</a> <strong>-mno-cygwin</strong>: </h4>
+<div class="sub">
+一昨日の/usr/lib/mingwを見てて思ったんだけど
+<pre>
+% ls /usr/lib/mingw
+CRT_noglob.o    crtmt.o         dllcrt2.o       libmingw32.a    libmsvcrt.a
+crt1.o          crtst.o         libcoldname.a   libmingwthrd.a  libmsvcrt20.a
+crt2.o          dllcrt1.o       libcrtdll.a     libmoldname.a   libmsvcrt40.a
+</pre>
+いつのまにかlibcoldname.aがある。
+元々はlibmoldname.aしかなかった。
+このmはmingwのmを意味していたと思われるが、
+msvcrtの意味に変わったらしい。cはもちろんcrtdllだ。
+とするとspecsの中身が気になるが、libcoldname.aが使われていない。
+gccのほうがまだ追従してない。
+問題になるのは
+<pre>
+% diff -u1 moldname-{crtdll,msvcrt}.def
+--- moldname-crtdll.def	Sat Nov 18 08:12:18 2000
++++ moldname-msvcrt.def	Sat Nov 18 08:12:18 2000
+@@ -1,3 +1,3 @@
+ ;
+-; moldname-crtdll.def 
++; moldname-msvcrt.def 
+ ;
+@@ -36,2 +36,4 @@
+ 
++daylight DATA
++
+ dup
+@@ -114,2 +116,4 @@
+ tempnam
++
++timezone DATA
+
+</pre>
+のようにdaylightかtimezoneを使ったときだ、たぶん。
+でもほとんど問題にならないだろう。
+
+</div>
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200101082" title="200101082" href="200101a.html#200101082">■</a> 
+-msvcrt, -Zmsvcrt</h3>
+specsを変更するのは
+<a href="200101a.html#200101031S5">どーのこーの</a>と書いたが,では-msvcrtオプションを追加することは本当に可能なのか?
+やってみよう。native cygwin上で実験。<br>
+このまま-msvcrtをつけたらgccは知らないオプションなので、
+cc1が文句を言ってエラーになる。
+<pre>
+% gcc -msvcrt foo.c
+cc1.exe: Invalid option `svcrt'
+</pre>
+あ、こりゃだめだ。しょうがない-Zmsvcrtにしよう。
+<pre>
+% gcc -Zmsvcrt foo.c   
+gcc: unrecognized option `-Zmsvcrt'
+</pre>
+今度はcc1に渡らなかったので一応最後まで通った。
+*cppに%{Zmsvcrt:-D__MSVCRT__}を追加してみる。
+<pre>
+% gcc -specs=$PWD/specs -Zmsvcrt foo.c
+</pre>
+OK。これでなんとなくできそうな予感がしてくる.
+<a href="#20010108F1"><sup><small>*1</small></sup></a>
+<h4><a name="200101082S1" href="200101a.html#200101082S1">_</a> <strong>-mno-win32</strong>: </h4>
+<div class="sub">
+*cppのところを見てて驚いたんだけど、
+いつのまにか-mno-win32というのが増えてる。
+これは指定されると
+<pre>
+-D_WIN32 -DWINNT -idirafter /usr/include/w32api 
+</pre>
+のオプションが外れる。まさに完全UNIX modeだ。
+
+</div>
+<h4><a name="200101082S2" href="200101a.html#200101082S2">_</a> <strong>*cpp, *link, *lib</strong>: </h4>
+<div class="sub">
+それはいいんだけど、余計な作業が増えるので実は厄介だ。
+%{mno-cygwin:...}には|でZmsvcrt を追加。
+%{!mno-cygwin:...}には更に%{!Zmsvcrt:...}で囲む。
+という作業と最初に追加した%{Zmsvcrt:-D__MSVCRT__}で*cppは完了。
+*link, *libも同じ要領。
+
+</div>
+<h4><a name="200101082S3" href="200101a.html#200101082S3">_</a> <strong>*libgcc</strong>: </h4>
+<div class="sub">
+ここはmsvcrt用の設定が必要。と同時に-mno-cygwinのときは-lcoldname
+をlinkするように修正。
+
+</div>
+<h4><a name="200101082S4" href="200101a.html#200101082S4">_</a> <strong>*startfile</strong>: </h4>
+<div class="sub">
+かなりややこしい。基本的に-Zmsvcrtが指定されたときだけcrt2.oが
+linkされるようにすればいい。
+
+</div>
+<h4><a name="200101082S5" href="200101a.html#200101082S5">_</a> <strong>specs.Zmsvcrt</strong>: </h4>
+<div class="sub">
+そしてできあがったのが
+<a href="../files/specs.Zmsvcrt">specs.Zmsvcrt</a>だ。
+
+</div>
+<h4><a name="200101082S6" href="200101a.html#200101082S6">_</a> <strong>-Zmsvcrt</strong>: </h4>
+<div class="sub">
+これで
+<pre>
+gcc -specs=specs.Zmscvrt -Zmsvcrt foo.c
+</pre>
+が可能になる。specs.Zmsvcrtを
+/usr/lib/gcc-lib/i686-pc-cygwin/2.95.2-6/specs
+へコピーすれば、どこからでも-Zmsvcrtできる。もとのspecsはbuiltin
+specsと同じなので保存しなくてもいい。
+<pre>
+% cmp /usr/lib/gcc-lib/i686-pc-cygwin/2.95.2-6/specs =(gcc -dumpspecs)
+</pre>
+ところで-specsを指定したときに気になるのは最初にspecsを読んでることだ。
+<pre>
+% gcc -specs=specs.Zmsvcrt -v                              
+Reading specs from /usr/lib/gcc-lib/i686-pc-cygwin/2.95.2-6/specs
+Reading specs from specs.Zmsvcrt
+gcc version 2.95.2-6 19991024 (cygwin experimental)
+</pre>
+これって差分だけでいいんじゃない? どうやらそういうことみたい。
+ここではたと気づく。
+じゃ-Zmsvcrtすら要らなくてspecsの指定だけで切り替えればいいじゃん.
+このspecsを指定したときはmsvcrt専用ということにして。
+あとはcrossも考えて-lbmingwもlinkするようにしないとね。
+
+</div>
+<h4><a name="200101082S7" href="200101a.html#200101082S7">_</a> <strong>specs.msvcrt</strong>: </h4>
+<div class="sub">
+そしてできあがったのが
+<a href="../files/specs.msvcrt">specs.msvcrt</a>だ。
+
+</div>
+<hr align="left" width="40%">
+<div>
+<a name="20010108F1" href="200101a.html#20010108F1"><small>*1</small></a>:
+(02:36)5cmぐらい積もったようだ。
+</div>
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200101083" title="200101083" href="200101a.html#200101083">■</a> 
+gawk 3.0.6</h3>
+
+native cygwin 上の話.
+
+<h4><a name="200101083S1" href="200101a.html#200101083S1">_</a> <strong>-mno-cygwin</strong>: </h4>
+<div class="sub">
+CC='gcc -mno-cygwin' で gawk 3.0.6 を configure してたら
+<pre>
+checking whether getpgrp takes no argument
+</pre>
+をチェックしてるところでハング。
+<pre>
+% objdump -p conftest.exe | grep 'DLL Name'
+        DLL Name: KERNEL32.dll
+        DLL Name: cygwin1.dll
+        DLL Name: crtdll.dll
+</pre>
+なぜかcygwin1.dllがlinkされてる。config.logを見ると
+<pre>
+gcc -mno-cygwin -o conftest -Os   conftest.c -lm
+</pre>
+と実行されている。一見問題なさそう。
+が、ここはfork()を使ってるから、
+そもそもconftest.exeは作られずエラーになるはず。
+としたらもう原因は-lmしかない。
+<pre>
+% cd /usr/lib
+% ls -l libm.a
+lrw-r--r--   1 watanabe ruby           22 Dec 29 17:14 libm.a -&gt; libcygwin.a
+</pre>
+うーむ。なにそれ?
+libm相当のものはCygwin DLLに含まれているから、
+libm.aが必要ないというのわかるけど、これはひどい。
+<pre>
+% ar rcv libm.a
+</pre>
+で空のlibraryを作ればすむ話なのに。
+<pre>
+% ls -l libm.a
+-rw-r--r--   1 watanabe ruby            8 Jan  8 15:50 libm.a
+</pre>
+しかもsymlinkよりもサイズは小さい。
+
+</div>
+<h4><a name="200101083S2" href="200101a.html#200101083S2">_</a> <strong>Ruby は?</strong>: </h4>
+<div class="sub">
+Rubyでなぜ問題にならないかというとcygwin, mingw32のときは
+-lmはlinkしないようになっている。
+具体的にはconfigure.inのこのあたり。
+<pre>
+cygwin*)        rb_cv_have_daylight=no;;
+mingw*)         LIBS=&quot;-lwsock32 -lmsvcrt $LIBS&quot;
+                ac_cv_header_a_out_h=no
+                ac_cv_header_pwd_h=no
+                ac_cv_header_utime_h=no
+                ac_cv_header_sys_ioctl_h=no
+                ac_cv_header_sys_param_h=no
+                ac_cv_header_sys_resource_h=no
+                ac_cv_header_sys_select_h=no
+                ac_cv_header_sys_times_h=no
+                ac_cv_func_times=yes;;
+</pre>
+defautl は
+<pre>
+*) LIBS=&quot;-lm $LIBS&quot;;;
+</pre>
+だ。
+
+</div>
+<h4><a name="200101083S3" href="200101a.html#200101083S3">_</a> <strong>make</strong>: </h4>
+<div class="sub">
+gawkのほうはconfigureも通ってmake。
+<pre>
+gcc -mno-cygwin -c -DGAWK -I. -I.  -DHAVE_CONFIG_H -Os -DDEFPATH='&quot;.:/usr/local/share/awk&quot;' ./gawkmisc.c
+./gawkmisc.c:31: gawkmisc.pc: No such file or directory
+</pre>
+gawkmisc.pcがないという。
+なんか変なの。pc/Makefileを見るとここで
+makeするのが正しいってことなんだろうけど。
+
+</div>
+<h4><a name="200101083S4" href="200101a.html#200101083S4">_</a> <strong>pc/</strong>: </h4>
+<div class="sub">
+そうじゃなくて
+<pre>
+% cp -a pc/* .
+% make mingw32
+</pre>
+ってことらしい。このままだとCC=gccのままなのでCC='gcc -mno-cygwin'
+に変更。
+main.cのenviron関係で
+<pre>
+main.o(.text+0x1200):main.c: undefined reference to `_environ_dll'
+</pre>
+になるが
+<pre>
+        extern char **environ;
+</pre>
+の所為なので、他のplatformと同じように#if ... #end。
+これでできた。-specs.msvcrtも試す。ok。
+</div>
+<!-- section end -->
+</div>
+<div align="right">〜クリンゴン/珈琲を聴きながら〜</div>
+<!-- 2001/01/08 end -->
+
+
+
+<hr class="hide">
+<!-- 2001/01/09 start -->
+<h2><a name="20010109" href="200101a.html#20010109">2001-01-09 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="200101091" title="200101091" href="200101a.html#200101091">■</a> 
+configure のオプション</h3>
+いま与えてるconfigureのオプションはかなり複雑になっている。
+
+<h4><a name="200101091S1" href="200101a.html#200101091S1">_</a> <strong>i386-cygwin</strong>: </h4>
+<div class="sub">
+cygwinではこんな感じ。
+<pre>
+#!/bin/sh
+CFLAGS=-Os CC='i686-pc-cygwin-gcc' \
+  ac_cv_func_getpgrp_void=yes \
+  ac_cv_func_setpgrp_void=yes \
+  ../ruby-1.6.2/configure \
+  --target=i386-cygwin \
+  --host=i686-pc-cygwin \
+  --build=i586-pc-linux-gnu \
+  --program-prefix='' \
+  --includedir=/usr/local/cygwin-local/include \
+  --srcdir=../ruby-1.6.2 \
+  --cache=../config.cache-cygwin \
+  --with-tcl-dir=/usr/local/mingw \
+  --with-tk-dir=/usr/local/mingw \
+  --enable-tcltk_stubs \
+  --with-tcllib=tclstub83 \
+  --with-tklib=tkstub83 \
+  --with-opt-dir=/usr/local/cygwin-local \
+  --enable-shared
+</pre>
+/usr/local/cygwin-localというのがいかにも怪しいが、
+/usr/local/cygwin/{include,lib}に他のライブラリ関係を置いてしまうと、
+Cygwinのものと混ざってしまいバージョンアップとかがしづらくなるので分けた。
+でも気にいらないので考え中。
+<pre>
+% ls /usr/local/cygwin-local/{include,lib}
+/usr/local/cygwin-local/include:
+curses.h     cursesw.h  gd.h       gdfontl.h   ncurses.h      readline   zlib.h
+cursesapp.h  cursslk.h  gd_io.h    gdfontmb.h  ncurses_dll.h  tcpd.h
+cursesf.h    dbm.h      gdbm.h     gdfonts.h   ndbm.h         termcap.h
+cursesm.h    expat.h    gdcache.h  gdfontt.h   png.h          ucl
+cursesp.h    freetype   gdfontg.h  iconv.h     pngconf.h      zconf.h
+
+/usr/local/cygwin-local/lib:
+libcurses.a      libgd.a       libiconv.a        libreadline.a  libz.a
+libcurses.dll.a  libgdbm.a     libiconv.la       libtermcap.a
+libexpat.a       libgdbm.la    libncurses.dll.a  libttf.a
+libexpat.la      libhistory.a  libpng.a          libwrap.a
+</pre>
+
+</div>
+<h4><a name="200101091S2" href="200101a.html#200101091S2">_</a> <strong>i386-mingw32</strong>: </h4>
+<div class="sub">
+mingw のほうはこんな感じ。
+<pre>
+#!/bin/sh
+CFLAGS=-Os CC='i686-pc-cygwin-gcc -specs=specs.msvcrt -Zbmingw' \
+  ac_cv_func_getpgrp_void=yes \
+  ac_cv_func_setpgrp_void=yes \
+  ac_cv_c_bigendian=no \
+  ../ruby-1.6.2/configure \
+  --target=i386-mingw32 \
+  --host=i686-pc-cygwin \
+  --build=i586-pc-linux-gnu \
+  --program-prefix='' \
+  --includedir=/usr/local/mingw/include \
+  --enable-shared \
+  --cache=../config.cache-mingw \
+  --enable-tcltk_stubs \
+  --with-tcllib=tclstub83 \
+  --with-tklib=tkstub83 \
+  --with-opt-dir=/usr/local/mingw
+</pre>
+/usr/local/mingwも同じような理由。
+Tcl/TkはどちらもWin32版をlinkしている。
+CygwinについてくるTcl/Tkは8.0なので日本語化パッチをあてないと、
+日本人には辛いと思うし。なぜ未だに8.0のままなのか謎だ。
+<pre>
+% ls /usr/local/mingw/{include,lib} 
+/usr/local/mingw/include:
+X11          gd.h       gdfontl.h   ndbm.h     tclDecls.h        zconf.h
+dbm.h        gd_io.h    gdfontmb.h  png.h      termcap.h         zlib.h
+expat.h      gdbm.h     gdfonts.h   pngconf.h  tk.h
+expat.h.bak  gdcache.h  gdfontt.h   readline   tkDecls.h
+freetype     gdfontg.h  iconv.h     tcl.h      tkIntXlibDecls.h
+
+/usr/local/mingw/lib:
+libexpat.a   libgdbm.la      libiconv.la      libtermcap.a  tclstub83.lib
+libexpat.la  libhistory.a    libpng.a         libttf.a      tkstub83.lib
+libgd.a      libhistory.old  libreadline.a    libttf.la
+libgdbm.a    libiconv.a      libreadline.old  libz.a
+</pre>
+Tcl/TkはStubsを使うようにしてるので tclstub83 と tkstub83 だけあればいい。
+ldは-lfooでfoo.libもlinkしてくれるようになっている。
+
+</div>
+<h4><a name="200101091S3" href="200101a.html#200101091S3">_</a> <strong>bmingw</strong>: </h4>
+<div class="sub">
+結局-lbmingwだけ残った形になってる。
+C++を考えなきゃこれでいいんだけど…。
+あ、RubyWinをmakeするときに困ったことになるかもしれないなあ。
+libgcc.a, libstdc++.aをPREFIX/mingw/libに移動したほうがよさそう。
+
+</div>
+<h4><a name="200101091S4" href="200101a.html#200101091S4">_</a> <strong>Ruby Binaries</strong>: </h4>
+<div class="sub">
+Ruby Binariesはruby-lang.orgに移そうと思ってる。
+てゆうか、すでに
+<a href="http://www.ruby-lang.org/~eban/ruby/">Ruby Binaries</a>があるんだけど、手抜きでindex.htmlがない。
+で、今度はばらばらにして、更にxdeltaのバイナリ差分も用意しようと思う。
+じゃないとアップロードもしんどいんだよう。
+</div>
+<!-- section end -->
+</div>
+<!-- 2001/01/09 end -->
+
+
+
+<hr class="hide">
+<!-- 2001/01/10 start -->
+<h2><a name="20010110" href="200101a.html#20010110">2001-01-10 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="200101101" title="200101101" href="200101a.html#200101101">■</a> 
+cross-compiling</h3>
+configureに指定するオプションに--target, --host, --buildがある。
+クロスコンパイル時に指定するわけだが、
+この三つは一体になにを意味しているのか？
+targetはまさにターゲットだ。
+hostはクロス環境のツール類のために指定する。
+buildは実際にコンパイルするホストを意味する。
+
+<h4><a name="200101101S1" href="200101a.html#200101101S1">_</a> <strong>Ruby の configure</strong>: </h4>
+<div class="sub">
+Cygwin の場合には
+<pre>
+--target=i386-cygwin \
+--host=i686-pc-cygwin \
+--build=i586-pc-linux-gnu \
+</pre>
+と与えている。
+つまりクロスのツール類はi686-pc-cygwin-fooのような名前になっている
+ことをconfigureに教えているわけだ。
+targetとhostだけでもよさそうだけど、
+この二つだけだとbuildはhostと同じものになってしまいまずい。
+buildを指定する必要がある。
+
+</div>
+<h4><a name="200101101S2" href="200101a.html#200101101S2">_</a> <strong>ac_cv_foo</strong>: </h4>
+<div class="sub">
+昨日のオプションに
+<pre>
+ac_cv_func_getpgrp_void=yes \
+ac_cv_func_setpgrp_void=yes \
+ac_cv_c_bigendian=no \
+</pre>
+という環境変数の設定があった。
+これは実行ファイルを作り、
+実際にBUILD上で実行した結果から判断するテストで、
+クロスの環境では不可能なものである。
+これなしで進めると
+<pre>
+cannot check getpgrp if cross compiling
+</pre>
+のようなメッセージを残してconfigureは異常終了してしまう。
+このあたりは実際にやってみて
+エラーが起きたらconfigureを確認し変数を見つけ出すという作業になる。
+Rubyの場合はこの3つを指定すればOK。
+実際の値はnativeの環境から得るか自分で調べる。
+getpgrp, setpgrpはvoidかどうかとbig endianかどうか。
+このくらいなら移植する人には自明なはずだ。
+</div>
+<!-- section end -->
+</div>
+<!-- 2001/01/10 end -->
+
+<hr>
+<div>
+<a href="200012c.html">&lt;Prev(,)</a> | 
+<a href="200101b.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

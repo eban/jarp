@@ -1,0 +1,504 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2005-12-a</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="200511c.html">
+<link rel="next" href="200512b.html">
+
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2005年12月上旬〜</p>
+<hr>
+<div>
+<a href="200511c.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="200512b.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2005/12/01 start -->
+<h2><a name="20051201" href="200512a.html#20051201">2005-12-01 (Thu)</a></h2>
+<!-- 2005-12-02 01:52:47 -->
+
+<div class="entry1">
+<h3><a name="200512011" title="200512011" href="200512a.html#200512011">■</a> 
+11月のspam</h3>
+<p>
+463通。Gmail側約7500スレッド。
+Gmailが頑張ってるからすりぬける数が先月とほとんど同じになってる考えるべきか？
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200512012" title="200512012" href="200512a.html#200512012">■</a> 
+<a href="http://tokyoenvious.xrea.jp/b/vim/hatena_vim.html">[Vim] Vimからはてなダイアリーを更新</a></h3>
+<p>
+Linuxで試してみた。
+注意すべき点はunzip -aで行末をLFに変換。さらにeuc-jpに変換。
+zshを使ってる場合はcurlを呼び出すときの?をquoteする必要がある。
+</p>
+<pre>
+% bash -c 'echo ?'; echo $?
+?
+0
+% zsh -c 'echo ?'; echo $?
+zsh: no matches found: ?
+1
+</pre>
+<p>
+bashやshの場合は?がマッチしなくてもエラーにならずにそのままコマンドに?が渡されるが、zshの場合はcsh同様エラーになる。
+</p>
+<!-- section end -->
+</div>
+<!-- 2005/12/01 end -->
+
+
+
+<hr class="hide">
+<!-- 2005/12/02 start -->
+<h2><a name="20051202" href="200512a.html#20051202">2005-12-02 (Fri)</a></h2>
+<!-- 2005-12-03 03:31:44 -->
+
+<div class="entry1">
+<h3><a name="200512021" title="200512021" href="200512a.html#200512021">■</a> 
+[FC4] /dev/cdrom</h3>
+<p>
+そういえばFC4にしてからなぜか/dev/cdromがないんだけど、ちょっと困るねこれは。
+symlink張るだけなんだけど、rebootするとまた張らないといけないし。
+/dev/fdはちゃんとsymlinkになってんだけどなあ。
+まじめにudevを勉強するか。
+</p>
+<!-- section end -->
+</div>
+<!-- 2005/12/02 end -->
+
+
+
+<hr class="hide">
+<!-- 2005/12/03 start -->
+<h2><a name="20051203" href="200512a.html#20051203">2005-12-03 (Sat)</a></h2>
+<!-- 2005-12-04 04:56:31 -->
+
+<div class="entry1">
+<h3><a name="200512031" title="200512031" href="200512a.html#200512031">■</a> 
+[TV] 僕らの音楽2</h3>
+<p>
+何気なく録画予約しといたら、見逃した矢井田瞳×山口洋のセッションがしかもフルで入ってた。うれしい。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200512032" title="200512032" href="200512a.html#200512032">■</a> 
+[FC4] yum update</h3>
+<p>
+久し振りにyum updateしてみたら依存関係が壊れてるようだ。
+</p>
+<pre>
+Error: Missing Dependency: gcc = 4.0.1 is needed by package libtool
+Error: Missing Dependency: libwx_gtk2-2.4.so.0(WXGTK2_2.4) is needed by package wxPythonGTK2
+Error: Missing Dependency: libwx_gtk2_gl-2.4.so.0(WXGTK2_2.4) is needed by package wxPythonGTK2
+Error: Missing Dependency: libwx_gtk2-2.4.so.0 is needed by package wxPythonGTK2
+Error: Missing Dependency: libwx_gtk2_gl-2.4.so.0 is needed by package wxPythonGTK2
+</pre>
+<p>
+もうちょっと待つか。
+一気にGCC 4.0.2が出てきてたから、そのあたりに不整合が起きてる模様。
+カーネルとgccとmysqlとperlと大物が並んで出てきただけにダウンロードも時間がかかりそうだな。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200512033" title="200512033" href="200512a.html#200512033">■</a> 
+<a href="http://www.mozilla.org/firefox/">[Firefox] Firefox 1.5</a></h3>
+<p>
+会社のWindows版を1.5に上げて特に問題なかったので、家のLinuxも1.5にした。
+ついでにSessionSaverとTab Xは
+<a href="http://hadakadenkyu.flnet.org/blog/ms.cgi?t=sketch&amp;blogid=&amp;ShowDiary_file=/firefox/extension/TML/1133287684">Tab Mix Lite</a>
+
+を使うことにした。
+機能も豊富だし重くないし、クローズボタンは普段隠れてて邪魔にならないのもいい。
+Undo Close TabがSessionSaverと違って任意のセッションを選べないが残念。
+</p>
+<!-- section end -->
+</div>
+<!-- 2005/12/03 end -->
+
+
+
+<hr class="hide">
+<!-- 2005/12/04 start -->
+<h2><a name="20051204" href="200512a.html#20051204">2005-12-04 (Sun)</a></h2>
+<!-- 2005-12-05 01:27:32 -->
+
+<div class="entry1">
+<h3><a name="200512041" title="200512041" href="200512a.html#200512041">■</a> 
+[Firefox] Firefox 1.5のjavascript:window.close();</h3>
+<p>
+javascript:window.close();をクリックしても閉じない。
+もう1回クリックすると閉じるどころか落ちる。うーむ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200512042" title="200512042" href="200512a.html#200512042">■</a> 
+[Firefox] SessionSaver</h3>
+<p>
+落ちて気づいたんだけど、
+Tab Mix Liteだとセッションの情報を保存するはFirefoxを終了するときらしく、
+こういうときに困るのであった。やはりSessionSaverに戻そう。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200512043" title="200512043" href="200512a.html#200512043">■</a> 
+<a href="http://del.icio.us/help/firefox/extension">[Firefox] del.icio.us/help/firefox/extension</a></h3>
+<p>
+なるほど。このTag This Linkを使えばBloglinesでいちいち開く必要もないわけだ。
+そのくらいならBookmarkletで何とかなるかと思いきや、
+コンテキストメニューじゃないと対処できないことに気づいた。
+マウスカーソルを移動させたらリンクから離れてしまうもんな。
+</p>
+<!-- section end -->
+</div>
+<!-- 2005/12/04 end -->
+
+
+
+<hr class="hide">
+<!-- 2005/12/05 start -->
+<h2><a name="20051205" href="200512a.html#20051205">2005-12-05 (Mon)</a></h2>
+<!-- 2005-12-06 02:02:26 -->
+
+<div class="entry1">
+<h3><a name="200512051" title="200512051" href="200512a.html#200512051">■</a> 
+<a href="http://tmp.gary.elixant.com/">[Firefox] Tab Mix Plus</a></h3>
+<p>
+closeボタンが消せるのでこっちを使うことにした。
+気づいてみると例のjavascript:window.close();問題が解決してる。
+Tab Mix Liteの所為？ま、いっか。
+落ちなくなったのでSessionSaverもuninstallしよう。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200512052" title="200512052" href="200512a.html#200512052">■</a> 
+[Firefox] 入れてる拡張</h3>
+<p>
+これで今入ってる拡張はAll-In-One Gestures, Greasemonkey,
+Forecastfox, keyconfig, del.icio.us, Tab Mix Plus, LiveLinesの7個。
+</p>
+<!-- section end -->
+</div>
+<!-- 2005/12/05 end -->
+
+
+
+<hr class="hide">
+<!-- 2005/12/06 start -->
+<h2><a name="20051206" href="200512a.html#20051206">2005-12-06 (Tue)</a></h2>
+<!-- 2005-12-07 01:50:00 -->
+
+<div class="entry1">
+<h3><a name="200512061" title="200512061" href="200512a.html#200512061">■</a> 
+[FC4] yum update</h3>
+<p>
+結局待ってても解決しそうにないので、問題のパッケージを削除してみる。
+メッセージを見るとlibtoolとwxPythonGtk2あたりがなんか怪しいので、
+両方とも消す。kdevelopも消えたが気にしないことにしよう。
+この状態でyum updateするととりあえず進んだ。
+</p>
+<pre>
+Transaction Summary
+=============================================================================
+Install      7 Package(s)         
+Update      22 Package(s)         
+Remove       0 Package(s)         
+Total download size: 99 M
+</pre>
+<p>
+うひょー。でかいよ。さていきなりgcc 4.0.2に上がっちゃってもいいんだろうか。
+</p>
+<!-- section end -->
+</div>
+<!-- 2005/12/06 end -->
+
+
+
+<hr class="hide">
+<!-- 2005/12/07 start -->
+<h2><a name="20051207" href="200512a.html#20051207">2005-12-07 (Wed)</a></h2>
+<!-- 2005-12-08 01:44:56 -->
+
+<div class="entry1">
+<h3><a name="200512071" title="200512071" href="200512a.html#200512071">■</a> 
+<a href="http://qdbm.sf.net/">[Soft] QDBM: Quick DataBase Manager 1.8.35</a></h3>
+<blockquote><dl>
+<dt>
+Changes:
+<dd>
+The memory management routines were enhanced and the speed of
+database access was improved. The speed of the B+ tree database was
+especially improved. 
+</dl></blockquote><p>
+make checkしたらcbstrstrkmpがundefinedになった。
+make installしてからだと通った。
+</p>
+<pre>
+LD_LIBRARY_PATH=.:/lib:/usr/lib:/home/eban/lib:/usr/local/lib
+</pre>
+<p>
+だからいま作った共有ライブラリが使われるはずなのになあ。
+途中でどこか別のディレクトリに移動してるのか？
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200512072" title="200512072" href="200512a.html#200512072">■</a> 
+[Linux] ccacheのcacheをクリア</h3>
+<p>
+gccも4.0.2に上がったことだし、ccache -Cでcacheをクリア。200MBもたまってたよ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200512073" title="200512073" href="200512a.html#200512073">■</a> 
+[Ruby] Rubyをmakeするときにccacheを使う設定</h3>
+<p>
+まあ、別にRubyに限らないわけだけど、基本的には
+</p>
+<pre>
+% CC='ccache gcc' ./configure
+</pre>
+<p>
+とか
+</p>
+<pre>
+% ./configure CC='ccache gcc'
+</pre>
+<p>
+とすればいい。Rubyだったら
+</p>
+<pre>
+% ./configure --with-gcc='ccache gcc'
+</pre>
+<p>
+も可能。
+</p>
+
+<p>
+CCを変えるのがいやなら
+</p>
+<pre>
+% mkdir ~/ccache
+% ln -s =ccache ~/ccache/gcc
+% ln -s =ccache ~/ccache/cc
+% PATH=$HOME/ccache:$PATH make
+</pre>
+<p>
+なんてのもありかな。あとGNU makeなら
+</p>
+<pre>
+% printf 'include Makefile\nexport PATH:=$(HOME)/ccache:$(PATH)\n' &gt; GNUmakefile
+</pre>
+<p>
+とやっとけばmakeだけいけるはず。たぶん
+</p>
+
+<p>
+で、いろいろ試してて気づいたんだけど、ccacheってwarning messageもcacheしてるようだ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2005/12/07 end -->
+
+
+
+<hr class="hide">
+<!-- 2005/12/08 start -->
+<h2><a name="20051208" href="200512a.html#20051208">2005-12-08 (Thu)</a></h2>
+<!-- 2005-12-09 21:59:52 -->
+
+<div class="entry1">
+<h3><a name="200512081" title="200512081" href="200512a.html#200512081">■</a> 
+百均卓上カレンダー</h3>
+<p>
+ぐぐってCDケースサイズの来年の卓上カレンダーPDFを探してみたが、
+印刷してはさみで切ってとか考えると面倒なので百均のを買ったみた。
+百均ってなんでもあるもんだねえ。
+</p>
+
+<p>
+なければ
+<a href="http://raa.ruby-lang.org/project/pdf-writer/">PDF::Writer</a>で作ろうかと思ってgemでinstallしたまではいいんだが、それっきり忘れていた。
+</p>
+<!-- section end -->
+</div>
+<!-- 2005/12/08 end -->
+
+
+
+<hr class="hide">
+<!-- 2005/12/09 start -->
+<h2><a name="20051209" href="200512a.html#20051209">2005-12-09 (Fri)</a></h2>
+<!-- 2005-12-10 02:46:29 -->
+
+<div class="entry1">
+<h3><a name="200512091" title="200512091" href="200512a.html#200512091">■</a> 
+<a href="http://www.zsh.org/">[Soft] Zsh 4.2.6</a></h3>
+<blockquote><dl>
+<dt>
+Changes:
+<dd>
+This release mostly contains minor bugfixes to configuration and
+internals. A few enhancements were made to completion functions. If
+multibyte character sets such as UTF-8 are important to you, you may wish
+to wait for the forthcoming 4.3.1 development release. 
+</dl></blockquote><p>
+なるほど。4.3.1ならUTF-8が使えるのか。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200512092" title="200512092" href="200512a.html#200512092">■</a> 
+[Web] この日記のブラウザ別トップ10</h3>
+<p>
+Google Analyticsの「ブラウザのバージョン」ってのでUser-Agent別のトップ10がわかるみたい。
+1位のFirefoxが46.90%、2位のIEが42.71%と若干Firefoxが勝ってるようだ。
+まあ、そうだよなあ。Firefoxのことばかり書いてるし。
+それはそれとして7位のgzipってなんだ？そんなUser-Agentあり？
+</p>
+<!-- section end -->
+</div>
+<!-- 2005/12/09 end -->
+
+
+
+<hr class="hide">
+<!-- 2005/12/10 start -->
+<h2><a name="20051210" href="200512a.html#20051210">2005-12-10 (Sat)</a></h2>
+<!-- 2005-12-11 01:37:04 -->
+
+<div class="entry1">
+<h3><a name="200512101" title="200512101" href="200512a.html#200512101">■</a> 
+[VMware] カーネルをコンパイルしたgccのバージョンの違い</h3>
+<p>
+カーネルを上げてから初めての再起動でVMwareのデバドラを作り直してないことに気づいた。
+さっそくsudo vmware-config.plを実行したら
+</p><blockquote><p>
+Your kernel was built with &quot;gcc&quot; version &quot;4.0.1&quot;, while you are trying to use 
+&quot;/usr/bin/gcc&quot; version &quot;4.0.2&quot;. This configuration is not recommended and VMware
+Workstation may crash if you'll continue. Please try to use exactly same 
+compiler as one used for building your kernel. Do you want to go with compiler 
+&quot;/usr/bin/gcc&quot; version &quot;4.0.2&quot; anyway? [no] 
+</p></blockquote><p>
+と言われた。なるほどねえ。
+まあ、そう言われてもカーネルを4.0.2で作り直すのも面倒だし、
+anywayと言われようがそのまま強引にmyway。とりあえず動いてるあらよしとする。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200512102" title="200512102" href="200512a.html#200512102">■</a> 
+[Linux] カーネルをコンパイルしたgccのバージョンを知る</h3>
+<p>
+ところでカーネルをコンパイルしたgccのバージョンってどうやったらわかるのか？
+boot messageに出てたのは記憶にあるからdmesgで出てきそう。
+</p>
+<pre>
+% dmesg | grep gcc
+Linux version 2.6.14-1.1644_FC4smp (bhcompile@hs20-bc1-1.build.redhat.com) \
+(gcc version 4.0.1 20050727 (Red Hat 4.0.1-5)) #1 SMP Sun Nov 27 03:39:31 EST 2005
+</pre>
+<p>
+あった。vmware-config.plを見ると/proc/versionに書いてあるらしい。
+</p>
+<pre>
+% cmp =(dmesg | grep gcc) /proc/version; echo $?
+0
+</pre>
+<p>
+同じものだ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2005/12/10 end -->
+
+<hr>
+<div>
+<a href="200511c.html">&lt;Prev(,)</a> | 
+<a href="200512b.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

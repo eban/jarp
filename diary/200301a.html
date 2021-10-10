@@ -1,0 +1,756 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2003-1-a</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="200212c.html">
+<link rel="next" href="200301b.html">
+
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2003年1月上旬〜</p>
+<hr>
+<div>
+<a href="200212c.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="200301b.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2003/01/01 start -->
+<h2><a name="20030101" href="200301a.html#20030101">2003-01-01 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="200301011" title="200301011" href="200301a.html#200301011">■</a> 
+12月のspam</h3>
+<p>
+391通。このあたりで落ち着いたか？韓国から85通。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200301012" title="200301012" href="200301a.html#200301012">■</a> 
+<a href="http://www.openssl.org/">[Linux] OpenSSL 0.9.7</a></h3>
+<p>
+今年の年越しmakeはOpenSSLだった。
+OpenSSLは
+</p>
+<pre>
+% objdump -p /usr/local/ssl/lib/libssl.so.0.9.6|grep SONAME
+  SONAME      libssl.so.0.9.6
+</pre>
+<p>
+なので、0.9.7を使いたければリンクしなおす必要あり。
+</p>
+
+<p>
+OpenSSHをmakeしなおしてみよう。ちなみにOpenSSHの場合は同じ0.9.6でも
+</p>
+<pre>
+OpenSSL version mismatch. Built against 90607f, you have 906080
+</pre>
+<p>
+のようにコンパイル時に埋め込んでしまうため、
+共有ライブラリの名前が変わらないようなupdateのときは注意が必要。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200301013" title="200301013" href="200301a.html#200301013">■</a> 
+[Ruby] Ruby 1.6</h3>
+<p>
+とりあえずみんないじり始めたので、残務をかたづけよう。
+</p>
+<!-- section end -->
+</div>
+<!-- 2003/01/01 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/01/02 start -->
+<h2><a name="20030102" href="200301a.html#20030102">2003-01-02 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="200301021" title="200301021" href="200301a.html#200301021">■</a> 
+<a href="http://www.moonwolf.com/~arcml/cgi-bin/arcml/?rm=view&amp;list_id=1&amp;ml_count=438">[Ruby] LIBRUBY_SO(1)</a></h3>
+<p>
+makeなら知ってるからmakeでLIBRBUY_SOを展開させるわけやね。
+うまいな。でも./config.status --recheckがちょっといやだな。
+</p>
+<pre>
+config.h: config.status
+        ./config.status --recheck
+</pre>
+<p>
+だとconfigure直後のmakeで必ずrecheckがかかるから。
+たぶん要らない気がする。
+</p>
+
+<p>
+それとconfigureしなおすとconfig.hは初期状態に戻るので、
+必ず更新される。
+その後makeすればconfig.hに追加された状態に戻るが、
+config.hは更新されているので全部リコンパイルとなる。
+これは痛い。
+<a href="http://ccache.samba.org/">ccache</a>を使ってればそれほど痛くないかもしれないけど。
+</p>
+
+<p>
+というわけでLIBRUBY_SOをconfig.hで定義するのはちょっと無理な感じがする。
+LIBRUBY_SOを参照しているのはruby.cだけなので、
+libruby_so.hという別のファイルを作るのはどうだろう？
+</p>
+<pre>
+ruby.o: libruby_so.h
+</pre>
+<p>
+てな感じでWindows系はruby.cでこれをincludeする。
+これならruby.cだけが依存するからまずまずかな。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200301022" title="200301022" href="200301a.html#200301022">■</a> 
+[Ruby] LIBRUBY_SO(2)</h3>
+<p>
+要するにLIBRUBY_SOをどう伝えるかということなので、
+だったら*.rcにでも埋め込んでしまうのはどうだろう？
+Windows系だけの話だし。リソースはよくわからないんだけど、
+</p>
+<pre>
+STRINGTABLE
+BEGIN
+  0 &quot;#{$libruby_so}&quot;
+END
+</pre>
+<p>
+としてresource.rbを実行するとことろで
+</p>
+<pre>
+-libruby_so=$(LIBRUBY_SO) \
+</pre>
+<p>
+を追加する。あとはruby.cを
+</p>
+<pre>
+LoadString(0, 0, libpath, sizeof libpath);
+GetModuleFileName(GetModuleHandle(libpath), libpath, sizeof libpath);
+</pre>
+<p>
+とでもすればいけそう。やってみる。あ、
+<a href="../files/libruby_so.diff">いけた。</a></p>
+
+<p>
+これは-DLIBRUBY_SO=が-libruby_so=になっただけとも言える。
+でも、依存するものが少ないし、変更点も少ないし、
+新たにファイルを作るわけでもないので、
+いいかもしれない。
+</p>
+<!-- section end -->
+</div>
+<!-- 2003/01/02 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/01/03 start -->
+<h2><a name="20030103" href="200301a.html#20030103">2003-01-03 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="200301031" title="200301031" href="200301a.html#200301031">■</a> 
+<a href="http://www.ruby-lang.org/raa/list.rhtml?name=swin">[Ruby] SWin 030101</a></h3>
+<p>
+更新。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200301032" title="200301032" href="200301a.html#200301032">■</a> 
+<a href="http://www.ruby-lang.org/raa/list.rhtml?name=vruby">[Ruby] VRuby 030101</a></h3>
+<p>
+更新。インストーラがクロスの環境じゃ動かなくなってしまったので、
+</p>
+<pre>
+% mkdir lib
+% mv vr lib
+% i386-cygwin-ruby -rmkmf -e 'create_makefile(&quot;vr&quot;)'
+% make site-install
+</pre>
+<p>
+とした。結構
+<a href="200212c.html#200212225">役に立ってるようだ。</a></p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200301033" title="200301033" href="200301a.html#200301033">■</a> 
+[Ruby] --enable-shared</h3>
+<p>
+/etc/ld.so.confを確認してldconfigしないとだめです。
+LD_RUN_PATHという手もありますが。
+</p>
+<!-- section end -->
+</div>
+<!-- 2003/01/03 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/01/04 start -->
+<h2><a name="20030104" href="200301a.html#20030104">2003-01-04 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="200301041" title="200301041" href="200301a.html#200301041">■</a> 
+[Vim] syntax=rubyでのコメント行で&quot;o&quot;コマンド</h3>
+<p>
+Vim6のruby modeはdefaultでコメント行でoすると勝手に&quot;# &quot;が頭につく。
+自分の行動パターン的にはそこにはスクリプトを書くことが多いというより、
+空行を入れるかもといったところだ。いずれにしても余計なお世話だ。
+調べてみると$VIMRUNTIME/ftplugin/ruby.vimに
+</p>
+<pre>
+&quot; Set 'formatoptions' to break comment lines but not other lines, and insert
+&quot; the comment leader when hitting &lt;CR&gt; or using &quot;o&quot;.
+setlocal fo-=t fo+=croql
+</pre>
+<p>
+とあった。これが怪しい。:help 'fo'してみるとdefaultはtcqらしい。
+tは引かれてcroqlが足されるから最終的にはcroqlか？
+CTRL-^してfo-tableを見ると
+</p>
+<pre>
+o       Automatically insert the current comment leader after hitting 'o' or
+        'O' in Normal mode.
+</pre>
+<p>
+とあった。これだな。setlocal fo-=oでやめさせればいいわけだ。
+どうせなら~/.vim/ftplugin/ruby.vimを作ってここで設定しよう。
+あ、これを作ると$VIMRUNTIMEのほうはloadされなくなるのか。
+setlocal sw=2も入れとこう。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200301042" title="200301042" href="200301a.html#200301042">■</a> 
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-list/36891">[Ruby] libsafe</a></h3>
+<p>
+<a href="http://www.avayalabs.com/project/libsafe/index.html">libsafe</a>をインストールして
+</p>
+<pre>
+% LD_PRELOAD=libsafe.so.2.0.16 make test
+</pre>
+<p>
+で実行してみる。1.6も1.8も問題ないなあ。
+</p>
+<pre>
+% LD_PRELOAD=libsafe.so.2.0.16 ldd ./miniruby
+        libsafe.so.2.0.16 =&gt; /lib/libsafe.so.2.0.16 (0x4001b000)
+        libdl.so.2 =&gt; /lib/libdl.so.2 (0x40021000)
+        libcrypt.so.1 =&gt; /lib/libcrypt.so.1 (0x40024000)
+        libm.so.6 =&gt; /lib/libm.so.6 (0x40050000)
+        libc.so.6 =&gt; /lib/libc.so.6 (0x40072000)
+        /lib/ld-linux.so.2 =&gt; /lib/ld-linux.so.2 (0x40000000)
+</pre>
+<p>
+だからちゃんとpreloadもされてるよなあ。
+glibc 2.3.1ってことは必然的にgcc 3.2以上だから、
+うちとほとんど同じ環境のはずなんだけど。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200301043" title="200301043" href="200301a.html#200301043">■</a> 
+<a href="http://www.dm4lab.to/~usa/ruby/d/200301a.html#id20030104_P5">[Ruby] oldname</a></h3>
+<p>
+human68kも動いてなかったし、winceも考えなくてもいいでしょう。
+ぎゃっと叫ぶ人が出てきたときに考えれば。
+</p>
+<!-- section end -->
+</div>
+<!-- 2003/01/04 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/01/05 start -->
+<h2><a name="20030105" href="200301a.html#20030105">2003-01-05 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="200301051" title="200301051" href="200301a.html#200301051">■</a> 
+朝刊</h3>
+<p>
+02:23AM。なにか物音がするので玄関に行ってみると、新聞が来てた。はえー。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200301052" title="200301052" href="200301a.html#200301052">■</a> 
+[Ruby] ext/extmk.rb; $mflags</h3>
+<p>
+GNU makeは
+</p>
+<pre>
+% make -n DESTDIR=/tmp install
+</pre>
+<p>
+とするとMAKEFLAGSに&quot;-n -- DESTDIR=/tmp&quot;とセットする。
+</p>
+<pre>
+% make -n DESTDIR=/tmp no-install
+</pre>
+<p>
+とすると、--make-flagsで
+</p>
+<pre>
+&quot;$(MFLAGS)$(MAKEFLAGS) -n DESTDIR=$(DESTDIR)&quot;
+</pre>
+<p>
+を渡しているから、各拡張ライブラリへのmakeへは
+</p>
+<pre>
+&quot;-nn -- DESTDIR=/tmp -n DESTDIR=/tmp&quot;
+</pre>
+<p>
+が最終的に渡る。
+このままでは&quot;--&quot;があるため&quot;-n&quot;はターゲットになってしまう。
+というわけで&quot;--&quot;を削除する。
+ついでに同じものがいくつも出てくるのもなんだからuniqする。
+で、順番も気になるのでオプションが前に来るようにしよう。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200301053" title="200301053" href="200301a.html#200301053">■</a> 
+[Ruby] ext/extmk.rb; Enumerable#partition</h3>
+<p>
+$mflagsは最終的には
+</p>
+<pre>
+[&quot;INSTALL_PROG=install -c -m 0755&quot;,
+ &quot;INSTALL_DATA=install -c -m 0644&quot;,
+ &quot;MAKEDIRS=mkdir -p&quot;,
+ &quot;-nn&quot;,
+ &quot;DESTDIR=/tmp&quot;,
+ &quot;-n&quot;,
+ &quot;install&quot;]
+</pre>
+<p>
+となっている。これは単純にsortはできないので、
+Enumerable#partitionを使ってみよう。1.8だしね。
+</p>
+<pre>
+$mflags = $mflags.partition{|x| x[0] == ?-}.flatten!
+</pre>
+<p>
+で、オプションを前方に集められる。
+</p>
+<pre>
+[&quot;-nn&quot;,
+ &quot;-n&quot;,
+ &quot;INSTALL_PROG=install -c -m 0755&quot;,
+ &quot;INSTALL_DATA=install -c -m 0644&quot;,
+ &quot;MAKEDIRS=mkdir -p&quot;,
+ &quot;DESTDIR=/tmp&quot;,
+ &quot;install&quot;]
+</pre>
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200301054" title="200301054" href="200301a.html#200301054">■</a> 
+[Ruby][Cygwin] $0</h3>
+<p>
+ext/extmk.rbで$0を設定するようになったが、Cygwinはなんか変だな。
+</p>
+<pre>
+% irb hoge.rb
+hoge.rb(main):001:0&gt; $0
+=&gt; &quot;hoge&quot;
+hoge.rb(main):002:0&gt; $0 = &quot;foobar&quot;
+=&gt; &quot;foobar&quot;
+hoge.rb(main):003:0&gt; $0
+=&gt; &quot;foob&quot;
+</pre>
+<p>
+と4文字で切れてしまう。あれ？最初から4文字か。と思ったら、irb/init.rbで
+</p>
+<pre>
+$0 = opt
+</pre>
+<p>
+と設定していた。代入すると4文字で切られちゃう感じだな。でもmakeすると
+</p>
+<pre>
+../ruby/ext/extmk.rb:74:in `load': No such file to load -- /home/wata (LoadError)
+</pre>
+<p>
+となるから、もっと設定されるときもあるようだ。うーむ。
+set_arg0()をじっくり読もう。
+</p>
+<!-- section end -->
+</div>
+<!-- 2003/01/05 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/01/06 start -->
+<h2><a name="20030106" href="200301a.html#20030106">2003-01-06 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="200301061" title="200301061" href="200301a.html#200301061">■</a> 
+[Ruby] instruby.rb</h3>
+<p>
+include FileUtils::Verboseしてしまうと、cmpもverboseになるのが気になるなあ。
+</p>
+<pre>
+include FileUtils::NoWrite if $dryrun
+module FileUtils
+  @fileutils_output = STDOUT
+  @fileutils_label = ''
+end
+
+Object.module_eval do
+  [:ln_sf, :makedirs, :install].each do |method|
+    define_method(method) do |*args|
+      args.push :verbose
+      FileUtils.send method, *args
+    end
+  end
+end
+</pre>
+<p>
+としてmakelinkはln_sfにしちゃうとか。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200301062" title="200301062" href="200301a.html#200301062">■</a> 
+[Ruby] @fileutils_label</h3>
+<p>
+@fileutils_labelの初期値が'fileutils.'だと、
+one-linerでそれを表示したくないときに困る。
+具体的にはlib/mkmf.rbのconfiguration()で使われてるftools.rbをfileutils.rbに単純に置き換えたとき。
+</p>
+<pre>
+INSTALL_PROG = $(RUBY) -rfileutils -e 'FileUtils.install ARGV[0], ARGV[1], 0755, :verbose'
+</pre>
+<p>
+これだと、
+</p>
+<pre>
+fileutils.install -c -m 0755 x y
+</pre>
+<p>
+という表示になってしまう。かといって
+</p>
+<pre>
+INSTALL_PROG = $(RUBY) -rfileutils -e 'include FileUtils;@fileutils_label=&quot;&quot;;install ARGV[0], ARGV[1], 0755, :verbose'
+</pre>
+<p>
+というのも苦しい。
+実際はこの行が表示されるわけじゃないからいいのかもしれないが、
+単純にfileutils.rb側を変えたほうがよさそうな気もする。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200301063" title="200301063" href="200301a.html#200301063">■</a> 
+<a href="../files/un.rb">[Ruby] un.rb</a></h3>
+<p>
+長くなるとか、@のような文字は危ないかもしれないので、
+runという名前のライブラリを考えてみた。
+-runで実行できるようにわざとun.rbという名前で作る。
+</p>
+<pre>
+% ruby -run -e install -- -m 0755 x y
+% ruby -run -e rm -- -f *.o
+% ruby -run -e cp -- -p x y
+</pre>
+<p>
+のように普通のコマンドと同じように使える。
+メタ文字も出てこないのでquoteする必要もない。
+</p>
+<pre>
+RM = $(RUBY) -run -e rm -- -vf
+MAKEDIRS = $(RUBY) -run -e mkdir -- -vp
+INSTALL_PROG = $(RUBY) -run -e install -- -vm 0755
+INSTALL_DATA = $(RUBY) -run -e install -- -vm 0644
+</pre>
+<p>
+と定義できる。
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-list/13912">[ruby-list:13912]</a>の焼き直しにすぎないんだけど。
+</p>
+<!-- section end -->
+</div>
+<!-- 2003/01/06 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/01/07 start -->
+<h2><a name="20030107" href="200301a.html#20030107">2003-01-07 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="200301071" title="200301071" href="200301a.html#200301071">■</a> 
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-talk/60783">[Ruby] 16KB制限</a></h3>
+<p>
+ruby-talkは16KB制限が入った。12月と1月のruby-talkを見てみたけど、
+16KBに収まらないようなメールはやっぱ何か間違ってる。
+ruby-devは差分が流れるから別だけど。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200301072" title="200301072" href="200301a.html#200301072">■</a> 
+<a href="http://www.namikilab.tuat.ac.jp/~sasada/diary/200301.html#d7">[Ruby] zip</a></h3>
+<pre>
+% ruby -v -e 'p [1,2,3].zip([4,5,6]).map{|x,y| x+y}'
+ruby 1.8.0 (2003-01-07) [i386-linux]
+[5, 7, 9]
+</pre>
+
+<!-- section end -->
+</div>
+<!-- 2003/01/07 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/01/08 start -->
+<h2><a name="20030108" href="200301a.html#20030108">2003-01-08 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="200301081" title="200301081" href="200301a.html#200301081">■</a> 
+<a href="../files/Win32API.rb">[Ruby] Win32API.rb</a></h3>
+<p>
+なんだかんだで、
+<a href="../files/Win32API.rb">Win32API.rb</a>を用意することになったが、
+とりあえずgetch.rbとpoint.rbはそれなりに動くようになった。
+が、肝心のregistry.rbは
+</p>
+<pre>
+% cat reg.rb
+require 'registry'
+
+Win32::Registry::HKEY_LOCAL_MACHINE.open(
+  'SOFTWARE\Cygnus Solutions\Cygwin\Program Options') do |reg|
+  p reg['c:\cygwin\usr\sbin\inetd.exe']
+end
+% ruby -I. reg.rb
+./Win32API.rb:19:in `call': bignum too big to convert into `int' (RangeError)
+        from ./Win32API.rb:29:in `call'
+        from ./registry.rb:417:in `OpenKey'
+        from ./registry.rb:525:in `open'
+        from ./registry.rb:605:in `open'
+        from reg.rb:4
+</pre>
+<p>
+となってしまう。本来なら
+</p>
+<pre>
+% ruby reg.rb 
+&quot;binmode tty ntsec&quot;
+</pre>
+<p>
+と表示されるはずなんだけど。sym.cを見てみる。あ、NUM2LONGだからか。
+</p>
+<pre>
+  case 'L':
+    ANY2L(args[i]) = DLNUM2LONG(argv[i]);
+    PUSH_L(ftype);
+    break;
+</pre>
+<p>
+NUM2ULONGにしてみる。先に進んだ。でも
+</p>
+<pre>
+./Win32API.rb:19:in `call': undefined method `to_ptr' for 0:Fixnum (NoMethodError)
+        from ./Win32API.rb:19:in `call'
+        from ./registry.rb:447:in `QueryValue'
+        from ./registry.rb:665:in `read'
+        from ./registry.rb:688:in `[]'
+        from reg.rb:5
+        from reg.rb:3:in `open'
+        from ./registry.rb:605:in `open'
+        from reg.rb:4
+</pre>
+<p>
+と次の関門が待っているのであった。今日はここまで。
+</p>
+
+<p>
+Win32API wrapperは無謀だったか？
+</p>
+<!-- section end -->
+</div>
+<!-- 2003/01/08 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/01/09 start -->
+<h2><a name="20030109" href="200301a.html#20030109">2003-01-09 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="200301091" title="200301091" href="200301a.html#200301091">■</a> 
+[Web] .htaccess</h3>
+<p>
+<a href="../ruby/binaries/">Ruby Binaries</a>の.htaccessにこれを加えてみた。
+</p>
+<pre>
+IndexOptions DescriptionWidth=* TrackModified
+IndexOrderDefault Descending Date
+</pre>
+<p>
+defaultは新しい順のほうがよさそう。
+</p>
+
+<p>
+Descriptionが古いままだなあ。list.rhtmlのほうを使うようにしないと。
+名前も調べなおさないといけないのか。
+</p>
+<!-- section end -->
+</div>
+<!-- 2003/01/09 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/01/10 start -->
+<h2><a name="20030110" href="200301a.html#20030110">2003-01-10 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="200301101" title="200301101" href="200301a.html#200301101">■</a> 
+[Linux] WineとOpenwallパッチ</h3>
+<p>
+久し振りにwineを起動してみるとこけてしまった。
+</p>
+<pre>
+% wine -- ruby -v
+err:virtual:map_image Standard load address for a Win32 program (0x00400000) not available - security-patched kernel ?
+wine: could not load 'R:\ruby\mingw\ruby.exe' as Win32 binary
+</pre>
+<p>
+なるほど。
+<a href="http://www.openwall.com/linux/">Openwall</a>パッチが原因か。そういえば動的にon/offってできないんだ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200301102" title="200301102" href="200301a.html#200301102">■</a> 
+[Linux] Wineの速度</h3>
+<p>
+実際のところWineはどのくらいの実力があるのか計ってみた。
+例によって違いがわかりやすい遅いP5 133MHzのLinux 2.4.20上で実行。
+</p>
+<pre>
+% TIMEFMT='%E real  %U user  %S sys  %P cpu'
+% time wine --debugmsg err-all -- ./ruby -v
+ruby 1.8.0 (2003-01-09) [i386-cygwin]
+3.38s real  1.74s user  0.41s sys  63% cpu
+% time ruby -v
+ruby 1.8.0 (2003-01-09) [i386-linux]
+0.49s real  0.46s user  0.05s sys  103% cpu
+</pre>
+<p>
+起動時間は3秒ぐらいだな。
+</p>
+<pre>
+% time wine --debugmsg err-all -- ./ruby ../ruby/sample/sieve.rb 1000000 &gt;/dev/null
+64.20s real  61.92s user  0.86s sys  97% cpu
+% time ruby ../ruby/sample/sieve.rb 1000000 &gt;/dev/null 
+71.91s real  71.74s user  0.25s sys  100% cpu
+</pre>
+<p>
+うーむ。逆転してしまった。まじ？同じgcc 3.2なのに。
+てゆか間にCygwinもあるんだよね。なにか間違ってる…。
+</p>
+<!-- section end -->
+</div>
+<!-- 2003/01/10 end -->
+
+<hr>
+<div>
+<a href="200212c.html">&lt;Prev(,)</a> | 
+<a href="200301b.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

@@ -1,0 +1,357 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2008-12-a</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="200811c.html">
+<link rel="next" href="200812b.html">
+
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2008年12月上旬〜</p>
+<hr>
+<div>
+<a href="200811c.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="200812b.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2008/12/01 start -->
+<h2><a name="20081201" href="200812a.html#20081201">2008-12-01 (Mon)</a></h2>
+<!-- 2008-12-02 00:38:38 -->
+
+<div class="entry1">
+<h3><a name="200812011" title="200812011" href="200812a.html#200812011">■</a> 
+[Fedora] Fedora 10 のscim-skk</h3>
+<p>
+scim-skkが確定すると死ぬという現象が直ってないので、<br>
+scim-skk-0.5.2-11.fc10.src.rpmを見たらパッチがあたってない。残念。
+</p>
+
+<p>
+差分を用意した。
+
+<a href="http://gist.github.com/30746">scim_skk_dictionary.cpp.diff</a>
+</p>
+
+<p>
+それにしてもgistって一律CR+LFになるのがやだな。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200812012" title="200812012" href="200812a.html#200812012">■</a> 
+11月のspam</h3>
+<p>
+2500通ほど。激減してるとつぶやいたらうささんが教えてくれた。<br>
+
+<a href="http://www.computerworld.jp/news/sec/127050.html">大規模ボットネット閉鎖でスパムが急減</a>
+</p>
+<!-- section end -->
+</div>
+<!-- 2008/12/01 end -->
+
+
+
+<hr class="hide">
+<!-- 2008/12/02 start -->
+<h2><a name="20081202" href="200812a.html#20081202">2008-12-02 (Tue)</a></h2>
+<!-- 2008-12-03 01:41:07 -->
+
+<div class="entry1">
+<h3><a name="200812021" title="200812021" href="200812a.html#200812021">■</a> 
+[Linux] sox infile outfile norm</h3>
+<p>
+F10になったらsoxも更新されて音量の正規化が簡単になってた。
+</p>
+
+<pre>
+% sox infile outfile norm
+</pre>
+<p>
+でok。しかし相変わらずmp3が扱えないのが痛いなあ。<br>
+自分でmakeするか。
+</p>
+
+<!-- section end -->
+</div>
+<!-- 2008/12/02 end -->
+
+
+
+<hr class="hide">
+<!-- 2008/12/03 start -->
+<h2><a name="20081203" href="200812a.html#20081203">2008-12-03 (Wed)</a></h2>
+<!-- 2008-12-04 03:09:00 -->
+
+<div class="entry1">
+<h3><a name="200812031" title="200812031" href="200812a.html#200812031">■</a> 
+[Fedora] ネットワーク不調</h3>
+<p>
+どうにもネットワークが不調なので再起動してみると、<br>
+絶不調になった。ルータにしかつながらない。<br>
+routeコマンドを実行してみるとなぜかdefault gatewayが自分自身になってた。<br>
+なんでそんな不思議な設定に。
+</p>
+
+<p>
+まあでもこれだと常に通らないわけで、今までの頻繁に不調だった原因ではないはず。<br>
+現にその後もやはり不調のまま。ちょっとましなった気がするが。<br>
+しかし勝手に書き換わるのも問題ではある。
+</p>
+
+<p>
+なんか気持ち悪いので空いてる/dev/sdcへF10を新規に入れてみようかな。<br>
+会社のPCは何ともないし。うーむ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2008/12/03 end -->
+
+
+
+<hr class="hide">
+<!-- 2008/12/04 start -->
+<h2><a name="20081204" href="200812a.html#20081204">2008-12-04 (Thu)</a></h2>
+<!-- 2008-12-05 00:29:18 -->
+
+<div class="entry1">
+<h3><a name="200812041" title="200812041" href="200812a.html#200812041">■</a> 
+[Fedora] ネットワーク不調のせいで</h3>
+<p>
+どうもこの2,3日間、この日記すらアップロードされてなかったようで。<br>
+rsyncが成功するまで繰り返すようにシェルスクリプトを変更した。
+</p>
+<!-- section end -->
+</div>
+<!-- 2008/12/04 end -->
+
+
+
+<hr class="hide">
+<!-- 2008/12/05 start -->
+<h2><a name="20081205" href="200812a.html#20081205">2008-12-05 (Fri)</a></h2>
+<!-- 2008-12-06 21:09:44 -->
+
+<div class="entry1">
+<h3><a name="200812051" title="200812051" href="200812a.html#200812051">■</a> 
+[Fedora] jigdo-liteでダウンロード</h3>
+<p>
+とりあえずnetinstのISOイメージをjigdoでダウンロード。<br>
+jigdoを起動して
+</p>
+
+<pre>
+http://ftp.riken.jp/Linux/fedora/releases/9/Fedora/i386/jigdo/Fedora-10-i386-netinst.jigdo
+</pre>
+<p>
+を入力。ってあれ？今見ると途中で9になってるな。<br>
+スクロールしてみると間違いないようだ。<br>
+ダウンロードも成功してる。<br>
+ちゃんとファイル名もF10だしな。<br>
+しかしさすがに今は存在しない。
+</p>
+
+<pre>
+http://ftp.riken.jp/Linux/fedora/releases/10/Fedora/i386/jigdo/Fedora-10-i386-netinst.jigdo
+</pre>
+<p>
+だよなあ。なんか狐につままれたみたい。
+</p>
+<!-- section end -->
+</div>
+<!-- 2008/12/05 end -->
+
+
+
+<hr class="hide">
+<!-- 2008/12/06 start -->
+<h2><a name="20081206" href="200812a.html#20081206">2008-12-06 (Sat)</a></h2>
+<!-- 2008-12-07 02:18:48 -->
+
+<div class="entry1">
+<h3><a name="200812061" title="200812061" href="200812a.html#200812061">■</a> 
+[Golf] codegolfネタバレ会</h3>
+<p>
+アキバの古炉奈でcodegolfのネタバレ会。<br>
+kounoikeさんの??とprintの1が印象的だった。<br>
+それにしてもAAが俺だけ全然違うのはびっくり。<br>
+最後の1Bが縮まないわけだ。しかしここで50Bが…。
+</p>
+
+<!-- section end -->
+</div>
+<!-- 2008/12/06 end -->
+
+
+
+<hr class="hide">
+<!-- 2008/12/07 start -->
+<h2><a name="20081207" href="200812a.html#20081207">2008-12-07 (Sun)</a></h2>
+<!-- 2008-12-08 01:26:11 -->
+
+<div class="entry1">
+<h3><a name="200812071" title="200812071" href="200812a.html#200812071">■</a> 
+[Fedora] やはりネットワーク不調</h3>
+<p>
+netinstでインストールしようとしたらミラーサイトのリストを取るとこでエラーだらけ。<br>
+やはりF10のカーネルというかネットワークドライバの原因のようだ。
+</p>
+
+<p>
+とりあえず名前を引くとこが一番失敗するのでdnsmasq復活させた。<br>
+すこしはましになるかな。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2008/12/07 end -->
+
+
+
+<hr class="hide">
+<!-- 2008/12/08 start -->
+<h2><a name="20081208" href="200812a.html#20081208">2008-12-08 (Mon)</a></h2>
+<!-- 2008-12-09 01:32:09 -->
+
+<div class="entry1">
+<h3><a name="200812081" title="200812081" href="200812a.html#200812081">■</a> 
+<a href="http://golf.shinh.org/p.rb?4+in+3">[Golf] 4 in 3</a></h3>
+<p>
+さてbashで解くかーと思ったら浮動小数点使えないこと忘れてた。
+</p>
+
+<pre>
+$ echo $[4.0 / 3.0]
+bash: 4.0 / 3.0: syntax error: invalid arithmetic operator (error token is &quot;.0 / 3.0&quot;)
+</pre>
+<p>
+exprも駄目だしな。
+</p>
+
+<pre>
+$ expr 4.0 / 3.0
+expr: non-numeric argument
+</pre>
+<p>
+zshってすごいよなあ。
+</p>
+
+<pre>
+% echo $[4.0 / 3.0]
+1.3333333333333333
+</pre>
+<p>
+なんか前にも書いた気がするが。
+</p>
+<!-- section end -->
+</div>
+<!-- 2008/12/08 end -->
+
+
+
+<hr class="hide">
+<!-- 2008/12/09 start -->
+<h2><a name="20081209" href="200812a.html#20081209">2008-12-09 (Tue)</a></h2>
+<!-- 2008-12-10 00:40:29 -->
+
+<div class="entry1">
+<h3><a name="200812091" title="200812091" href="200812a.html#200812091">■</a> 
+[Gmail] Treeテーマ</h3>
+<p>
+Treeテーマがさわやかでいいやと思ってたら、<br>
+今日みたいに雨や曇の日はどんよりして気分も下がる。<br>
+これって常に晴れてくれないもんかな。
+</p>
+
+<p>
+というわけでDeskにしてみたが、なんか画像が多くて重いような？<br>
+Mountainsにしてみるか。
+</p>
+
+<!-- section end -->
+</div>
+<!-- 2008/12/09 end -->
+
+
+
+<hr class="hide">
+<!-- 2008/12/10 start -->
+<h2><a name="20081210" href="200812a.html#20081210">2008-12-10 (Wed)</a></h2>
+<!-- 2008-12-11 01:33:48 -->
+
+<div class="entry1">
+<h3><a name="200812101" title="200812101" href="200812a.html#200812101">■</a> 
+[Thunderbird] Thunderbird 3.0 Beta 1</h3>
+<p>
+早速インストールしたのはいいが、<br>
+今まで使っていたShredderでタブを使ってないことに気づいた。<br>
+使う機会がないんだよなあ。<br>
+スケジューラとか拡張を入れればそれなりに使い途もあるんだろうけど。
+</p>
+<!-- section end -->
+</div>
+<!-- 2008/12/10 end -->
+
+<hr>
+<div>
+<a href="200811c.html">&lt;Prev(,)</a> | 
+<a href="200812b.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

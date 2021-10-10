@@ -1,0 +1,503 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2015-2-a</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="201501c.html">
+<link rel="next" href="201502b.html">
+
+<link rel="stylesheet" type="text/css" href="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.css">
+<script type="text/javascript" src="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.js"></script>
+<script type="text/javascript">
+<!--       
+$(document).ready(function() {
+  prettyPrint();
+});
+-->
+</script>
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2015年2月上旬〜</p>
+<hr>
+<div>
+<a href="201501c.html" accesskey=",">&lt;Older(,)</a> | 
+<a href="201502b.html" accesskey=".">Newer(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2015/02/01 start -->
+<h2><a name="20150201" href="201502a.html#20150201">2015-02-01 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="201502011" title="201502011" href="201502a.html#201502011">■</a> 
+<a href="http://blog.ueda.asia/?p=5171">【問題】第15回ドキッ！grepだらけのシェル芸勉強会 にUstで参加</a></h3>
+<p>
+今回も行けなかったのでUstで参加。
+</p>
+<h4><a name="201502011S1" href="201502a.html#201502011S1">_</a> <strong>Q1 1という文字を含まないファイル</strong>: </h4>
+<div class="sub">
+<p>
+grep3連発。
+</p>
+<pre>
+% seq 2 5 &gt; a
+% seq 1 9 &gt; b
+% seq 5 11 &gt; c
+% seq 3 6 &gt; d
+% grep -c 1 ? | grep 0 | grep -o '^.'
+a
+d
+</pre>
+<p>
+と思ったら-Lという素敵なオプションがあるなんて、びっくりですわ。
+</p>
+<pre>
+-L, --files-without-match
+       Suppress normal output; instead print the name of each input file from which no output  would  normally
+       have been printed.  The scanning will stop on the first match.
+</pre>
+</div>
+<h4><a name="201502011S2" href="201502a.html#201502011S2">_</a> <strong>Q2 1-9, 10-90, 下2桁が00のファイルだけ残してあとを消す</strong>: </h4>
+<div class="sub">
+<p>
+否定形なので結構悩む。
+</p>
+<pre>
+% ls | grep -Pv '\.\d$|\d0$|00$' | xargs rm
+</pre>
+<p>
+今思うと、-Pを使うまでもないな。
+</p>
+<pre>
+% ls | grep -v '\..0\?$\|00$' | xargs rm
+</pre>
+
+</div>
+<h4><a name="201502011S3" href="201502a.html#201502011S3">_</a> <strong>Q3 -v, -f, awkの数をカウント</strong>: </h4>
+<div class="sub">
+<p>
+最終的にはほぼ同じ。
+<pre>
+% grep -ow 'awk\|-[vf]' text1 | sort | uniq -c  
+</pre>
+</p>
+</div>
+<h4><a name="201502011S4" href="201502a.html#201502011S4">_</a> <strong>Q4 /etcの下のshbangとset -eがあるファイルの数</strong>: </h4>
+<div class="sub">
+<p>
+なんか無理矢理感満載だ。sudoのあるなしはこの際どうでもいいのでカット。
+</p>
+<pre>
+% grep -R -l '#!/bin/sh' /etc | xargs grep -c &quot;set -e&quot; | tee &gt;(grep -c ':0$') | grep -c ':[^0]$'
+</pre>
+<p>
+uniq -cにしておこう。
+</p>
+<pre>
+% grep -R -l '#!/bin/sh' /etc | xargs grep -c &quot;set -e&quot; | awk '$0=/:0$/_' | sort | uniq -c
+</pre>
+</div>
+<h4><a name="201502011S5" href="201502a.html#201502011S5">_</a> <strong>Q5 日本語やギリシャ文字のある行を除去</strong>: </h4>
+<div class="sub">
+<p>
+ほぼ解答例と同じ。
+</p>
+<pre>
+% grep -P '^[[:print:]]*$' text2
+</pre>
+
+</div>
+<h4><a name="201502011S6" href="201502a.html#201502011S6">_</a> <strong>Q6 ファイルの中の数字を足して10になるファイル</strong>: </h4>
+<div class="sub">
+<p>
+grepじゃないが。
+</p>
+<pre>
+% awk '$1+$2+$3+$4==10{print FILENAME}' ?
+</pre>
+<p>
+もう1個。これもgrepじゃない。grep 10で無理矢理使えなくもないが。
+</p>
+<pre>
+% for i in ?;do read a &lt; $i;[ $[${a// /+}] = 10 ] &amp;&amp; echo $i;done
+</pre>
+</div>
+<h4><a name="201502011S7" href="201502a.html#201502011S7">_</a> <strong>Q7 psコマンドを打って（オプションは任意）、そのpsコマンドの行、親プロセスの行、親の親のプロセスの行を表示</strong>: </h4>
+<div class="sub">
+<p>
+パス。
+</p>
+</div>
+<h4><a name="201502011S8" href="201502a.html#201502011S8">_</a> <strong>Q8 seqとfactorの出力の後ろにgrepだけをいくつかつなげて、「素数の一つ前の数で、かつ10以上の数」を列挙してください。</strong>: </h4>
+<div class="sub">
+<p>
+grepしばり。
+</p>
+<pre>
+$ seq 10 1000 | factor | ...(grepだけ)
+</pre>
+<p>
+grep3つで。
+</p>
+<pre>
+% seq 10 1000 | factor | grep -B1 ': [^ ]*$' | grep ': [^ ]* ' | grep -o '^[0-9]*'
+</pre>
+<p>
+Perlの正規表現の肯定先読みを使うとgrepを1個減らせる。
+</p>
+<pre>
+% seq 10 1000 | factor | grep -B1 ': [^ ]*$' | grep -Po '.*(?=: [^ ]* )'
+</pre>
+</div>
+<!-- section end -->
+</div>
+<!-- 2015/02/01 end -->
+
+
+
+<hr class="hide">
+<!-- 2015/02/02 start -->
+<h2><a name="20150202" href="201502a.html#20150202">2015-02-02 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="201502021" title="201502021" href="201502a.html#201502021">■</a> 
+Q7 psコマンドを打ってご先祖さまを表示 #シェル芸</h3>
+<p>
+なんかいろいろいじってるうちにgrepがなくなってしまった。
+</p>
+<pre>
+% ps -eo ppid,pid,args --forest | tac | awk '(/ [p]s /||$2==pid)&amp;&amp;pid=_$1' | tac
+    0     1 /sbin/init
+    1  1216 lightdm
+ 1216  2076  \_ lightdm --session-child 12 15
+ 2076  2093      \_ upstart --user
+ 2093  3531          \_ tmux start-server; show-option -g
+ 3531 25659          |   \_ -zsh
+25659  9151          |       \_ ps -eo ppid,pid,args --forest
+</pre>
+<p>
+tacを使うと素直に上から下へのスキャンで済む。<br>
+面倒なのでご先祖さまのinitまで表示。<br>
+-fと--forestは違うようだ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2015/02/02 end -->
+
+
+
+<hr class="hide">
+<!-- 2015/02/03 start -->
+<h2><a name="20150203" href="201502a.html#20150203">2015-02-03 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="201502031" title="201502031" href="201502a.html#201502031">■</a> 
+823年ぶりというデマ #シェル芸</h3>
+<p>
+2月のカレンダーがきれいに4段におさまっているのが823年ぶりというデマが出回った。<br>
+</p>
+<pre>
+% cal -h
+   February 2015      
+Su Mo Tu We Th Fr Sa  
+ 1  2  3  4  5  6  7  
+ 8  9 10 11 12 13 14  
+15 16 17 18 19 20 21  
+22 23 24 25 26 27 28  
+
+
+</pre>
+<p>
+ではどのくらいあるのか考えてみよう。<br>
+条件としては2/1が日曜日でうるう年ではない、この2つがそろえばok。<br>
+言い変えると3/1の前日が28日で土曜日とも言える。<br>
+そうすることでdate一発で判断可能になる。
+</p>
+<pre>
+% date -d '2015-03-01 -1day' +'%F %a'         
+2015-02-28 Sat
+% date -d '2012-03-01 -1day' +'%F %a'
+2012-02-29 Wed
+</pre>
+<p>
+'28 Sat'でgrepすればいいわけだ。以上まとめて適当に1951年から2050年の100年間で調べてみる。
+</p>
+<pre>
+% seq -f '%g-03-01 -1day' 1951 2050 | xargs -L1 -d '\n' date +'%F %a' -d | grep '28 Sat'
+1953-02-28 Sat
+1959-02-28 Sat
+1970-02-28 Sat
+1981-02-28 Sat
+1987-02-28 Sat
+1998-02-28 Sat
+2009-02-28 Sat
+2015-02-28 Sat
+2026-02-28 Sat
+2037-02-28 Sat
+2043-02-28 Sat
+</pre>
+<p>
+前回は2009年、次回は2026年だとわかった。<br>
+見ればわかるとおり間隔は6,11,11の繰り返しになっている。
+</p>
+<!-- section end -->
+</div>
+<!-- 2015/02/03 end -->
+
+
+
+<hr class="hide">
+<!-- 2015/02/04 start -->
+<h2><a name="20150204" href="201502a.html#20150204">2015-02-04 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="201502041" title="201502041" href="201502a.html#201502041">■</a> 
+金土日5回 #シェル芸</h3>
+<p>
+823年デマにはいろんパターンがあるようで。<br>
+<a href="http://d.hatena.ne.jp/rikuo/20150202">「823年に一度の奇跡のカレンダー」の季節が今年もやってきました - 聴く耳を持たない(片方しか)</a></p>
+<p>
+今日は金土日曜が5回ある月を探してみよう。<br>
+実は昨日の件と条件は似ていて、簡単にいうと月末が31日で日曜日になっている月となる。<br>
+つまり翌月1日の前日が31日で日曜日。これもdate一発でok。
+</p>
+<pre>
+% seq -f &quot;2015-%g-01 1month -1day&quot; 12 | xargs -L1 -d '\n' date &quot;+%F %a&quot; -d
+2015-01-31 Sat
+2015-02-28 Sat
+2015-03-31 Tue
+2015-04-30 Thu
+2015-05-31 Sun
+2015-06-30 Tue
+2015-07-31 Fri
+2015-08-31 Mon
+2015-09-30 Wed
+2015-10-31 Sat
+2015-11-30 Mon
+2015-12-31 Thu
+</pre>
+<p>
+例によって&quot;31 Sun&quot;でgrep。<br>
+2001年から2020年までの期間で探してみよう。
+</p>
+<pre>
+% seq 2001 2020 | xargs -i seq -f '{}-%g-01 1month -1day' 12 | xargs -L1 -d '\n' date '+%F %a' -d | grep '31 Sun'
+2002-03-31 Sun
+2003-08-31 Sun
+2004-10-31 Sun
+2005-07-31 Sun
+2006-12-31 Sun
+2008-08-31 Sun
+2009-05-31 Sun
+2010-01-31 Sun
+2010-10-31 Sun
+2011-07-31 Sun
+2013-03-31 Sun
+2014-08-31 Sun
+2015-05-31 Sun
+2016-01-31 Sun
+2016-07-31 Sun
+2017-12-31 Sun
+2019-03-31 Sun
+2020-05-31 Sun
+</pre>
+<p>
+今年は5月にまた823年デマが流れるかも。
+</p>
+<pre>
+% ncal -M 5 2015
+    May 2015          
+Mo     4 11 18 25   
+Tu     5 12 19 26   
+We     6 13 20 27   
+Th     7 14 21 28   
+Fr  1  8 15 22 29   
+Sa  2  9 16 23 30   
+Su  3 10 17 24 31   
+</pre>
+<!-- section end -->
+</div>
+<!-- 2015/02/04 end -->
+
+
+
+<hr class="hide">
+<!-- 2015/02/05 start -->
+<h2><a name="20150205" href="201502a.html#20150205">2015-02-05 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="201502051" title="201502051" href="201502a.html#201502051">■</a> 
+xargsで空白を含んだ引数を扱う</h3>
+<p>
+findの-print0のようにNULで区切られればxargs -0で受けられる。<br>
+しかしなかなかそういうオプションがあるコマンドは少ない。<br>
+tr '\n' '\0'で無理矢理という手もあるがもっと手軽な方法がある。<br>
+1行1引数にしたければ-L1 -d '\n'のようにすればok。<br>
+</p>
+<pre>
+% echo 'a b\nc' | xargs ruby -e 'p ARGV'
+[&quot;a&quot;, &quot;b&quot;, &quot;c&quot;]
+% echo 'a b\nc' | xargs -L1 ruby -e 'p ARGV'
+[&quot;a&quot;, &quot;b&quot;]
+[&quot;c&quot;]
+% echo 'a b\nc' | xargs -L1 -d '\n' ruby -e 'p ARGV'
+[&quot;a b&quot;]
+[&quot;c&quot;]
+% echo 'a b\nc' | tr '\n' '\0' | xargs -L1 -0 ruby -e 'p ARGV'
+[&quot;a b&quot;]
+[&quot;c&quot;]
+</pre>
+<p>
+<a href="201502a.html#201502031">一昨日</a><a href="201502a.html#201502041">昨日</a>の日記参照。
+</p>
+<!-- section end -->
+</div>
+<!-- 2015/02/05 end -->
+
+
+
+<hr class="hide">
+<!-- 2015/02/06 start -->
+<h2><a name="20150206" href="201502a.html#20150206">2015-02-06 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="201502061" title="201502061" href="201502a.html#201502061">■</a> 
+virtualbox-guest-dkms</h3>
+<p>
+以前
+<a href="201410c.html#201410251">virtualbox-guest-dkms</a>を入れた話を書いたが、<br>
+これって結局kernelが上がっても一々Guest Additionsを入れなおさなくてもいい<br>
+というものすごいうれしい副作用が。
+</p>
+<!-- section end -->
+</div>
+<!-- 2015/02/06 end -->
+
+
+
+<hr class="hide">
+<!-- 2015/02/07 start -->
+<h2><a name="20150207" href="201502a.html#20150207">2015-02-07 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="201502071" title="201502071" href="201502a.html#201502071">■</a> 
+awkで並列処理</h3>
+<p>
+awkでprint | &quot;command&quot;とするとパイプ処理になるが、名前が違えば別の処理になる。<br>
+たとえば
+</p>
+<pre>
+% LANG=C awk '{print | &quot;sort &gt; file&quot; NR%5}' file.txt &amp; (sleep 1; ps -o pid,args -C sort); sort -m file{0..4} &gt; q
+[1] 9151
+  PID COMMAND
+ 9160 sort
+ 9161 sort
+ 9163 sort
+ 9165 sort
+ 9166 sort
+</pre>
+<p>
+とすれば5個sortが並列に動く。<br>
+ただしこれ実際に一番CPU食うのはawkなので全然速くならない。
+</p>
+<!-- section end -->
+</div>
+<!-- 2015/02/07 end -->
+
+
+
+<hr class="hide">
+<!-- 2015/02/08 start -->
+<h2><a name="20150208" href="201502a.html#20150208">2015-02-08 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="201502081" title="201502081" href="201502a.html#201502081">■</a> 
+落穂拾い Q7の別解</h3>
+<p>
+psの-Hオプションを使ってみた。
+</p>
+<pre>
+% ps -eo ppid,pid,args --forest | tac | awk '(/ [p]s /||$2==pid)&amp;&amp;pid=_$1' | tac
+    0     1 /sbin/init
+    1  1182 lightdm
+ 1182  2002  \_ lightdm --session-child 12 15
+ 2002  2016      \_ upstart --user
+ 2016  3030          \_ /usr/bin/xfce4-terminal
+ 3030  7882          |   \_ zsh
+ 7882 20327          |   |   \_ ps -eo ppid,pid,args --forest
+% ps -eHo ppid,pid,args | tac | awk '(/ [p]s /||$2==pid)&amp;&amp;pid=_$1' | tac
+    0     1 /sbin/init
+    1  1182   lightdm
+ 1182  2002     lightdm --session-child 12 15
+ 2002  2016       upstart --user
+ 2016  3030         /usr/bin/xfce4-terminal
+ 3030  7882           zsh
+ 7882 21483             ps -eHo ppid,pid,args
+</pre>
+<p>
+--forestは無理矢理抜き出したので表示がいまいちだが、<br>
+余計なものがない後者のほうがいい感じ?
+</p>
+<!-- section end -->
+</div>
+<!-- 2015/02/08 end -->
+
+<hr>
+<div>
+<a href="201501c.html">&lt;Older(,)</a> | 
+<a href="201502b.html">Newer(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

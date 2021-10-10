@@ -1,0 +1,724 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2002-4-c</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="200204b.html">
+<link rel="next" href="200205a.html">
+
+<link rel="stylesheet" type="text/css" href="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.css">
+<script async type="text/javascript" src="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.js"></script>
+<script type="text/javascript">
+<!--       
+$(document).ready(function() {
+  prettyPrint();
+});
+-->
+</script>
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2002年4月下旬〜</p>
+<hr>
+<div>
+<a href="200204b.html" accesskey=",">&lt;Older(,)</a> | 
+<a href="200205a.html" accesskey=".">Newer(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2002/04/21 start -->
+<h2><a name="20020421" href="200204c.html#20020421">2002-04-21 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="200204211" title="200204211" href="200204c.html#200204211">■</a> 
+[Cygwin] latest, contrib -&gt; release</h3>
+<p>
+なにげなくCygwinのmirror siteを見に行くとディレクトリ構成が変わっていた。
+latest, contribはreleaseという1個のディレクトリに統合されたようだ。
+ほぅ。release/XFree86というディレクトリまである。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200204212" title="200204212" href="200204c.html#200204212">■</a> 
+[Ruby] ext/socket/extconf.rb</h3>
+<p>
+have_struct_memberを使うべきだったか？
+</p>
+<pre>
+have_struct_member(&quot;sockaddr_storage&quot;, &quot;ss_family&quot;,
+  /mswin32|mingw/ =~ RUBY_PLATFORM ? nil :
+    %w[sys/types.h netdb.h string.h sys/socket.h])
+</pre>
+<p>
+うーむ。あまりうれしくない。
+それはそれとしてtry_compileってなかったのか。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200204213" title="200204213" href="200204c.html#200204213">■</a> 
+ccacheの不思議</h3>
+<p>
+cache missした場合どのくらい遅くなるのか、Rubyをmakeして計ってみた。
+</p>
+<pre>
+% time make
+make  889.25s user 59.64s system 97% cpu 16:11.20 total
+% rm -rf ~/.ccache/*
+% vi config.cache # ac_cv_prog_CCとac_cv_prog_CPPにccacheをprefix
+% ./cofnig.cache
+% time make
+make  893.82s user 64.05s system 98% cpu 16:09.27 total
+</pre>
+<p>
+変わらないよ。なぜに？
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200204214" title="200204214" href="200204c.html#200204214">■</a> 
+<a href="http://www.nongnu.org/cvs/">cvs 1.11.2</a></h3>
+<p>
+更新。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200204215" title="200204215" href="200204c.html#200204215">■</a> 
+[Ruby] cleanups</h3>
+<p>
+いっそのことMichal Rokosさんにはcommitterになってもらうのがいいという気も。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200204216" title="200204216" href="200204c.html#200204216">■</a> 
+<a href="http://znz.s1.xrea.com/t/?date=20020421#p02">[Ruby] socket</a></h3>
+<p>
+typoがあって常にsockaddr_storageがないことになってました。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200204217" title="200204217" href="200204c.html#200204217">■</a> 
+[GCC] rsync server</h3>
+<pre>
+% rsync rsync://gcc.gnu.org/
+</pre>
+<p>
+でリストが得られる。cygwin-cvsもあるのか。でも思ってたのと違うなあ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200204218" title="200204218" href="200204c.html#200204218">■</a> 
+AC_INIT</h3>
+<p>
+他のソフトではどうなっているのか、動向を探る。
+ccacheもrsyncも引数に何も指定してない。
+なるほど単に
+</p>
+<pre>
+AC_INIT()
+</pre>
+<p>
+だけでいいわけだ。そうしよう。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200204219" title="200204219" href="200204c.html#200204219">■</a> 
+spam</h3>
+<p>
+最近mortgageという単語を含むsubjectのspamが多い。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/04/21 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/04/22 start -->
+<h2><a name="20020422" href="200204c.html#20020422">2002-04-22 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="200204221" title="200204221" href="200204c.html#200204221">■</a> 
+[GCC] rsync server</h3>
+<p>
+gcc.gnu.org::で公開してるのはCVSのrepositoryだった。
+cygwinだと
+</p>
+<pre>
+gcc.gnu.org::src-cvs/winsup/
+</pre>
+<p>
+にある。これを取ってくるということは結局CVSupと変わりないんだよね。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200204222" title="200204222" href="200204c.html#200204222">■</a> 
+[Ruby] rsync server</h3>
+<p>
+Rubyもrsync serverで公開するってのはどうだろう？
+CVSだとfirewallに阻まれるとかあるし。
+commit権がない人にはrsyncで十分のような気も。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200204223" title="200204223" href="200204c.html#200204223">■</a> 
+[Cygwin] mirror</h3>
+<p>
+というわけで
+</p>
+<pre>
+% rsync -auvz --delete --progress gcc.gnu.org::cygwin-ftp/'[rs]*' .
+</pre>
+<p>
+でmirrorしてみる。lftpgetでmirrorするよりは速い。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200204224" title="200204224" href="200204c.html#200204224">■</a> 
+メールの流量</h3>
+<p>
+なぜだか今日はメールの量が少なかった。いつもの半分ぐらいだ。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/04/22 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/04/23 start -->
+<h2><a name="20020423" href="200204c.html#20020423">2002-04-23 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="200204231" title="200204231" href="200204c.html#200204231">■</a> 
+Ruby アプリケーションプログラミング</h3>
+<p>
+来ました。ありがとうございます。
+連休前というのがなかなかぴったりの時期だ。
+欄外に
+<a href="../ruby/jarh.rb">JARH</a> が載ってるのでよろしく。
+自分も何が選ばれたのか知らないので楽しみ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200204232" title="200204232" href="200204c.html#200204232">■</a> 
+<a href="http://www.ruby-lang.org/en/raa-list.rhtml?name=Win32OLE">Win32OLE 0.4.8</a></h3>
+<p>
+更新。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200204233" title="200204233" href="200204c.html#200204233">■</a> 
+<a href="http://www.ruby-lang.org/en/raa-list.rhtml?name=Ruby%2FGoogle">ruby-google 0.3.0</a></h3>
+<p>
+更新。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200204234" title="200204234" href="200204c.html#200204234">■</a> 
+MinGW版ruby</h3>
+<p>
+1.7のsample/test.rbの最後にあるコードなんだけど、MinGW版rubyでSEGVになる。
+</p>
+<pre>
+class S
+  def initialize(a)
+    @a = a
+  end
+end
+l=nil
+100000.times {
+  l = S.new(l)
+}
+</pre>
+<p>
+1.6.6あたりで実行してもSEGVだ。うぅむ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200204235" title="200204235" href="200204c.html#200204235">■</a> 
+<a href="http://tamura.tdiary.net/20020420.html#p01">[Ruby] SH3 でクロスコンパイル</a></h3>
+<p>
+それはたぶん
+</p>
+<pre>
+--host=i686-pc-linux-gnu
+</pre>
+<p>
+じゃなくて
+</p>
+<pre>
+--host=sh3-linux
+</pre>
+<p>
+かな。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/04/23 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/04/24 start -->
+<h2><a name="20020424" href="200204c.html#20020424">2002-04-24 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="200204241" title="200204241" href="200204c.html#200204241">■</a> 
+PR#294, 295, 296, 297, 298</h3>
+<p>
+これってvirusだよね。困ったもんだな。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200204242" title="200204242" href="200204c.html#200204242">■</a> 
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-talk/38927">ruby-core</a></h3>
+<p>
+ruby-dev MLの英語版。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200204243" title="200204243" href="200204c.html#200204243">■</a> 
+mkmf.rbを利用してextmk.rbを書く</h3>
+<p>
+LINKは$hdrdirじゃなくて$topdirにする。
+じゃなくて、%sにして
+topdirを外から与える。
+</p>
+<pre>
+require 'mkmf'
+</pre>
+<p>
+の後に再度
+</p>
+<pre>
+$topdir = File.expand_path(&quot;..&quot;)
+</pre>
+<p>
+しとけばよさそう。そういった意味ではLINKはブロックになってると、
+評価された時点での変数の値を参照できて都合よさげ？
+なんとなく 
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-list/34885">[ruby-list:34885]</a>
+から始まる話の逆のような気も。
+</p>
+
+<p>
+install_rbの引数に互換性がない。
+あ、この中で閉じてると思えば別に構わないか。
+</p>
+
+<p>
+なんとかなりそう？
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200204244" title="200204244" href="200204c.html#200204244">■</a> 
+<a href="200204c.html#200204234">stack overflow</a></h3>
+<p>
+GNU ldのChangeLogによるとstack sizeがいつのまにか32MBから2MBに変更されてた。
+</p>
+<pre>
+2001-06-05  Danny Smith  &lt;danny_r_smith_2001@yahoo.co.nz&gt;
+
+        * emultempl/pe.em (init): Reduce default stack reserve to 0x200000.
+</pre>
+<p>
+とりあえず以前のように32MB確保しとく。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/04/24 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/04/25 start -->
+<h2><a name="20020425" href="200204c.html#20020425">2002-04-25 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="200204251" title="200204251" href="200204c.html#200204251">■</a> 
+うたばん</h3>
+<p>
+Gackt面白すぎ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200204252" title="200204252" href="200204c.html#200204252">■</a> 
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-talk/38992">ruby-talk news gateway</a></h3>
+<p>
+また止まってるらしい。がくっとメールの量が減るのでなんとなくわかる。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200204253" title="200204253" href="200204c.html#200204253">■</a> 
+<a href="200204c.html#200204243">mkmf.rbを利用してextmk.rbを書く</a></h3>
+<p>
+create_makefileを一行ずつ比較してみた。mkmf.rbでは
+</p>
+<pre>
+lib.sub!(/-l(.*)/, '&quot;lib\1.a&quot;')
+</pre>
+<p>
+で、extmk.rbは
+</p>
+<pre>
+lib.sub!(/-l(.*)/, %%&quot;lib\\1.#{$LIBEXT}&quot;%)
+</pre>
+<p>
+となっているのが気になる。
+$LIBEXTという存在が悩ましい。
+OBJEXTやEXEEXTと基本的には同じものなので、
+rbconfig.rbにあるべきか？
+とりあえずはmkmf.rbへ移動だな。
+</p>
+
+<p>
+STDOUT.flushが多用されてるのにも気づいた。これもsyncで良さそう。
+</p>
+
+<p>
+LINKとCPPの$topdirは関数にするだけで十分だと気づく。
+</p>
+
+<p>
+そういえばdefflagはdeffileに名前を変えるべきだったか？
+でもmswin32ではflagとして使うかもしれないし、このままにしとこう。
+</p>
+
+<p>
+LIBRUBYARGの処理も微妙に違うなあ。
+</p>
+
+<p>
+うーむ。なかなか進まん。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/04/25 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/04/26 start -->
+<h2><a name="20020426" href="200204c.html#20020426">2002-04-26 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="200204261" title="200204261" href="200204c.html#200204261">■</a> 
+<a href="200204c.html#200204253">mkmf.rbを利用してextmk.rbを書く</a></h3>
+<p>
+グローバル変数が多いよねえ。やはりcreate_makefileがかなりやっかいだ。
+これだけはextmk.rbに残すという手もあるが、それは負けだ。
+てゆかかなり負け気味ではある。
+</p>
+
+<p>
+それより1.7のmkmf.rbを見てたらクロスの環境が心配になってきた。
+そっちの確認のほうが先だな。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/04/26 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/04/27 start -->
+<h2><a name="20020427" href="200204c.html#20020427">2002-04-27 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="200204271" title="200204271" href="200204c.html#200204271">■</a> 
+<a href="http://www.ruby-lang.org/en/raa-list.rhtml?name=NArray">[Ruby] NArray</a></h3>
+<p>
+NArrayが標準添付になるかもしれないので、DJGPPでコンパイルしてみる。
+sincosでエラーになる。あまり聞いたことのない関数だが、NArrayでは
+</p>
+<pre>
+void sincos(double x, double *s, double *c);
+</pre>
+<p>
+を期待してる模様。一方DJGPPでは
+</p>
+<pre>
+void sincos(double *s, double *c, double x);
+</pre>
+<p>
+なので引数が違う。
+/usr/include/bits/mathinline.hやdietlibcのmath.hを見るとDJGPPが間違っているようだ。
+これはちょっといやだな。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200204272" title="200204272" href="200204c.html#200204272">■</a> 
+patch 2.5.4</h3>
+<p>
+@niftyのFLINUXでの情報によるとpatch 2.5.3だとDOS line endingsなパッチファイルも
+</p>
+<pre>
+(Stripping trailing CRs from patch.)
+</pre>
+<p>
+という警告だけでちゃんと処理するらしい。
+というわけで最新らしいpatch 2.5.4に上げてみた。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/04/27 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/04/28 start -->
+<h2><a name="20020428" href="200204c.html#20020428">2002-04-28 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="200204281" title="200204281" href="200204c.html#200204281">■</a> 
+<a href="../files/impgen.rb">impgen.rb</a></h3>
+<p>
+bcc対応のパッチを見てて、
+どうせならlibtoolのimpgen.cをRubyへ移植してみたらどうだろうと思い作ってみた。
+</p>
+
+<p>
+あ、これってDLLのsymbolだけなのか。だめじゃん。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/04/28 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/04/29 start -->
+<h2><a name="20020429" href="200204c.html#20020429">2002-04-29 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="200204291" title="200204291" href="200204c.html#200204291">■</a> 
+extmk.log</h3>
+<p>
+try_cppの結果は標準エラー出力だけのほうがいいな。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200204292" title="200204292" href="200204c.html#200204292">■</a> 
+dnsmasq 1.5</h3>
+<p>
+更新。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200204293" title="200204293" href="200204c.html#200204293">■</a> 
+<a href="http://www.ruby-lang.org/en/raa-list.rhtml?name=REXML">REXML</a></h3>
+<p>
+更新。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200204294" title="200204294" href="200204c.html#200204294">■</a> 
+<a href="http://freshmeat.net/projects/openpatch/">OpenPATCH</a></h3>
+<p>
+fgetlnというのがBSD特有の関数らしい。
+</p>
+
+
+
+
+<!-- section end -->
+</div>
+<!-- 2002/04/29 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/04/30 start -->
+<h2><a name="20020430" href="200204c.html#20020430">2002-04-30 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="200204301" title="200204301" href="200204c.html#200204301">■</a> 
+<a href="http://znz.s1.xrea.com/t/?date=20020429#p08">Undo</a></h3>
+<p>
+C-x uとか。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200204302" title="200204302" href="200204c.html#200204302">■</a> 
+Borland C++ Compiler C 5.5.1</h3>
+<p>
+変なところ。-Eが別の意味になっている。-o, -eの後には空白があってはいけない。
+chcp 437してもメッセージが日本語のまま。
+Makefileの中では{}が特別な意味を持つ。あ、これはmakeの話。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200204303" title="200204303" href="200204c.html#200204303">■</a> 
+PR#302</h3>
+<p>
+MIME-Versionとかmultipartとかのヘッダを削除してしまうのなら、
+最初から受け付けなくてもいいんじゃないかな。
+この手のうっとうしいvirusとか、こわれてしまうパッチとか来てもうれしくないし。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200204304" title="200204304" href="200204c.html#200204304">■</a> 
+@nifty</h3>
+<p>
+とりあえずあと一ヶ月やめるかどうか考えよう。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/04/30 end -->
+
+<hr>
+<div>
+<a href="200204b.html">&lt;Older(,)</a> | 
+<a href="200205a.html">Newer(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

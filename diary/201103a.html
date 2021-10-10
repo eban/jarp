@@ -1,0 +1,346 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2011-3-a</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="201102c.html">
+<link rel="next" href="201103b.html">
+
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2011年3月上旬〜</p>
+<hr>
+<div>
+<a href="201102c.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="201103b.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2011/03/01 start -->
+<h2><a name="20110301" href="201103a.html#20110301">2011-03-01 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="201103011" title="201103011" href="201103a.html#201103011">■</a> 
+2月のspam</h3>
+<p>
+1670通ほど。また減った。ずいぶんと減ったもんだな。
+
+</p>
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="201103012" title="201103012" href="201103a.html#201103012">■</a> 
+HDDレコーダー</h3>
+<p>
+ちょうど今日から期間限定4000円引きということでPS3 HDDレコーダーパックを発注した。<br>
+結局先日挙げた3つ条件を満たしていてしかも安いのってことだと、これになってしまうね。<br>
+ゲームとして使う予定が今のところないが、まあそれはそれで。
+</p>
+<!-- section end -->
+</div>
+<!-- 2011/03/01 end -->
+
+
+
+<hr class="hide">
+<!-- 2011/03/02 start -->
+<h2><a name="20110302" href="201103a.html#20110302">2011-03-02 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="201103021" title="201103021" href="201103a.html#201103021">■</a> 
+PS3</h3>
+<p>
+HDMIケーブルがついてない。torneは番組ガイドが便利すぎ。なんだこれ。<br>
+もうontvjapanを使う必要ないな。<br>
+一応、追いかけ再生、1.5倍速は確認した。<br>
+あとワイヤレスコントローラ。ちょっとUSBケーブル短いんじゃねと思ったら、これワイヤレスだったんだな。<br>
+
+</p>
+<!-- section end -->
+</div>
+<!-- 2011/03/02 end -->
+
+
+
+<hr class="hide">
+<!-- 2011/03/03 start -->
+<h2><a name="20110303" href="201103a.html#20110303">2011-03-03 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="201103031" title="201103031" href="201103a.html#201103031">■</a> 
+PS3をHDMIケーブルでテレビに接続</h3>
+<p>
+ソフマップで一番安いケーブル買ってきたわけだけどすごく画質がくっきりした。<br>
+全然別物だ。
+</p>
+<p>
+あとつなぐとしたらキーボードぐらい？まあ、USBキーボードならいくらでもあるか。
+
+</p>
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="201103032" title="201103032" href="201103a.html#201103032">■</a> 
+DLNA</h3>
+<p>
+PS3があってもとりあえずやりたいゲームもないのでどうしたもんかと思っていたが、<br>
+DLNAで動画を見ればいいんだなと
+<a href="http://code.google.com/p/ps3mediaserver/">PMS</a>を試してみたら便利すぎてわらた。なんだこれ。<br>
+RD-H1の中身もPCに移してどのくらいきれいに見えるかやってみよう。
+</p>
+<!-- section end -->
+</div>
+<!-- 2011/03/03 end -->
+
+
+
+<hr class="hide">
+<!-- 2011/03/04 start -->
+<h2><a name="20110304" href="201103a.html#20110304">2011-03-04 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="201103041" title="201103041" href="201103a.html#201103041">■</a> 
+version.h自動更新のcommit mailが飛ばない件が解決</h3>
+<p>
+version.hの自動更新の仕組みは
+</p>
+<pre>
+batchコマンドでプロセスを切り離す
+一時ディレクトリを作る
+そこへchdir
+svn co --depth empty file:///#{repos}/#{branch} v
+svn up v/version.h
+chdir v
+version.hを今日の日付に書き換え
+svn commit -m 2010-03-04 version.h
+chdir /
+</pre>
+<p>
+という感じになっている。version.hに変更があればcommitでもう1回これが呼ばれる。<br>
+なければcommitさればないので終了する。無限にcommitされることはない。<br>
+今はいちいち変化があったどうかは調べずにsvn commitにまかせている。<br>
+Solarisではこれでうまくいっていたが、Debianだとなぜか
+</p>
+<pre>
+cd: 9: can't cd to /tmp/d20110301-19325-4z8r0z/v
+Execution directory inaccessible
+</pre>
+<p>
+という謎のエラーが出てしまった。<br>
+これはversion.hをcommitしたときのカレントディレクトリが一時ディレクトリのため、<br>
+実際に実行する際にはすでに消えてるのでbatchがこのようなエラーを吐くようだ。
+というわけで、chdirしないように変更。
+</p>
+<pre>
+一時ディレクトリを作る(/tmp/x)
+svn co --depth empty file:///#{repos}/#{branch} /tmp/xv
+svn up /tmp/x/v/version.h
+/tmp/x/v/version.hを今日の日付に書き換え
+svn commit -m 2010-03-04 /tmp/x/v/version.h
+</pre>
+<p>
+svnはそこへchdirしてなくてもcoもupもciもできる。これでこの件は解決。
+</p>
+<!-- section end -->
+</div>
+<!-- 2011/03/04 end -->
+
+
+
+<hr class="hide">
+<!-- 2011/03/05 start -->
+<h2><a name="20110305" href="201103a.html#20110305">2011-03-05 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="201103051" title="201103051" href="201103a.html#201103051">■</a> 
+dlvr.itの余計なパラメータ</h3>
+<p>
+bit.lyからj.mpへ変更したらtweetのURL末尾に余計なパラメータがついて、<br>
+ちゃんと該当する日記に飛べないとznzさんから指摘されたので、<br>
+dlvr.itが提供するshort urlサービスに変更してみた。<br>
+さて、どうなるかの実験。
+</p>
+<!-- section end -->
+</div>
+<!-- 2011/03/05 end -->
+
+
+
+<hr class="hide">
+<!-- 2011/03/06 start -->
+<h2><a name="20110306" href="201103a.html#20110306">2011-03-06 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="201103061" title="201103061" href="201103a.html#201103061">■</a> 
+cygwinの小技</h3>
+<p>
+/proc/registry以下をアクセスすればレジストリの内容を見ることができる。
+</p>
+<pre>
+% tr '\0' '\n' &lt; /proc/registry/HKEY_LOCAL_MACHINE/SOFTWARE/Cygwin/setup/rootdir
+D:\cygwin
+</pre>
+<p>
+文字列はNUL terminateしてたりするので、そのあたりは注意。<br>
+たぶん書き換えれば変更できると思うけど、怖いのでやったことはない。
+</p>
+<!-- section end -->
+</div>
+<!-- 2011/03/06 end -->
+
+
+
+<hr class="hide">
+<!-- 2011/03/07 start -->
+<h2><a name="20110307" href="201103a.html#20110307">2011-03-07 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="201103071" title="201103071" href="201103a.html#201103071">■</a> 
+redmineからのメールのToがundisclosed-recipients:;になってる件</h3>
+<p>
+なんかいつのまにかruby-core MLのラベルのついてないメールがあることに気づいた。<br>
+なんだこれと調べてみるとredmineからのメールらしい。<br>
+どうも移行したときからToがundisclosed-recipients:;になったようだ。<br>
+フィルタの設定条件はto:(ruby-core@ruby-lang.org)としているので、どうにもまずい。<br>
+Gmailの設定を見るとFromかToかSubjectぐらいしか使えるフィールドがない。<br>
+Subjectの[ruby-core:を見るというのはなんともかっこ悪いので使いたくない。<br>
+いろいろまたいじってMore actionsのFilter messages like thisをしてみると、<br>
+Has the words:でlist:(ruby-core.ruby-lang.org)とすればいけることがわかった。<br>
+List-Id:を見ているのか？
+</p>
+<!-- section end -->
+</div>
+<!-- 2011/03/07 end -->
+
+
+
+<hr class="hide">
+<!-- 2011/03/08 start -->
+<h2><a name="20110308" href="201103a.html#20110308">2011-03-08 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="201103081" title="201103081" href="201103a.html#201103081">■</a> 
+RD-H1がADAMSの受信に失敗</h3>
+<p>
+すでにほとんど使ってないRD-H1を立ち上げて番組データを見たら、<br>
+2日ほどADAMSの受信に失敗してるとのメッセージが出てきた。<br>
+torneへ移行してへそを曲げたらしい。<br>
+設定ではADAMSとinetの両方にチェックが入っているので、<br>
+inetでがんばってくれてもばちはあたらないと思うががんばってくれない。<br>
+しかたないのでADAMSのチェックを外したらinetでデータをダウンロードしてくれた。<br>
+ADAMSっていつでも有効ってわけじゃないし、不便だよな。って今頃言っても遅いが。<br>
+7月までにはこれも終了するだろうし。
+</p>
+<p>
+やっぱもう1台地デジ用のレコーダ欲しいな。
+</p>
+<!-- section end -->
+</div>
+<!-- 2011/03/08 end -->
+
+
+
+<hr class="hide">
+<!-- 2011/03/09 start -->
+<h2><a name="20110309" href="201103a.html#20110309">2011-03-09 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="201103091" title="201103091" href="201103a.html#201103091">■</a> 
+ADAMS, G-GUIDEが受信できない件</h3>
+<p>
+ぐぐってみたら
+<a href="http://sugiyama.jpn.org/log/eid2321.html">すぎやまの日々 | JCN系ケーブルテレビでADAMSが受信できない</a>という記述を発見。<br>
+うちはJ:COMだけど時期も一致してる。まあ、そういうことなんだろう。<br>
+RD-H1はどうせネットがつながってるからなんとでもなるが、<br>
+Clip-ONはどうにもならない。10年間ごくろうさん。
+</p>
+<!-- section end -->
+</div>
+<!-- 2011/03/09 end -->
+
+
+
+<hr class="hide">
+<!-- 2011/03/10 start -->
+<h2><a name="20110310" href="201103a.html#20110310">2011-03-10 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="201103101" title="201103101" href="201103a.html#201103101">■</a> 
+termtterでone-liner POST</h3>
+<p>
+<a href="http://twitter.com/jugyo">@jugyoさん</a>やら
+<a href="http://twitter.com/emasaka">@emasakaさん</a>にいろいろ教えてもらった。
+</p>
+<pre>
+% termtter -c -n confirm -r 'u 歯みがいたかー'
+</pre>
+<p>
+で確認なしでPOSTできる。ってことはdlvr.itを使わなくても、<br>
+この日記をアップロードすると同時に簡単にPOSTできるわけだな。<br>
+j.mpのAPIを調べてなくては。
+</p>
+<!-- section end -->
+</div>
+<!-- 2011/03/10 end -->
+
+<hr>
+<div>
+<a href="201102c.html">&lt;Prev(,)</a> | 
+<a href="201103b.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

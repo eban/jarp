@@ -1,0 +1,346 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2007-4-a</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="200703c.html">
+<link rel="next" href="200704b.html">
+
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2007年4月上旬〜</p>
+<hr>
+<div>
+<a href="200703c.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="200704b.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2007/04/01 start -->
+<h2><a name="20070401" href="200704a.html#20070401">2007-04-01 (Sun)</a></h2>
+<!-- 2007-04-02 01:30:15 -->
+
+<div class="entry1">
+<h3><a name="200704011" title="200704011" href="200704a.html#200704011">■</a> 
+3月のspam</h3>
+<p>
+351通。Gmail側4750スレッドほど。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200704012" title="200704012" href="200704a.html#200704012">■</a> 
+[RSS] Yahoo! Pipesのcontent:encodedでタグがエスケープされて困る件</h3>
+<p>
+いつのまにかYahoo! Pipesでcontent:encodedが対応されたようだけど、<br>
+なぜかタグがエスケープされてて使いもんにならない。
+</p>
+
+<p>
+content:encodedがあればdescriptionもあるのでOperatorsのRegexで、
+</p>
+<pre>
+Rules
+In content:encoded replace (.|\n)+ with 空
+</pre>
+<p>
+で削ってみたら、descriptionが有効になった。<br>
+でもせっかく全文があるのに削るのもねえ。
+</p>
+
+<p>
+つぎにRenameを試してみる。
+</p>
+<pre>
+Maps
+content:encoded Rename description
+</pre>
+<p>
+とかなり強引な方法だが、これでいけた。<br>
+しかし、Fetch Feedにdescriptionしかないフィードが混ざっていると、<br>
+なぜかrenameしてくれない。<br>
+しかたないので、descriptionしかないフィードと<br>
+descriptionとcontent:encdoedの両方があるフィードを分けて、<br>
+後者だけrenameして結果をUnionすることに。<br>
+これでやっとうまくいった。
+</p>
+
+<p>
+かなり疲れた。
+</p>
+<!-- section end -->
+</div>
+<!-- 2007/04/01 end -->
+
+
+
+<hr class="hide">
+<!-- 2007/04/02 start -->
+<h2><a name="20070402" href="200704a.html#20070402">2007-04-02 (Mon)</a></h2>
+<!-- 2007-04-03 01:44:37 -->
+
+<div class="entry1">
+<h3><a name="200704021" title="200704021" href="200704a.html#200704021">■</a> 
+[Mail] subscribe</h3>
+<p>
+すでにsubscribeしてるMLへsubscribeコマンドを送る人は今までなかったな。<br>
+というかあやうくいつものようにunsubscribeしてあげるところだった。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200704022" title="200704022" href="200704a.html#200704022">■</a> 
+<a href="http://golf.shinh.org/p.rb?right+time">[穴] right time</a></h3>
+<p>
+なんか不可解な現象が起こる。なぜかPerlとCだけで使えるという。うーむ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2007/04/02 end -->
+
+
+
+<hr class="hide">
+<!-- 2007/04/03 start -->
+<h2><a name="20070403" href="200704a.html#20070403">2007-04-03 (Tue)</a></h2>
+<!-- 2007-04-04 01:15:03 -->
+
+<div class="entry1">
+<h3><a name="200704031" title="200704031" href="200704a.html#200704031">■</a> 
+<a href="http://golf.shinh.org/p.rb?right+time">[穴] right time</a></h3>
+<p>
+あ、そうか。PerlもCもgmtimeするからだった。<br>
+だから元になるTZはどこでもいいから短いのを使えばいいだけと。
+</p>
+<!-- section end -->
+</div>
+<!-- 2007/04/03 end -->
+
+
+
+<hr class="hide">
+<!-- 2007/04/04 start -->
+<h2><a name="20070404" href="200704a.html#20070404">2007-04-04 (Wed)</a></h2>
+<!-- 2007-04-05 01:35:23 -->
+
+<div class="entry1">
+<h3><a name="200704041" title="200704041" href="200704a.html#200704041">■</a> 
+[Mail] inboxを整理</h3>
+<p>
+いつもinboxに既読メールが400件ぐらいたまってる。<br>
+なぜかそのくらいのメールを常に保つようになって3,4年。<br>
+内容をたまに確認するわけでもなく、<br>
+ただそこにあるだけなので全部別のフォルダへ移動。<br>
+すっきりした。mailerの動きが機敏になった。
+</p>
+
+<p>
+さて、なんのためにためていたのか？<br>
+なんか理由があったような気もするんだが。
+</p>
+<!-- section end -->
+</div>
+<!-- 2007/04/04 end -->
+
+
+
+<hr class="hide">
+<!-- 2007/04/05 start -->
+<h2><a name="20070405" href="200704a.html#20070405">2007-04-05 (Thu)</a></h2>
+<!-- 2007-04-06 02:00:57 -->
+
+<div class="entry1">
+<h3><a name="200704051" title="200704051" href="200704a.html#200704051">■</a> 
+<a href="http://golf.shinh.org/p.rb?join+lines">[穴] join lines</a></h3>
+<p>
+awkでもう1個思いついたのでxgawkで登録。かなりせこい。
+</p>
+<!-- section end -->
+</div>
+<!-- 2007/04/05 end -->
+
+
+
+<hr class="hide">
+<!-- 2007/04/06 start -->
+<h2><a name="20070406" href="200704a.html#20070406">2007-04-06 (Fri)</a></h2>
+<!-- 2007-04-07 01:43:11 -->
+
+<div class="entry1">
+<h3><a name="200704061" title="200704061" href="200704a.html#200704061">■</a> 
+<a href="http://www.lua.org/">[Programming] Lua</a></h3>
+<p>
+あなごるの問題を解いてLuaを勉強中。<br>
+癖がない。全部テーブル。syntactic sugarが多いような？
+</p>
+<!-- section end -->
+</div>
+<!-- 2007/04/06 end -->
+
+
+
+<hr class="hide">
+<!-- 2007/04/07 start -->
+<h2><a name="20070407" href="200704a.html#20070407">2007-04-07 (Sat)</a></h2>
+<!-- 2007-04-08 02:17:39 -->
+
+<div class="entry1">
+<h3><a name="200704071" title="200704071" href="200704a.html#200704071">■</a> 
+<a href="http://sourceforge.net/projects/fdm">[Soft] Fetch and deliver mail 1.1</a></h3>
+<blockquote><dl>
+<dt>
+About:
+<dd>
+fdm is a simple, lightweight replacement for mail fetch, filter and delivery
+programs such as fetchmail and procmail. It can fetch using POP3 or IMAP (with
+SSL) or from stdin, and deliver to a pipe, file, maildir, mbox or SMTP server,
+based on regexps.
+</dl></blockquote>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200704072" title="200704072" href="200704a.html#200704072">■</a> 
+[Tips] スクロールバーでShift+左クリックで一気にスクロール</h3>
+<p>
+Windowsの小技としてどこかで見かけたけど、Linux版Firefoxでもいけるようだ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200704073" title="200704073" href="200704a.html#200704073">■</a> 
+花見</h3>
+<p>
+恒例の花見。見事な桜吹雪。
+</p>
+<!-- section end -->
+</div>
+<!-- 2007/04/07 end -->
+
+
+
+<hr class="hide">
+<!-- 2007/04/08 start -->
+<h2><a name="20070408" href="200704a.html#20070408">2007-04-08 (Sun)</a></h2>
+<!-- 2007-04-09 02:54:26 -->
+
+<div class="entry1">
+<h3><a name="200704081" title="200704081" href="200704a.html#200704081">■</a> 
+<a href="http://golf.shinh.org/p.rb?example_com">[穴] example_com</a></h3>
+<p>
+awkが抜かれていたので見直し。なぜか今見ると無駄が見える。不思議なもんだ。<br>
+さらにそれをsedにも適用。Bash版を適当に見直し。あらBashがトップに。
+</p>
+<!-- section end -->
+</div>
+<!-- 2007/04/08 end -->
+
+
+
+<hr class="hide">
+<!-- 2007/04/09 start -->
+<h2><a name="20070409" href="200704a.html#20070409">2007-04-09 (Mon)</a></h2>
+<!-- 2007-04-10 01:48:58 -->
+
+<div class="entry1">
+<h3><a name="200704091" title="200704091" href="200704a.html#200704091">■</a> 
+<a href="http://golf.shinh.org/p.rb?example_com">[穴] example_com</a></h3>
+<p>
+Bash版でちゃんとやらなくてもいいということに気づいて5B縮んだ。<br>
+非常にだらしない。
+</p>
+<!-- section end -->
+</div>
+<!-- 2007/04/09 end -->
+
+
+
+<hr class="hide">
+<!-- 2007/04/10 start -->
+<h2><a name="20070410" href="200704a.html#20070410">2007-04-10 (Tue)</a></h2>
+<!-- 2007-04-11 01:59:06 -->
+
+<div class="entry1">
+<h3><a name="200704101" title="200704101" href="200704a.html#200704101">■</a> 
+<a href="http://www.puchalla-online.de/cutoggvorbis/cutoggvorbis.html">[Soft] cutoggvorbis 0.2</a></h3>
+<p>
+無音が続くほとんどいやがらせに近いボーナストラックを編集するのにいいかも。
+</p><blockquote><dl>
+<dt>
+About:
+<dd>
+cutoggvorbis is a small and fast command line Ogg/Vorbis editor. It
+lets you select sections of an Ogg/Vorbis file interactively or via a
+timetable and save them to separate files without quality loss. It uses
+ogg123 for playback and even works with files bigger than 2GB. 
+</dl></blockquote>
+<!-- section end -->
+</div>
+<!-- 2007/04/10 end -->
+
+<hr>
+<div>
+<a href="200703c.html">&lt;Prev(,)</a> | 
+<a href="200704b.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

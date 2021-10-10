@@ -1,0 +1,310 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2008-4-c</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="200804b.html">
+<link rel="next" href="200805a.html">
+
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2008年4月下旬〜</p>
+<hr>
+<div>
+<a href="200804b.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="200805a.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2008/04/21 start -->
+<h2><a name="20080421" href="200804c.html#20080421">2008-04-21 (Mon)</a></h2>
+<!-- 2008-04-22 00:38:02 -->
+
+<div class="entry1">
+<h3><a name="200804211" title="200804211" href="200804c.html#200804211">■</a> 
+<a href="http://golf.shinh.org/p.rb?trivial+encoder">[Golf] trivial encoder</a></h3>
+<p>
+3番目の出力の最後のAは余計だと思うが、<br>
+なぜか解いてしまう人が続出するのでそれに対処してみた。<br>
+コマンドが見つかるかどうかだから、これもBash最強なのかな。
+</p>
+<!-- section end -->
+</div>
+<!-- 2008/04/21 end -->
+
+
+
+<hr class="hide">
+<!-- 2008/04/22 start -->
+<h2><a name="20080422" href="200804c.html#20080422">2008-04-22 (Tue)</a></h2>
+<!-- 2008-04-23 02:01:22 -->
+
+<div class="entry1">
+<h3><a name="200804221" title="200804221" href="200804c.html#200804221">■</a> 
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-list/44850">[Ruby] String#map</a></h3>
+<p>
+今日また1.8.7でSymbol#to_procが復活したので
+</p>
+
+<pre>
+% ruby -ve 'p &quot;PHP&quot;.scan(/./).map(&amp;:succ).join'
+ruby 1.8.7 (2008-04-22 patchlevel 5000) [i386-linux]
+&quot;QIQ&quot;
+</pre>
+<p>
+が可能になった。しかし、一々配列にして処理して文字列に戻すというのがなんだかもどかしい。<br>
+なんとなく
+</p>
+
+<pre>
+&quot;PHP&quot;.map(&amp;:succ)
+</pre>
+<p>
+と書きたくなるよね。そこでgorubyの登場。
+</p>
+
+<pre>
+% goruby -e 'p &quot;PHP&quot;.map(&amp;:succ)'   
+&quot;QIQ&quot;
+</pre>
+<p>
+ちゃんと動いたりする。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200804222" title="200804222" href="200804c.html#200804222">■</a> 
+[Mail] Fromを騙るspamが急増</h3>
+<p>
+エラーメールがやたらと増えてると思ったらFromを騙るspamが急増してることがわかった。<br>
+なんかロシア語っぽいメールが多い。数百通は来てるな。
+</p>
+<!-- section end -->
+</div>
+<!-- 2008/04/22 end -->
+
+
+
+<hr class="hide">
+<!-- 2008/04/23 start -->
+<h2><a name="20080423" href="200804c.html#20080423">2008-04-23 (Wed)</a></h2>
+<!-- 2008-04-24 01:08:58 -->
+
+<div class="entry1">
+<h3><a name="200804231" title="200804231" href="200804c.html#200804231">■</a> 
+[Thunderbird] Thunderbirdのテンプレート機能</h3>
+<p>
+ノートPCでThunderbirdを使ってメールを書いる途中で、<br>
+突然PC持ってどこかに移動しなきゃいけないなんてことはよくあるんだけど、<br>
+「下書き」に保存すれば後から再開できて便利だよね。<br>
+そこのメニューにテンプレートなんてものがあることに今日気づいた。<br>
+今まで定型のメールを出すときは無駄に過去のメールを探し出してコピペしてたけど、<br>
+テンプレートを作っておけばいいのか。
+</p>
+
+<p>
+で、実際に作ってみたらTemplatesという名前のフォルダが作られてそこに保存された。<br>
+右クリック-新しく編集でいいわけだ。<br>
+</p>
+<!-- section end -->
+</div>
+<!-- 2008/04/23 end -->
+
+
+
+<hr class="hide">
+<!-- 2008/04/24 start -->
+<h2><a name="20080424" href="200804c.html#20080424">2008-04-24 (Thu)</a></h2>
+<!-- 2008-04-25 01:46:12 -->
+
+<div class="entry1">
+<h3><a name="200804241" title="200804241" href="200804c.html#200804241">■</a> 
+[PC] 新しいノートPC</h3>
+<p>
+外部ディスプレイに出なくなって周りの人から非難されるようになったんで、<br>
+ノートPCを新調。とりあえずFirefoxとThunderbirdとCygwinを入れた。<br>
+FirefoxとThunderbirdはプロファイルをごっそりコピーするだけなので簡単。<br>
+特にThunderbirdはIMAP中心で使ってるのでデータ量も少ない。<br>
+それにしても最近のCygwinのパッケージはすごすぎ。なんでもあるな。
+</p>
+<!-- section end -->
+</div>
+<!-- 2008/04/24 end -->
+
+
+
+<hr class="hide">
+<!-- 2008/04/25 start -->
+<h2><a name="20080425" href="200804c.html#20080425">2008-04-25 (Fri)</a></h2>
+<!-- 2008-04-26 00:31:51 -->
+
+<div class="entry1">
+<h3><a name="200804251" title="200804251" href="200804c.html#200804251">■</a> 
+[inetd] inetd.co.jpからのお知らせ</h3>
+<p>
+久し振りにinetd.co.jpからお知らせが来た。<br>
+思い出したかのように今どのくらい使えるのかと調べたら、なんと5GBだ。<br>
+最初は300MBだったのに。12月に1GBから5GBになっていたのか。<br>
+</p>
+<!-- section end -->
+</div>
+<!-- 2008/04/25 end -->
+
+
+
+<hr class="hide">
+<!-- 2008/04/26 start -->
+<h2><a name="20080426" href="200804c.html#20080426">2008-04-26 (Sat)</a></h2>
+<!-- 2008-04-27 02:50:55 -->
+
+<div class="entry1">
+<h3><a name="200804261" title="200804261" href="200804c.html#200804261">■</a> 
+<a href="http://golf.shinh.org/p.rb?embed">[Golf] embed</a></h3>
+<p>
+追い付いたと思ったらいつのまにか上がいた。eのときと同じ方法。unpackではない。
+</p>
+<!-- section end -->
+</div>
+<!-- 2008/04/26 end -->
+
+
+
+<hr class="hide">
+<!-- 2008/04/27 start -->
+<h2><a name="20080427" href="200804c.html#20080427">2008-04-27 (Sun)</a></h2>
+<!-- 2008-04-28 02:20:07 -->
+
+<div class="entry1">
+<h3><a name="200804271" title="200804271" href="200804c.html#200804271">■</a> 
+[TV] ビデオ消化</h3>
+<p>
+日本沈没、カンフーハッスル。<br>
+「パズル」って考えてみると「TRICK」なんだな。
+</p>
+<!-- section end -->
+</div>
+<!-- 2008/04/27 end -->
+
+
+
+<hr class="hide">
+<!-- 2008/04/28 start -->
+<h2><a name="20080428" href="200804c.html#20080428">2008-04-28 (Mon)</a></h2>
+<!-- 2008-04-29 02:20:30 -->
+
+<div class="entry1">
+<h3><a name="200804281" title="200804281" href="200804c.html#200804281">■</a> 
+<a href="http://www.inetd.co.jp/modules/service/exp.html">[Inetd] experimental(実験)サーバのご提供について</a></h3>
+<p>
+面白そうなので申し込んでみた。これって3年前からやってるんだな。<br>
+っておれが使い始めた年じゃないか。今頃気づくなんて。
+</p>
+<!-- section end -->
+</div>
+<!-- 2008/04/28 end -->
+
+
+
+<hr class="hide">
+<!-- 2008/04/29 start -->
+<h2><a name="20080429" href="200804c.html#20080429">2008-04-29 (Tue)</a></h2>
+<!-- 2008-04-30 01:51:33 -->
+
+<div class="entry1">
+<h3><a name="200804291" title="200804291" href="200804c.html#200804291">■</a> 
+[mp3] ビデオウィンドウを出さないでmplayerを使う</h3>
+<p>
+xineでflvを再生するとなぜか音が出ない。<br>
+mplayerなら問題ない。けど音楽聞くにはビデオウィンドウが邪魔。<br>
+というわけでman mplayerしてみたら-vo nullでいけるようだ。<br>
+で、mp3ファイルもmpg123の代わりに使ってみてるんだけど、<br>
+スペースバーで一時停止したり、ボリュームをいじったり、<br>
+前の曲に戻ったりとすげー使い勝手がいいことがわかった。<br>
+全部キーボードで操作できるしね。
+</p>
+<!-- section end -->
+</div>
+<!-- 2008/04/29 end -->
+
+
+
+<hr class="hide">
+<!-- 2008/04/30 start -->
+<h2><a name="20080430" href="200804c.html#20080430">2008-04-30 (Wed)</a></h2>
+<!-- 2008-05-01 14:18:09 -->
+
+<div class="entry1">
+<h3><a name="200804301" title="200804301" href="200804c.html#200804301">■</a> 
+<a href="http://www.nicovideo.jp/watch/nm3138313">[ニコニコ動画] 【鏡音リン・レン】あの双子が円周率1000桁に挑戦【オリジナル】</a></h3>
+<p>
+途中で9が6個連続するとこが出てきて驚いた。<br>
+7が心地いい。しかしこの歌詞職人だけは本当乙。<br>
+FULL希望とか歌ってみろとかタグついてるけど無理だから。<br>
+これたとえ覚えてもブレスがないから歌うのは不可能だよな。
+# 88.5
+</p>
+<!-- section end -->
+</div>
+<!-- 2008/04/30 end -->
+
+<hr>
+<div>
+<a href="200804b.html">&lt;Prev(,)</a> | 
+<a href="200805a.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

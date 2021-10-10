@@ -1,0 +1,522 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2013-12-a</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="201311c.html">
+<link rel="next" href="201312b.html">
+
+<link rel="stylesheet" type="text/css" href="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.css">
+<script type="text/javascript" src="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.js"></script>
+<script type="text/javascript">
+<!--       
+$(document).ready(function() {
+  prettyPrint();
+});
+-->
+</script>
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2013年12月上旬〜</p>
+<hr>
+<div>
+<a href="201311c.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="201312b.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2013/12/01 start -->
+<h2><a name="20131201" href="201312a.html#20131201">2013-12-01 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="201312011" title="201312011" href="201312a.html#201312011">■</a> 
+busybox shで謎のPermission denied発生</h3>
+<p>
+そんなAndroid端末があったりする。
+</p>
+<pre>
+shell@android:/ $ /data/local/tmp/busybox sh
+sh: precmd: Permission denied
+shell@android:/ $ type precmd
+precmd: not found
+sh: precmd: Permission denied
+shell@android:/ $ date
+Tue Nov 26 03:33:51 GMT 2013
+sh: precmd: Permission denied
+</pre>
+<p>
+ちょっと前のログだが、いったい何が原因なのか。precmdなのでPS1が怪しい。
+</p>
+<pre>
+shell@android:/ $ echo $PS1
+$(precmd)$USER@$HOSTNAME:${PWD:-?} $
+</pre>
+<p>
+なるほど、これか。しかしなぜnot foundじゃなくPermission deniedなのか。
+</p>
+<!-- section end -->
+</div>
+<!-- 2013/12/01 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/12/02 start -->
+<h2><a name="20131202" href="201312a.html#20131202">2013-12-02 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="201312021" title="201312021" href="201312a.html#201312021">■</a> 
+一応Permission deniedの原因発覚</h3>
+<p>
+/system/bin/shの正体はなにかと調べたらmkshだった。<br>
+というわけで/etc/mkshrcが起動時に読み込まれる。
+</p>
+<pre>
+shell@android:/ $ cat /etc/mkshrc                                              
+# Copyright (c) 2010
+#	Thorsten Glaser &lt;t.glaser@tarent.de&gt;
+# This file is provided under the same terms as mksh.
+#-
+# Minimal /system/etc/mkshrc for Android
+
+: ${TERM:=vt100} ${HOME:=/data} ${MKSH:=/system/bin/sh} ${HOSTNAME:=android}
+: ${SHELL:=$MKSH} ${USER:=$(typeset x=$(id); x=${x#*\(}; print -r -- ${x%%\)*})}
+if (( USER_ID )); then PS1='$'; else PS1='#'; fi
+function precmd {
+	typeset e=$?
+
+	(( e )) &amp;&amp; print -n &quot;$e|&quot;
+}
+PS1='$(precmd)$USER@$HOSTNAME:${PWD:-?} '&quot;$PS1 &quot;
+export HOME HOSTNAME MKSH PS1 SHELL TERM USER
+alias l='ls'
+alias la='l -a'
+alias ll='l -l'
+alias lo='l -a -l'
+
+for p in ~/.bin; do
+	[[ -d $p/. ]] || continue
+	[[ :$PATH: = *:$p:* ]] || PATH=$p:$PATH
+done
+
+unset p
+
+: place customisations above this line
+</pre>
+<p>
+precmdはfunctionだったわけね。<br>
+あとなぜかPS1までexportされていた。これが原因か。<br>
+しかしなぜPermission deniedになるのか？<br>
+PATHに設定されているディレクトリのpermissionを見てみる。
+</p>
+<pre>
+shell@android:/ $ (IFS=:; for i in $PATH; do ls $i/precmd; done)               
+/sbin/precmd: Permission denied
+/vendor/bin/precmd: No such file or directory
+/system/sbin/precmd: No such file or directory
+/system/bin/precmd: No such file or directory
+/system/xbin/precmd: No such file or directory
+</pre>
+<p>
+なるほど。/sbinのせいか。
+</p>
+<pre>
+shell@android:/ $ ls -ld /sbin
+drwxr-x--- root     root              1970-06-20 22:56 sbin
+</pre>
+<p>
+これじゃ無理だ。
+</p>
+<p>
+まとめると、/system/bin/shはmkshで/etc/mkshrcを起動時に読み込む。<br>
+そこでPS1が設定されてexportもされる。precmdはfunctionなので見つかる。<br>
+この状態でbusybox shを実行するとPS1がそのまま引き継がれて、<br>
+プロンプトを表示する際にprecmdが実行される。<br>
+busybox shは権限がないと警告を表示するようで、<br>
+/sbinが0750だとアクセスできない、と。
+</p>
+<p>
+Nexus7ではexport PS1してないので、そんな状態にはならない。<br>
+で試しに手でやってみると再現した。
+</p>
+<pre>
+shell@grouper:/ $ export PS1
+shell@grouper:/ $ /data/local/tmp/busybox sh                                   
+sh: precmd: Permission denied
+shell@grouper:/ $ 
+</pre>
+<!-- section end -->
+</div>
+<!-- 2013/12/02 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/12/03 start -->
+<h2><a name="20131203" href="201312a.html#20131203">2013-12-03 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="201312031" title="201312031" href="201312a.html#201312031">■</a> 
+11月のspam</h3>
+<p>
+300通ほど。このあたりで落ち着いてるね。
+
+</p>
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="201312032" title="201312032" href="201312a.html#201312032">■</a> 
+androidのinputコマンドでできること</h3>
+<p>
+androidのバージョンが上がるごとにinputコマンドでできることが増えている。
+</p>
+<pre>
+% adb shell getprop ro.build.version.release; adb shell input
+4.0.4
+usage: input [text|keyevent]
+       input text &lt;string&gt;
+       input keyevent &lt;event_code&gt;
+</pre>
+<p>
+4.0.4ではこんなもんだったが、4.2.2ではkeyeventは名前でも指定できる。
+</p>
+<pre>
+% adb shell getprop ro.build.version.release; adb shell input
+4.2.2
+usage: input ...
+       input text &lt;string&gt;
+       input keyevent &lt;key code number or name&gt;
+       input [touchscreen|touchpad] tap &lt;x&gt; &lt;y&gt;
+       input [touchscreen|touchpad] swipe &lt;x1&gt; &lt;y1&gt; &lt;x2&gt; &lt;y2&gt;
+       input trackball press
+       input trackball roll &lt;dx&gt; &lt;dy&gt;
+</pre>
+<p>
+わざわざKEYCODE_1=8とかして$KEYCODE_1で参照してたがその必要もなくなっていた。<br>
+あとtapとswipeは便利すぎる。
+</p>
+<p>
+Kitkatではkeyeventに--longpressがあるってことは長押しにも対応している?
+</p>
+<pre>
+% adb shell getprop ro.build.version.release; adb shell input
+4.4
+Usage: input [&lt;source&gt;] &lt;command&gt; [&lt;arg&gt;...]
+
+The sources are: 
+      trackball
+      joystick
+      touchnavigation
+      mouse
+      keyboard
+      gamepad
+      touchpad
+      dpad
+      stylus
+      touchscreen
+
+The commands and default sources are:
+      text &lt;string&gt; (Default: touchscreen)
+      keyevent [--longpress] &lt;key code number or name&gt; ... (Default: keyboard)
+      tap &lt;x&gt; &lt;y&gt; (Default: touchscreen)
+      swipe &lt;x1&gt; &lt;y1&gt; &lt;x2&gt; &lt;y2&gt; [duration(ms)] (Default: touchscreen)
+      press (Default: trackball)
+      roll &lt;dx&gt; &lt;dy&gt; (Default: trackball)
+</pre>
+<!-- section end -->
+</div>
+<!-- 2013/12/03 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/12/04 start -->
+<h2><a name="20131204" href="201312a.html#20131204">2013-12-04 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="201312041" title="201312041" href="201312a.html#201312041">■</a> 
+vimでインデントしないペースト</h3>
+<p>
++xterm_clipboardとか+clipboardになってれば&quot;*pでok。:pu *でもいい。<br>
+set cb=unnamedにすればクリップボードが共有されるのでpだけでいける。<br>
++とかunnamedplusにしたほうがいいときもあるが。<br>
+この状態でUbuntuからSynergy経由でCygwinのvimへペーストなんてのも簡単にできて便利。<br>
+Ubuntu側のvimで5yyしてCygwin側のvimでpとか。
+</p>
+<!-- section end -->
+</div>
+<!-- 2013/12/04 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/12/05 start -->
+<h2><a name="20131205" href="201312a.html#20131205">2013-12-05 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="201312051" title="201312051" href="201312a.html#201312051">■</a> 
+意外に高機能なbusyboxのawk</h3>
+<p>
+busyboxにあるコマンドはサブセットなんじゃないか漠然と思ってしまうが、<br>
+結構がんばっている。awkにはstrftimeもある。
+</p>
+<pre>
+% busybox awk 'BEGIN{print strftime(&quot;%F %T&quot;)}'
+2013-12-06 01:40:21
+% mawk 'BEGIN{print strftime(&quot;%F %T&quot;)}'
+mawk: line 2: function strftime never defined
+</pre>
+<p>
+あとなぜかandだのorだのビット演算もできるようで。
+</p>
+<p>
+ソース見たらgawk並に関数がそろっていた。
+</p>
+<pre>
+        &quot;\3and&quot;       &quot;\5compl&quot;     &quot;\6lshift&quot;  &quot;\2or&quot;
+        &quot;\6rshift&quot;    &quot;\3xor&quot;
+        &quot;\5close&quot;     &quot;\6system&quot;    &quot;\6fflush&quot;  &quot;\5atan2&quot;   /* BUILTIN */
+        &quot;\3cos&quot;       &quot;\3exp&quot;       &quot;\3int&quot;     &quot;\3log&quot;
+        &quot;\4rand&quot;      &quot;\3sin&quot;       &quot;\4sqrt&quot;    &quot;\5srand&quot;
+        &quot;\6gensub&quot;    &quot;\4gsub&quot;      &quot;\5index&quot;   &quot;\6length&quot;
+        &quot;\5match&quot;     &quot;\5split&quot;     &quot;\7sprintf&quot; &quot;\3sub&quot;
+        &quot;\6substr&quot;    &quot;\7systime&quot;   &quot;\10strftime&quot; &quot;\6mktime&quot;
+        &quot;\7tolower&quot;   &quot;\7toupper&quot;   NTC
+        &quot;\7getline&quot;   NTC
+        &quot;\4func&quot;      &quot;\10function&quot; NTC
+        &quot;\5BEGIN&quot;     NTC
+        &quot;\3END&quot;
+</pre>
+<p>
+おお、gensubが使えるのか。
+</p>
+<pre>
+% gawk 'BEGIN{a=&quot;XYZ&quot;; print gensub(/(.)(.)(.)/, &quot;\\3\\2\\1&quot;, 1, a), a}'
+ZYX XYZ
+% busybox awk 'BEGIN{a=&quot;XYZ&quot;; print gensub(/(.)(.)(.)/, &quot;\\3\\2\\1&quot;, 0, a), a}'
+ZYX XYZ
+</pre>
+<!-- section end -->
+</div>
+<!-- 2013/12/05 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/12/06 start -->
+<h2><a name="20131206" href="201312a.html#20131206">2013-12-06 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="201312061" title="201312061" href="201312a.html#201312061">■</a> 
+Sony Readerにepubを読み込ませる</h3>
+<p>
+以前は適当にwebrickでサーバ立てて簡単にSony Readerでepubをダウンロードできたが、<br>
+いつのまにか失敗するようになってしまった。<br>
+原因はmime typeのようで、application/octet-streamじゃだめみたい。<br>
+application/epub+zipにする必要がある。
+</p>
+<pre>
+% ruby -run -e help httpd   
+Run WEBrick HTTP server.
+
+  ruby -run -e httpd -- [OPTION] DocumentRoot
+
+  --bind-address=ADDR         address to bind
+  --port=NUM                  listening port number
+  --max-clients=MAX           max number of simultaneous clients
+  --temp-dir=DIR              temporary directory
+  --do-not-reverse-lookup     disable reverse lookup
+  --request-timeout=SECOND    request timeout in seconds
+  --http-version=VERSION      HTTP version
+  -v                          verbose
+</pre>
+<p>
+やっぱないよなあ。追加するか。でもhashだから指定しづらい。
+</p>
+<pre>
+  setup(&quot;&quot;, &quot;BindAddress=ADDR&quot;, &quot;Port=PORT&quot;, &quot;MaxClients=NUM&quot;, &quot;TempDir=DIR&quot;,
+        &quot;DoNotReverseLookup&quot;, &quot;RequestTimeout=SECOND&quot;, &quot;HTTPVersion=VERSION&quot;, &quot;MimeTypes=TYPE&quot;) do
+</pre>
+<p>
+として、
+</p>
+<pre>
+  opt = options[:MimeTypes] and options[:MimeTypes] = WEBrick::HTTPUtils::DefaultMimeTypes.merge(Hash[*opt.split])
+</pre>
+<p>
+を追加して
+</p>
+<pre>
+% ruby -run -e httpd -- --port=8080 --mime-types='epub application/epub+zip' .
+</pre>
+<p>
+とすればいいか。
+</p>
+<!-- section end -->
+</div>
+<!-- 2013/12/06 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/12/07 start -->
+<h2><a name="20131207" href="201312a.html#20131207">2013-12-07 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="201312071" title="201312071" href="201312a.html#201312071">■</a> 
+/etc/zsh_command_not_found</h3>
+<p>
+コマンドがなかったら、これをインストールしろよ的なあれがzshにも欲しくて
+</p>
+<pre>
+source /etc/zsh_command_not_found
+</pre>
+<p>
+を.zshrcに入れてみたが、本当に間違えたときにやたらと時間がかかって、挙句の果てに
+</p>
+<pre>
+% foo
+コマンド 'foo' は見つかりませんでした。もしかして:
+ コマンド 'goo' - パッケージ 'goo' (universe)
+ コマンド 'fio' - パッケージ 'fio' (universe)
+ コマンド 'zoo' - パッケージ 'zoo' (universe)
+ コマンド 'fgo' - パッケージ 'fgo' (universe)
+ コマンド 'fop' - パッケージ 'fop' (main)
+ コマンド 'fox' - パッケージ 'objcryst-fox' (universe)
+ コマンド 'fog' - パッケージ 'ruby-fog' (universe)
+ コマンド 'xoo' - パッケージ 'xoo' (universe)
+zsh: command not found: foo
+zsh: exit 127   foo
+</pre>
+<p>
+とか出てきて困惑している。消そう。
+</p>
+<!-- section end -->
+</div>
+<!-- 2013/12/07 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/12/08 start -->
+<h2><a name="20131208" href="201312a.html#20131208">2013-12-08 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="201312081" title="201312081" href="201312a.html#201312081">■</a> 
+tenki jpのアメダスRSSが終了していた</h3>
+<p>
+IFTTTからのメールで気づいた。確認してみたら12/2からtwitterのbotが止まっていた。<br>
+RSSもすでに404でやっぱこっそり終了ということなんだな。<br>
+しかし困ったねえ。Yahoo Pipesか？
+</p>
+<!-- section end -->
+</div>
+<!-- 2013/12/08 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/12/09 start -->
+<h2><a name="20131209" href="201312a.html#20131209">2013-12-09 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="201312091" title="201312091" href="201312a.html#201312091">■</a> 
+Yahoo! Pipesでアメダスの情報をRSS化してみた</h3>
+<p>
+というわけで、
+<a href="http://pipes.yahoo.com/pipes/pipe.info?_id=436f0fa591b3b95fd71adbedbebd5252">こんなの</a>をYahoo! Pipesで作ってみたけど、IFTTTが拾ってくれない。<br>
+一発だけ通ったきりでその後音沙汰なし。<br>
+checkも通ってるし何が悪いんだろう。
+</p>
+<!-- section end -->
+</div>
+<!-- 2013/12/09 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/12/10 start -->
+<h2><a name="20131210" href="201312a.html#20131210">2013-12-10 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="201312101" title="201312101" href="201312a.html#201312101">■</a> 
+IFTTTが拾ってくれない原因は変化しないURL</h3>
+<p>
+アメダスのページって当然固定なのでRSSのlinkも固定にしておいたら、<br>
+GUIDが変化しなくて更新されてないとみなされていた。<br>
+つまり無理矢理にでもURLを変える必要がある。<br>
+以前のアメダスRSSを確認してみたらやはり一見無駄とも思えるパラメータがついていた。<br>
+というわけでなんかつけないといけないわけで、一番簡単なタイムスタンプをつけてみた。<br>
+Date Builderでparse可能な文字列を指定する。
+<a href="http://pipes.yahoo.com/pipes/docs?doc=user_inputs">User Input Modules</a>を見るとnowが使えるので現在時もok。<br>
+あとはDate Formatterを使って?rss%F-%TをlinkのURLに追加してみた。<br>
+が、これではアクセスする度にURLが変わってしまいGUIDも変化してしまう。<br>
+1時間1度しか更新されないわけで?rss%F-%Hにしないとまずい。<br>
+いやいや、実際に更新されるのは毎時ぴったりじゃないので%Hでもまずい。<br>
+tableに観測した時刻があるのでこれを使うことにしてやっとできあがり。<br>
+これでIFTTTも拾ってくれるようになった。
+</p>
+<!-- section end -->
+</div>
+<!-- 2013/12/10 end -->
+
+<hr>
+<div>
+<a href="201311c.html">&lt;Prev(,)</a> | 
+<a href="201312b.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

@@ -1,0 +1,529 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2004-7-a</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="200406c.html">
+<link rel="next" href="200407b.html">
+
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2004年7月上旬〜</p>
+<hr>
+<div>
+<a href="200406c.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="200407b.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2004/07/01 start -->
+<h2><a name="20040701" href="200407a.html#20040701">2004-07-01 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="200407011" title="200407011" href="200407a.html#200407011">■</a> 
+[CVS] YAMLでcommit mailを表現</h3>
+<p>
+こんな感じなのかな。
+</p>
+<pre>
+HEAD:
+  Name: eban
+  Date: Thu, 1 Jul 2004 01:16:57 +0900
+  Modified files:
+    test: [ChangeLog, foo]
+    test/bar: [hoge]
+  Added files:
+    test: [bar]
+  Removed files:
+    test: [baz]
+  Log:
+    - &quot;* foo: foo&quot;
+    - &quot;* bar/hoge: hoge&quot;
+branch:
+  Name: eban
+  Date: Thu, 1 Jul 2004 01:16:57 +0900
+  Modified files:
+    test: [ChangeLog, foo]
+    test/bar: [hoge]
+  Added files:
+    test: [bar]
+  Removed files:
+    test: [baz]
+  Log:
+    - hogehoge.
+</pre>
+<p>
+もうちょっとYAMLについて知る必要があるな。週末にでも調べよう。
+</p>
+<!-- section end -->
+</div>
+<!-- 2004/07/01 end -->
+
+
+
+<hr class="hide">
+<!-- 2004/07/02 start -->
+<h2><a name="20040702" href="200407a.html#20040702">2004-07-02 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="200407021" title="200407021" href="200407a.html#200407021">■</a> 
+6月のspam</h3>
+<p>
+4584通。ruby-lang.org経由がちょっと減ったかな。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200407022" title="200407022" href="200407a.html#200407022">■</a> 
+<a href="http://perllinux.sf.net">[Linux] Perl/Linux</a></h3>
+<p>
+すげー。
+</p><blockquote class="cite"><p>
+About: Perl/Linux is a Linux distribution where all programs are  written
+in Perl. The only compiled code in this Perl/Linux  system is the Linux
+Kernel (not currently built with this  project), Perl, and uClibc.
+</p></blockquote><p>
+<a href="http://sourceforge.net/projects/ppt/">PPT</a>を使ってるのか。
+<!-- section end -->
+</div>
+<!-- 2004/07/02 end -->
+
+
+
+<hr class="hide">
+<!-- 2004/07/03 start -->
+<h2><a name="20040703" href="200407a.html#20040703">2004-07-03 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="200407031" title="200407031" href="200407a.html#200407031">■</a> 
+[VMware] VMware 4.5.2</h3>
+<p>
+久し振りにVMwareを立ち上げてみると、
+</p>
+<pre>
+New update available at:
+	http://www.vmware.com/info?id=71&amp;sn=ないしょ
+(null)
+VMware Workstation 4.5.2 (build 8848) is now available.
+Please choose 'yes' to open a web browser to download the update.
+</pre>
+<p>
+と言われた。そんな機能もあったか。早速上げる。
+</p>
+
+<p>
+それはそれとして、NULLポインタかよ!
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200407032" title="200407032" href="200407a.html#200407032">■</a> 
+<a href="200407a.html#200407011">[CVS] YAMLでcommit mailを表現</a></h3>
+<p>
+あのままだとHashになってしまって、あまりよくない。
+こんな感じか？
+</p>
+<pre>
+HEAD:
+  - Name: eban
+  - Date: Thu, 1 Jul 2004 01:16:57 +0900
+  - Modified files:
+    - test: [ChangeLog, foo]
+    - test/bar: [hoge]
+  - Added files:
+    - test: [bar]
+  - Removed files:
+    - test: [baz]
+  - Log:
+    - &quot;* foo: foo&quot;
+    - &quot;* bar/hoge: hoge&quot;
+</pre>
+<p>
+round-tripするとちょっと間延びした感じがいやだな。
+</p>
+<pre>
+--- 
+HEAD: 
+  - 
+    Name: eban
+  - 
+    Date: &quot;Thu, 1 Jul 2004 01:16:57 +0900&quot;
+  - 
+    Modified files: 
+      - 
+        test: 
+          - ChangeLog
+          - foo
+      - 
+        test/bar: 
+          - hoge
+  - 
+    Added files: 
+      - 
+        test: 
+          - bar
+  - 
+    Removed files: 
+      - 
+        test: 
+          - baz
+  - 
+    Log: 
+      - &quot;* foo: foo&quot;
+      - &quot;* bar/hoge: hoge&quot;
+</pre>
+<p>
+実際はYAML::dumpすることになるから、この形式だよなあ。
+</p>
+<pre>
+gsub(/- \n\s+/, &quot;- &quot;)
+</pre>
+<p>
+ぐらいで手を打つか。
+</p>
+<pre>
+--- 
+HEAD: 
+  - Name: eban
+  - Date: &quot;Thu, 1 Jul 2004 01:16:57 +0900&quot;
+  - Modified files: 
+      - test: 
+          - ChangeLog
+          - foo
+      - test/bar: 
+          - hoge
+  - Added files: 
+      - test: 
+          - bar
+  - Removed files: 
+      - test: 
+          - baz
+  - Log: 
+      - &quot;* foo: foo&quot;
+      - &quot;* bar/hoge: hoge&quot;
+</pre>
+<p>
+しかしLogはいまいちだな。もうちょっと考えよう。
+</p>
+<!-- section end -->
+</div>
+<!-- 2004/07/03 end -->
+
+
+
+<hr class="hide">
+<!-- 2004/07/04 start -->
+<h2><a name="20040704" href="200407a.html#20040704">2004-07-04 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="200407041" title="200407041" href="200407a.html#200407041">■</a> 
+<a href="http://gcc.gnu.org/">[GNU] GCC 3.4.1</a></h3>
+<p>
+Changes:
+</p><blockquote class="cite"><p>
+This is a bugfix release, containing fixes for regressions in GCC
+3.4.0 relative to previous releases of GCC. 
+</p></blockquote><p>
+
+<a href="200402b.html#200402181">小細工</a>はやめた。
+<pre>
+% mkdir linux; cd linux
+% CFLAGS=-Os CXXFLAGS=-Os CC=/usr/bin/gcc ../configure \
+  --enable-languages=c++ --with-system-zlib \
+  --enable-sjlj-exceptions --enable-threads \
+  --disable-version-specific-runtime-libs --disable-nls \
+  --without-included-gettext --without-catgets
+% make CFLAGS=-Os LIBCFLAGS=-Os LIBCXXFLAGS=-Os \
+        STAGE1_CFLAGS=-Os BOOT_CFLAGS=-Os bootstrap
+</pre>
+<p>
+gcovもバージョンに依存するのでgcov-3.4.0という名前で残しておこう。
+3.3のときにすべきだったな。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200407042" title="200407042" href="200407a.html#200407042">■</a> 
+[CM] SAGAWA e-collect</h3>
+<p>
+上原多香子の口と声があまりにも合っていないのが気になる。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200407043" title="200407043" href="200407a.html#200407043">■</a> 
+[CVS] 複数branch commitのcommit mail</h3>
+<p>
+一日考えたけど、すごく面倒だなあ。方針を変えよう。
+</p>
+<!-- section end -->
+</div>
+<!-- 2004/07/04 end -->
+
+
+
+<hr class="hide">
+<!-- 2004/07/05 start -->
+<h2><a name="20040705" href="200407a.html#20040705">2004-07-05 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="200407051" title="200407051" href="200407a.html#200407051">■</a> 
+<a href="http://raa.ruby-lang.org/project/uconv/">[Ruby] Uconv 0.4.12</a></h3>
+<p>
+IRCでの情報によるとUconv 0.4.11だと落ちることがあるらしい。
+というわけで今更ではあるが、Uconv 0.4.12のバイナリを用意。
+さて、そろそろ他のも更新しないとね。
+</p>
+<!-- section end -->
+</div>
+<!-- 2004/07/05 end -->
+
+
+
+<hr class="hide">
+<!-- 2004/07/06 start -->
+<h2><a name="20040706" href="200407a.html#20040706">2004-07-06 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="200407061" title="200407061" href="200407a.html#200407061">■</a> 
+<a href="http://www.gnu.org/software/sed/">[GNU] sed 4.1.1</a></h3>
+<p>
+Changes:
+</p><blockquote class="cite"><p>
+This fixes a couple of major bugs: permissions were not preserved in
+in-place editing mode, and case-insensitive substitutions did not
+work. Plus, in-place editing mode now gives an error when working on a
+terminal or other non- regular file, and - does not mean stdin in
+in-place editing mode.
+</p></blockquote><p>
+いつものようにuclibcでmake。
+<pre>
+% CC='/usr/i386-linux-uclibc/usr/bin/gcc -static' \
+  CFLAGS=-Os CXXFLAGS=-Os ./configure \
+  --disable-dependency-tracking --disable-nls --prefix=/usr
+</pre>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200407062" title="200407062" href="200407a.html#200407062">■</a> 
+[Mail] Gmailのshortcut</h3>
+<p>
+今まではoしてyしてoしてyして…って感じで使ってたけど、
+oしてkしてkして…最後にallでチェックしてyすればいいことに気づいた。
+</p>
+
+<p>
+読み返してみると何が何だか。
+</p>
+<!-- section end -->
+</div>
+<!-- 2004/07/06 end -->
+
+
+
+<hr class="hide">
+<!-- 2004/07/07 start -->
+<h2><a name="20040707" href="200407a.html#20040707">2004-07-07 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="200407071" title="200407071" href="200407a.html#200407071">■</a> 
+<a href="http://bloglines.com/">[Blog] Bloglines</a></h3>
+<p>
+
+<a href="http://www.bloglines.com/about/news">Special suprise</a>がこれかー。
+ちょっとこのCSSはくどいかな。
+完全にUTF-8になったようだ。
+あれ？文字の大きさは選べなくなったか。
+</p>
+<!-- section end -->
+</div>
+<!-- 2004/07/07 end -->
+
+
+
+<hr class="hide">
+<!-- 2004/07/08 start -->
+<h2><a name="20040708" href="200407a.html#20040708">2004-07-08 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="200407081" title="200407081" href="200407a.html#200407081">■</a> 
+[gmake] Makefileを変更せずにリンクするファイルを差し替える</h3>
+<p>
+Makefileに
+</p>
+<pre>
+OBJS = foo.o bar.o ...20個ぐらい続く
+program: $(OBJS); $(CC) -o program $(OBJS)
+</pre>
+<p>
+というのはよくあるけど、1個だけ差し替えたくなった。
+Makefileをいじるんじゃなくて、GNUmakefileでなんとかならないもんかなと、
+</p>
+<pre>
+include Makefile
+OBJS := $(subst foo.o,hoge.o,$(OBJS))
+</pre>
+<p>
+としてみたら、依存関係のほうはどうも後の祭りらしく、
+hoge.oを作らずにリンクしようとする。ならばと
+</p>
+<pre>
+include Makefile
+OBJS := $(subst foo.o,hoge.o,$(OBJS))
+program: $(OBJS)
+</pre>
+<p>
+としてみたらいけた。
+</p>
+<!-- section end -->
+</div>
+<!-- 2004/07/08 end -->
+
+
+
+<hr class="hide">
+<!-- 2004/07/09 start -->
+<h2><a name="20040709" href="200407a.html#20040709">2004-07-09 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="200407091" title="200407091" href="200407a.html#200407091">■</a> 
+[Ruby] MSYS</h3>
+<p>
+とりあえず、これだけインストールすればCVS版Rubyのmakeはできる。
+</p>
+<pre>
+% du -m MSYS-1.0.10.exe MinGW-3.1.0-1.exe msysDTK-1.0.1.exe \
+  bison-1.875.0-2003.02.10-1.exe 
+3       MSYS-1.0.10.exe
+15      MinGW-3.1.0-1.exe
+10      msysDTK-1.0.1.exe
+2       bison-1.875.0-2003.02.10-1.exe
+</pre>
+<p>
+でも、MSYSの「勝手に引数変換機能」は本当余計なお世話で、
+--prefix=c:/rubyのようにあらかじめ指定しておかないと、
+どこにインストールされたのか迷う。
+</p>
+<pre>
+$ ./ruby -e 'puts ARGV' /hoge
+c:/msys/1.0/hoge
+</pre>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200407092" title="200407092" href="200407a.html#200407092">■</a> 
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-talk/105691">[Ruby] irbでvi mode</a></h3>
+<p>
+irbでvi modeにしたければ
+</p>
+<pre>
+Readline.vi_editing_mode
+</pre>
+<p>
+とすればいい。常にそうしたければ~/.irbrcに書いておく。
+まあでもそういう人はirbだけvi modeにしても満足できないに決まってるわけで、~/.inputrcに
+</p>
+<pre>
+set editing-mode vi
+</pre>
+<p>
+と書いておけよという気がしないでもない。
+</p>
+<!-- section end -->
+</div>
+<!-- 2004/07/09 end -->
+
+
+
+<hr class="hide">
+<!-- 2004/07/10 start -->
+<h2><a name="20040710" href="200407a.html#20040710">2004-07-10 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="200407101" title="200407101" href="200407a.html#200407101">■</a> 
+[GNU] glibc 2.3.2</h3>
+<p>
+glibc 2.3.2をgcc 3.4.1でmakeするとエラーが出まくる。
+以前成功したgcc 3.2.2でmakeするとgcc自身がSEGVに。
+なかなか手強い。
+</p>
+
+<p>
+Plamo 4.0のlibc-2.3.2.soをstringsしてみるとgcc 3.3.2を使ってるようだ。
+これで試してみるか。
+</p>
+<!-- section end -->
+</div>
+<!-- 2004/07/10 end -->
+
+<hr>
+<div>
+<a href="200406c.html">&lt;Prev(,)</a> | 
+<a href="200407b.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

@@ -1,0 +1,357 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2006-6-b</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="200606a.html">
+<link rel="next" href="200606c.html">
+
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2006年6月中旬〜</p>
+<hr>
+<div>
+<a href="200606a.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="200606c.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2006/06/11 start -->
+<h2><a name="20060611" href="200606b.html#20060611">2006-06-11 (Sun)</a></h2>
+<!-- 2006-06-12 00:51:26 -->
+
+<div class="entry1">
+<h3><a name="200606111" title="200606111" href="200606b.html#200606111">■</a> 
+<a href="http://jp.rubyist.net/RubyKaigi2006/">[Ruby] 日本 Ruby カンファレンス 2006</a></h3>
+<p>
+「待塊」を「侍魂」と空目した人は多いはずだというか、それを狙ったと思われる。
+</p>
+<!-- section end -->
+</div>
+<!-- 2006/06/11 end -->
+
+
+
+<hr class="hide">
+<!-- 2006/06/12 start -->
+<h2><a name="20060612" href="200606b.html#20060612">2006-06-12 (Mon)</a></h2>
+<!-- 2006-06-13 01:57:17 -->
+
+<div class="entry1">
+<h3><a name="200606121" title="200606121" href="200606b.html#200606121">■</a> 
+<a href="http://www.lighttpd.net/">[HTTPD] lighttpd</a></h3>
+<p>
+みんな「らいてぃ」と呼んでたので調べてみたら書いてあった。
+</p><blockquote><p>
+What's with the name?<br><br>
+Light footprint + httpd = LightTPD<br>
+If you prefer, call it just &quot;Lighty&quot;. We want to keep your tongue
+intact. :) 
+</p></blockquote>
+<!-- section end -->
+</div>
+<!-- 2006/06/12 end -->
+
+
+
+<hr class="hide">
+<!-- 2006/06/13 start -->
+<h2><a name="20060613" href="200606b.html#20060613">2006-06-13 (Tue)</a></h2>
+<!-- 2006-06-14 02:02:45 -->
+
+<div class="entry1">
+<h3><a name="200606131" title="200606131" href="200606b.html#200606131">■</a> 
+[Ruby] ファイル名をSymbolで指定したらbinmodeというふざけた提案</h3>
+<p>
+をIRCで冗談でしてみた。
+</p>
+<pre>
+File.read(&quot;foo&quot;)
+</pre>
+<p>
+の代わりに
+</p>
+<pre>
+File.read(:foo)
+</pre>
+<p>
+とすればbinmodeになる(変数の場合はinternする)。ついでに
+</p>
+<pre>
+open(:foo)
+</pre>
+<p>
+でもbinmode。なんか変だな。やっぱボツだ。
+</p>
+
+<p>
+しかしlengthをFloatにしたらbinmodeという奇抜な案には敵わない。
+</p>
+<!-- section end -->
+</div>
+<!-- 2006/06/13 end -->
+
+
+
+<hr class="hide">
+<!-- 2006/06/14 start -->
+<h2><a name="20060614" href="200606b.html#20060614">2006-06-14 (Wed)</a></h2>
+<!-- 2006-06-15 01:01:45 -->
+
+<div class="entry1">
+<h3><a name="200606141" title="200606141" href="200606b.html#200606141">■</a> 
+[Ruby] binmodeでread</h3>
+<p>
+Symbol#to_procを使えば
+</p>
+<pre>
+open(&quot;file&quot;, &quot;rb&quot;, &amp;:read)
+</pre>
+<p>
+で済むことに気づいた。もう満足しちゃった気分。
+</p>
+<!-- section end -->
+</div>
+<!-- 2006/06/14 end -->
+
+
+
+<hr class="hide">
+<!-- 2006/06/15 start -->
+<h2><a name="20060615" href="200606b.html#20060615">2006-06-15 (Thu)</a></h2>
+<!-- 2006-06-16 02:08:05 -->
+
+<div class="entry1">
+<h3><a name="200606151" title="200606151" href="200606b.html#200606151">■</a> 
+<a href="http://www.network-science.de/ascii/">[ASCII] ASCII Generator</a></h3>
+<p>
+_all fonts with your text_を選んで眺めてみた。これは楽しい。
+</p>
+<pre>
+Font: italic
+                           __                    
+   /   __/  _    _// _ _  /__)  /        __/_ _  
+(_/(/_) /  (//)()//)(-/  / ( (/()(/ /)()/ /(-/ , 
+
+Font: pepper
+  _                                _                          
+   /    __/_  _  _  _ _/_/_ _  _  /_/   /_      _  _  __/__  _
+(_//_/_\ /   /_|/ //_// / //_'/  / \/_//_//_/  /_//_// / /_'//
+                                          _/  /               
+</pre>
+<p>
+こんなに小さくよくまとめるよなあ。ほとんど読めないけど。
+</p>
+<pre>
+Font: slant
+       __           __                       __  __             
+      / /_  _______/ /_   ____ _____  ____  / /_/ /_  ___  _____
+ __  / / / / / ___/ __/  / __ `/ __ \/ __ \/ __/ __ \/ _ \/ ___/
+/ /_/ / /_/ (__  ) /_   / /_/ / / / / /_/ / /_/ / / /  __/ /    
+\____/\__,_/____/\__/   \__,_/_/ /_/\____/\__/_/ /_/\___/_/     
+                                                                
+    ____        __                              __           
+   / __ \__  __/ /_  __  __   ____  ____  _____/ /____  _____
+  / /_/ / / / / __ \/ / / /  / __ \/ __ \/ ___/ __/ _ \/ ___/
+ / _, _/ /_/ / /_/ / /_/ /  / /_/ / /_/ / /  / /_/  __/ /  _ 
+/_/ |_|\__,_/_.___/\__, /  / .___/\____/_/   \__/\___/_/  ( )
+                  /____/  /_/                             |/ 
+</pre>
+<p>
+なかなかかっこいい。
+</p>
+<!-- section end -->
+</div>
+<!-- 2006/06/15 end -->
+
+
+
+<hr class="hide">
+<!-- 2006/06/16 start -->
+<h2><a name="20060616" href="200606b.html#20060616">2006-06-16 (Fri)</a></h2>
+<!-- 2006-06-17 17:58:36 -->
+
+<div class="entry1">
+<h3><a name="200606161" title="200606161" href="200606b.html#200606161">■</a> 
+目覚まし時計</h3>
+<p>
+
+<a href="200605a.html#200605082">あれから</a>全然遅れない目覚まし時計。いったいなんだったのか？
+</p>
+<!-- section end -->
+</div>
+<!-- 2006/06/16 end -->
+
+
+
+<hr class="hide">
+<!-- 2006/06/18 start -->
+<h2><a name="20060618" href="200606b.html#20060618">2006-06-18 (Sun)</a></h2>
+<!-- 2006-06-19 03:02:45 -->
+
+<div class="entry1">
+<h3><a name="200606181" title="200606181" href="200606b.html#200606181">■</a> 
+<a href="http://a-h.parfe.jp/einfach/archives/2006/0614152140.html">[Keyconfig] keyconfig拡張で”Gmailで送信”</a></h3>
+<p>
+これは面白いなあ。
+<a href="http://atode.cc">あとで読む</a>版を考えよう。
+</p>
+<!-- section end -->
+</div>
+<!-- 2006/06/18 end -->
+
+
+
+<hr class="hide">
+<!-- 2006/06/19 start -->
+<h2><a name="20060619" href="200606b.html#20060619">2006-06-19 (Mon)</a></h2>
+<!-- 2006-06-20 01:47:37 -->
+
+<div class="entry1">
+<h3><a name="200606191" title="200606191" href="200606b.html#200606191">■</a> 
+[Diary] アップロードし忘れ</h3>
+<p>
+なにかを忘れてる気がしたが、ここんとこ日記をアップロードしてないことにいま気づいた。
+たまには読もう。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200606192" title="200606192" href="200606b.html#200606192">■</a> 
+傘</h3>
+<p>
+折り畳みの傘の柄の部分がぽろっと抜けてしまい、買わなきゃなと思いつつもこれまた忘れてしまう。
+</p>
+
+<p>
+さしてるときはかろうじて使えるが、閉じて持って歩くときに困る。
+柄の部分を持てないしうまく閉じないし。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200606193" title="200606193" href="200606b.html#200606193">■</a> 
+[Ruby] ruby-doc MLのアーカイブ</h3>
+<p>
+なんか聞かれたので書いとこう。今のところruby-doc MLをアーカイブしてるのは
+
+<a href="http://dir.gmane.org/gmane.comp.lang.ruby.documentation">gmane</a>
+と
+
+<a href="http://www.nabble.com/ruby-doc-f13892.html">Nable</a>
+がある。
+<a href="http://blade.nagaokaut.ac.jp/ruby/index.html">blade</a>にはない。
+</p>
+<!-- section end -->
+</div>
+<!-- 2006/06/19 end -->
+
+
+
+<hr class="hide">
+<!-- 2006/06/20 start -->
+<h2><a name="20060620" href="200606b.html#20060620">2006-06-20 (Tue)</a></h2>
+<!-- 2006-06-21 02:37:50 -->
+
+<div class="entry1">
+<h3><a name="200606201" title="200606201" href="200606b.html#200606201">■</a> 
+[Firefox] Keyconfigでbookmarkletを呼び出す</h3>
+<p>
+
+<a href="http://atode.cc">「あとで読む」</a>はすでにbookmarkletとして存在するので、これを呼び出すKeyconfigのCODEを書きたいというのが今日のお題。
+ぐぐってみたら
+<a href="http://kb.mozillazine.org/Keyconfig_extension:_Firefox#Bookmark_Keyword">Bookmark Keyword</a>
+を発見。
+</p>
+<pre>
+Opens the bookmark with the specified keyword.
+Replace the string KEYWORD with your bookmark's keyword.
+
+user_pref(&quot;keyconfig.main.xxx_key__Keyword 1&quot;,
+  &quot;!][][][if(window.loadURI) loadURI(getShortcutOrURI('KEYWORD',{}));&quot;);
+</pre>
+<p>
+ということらしい。
+まず「あとで読む」のbookmarkletにatodeというキーワードを設定して、
+Keyconfigのオプションで新しいキーを追加して名前を「あとで読む」にして
+CODEには
+</p>
+<pre>
+if(window.loadURI) loadURI(getShortcutOrURI('atode',{}));
+</pre>
+<p>
+と書いてなんか適当なキーに割り当ててFirefoxを再起動。
+これでマウスを使わずにワンキーで登録できる。結構便利だ。
+</p>
+
+<p>
+この方法だと'atode'の部分にbookmarkletのキーワードを指定すればいいだけなので、すごい楽チン。
+既存のbookmarkletが一発で呼び出せる。
+</p>
+<!-- section end -->
+</div>
+<!-- 2006/06/20 end -->
+
+<hr>
+<div>
+<a href="200606a.html">&lt;Prev(,)</a> | 
+<a href="200606c.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

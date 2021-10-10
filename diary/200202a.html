@@ -1,0 +1,624 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2002-2-a</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="200201c.html">
+<link rel="next" href="200202b.html">
+
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2002年2月上旬〜</p>
+<hr>
+<div>
+<a href="200201c.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="200202b.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2002/02/01 start -->
+<h2><a name="20020201" href="200202a.html#20020201">2002-02-01 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="200202011" title="200202011" href="200202a.html#200202011">■</a> 
+<a href="http://homepage1.nifty.com/markey/memo/200201.html#jan3101">Win32OLE</a></h3>
+<p>
+Win32OLEはzipなのでunzip -aしてます。
+</p>
+
+<p>
+Cygwinのgcc-2.95.3-5とオリジナルのgcc-2.95.3とのdiffを取ってみて原因がわかった。
+gcc/cccp.cは
+</p>
+<pre>
+-    fd = open (fname, O_RDONLY, 0);
++    fd = open (fname, O_RDONLY|O_TEXT, 0);
+</pre>
+<p>
+という感じの対応なので、クロスコンパイラにはまったくもって無力だ。
+</p>
+
+<p>
+実はgcc-2.95.2の時代に必要になって
+<a href="../files/cccp.c.diff">quick hack</a>
+したことがある。これをあてようかな。
+Cygwinはgcc 3.0.xにはなかなかなりそうにないし。
+gcc 3.0.xは最初からちゃんとCR+LFに対応してる。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200202012" title="200202012" href="200202a.html#200202012">■</a> 
+Dillo 0.6.4</h3>
+<p>
+入れてみたが、space barが使えん。スクロールもカーソルキーだけなのかな？
+C-nかと思って押し続けたらえらい目にあった。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/02/01 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/02/02 start -->
+<h2><a name="20020202" href="200202a.html#20020202">2002-02-02 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="200202021" title="200202021" href="200202a.html#200202021">■</a> 
+<a href="http://www.thekelleys.org.uk/dnsmasq/doc.html">dnsmasq 1.2</a></h3>
+<p>
+/etc/hostsはもちろんDHCPのleasesファイルまで見るらしいので試してみる。
+
+<a href="http://home.t-online.de/home/Moestl/">pdns</a> と違って、
+cacheをファイルとして持たない。restartすると忘れる。
+pdnsは結構サイズも大きいのが気になっていたけど、これならいいかも。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200202022" title="200202022" href="200202a.html#200202022">■</a> 
+<a href="http://www.ruby-lang.org/en/raa-list.rhtml?name=Devel%3A%3ALogger">Devel::Logger 0.9.3</a></h3>
+<p>
+更新。ファイル名がDevel__Loggerからdevel-loggerに変更されてる。
+こういう場合もあるのか。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200202023" title="200202023" href="200202a.html#200202023">■</a> 
+RDtool 0.6.11</h3>
+<p>
+更新。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/02/02 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/02/03 start -->
+<h2><a name="20020203" href="200202a.html#20020203">2002-02-03 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="200202031" title="200202031" href="200202a.html#200202031">■</a> 
+1月のspam</h3>
+<p>
+80通。また記録更新。日本より韓国からのspamのほうが多いのはどういうこと？
+かろうじて読める
+</p>
+<pre>
+http://www.perl.com/CPAN-local/modules/by-authors/00whois.html
+</pre>
+<p>
+というのURLから情報を得たらしい。そこからはたどれないと思うんだけど、
+とりあえず読める人に送るように。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200202032" title="200202032" href="200202a.html#200202032">■</a> 
+<a href="../files/fake.rb">fake.rb</a></h3>
+<p>
+あまりにもうちの環境に依存しすぎているので、
+そういったものは~/.fakercに追い出すことにした。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/02/03 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/02/04 start -->
+<h2><a name="20020204" href="200202a.html#20020204">2002-02-04 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="200202041" title="200202041" href="200202a.html#200202041">■</a> 
+<a href="http://www.ruby-lang.org/en/raa-list.rhtml?name=ncurses-ruby">ncurses-ruby</a></h3>
+<p>
+ファイル名がncurses-ruby-0.1.tar.bzだった。
+今時ほんとにbzip2じゃなくてbzipなのか？
+</p>
+<pre>
+% file ncurses-ruby-0.1.tar.bz 
+ncurses-ruby-0.1.tar.bz: bzip2 compressed data, block size = 900k
+</pre>
+<p>
+やっぱbzip2だった。紛らわしい。
+</p>
+
+<p>
+しかも中はC++かあ。これも珍しい。dllwrapのオプションで
+</p>
+<pre>
+--driver-name=gcc
+</pre>
+<p>
+としてるので、-lstdc++がリンクされない。
+</p>
+<pre>
+make LOCAL_LIBS=-lstdc++
+</pre>
+<p>
+でokだが、クロスのほうはCXXがg++のままだった。しまったなあ。configure時に
+</p>
+<pre>
+CXX=i686-pc-cygwin-g++
+</pre>
+<p>
+も必要だ。違った。げっ。configure.inにAC_PROG_CXXがない。そうだったのか。
+g++になったのはGNU makeのdefaultか。
+</p>
+<pre>
+% make -p |grep ^CXX  
+make: *** No targets specified and no makefile found.  Stop.
+CXX = g++
+</pre>
+<p>
+これってやっぱり
+</p>
+<pre>
+configure.inにAC_PROG_CXX
+ext/extmk.rbにCXX = @CXX@
+lib/mkmf.rbにCXX = #{CONFIG[&quot;CXX&quot;]}
+</pre>
+<p>
+を入れるべきか？
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/02/04 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/02/05 start -->
+<h2><a name="20020205" href="200202a.html#20020205">2002-02-05 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="200202051" title="200202051" href="200202a.html#200202051">■</a> 
+xpm-nox</h3>
+<p>
+なんか変なシェルスクリプトがついてる。
+configureじゃなくてImakefileだから、いろいろ小細工してるようだ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200202052" title="200202052" href="200202a.html#200202052">■</a> 
+Linux 2.4.8-pre8</h3>
+<p>
+例によってO(1)-sched+preemptをあてる。
+ついでにiptablesのために
+NetFilter Configurationに関するものをモジュールにしてみた。
+週末にでも設定しよう。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/02/05 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/02/06 start -->
+<h2><a name="20020206" href="200202a.html#20020206">2002-02-06 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="200202061" title="200202061" href="200202a.html#200202061">■</a> 
+<a href="http://www.ruby-lang.org/en/raa-list.rhtml?name=WEBrick">WEBrick 1.1.4</a></h3>
+<p>
+更新。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/02/06 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/02/07 start -->
+<h2><a name="20020207" href="200202a.html#20020207">2002-02-07 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="200202071" title="200202071" href="200202a.html#200202071">■</a> 
+<a href="http://www.ruby-lang.org/en/raa-list.rhtml?name=Benchmark">Benchmark 011126</a></h3>
+<p>
+MinGWには確かtimesはportingされてるはずだけど、DJGPPはどうだったかな？
+</p>
+<pre>
+% grep HAVE_TIMES config.h
+#define HAVE_TIMES 1
+</pre>
+<p>
+あるね。むしろこういった領域ならDJGPPのほうがどうにでもなるか。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200202072" title="200202072" href="200202a.html#200202072">■</a> 
+spam</h3>
+<p>
+今日だけで10通来た。ぐはぁ。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/02/07 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/02/08 start -->
+<h2><a name="20020208" href="200202a.html#20020208">2002-02-08 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="200202081" title="200202081" href="200202a.html#200202081">■</a> 
+Linux 2.4.18-pre9</h3>
+<p>
+iptablesを試す前にもう-pre9なのであった。明日は試せるかな。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/02/08 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/02/09 start -->
+<h2><a name="20020209" href="200202a.html#20020209">2002-02-09 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="200202091" title="200202091" href="200202a.html#200202091">■</a> 
+cmail-summarize-format-alist</h3>
+<p>
+なんか変だと思ったら、cmail-summary.elのcmail-make-summary-lineは
+</p>
+<pre>
+(if sum (setq sum (cdr sum))
+</pre>
+<p>
+じゃなくて
+</p>
+<pre>
+(if sum (setq sum (cadr sum))
+</pre>
+<p>
+が正解じゃないだろうか？
+結局alistは使わずに自前でcmail-current-folderを見るようにしたので、
+自然と避けることになったしまったが。
+</p>
+
+<p>
+INBOXではそのまま、その他のfolderでは[xxxx]を削除。
+</p>
+<pre>
+(setq
+ cmail-summarize-format
+ '(lambda ()
+    (let* ((j (cmail-summary-fp-value ?j))
+           (s j)
+           (page (cmail-get-page-number-from-summary))
+           (unit &quot;KB&quot;))
+      (if (and (not (string= &quot;INBOX&quot; cmail-current-folder))
+               (string-match &quot;^\\[.*\\][ \t]*\\(.*\\)&quot; j))
+          (setq s (match-string 1 j)))
+      (save-excursion
+        (cmail-get-folder)
+        (setq page (- (cmail-n-page (1+ page)) (cmail-n-page page)))
+        (if (&lt; (* 1024 1024) page)
+            (setq page (/ page (* 1024 1024.0)) unit &quot;MB&quot;)
+          (setq page (/ page 1024.0))))
+      (format &quot;%s %5.1f%s %s|%s%s\n&quot;
+              (cmail-summary-fp-value ?d)
+              page
+              unit
+              (cmail-fill -8 (cmail-summary-fp-value ?n))
+              (cmail-summary-fp-value ?I)
+              s))))
+</pre>
+<p>
+逆にINBOXでは[ruby-talk:xxxxx]をつけようかと思ったけど、
+cmailでは増やすのはむちゃくちゃ難しい気がする。
+サマリを増やすと互換性がないしなあ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200202092" title="200202092" href="200202a.html#200202092">■</a> 
+Lyrico</h3>
+<p>
+露崎春女だったのか。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/02/09 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/02/10 start -->
+<h2><a name="20020210" href="200202a.html#20020210">2002-02-10 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="200202101" title="200202101" href="200202a.html#200202101">■</a> 
+TSNET</h3>
+<p>
+なんだか知らないうちにスタッフになったらしい。
+@niftyには特に思い入れもないし、やめるいい機会か？
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200202102" title="200202102" href="200202a.html#200202102">■</a> 
+xpm-nox 4.2.0</h3>
+<p>
+ライブラリだけあればいいのでlib/で
+</p>
+<pre>
+% make -f Makefile.cygwin CC=i686-pc-cygwin-gcc CDEBUGFLAGS=-Os libXpm.a
+</pre>
+<p>
+としてみた。いけるね。途中warningが出るけど。あ、だめだ。
+</p>
+<pre>
+simx.c:39: xpmi.h: No such file or directory
+</pre>
+<p>
+うーむ。どこを探してもそんなファイルはないな。simx.cの39行目は
+</p>
+<pre>
+#include &quot;xpmi.h&quot;                      /* for XpmMalloc */
+</pre>
+<p>
+となってる。XpmMallocねえ。
+</p>
+<pre>
+% grep XpmMalloc *.h
+XpmI.h:#define XpmMalloc(size) malloc((size))
+&lt;snip&gt;
+</pre>
+<p>
+あ、そういうことか。simx.cを書き換えて再度make。
+なぜかgccを使ってリンクしようとする。
+Makefile.cygwinを見るとLDSHAREDにgccが直接埋まってる。
+</p>
+<pre>
+% make -f Makefile.cygwin CC=i686-pc-cygwin-gcc CDEBUGFLAGS=-Os \
+  LDSHARED='$(CC) -shared -Wl,--export-all' \
+  AR='i686-pc-cygwin-ar rc' RANLIB=i686-pc-cygwin-ranlib libXpm.a
+</pre>
+<p>
+とした。できあがったlibXpm.aを/usr/local/cygwin-local/lib/へコピー。
+</p>
+<pre>
+% cp libXpm.a /usr/local/cygwin-local/lib/
+% mkdir /usr/local/cygwin-local/include/X11
+% cp xpm.h simx.h /usr/local/cygwin-local/include/X11
+</pre>
+
+<p>
+わざわざ作らなくてもxpm-nox-4.1.0-1.tar.bz2から取り出せばいいだけの話なんだが
+</p>
+<pre>
+CC='i686-pc-cygwin-gcc -mno-cygwin'
+</pre>
+<p>
+とすればMinGW版も作れる。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200202103" title="200202103" href="200202a.html#200202103">■</a> 
+[cmail] cmail-n-page, cmail-get-field-values-in-mail-buffer</h3>
+<p>
+cmail-n-pageしてからメーリングリストの名前と番号を取り出せばいいだけの話だった。
+
+<a href="../files/cmail-summarize-format.el">ここ</a> に置いとこう。
+INBOX内ではruby-talkとmodruby-jaにtagをつける。
+INBOX外ではtagと取り除く。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200202104" title="200202104" href="200202a.html#200202104">■</a> 
+<a href="http://homepage1.nifty.com/markey/memo/200202.html#feb0802">cmail</a></h3>
+<p>
+というわけで[ruby-xxx:xxxxx]をkill-ringに入れます。
+&quot;T&quot;がうまい具合に空いてた。
+</p>
+<pre>
+(defun cmail-get-fml-tag ()
+  (interactive)
+  (let ((page (cmail-get-page-number-from-summary)) tag)
+    (save-excursion
+      (cmail-get-folder)
+      (cmail-n-page page)
+      (setq
+       tag
+       (concat
+        &quot;[&quot; (cmail-get-field-values-in-mail-buffer &quot;X-ML-Name&quot;)
+        &quot;:&quot; (cmail-get-field-values-in-mail-buffer &quot;X-Mail-Count&quot;) &quot;]&quot;))
+      (kill-new tag)
+      (message tag))))
+
+(setq cmail-summary-mode-hook
+      '(lambda ()
+         (define-key cmail-summary-mode-map &quot;T&quot; 'cmail-get-fml-tag)))
+</pre>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200202105" title="200202105" href="200202a.html#200202105">■</a> 
+ruby-talk</h3>
+<p>
+ちょっと勢いが衰えたようだ。
+先月までは100通/日ぐらいだったけど、
+2月に入ってから60-70通/日ぐらいになってる。
+でもこのペースでも1週間以内で追い付くね。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200202106" title="200202106" href="200202a.html#200202106">■</a> 
+Windows installer</h3>
+<p>
+Windows installerを使うといろいろなパッケージが含まれてるもんだから、
+
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-talk/32927">[ruby-talk:32927]</a>
+とか
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-talk/33500">[ruby-talk:33500]</a> のようなケースも出てくるんだね。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200202107" title="200202107" href="200202a.html#200202107">■</a> 
+Google</h3>
+<p>
+オリンピックはいいとして、w3mでGoogleを見ると
+</p>
+<pre>
+This cookie was rejected to prevent security violation. [RFC 2109 4.3.2 rule 3]
+</pre>
+<p>
+と言われてしまう。なんか厳しくなった？
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200202108" title="200202108" href="200202a.html#200202108">■</a> 
+<a href="http://www.ruby-lang.org/en/raa-list.rhtml?name=bdb">bdb 0.3.0</a></h3>
+<p>
+更新。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/02/10 end -->
+
+<hr>
+<div>
+<a href="200201c.html">&lt;Prev(,)</a> | 
+<a href="200202b.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

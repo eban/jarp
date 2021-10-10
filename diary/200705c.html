@@ -1,0 +1,383 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2007-5-c</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="200705b.html">
+<link rel="next" href="200706a.html">
+
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2007年5月下旬〜</p>
+<hr>
+<div>
+<a href="200705b.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="200706a.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2007/05/21 start -->
+<h2><a name="20070521" href="200705c.html#20070521">2007-05-21 (Mon)</a></h2>
+<!-- 2007-05-22 01:20:09 -->
+
+<div class="entry1">
+<h3><a name="200705211" title="200705211" href="200705c.html#200705211">■</a> 
+<a href="http://www.googletutor.com/2007/03/29/using-google-groups-to-backup-gmail/">[Gmail] Using Google Groups To Backup Gmail</a></h3>
+<p>
+privateなGoogle Groupsを作りGmailからforwardさせてbackupを取る方法。<br>
+他のMLをremote archiveするという機能を利用している。<br>
+おなじGoogleってのもなんだけど、sizeの制限はどうなってんだろう。<br>
+といいつつ、設定してみた。
+</p>
+
+<p>
+そうそう。これはforwardを利用するわけで過去mailはbackupできないので注意。<br>
+設定してから届いたmailがbackupされる。
+</p>
+<!-- section end -->
+</div>
+<!-- 2007/05/21 end -->
+
+
+
+<hr class="hide">
+<!-- 2007/05/22 start -->
+<h2><a name="20070522" href="200705c.html#20070522">2007-05-22 (Tue)</a></h2>
+<!-- 2007-05-23 01:31:30 -->
+
+<div class="entry1">
+<h3><a name="200705221" title="200705221" href="200705c.html#200705221">■</a> 
+<a href="http://golf.shinh.org/p.rb?123">[穴] 123</a></h3>
+<p>
+これは意表を突かれた。submitは攻撃してる気分。
+</p>
+<!-- section end -->
+</div>
+<!-- 2007/05/22 end -->
+
+
+
+<hr class="hide">
+<!-- 2007/05/23 start -->
+<h2><a name="20070523" href="200705c.html#20070523">2007-05-23 (Wed)</a></h2>
+<!-- 2007-05-24 01:08:11 -->
+
+<div class="entry1">
+<h3><a name="200705231" title="200705231" href="200705c.html#200705231">■</a> 
+<a href="http://golf.shinh.org/p.rb?123">[穴] 123</a></h3>
+<p>
+Rubyで6Bを思いつく。<br>
+awkは他の人とは違う方法のようだ。<br>
+処理時間からしてbusy waitしてるっぽい。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200705232" title="200705232" href="200705c.html#200705232">■</a> 
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-talk/252664">[Ruby] unpack('m')</a></h3>
+<p>
+unpack('m')は空白文字を無視するのでtrで削除する必要はない。
+</p>
+<pre>
+require'zlib';puts Zlib::Inflate.inflate(*%q{eJxdkLEOAyEMQ/f7CovliETwB/Ark
+WCrdGtXPr6B9go6MxAb5w0AS/HAQ/JMVoUGZA0haB7mzkkjkFICjCvutI5UhtI0W9/KxBSuPjn
+WfXD2HH4P0SFaOwwdRK/qMFmoVqtl9cNa28Zi1hgFUUSz/VkOEb9PVT2/bN6sNtyS99pxvd7Tm
+Oz/wQ+15Dg3}.unpack('m'))
+</pre>
+<p>
+まあ、なんというか、元とは全然違う話になってるし。
+</p>
+<!-- section end -->
+</div>
+<!-- 2007/05/23 end -->
+
+
+
+<hr class="hide">
+<!-- 2007/05/24 start -->
+<h2><a name="20070524" href="200705c.html#20070524">2007-05-24 (Thu)</a></h2>
+<!-- 2007-05-25 01:39:02 -->
+
+<div class="entry1">
+<h3><a name="200705241" title="200705241" href="200705c.html#200705241">■</a> 
+<a href="http://gcc.gnu.org/">[GNU] GCC 4.2.0</a></h3>
+<p>
+今回からは--prefix=/usr/local/gccで。
+</p>
+<pre>
+% mkdir linux
+% cd linux
+% CFLAGS=-Os CXXFLAGS=-Os CC=/usr/bin/gcc ../configure \
+  --enable-languages=c++ --with-system-zlib \
+  --enable-sjlj-exceptions --enable-threads \
+  --disable-version-specific-runtime-libs --disable-nls \
+  --without-included-gettext --without-catgets --prefix=/usr/local/gcc; : gcc
+</pre>
+<p>
+Rubyのtrunkで--with-gcc=/usr/local/gcc/bin/gccで試して特に問題なし。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200705242" title="200705242" href="200705c.html#200705242">■</a> 
+<a href="http://rubyforge.org/forum/forum.php?forum_id=14655">[Ruby] Rubygems 0.9.4</a></h3>
+<p>
+例のNo Methodエラーが直るらしいよ。
+</p><blockquote><dl>
+<dt>
+Announce: RubyGems Release 0.9.4
+<dd>
+Release 0.9.4 is a maintenance release of RubyGems that fixes a number of small bugs.
+<dd>
+If you are experiencing problems with the source index (e.g. strange
+&quot;No Method&quot; errors), or problems with zlib (e.g. &quot;Buffer Error&quot;
+messsage), we recommend upgrading to RubyGems 0.9.4.
+<dd>
+Bug Fixes Include:
+<ul>
+<li>Several people have been experiencing problems with no method errors
+on the source index cache. The source index cache is now a bit more
+self healing. Furthermore, if the source index cache is
+irreparable, then it is automatically dropped and reloaded.
+<li>The source cache files may now be dropped with the &quot;gem sources
+--clear-all&quot; command. (This command may require root is the system
+source cache is in a root protected area).
+<li>Several sub-commands were accidently dropped from the &quot;gem&quot; command.
+These commands have been restored.
+</ul>
+</dl></blockquote>
+<!-- section end -->
+</div>
+<!-- 2007/05/24 end -->
+
+
+
+<hr class="hide">
+<!-- 2007/05/25 start -->
+<h2><a name="20070525" href="200705c.html#20070525">2007-05-25 (Fri)</a></h2>
+<!-- 2007-05-26 01:22:52 -->
+
+<div class="entry1">
+<h3><a name="200705251" title="200705251" href="200705c.html#200705251">■</a> 
+[PC] SIMM 256MB</h3>
+<p>
+メモリが128MBしかないとgem updateは2時間半かかるが、<br>
+256MBあれば1分で終わる。なんかすげーと思った。<br>
+たまたま要らないPCからSIMMを調達できたのはラッキーだった。
+</p>
+<!-- section end -->
+</div>
+<!-- 2007/05/25 end -->
+
+
+
+<hr class="hide">
+<!-- 2007/05/26 start -->
+<h2><a name="20070526" href="200705c.html#20070526">2007-05-26 (Sat)</a></h2>
+<!-- 2007-05-28 02:03:41 -->
+
+<div class="entry1">
+<h3><a name="200705261" title="200705261" href="200705c.html#200705261">■</a> 
+<a href="http://twitku.com/">[Twitter] TwitKu.com a free Twitter + Jaiku web app.</a></h3>
+<p>
+TwitKu.comが日本語対応したという噂を聞いて試した。<br>
+たまに調子悪いこともあるようだが概ね順調。
+</p>
+
+<p>
+それにしても4 hours agoとかいう表現はわかりにくい。<br>
+jsonとかの中身を見ると普通に時刻が入ってるわけで、<br>
+なんでそんなわかりにくくするんだろう。<br>
+リフレシュが死んでたりすると、<br>
+生きてるのか死んでるのかもわからないし。
+</p>
+<!-- section end -->
+</div>
+<!-- 2007/05/26 end -->
+
+
+
+<hr class="hide">
+<!-- 2007/05/27 start -->
+<h2><a name="20070527" href="200705c.html#20070527">2007-05-27 (Sun)</a></h2>
+<!-- 2007-05-28 02:03:00 -->
+
+<div class="entry1">
+<h3><a name="200705271" title="200705271" href="200705c.html#200705271">■</a> 
+日記</h3>
+<p>
+また1日ずれた。修正。<br>
+しかし日付けに大した意味もないし、この形式をやめるか。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200705272" title="200705272" href="200705c.html#200705272">■</a> 
+<a href="http://d.hatena.ne.jp/brazil/20070414/1176540465">[Twitter] 自分をfollowする</a></h3>
+<p>
+そうそう。思い出した。この設定やっとくとecho backが返ってくる。
+</p>
+<!-- section end -->
+</div>
+<!-- 2007/05/27 end -->
+
+
+
+<hr class="hide">
+<!-- 2007/05/28 start -->
+<h2><a name="20070528" href="200705c.html#20070528">2007-05-28 (Mon)</a></h2>
+<!-- 2007-05-29 02:06:36 -->
+
+<div class="entry1">
+<h3><a name="200705281" title="200705281" href="200705c.html#200705281">■</a> 
+<a href="http://freshmeat.net/projects/shtunnel/">[Soft] Shell Tunnel 0.1.9</a></h3>
+<blockquote><dl>
+<dt>
+About:
+<dd>
+Shell Tunnel provides a normal shell with port forwarding features
+like those provided by the -L and -R options in ssh(1). It was written to
+support a network that uses compile farms. It contains a small application
+to help to distinguish streams running tests.
+</dl></blockquote>
+<!-- section end -->
+</div>
+<!-- 2007/05/28 end -->
+
+
+
+<hr class="hide">
+<!-- 2007/05/29 start -->
+<h2><a name="20070529" href="200705c.html#20070529">2007-05-29 (Tue)</a></h2>
+<!-- 2007-05-30 02:10:52 -->
+
+<div class="entry1">
+<h3><a name="200705291" title="200705291" href="200705c.html#200705291">■</a> 
+<a href="http://freshmeat.net/projects/miniwebsvr/">[Soft] MiniWebsvr 0.0.8</a></h3>
+<blockquote><dl>
+<dt>
+About:
+<dd>
+MiniWebsvr is a small Web server that aims to one day be
+embeddable. It supports static Web pages, directory listing, HTTP MIME
+encodings, GET/HEAD/OPTIONS, and logging to disk. It has a small memory
+footprint, is multi-threaded, and supports command line options,
+conditional GET:, If-Modified-Since:, and range-bound downloads (download
+resuming).
+</dl></blockquote>
+<!-- section end -->
+</div>
+<!-- 2007/05/29 end -->
+
+
+
+<hr class="hide">
+<!-- 2007/05/30 start -->
+<h2><a name="20070530" href="200705c.html#20070530">2007-05-30 (Wed)</a></h2>
+<!-- 2007-05-31 02:30:52 -->
+
+<div class="entry1">
+<h3><a name="200705301" title="200705301" href="200705c.html#200705301">■</a> 
+<a href="http://nahi.jaiku.com/presence/3243455">[RSS] タイトルのリンクをRSSに埋めてみる</a></h3>
+<p>
+あまり体裁を考えてないけど、埋めこんでみた。
+</p>
+<!-- section end -->
+</div>
+<!-- 2007/05/30 end -->
+
+
+
+<hr class="hide">
+<!-- 2007/05/31 start -->
+<h2><a name="20070531" href="200705c.html#20070531">2007-05-31 (Thu)</a></h2>
+<!-- 2007-06-01 02:30:13 -->
+
+<div class="entry1">
+<h3><a name="200705311" title="200705311" href="200705c.html#200705311">■</a> 
+[Twitter] Rubyのcommit logをtwitterに流す実験</h3>
+<p>
+
+<a href="http://twitterfeed.com">twitterfeed.com</a>と
+<a href="http://cia.vc">cia.vc</a>のrssを組み合わせれば、<br>
+特に何も用意しなくてもRubyのcommit logをtwitterへ流せるなと気づき実験。<br>
+twitterfeed.comはOpenIDが必要だが、<br>
+
+<a href="http://idproxy.net/">idproxy.net</a>を使えばYahoo! accountで認証できる。<br>
+Yahoo!はPipesでaccount取ったから既にある。これで全部そろった。
+</p>
+
+<p>
+で、
+<a href="http://twitter.com/rubyci">rubyci</a>という名前にしたんで適当にaddしてみてね。<br>
+twitterfeed.comは30分間隔のpollingという設定なのでちょっと間が空いてる。
+</p>
+<!-- section end -->
+</div>
+<!-- 2007/05/31 end -->
+
+<hr>
+<div>
+<a href="200705b.html">&lt;Prev(,)</a> | 
+<a href="200706a.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

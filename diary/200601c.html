@@ -1,0 +1,454 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2006-1-c</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="200601b.html">
+<link rel="next" href="200602a.html">
+
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2006年1月下旬〜</p>
+<hr>
+<div>
+<a href="200601b.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="200602a.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2006/01/21 start -->
+<h2><a name="20060121" href="200601c.html#20060121">2006-01-21 (Sat)</a></h2>
+<!-- 2006-01-22 02:19:36 -->
+
+<div class="entry1">
+<h3><a name="200601211" title="200601211" href="200601c.html#200601211">■</a> 
+<a href="http://cygwin.com/ml/cygwin-announce/2006-01/msg00032.html">[Cygwin] Updated: cygwin-1.5.19-4</a></h3>
+<p>
+やっとss_familyのtypoが直った。
+</p><blockquote><dl>
+<dt>
+Changes since 1.5.19-3:
+<dd>
+corinna: Fix typo in sockaddr_storage ss_family name.
+</dl></blockquote><p>
+おそらく
+<a href="http://cygwin.com/ml/cygwin-announce/2006-01/msg00031.html">Ruby 1.8.4</a>
+をmakeしたときにcorinnaが気づいたと思われる。
+</p>
+<!-- section end -->
+</div>
+<!-- 2006/01/21 end -->
+
+
+
+<hr class="hide">
+<!-- 2006/01/22 start -->
+<h2><a name="20060122" href="200601c.html#20060122">2006-01-22 (Sun)</a></h2>
+<!-- 2006-01-23 21:11:40 -->
+
+<div class="entry1">
+<h3><a name="200601221" title="200601221" href="200601c.html#200601221">■</a> 
+<a href="http://www.reminderfeed.com/">[RSS] ReminderFeed - Your RSS Reminder Service</a></h3>
+<p>
+
+<a href="http://www.100shiki.com/archives/2006/01/_reminderfeedco.html">百式</a>経由で知る。
+登録しなくていいので手軽。でもそのため毎回subscribeする必要があるのが難点。
+終わったらunsubscribeしなきゃいけないし。
+ってことは総合的には登録制のほうが手軽になるのか？
+</p>
+<!-- section end -->
+</div>
+<!-- 2006/01/22 end -->
+
+
+
+<hr class="hide">
+<!-- 2006/01/23 start -->
+<h2><a name="20060123" href="200601c.html#20060123">2006-01-23 (Mon)</a></h2>
+<!-- 2006-01-24 01:34:13 -->
+
+<div class="entry1">
+<h3><a name="200601231" title="200601231" href="200601c.html#200601231">■</a> 
+<a href="http://www.vim.org/scripts/script.php?script_id=273">[Vim] taglist.vim : Source code browser (supports C/C++, java, perl, python, tcl, sql, php, etc)</a></h3>
+<p>
+
+<a href="http://www.vim.org/">http://www.vim.org/</a>で現在ratingが1位のプラグイン。
+無難に3.4をインストールと思ったが、install detailsに書いてあるTlistToggleは4.0b3で
+</p>
+<pre>
+4. New ':TlistToggle' command to supersede the ':Tlist' command. 
+</pre>
+<p>
+ってことなのでこれを入れた。特に問題もない。
+ctagsの結果を利用してるだけなのでRubyもちゃんといける。
+</p>
+
+<p>
+でもctagsは特異メソッド名の認識が甘いようだ。
+lib/mkmf.rbで試したら、なんかselfがいっぱい出てくるし。
+</p>
+<!-- section end -->
+</div>
+<!-- 2006/01/23 end -->
+
+
+
+<hr class="hide">
+<!-- 2006/01/24 start -->
+<h2><a name="20060124" href="200601c.html#20060124">2006-01-24 (Tue)</a></h2>
+<!-- 2006-01-25 01:23:04 -->
+
+<div class="entry1">
+<h3><a name="200601241" title="200601241" href="200601c.html#200601241">■</a> 
+[Mail] ruby-talk news gateway</h3>
+<p>
+復活したようだ。古い記事の洪水が。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200601242" title="200601242" href="200601c.html#200601242">■</a> 
+<a href="http://www.vim.org/scripts/script.php?script_id=474">[Vim] SearchComplete : Tab completion of words inside of a search ('/')</a></h3>
+<p>
+検索のときにtabで補完できる。なるほど便利だ。
+でも考えてみると補完するためにバッファ内をすでに検索してるわけで、
+その後でまた検索ってなんか無駄な感じもする。
+</p>
+
+<p>
+インクリメンタルサーチ(set incsearch)で十分か？
+</p>
+<!-- section end -->
+</div>
+<!-- 2006/01/24 end -->
+
+
+
+<hr class="hide">
+<!-- 2006/01/25 start -->
+<h2><a name="20060125" href="200601c.html#20060125">2006-01-25 (Wed)</a></h2>
+<!-- 2006-01-26 01:42:29 -->
+
+<div class="entry1">
+<h3><a name="200601251" title="200601251" href="200601c.html#200601251">■</a> 
+<a href="http://www.nitrohq.com/">[Ruby] Nitro</a></h3>
+<p>
+
+<a href="ruby-doc.org">ruby-doc.org</a>がリニューアルして、そこで使われているNitroが話題になってたんでインストールしてみる。
+</p>
+<pre>
+% gem install -y nitro
+Attempting local installation of 'nitro'
+Local gem file not found: nitro*.gem
+Attempting remote installation of 'nitro'
+Updating Gem source index for: http://gems.rubyforge.org
+Successfully installed nitro-0.27.0
+Successfully installed og-0.27.0
+Successfully installed glue-0.27.0
+Successfully installed facets-2005.10.30
+Successfully installed gen-0.27.0
+Successfully installed glue-0.27.0
+Successfully installed RedCloth-3.0.3
+Successfully installed ruby-breakpoint-0.5.0
+Successfully installed daemons-0.4.2
+Installing RDoc documentation for nitro-0.27.0...
+Installing RDoc documentation for og-0.27.0...
+Installing RDoc documentation for glue-0.27.0...
+Installing RDoc documentation for gen-0.27.0...
+Installing RDoc documentation for glue-0.27.0...
+Installing RDoc documentation for ruby-breakpoint-0.5.0...
+Installing RDoc documentation for daemons-0.4.2...
+</pre>
+<p>
+依存してるパッケージが多い。
+</p>
+
+<p>
+動作確認。
+</p>
+<pre>
+% ruby-1.8.4 -rubygems -e 'require &quot;nitro&quot;; Nitro.run'
+
+==&gt; Setup for debug mode
+==&gt; Listening at 0.0.0.0:9999.
+==&gt; Press Ctrl-C to shutdown; Run with --help for options.
+
+[2006-01-25 22:01:23] INFO  WEBrick 1.3.1
+[2006-01-25 22:01:23] INFO  ruby 1.8.4 (2005-12-27) [i386-linux]
+[2006-01-25 22:01:23] INFO  WEBrick::HTTPServer#start: pid=10981 port=9999
+</pre>
+<p>
+問題なく立ち上がった。
+</p>
+<pre>
+% mkdir public
+% echo 'Hello, World! #{Time.now}' &gt;public/index.xhtml
+% curl http://localhost:9999/ 
+Hello, World! Wed Jan 25 22:05:07 JST 2006
+</pre>
+<p>
+デフォルトはこんな感じで使えるらしい。
+</p>
+<!-- section end -->
+</div>
+<!-- 2006/01/25 end -->
+
+
+
+<hr class="hide">
+<!-- 2006/01/26 start -->
+<h2><a name="20060126" href="200601c.html#20060126">2006-01-26 (Thu)</a></h2>
+<!-- 2006-01-27 01:36:00 -->
+
+<div class="entry1">
+<h3><a name="200601261" title="200601261" href="200601c.html#200601261">■</a> 
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-talk/177077">[Ruby] Compiling 1.8.4 with djgpp</a></h3>
+<p>
+たぶんcommon.mk対応してないからだと思うけど、流石にdjgppはもうやる気なし。
+</p>
+<!-- section end -->
+</div>
+<!-- 2006/01/26 end -->
+
+
+
+<hr class="hide">
+<!-- 2006/01/27 start -->
+<h2><a name="20060127" href="200601c.html#20060127">2006-01-27 (Fri)</a></h2>
+<!-- 2006-01-28 01:43:58 -->
+
+<div class="entry1">
+<h3><a name="200601271" title="200601271" href="200601c.html#200601271">■</a> 
+<a href="[Firefox]">Tab Mix Plus 0.3</a></h3>
+<p>
+updateしたらCTRL+TABの挙動がなんか違う。
+設定を見直してみると
+</p>
+<pre>
+Ctrl-Tab navigates tabs in the most recently used order
+</pre>
+<p>
+にチェックが入ってる。
+LinuxとWindows版どちらも同じだったので思い違いというわけでもなさそう。
+デフォルトの設定が変わったのか？
+</p>
+
+<p>
+セッション管理もEnable Crash Recoveryなんてこともできるし、
+保存する内容もSessionSaverと遜色ない。
+というわけでSassionSaverをUninstall。
+いや、とりあえずはdisableにしとこう。
+</p>
+<!-- section end -->
+</div>
+<!-- 2006/01/27 end -->
+
+
+
+<hr class="hide">
+<!-- 2006/01/28 start -->
+<h2><a name="20060128" href="200601c.html#20060128">2006-01-28 (Sat)</a></h2>
+<!-- 2006-01-29 02:18:31 -->
+
+<div class="entry1">
+<h3><a name="200601281" title="200601281" href="200601c.html#200601281">■</a> 
+<a href="http://www.nikkansports.com/ns/entertainment/p-et-tp0-060128-0006.html">[TV] 「ビフォーアフター」アスベストで終止符</a></h3>
+<p>
+うう、残念。
+</p>
+<!-- section end -->
+</div>
+<!-- 2006/01/28 end -->
+
+
+
+<hr class="hide">
+<!-- 2006/01/29 start -->
+<h2><a name="20060129" href="200601c.html#20060129">2006-01-29 (Sun)</a></h2>
+<!-- 2006-01-30 00:47:12 -->
+
+<div class="entry1">
+<h3><a name="200601291" title="200601291" href="200601c.html#200601291">■</a> 
+<a href="http://www.scriptol.org/ctocpp.php">[Soft] C to C++ Converter 1.4</a></h3>
+<blockquote><dl>
+<dt>
+About:
+<dd>
+C to C++ Converter is a script that converts C projects to C++ in
+six steps. It also provides a project mover that changes the directory of
+a project while updating #include statements.
+</dl></blockquote>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200601292" title="200601292" href="200601c.html#200601292">■</a> 
+<a href="http://nbenoit.tuxfamily.org/projects.php?rq=mmsrip">[Soft] MMS Ripper 0.7.0</a></h3>
+<blockquote><dl>
+<dt>
+Changes:
+<dd>
+This release introduces many improvements and bugfixes such as a
+workaround for recalcitrant MMS servers, a switch which enables debug
+output and the display of the ripping speed. You may also compile MMSRIP
+on Solaris, Cygwin, and Win32 now. 
+</dl></blockquote>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200601293" title="200601293" href="200601c.html#200601293">■</a> 
+<a href="http://www.vanheusden.com/rsstail/">[Soft] rsstail 0.7</a></h3>
+<blockquote><dl>
+<dt>
+About:
+<dd>
+RSSTail is more or less an RSS reader. It monitors an RSS feed, and
+if it detects a new entry, it will emit only that new entry. 
+</dl></blockquote>
+<!-- section end -->
+</div>
+<!-- 2006/01/29 end -->
+
+
+
+<hr class="hide">
+<!-- 2006/01/30 start -->
+<h2><a name="20060130" href="200601c.html#20060130">2006-01-30 (Mon)</a></h2>
+<!-- 2006-01-31 02:21:39 -->
+
+<div class="entry1">
+<h3><a name="200601301" title="200601301" href="200601c.html#200601301">■</a> 
+<a href="http://posren.livedoor.com/">[DVD] ぽすれん</a></h3>
+<p>
+ライブドアショックでぽすれんユーザが減るかと思ったが、貸出中の数は前とあまり変わらず。
+意外とやめないもんらしい。
+</p>
+
+<p>
+とりあえずいろんな条件が変化してるのでまた
+
+<a href="http://www.discas.net/">DISCAS</a>
+に戻るかどうか検討はしてみよう。
+</p>
+
+<p>
+ぽすれんの休会も年会費は取られないようになったようで、
+DISCASに戻りやすくはなってる。
+</p>
+<pre>
+・休会会員の年会費無料のお知らせ
+2006年1月1日より、休会会員の方の年会費を無料とさせていただきました。
+</pre>
+
+<!-- section end -->
+</div>
+<!-- 2006/01/30 end -->
+
+
+
+<hr class="hide">
+<!-- 2006/01/31 start -->
+<h2><a name="20060131" href="200601c.html#20060131">2006-01-31 (Tue)</a></h2>
+<!-- 2006-02-01 01:02:25 -->
+
+<div class="entry1">
+<h3><a name="200601311" title="200601311" href="200601c.html#200601311">■</a> 
+<a href="http://feedpath.jp/">[RSS] Feedpath</a></h3>
+<p>
+Bloglinesの360フィードほどのOPMLをimportしたら15分ぐらいかかった。
+フォルダはやはり無視された。これを分類するのはもう無理。
+</p>
+
+<p>
+タイトルが短すぎる。
+ブラウザを横に拡げても余白が多くなるだけでタイトルは変化しないし、
+この日記みたいに日付け入れてるともう使いもんにならない。
+まあ、日付け入れても意味ない気もするから今日からやめよう。
+その代わり[jarp]とでも入れとくか。
+</p>
+
+<p>
+JavaScriptばりばりなわけでw3mでは使えない。残念。
+</p>
+
+<p>
+タグはどうなんだろう。
+生ごみ、鳥肌、ui、gone、Mobile Music。
+これが24時間以内のTop5ってことは、あまりタグをつける人がいないようだ。
+</p>
+
+<p>
+アーカイブはなかなかいい。
+Feedpathのアーカイブは単にチェックするだけだし、
+アーカイブとして分類されるのでまとめて読むのも楽。
+BloglinesのClippingsは面倒だし、Keep Newだと後でまとめて読むときに探すのが大変。
+そのままexpireされてなぜか未読の数としていつまでも残るってこともあったしなあ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2006/01/31 end -->
+
+<hr>
+<div>
+<a href="200601b.html">&lt;Prev(,)</a> | 
+<a href="200602a.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

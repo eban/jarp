@@ -1,0 +1,385 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2004-3-b</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="200403a.html">
+<link rel="next" href="200403c.html">
+
+<link rel="stylesheet" type="text/css" href="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.css">
+<script async type="text/javascript" src="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.js"></script>
+<script type="text/javascript">
+<!--       
+$(document).ready(function() {
+  prettyPrint();
+});
+-->
+</script>
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2004年3月中旬〜</p>
+<hr>
+<div>
+<a href="200403a.html" accesskey=",">&lt;Older(,)</a> | 
+<a href="200403c.html" accesskey=".">Newer(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2004/03/11 start -->
+<h2><a name="20040311" href="200403b.html#20040311">2004-03-11 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="200403111" title="200403111" href="200403b.html#200403111">■</a> 
+[Mail] ruby-talk ML archive</h3>
+<p>
+いつの間にかruby-talk MLのarchiveを作るとこで失敗するようになってた。
+</p>
+<pre>
+tar (child): /home/ftp/pub/ruby/ML/ruby-talk.94601-94700.tar.gz: Cannot open: No such file or directory
+tar (child): Error is not recoverable: exiting now
+94601
+94602
+</pre>
+<p>
+そうか。/home/ftpは/var/ftpへ移動してたか。
+http://ftp.ruby-lang.org/もそれが原因でアクセスできなかった。
+もろもろ修正。
+</p>
+<!-- section end -->
+</div>
+<!-- 2004/03/11 end -->
+
+
+
+<hr class="hide">
+<!-- 2004/03/12 start -->
+<h2><a name="20040312" href="200403b.html#20040312">2004-03-12 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="200403121" title="200403121" href="200403b.html#200403121">■</a> 
+[Mail] IMAP</h3>
+<p>
+cmail MLでIMAPを使えばメモリに優しいんじゃないかという提案があった。
+なるほど。Maildirか。MHフォルダでもいいわけだ。
+うーむ。なんで今まで気づかなかったんだろう。
+</p>
+
+<p>
+というわけで、どのIMAPを使うかを調査しよう。
+</p>
+<!-- section end -->
+</div>
+<!-- 2004/03/12 end -->
+
+
+
+<hr class="hide">
+<!-- 2004/03/13 start -->
+<h2><a name="20040313" href="200403b.html#20040313">2004-03-13 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="200403131" title="200403131" href="200403b.html#200403131">■</a> 
+<a href="http://www.thekelleys.org.uk/dnsmasq/doc.html">[Soft] Dnsmasq 2.4</a></h3>
+<p>
+2.3を入れようと思ったらすでに2.4になっていた。
+</p>
+<pre>
+Changes:
+This release fixes a stupid bug where the DHCP server failed to
+start up if its leases file did not already exist.  It also fixes
+some problems with the new code for reading /etc/ethers and adds an
+alias facility like &quot;DNS doctor&quot; on Cisco PIX routers.
+</pre>
+<!-- section end -->
+</div>
+<!-- 2004/03/13 end -->
+
+
+
+<hr class="hide">
+<!-- 2004/03/14 start -->
+<h2><a name="20040314" href="200403b.html#20040314">2004-03-14 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="200403141" title="200403141" href="200403b.html#200403141">■</a> 
+[XSL] {}による展開</h3>
+<p>
+xsl:ifを使わなくてもitem0, item1のような文字列をclassで指定してあげれば十分だと気づいた(遅。
+</p>
+<pre>
+&lt;xsl:template match=&quot;rss:item&quot;&gt;
+ &lt;div class=&quot;item{position() mod 2}&quot;&gt;
+  &lt;xsl:call-template name=&quot;item&quot; /&gt;
+ &lt;/div&gt;
+&lt;/xsl:template&gt;
+</pre>
+<p>
+となる。css側でdiv.item0, div.item1を適当に設定してやればいいわけだ。
+xsl:atributeやxsl:elementを使うとさすがにわかりにくい。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200403142" title="200403142" href="200403b.html#200403142">■</a> 
+<a href="http://www.washington.edu/imap/">[Mail] UW-IMAP</a></h3>
+<p>
+SLLTYPE=nopwdのままだとシステムの認証は使えなくなるので、
+/etc/cram-md5.pwdを適切に設定しCRAM-MD5を使うことになる。
+SLLTYPE=unixにすればAUTHにLOGINも使えるが、当然ながら推奨されない。
+</p>
+
+<p>
+インストールしたらtelnet localhost 143で実験。
+</p>
+<pre>
+* OK [CAPABILITY IMAP4REV1 LOGIN-REFERRALS STARTTLS AUTH=CRAM-MD5 AUTH=LOGIN]
+  localhost IMAP4rev1 2003.339 at Sun, 14 Mar 2004 15:49:20 +0900 (JST)
+</pre>
+<p>
+のように返ってくる。これでCRAM-MD5とLOGINが使えることがわかった。
+</p>
+
+<p>
+cmailではCVSの最新じゃないとCRAM-MD5は使えない。
+まあ、それはいいんだけど、困ったことになぜかふつうのフォルダにアクセスできない。
+というわけで、全然別なところで中断中。
+</p>
+<!-- section end -->
+</div>
+<!-- 2004/03/14 end -->
+
+
+
+<hr class="hide">
+<!-- 2004/03/15 start -->
+<h2><a name="20040315" href="200403b.html#20040315">2004-03-15 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="200403151" title="200403151" href="200403b.html#200403151">■</a> 
+[RSS] index.rdfの順番</h3>
+<p>
+RSS Reader Panelは勝手にソートしてくれないようだ。
+なんとなく他との違いが目立つので、
+<a href="index.rdf">index.rdf</a>は新しい順に並べるようにした。
+これで、
+<a href="diary.xsl">diary.xsl</a>のほうもソートする必要がなくなった。
+</p>
+<!-- section end -->
+</div>
+<!-- 2004/03/15 end -->
+
+
+
+<hr class="hide">
+<!-- 2004/03/16 start -->
+<h2><a name="20040316" href="200403b.html#20040316">2004-03-16 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="200403161" title="200403161" href="200403b.html#200403161">■</a> 
+[Mail] ruby-{list,talk,core}-ctlへの攻撃、その後</h3>
+<p>
+なんだかわからないまま10日が過ぎてもまだ続いている。
+shugoさんをircで見つけたついでに、postfixの設定でrejectするようにしてもらった。
+負荷は問題にならなくても、logが半端な量じゃないしなあ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200403162" title="200403162" href="200403b.html#200403162">■</a> 
+<a href="http://www.nongnu.org/cvs/">[Soft] CVS 1.12.6</a></h3>
+<p>
+ircで話題になり、なんとなく上げてみる。1.12系列は初めてか。
+</p>
+<!-- section end -->
+</div>
+<!-- 2004/03/16 end -->
+
+
+
+<hr class="hide">
+<!-- 2004/03/17 start -->
+<h2><a name="20040317" href="200403b.html#20040317">2004-03-17 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="200403171" title="200403171" href="200403b.html#200403171">■</a> 
+<a href="http://www.vmware.com/">[VMware] VMware 4.5</a></h3>
+<p>
+Linux 2.6対応のVMware 4.5が出た。そろそろ家のLinux boxも2.6へ上げよう。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200403172" title="200403172" href="200403b.html#200403172">■</a> 
+<a href="http://cygwin.com/ml/cygwin-announce/2004-03/msg00009.html">[Cygwin] Updated: cygwin-1.5.8-1</a></h3>
+<p>
+例のzshがハングする件が直ったらしい。
+</p>
+<pre>
+- Fix hang typified by trying to execute an unknown command in zsh.
+  This was caused by a signal race which could have caused other
+  strange hangs or odd behavior.
+  (Christopher Faylor)
+</pre>
+<p>
+試すのは明日だな。
+</p>
+<!-- section end -->
+</div>
+<!-- 2004/03/17 end -->
+
+
+
+<hr class="hide">
+<!-- 2004/03/18 start -->
+<h2><a name="20040318" href="200403b.html#20040318">2004-03-18 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="200403181" title="200403181" href="200403b.html#200403181">■</a> 
+<a href="http://www.openssl.org/">[Soft] OpenSSL 0.9.7d</a></h3>
+<p>
+更新。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200403182" title="200403182" href="200403b.html#200403182">■</a> 
+[Cygwin] zsh</h3>
+<p>
+Cygwin 1.5.8に上げた。zshも問題ないようだ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200403183" title="200403183" href="200403b.html#200403183">■</a> 
+<a href="http://search.cpan.org/search?query=Template%3A%3AExtract&amp;mode=module">[Perl] Template::Extract</a></h3>
+<p>
+<a href="http://naoya.dyndns.org/~naoya/mt/archives/000833.html">NDO::Weblog経由。</a>これは面白いなあ。後で調べよう。
+</p>
+<!-- section end -->
+</div>
+<!-- 2004/03/18 end -->
+
+
+
+<hr class="hide">
+<!-- 2004/03/19 start -->
+<h2><a name="20040319" href="200403b.html#20040319">2004-03-19 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="200403191" title="200403191" href="200403b.html#200403191">■</a> 
+<a href="http://www.zsh.org/">[Soft] Zsh 4.2.0</a></h3>
+<pre>
+Changes:
+4.2.0 is the first in  the new stable 4.2 release series, superseding
+both  4.0  and  4.1  branches.  There are  many  evolutionary  changes
+affecting  the  whole   shell:  builtins,  modules,  completion,  line
+editing, as well as improved  compatibility with other shells and with
+some operating systems.
+</pre>
+<p>
+早速make。
+</p>
+<pre>
+% CFALGS=-Os ./configure --prefix=/usr --bindir=/bin
+</pre>
+
+<!-- section end -->
+</div>
+<!-- 2004/03/19 end -->
+
+
+
+<hr class="hide">
+<!-- 2004/03/20 start -->
+<h2><a name="20040320" href="200403b.html#20040320">2004-03-20 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="200403201" title="200403201" href="200403b.html#200403201">■</a> 
+<a href="http://cygwin.com/ml/cygwin-announce/2004-03/msg00014.html">[Cygwin] Updated: cygwin-1.5.9-1</a></h3>
+<p>
+早くも出た。Work aroundというあたりが気になる。とりあえず次までのつなぎ？
+</p>
+<pre>
+Changes since 1.5.8-1:
+
+- Work around &quot;Couldn't reserve space for cygwin's heap&quot; errors
+  reported by some people in the cygwin mailing list.
+  (Christopher Faylor)
+
+- Make SwapFree field in /proc/meminfo show correct info.
+  (Corinna Vinschen)
+</pre>
+
+<!-- section end -->
+</div>
+<!-- 2004/03/20 end -->
+
+<hr>
+<div>
+<a href="200403a.html">&lt;Older(,)</a> | 
+<a href="200403c.html">Newer(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

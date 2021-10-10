@@ -1,0 +1,351 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2010-9-c</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="201009b.html">
+<link rel="next" href="201010a.html">
+
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2010年9月下旬〜</p>
+<hr>
+<div>
+<a href="201009b.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="201010a.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2010/09/21 start -->
+<h2><a name="20100921" href="201009c.html#20100921">2010-09-21 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="201009211" title="201009211" href="201009c.html#201009211">■</a> 
+[PC] ワイヤレスマウスの電池の消耗が激しい件</h3>
+<p>
+今のところだいたい2週間弱ぐらいで切れる。<br>
+不良品なのか確かめるために
+<a href="http://www.amazon.co.jp/dp/B000LSC12Q">amazonのレビュー</a>を見たら2件しかないレビュー2つとも電池の件だった。<br>
+5日で切れるとあった。おれよりひどい。<br>
+あまり使わないから10日保ってたんだな。<br>
+不良品ではないようだ。<br>
+まあでもeneloopなのでそれほど困ってはいない。
+</p>
+<p>
+そうそう。たまにぴくっとホイールが作動するんだけど、<br>
+これってスリープのときも起こるんだよね。<br>
+いやいやスリープしてないじゃん。<br>
+このあたりが電池消費する原因というか不具合のような。
+</p>
+<!-- section end -->
+</div>
+<!-- 2010/09/21 end -->
+
+
+
+<hr class="hide">
+<!-- 2010/09/22 start -->
+<h2><a name="20100922" href="201009c.html#20100922">2010-09-22 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="201009221" title="201009221" href="201009c.html#201009221">■</a> 
+<a href="http://golf.shinh.org/p.rb?C+style+constants#Bash">[Golf] C style constants</a></h3>
+<p>
+zshだと8進数が扱えなかったので、bashもそうだと思い込んでいた。
+</p>
+<pre>
+% zsh -c 'printf &quot;%d\n&quot; 0x10 010'
+16
+10
+% bash -c 'printf &quot;%d\n&quot; 0x10 010'
+16
+8
+</pre>
+<p>
+このあたりの微妙な違いって結構ゴルフでは重要だな。
+</p>
+<!-- section end -->
+</div>
+<!-- 2010/09/22 end -->
+
+
+
+<hr class="hide">
+<!-- 2010/09/23 start -->
+<h2><a name="20100923" href="201009c.html#20100923">2010-09-23 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="201009231" title="201009231" href="201009c.html#201009231">■</a> 
+[Ruby] ri hello</h3>
+<p>
+なにげにri helloとやったらなぜか出てきたわけだけどこれなんだ？
+</p>
+<pre>
+% ri-trunk -T hello
+.hello
+
+(from ruby core)
+Implementation from Foo
+------------------------------------------------------------------------------
+  hello(it)
+
+------------------------------------------------------------------------------
+</pre>
+<p>
+どうやらlib/drb/extserv.rbのテストコードらしい。こんなの拾っちゃうんだな。
+</p>
+<!-- section end -->
+</div>
+<!-- 2010/09/23 end -->
+
+
+
+<hr class="hide">
+<!-- 2010/09/24 start -->
+<h2><a name="20100924" href="201009c.html#20100924">2010-09-24 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="201009241" title="201009241" href="201009c.html#201009241">■</a> 
+[Tips] atコマンドの警告</h3>
+<p>
+atコマンドを実行するとなぜか毎回
+</p>
+</p><blockquote><p>
+warning: commands will be executed using /bin/sh
+</p></blockquote><p>
+<p>
+と言われてうっとうしい。何の警告なんだこれは。zshを使ってるからかと思い、
+</p>
+<pre>
+% echo date | SHELL=/bin/sh at now
+</pre>
+してみたら黙った。そういうことらしい。
+<!-- section end -->
+</div>
+<!-- 2010/09/24 end -->
+
+
+
+<hr class="hide">
+<!-- 2010/09/25 start -->
+<h2><a name="20100925" href="201009c.html#20100925">2010-09-25 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="201009251" title="201009251" href="201009c.html#201009251">■</a> 
+[Vim] 化けるgvimのメニュー</h3>
+<p>
+どういうわけか、gvimのメニュー表示が化ける。<br>
+不思議なのはgvim -u ~/.vimrcとしても化けない。<br>
+~/.vimrcを消しても化けない。<br>
+どういうこと？
+</p>
+<p>
+:scriptnamesしてみると-u ~/.vimrcすると~/.vimrcが1番最初に読み込まれている。<br>
+このあたりに原因がありそうだ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2010/09/25 end -->
+
+
+
+<hr class="hide">
+<!-- 2010/09/26 start -->
+<h2><a name="20100926" href="201009c.html#20100926">2010-09-26 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="201009261" title="201009261" href="201009c.html#201009261">■</a> 
+[Vim] set encoding=japan</h3>
+<p>
+結局gvimのメニューが化ける原因はset encoding=japanだった。<br>
+これってset encoding=euc-jpと同じ意味なので、まあ要らないっちゃ要らないよな。<br>
+defaultのutf-8でいいはずだし。
+</p>
+<!-- section end -->
+</div>
+<!-- 2010/09/26 end -->
+
+
+
+<hr class="hide">
+<!-- 2010/09/27 start -->
+<h2><a name="20100927" href="201009c.html#20100927">2010-09-27 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="201009271" title="201009271" href="201009c.html#201009271">■</a> 
+さいたま市の気温</h3>
+<p>
+この安定度はちょっとすごい。15.5から16.4でぴったり四捨五入で16度に収まってる。
+</p>
+<pre>
+[さいたま市] 2010-09-26 22:00 気温16.4度 降水量1.0mm 北西の風2m
+[さいたま市] 2010-09-26 23:00 気温16.0度 降水量2.5mm 北北西の風2m
+[さいたま市] 2010-09-27 00:00 気温15.8度 降水量3.0mm 北北西の風2m
+[さいたま市] 2010-09-27 01:00 気温16.0度 降水量3.5mm 北の風2m
+[さいたま市] 2010-09-27 02:00 気温16.3度 降水量5.5mm 東北東の風3m
+[さいたま市] 2010-09-27 03:00 気温15.6度 降水量5.0mm 北東の風3m
+[さいたま市] 2010-09-27 05:00 気温15.7度 降水量3.0mm 北北東の風3m
+[さいたま市] 2010-09-27 06:00 気温15.7度 降水量3.0mm 北北東の風3m
+[さいたま市] 2010-09-27 07:00 気温15.6度 降水量4.0mm 北東の風3m
+[さいたま市] 2010-09-27 08:00 気温15.7度 降水量3.0mm 北東の風2m
+[さいたま市] 2010-09-27 09:00 気温15.6度 降水量3.0mm 北東の風3m
+[さいたま市] 2010-09-27 10:00 気温15.8度 降水量1.0mm 北北西の風3m
+[さいたま市] 2010-09-27 11:00 気温15.8度 降水量1.0mm 北北西の風3m
+[さいたま市] 2010-09-27 12:00 気温15.9度 降水量1.5mm 北北西の風3m
+[さいたま市] 2010-09-27 13:00 気温15.9度 降水量1.5mm 北北西の風3m
+[さいたま市] 2010-09-27 14:00 気温16.0度 降水量0.5mm 北北西の風4m
+[さいたま市] 2010-09-27 15:00 気温16.0度 降水量0.0mm 北北西の風4m
+[さいたま市] 2010-09-27 16:00 気温15.7度 降水量0.5mm 北北西の風3m
+[さいたま市] 2010-09-27 17:00 気温15.5度 降水量0.0mm 北西の風3m
+[さいたま市] 2010-09-27 18:00 気温15.7度 降水量0.5mm 北北西の風2m
+[さいたま市] 2010-09-27 19:00 気温15.7度 降水量0.5mm 北北西の風2m
+[さいたま市] 2010-09-27 20:00 気温15.9度 降水量0.0mm 北西の風2m
+[さいたま市] 2010-09-27 21:00 気温16.0度 降水量0.0mm 北北西の風2m
+[さいたま市] 2010-09-27 22:00 気温16.1度 降水量0.5mm 北西の風2m
+[さいたま市] 2010-09-27 23:00 気温16.0度 降水量3.5mm 北西の風2m
+</pre>
+<p>
+一日中雨。
+</p>
+<!-- section end -->
+</div>
+<!-- 2010/09/27 end -->
+
+
+
+<hr class="hide">
+<!-- 2010/09/28 start -->
+<h2><a name="20100928" href="201009c.html#20100928">2010-09-28 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="201009281" title="201009281" href="201009c.html#201009281">■</a> 
+[ntp] ntpq -p</h3>
+<p>
+ntpの状態を見るのにntpstatとかntptraceとかどれを使っていいやらよくわからない。<br>
+distroによってもあったりなかったりするので。<br>
+ntpqだとほとんどどこにでもあるようだ。<br>
+まあ、目的はちょっと違うかもしれないがだいたい自分の知りたい情報は出てくるのでこれでよし。
+</p>
+<!-- section end -->
+</div>
+<!-- 2010/09/28 end -->
+
+
+
+<hr class="hide">
+<!-- 2010/09/29 start -->
+<h2><a name="20100929" href="201009c.html#20100929">2010-09-29 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="201009291" title="201009291" href="201009c.html#201009291">■</a> 
+[Zsh] zshの小文字のpath</h3>
+<p>
+rvmがzshだと変な挙動になる原因は変数名に小文字のpathとか使ってるせい。<br>
+zshの小文字のpathはPATHの配列表現になっている。
+</p>
+<pre>
+% PATH=/bin:/usr/bin:/usr/local/bin
+% echo $path
+/bin /usr/bin /usr/local/bin
+% path=(/bin /usr/bin)
+% echo $PATH
+/bin:/usr/bin
+</pre>
+<p>
+local pathしちゃうとPATHが空になり、command not foundだらけになってしまう。
+</p>
+<p>
+bashでもzshでも動くスクリプトを書くときはpathという名前の変数は避けるように。
+</p>
+<!-- section end -->
+</div>
+<!-- 2010/09/29 end -->
+
+
+
+<hr class="hide">
+<!-- 2010/09/30 start -->
+<h2><a name="20100930" href="201009c.html#20100930">2010-09-30 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="201009301" title="201009301" href="201009c.html#201009301">■</a> 
+<a href="http://ccache.samba.org/">[Soft] 新旧ccache</a></h3>
+<p>
+2004年から開発が止まったままだったccacheがここにきて活発になってきてる。<br>
+メンテナが交代したからのようだ。<br>
+どうもスピード重視になったようで、3.0からはデフォルトでいろいろ変わっている。<br>
+その方針のためかcache fileが圧縮されなくなった。<br>
+<ul>
+<li>2.4ではデフォルト圧縮で環境変数CCACHE_NOCOMPRESSが設定されてれば圧縮しない。
+<li>3.0からはデフォルト無圧縮で環境変数CCACHE_COMPRESSが設定されてれば圧縮する。
+</ul>
+<p>
+という違いがある。両方指定されたどうなるかは確認してない。
+</p>
+<p>
+GB単位とかの巨大なプロジェクトじゃないとあまり体感できないが、<br>
+この変更は地味にいやらしい。
+</p>
+<!-- section end -->
+</div>
+<!-- 2010/09/30 end -->
+
+<hr>
+<div>
+<a href="201009b.html">&lt;Prev(,)</a> | 
+<a href="201010a.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

@@ -1,0 +1,286 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2012-9-b</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="201209a.html">
+<link rel="next" href="201209c.html">
+
+<link rel="stylesheet" type="text/css" href="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.css">
+<script type="text/javascript" src="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.js"></script>
+<script type="text/javascript">
+<!--       
+$(document).ready(function() {
+  prettyPrint();
+});
+-->
+</script>
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2012年9月中旬〜</p>
+<hr>
+<div>
+<a href="201209a.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="201209c.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2012/09/11 start -->
+<h2><a name="20120911" href="201209b.html#20120911">2012-09-11 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="201209111" title="201209111" href="201209b.html#201209111">■</a> 
+<a href="http://dan.egnor.name/xml2/">xml2</a></h3>
+<p>
+xmlをフラットなテキストファイルに変換するプログラム。なかなか便利。<br>
+RSSだとこんな感じに変換される。
+</p>
+<pre>
+% head -n11 index.rdf
+&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
+&lt;?xml-stylesheet href=&quot;diary.xsl&quot; type=&quot;text/xsl&quot;?&gt;
+&lt;rdf:RDF xmlns=&quot;http://purl.org/rss/1.0/&quot;
+  xmlns:rdf=&quot;http://www.w3.org/1999/02/22-rdf-syntax-ns#&quot;
+  xmlns:content=&quot;http://purl.org/rss/1.0/modules/content/&quot;
+  xmlns:dc=&quot;http://purl.org/dc/elements/1.1/&quot;
+  xmlns:image=&quot;http://purl.org/rss/1.0/modules/image/&quot;
+  xmlns:slash=&quot;http://purl.org/rss/1.0/modules/slash/&quot;
+  xmlns:sy=&quot;http://purl.org/rss/1.0/modules/syndication/&quot;
+  xmlns:taxo=&quot;http://purl.org/rss/1.0/modules/taxonomy/&quot;
+  xmlns:trackback=&quot;http://madskills.com/public/xml/rss/module/trackback/&quot;&gt;
+% xml2 &lt; index.rdf | head                                
+/?xml-stylesheet=href=&quot;diary.xsl&quot; type=&quot;text/xsl&quot;
+/rdf:RDF/@xmlns=http://purl.org/rss/1.0/
+/rdf:RDF/@xmlns:rdf=http://www.w3.org/1999/02/22-rdf-syntax-ns#
+/rdf:RDF/@xmlns:content=http://purl.org/rss/1.0/modules/content/
+/rdf:RDF/@xmlns:dc=http://purl.org/dc/elements/1.1/
+/rdf:RDF/@xmlns:image=http://purl.org/rss/1.0/modules/image/
+/rdf:RDF/@xmlns:slash=http://purl.org/rss/1.0/modules/slash/
+/rdf:RDF/@xmlns:sy=http://purl.org/rss/1.0/modules/syndication/
+/rdf:RDF/@xmlns:taxo=http://purl.org/rss/1.0/modules/taxonomy/
+/rdf:RDF/@xmlns:trackback=http://madskills.com/public/xml/rss/module/trackback/
+</pre>
+<p>
+各アイテムのタイトルを取り出したければgrepでできてしまう。
+</p>
+<pre>
+% xml2 &lt; index.rdf | grep '/item/title='      
+/rdf:RDF/item/title=CygwinのGNU coreutils sortが大文字小文字を無視してしまう
+/rdf:RDF/item/title=Google ChromeでHTTP Headerを見る
+/rdf:RDF/item/title=twitterのRSS機能
+/rdf:RDF/item/title=nasneが届いた
+/rdf:RDF/item/title=nasneを発注
+</pre>
+<p>
+2xmlでこの形式を元のxmlに戻すこともできるらしいが、結構あやしい。<br>
+他にhtml2やcsv2もある。特にhtml2なんか使い出がある。<br>
+まあ厳しいのでいいかげんなHTMLは警告出まくるが。
+</p>
+<!-- section end -->
+</div>
+<!-- 2012/09/11 end -->
+
+
+
+<hr class="hide">
+<!-- 2012/09/12 start -->
+<h2><a name="20120912" href="201209b.html#20120912">2012-09-12 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="201209121" title="201209121" href="201209b.html#201209121">■</a> 
+svn export的な動作をgitで</h3>
+<p>
+git cloneせずにgit archiveでtarを掃き出させてtar xで展開すればいいわけだが、<br>
+相手がhttpの場合はサーバ側のgitが対応していないとだめ。<br>
+古いのが結構残ってたりするが、こればっかりはこちらからはどうしようもない。
+</p>
+<!-- section end -->
+</div>
+<!-- 2012/09/12 end -->
+
+
+
+<hr class="hide">
+<!-- 2012/09/13 start -->
+<h2><a name="20120913" href="201209b.html#20120913">2012-09-13 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="201209131" title="201209131" href="201209b.html#201209131">■</a> 
+Xfceにしたらハングしなくなった</h3>
+<p>
+Ubuntu 12.04からやたらとXが死ぬとかOSごとお亡くなりになるとか頻繁に起きていたが、<br>
+Xfceにしてからまったく起きなくなった。<br>
+あと、w3mも画像が表示できかなったけどこれもできるようになった。<br>
+workspaceとかショートカットキーとかそのあたりが設定できれば十分だよなあ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2012/09/13 end -->
+
+
+
+<hr class="hide">
+<!-- 2012/09/14 start -->
+<h2><a name="20120914" href="201209b.html#20120914">2012-09-14 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="201209141" title="201209141" href="201209b.html#201209141">■</a> 
+svn:externalsの罠</h3>
+<p>
+svnで-rでリビジョンを指定してもsvn:externalsの先がHEADだったりすると、<br>
+そっちだけ最新を取ってきてしまって気づかないことがあるので注意。<br>
+日時を指定したときは伝わってもいい気がするが、<br>
+元々-rはリビジョンだからそんな気遣いはないようだ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2012/09/14 end -->
+
+
+
+<hr class="hide">
+<!-- 2012/09/15 start -->
+<h2><a name="20120915" href="201209b.html#20120915">2012-09-15 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="201209151" title="201209151" href="201209b.html#201209151">■</a> 
+gotoにるりま検索も追加</h3>
+<p>
+<a href="201104c.html#201104271">goto</a>のルールにあてはまらないものはるりま検索へ飛ばすようにした。<br>
+元のGoogleでruby関連MLを検索したときはg:で。
+</p>
+<pre>
+RewriteEngine on
+RewriteBase /~eban/
+RewriteRule ^$ index.html [L,QSA]
+RewriteRule ruby-changes:\s*(\d+)\s* http://archive.good-day.net/~w3ml/w3ml.cgi/ruby-changes/msg/$1 [L,QSA]
+RewriteRule (ruby-\w+):\s*(\d+)\s* http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/$1/$2 [L,QSA]
+RewriteRule ^#?(\d+) http://redmine.ruby-lang.org/issues/$1 [L,QSA]
+RewriteRule ^r(\d+) http://svn.ruby-lang.org/cgi-bin/viewvc.cgi?view=rev&amp;revision=$1 [L,QSA]
+RewriteRule ruby-(\w+)$ http://blade.nagaokaut.ac.jp/ruby/ruby-$1/index.shtml [L,QSA]
+RewriteRule ^g:\s*(.*)$ http://www.google.com/search?hl=ja&amp;lr=lang_ja&amp;ie=utf-8&amp;q=$1+site:blade.nagaokaut.ac.jp+inurl:blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ [L,QSA]
+RewriteRule ^(?:rurema:\s*)?(.+)$ http://rurema.clear-code.com/query:$1/ [L,QSA]
+</pre>
+<p>
+ああ、これってhelp.htmlを用意すればいいんだな。後で考えよう。
+</p>
+<!-- section end -->
+</div>
+<!-- 2012/09/15 end -->
+
+
+
+<hr class="hide">
+<!-- 2012/09/16 start -->
+<h2><a name="20120916" href="201209b.html#20120916">2012-09-16 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="201209161" title="201209161" href="201209b.html#201209161">■</a> 
+グインが全部見つかった!</h3>
+<p>
+グインもかなりスキャンしたので数えてみたら114冊になった。<br>
+残りを数えたら16冊。おお、ちゃんと130冊全部ある！<br>
+外伝は21冊で残り1冊。これもちゃんと全部ある！<br>
+いやー長かったな。今月中にはグインも全部終わりそうだ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2012/09/16 end -->
+
+
+
+<hr class="hide">
+<!-- 2012/09/17 start -->
+<h2><a name="20120917" href="201209b.html#20120917">2012-09-17 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="201209171" title="201209171" href="201209b.html#201209171">■</a> 
+xsaneで赤をdrop</h3>
+<p>
+xsaneでウィンドウ-詳細オプションを表示-Dropout color-赤にすれば古い赤茶けた本に有効。<br>
+というわけで、グイン全巻スキャン完了した。それとスキャン数も800冊も越えた。
+</p>
+<!-- section end -->
+</div>
+<!-- 2012/09/17 end -->
+
+
+
+<hr class="hide">
+<!-- 2012/09/18 start -->
+<h2><a name="20120918" href="201209b.html#20120918">2012-09-18 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="201209181" title="201209181" href="201209b.html#201209181">■</a> 
+草枕</h3>
+<p>
+新潮文庫140円。1977年。ものすごく赤茶けてる。考えてみると青空文庫にあるんだよなあ。<br>
+まだ裁断してないことだしわざわざスキャンする必要ないか。<br>
+古い紙だと2枚重なって流れてきたり、すぐ異常起こして止まってしまう。<br>
+異常になるとxsaneを立ち上げなおさないとだめで、<br>
+立ち上げなおすとなぜかdpiが50へ戻されるのでいちいち再設定しないといけない。<br>
+バグっぽいが仕様なんだろうか。
+</p>
+<!-- section end -->
+</div>
+<!-- 2012/09/18 end -->
+
+<hr>
+<div>
+<a href="201209a.html">&lt;Prev(,)</a> | 
+<a href="201209c.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

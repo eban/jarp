@@ -1,0 +1,679 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2003-2-c</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="200302b.html">
+<link rel="next" href="200303a.html">
+
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2003年2月下旬〜</p>
+<hr>
+<div>
+<a href="200302b.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="200303a.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2003/02/21 start -->
+<h2><a name="20030221" href="200302c.html#20030221">2003-02-21 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="200302211" title="200302211" href="200302c.html#200302211">■</a> 
+<a href="http://www.fefe.de/dietlibc/">[Linux] diet libc 0.22</a></h3>
+<p>
+更新。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200302212" title="200302212" href="200302c.html#200302212">■</a> 
+[Ruby] require &quot;socket.so&quot; with static linked socket extention (PR#398)</h3>
+<p>
+というわけでdjgppのバイナリはここ1ヶ月ほど実行できないものになってた。
+が、誰も文句を言う人がいないというのもなんだな。
+</p>
+<!-- section end -->
+</div>
+<!-- 2003/02/21 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/02/22 start -->
+<h2><a name="20030222" href="200302c.html#20030222">2003-02-22 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="200302221" title="200302221" href="200302c.html#200302221">■</a> 
+<a href="http://raa.ruby-lang.org/project/xml-configfile/">[Ruby] xml-configfile 0.8.0</a></h3>
+<p>
+更新。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200302222" title="200302222" href="200302c.html#200302222">■</a> 
+<a href="200302b.html#200302201">[Ruby] PragProgRuby用の拡張ライブラリをMinGWで作る</a></h3>
+<p>
+1.6は簡単だった。1.8で試そうとしたらPragProgRubyはまだ1.7.3だった。
+で、同じようにrbconfig.rbをでっちあげて、win32oleで試してみるとリンクでこける。
+</p>
+<pre>
+Cannot export .idata$4: symbol not found
+Cannot export .idata$5: symbol not found
+Cannot export .idata$6: symbol not found
+Cannot export .text: symbol not found
+Cannot export msvcrt-ruby17_NULL_THUNK_DATA: symbol not found
+</pre>
+<p>
+どうもmsvcrt-ruby17.libをリンクするとこうなるようだ。
+1.6だと大丈夫なのはdllwrapだからか。くー。
+msvcrt-ruby17.libからlibmsvcrt-ruby17.dll.aを作るのは簡単だから、
+別に用意するかな。
+</p>
+<pre>
+% printf 'NAME msvcrt-ruby17.dll\nEXPORTS\n' &gt;x.def
+% nm -g --defined msvcrt-ruby17.lib |\
+  sed -n '/00000000 I __imp__/s///p' &gt;&gt;x.def
+% dlltool --def=x.def --output-lib=libmsvcrt-ruby17.dll.a
+</pre>
+<p>
+てな感じで。これを$(libdir)へコピーすればokだ。
+あとはインストーラ作って1.8で試してみよう。
+</p>
+<!-- section end -->
+</div>
+<!-- 2003/02/22 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/02/23 start -->
+<h2><a name="20030223" href="200302c.html#20030223">2003-02-23 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="200302231" title="200302231" href="200302c.html#200302231">■</a> 
+<a href="200302c.html#200302222">[Ruby][LD] --export-all-symbols</a></h3>
+<p>
+メッセージをよく見るべきだった。
+</p>
+<pre>
+Cannot export .idata$4: symbol not found
+</pre>
+<p>
+なんだからexportが関連してる。つまり--export-all-symbolsがいけないわけだ。
+これを外せばちゃんとDLLを作ることができた。
+というわけで、CONFIG[&quot;LDSHARED&quot;]から削除。
+問題はerubyがdefファイルを作らないからエラーになることぐらいかな。
+</p>
+<pre>
+--exclude-sym='.idata$4,.idata$5,.idata$6,.text,^?msvcrt-ruby17_NULL_THUNK_DATA'
+</pre>
+<p>
+をldへ渡せれば--export-all-symbolsのままでもいいが、
+^?は実はDELコードなのと、gccから,を含んだ引数をldへどうやって渡せばいいかわからん。
+さすがにこんなところまでquoteできるようにはなってない。
+あ、何がまずいかというと、たとえば
+</p>
+<pre>
+-Wl,--exclude-sym='.idata$4,.idata$5'
+</pre>
+<p>
+とgccの引数で指定するとldには
+</p>
+<pre>
+--exclude-sym=.idata$4 .idata$5
+</pre>
+<p>
+が渡ってしまう。やっぱ個々にばらすしかないか。
+</p>
+<pre>
+-Wl,--exclude-sym='.idata$4',--exclude-sym='.idata$5'
+</pre>
+<p>
+ならokだった。くー。美しくないがこれでいこう。
+</p>
+
+<p>
+と思ったら$はmakeに食われてしまう。2個必要だ。
+msvcrt-ruby17_NULL_THUNK_DATAもversionに合わせて変更しなきゃいけないな。
+</p>
+
+<p>
+そうそう。msvcrt-ruby17.dllを直接リンクすると問題ないんだよね。
+ってことは-L$(bindir)が最初に来るようにすればいいだけの話か？
+DLDFLAGSに追加しよう。なんだいけたじゃん。
+</p>
+
+<p>
+1.6で試すとbindirがMakefileで定義されてない。
+しょうがないから$(prefix)/binで代用。なかなかうまくいかないもんだな。
+いやいや、1.6はdllwrapだから追加しなくてもいい。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200302232" title="200302232" href="200302c.html#200302232">■</a> 
+[Music] 椎名林檎</h3>
+<p>
+<a href="http://www.nack5.co.jp/">NACK5</a>を聞いていると椎名林檎の例のアルバムが今日発売らしい。
+「茎」を中心にシンメトリになっているということなので、
+曲目を調べてみる。
+</p>
+<pre>
+ 1.宗教
+ 2.ドッペルゲンガー
+ 3.迷彩
+ 4.おだいじに
+ 5.やっつけ仕事
+ 6.茎
+ 7.とりこし苦労
+ 8.おこのみで
+ 9.意識
+10.ポルターガイスト
+11.葬列
+</pre>
+<p>
+なるほど。
+</p>
+<pre>
+漢字
+カタカナ
+漢字
+ひらがな
+ひらがな+漢字
+漢字
+ひらがな+漢字
+ひらがな
+漢字
+カタカナ
+漢字
+</pre>
+<p>
+でしかもちゃんと対応する文字数も同じだ。
+CCCDだから買うことはないが。
+</p>
+
+<p>
+気になって他のアルバムも調べたら「勝訴ストリップ」もシンメトリだ。
+文字数を見てみると一部例外がある。ということは今回はそこも徹底したわけだ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200302233" title="200302233" href="200302c.html#200302233">■</a> 
+<a href="http://shfs.sf.net/">[Linux] SHFS 0.29-2</a></h3>
+<p>
+これは面白い。
+</p>
+<pre>
+SHFS is a simple and easy to use Linux kernel (2.4) module which
+allows you to mount remote filesystems using plain shell (ssh/rsh)
+connection. It supports some nice features like number of different
+caches for access speedup, target system optimisations, etc.
+</pre>
+<p>
+インストールすれば
+</p>
+<pre>
+% mkdir ~/helium
+% sudo shfsmount -u watanabe helium/home/eban ~/helium
+</pre>
+<p>
+でアクセスできるようになる。-oでuidとgidを指定すればファイルのownerも問題なし。
+でも頻繁に
+</p>
+<pre>
+% ls             
+ls: .: Stale NFS file handle
+</pre>
+<p>
+となってしまうなあ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200302234" title="200302234" href="200302c.html#200302234">■</a> 
+<a href="http://lufs.sf.net/">[Linux] LUFS Userland Filesystem</a></h3>
+<p>
+そういえばLUFSというのも
+<a href="http://freshmeat.net/">freshmeat</a>でよく見かける。READMEには
+</p>
+<pre>
+sshfs, ftpfs, localfs, locasefs, gnutellafs, gvfs, cardfs, cefs
+</pre>
+<p>
+とある。sshfsを試したがSEGVになってしまった。うーむ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200302235" title="200302235" href="200302c.html#200302235">■</a> 
+[Mail] 419事件</h3>
+<p>
+特命リサーチ200X-2を見てたらナイジェリアからのspamで騙される日本人が増えてるらしい。
+というわけで今月のspamを調べてみた。
+</p>
+<pre>
+CMAIL_DELIMITER = &quot;\C-_\C-L\n&quot;
+
+ARGV.each do |file|
+  print File.basename(file), ':'
+  total = 0
+  nigeria = 0
+  open(file) do |fh|
+    while message = fh.gets(CMAIL_DELIMITER)
+      total += 1
+      nigeria += 1 if message =~ /nigeria/i
+    end
+  end
+  print nigeria, '/', total, &quot;\n&quot;
+end
+</pre>
+<p>
+を実行してみると
+</p>
+<pre>
+spam:40/368
+</pre>
+<p>
+と出た。1割強もあるのか。今月も相変わらずのペースで来てるねえ。
+</p>
+
+<p>
+ruby-bugのSpamAssassinの結果をよく見ると
+</p>
+<pre>
+BODY: Nigerian scam key phrase
+</pre>
+<p>
+とあった。
+SpamAssassinがspamかもしれないと判断したものは今のところ100%spamだ。
+そろそろruby-bugsへ流さなくてもいいんじゃないかなあ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2003/02/23 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/02/24 start -->
+<h2><a name="20030224" href="200302c.html#20030224">2003-02-24 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="200302241" title="200302241" href="200302c.html#200302241">■</a> 
+[w3m] ruby-ml.cgi</h3>
+<p>
+urimethodmapを使って w3m ruby-list:10000 と実行すると
+</p>
+<pre>
+http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-list/10000
+</pre>
+<p>
+へ飛ぶlocal cgiを書いてみようと思い立つ。が、実質1行だった。
+</p>
+<pre>
+% cat ~/.w3m/cgi-bin/ruby-ml.cgi
+#! /bin/sh
+
+blade='http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby'
+echo w3m-control: GOTO $blade/${QUERY_STRING/://}
+</pre>
+<p>
+$QUERY_STRINGには ruby-list:10000 が入っているので:を/に変換している。sedを使う必要もなし。
+あとは~/.w3m/urimethodmapに
+</p>
+<pre>
+ruby-list: file:///cgi-bin/ruby-ml.cgi?%s
+ruby-dev: file:///cgi-bin/ruby-ml.cgi?%s
+ruby-ext: file:///cgi-bin/ruby-ml.cgi?%s
+ruby-math: file:///cgi-bin/ruby-ml.cgi?%s
+ruby-talk: file:///cgi-bin/ruby-ml.cgi?%s
+ruby-core: file:///cgi-bin/ruby-ml.cgi?%s
+</pre>
+<p>
+を追加すればokだ。
+ruby-ml.cgiは~/.w3m/configのcgi_binで指定したディレクトリに置く。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200302242" title="200302242" href="200302c.html#200302242">■</a> 
+[w3m] raa.cgi</h3>
+<p>
+raaも同じように作れる。
+</p>
+<pre>
+#! /bin/sh
+
+url='http://raa.ruby-lang.org'
+name=${QUERY_STRING##*:}
+echo w3m-control: GOTO $url/${name:+list.rhtml?name=$name}
+</pre>
+<p>
+これでw3m raa: なら http://raa.ruby-lang.org/ へ、w3m raa:fooなら http://raa.ruby-lang.org/list.rhtml?foo へ飛ぶようになる。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200302243" title="200302243" href="200302c.html#200302243">■</a> 
+<a href="http://raa.ruby-lang.org/project/nkf192-ruby/">[Ruby] nkf192-ruby 0.1.0</a></h3>
+<p>
+更新。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200302244" title="200302244" href="200302c.html#200302244">■</a> 
+<a href="http://raa.ruby-lang.org/project/rexml-stable/">[Ruby] REXML 2.4.7</a></h3>
+<p>
+更新。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200302245" title="200302245" href="200302c.html#200302245">■</a> 
+[w3m] ruby-ml.cgi (2)</h3>
+<p>
+やっぱこっちも % w3m ruby-list: でアクセスしたくなった。
+</p>
+<pre>
+#! /bin/sh
+
+blade='http://blade.nagaokaut.ac.jp'
+
+ml=${QUERY_STRING/://}
+case &quot;$ml&quot; in
+  */) echo w3m-control: GOTO $blade/ruby/${ml}index.shtml;;
+  *) echo w3m-control: GOTO $blade/cgi-bin/scat.rb/ruby/$ml;;
+esac
+</pre>
+
+<p>
+ってなぜRubyで書かない？
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200302246" title="200302246" href="200302c.html#200302246">■</a> 
+<a href="200302c.html#200302234">[Linux] LUFS Userland Filesystem</a></h3>
+<p>
+カーネルをmakeしたときとは違うversionのGCC 3.2.2でmakeしたのがまずかった気がする。
+GCC 2.95.3でmakeしなおそう。
+</p>
+<pre>
+/usr/lib/liblufs-sshfs.so: undefined symbol: cerr
+</pre>
+<p>
+なかなか上手くいかない。
+</p>
+<!-- section end -->
+</div>
+<!-- 2003/02/24 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/02/25 start -->
+<h2><a name="20030225" href="200302c.html#20030225">2003-02-25 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="200302251" title="200302251" href="200302c.html#200302251">■</a> 
+<a href="http://raa.ruby-lang.org/project/druby/">[Ruby] druby 2.0.1</a></h3>
+<p>
+更新。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200302252" title="200302252" href="200302c.html#200302252">■</a> 
+<a href="http://tamura.tdiary.net/20030225.html#p03">[Ruby] 採用の基準</a></h3>
+<p>
+自分で使うもの。リクエストされたもの。RAAでよく見かけるもの。ぐらいかな。
+他にライブラリが必要だと優先順位は下がります。あとサイズが大きいのも。
+ADSLになったからサイズはもうどうでもいいけど。
+</p>
+
+<p>
+<a href="http://raa.ruby-lang.org/project/ruby-js/">Ruby/JS</a>は明日にでも。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200302253" title="200302253" href="200302c.html#200302253">■</a> 
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-dev/19657">[Ruby] Ruby 1.8.0 preview2</a></h3>
+<p>
+来週の月曜日だから今週末にはprefix対応を入れないと。
+</p>
+<!-- section end -->
+</div>
+<!-- 2003/02/25 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/02/26 start -->
+<h2><a name="20030226" href="200302c.html#20030226">2003-02-26 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="200302261" title="200302261" href="200302c.html#200302261">■</a> 
+<a href="http://raa.ruby-lang.org/project/ruby-js/">[Ruby] Ruby/JS 0.0.2</a></h3>
+<p>
+更新。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200302262" title="200302262" href="200302c.html#200302262">■</a> 
+[Mail] Bayesian Filtering</h3>
+<p>
+今月も終わりに近づいてかなりspamもたまったので
+<a href="http://raa.ruby-lang.org/project/bsproc/">bsproc</a>を使ってBayesian Filteringしてみよう。
+とりあえず日本語とか考えずに今月手で整理したspamとruby-talkでindexを作る。
+</p>
+<pre>
+% bsproc -i -t ~/cmail/spam -c ~/cmail/ruby/ruby-talk.*
+</pre>
+<p>
+現在~/cmail/spamは417通。え？もう400越えてるの？それはそれとして、
+このindexを使って~/cmail/spamをばらばらにして試すと365通がspamと認識された。
+spamじゃないと認識されたのは、日本語、ドイツ語、何語だかわからないのと、
+非常に短かいもの。なかなか大したもんだ。
+不思議なことに韓国語とか中国語のspamは全部spamと認識されてる。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2003/02/26 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/02/27 start -->
+<h2><a name="20030227" href="200302c.html#20030227">2003-02-27 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="200302271" title="200302271" href="200302c.html#200302271">■</a> 
+[Mail][Ruby] bsproc</h3>
+<p>
+indexを作るときにやけに速かったなと感じたので、
+コマンドラインを確認してみた。
+</p>
+<pre>
+% bsproc -i -t ~/cmail/spam -c ~/cmail/ruby/ruby-talk.*
+</pre>
+<p>
+うーむ。-cはこれだと最初にマッチしたものだけが有効になってしまう。
+結局spam(417通)とruby-talk.0007(221通)だけを処理してたのか。
+面倒なのでzshの機能を使い
+</p>
+<pre>
+% bsproc -i -t ~/cmail/spam -c =(cat ~/cmail/ruby/ruby-talk.*)
+</pre>
+<p>
+としてみたら、Out of Memoryになってしまった。
+とりあえずここ半年ぐらいで手を打つことにしよう。
+</p>
+<pre>
+% bsproc -i -t ~/cmail/spam -c =(cat ~/cmail/ruby/ruby-talk.{021*,03*})
+</pre>
+<p>
+で作ったindexでspamの検査すると416/420になった。おぉ。
+検出できなかったのは、
+何語かわからないもの、生のSJIS、普通の日本語のspamが2通だった。
+</p>
+
+<p>
+今月のruby-listで試すと7通がspamと認識された。
+見た感じではjavascriptとかhtmlを含んだメールは高くなってるようだ。
+verboseモードで確認してみると
+</p>
+<pre>
+List-Owner 0.05215419501133787
+$$$ 0.99
+List-Unsubscribe 0.07522123893805309
+List-Id 0.05215419501133787
+List-Software 0.05215419501133787
+Posted 0.05215419501133787
+$B$ 0.99
+ISO-2022-JP 0.9114456709487061
+iso-2022-jp 0.9475206289558674
+$7$ 0.99
+List-Post 0.06487695749440717
+yahoo.co.jp 0.9703483010569625
+unsubscribe 0.07522123893805309
+List-Help 0.06487695749440717
+$5$$ 0.99
+</pre>
+<p>
+と、日本語を構成してる要素がことごとく高くなってしまっている。
+やはりなにも考えないのは無理がある。
+当然といえば当然の結果ではあるが、
+yahoo.co.jpが高くなっているのには笑った。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200302272" title="200302272" href="200302c.html#200302272">■</a> 
+<a href="http://raa.ruby-lang.org/project/ruby-js/">[Ruby] Ruby/JS 0.0.3</a></h3>
+<p>
+更新。
+</p>
+<!-- section end -->
+</div>
+<!-- 2003/02/27 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/02/28 start -->
+<h2><a name="20030228" href="200302c.html#20030228">2003-02-28 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="200302281" title="200302281" href="200302c.html#200302281">■</a> 
+<a href="http://znz.s1.xrea.com/t/?date=20030227#p01">[Ruby] Ruby/JS</a></h3>
+<p>
+rubyのprefixも/tmp/$USERということなら
+</p>
+<pre>
+% /tmp/$USER/bin/ruby extconf.rb --with-js-dir=/tmp/$USER
+</pre>
+<p>
+で、いけそうな気がします。
+</p>
+<!-- section end -->
+</div>
+<!-- 2003/02/28 end -->
+
+<hr>
+<div>
+<a href="200302b.html">&lt;Prev(,)</a> | 
+<a href="200303a.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

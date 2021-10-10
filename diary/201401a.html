@@ -1,0 +1,392 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2014-1-a</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="201312c.html">
+<link rel="next" href="201401b.html">
+
+<link rel="stylesheet" type="text/css" href="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.css">
+<script type="text/javascript" src="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.js"></script>
+<script type="text/javascript">
+<!--       
+$(document).ready(function() {
+  prettyPrint();
+});
+-->
+</script>
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2014年1月上旬〜</p>
+<hr>
+<div>
+<a href="201312c.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="201401b.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2014/01/01 start -->
+<h2><a name="20140101" href="201401a.html#20140101">2014-01-01 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="201401011" title="201401011" href="201401a.html#201401011">■</a> 
+irbの補完を1回のタブで済ます方法</h3>
+<p>
+~/.irbrcに require 'irb/completion' と書いておけば補完できるが、<br>
+候補が複数ある場合はタブを2回押さないといけない。たとえば
+</p>
+<pre>
+% irb
+irb(main):001:0&gt; &quot;hoge&quot;.u&lt;TAB&gt;&lt;TAB&gt;
+&quot;hoge&quot;.unpack      &quot;hoge&quot;.untrust     &quot;hoge&quot;.upcase      &quot;hoge&quot;.upto        
+&quot;hoge&quot;.untaint     &quot;hoge&quot;.untrusted?  &quot;hoge&quot;.upcase!     
+irb(main):001:0&gt; 
+</pre>
+<p>
+とこんな感じに。これを1回のタブを押すだけで候補を出すようにするには~/.inpurcに
+</p>
+<pre>
+set show-all-if-ambiguous on
+</pre>
+<p>
+と書いておけばいい。<br>
+ただinputrcなのでこのままではreadlineを使ってるソフトは全部そのような挙動になる。<br>
+bashとかgdbとか。Rubyの中だけで有効にするには~/.inpurcで
+</p>
+<pre>
+$if Ruby
+  set show-all-if-ambiguous on
+$endif
+</pre>
+<p>
+のように条件を指定する。アプリケーション毎にBash, Gdbのような名前が設定されている。
+</p>
+<!-- section end -->
+</div>
+<!-- 2014/01/01 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/01/02 start -->
+<h2><a name="20140102" href="201401a.html#20140102">2014-01-02 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="201401021" title="201401021" href="201401a.html#201401021">■</a> 
+<a href="http://manpages.ubuntu.com/manpages/raring/man1/aha.1.html">aha - Ansi HTML Adapter</a></h3>
+<p>
+ahoってコマンドがあるとかないとか聞いて探したらなかったけど、ahaなんてコマンドが見つかった。<br>
+man見たらこれは面白い。エスケープシーケンスの色付きテキストをHTMLへ変換してくれるらしい。<br>
+</p>
+<p>
+さっそく先日のクリスマスツリーでやってみる。
+</p>
+<pre>
+% bash xmas.sh | aha -n &gt; xmas.html
+</pre>
+<p>
+HTMLを表示するとこんな感じ。
+</p>
+<pre>
+
+                    <span style="color:olive;"> ★
+                    </span><span style="color:green;">／＼
+                   ／</span><span style="color:teal;"> </span><span style="color:blue;">&amp;</span><span style="color:green;">＼
+                  ／</span><span style="color:olive;">⁂</span><span style="color:gray;"> </span><span style="color:teal;">@</span><span style="color:purple;"> </span><span style="color:green;">＼
+                 ／</span><span style="color:blue;">⸮</span><span style="color:gray;"> </span><span style="color:purple;">⸮</span><span style="color:teal;">｡⸛</span><span style="color:purple;">i</span><span style="color:green;">＼
+                ／@</span><span style="color:olive;">  </span><span style="color:teal;">  </span><span style="color:olive;">｡</span><span style="color:purple;"> </span><span style="color:teal;">⁂</span><span style="color:green;">＼
+               ／</span><span style="color:blue;">  </span><span style="color:teal;"> </span><span style="color:purple;"> </span><span style="color:gray;">  </span><span style="color:olive;"> </span><span style="color:teal;"> </span><span style="color:purple;"> </span><span style="color:blue;"> </span><span style="color:green;">＼
+              ／</span><span style="color:olive;">⸮⸮</span><span style="color:purple;"> </span><span style="color:gray;"> </span><span style="color:purple;"> </span><span style="color:teal;">&amp;</span><span style="color:gray;">  </span><span style="color:blue;">@</span><span style="color:olive;">&amp;</span><span style="color:teal;">⁂</span><span style="color:blue;"> </span><span style="color:green;">＼
+             ／</span><span style="color:blue;"> </span><span style="color:olive;">&amp;</span><span style="color:purple;"> </span><span style="color:teal;"> </span><span style="color:purple;"> </span><span style="color:blue;">  </span><span style="color:teal;">⁂</span><span style="color:olive;"> </span><span style="color:purple;"> </span><span style="color:olive;">   </span><span style="color:purple;"> </span><span style="color:green;">＼
+            ／</span><span style="color:olive;">⸛</span><span style="color:purple;"> </span><span style="color:gray;"> </span><span style="color:blue;"> </span><span style="color:purple;"> </span><span style="color:blue;"> </span><span style="color:olive;">  &amp;</span><span style="color:teal;">⁂</span><span style="color:purple;"> </span><span style="color:teal;">⸮</span><span style="color:purple;"> </span><span style="color:olive;"> </span><span style="color:purple;">⸛</span><span style="color:teal;"> </span><span style="color:green;">＼
+           ／ </span><span style="color:purple;">⁂</span><span style="color:teal;">@</span><span style="color:olive;"> </span><span style="color:purple;">  </span><span style="color:olive;">&amp;</span><span style="color:purple;">   </span><span style="color:teal;"> </span><span style="color:olive;">&amp;</span><span style="color:purple;">⁂</span><span style="color:gray;">i</span><span style="color:blue;"> </span><span style="color:teal;">&amp;</span><span style="color:purple;">@｡</span><span style="color:green;">＼
+          ／</span><span style="color:blue;"> </span><span style="color:gray;"> </span><span style="color:olive;">ii</span><span style="color:gray;"> </span><span style="color:purple;"> </span><span style="color:blue;">i@</span><span style="color:gray;">⁂⸮⁂&amp;</span><span style="color:purple;"> ⁂ </span><span style="color:blue;">｡⁂</span><span style="color:gray;"> </span><span style="color:teal;"> </span><span style="color:blue;">@</span><span style="color:green;">＼
+         ／</span><span style="color:purple;"> </span><span style="color:olive;">｡  </span><span style="color:purple;">⁂ </span><span style="color:gray;">｡⁂</span><span style="color:blue;">｡</span><span style="color:purple;"> </span><span style="color:blue;"> ⸛</span><span style="color:olive;">⁂</span><span style="color:purple;">⸮</span><span style="color:gray;">⁂</span><span style="color:purple;"> </span><span style="color:blue;"> </span><span style="color:teal;"> </span><span style="color:purple;"> </span><span style="color:gray;">⸮⸛ </span><span style="color:green;">＼
+        ／</span><span style="color:gray;"> </span><span style="color:blue;"> </span><span style="color:teal;"> </span><span style="color:purple;">⸛</span><span style="color:blue;">i</span><span style="color:gray;">  </span><span style="color:purple;"> @</span><span style="color:teal;"> </span><span style="color:gray;">⸮@⁂ ⸮</span><span style="color:blue;"> </span><span style="color:purple;">｡</span><span style="color:olive;">   </span><span style="color:gray;"> </span><span style="color:teal;"> </span><span style="color:blue;"> </span><span style="color:teal;">⁂</span><span style="color:green;">＼
+       ／｡</span><span style="color:teal;">⸛ </span><span style="color:olive;">  i</span><span style="color:blue;"> </span><span style="color:olive;">&amp;</span><span style="color:teal;"> </span><span style="color:gray;">⸛ </span><span style="color:teal;"> </span><span style="color:blue;">i </span><span style="color:purple;">⸛</span><span style="color:teal;">&amp;</span><span style="color:gray;">i </span><span style="color:olive;">⸮&amp;</span><span style="color:gray;">&amp;</span><span style="color:blue;"> i</span><span style="color:purple;">｡</span><span style="color:olive;"> ⸛</span><span style="color:green;">＼
+      ／</span><span style="color:purple;">⁂i⁂⁂</span><span style="color:olive;">&amp;</span><span style="color:purple;">&amp;</span><span style="color:teal;">i⁂</span><span style="color:blue;">  </span><span style="color:teal;"> </span><span style="color:olive;">⸛ </span><span style="color:gray;">｡</span><span style="color:blue;">   </span><span style="color:teal;">｡ </span><span style="color:blue;"> </span><span style="color:olive;">⁂ </span><span style="color:gray;">  </span><span style="color:olive;"> </span><span style="color:teal;">  </span><span style="color:purple;">⸛</span><span style="color:green;">＼
+     ／</span><span style="color:blue;"> </span><span style="color:gray;">  </span><span style="color:purple;"> </span><span style="color:olive;"> </span><span style="color:teal;"> </span><span style="color:blue;"> </span><span style="color:teal;"> </span><span style="color:purple;"> ⁂</span><span style="color:blue;"> </span><span style="color:purple;"> </span><span style="color:blue;"> i</span><span style="color:teal;">  </span><span style="color:blue;"> </span><span style="color:gray;"> </span><span style="color:blue;"> @ </span><span style="color:purple;"> ｡</span><span style="color:teal;"> ｡</span><span style="color:gray;">  </span><span style="color:blue;">@</span><span style="color:olive;"> </span><span style="color:gray;">&amp;</span><span style="color:green;">＼
+    ／</span><span style="color:olive;"> </span><span style="color:blue;"> ⸛ </span><span style="color:gray;">&amp;</span><span style="color:purple;">⸛</span><span style="color:gray;"> </span><span style="color:teal;">@</span><span style="color:olive;">｡</span><span style="color:purple;">   ｡ ⸮</span><span style="color:gray;"> </span><span style="color:olive;">&amp;</span><span style="color:teal;"> </span><span style="color:purple;">｡@</span><span style="color:olive;"> </span><span style="color:gray;"> </span><span style="color:purple;">@</span><span style="color:gray;"> </span><span style="color:olive;">⸮</span><span style="color:purple;">i&amp;</span><span style="color:blue;"> </span><span style="color:gray;"> </span><span style="color:olive;">⁂ </span><span style="color:teal;"> </span><span style="color:green;">＼
+   ／</span><span style="color:gray;">&amp;</span><span style="color:teal;">｡ </span><span style="color:olive;">⸛</span><span style="color:purple;"> </span><span style="color:teal;"> </span><span style="color:olive;">⸮ @</span><span style="color:teal;"> </span><span style="color:gray;">｡</span><span style="color:purple;"> </span><span style="color:gray;"> </span><span style="color:purple;">⁂</span><span style="color:olive;"> ｡</span><span style="color:purple;">⸮</span><span style="color:gray;"> </span><span style="color:olive;">&amp;⸛</span><span style="color:gray;">⸮</span><span style="color:olive;"> </span><span style="color:purple;">i</span><span style="color:blue;"> ⁂</span><span style="color:teal;"> </span><span style="color:purple;">   </span><span style="color:gray;"> </span><span style="color:teal;"> </span><span style="color:purple;"> </span><span style="color:blue;">  </span><span style="color:green;">＼
+  ／</span><span style="color:teal;">@ </span><span style="color:blue;">⸮</span><span style="color:gray;">&amp;</span><span style="color:blue;"> </span><span style="color:purple;">i</span><span style="color:teal;"> </span><span style="color:olive;"> </span><span style="color:teal;"> ⸛</span><span style="color:olive;"> </span><span style="color:blue;">⸛</span><span style="color:teal;"> </span><span style="color:olive;"> &amp;</span><span style="color:blue;"> </span><span style="color:teal;">   </span><span style="color:olive;"> </span><span style="color:blue;">  </span><span style="color:teal;"> </span><span style="color:olive;"> </span><span style="color:teal;">⁂</span><span style="color:gray;"> </span><span style="color:teal;"> </span><span style="color:purple;">  </span><span style="color:gray;"> </span><span style="color:blue;">@ </span><span style="color:purple;"> </span><span style="color:olive;"> ｡ </span><span style="color:green;">＼
+ ／</span><span style="color:purple;">&amp;</span><span style="color:blue;">  ⁂</span><span style="color:teal;">@</span><span style="color:purple;"> </span><span style="color:blue;"> </span><span style="color:purple;">⁂ </span><span style="color:teal;">⸮@</span><span style="color:purple;"> </span><span style="color:gray;">@</span><span style="color:purple;">⸮ </span><span style="color:teal;">  </span><span style="color:olive;"> </span><span style="color:purple;"> </span><span style="color:olive;">⁂</span><span style="color:blue;"> ｡</span><span style="color:purple;"> </span><span style="color:gray;">⸮</span><span style="color:purple;">&amp;</span><span style="color:gray;">⁂</span><span style="color:blue;">⸮</span><span style="color:gray;"> </span><span style="color:teal;">  </span><span style="color:gray;"> </span><span style="color:blue;">｡</span><span style="color:gray;"> </span><span style="color:olive;">⸮</span><span style="color:purple;">  </span><span style="color:blue;">⸮ </span><span style="color:green;">＼
+ ^^^^^^^^^^^^^^^^^^^|  |^^^^^^^^^^^^^^^^^^^
+                    |  |                   
+
+</span>
+</pre>
+<p>
+結構やるね。
+</p>
+<!-- section end -->
+</div>
+<!-- 2014/01/02 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/01/03 start -->
+<h2><a name="20140103" href="201401a.html#20140103">2014-01-03 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="201401031" title="201401031" href="201401a.html#201401031">■</a> 
+chromeでopen/closeを繰り返すとだんだん重くなる</h3>
+<p>
+そうなるとchromeの終了もなかなか終わらず数分ぐらいプロセスと残ってしまう。<br>
+たぶん拡張のどれかが原因だと思い、まずはセーフモードでと
+</p>
+<pre>
+% google-chrome --disable-extensions
+</pre>
+<p>
+で起動してみたら重くならなかった。やはり拡張が原因か。<br>
+とりあえずほとんどの拡張を無効にして、<br>
+1個ずつ適当なタイミングで有効にしているわけだけど、<br>
+これが結構時間がかかるので、なかなか該当する拡張にぶち当たらない。<br>
+まあ気長に。
+</p>
+<!-- section end -->
+</div>
+<!-- 2014/01/03 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/01/04 start -->
+<h2><a name="20140104" href="201401a.html#20140104">2014-01-04 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="201401041" title="201401041" href="201401a.html#201401041">■</a> 
+Colored Man Pages</h3>
+<p>
+ぐぐってたら
+<a href="http://www.cyberciti.biz/faq/linux-unix-colored-man-pages-with-less-command/">Linux / Unix: Colored Man Pages With less Command</a>てなページを見つけた。<br>
+ちょっといじって、こんな感じで設定してみた。
+</p>
+<pre>
+man() {
+    LESS_TERMCAP_mb=$'\e[1;31m' \
+    LESS_TERMCAP_md=$'\e[1;32m' \
+    LESS_TERMCAP_me=$'\e[0m' \
+    LESS_TERMCAP_se=$'\e[0m' \
+    LESS_TERMCAP_so=$'\e[1;44;33m' \
+    LESS_TERMCAP_ue=$'\e[0m' \
+    LESS_TERMCAP_us=$'\e[4;36m' \
+    command man &quot;$@&quot;
+}
+</pre>
+<p>
+<img src="../images/colored-man-man.png" alt="">
+</p>
+<p>
+意外に使われてる色が少ない。<br>
+緑と水色しか出てこないってことはmanで使われてるのはmdとusだけか。
+</p>
+<!-- section end -->
+</div>
+<!-- 2014/01/04 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/01/05 start -->
+<h2><a name="20140105" href="201401a.html#20140105">2014-01-05 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="201401051" title="201401051" href="201401a.html#201401051">■</a> 
+numfmt</h3>
+<p>
+GNU coreutils 8.21からnumfmtという便利なコマンドが追加されている。<br>
+最近は-h(--human-readable)オプションが使えるコマンドが増えてるが、<br>
+すでに数値になっちゃってるものはもうどうしようもない。<br>
+そこでnumfmtだ。
+</p>
+<pre>
+% echo 123456789 | numfmt --to=iec
+118M
+% echo 123456789 | numfmt --grouping
+123,456,789
+</pre>
+<p>
+のように変換できる。便利すぎる。
+</p>
+<p>
+ただUbuntu 13.10ではまだ8.20なので使えない。<br>
+しかたないのでnumfmtと
+<a href="201311c.html#201311281">seq</a>は自分でmakeして使ってる。
+</p>
+<!-- section end -->
+</div>
+<!-- 2014/01/05 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/01/06 start -->
+<h2><a name="20140106" href="201401a.html#20140106">2014-01-06 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="201401061" title="201401061" href="201401a.html#201401061">■</a> 
+Chromeが重くなる原因はTampermonkeyか？</h3>
+<p>
+まだわからんが、なかなか特定が難しい。<br>
+しかしこれをやめられるかどうか。<br>
+userscriptを拡張にしちゃう手もあるか。
+</p>
+<!-- section end -->
+</div>
+<!-- 2014/01/06 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/01/07 start -->
+<h2><a name="20140107" href="201401a.html#20140107">2014-01-07 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="201401071" title="201401071" href="201401a.html#201401071">■</a> 
+Pocketのショートカットキー</h3>
+<p>
+いつもPocketではqueue形式じゃなくてlist形式で使ってんだけど、<br>
+いつの間にかqueue形式になってることがあって変だなと思ったら、<br>
+キーボードショートカットにCTRL+1とかが加わっていた。<br>
+ChromeでCTRL+1はタブの1番目という感じに設定しているので、<br>
+CTRL+1を押せばタブの1番目に移動するが、<br>
+裏ではqueue形式(機能的にはHome)へ移動していたらしい。<br>
+見えないから何がどうなってるのかしばらくわからなかったよ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2014/01/07 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/01/08 start -->
+<h2><a name="20140108" href="201401a.html#20140108">2014-01-08 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="201401081" title="201401081" href="201401a.html#201401081">■</a> 
+Tampermonkeyなしでも不便でなかった</h3>
+<p>
+外してみると何に使っていたかわからないくらいであった。<br>
+どうしても必要なuserscriptってのに今後気づいたら対処しよう。
+</p>
+<!-- section end -->
+</div>
+<!-- 2014/01/08 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/01/09 start -->
+<h2><a name="20140109" href="201401a.html#20140109">2014-01-09 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="201401091" title="201401091" href="201401a.html#201401091">■</a> 
+bashでfile:///補完?</h3>
+<p>
+ちょっと驚いた。bashで何げなく
+</p>
+<pre>
+$ ls file:///ho&lt;TAB&gt;
+$ ls file:///home/
+</pre>
+<p>
+とタブ押したら補完された！<br>
+file:をちゃんと認識してるかと思ったが、foo:でもいけてしまった。<br>
+つまりfile://のあたりは無視されているだけだった。<br>
+まあ、その適当さのおかげで便利になっているようで。<br>
+zshではそんな挙動にはならないので、自分でなんか書かないとできないんだろう。
+</p>
+<!-- section end -->
+</div>
+<!-- 2014/01/09 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/01/10 start -->
+<h2><a name="20140110" href="201401a.html#20140110">2014-01-10 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="201401101" title="201401101" href="201401a.html#201401101">■</a> 
+GNU grep 2.16</h3>
+<p>
+<a href="http://freecode.com/projects/grep">Freecode</a>では2.16となってるが、実際は
+<a href="http://savannah.gnu.org/forum/forum.php?forum_id=7763">2.15</a>からの機能。<br>
+単に2.15を飛ばしちゃったからだと思われる。
+</p>
+<blockquote><p>
+Release Notes:<br>
+&quot;grep -P&quot; can now use a just-in-time compiler to greatly speed up<br>
+matches, assuming proper support from PCRE. Several multi-byte issues<br>
+where resolved. Handling of very long lines on systems with a deficient<br>
+read system call was improved.<br>
+</p></blockquote>
+<p>
+結構-Pを多用するのでうれしい機能だ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2014/01/10 end -->
+
+<hr>
+<div>
+<a href="201312c.html">&lt;Prev(,)</a> | 
+<a href="201401b.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

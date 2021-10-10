@@ -1,0 +1,382 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2015-8-a</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="201507c.html">
+<link rel="next" href="201508b.html">
+
+<link rel="stylesheet" type="text/css" href="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.css">
+<script async type="text/javascript" src="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.js"></script>
+<script type="text/javascript">
+<!--       
+$(document).ready(function() {
+  prettyPrint();
+});
+-->
+</script>
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2015年8月上旬〜</p>
+<hr>
+<div>
+<a href="201507c.html" accesskey=",">&lt;Older(,)</a> | 
+<a href="201508b.html" accesskey=".">Newer(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2015/08/01 start -->
+<h2><a name="20150801" href="201508a.html#20150801">2015-08-01 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="201508011" title="201508011" href="201508a.html#201508011">■</a> 
+進捗・どう・です・か #シェル芸</h3>
+<p>
+bashで。
+</p>
+<pre>
+while [ &quot;$a&quot; = &quot;${a%$w}&quot; ]; do
+</pre>
+<p>
+というのも思いついたが、正規表現のほうが速いようだ。
+</p>
+<pre>
+#!/bin/bash
+
+w=進捗どうですか
+a=
+until [[ $a =~ $w$ ]]; do
+  a+=${w:RANDOM%4*2:2}
+done
+
+echo &quot;$a???&quot;
+echo &quot;$((${#a}+3))文字で煽られました&quot;
+</pre>
+<!-- section end -->
+</div>
+<!-- 2015/08/01 end -->
+
+
+
+<hr class="hide">
+<!-- 2015/08/02 start -->
+<h2><a name="20150802" href="201508a.html#20150802">2015-08-02 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="201508021" title="201508021" href="201508a.html#201508021">■</a> 
+いろいろあったがWindows10がまともに立ち上がった</h3>
+<p>
+2,093.4 MBとやけに少ないダウンロードサイズだったが、<br>
+それ自体は有線LANを用意してたので10分ほどで終了。<br>
+その後アップグレードに1時間ほど。<br>
+「通常よりも少し時間がかかっていますが、間もなく準備が完了します」<br>
+と表示していきなり電源が切れた。<br>
+しかも下部に「PCの電源を落とさないでください」と表示されていたわけで、<br>
+絶対にまずい状況だ。<br>
+すぐに電源ONしてみたがロゴが出た時点で切れた。<br>
+完全に熱暴走っぽい。扇風機で数分冷したら立ち上がった。<br>
+なんか特に問題なくログオン画面に移行した。<br>
+だが、なんか変だ。<br>
+エクスプローラーの起動がやたらと遅い。15秒以上かかる。<br>
+致命的なのはスタートメニューが出てこない。<br>
+右クリックは効くのでシャットダウンとかは可能だが、<br>
+設定が開けないのが痛い。<br>
+ぐぐってみるとPCをリフレッシュせよとあるが、<br>
+それにはまず設定を開かないといけない。<br>
+ということでコマンド名をぐぐってみるとWin-Rでms-settings:と入力すればいけるとあった。<br>
+これは動いた。「更新とセキュリティ」の「回復」を選んで、<br>
+「このPCを初期状態に戻す」を試すことにした。<br>
+初期化なのでインストールしたアプリはC:\Windows.oldへ全部移動となり、<br>
+もうWindows7へは戻せなくなる。<br>
+元々半年前にWindows7はインストールしたばかりなのとScanSnap専用マシンとしてたので、<br>
+初期化しちゃって構わない。
+</p>
+<p>
+これが正解だったわけだが、続きは「さあ始めましょう」だけだった。<br>
+すべて解消した。スタートメニューも出てきたし、<br>
+エクスプローラーも瞬時に起動するようになった。<br>
+C:\Windows.oldは10GBほど食っているが、消しちゃって構わないだろう。<br>
+なんかすっきりした。
+</p>
+<!-- section end -->
+</div>
+<!-- 2015/08/02 end -->
+
+
+
+<hr class="hide">
+<!-- 2015/08/03 start -->
+<h2><a name="20150803" href="201508a.html#20150803">2015-08-03 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="201508031" title="201508031" href="201508a.html#201508031">■</a> 
+Windows10でScanSnap S1500</h3>
+<p>
+販売終了しているがドライバーはまだちゃんと置いてるのでインストール可能。<br>
+<a href="http://scansnap.fujitsu.com/jp/downloads/model/s1500-1.html">スキャナ ScanSnap : ドライバダウンロード : 富士通</a></p>
+<p>
+まったく問題なく動作する。
+</p>
+<!-- section end -->
+</div>
+<!-- 2015/08/03 end -->
+
+
+
+<hr class="hide">
+<!-- 2015/08/04 start -->
+<h2><a name="20150804" href="201508a.html#20150804">2015-08-04 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="201508041" title="201508041" href="201508a.html#201508041">■</a> 
+Logicool M310t</h3>
+<p>
+結局買い替えた。1年振り。前回のM185よりはちょい高目で。って倍か。
+</p>
+<!-- section end -->
+</div>
+<!-- 2015/08/04 end -->
+
+
+
+<hr class="hide">
+<!-- 2015/08/05 start -->
+<h2><a name="20150805" href="201508a.html#20150805">2015-08-05 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="201508051" title="201508051" href="201508a.html#201508051">■</a> 
+判子をかすれさせる</h3>
+<p>
+今日は判子の日なのでより判子らしくするためにかすれさせてみた。<br>
+いろいろ方法はあるけど、-sketchがいい感じ？
+</p>
+<pre>
+% convert tyd2014-20.png -sketch 10x10 tyd2015-20.png
+</pre>
+<p>
+<img src="../images/tyd2014-20.png" alt="">
+<img src="../images/tyd2015-20.png" alt="">
+</p>
+<p>
+完全にネタ切れである。
+</p>
+<!-- section end -->
+</div>
+<!-- 2015/08/05 end -->
+
+
+
+<hr class="hide">
+<!-- 2015/08/06 start -->
+<h2><a name="20150806" href="201508a.html#20150806">2015-08-06 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="201508061" title="201508061" href="201508a.html#201508061">■</a> 
+OpenShift</h3>
+<p>
+そろそろYahoo Pipes!+IFTTTで動かしてbotをどうするか考えないといけない。<br>
+どこかfreeのPaaSと思って探しても今やOpenShift一択のようで。<br>
+とりあえずアカウント作った。
+</p>
+<!-- section end -->
+</div>
+<!-- 2015/08/06 end -->
+
+
+
+<hr class="hide">
+<!-- 2015/08/07 start -->
+<h2><a name="20150807" href="201508a.html#20150807">2015-08-07 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="201508071" title="201508071" href="201508a.html#201508071">■</a> 
+<a href="https://twitter.com/nogiro_iota/status/629259239098200064">段組</a></h3>
+<p>
+要する段組ということでまだ出てないやつをひとつ。
+</p>
+<pre>
+% seq 6 | pr -2 -l 3 -s&quot; &quot;
+1 4
+2 5
+3 6
+</pre>
+<p>
+3は6/2なのでその計算が必要。
+</p>
+<!-- section end -->
+</div>
+<!-- 2015/08/07 end -->
+
+
+
+<hr class="hide">
+<!-- 2015/08/08 start -->
+<h2><a name="20150808" href="201508a.html#20150808">2015-08-08 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="201508081" title="201508081" href="201508a.html#201508081">■</a> 
+シドニアの騎士 第九惑星戦役</h3>
+<p>
+やっと見れた。一気に12話。最近はまとめて後で一気に見ることが多い。<br>
+一週ずつだと最初の話とか忘れてるし。
+</p>
+<!-- section end -->
+</div>
+<!-- 2015/08/08 end -->
+
+
+
+<hr class="hide">
+<!-- 2015/08/09 start -->
+<h2><a name="20150809" href="201508a.html#20150809">2015-08-09 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="201508091" title="201508091" href="201508a.html#201508091">■</a> 
+PPMの形式</h3>
+<p>
+<a href="http://gauc.no-ip.org/~hi_saito/MPS/20150809_AWK_%E7%94%BB%E5%83%8F%E3%81%AE%E3%83%86%E3%83%B3%E3%83%97%E3%83%AC%E3%83%BC%E3%83%88%E3%83%9E%E3%83%83%E3%83%81%E3%83%B3%E3%82%B0.md.html">AWK で画像のテンプレートマッチング</a>でnetpbmのP3形式を使っているけど、ちょっと納得がいかない。<br>
+Code 2.3-2 ppm2array.awkを見ると2行目は読み捨てているので、<br>
+1行がwidth分の画素で構成されていることが前提になっているような。
+</p>
+<pre>
+% convert org.png -type grayscale -compress none org_gray.ppm
+% head org_gray.ppm                                          
+P3
+90 120
+255
+219 219 219 220 220 220 219 219 219 218 218 218 220 220 220 221 221 221 
+219 219 219 219 219 219 220 220 220 220 220 220 220 220 220 220 220 220 
+220 220 220 219 219 219 219 219 219 220 220 220 220 220 220 221 221 221 
+220 220 220 219 219 219 219 219 219 220 220 220 220 220 220 218 218 218 
+219 219 219 218 218 218 218 218 218 219 219 219 219 219 219 217 217 217 
+219 219 219 218 218 218 220 220 220 218 218 218 218 218 218 218 218 218 
+218 218 218 218 218 218 219 219 219 217 217 217 219 219 219 222 222 222 
+</pre>
+<p>
+でも実際は80バイトを超えないように改行されている。どうでしょう？
+</p>
+<p>
+あとPPMじゃなくて最初からPGMに変換すれば%3しなくても済みます。
+</p>
+<pre>
+% convert org.png -compress none org_gray.pgm   
+% head org_gray.pgm
+P2
+90 120
+255
+219 220 219 218 220 221 219 219 220 220 220 220 220 219 219 220 220 221 220 
+219 219 220 220 218 219 218 218 219 219 217 219 218 220 218 218 218 218 218 
+219 217 219 222 211 204 197 214 213 214 215 215 215 215 213 212 211 210 208 
+204 200 188 166 135 96 70 68 66 65 65 65 65 66 66 68 70 77 178 246 247 248 247 
+247 248 248 248 248 248 248 248 248 248 218 219 220 220 220 221 220 220 221 
+220 220 220 220 220 220 220 220 220 220 220 220 219 220 220 219 220 219 219 
+219 219 219 218 219 218 218 219 219 218 217 217 217 221 209 205 195 212 214 
+</pre>
+<p>
+というわけで、pgm2array.awkを考えてみた。
+</p>
+<pre>
+#! /bin/awk -f
+
+NR == 2 { width = $1 }
+NR == 3 { RS = &quot;[\n ]+&quot; }
+NR &gt;= 4 { printf(&quot;%d%s&quot;, $0, (NR-3) % width == 0 ? &quot;\n&quot; : &quot; &quot;) }
+</pre>
+
+<!-- section end -->
+</div>
+<!-- 2015/08/09 end -->
+
+
+
+<hr class="hide">
+<!-- 2015/08/10 start -->
+<h2><a name="20150810" href="201508a.html#20150810">2015-08-10 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="201508101" title="201508101" href="201508a.html#201508101">■</a> 
+<a href="http://nullpopopo.blogcube.info/2013/07/shell-gei_date.html">今日は今月の何週目? #シェル芸</a></h3>
+<p>
+calを使う例が惜しい。dateの%dは1桁の日付のときは01-09のように0がつくのでgrepで見つからなくなる。<br>
+ということは%eか%-dを使えばいいわけだ。grepには-wを忘れずに。
+</p>
+<pre>
+% cal -h | sed '1,2d' | grep -nw $(date '+%-d' -d8/1) | cut -d: -f1
+1
+% cal -h | sed '1,2d' | grep -nw $(date '+%-d' -d8/2) | cut -d: -f1
+2
+% cal -h | sed '1,2d' | grep -nw $(date '+%-d' -d8/8) | cut -d: -f1
+2
+% cal -h | sed '1,2d' | grep -nw $(date '+%-d' -d8/9) | cut -d: -f1
+3
+</pre>
+<p>
+こんな感じ。まあ、sed,grep,cutはawkでもいい。
+</p>
+<pre>
+% cal -h | awk &quot;/\&lt;$(date +%-d)\&gt;/{print NR-2}&quot;     
+3
+</pre>
+<!-- section end -->
+</div>
+<!-- 2015/08/10 end -->
+
+<hr>
+<div>
+<a href="201507c.html">&lt;Older(,)</a> | 
+<a href="201508b.html">Newer(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

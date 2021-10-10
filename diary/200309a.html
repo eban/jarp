@@ -1,0 +1,596 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2003-9-a</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="200308c.html">
+<link rel="next" href="200309b.html">
+
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2003年9月上旬〜</p>
+<hr>
+<div>
+<a href="200308c.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="200309b.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2003/09/01 start -->
+<h2><a name="20030901" href="200309a.html#20030901">2003-09-01 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="200309011" title="200309011" href="200309a.html#200309011">■</a> 
+8月のspam</h3>
+<p>
+1239通。4ヶ月連続でだいたい1200通ってのも不思議だ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200309012" title="200309012" href="200309a.html#200309012">■</a> 
+[Ruby] ruby-bugs, ruby-bugs-ja</h3>
+<p>
+ゴミを移動した。パスワードを探し出すのに苦労した。
+ruby-bugsのほうはspuriousだったのか。trashを作ってしまった。
+で、困ったことに消せないのだよ。
+そもそもゴミも移動じゃなくて消したいわけなんだよね。
+やっぱjitterbugはだめだめだ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200309013" title="200309013" href="200309a.html#200309013">■</a> 
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-core/1465">[Ruby] %y</a></h3>
+<p>
+誰も見向きもしないようだけど、YAMLだけってのは不公平だよね。いっそのこと
+</p>
+<pre>
+class String
+  def percent_y
+    ...
+  end
+end
+</pre>
+<p>
+と定義すると、%y{ ... }でpercent_yが呼ばれるようにするのはどうだろう？
+いやpercent_yってのはいまいちだから、
+なんかこうかっこいいインタフェースを考えて。
+</p>
+
+<p>
+逆にmethod_missingみたいな仕組みでもいいのかもしれない。
+</p>
+<!-- section end -->
+</div>
+<!-- 2003/09/01 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/09/02 start -->
+<h2><a name="20030902" href="200309a.html#20030902">2003-09-02 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="200309021" title="200309021" href="200309a.html#200309021">■</a> 
+<a href="http://cygwin.com/ml/cygwin-announce/2003-09/msg00001.html">[Cygwin] Cygwin 1.5.3-1</a></h3>
+<pre>
+Changes: Support has been added for 64-bit file I/O and 32 bit UID and
+GIDs. Networking problems and problems with malloc of large objects
+have been fixed. There is improved signal handling, and many other
+bugfixes.
+</pre>
+<p>
+しばらくre-linkによるアプリケーション側のupdateが続く模様。
+落ち着くまで待ったほうがよさそう。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200309022" title="200309022" href="200309a.html#200309022">■</a> 
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-core/01495">[Ruby] |rcr|.xv  Index Variables ( *_with_index )</a></h3>
+<p>
+これはちょっとねえ。たかがwith_index程度に文法を変えるのはまずいっしょ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2003/09/02 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/09/03 start -->
+<h2><a name="20030903" href="200309a.html#20030903">2003-09-03 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="200309031" title="200309031" href="200309a.html#200309031">■</a> 
+[Cygwin] update</h3>
+<p>
+全部かよ!いやGCCはまだだ。いいかげん3.3にして欲しいのに。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200309032" title="200309032" href="200309a.html#200309032">■</a> 
+<a href="http://raa.ruby-lang.org/project/log4r/">[Ruby] Log4r 1.0.3</a></h3>
+<p>
+更新。
+</p>
+<!-- section end -->
+</div>
+<!-- 2003/09/03 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/09/04 start -->
+<h2><a name="20030904" href="200309a.html#20030904">2003-09-04 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="200309041" title="200309041" href="200309a.html#200309041">■</a> 
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-list/38356">[Ruby] reverse!で回文チェック</a></h3>
+<p>
+元の文字列を書き換えるようなチェックじゃ、使いもんにならんだろうが！
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200309042" title="200309042" href="200309a.html#200309042">■</a> 
+<a href="http://znz.s1.xrea.com/t/?date=20030903#p02">[Ruby] %y</a></h3>
+<p>
+def %yじゃ、
+引数がyで%という名前のメソッドを定義することになるのでだめです。
+</p>
+<pre>
+class String
+  def %y
+    &quot;%y&quot;
+  end
+end
+
+p &quot;&quot; % &quot;&quot; #=&gt; &quot;%y&quot;
+</pre>
+
+<!-- section end -->
+</div>
+<!-- 2003/09/04 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/09/05 start -->
+<h2><a name="20030905" href="200309a.html#20030905">2003-09-05 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="200309051" title="200309051" href="200309a.html#200309051">■</a> 
+<a href="http://japan.cnet.com/news/ent/story/0,2000047623,20060785,00.htm">MXI</a></h3>
+<p>
+なんかあやしげ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200309052" title="200309052" href="200309a.html#200309052">■</a> 
+[Soft] lesskey</h3>
+<p>
+man lesskeyによると#envセクションを使うことで環境変数を定義できるらしい。
+~/.lesskeyは
+</p>
+<pre>
+#line-edit
+^P up
+^N down
+^F right
+^B left
+^A home
+^E end
+^H backspace
+^D delete
+#env
+LESS=icM
+</pre>
+<p>
+としよう。
+</p>
+<!-- section end -->
+</div>
+<!-- 2003/09/05 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/09/06 start -->
+<h2><a name="20030906" href="200309a.html#20030906">2003-09-06 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="200309061" title="200309061" href="200309a.html#200309061">■</a> 
+<a href="http://raa.ruby-lang.org/project/bdb/">[Ruby] bdb 0.4.8</a></h3>
+<p>
+更新。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200309062" title="200309062" href="200309a.html#200309062">■</a> 
+<a href="http://raa.ruby-lang.org/project/log4r/">[Ruby] Log4r 1.0.4</a></h3>
+<p>
+更新。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200309063" title="200309063" href="200309a.html#200309063">■</a> 
+<a href="http://raa.ruby-lang.org/project/rdtool/">[Ruby] RDtool 0.6.14</a></h3>
+<p>
+更新。
+</p>
+<!-- section end -->
+</div>
+<!-- 2003/09/06 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/09/07 start -->
+<h2><a name="20030907" href="200309a.html#20030907">2003-09-07 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="200309071" title="200309071" href="200309a.html#200309071">■</a> 
+<a href="http://www.xmms.org/">[Soft] XMMS 1.2.8</a></h3>
+<p>
+久々だな。1年半振りか。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200309072" title="200309072" href="200309a.html#200309072">■</a> 
+<a href="http://nabeken.tdiary.net/20030906.html#p03">[Cygwin] ruby-1.8.0-1のmd5.so</a></h3>
+<p>
+126とは
+</p>
+<pre>
+% /c/winnt/system32/net helpmsg 126
+
+The specified module could not be found.
+</pre>
+<p>
+という意味なので、なにかDLLが足りないわけです。
+</p>
+<pre>
+% objdump -p /usr/lib/ruby/1.8/i386-cygwin/digest/md5.so|grep 'DLL N'
+        DLL Name: cygruby18.dll
+        DLL Name: cygcrypto-0.9.7.dll
+        DLL Name: cygwin1.dll
+        DLL Name: KERNEL32.dll
+        DLL Name: cygruby18.dll
+</pre>
+<p>
+というわけで、たぶんcygcrypto-0.9.7.dllが原因です。
+<a href="http://nabeken.tdiary.net/20030907.html#p01">他もだめ</a>というのがopenssl.so以外だとすると原因は別になりそうだけど、
+まずはOpenSSLをインストールしてみましょう。
+</p>
+
+<p>
+digest/md5はextconf.rbでlibcryptoがないときは自前の関数を使うような処理になっているので、
+configureしなおして自分でmakeすればそれなりに動くものができあがります。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200309073" title="200309073" href="200309a.html#200309073">■</a> 
+[Video] 黄泉がえり</h3>
+<p>
+柴咲コウは劇中歌手だけだったのか。
+中学生のパートが印象的だった。
+全体的にはなんかいまいち。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200309074" title="200309074" href="200309a.html#200309074">■</a> 
+[Video] 青の炎</h3>
+<p>
+二宮和也の演技はすごいね。単なるアイドル映画ではない。
+</p>
+<!-- section end -->
+</div>
+<!-- 2003/09/07 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/09/08 start -->
+<h2><a name="20030908" href="200309a.html#20030908">2003-09-08 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="200309081" title="200309081" href="200309a.html#200309081">■</a> 
+<a href="http://cygwin.com/ml/cygwin-announce/2003-09/msg00079.html">[Cygwin] -Bstatic -lz -Bdynamic</a></h3>
+<p>
+なるほどねえ。-Bstaticと-Bdynamicではさめば、
+はさまれたライブラリだけがスタティックにリンクされるわけか。
+つまりlibz.dll.aじゃなくてlibz.aがリンクされる。
+gccからなら
+</p>
+<pre>
+-Wl,-Bstatic -lz -Wl,-Bdynamic
+</pre>
+<p>
+とすればいい。
+</p>
+
+<p>
+シンボルだけなので細かい引数は無視して実験。
+</p>
+<pre>
+% cat foo.c
+main()
+{
+    zlibVersion();
+    DES_crypt();
+}
+% gcc foo.c -lz -lcrypto                           
+% objdump -p a.exe |grep 'DLL N'
+        DLL Name: cygcrypto-0.9.7.dll
+        DLL Name: cygwin1.dll
+        DLL Name: cygz.dll
+        DLL Name: KERNEL32.dll
+% gcc foo.c -Wl,-Bstatic -lz -Wl,-Bdynamic -lcrypto
+% objdump -p a.exe |grep 'DLL N'                   
+        DLL Name: cygcrypto-0.9.7.dll
+        DLL Name: cygwin1.dll
+        DLL Name: KERNEL32.dll
+</pre>
+<p>
+ちゃんと-lzだけがスタティックにリンクされている。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200309082" title="200309082" href="200309a.html#200309082">■</a> 
+<a href="200309a.html#200309072">[Cygwin] ruby-1.8.0-1とOpenSSL</a></h3>
+<p>
+これってCygwinのsetup.iniの不備と言える。
+OpenSSLに依存していると書かれていないのがまずい。
+他も調べてみると
+</p>
+<pre>
+ncurses, dbm, gdbm, iconv, readline, tcltklib, zlib
+</pre>
+<p>
+もそうだな。依存させるのは簡単だけど、
+逆に用もないのになんかいっぱいインストールされるといやだなと感じるユーザもいるかもしれない。
+</p>
+
+<p>
+考えてみるとおいらが作ってるsetup.iniもrequiresは書いてない。
+他人のことは言えない。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200309083" title="200309083" href="200309a.html#200309083">■</a> 
+<a href="http://www.kbc.co.jp/rockers/cast.html">ROCKERS</a></h3>
+<p>
+木更津キャッツアイかよ!
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200309084" title="200309084" href="200309a.html#200309084">■</a> 
+<a href="http://raa.ruby-lang.org/project/vruby/">[Ruby] VRuby 030906</a></h3>
+<p>
+更新。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200309085" title="200309085" href="200309a.html#200309085">■</a> 
+<a href="http://raa.ruby-lang.org/project/swin/">[Ruby] SWin 030906</a></h3>
+<p>
+更新。
+</p>
+<!-- section end -->
+</div>
+<!-- 2003/09/08 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/09/09 start -->
+<h2><a name="20030909" href="200309a.html#20030909">2003-09-09 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="200309091" title="200309091" href="200309a.html#200309091">■</a> 
+月と火星</h3>
+<p>
+家に帰る途中、空を見上げたら月と火星が並んでいた。
+明後日は十五夜か。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200309092" title="200309092" href="200309a.html#200309092">■</a> 
+<a href="http://www.spamassassin.org/">[Mail] SpamAssassin</a></h3>
+<p>
+びっくりするぐらい遅い。1通あたり18秒って。
+-Lを指定したら39秒って、え？なんかおかしいな。
+</p>
+
+<p>
+なぜSpamAssassinかというとruby-bugs(-ja)で使っているからであり、
+その勉強のためだったりするわけだが、
+たとえば200通ぐらい一度に受けると3600秒かかるわけで1時間かよ!
+</p>
+
+<p>
+とかなんとか書いてる間に5通のspamを見つけてくれた。
+ちゃんと動いてるようだが、これを使うわけにはいかないな。
+</p>
+<!-- section end -->
+</div>
+<!-- 2003/09/09 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/09/10 start -->
+<h2><a name="20030910" href="200309a.html#20030910">2003-09-10 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="200309101" title="200309101" href="200309a.html#200309101">■</a> 
+<a href="http://bogofilter.sf.net/">[Mail] Bogofilter</a></h3>
+<p>
+で、結局Bogofilterを入れてみたり。
+半年ほどspamを取っといたけど、それは使わずに0から育ててみる。
+</p>
+
+<p>
+学習させるために、SpamAssassinと組み合わせてみよう。
+bogofilterで生き残ったメールをSpamAssassinでもう一度チェックし、
+spamと判断されたらbogofilter -Nsで学習しなおすという方針。
+だれかすでにやってるに違いないと思い、
+bogofilter spamassassinでぐぐるとやはり
+<a href="http://www.fkimura.com/bogofilter0.html">ある</a>ね。というわけで~/.procmailrcをこんな感じにした。
+</p>
+<pre>
+MAILDIR=$HOME/Mail/
+PATH=/bin:/usr/bin:/usr/local/bin
+LOGFILE=$HOME/procmail.log
+
+### SPAM
+
+:0fw
+| bogofilter -u -e -p -l
+
+:0:
+* ^X-Bogosity: Yes
+spam/.
+
+:0fw
+| spamassassin
+
+:0
+* ^X-Spam-Status: Yes
+{
+	:0cw
+	|bogofilter -Ns
+	:0:
+	spam/.
+}
+</pre>
+<p>
+最初は精度が悪いので手動でも学習させよう。
+spamじゃないのにspamと判断されたら
+</p>
+<pre>
+% bogofilter -Sn &lt;no-spam
+</pre>
+<p>
+spamなのにspamじゃないと判断されたら
+</p>
+<pre>
+% bogofilter -Ns &lt;spam
+</pre>
+<p>
+でいいわけだな。
+</p>
+
+<p>
+やっぱnkf+kakasiでわかち書きにしたほうがいいのかな。
+このままでも結構賢くなりつつあるから、とりあえず様子見。
+</p>
+<!-- section end -->
+</div>
+<!-- 2003/09/10 end -->
+
+<hr>
+<div>
+<a href="200308c.html">&lt;Prev(,)</a> | 
+<a href="200309b.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

@@ -1,0 +1,792 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2002-6-c</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="200206b.html">
+<link rel="next" href="200207a.html">
+
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2002年6月下旬〜</p>
+<hr>
+<div>
+<a href="200206b.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="200207a.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2002/06/21 start -->
+<h2><a name="20020621" href="200206c.html#20020621">2002-06-21 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="200206211" title="200206211" href="200206c.html#200206211">■</a> 
+[Ruby] MinGW</h3>
+<p>
+
+<a href="http://cygwin.com/ml/cygwin-announce/2002-06/msg00009.html">Updated: mingw-runtime-2.0-2</a>
+</p>
+<pre>
+The changes include extensions to the runtime supplied by MSVCRT.DLL
+in a static lib called libmingwex.a. These extensions include some C89 
+and C99 wide character functions, floating point environment functions
+(declared in fenv.h), floating point classification functions and 
+macros, the inttypes.h format conversion macros, stubs for some
+MSVCRT.DLL underscored functions that are now part of C99 std, and a 
+replacement for fseek and fwrite that are safer on W9x. 
+
+It also contains the POSIX dirent functions, which have been removed
+from libmingw.a and added to libmingwex.a.
+
+The ISO C extensions are visible by default. To remove them, define
+__NO_ISOCEXT 
+
+To use these functions, you will need to explicitly add -lmingwex to
+your command line. In future releases of GCC, libmingwex.a will 
+become a system lib added automatically by specs.
+</pre>
+<p>
+この変更でisinfとかが#defineされるようになった。
+win32/win32.hで
+</p>
+<pre>
+extern int isinf(double);
+extern int isnan(double);
+</pre>
+<p>
+としてるためMinGWではエラーになる。#ifdef .. #endifで囲むのは簡単だ。
+でもlibmingwex.aもlinkしなきゃいけないとなると、
+そのライブラリの有無をチェック必要があってちょっと面倒。
+というわけで-D__NO_ISOCEXTとした。libmingwexはGCCで対応してからでもいいでしょう。というか忘れないように。
+ついでに-D__MSVCRT__はGCCのspecsで定義されてるので削除。
+というのが昨日のcommit内容。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200206212" title="200206212" href="200206c.html#200206212">■</a> 
+<a href="http://cygwin.com/ml/cygwin-announce/2002-06/msg00008.html">[Cygwin] expat 1.95.3</a></h3>
+<p>
+patchを見るとCygwinのlibtoolでlibtoolizeし直しになってる。
+つまり、libiconvやexpatで使われてるlibtoolが古いってことなんだろう。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/06/21 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/06/22 start -->
+<h2><a name="20020622" href="200206c.html#20020622">2002-06-22 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="200206221" title="200206221" href="200206c.html#200206221">■</a> 
+<a href="http://wwww.uclibc.org/">uClibc 0.9.12</a></h3>
+<p>
+更新。ところどころ
+</p>
+<pre>
+cd: can't cd to ./lib
+</pre>
+<p>
+というのが出るが、特に問題はないようだ。
+
+<a href="http://wwww.uclibc.org/">web page</a> を見ていると
+</p>
+<pre>
+28 May 2002, Native uClibc/gcc-3.1 toolchain
+</pre>
+<p>
+というのが気になった。実は以前挑戦して失敗しているので。
+</p>
+<!-- section end -->
+</div>
+<!-- 2002/06/22 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/06/23 start -->
+<h2><a name="20020623" href="200206c.html#20020623">2002-06-23 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="200206231" title="200206231" href="200206c.html#200206231">■</a> 
+<a href="http://www.ruby-lang.org/en/raa-list.rhtml?name=rpkg">[Ruby] rpkg</a></h3>
+<p>
+いつのまにか
+<a href="http://www.allruby.com/rpkg/usage.html.ja">日本語のガイド</a>
+が用意されてる。でもapacheの設定が足りないらしくtext/plainになってしまう。
+usage.html.ja.jisならいいのか？
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200206232" title="200206232" href="200206c.html#200206232">■</a> 
+[Ruby] Ruby 1.7をuClibcでコンパイル</h3>
+<p>
+久し振りにuClibcでコンパイルしてみると
+</p>
+<pre>
+compiling socket
+
+Fatal: --enable-ipv6 is specified, and your OS seems to support IPv6 feature.
+But your getaddrinfo() and getnameinfo() are appeared to be broken.  Sorry,
+you cannot compile IPv6 socket classes with broken these functions.
+You can try --enable-wide-getaddrinfo.
+</pre>
+<p>
+となった。メッセージの通り--enable-wide-getaddrinfoを指定しても、
+状況は変わらない。ext/socket/extconf.rbが
+</p>
+<pre>
+$getaddr_info_ok = false
+if !enable_config(&quot;wide-getaddrinfo&quot;, false) and try_run(&lt;&lt;EOF)
+...
+EOF
+  $getaddr_info_ok = true
+end
+if $ipv6 and not $getaddr_info_ok
+      print &lt;&lt;EOS
+
+Fatal: --enable-ipv6 is specified, and your OS seems to support IPv6 feature.
+But your getaddrinfo() and getnameinfo() are appeared to be broken.  Sorry,
+you cannot compile IPv6 socket classes with broken these functions.
+You can try --enable-wide-getaddrinfo.
+EOS
+  exit
+end
+</pre>
+<p>
+となっているので$getaddr_info_okがtrueにならない。解決策としては
+</p>
+<pre>
+メッセージをYou can try --disable-ipv6.にする
+--enable-wide-getaddrinfoだったら$getaddr_info_okは無条件にtrueに
+</pre>
+<p>
+のどちらがいいかな？
+というよりAF_INET6の存在でIPv6かどうかを判断してるのがゆるすぎるのかもしれない。
+そこをなんとかすれば
+</p>
+<pre>
+default_ipv6 = /cygwin/ !~ RUBY_PLATFORM
+</pre>
+<p>
+もなくせるんだけど。
+</p>
+
+<p>
+--enable-wide-getaddrinfoに関しては
+</p>
+<pre>
+$getaddr_info_ok = false
+if !enable_config(&quot;wide-getaddrinfo&quot;, false) and try_run(&lt;&lt;EOF)
+</pre>
+<p>
+を
+</p>
+<pre>
+$getaddr_info_ok = enable_config(&quot;wide-getaddrinfo&quot;, false)
+if !$getaddr_info_ok and try_run(&lt;&lt;EOF)
+</pre>
+<p>
+にすればいい気がしてきた。
+でも、こうしてみるとなぜかgetaddrinfoはあることになるなあ。
+ということはこの変更じゃだめだ。
+あ、そもそもuClibcのIPv6対応をonにしてないから、
+実際に実行してみるとエラーになるのが原因だ。
+ConfigのINCLUDE_IPV6をtrueにして作り直し。やっぱそうか。
+</p>
+
+<p>
+結論としては今のままだと--enable-wide-getaddrinfoは機能してないので、
+</p>
+<pre>
+if $ipv6 and not $getaddr_info_ok and not enable_config(&quot;wide-getaddrinfo&quot;, false)
+</pre>
+<p>
+てな感じの変更が必要だ。と、まとめたかったんだが、まとまらない。
+実際にgetaddrinfo.cをコンパイルしてみるとエラーになる。
+</p>
+<pre>
+getaddrinfo.c:483: structure has no member named `s6_addr8'
+</pre>
+<p>
+USAGIを確認してみる。
+</p>
+<pre>
+% bzip2 -dc usagi-linux24-s20020610-2.4.18.diff.bz2 |grep s6_addr8
+% bzip2 -dc usagi-tool-s20020610.tar.bz2 |grep s6_addr8
+%
+</pre>
+<p>
+ないねえ。今はs6_addrを使えってことだろうか。
+itojunさんはたしかNetBSD使いだよね。
+NetBSD 1.5を立ち上げて/usr/include/netinet6/in6.hを見てみる。
+</p>
+<pre>
+#define s6_addr   __u6_addr.__u6_addr8
+#ifdef _KERNEL  /*XXX nonstandard*/
+#define s6_addr8  __u6_addr.__u6_addr8
+#define s6_addr16 __u6_addr.__u6_addr16
+#define s6_addr32 __u6_addr.__u6_addr32
+#endif
+</pre>
+<p>
+なるほど。こっちでは定義されてる。
+とは言うものの#ifdef _KERNELだし、やはりs6_addrを使うべきだろう。
+というかこれじゃNetBSDでは--enable-wide-getaddrinfoはエラーになるな。
+_KERNELはdefineされてないし。
+ま、*BSDにはKAMEが入ってるからそんなことする必要ないけど。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/06/23 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/06/24 start -->
+<h2><a name="20020624" href="200206c.html#20020624">2002-06-24 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="200206241" title="200206241" href="200206c.html#200206241">■</a> 
+[Cygwin] Updated: cygwin-1.3.11-3 </h3>
+<p>
+出たけど、すぐに次が出そうだ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200206242" title="200206242" href="200206c.html#200206242">■</a> 
+<a href="http://www.openssh.com/">OpenSSH 3.3p1</a></h3>
+<p>
+更新。というわけで普通のユーザでmake installしてみる。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200206243" title="200206243" href="200206c.html#200206243">■</a> 
+<a href="http://www.allruby.com/rpkg/usage.html.ja">[w3m] usage.html.ja</a></h3>
+<p>
+そうか。w3mならvで切り替えられるんだな。
+hoge.html.inのようなconfigure対象ファイルを見るときに、
+一々-T text/htmlとするよりは便利だ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200206244" title="200206244" href="200206c.html#200206244">■</a> 
+[Ruby] news gateway</h3>
+<p>
+ruby-talk MLの流量が少なすぎる。news gatewayが止まってる？
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200206245" title="200206245" href="200206c.html#200206245">■</a> 
+[Ruby] IPv6</h3>
+<p>
+結局のところ$ipv6_okが真のときに--enable-wide-getaddrinfoしても
+</p>
+<pre>
+getipnodebyaddr()
+getipnodebyname()
+freehostent()
+</pre>
+<p>
+が実行時にundefined symbolになり、使えないことが判明。
+</p>
+<pre>
+% LD_LIBRARY_PATH=.:/usr/i386-linux-uclibc/lib ./ruby -r./ext/socket/socket -e0
+./ruby: can't resolve symbol 'getipnodebyaddr'
+./ruby: can't resolve symbol 'getipnodebyname'
+./ruby: can't resolve symbol 'freehostent__compat'
+0: Unable to resolve symbol - ./ext/socket/socket.so (LoadError)
+</pre>
+<p>
+USAGIにはない。しかもuClibcのIPv6対応ってUSAGIそのものだった。
+KAMEにはあるはずだから、そこからこの3つを持ってくるか。
+</p>
+
+<p>
+それはそれとして
+</p>
+<pre>
+-Wl,-no-undefined
+</pre>
+<p>
+を加えたほうがいいかなあ。
+</p>
+<pre>
+ccache /usr/i386-linux-uclibc/bin/gcc -shared \
+  -nostartfiles -Wl,-no-undefined \
+  -L/pub/ruby/uclibc -L/usr/local/lib \
+  -o socket.so socket.o getaddrinfo.o getnameinfo.o -L. -lruby -lc 
+getaddrinfo.o: In function `get_name':
+getaddrinfo.o(.text+0x6ea): undefined reference to `getipnodebyaddr'
+getaddrinfo.o(.text+0x780): undefined reference to `freehostent__compat'
+getaddrinfo.o(.text+0x7a1): undefined reference to `freehostent__compat'
+getaddrinfo.o: In function `get_addr':
+getaddrinfo.o(.text+0x8ca): undefined reference to `getipnodebyname'
+getaddrinfo.o(.text+0x9f6): undefined reference to `freehostent__compat'
+getaddrinfo.o(.text+0xa5f): undefined reference to `freehostent__compat'
+getnameinfo.o: In function `getnameinfo__compat':
+getnameinfo.o(.text+0x1bd): undefined reference to `getipnodebyaddr'
+getnameinfo.o(.text+0x1fa): undefined reference to `freehostent__compat'
+getnameinfo.o(.text+0x213): undefined reference to `freehostent__compat'
+</pre>
+<p>
+とLinuxでもリンク時にわかる。
+freehostentに__compatをつけてるということは、
+やっぱ、ここで用意すべきだな、きっと。
+というわけで明日はKAMEを調べよう。
+あ、gai_strerrorにも__compatをつければuClibcのad-hocな対応は要らないじゃん。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/06/24 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/06/25 start -->
+<h2><a name="20020625" href="200206c.html#20020625">2002-06-25 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="200206251" title="200206251" href="200206c.html#200206251">■</a> 
+<a href="../files/indent.xsl">indent.xsl</a></h3>
+<p>
+
+<a href="http://cvs.m17n.org/~akr/diary/d2002_06.html#a2002_06_20_4">天泣記</a>
+を見てて、そうかコメントもあったねと対応してみた。
+comment()を追加すればいいようだ。
+tidyのように謎の空行は入らないし、よさげ。
+</p>
+<pre>
+&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; version=&quot;1.0&quot;&gt;
+  &lt;xsl:output method=&quot;xml&quot; encoding=&quot;UTF-8&quot; indent=&quot;yes&quot;/&gt;
+  &lt;xsl:strip-space elements=&quot;*&quot;/&gt;
+  &lt;xsl:template match=&quot;@*|*|text()|comment()&quot;&gt;
+    &lt;xsl:copy&gt;
+      &lt;xsl:apply-templates select=&quot;@*|*|text()|comment()&quot;/&gt;
+    &lt;/xsl:copy&gt;
+  &lt;/xsl:template&gt;
+&lt;/xsl:stylesheet&gt;
+</pre>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200206252" title="200206252" href="200206c.html#200206252">■</a> 
+[Cygwin] newlibのfseek</h3>
+<p>
+実はsnapshotsを使ってるときから気づいていたんだけど、
+1.3.11のfseekがなんか変だ。splintがエラーになる。
+</p>
+<pre>
+Tests:
+
+Checking help...
+Checking abstptr...
+Checking abstract...
+Checking alias...
+1a2,8
+&gt; bool.h:4:1: *** Internal Bug at llerror.c:1866: macrocache.c:257: Check Failed:
+&gt;                fseek (s_macFile, 0, SEEK_CUR) == 0 [errno: 2]
+&gt; *** Last code point: transferChecks.c:4395
+&gt; *** Previous code point: transferChecks.c:3978
+&gt; Possible system error diagnostic: : No such file or directory
+&gt;      *** Please report bug to splint-bug@splint.org ***
+&gt;        (attempting to continue, results may be incorrect)
+</pre>
+<p>
+メッセージに従いソースを追ってみると、fseekがなぜかエラーを起こしてるらしい。
+fseekといえばbinmode vs. textmodeに違いないと思い面倒だから放っといたんだけど、
+Rubyでも
+</p>
+<pre>
+% ruby -e 'open(&quot;foo&quot;, &quot;wb&quot;){|fh|p fh.seek(0, File::SEEK_CUR)}'
+-e:1:in `seek': No error - &quot;foo&quot; (Errno::E000)
+        from -e:1
+        from -e:1:in `open'
+        from -e:1
+</pre>
+<p>
+なのでCygwinのソースを見てみる。
+場所はnewlib/libc/stdio/fseek.cだ。
+</p>
+<pre>
+    fflush(fp);   /* may adjust seek offset on append stream */
+    if (fp-&gt;_flags &amp; __SOFF)
+      curoff = fp-&gt;_offset;
+    else
+      {
+        curoff = (*seekfn) (fp-&gt;_cookie, (fpos_t) 0, SEEK_CUR);
+        if (curoff == -1L)
+          _funlockfile(fp);
+          return EOF;
+      }
+</pre>
+<p>
+なるほど。Pythonじゃないんだから、これじゃだめだ。
+_funlockfile(fp);を追加したときに{}を忘れたようだ。
+ここで必ずEOFを返してしまう。しかもこの後の処理も実行されないからかなりまずい。
+newlibのREADMEを見たらnewlib@sources.redhat.comへ送れということなので、
+パッチ作ってバグ報告したら半日ほどして、
+</p>
+<pre>
+Applied.  Thanks.
+</pre>
+<p>
+が来た。というわけで次のCygwinのリリースに間に合ったようだ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200206253" title="200206253" href="200206c.html#200206253">■</a> 
+[Cygwin] GCC 3.1でcygwin1.dllをmake</h3>
+<p>
+上の変更でsplintがちゃんと動くかどうか確認するためにcygwin自体をmakeしてみる。
+ついでだからGCC 3.1でmakeしよう。
+実は会社のクロスの環境はGCC 3.1にしてあったりするんだが、
+いつも通りの手順で問題なくnew-cygwin1.dllはできた。
+これでsplintを試すとめでたくok。GCC 3.1でも大丈夫のようだ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200206254" title="200206254" href="200206c.html#200206254">■</a> 
+[Cygwin] その他のツール</h3>
+<p>
+動かなかったlhaも動くようになった。
+ひょっとして
+<a href="http://cygwin.com/ml/cygwin/2002-06/msg01273.html">これ</a>
+も、No errorってあたりからして同じかもしれない。
+すぐに1.3.11-4が出るとは思うけど、
+fseekでSEEK_CURを使っているソフトは要注意だ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200206255" title="200206255" href="200206c.html#200206255">■</a> 
+[Cygwin] 遅いぞbash</h3>
+<p>
+Cygwin MLでも
+
+<a href="http://cygwin.com/ml/cygwin/2002-06/msg01113.html">報告</a>
+があったけど、Cygwin 1.3.11にしたらコマンド起動のもたつきがかなり気になる。
+タスクマネージャで見てもCPU利用率は0%のままなので、
+何かを待っているようだ。
+なにしろどんなコマンドも10秒ほど待たされるので使いものにならん。
+と思ったら別のマシンでは最初のzsh起動時は待たされたが、
+その後は順調だ。うーむ。違いはというとbashとzshだな。そうか。
+bashから起動すると遅くてzshだと問題ないんだ。
+shとtcshも試したが問題なし。bashだけ秘孔を突いたらしい。
+あまり使わないからいいけど。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200206256" title="200206256" href="200206c.html#200206256">■</a> 
+KAME</h3>
+<p>
+見るの忘れてた。後日。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/06/25 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/06/26 start -->
+<h2><a name="20020626" href="200206c.html#20020626">2002-06-26 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="200206261" title="200206261" href="200206c.html#200206261">■</a> 
+<a href="http://sources.redhat.com/ml/cygwin/2002-06/msg01279.html">[Cygwin] Executing commands is VERY slow when logged into an NT domain....</a></h3>
+<p>
+そうか。確かにおいらもdomainにlogonしてる。
+やめてもいいんだけど、ファイルの所有権の変更が面倒だなあ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200206262" title="200206262" href="200206c.html#200206262">■</a> 
+Andy Roonie</h3>
+<p>
+ってだれ？
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/06/26 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/06/27 start -->
+<h2><a name="20020627" href="200206c.html#20020627">2002-06-27 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="200206271" title="200206271" href="200206c.html#200206271">■</a> 
+<a href="http://www.openssh.com/">OpenSSH 3.4p1</a></h3>
+<p>
+更新。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200206272" title="200206272" href="200206c.html#200206272">■</a> 
+<a href="http://www.loveruby.net/~aamine/ja/tdiary/?date=20020627#p04">コマンドの使用回数</a></h3>
+<p>
+面白そう。setopt HIST_IGNORE_ALL_DUPSしてるのでmakeはもっと上位にいくかもしれない。
+</p>
+<pre>
+ % ruby -pe 'gsub(/^.?+;| .+$/,&quot;&quot;)' ~/.zshhist |sort |\
+   uniq -c |sort -r |head -20
+   2605	ls
+   2486	less
+   2065	cd
+   1514	grep
+   1157	vi
+   1081	mv
+    808	tar
+    766	ruby
+    732	sudo
+    715	rm
+    625	make
+    576	cp
+    469	w3m
+    359	locate
+    261	man
+    245	echo
+    240	mkdir
+    224	cat
+    216	diff
+    178	wget
+</pre>
+<p>
+使ってるコマンドはほとんど同じだ。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/06/27 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/06/28 start -->
+<h2><a name="20020628" href="200206c.html#20020628">2002-06-28 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="200206281" title="200206281" href="200206c.html#200206281">■</a> 
+<a href="http://visual-mingw.sourceforge.net/">Visual-MinGW</a></h3>
+<p>
+知らなかった。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200206282" title="200206282" href="200206c.html#200206282">■</a> 
+Cygwin ML</h3>
+<pre>
+news://news.gmane.org/gmane.os.cygwin
+</pre>
+<p>
+でアクセス可能。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/06/28 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/06/29 start -->
+<h2><a name="20020629" href="200206c.html#20020629">2002-06-29 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="200206291" title="200206291" href="200206c.html#200206291">■</a> 
+[C] int i = i;</h3>
+<p>
+確かにgccではエラーにならない(PR#270)。
+</p>
+<pre>
+% echo 'void foo(){ int i = i; }' &gt;foo.c
+% gcc -Wall -c foo.c
+%
+</pre>
+<p>
+splintにかけてみる。
+</p>
+<pre>
+% splint foo.c       
+Splint 3.0.1.6 --- 18 Jun 2002
+
+foo.c: (in function foo)
+foo.c:1:21: Variable i used before definition
+  An rvalue is used that may not be initialized to a value on some execution
+  path. (Use -usedef to inhibit warning)
+
+Finished checking --- 1 code warning
+</pre>
+<p>
+うーむ。warning扱いか。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200206292" title="200206292" href="200206c.html#200206292">■</a> 
+[Cygwin] OpenSSH</h3>
+<p>
+Cygwin 1.3.11-3とOpenSSHの更新で設定が混沌としていていまいちよくわからず。
+とりあえず1.3.10に戻すか。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/06/29 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/06/30 start -->
+<h2><a name="20020630" href="200206c.html#20020630">2002-06-30 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="200206301" title="200206301" href="200206c.html#200206301">■</a> 
+<a href="http://www.ruby-lang.org/en/raa-list.rhtml?name=RubyWin">[Ruby] RubyWin 0.0.4.0</a></h3>
+<p>
+更新。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200206302" title="200206302" href="200206c.html#200206302">■</a> 
+<a href="http://www.ruby-lang.org/en/raa-list.rhtml?name=Ruby+GetText+Package">[Ruby] Ruby GetText Package 0.3.0</a></h3>
+<p>
+MinGWが入ってなかったので追加。
+</p>
+<pre>
+--- ext/gettext/gettext/extconf.rb.orig	2002-06-29 18:52:27.000000000 +0000
++++ ext/gettext/gettext/extconf.rb	2002-06-30 13:50:29.000000000 +0000
+@@ -13,3 +13,3 @@
+ 
+-if RUBY_PLATFORM =~ /cygwin|mswin32|bccwin32/
++if RUBY_PLATFORM =~ /cygwin|mingw|mswin32|bccwin32/
+ 	have_header 'windows.h'
+</pre>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/06/30 end -->
+
+<hr>
+<div>
+<a href="200206b.html">&lt;Prev(,)</a> | 
+<a href="200207a.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

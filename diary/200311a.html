@@ -1,0 +1,607 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2003-11-a</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="200310c.html">
+<link rel="next" href="200311b.html">
+
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2003年11月上旬〜</p>
+<hr>
+<div>
+<a href="200310c.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="200311b.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2003/11/01 start -->
+<h2><a name="20031101" href="200311a.html#20031101">2003-11-01 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="200311011" title="200311011" href="200311a.html#200311011">■</a> 
+10月のspam</h3>
+<p>
+1955通。また増えたよ。
+</p>
+<pre>
+% grep -li 'ruby-talk-admin' * |wc -l
+    428
+</pre>
+<p>
+そうか。ruby-talk-adminか。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200311012" title="200311012" href="200311a.html#200311012">■</a> 
+<a href="http://raa.ruby-lang.org/project/bz2/">[Ruby] bz2 0.20</a></h3>
+<p>
+更新。rb_proc_newを使っているので、もはやRuby 1.6ではmakeできない。
+</p>
+<!-- section end -->
+</div>
+<!-- 2003/11/01 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/11/02 start -->
+<h2><a name="20031102" href="200311a.html#20031102">2003-11-02 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="200311021" title="200311021" href="200311a.html#200311021">■</a> 
+<a href="http://www.gnu.org/software/sed/">[Soft] GNU sed 4.0.8</a></h3>
+<pre>
+* fix `sed n' printing the last line twice.
+* fix incorrect error message for invalid character classes.
+* fix segmentation violation with repeated empty subexpressions.
+* fix incorrect parsing of ^ after escaped (.
+* more comprehensive test suite (and with many expected failures...)
+</pre>
+<p>
+なんとなくuclibcを使ってみる。
+</p>
+<pre>
+% ac_cv_header_wchar_h=no \
+  CC='/usr/i386-linux-uclibc/usr/bin/gcc -static' \
+  CFLAGS=-Os CXXFLAGS=-Os ./configure \
+  --disable-dependency-tracking --disable-nls --prefix=/usr
+% make all check
+&lt;途中略&gt;
+All 57 tests behaved as expected (4 expected failures)
+</pre>
+<p>
+よさげだ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200311022" title="200311022" href="200311a.html#200311022">■</a> 
+[Worm] Swen</h3>
+<p>
+まだやってくるよ。10月はどんなもんだったかというと
+</p>
+<pre>
+% scan +swen |awk '/2003-10/{print $2}' |sort |uniq -c
+     11	2003-10-01
+      5	2003-10-02
+      2	2003-10-03
+      2	2003-10-04
+      9	2003-10-05
+      8	2003-10-06
+      6	2003-10-07
+      6	2003-10-08
+      6	2003-10-09
+     10	2003-10-10
+     16	2003-10-11
+      9	2003-10-12
+     17	2003-10-13
+      9	2003-10-14
+     18	2003-10-15
+     14	2003-10-16
+      8	2003-10-17
+      2	2003-10-18
+      5	2003-10-19
+      4	2003-10-20
+      6	2003-10-21
+      6	2003-10-22
+     12	2003-10-23
+      6	2003-10-24
+      8	2003-10-25
+      2	2003-10-26
+      5	2003-10-28
+      4	2003-10-29
+      6	2003-10-30
+      3	2003-10-31
+</pre>
+<p>
+毎日来てるじゃん。
+今使ってるscan.formはこんな感じ。
+</p>
+<pre>
+%4(msg)%&lt;(cur)+%| %&gt;\
+%04(year{date})-%02(mon{date})-%02(mday{date}) %02(hour{date}):%02(min{date}) \
+%6(size) \
+|%10(hdecode(friendly{from}))| \
+%(hdecode{subject})%&lt;{body}&lt;&lt;%{body}%&gt;
+</pre>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200311023" title="200311023" href="200311a.html#200311023">■</a> 
+[Mail] scan</h3>
+<p>
+scanコマンドに-fileというオプションがあることに気づいた。
+もう15年ぐらいは使ってるというのに。
+</p>
+<pre>
+% scan -file ruby-talk.0311.mbox |head -5
+ 1 2003-11-01 00:15      0 |&quot;Michael C| Re: [Q] Ruby and XUL?&lt;&lt;On Wednesday 2
+ 2 2003-11-01 01:05      0 |&quot;Zachary P| Re: [Q] Ruby and XUL?&lt;&lt;On Sat, Nov 01
+ 3 2003-11-01 03:39      0 |Eric Hodel| Re: [Q] Ruby and XUL?&lt;&lt;James Britt (j
+ 4 2003-11-01 04:00      0 |James Brit| Re: [Q] Ruby and XUL?&lt;&lt;Eric Hodel wro
+ 5 2003-11-01 04:17      0 |Hal Fulton| Since today is October 31...&lt;&lt;srand 0
+</pre>
+<p>
+残念ながらサイズは0になってしまうし、1-5という範囲指定もできない。
+このファイルはcmailでM-x cmail-c2mで作ったもんだけど、
+そうか、cmail用のscanをRubyで作ればいいのか。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200311024" title="200311024" href="200311a.html#200311024">■</a> 
+<a href="http://www.gnu.org/software/wget/">[Soft] GNU wget 1.9</a></h3>
+<p>
+更新。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200311025" title="200311025" href="200311a.html#200311025">■</a> 
+<a href="200310c.html#200310282">[Ruby] ruby-talk</a></h3>
+<p>
+multipartが全滅してるので、文句を言われる前に元に戻した。
+fml用テストMLを作るかな。今のままruby-talkで実験するのもなんだし。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200311026" title="200311026" href="200311a.html#200311026">■</a> 
+[Ruby][Cygwin] &quot;B&quot;</h3>
+<p>
+binutilsが新しくなったせいか、ruby_safe_level等のsymbolが&quot;B&quot;になるようになった。
+Ruby 1.6はGNUmakefileで
+</p>
+<pre>
+nm --extern-only --defined-only librubys.a |\
+ruby -ne 'puts $1 if / [CDT] _(.*)$/' &gt; ruby.def
+</pre>
+<p>
+という感じでruby.defを作っていたため、
+拡張ライブラリを作るところでundefinedになってしまう。
+というわけで[BCDT]に変更。
+</p>
+
+<p>
+Ruby 1.8はruby.defを作らないので関係なし。
+</p>
+<!-- section end -->
+</div>
+<!-- 2003/11/02 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/11/03 start -->
+<h2><a name="20031103" href="200311a.html#20031103">2003-11-03 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="200311031" title="200311031" href="200311a.html#200311031">■</a> 
+<a href="http://www.postfix.org/">[Mail] Postfix 2.0.16</a></h3>
+<p>
+というわけで、Postfixをインストール。
+main.cfで書き換えたのと追加したのは以下の4つ。
+</p>
+<pre>
+myhostname = localhost.localdomain
+relayhost = ISPのSMTPサーバ名
+sender_canonical_maps = hash:/etc/postfix/sender_canonical
+mailbox_command = /usr/bin/procmail
+</pre>
+<p>
+sender_canonicalは
+</p>
+<pre>
+watanabe Fromに設定したいメールアドレス
+</pre>
+<p>
+てな具合。
+</p>
+<pre>
+sudo postmap hash:/etc/postfix/sender_canonical
+</pre>
+<p>
+を実行しデータベースを更新し、postfixをstartさせる。
+mailコマンドでrimへ送ってみる。okだ。
+</p>
+
+<p>
+これでfmlの準備はできたかな。
+</p>
+<!-- section end -->
+</div>
+<!-- 2003/11/03 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/11/04 start -->
+<h2><a name="20031104" href="200311a.html#20031104">2003-11-04 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="200311041" title="200311041" href="200311a.html#200311041">■</a> 
+<a href="http://www.fml.org">[Mail] fml 4.0.3</a></h3>
+<pre>
+% sudo mkdir /var/spool/ml
+% sudo chown watanabe /var/spool/ml
+% perl makefml install
+適当に応える
+% /usr/local/fml/makefml newml ruby-talk
+% sduo vi /etc/aliases
+メッセージの通り/var/spool/ml/ruby-talk/aliasesを追加
+% /usr/local/fml/makefml adduser ruby-talk watanabe@ruby.localdomain
+% cd /var/spool/ml/ruby-talk
+% vi cf
+面倒なのでDOMAINNAMEをruby.localdomainにしてしまう
+% make config.ph
+% echo test | mail -s test ruby-talk
+</pre>
+<p>
+でいいかなと思ったらエラーメールになってしまった。
+</p>
+<pre>
+&lt;ruby-talk@ruby.localdomain&gt;: mail to command is restricted
+</pre>
+<p>
+なるほど。Postfixの設定か。/etc/postfix/main.cfに
+</p>
+<pre>
+allow_mail_to_commands = alias,forward,include
+</pre>
+<p>
+を追加してreload。おお、これでいいみたいだ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2003/11/04 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/11/05 start -->
+<h2><a name="20031105" href="200311a.html#20031105">2003-11-05 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="200311051" title="200311051" href="200311a.html#200311051">■</a> 
+[Mail][fml] allow+multipart</h3>
+<p>
+さていろいろ実験できる環境ができたので、データを用意する。
+htmlつき、pgp-multipart、ファイルが添付されている、とこれくらいでいいかな。
+今月のruby-talk MLに来たメールで、
+それぞれに該当するものがあるかどうか調べてみるとすぐにみつかった。
+それぞれFromとTo:とFrom:を書き換えて要らないヘッダ部分を削り
+</p>
+<pre>
+/usr/local/fml/fml.pl /var/spool/ml/ruby-talk &lt; message
+</pre>
+<p>
+と実行して直接食わせる。これで簡単に実験できるわけだ。
+</p>
+
+<p>
+で、結局以下のような設定にするのが一番よさそうだ。
+</p>
+<pre>
+&amp;ADD_CONTENT_HANDLER('multipart/.*', 'text/html', 'strip+notice');
+&amp;ADD_CONTENT_HANDLER('multipart/.*', '.*/.*', 'allow+multipart');
+</pre>
+<p>
+これだとmultipartのままtext/htmlの部分だけstripすることができる。
+他のmultipartはいじらない。
+</p>
+
+<p>
+あとはvirus対策のためにrejectするsubtypeを設定すればいいかな。
+とりあえずapplication/x-msdownloadあたりか。
+</p>
+<pre>
+&amp;ADD_CONTENT_HANDLER('multipart/.*', 'application/.*download', 'reject');
+</pre>
+<p>
+ruby-talk ML自体は32KBというサイズの制限があるから、
+設定するまでもない気もする。
+</p>
+<!-- section end -->
+</div>
+<!-- 2003/11/05 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/11/06 start -->
+<h2><a name="20031106" href="200311a.html#20031106">2003-11-06 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="200311061" title="200311061" href="200311a.html#200311061">■</a> 
+[TV] ベストヒットUSA</h3>
+<p>
+テレビ朝日でもやってることに気づいた。
+不思議なことに
+<a href="200308c.html#200308214">テレビ埼玉</a>でやってる内容とは違う。
+というか、こっちは1時間番組だよ。
+なんでそんな不思議なことを？
+</p>
+
+<p>
+それにしてもR.E.M.のBad DayのPVは面白い。
+</p>
+<!-- section end -->
+</div>
+<!-- 2003/11/06 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/11/07 start -->
+<h2><a name="20031107" href="200311a.html#20031107">2003-11-07 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="200311071" title="200311071" href="200311a.html#200311071">■</a> 
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-talk/84801">[Ruby] spam?</a></h3>
+<p>
+spamにしか見えないこの記事だが、実はspamではない。
+ruby-talk MLのメンバだし、過去にも投稿してるし。
+</p>
+<!-- section end -->
+</div>
+<!-- 2003/11/07 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/11/08 start -->
+<h2><a name="20031108" href="200311a.html#20031108">2003-11-08 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="200311081" title="200311081" href="200311a.html#200311081">■</a> 
+<a href="http://use.perl.org/articles/03/11/07/117238.shtml?tid=6">[Perl] Perl 5.8.2</a></h3>
+<pre>
+% ./configure.gnu -Dcc=gcc -Dccflags=-DDEBUGGING
+% time make all test install
+make all test install  11873.31s user 543.82s system 93% cpu 3:41:17.06 total
+</pre>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200311082" title="200311082" href="200311a.html#200311082">■</a> 
+<a href="http://cygwin.com/ml/cygwin-announce/2003-11/msg00007.html">[Cygwin] nfs-server 2.2.47-2</a></h3>
+<pre>
+This package is a port of the Universal NFS server.  It contains an
+NFS daemon (rpc.nfsd) and a mount daemon (rpc.mountd).  Unlike other
+NFS daemons, this NFS server runs entirely in user space.  This
+makes it a tad slower than other NFS implementations, and also
+introduces some awkwardnesses in the semantics (for instance, moving
+a file to a different directory will render its file handle
+invalid).
+</pre>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200311083" title="200311083" href="200311a.html#200311083">■</a> 
+<a href="http://bogofilter.sf.net/">[Mail] Bogofilter 0.15.8</a></h3>
+<pre>
+* Modified handling of mime attachments to decode rfc822 and to
+  discard applications and images.
+* Added decoding of percent escaped characters in URLs.
+* Script tuning/bogotune rewritten as C program.
+* Added man page for bogotune.
+* Print &quot;X-Bogosity&quot; line when &quot;-t&quot; is used alone.
+* Change bogoupgrade back to using 2 arg open for perl-5.6
+  compatibility.
+* Initialize wordhash storage.
+* Fix initialization problem that prevents reading more than
+  one msg-count file.
+* Configure script modified to better detect BerkeleyDB libs.
+* Makefile modified to build bogolexer and bogoutil with fewer
+  shared libs.
+* Fix build problem in doc directory.
+* English and french versions of bogofilter-faq.html revised.
+</pre>
+
+<!-- section end -->
+</div>
+<!-- 2003/11/08 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/11/09 start -->
+<h2><a name="20031109" href="200311a.html#20031109">2003-11-09 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="200311091" title="200311091" href="200311a.html#200311091">■</a> 
+<a href="200311a.html#200311031">[Mail][Postfix] main.cf</a></h3>
+<p>
+今頃になって別ドメインに送れないことに気づいた。
+</p>
+<pre>
+relayhost = [ISPのSMTPサーバ名]
+</pre>
+<p>
+のようにMX lookupを無視する設定に変更。
+</p>
+
+<p>
+最近全然メールを書いてないということか。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200311092" title="200311092" href="200311a.html#200311092">■</a> 
+<a href="http://www.uclibc.org/">[Soft] uClibc 0.9.22</a></h3>
+<pre>
+o Added e1, microblaze, and sh64 architectures.
+o Much improved soft-float support
+o Rewrote the passwd and group handing functions
+    and implemented all SuSv3 required reentrant
+    versions.
+o Reworked and updated the Config system.  You now
+    get to select your target architecture with the
+    config system.
+o Fixed pthreads for mmuless m68k systems
+o Added some x86 optimized string functions.
+o Lots and lots of bugs fixed.
+</pre>
+
+<!-- section end -->
+</div>
+<!-- 2003/11/09 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/11/10 start -->
+<h2><a name="20031110" href="200311a.html#20031110">2003-11-10 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="200311101" title="200311101" href="200311a.html#200311101">■</a> 
+<a href="http://www.thekelleys.org.uk/dnsmasq/doc.html">[Soft] Dnsmasq 1.18</a></h3>
+<pre>
+Changes: A collection of minor enhancements and tweaks.
+</pre>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200311102" title="200311102" href="200311a.html#200311102">■</a> 
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-talk/84904">[Ruby][MSYS] 勝手に変換</a></h3>
+<p>
+MSYSのshはコマンドがMSYSのアプリケーションではない時、
+引数の/dをd:に勝手に変換する。
+でも
+</p>
+<pre>
+./configure --prefix=/d/programs/ruby-mignw
+</pre>
+<p>
+と実行すれば、MSYSのshが起動するわけで、/dはそのままになる。
+だからrbconfig.rbの中のprefixも/d/programs/ruby-mingwのままなので、
+instruby.rbで直接インストールされるruby.exeやlib/は
+カレントドライブの/d/programs/ruby-mingwにインストールされる。
+一方ext/extmk.rb経由でmake installされるファイル群は、
+MSYSのアプリケーションではないruby.exeがコピーするので、
+コマンドラインは変換される。ここで、
+</p>
+<pre>
+/d/programs/ruby-mingwはd:/programs/ruby-mingw
+</pre>
+<p>
+となる。
+つまりinstruby.rbの中でもruby.exeを起動すればいいわけだ。
+そりゃだめだめな解決策。
+</p>
+
+<p>
+まあ
+</p>
+<pre>
+./configure --prefix=d:/programs/ruby-mingw
+</pre>
+<p>
+で我慢してくれないかな。
+</p>
+<!-- section end -->
+</div>
+<!-- 2003/11/10 end -->
+
+<hr>
+<div>
+<a href="200310c.html">&lt;Prev(,)</a> | 
+<a href="200311b.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

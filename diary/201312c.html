@@ -1,0 +1,597 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2013-12-c</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="201312b.html">
+<link rel="next" href="201401a.html">
+
+<link rel="stylesheet" type="text/css" href="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.css">
+<script type="text/javascript" src="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.js"></script>
+<script type="text/javascript">
+<!--       
+$(document).ready(function() {
+  prettyPrint();
+});
+-->
+</script>
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2013年12月下旬〜</p>
+<hr>
+<div>
+<a href="201312b.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="201401a.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2013/12/21 start -->
+<h2><a name="20131221" href="201312c.html#20131221">2013-12-21 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="201312211" title="201312211" href="201312c.html#201312211">■</a> 
+<a href="http://golf.shinh.org/p.rb?rotate+counterclockwise+">rotate counterclockwise</a></h3>
+<p>
+休みに入ったので久し振りに挑戦。とはいうもののこれってtransposeなのでちょっと変更すればいけてしまう。<br>
+とりあえずBashで。とか考えてるうちにtransposeのほうが縮んだ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2013/12/21 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/12/22 start -->
+<h2><a name="20131222" href="201312c.html#20131222">2013-12-22 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="201312221" title="201312221" href="201312c.html#201312221">■</a> 
+傾けるのが面倒な人へ</h3>
+<p>
+<a href="https://twitter.com/tanjyouseki366/status/414745756499591168">これ</a>をわざわざNexus7で見たわけだけど、<br>
+いまいちなんだかわからないのでなんとかしてみる。<br>
+傾けて見るってことはその方向を縮小すればいいわけで、convertですよ。
+</p>
+<pre>
+% convert https://pbs.twimg.com/media/BcFeA0HCIAAMG1b.jpg -resize 100%x10% x:
+% convert https://pbs.twimg.com/media/BcFeA0HCIAAMG1b.jpg -resize 10%x100% -rotate -90 x:
+</pre>
+<p>
+結果を書くような無粋なまねはしないので実際に実行してご確認ください。
+</p>
+<!-- section end -->
+</div>
+<!-- 2013/12/22 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/12/23 start -->
+<h2><a name="20131223" href="201312c.html#20131223">2013-12-23 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="201312231" title="201312231" href="201312c.html#201312231">■</a> 
+やっと家のPCをUbuntu 13.10へ上げた</h3>
+<p>
+例のGUIが上げられるぜと催促してきたので上げたはいいが、途中でハングしてしまった。<br>
+psしてみると4時間ぐらい何もしてないようだったので、GUIを閉じてみたら無反応だった。<br>
+それを強制的に閉じてもaptなんちゃらがまだ残ってたのでそれもkill。<br>
+sudo do-release-upgradeすると何も言わずに終了する。<br>
+普通にaptitude safe-upgradeすると指示されたのでそれに従う。
+</p>
+<pre>
+% sudo aptitude safe-upgrade --full-resolver
+E: dpkg は中断されました。問題を修正するには 'sudo dpkg --configure -a' を手動で実行する必要があります。
+W: キャッシュファイルにロックをかけられません。これは通常、dpkg や別の apt ツールが既にパッケージをインストール中だとい&gt;う意味です。読み取り専用モードで開いています。パッケージの状態を変更してもそれは保存されません!
+E: dpkg は中断されました。問題を修正するには 'sudo dpkg --configure -a' を手動で実行する必要があります。
+% sudo dpkg --configure -a
+&lt;snip&gt;
+update-initramfs: Generating /boot/initrd.img-3.11.0-14-generic
+処理中にエラーが発生しました:
+ antlr
+% sudo dpkg --configure -a
+dpkg: 依存関係の問題により antlr の設定ができません:
+ antlr は以下に依存 (depends) します: libantlr-java (= 2.7.7+dfsg-5) ...しかし:
+  パッケージ libantlr-java はまだインストールされていません。
+
+dpkg: antlr の処理中にエラーが発生しました (--configure):
+ 依存関係の問題 - 設定を見送ります
+処理中にエラーが発生しました:
+ antlr
+</pre>
+<p>
+antlrがどうにもならないようで。purgeしてみる。
+</p>
+<pre>
+% sudo aptitude purge antlr
+Processing 4 removed doc-base files...
+Registering documents with scrollkeeper...
+処理中にエラーが発生しました:
+ libantlr-java
+E: Sub-process /usr/bin/dpkg returned an error code (1)
+パッケージをインストールできませんでした。復旧を試みています:
+
+現在の状態: 依存関係破損が 0 個 [-1], 更新が 681 個 [-11], 新規が 55591 個 [-16]。
+</pre>
+<p>
+やっぱだめっぽい。このlibantlr-javaを何とかしないといけない。<br>
+強制的に削除してみる。
+</p>
+<pre>
+% sudo dpkg --force-remove-reinstreq --remove libantlr-java
+dpkg: 警告: --force が有効なので、問題を無視します:
+ パッケージが非常に矛盾した状態に陥りました。
+削除を行う前にこのパッケージを再インストールすべきです。
+(データベースを読み込んでいます ... 現在 398562 個のファイルとディレクトリがインストールされています。)
+libantlr-java を削除しています ...
+% sudo aptitude safe-upgrade --full-resolver
+</pre>
+<p>
+これでやっと通った。<br>
+antlrはたぶん必要ないよな。<br>
+groovyが巻き添えを食ったがまあ必要になったら入れよう。
+</p>
+<p>
+uim-skk使いなので日本語入力周りは何も変わらない。<br>
+ああ、そういえば言われてたrubyのtest-allがエラーになるようなったな。
+</p>
+<!-- section end -->
+</div>
+<!-- 2013/12/23 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/12/24 start -->
+<h2><a name="20131224" href="201312c.html#20131224">2013-12-24 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="201312241" title="201312241" href="201312c.html#201312241">■</a> 
+convertで例の画像を作ってみた</h3>
+<p>
+<a href="201312c.html#201312221">先日</a>の画像をconvertで解けるなら作ることもできるわけでやってみた。
+</p>
+<p>
+400x400へresizeしてcompositeするだけ。
+</p>
+<pre>
+% convert -font ipagp-mona.ttf -pointsize 30 \
+  \( label:&quot;2013年クリスマスおめでとうございます&quot; -crop 0x70%+0+5% +repage -resize 400x400\! \) \
+  \( label:&quot;2014年あけましておめでとうございます&quot; -crop 0x70%+0+5% +repage -resize 400x400\! -rotate 90 \) \
+  -compose Multiply -composite -type grayscale -depth 3 foo.png
+</pre>
+<p>
+文言が見えちゃってるのであれだけど、結果はこんな感じ。<br>
+ところどころ読めちゃうねえ。
+</p>
+<p>
+<img src="../images/foo.png" alt="">
+</p>
+<!-- section end -->
+</div>
+<!-- 2013/12/24 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/12/25 start -->
+<h2><a name="20131225" href="201312c.html#20131225">2013-12-25 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="201312251" title="201312251" href="201312c.html#201312251">■</a> 
+クリスマスツリー</h3>
+<p>
+<a href="http://d.hatena.ne.jp/sugyan/20110608/1307460864">Perl版を</a>Bashに移植した。
+</p>
+<pre>
+#!/bin/bash
+
+STAR=$' \u2605'
+FSLASH=$'\uFF0F'
+BSLASH=$'\uFF3C'
+ORNAMENTS=(0069 0020 0020 0020 0020 0020
+    0020 0020 0020 0020 0020 0020
+    0020 2E1B 2042 2E2E 0026 0040 FF61)
+ORNAMENT_COLORS=(21 33 34 35 36 37)
+HAT='^'
+
+tree() {
+    h=$1
+    printf &quot;\n%${h}s\e[33m${STAR}\n&quot;
+    m=$((h * 2 - 1))
+    eval set {1..$h}
+    for l; do
+        o=$((l * 2 - 2))
+	s=$(((m - o) / 2 + 1))
+        printf &quot;%${s}s\e[32m${FSLASH}&quot;
+	for ((j=0; j &lt; o; j++)); do
+            or=${ORNAMENTS[${#ORNAMENTS[@]}*$RANDOM/32767]}
+            oc=${ORNAMENT_COLORS[${#ORNAMENT_COLORS[@]}*$RANDOM/32767]}
+            printf &quot;\e[${oc}m\u$or&quot;
+        done
+        printf &quot;\e[32m${BSLASH}\n&quot;
+    done
+    h1=$((h - 1))
+    spaces=$(printf &quot;%*s&quot; $h1)
+    hats=&quot;\e[32m${spaces// /$HAT}&quot;
+    printf &quot; ${hats}|  |${hats}&quot;
+    if (($h &gt; 10)); then
+        printf &quot;\n $spaces|  |$spaces&quot;
+    fi
+    printf &quot;\n\n&quot;
+}
+
+tree 20
+</pre>
+<p>
+<a href="https://gist.github.com/eban/8121851">https://gist.github.com/eban/8121851</a></p>
+<p>
+RANDOMのあたりは最初shuf -n1 -e的な処理だったが、<br>
+数が多くて遅すぎるのでRANDOMを使うようにした。
+</p>
+<p>
+<img src="../images/xmas-tree-fs8.png" alt="">
+</p>
+<!-- section end -->
+</div>
+<!-- 2013/12/25 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/12/26 start -->
+<h2><a name="20131226" href="201312c.html#20131226">2013-12-26 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="201312261" title="201312261" href="201312c.html#201312261">■</a> 
+コマンドラインからCygwinをsetup</h3>
+<p>
+setup-x86(_64)はコマンドラインからも使えるようになっていて、<br>
+いろいろオプションを指定すれば何も入力することなく更新可能になる。<br>
+</p>
+<pre>
+% ./setup-x86 -h
+Starting cygwin install, version 2.831
+User has backup/restore rights
+
+Command Line Options:
+ -D --download                     Download from internet
+ -L --local-install                Install from local directory
+ -s --site                         Download site
+ -O --only-site                    Ignore all sites except for -s
+ -R --root                         Root installation directory
+ -x --remove-packages              Specify packages to uninstall
+ -c --remove-categories            Specify categories to uninstall
+ -P --packages                     Specify packages to install
+ -C --categories                   Specify entire categories to install
+ -p --proxy                        HTTP/FTP proxy (host:port)
+ -a --arch                         architecture to install (x86_64 or x86)
+ -q --quiet-mode                   Unattended setup mode
+ -M --package-manager              Semi-attended chooser-only mode
+ -B --no-admin                     Do not check for and enforce running as
+                                   Administrator
+ -h --help                         print help
+ -l --local-package-dir            Local package directory
+ -r --no-replaceonreboot           Disable replacing in-use files on next
+                                   reboot.
+ -X --no-verify                    Don't verify setup.ini signatures
+ -n --no-shortcuts                 Disable creation of desktop and start menu
+                                   shortcuts
+ -N --no-startmenu                 Disable creation of start menu shortcut
+ -d --no-desktop                   Disable creation of desktop shortcut
+ -K --pubkey                       URL of extra public key file (gpg format)
+ -S --sexpr-pubkey                 Extra public key in s-expr format
+ -u --untrusted-keys               Use untrusted keys from last-extrakeys
+ -U --keep-untrusted-keys          Use untrusted keys and retain all
+ -g --upgrade-also                 also upgrade installed packages
+ -o --delete-orphans               remove orphaned packages
+ -A --disable-buggy-antivirus      Disable known or suspected buggy anti virus
+                                   software packages during execution.
+Ending cygwin install
+</pre>
+<p>
+たとえば
+</p>
+<pre>
+% ./setup-x86 -q -n -N -d -R c:/cygwin -s ftp://ftp.iij.ad.jp/pub/cygwin -l c:/cygwin/download
+</pre>
+<p>
+とすれば全パッケージの更新ができるし、cpioをインストールしたければ-Pで指定すればいい。<br>
+途中経過は例のGUIが出るが自動で進む。
+</p>
+<pre>
+% ./setup-x86 -q -n -N -d -R c:/cygwin -s ftp://ftp.iij.ad.jp/pub/cygwin -l c:/cygwin/download -P cpio
+Starting cygwin install, version 2.831
+User has backup/restore rights
+Current Directory: c:/cygwin/download
+Could not open service McShield for query, start and stop. McAfee may not be installed, or we don't have access.
+root: c:/cygwin binary system
+Selected local directory: c:/cygwin/download
+net: Direct
+Loaded cached mirror list
+get_url_to_membuf http://cygwin.com/mirrors.lst
+getUrlToStream http://cygwin.com/mirrors.lst
+site: ftp://ftp.iij.ad.jp/pub/cygwin<br>
+get_url_to_membuf ftp://ftp.iij.ad.jp/pub/cygwin/x86/setup.bz2
+getUrlToStream ftp://ftp.iij.ad.jp/pub/cygwin/x86/setup.bz2
+ftp &gt; 220 IIJ FTP server ready (IPv4 client).
+ftp &gt; 230 Login successful.
+ftp &gt; 200 Switching to Binary mode.
+ftp &gt; 227 Entering Passive Mode (202,232,140,144,57,107).
+ftp &gt; 150 Opening BINARY mode data connection for /pub/cygwin/x86/setup.bz2 (395212 bytes).
+ftp &gt; 226 Transfer complete.
+get_url_to_membuf ftp://ftp.iij.ad.jp/pub/cygwin/x86/setup.bz2.sig
+getUrlToStream ftp://ftp.iij.ad.jp/pub/cygwin/x86/setup.bz2.sig
+ftp &gt; 227 Entering Passive Mode (202,232,140,144,248,25).
+ftp &gt; 150 Opening BINARY mode data connection for /pub/cygwin/x86/setup.bz2.sig (72 bytes).
+ftp &gt; 226 Transfer complete.
+Added manual package cpio
+Changing gid back to original
+Visited: 280 nodes out of 3066 while creating dependency order.
+Dependency order of packages: base-cygwin &lt;snip&gt;
+Changing gid to Administrators
+Ending cygwin install
+% rehash
+% type cpio
+cpio is /usr/bin/cpio
+</pre>
+<p>
+複数のパッケージをインストールしたいときはcpio,bcのようにカンマで区切ればok。
+</p>
+<!-- section end -->
+</div>
+<!-- 2013/12/26 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/12/27 start -->
+<h2><a name="20131227" href="201312c.html#20131227">2013-12-27 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="201312271" title="201312271" href="201312c.html#201312271">■</a> 
+awkの引数で変数代入</h3>
+<p>
+たしか
+<a href="http://pubs.opengroup.org/onlinepubs/009696699/utilities/awk.html">POSIX</a>にあると以前見た記憶があったが、やはりあった。順番も決まっていた。<br>
+RSをいじるのは
+<a href="201304b.html#201304161">以前</a>にも使っていた。
+</p>
+<p>
+順番とは何かというと引数の間にも代入は入れることができて、たとえば
+</p>
+<pre>
+% awk '{print flag, $0}' flag=1 &lt;(date) flag=2 &lt;(sleep 1;date)
+1 Sat Dec 28 02:24:43 JST 2013
+2 Sat Dec 28 02:24:44 JST 2013
+</pre>
+<p>
+こんなことも可能。flagの値を途中で変えられる。<br>
+かと言って、まあ、あまりこれを積極的に使うケースは思いつかないけど。
+</p>
+<!-- section end -->
+</div>
+<!-- 2013/12/27 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/12/28 start -->
+<h2><a name="20131228" href="201312c.html#20131228">2013-12-28 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="201312281" title="201312281" href="201312c.html#201312281">■</a> 
+忘年会</h3>
+<p>
+馬場のShakey'sでピザとパスタの毎年恒例の忘年会。大体10周年記念らしい。<br>
+@koichiroさんが体調悪く残念ながら不参加。
+</p>
+<p>
+ハーフってこんなでかかったっけ？<br>
+ruby -run -e httpdの話。epub追加しちゃうか。<br>
+marshalの仕様とか。amarshal。yaml。ActiveRecordがどーのこーの。<br>
+30分15000円。コンサルは占い。時間で金取れ。<br>
+きちんと働かせるにはどうしたらいいか。<br>
+公開内緒話やや多め。SAMLってなんやねん。<br>
+irbとopensslだけ使ってる人。<br>
+bz2もやめてxzでいいんじゃね。<br>
+という話ならtkを。<br>
+gem化はどうなってるのか。<br>
+cdnとかherokuとか。<br>
+Rubyのほうから来ました。消火器じゃないんだから。<br>
+rvmのトラフィックがばかにならない。<br>
+バイナリをruby-lang.orgに置いてくれとの要望もあるらしい。<br>
+cdnに乗るまでは大元が必要。<br>
+ストレージをどこかに移したい。<br>
+金。<br>
+グラント？<br>
+電話は家に置きっぱなし。<br>
+着信履歴から適当に電話しないように。<br>
+家を建てた。屋上があるらしい。川の向こうはあっち。そろってあっち。<br>
+口は災いの元。
+猫しか撮らない。4匹に増えた。<br>
+iPadって写真撮れるんだ。<br>
+pserverだったわけよ。<br>
+svnを知らない子供たちさー。<br>
+git?<br>
+revision番号とか、単調増加するhash値を探すやつとか。<br>
+それすげー時間かかりそう。<br>
+そもそもcvsのときはrevision番号なんてなかった。<br>
+説得してほしい。人任せ。<br>
+方向性だけでテストもせずにコミットしない。だれもわかってくれないから。<br>
+転職。<br>
+英語大事。<br>
+品川駅は何かあるとすぐ人が溢れるのはなぜか。<br>
+最後はチョコピザでしょ、マシュマロ。<br>
+バイキングは飲み放題つきだと1時間半で1人3000円ぐらいだけど、<br>
+バンキングではなくぐだぐだと4時間半いて1人3000円に収まっている。<br>
+今度は鍋でも。<br>
+思い出したら追記。
+</p>
+<p>
+@eban,@gotoyuzo,@hemge,@hsbt,@nahi
+</p>
+<!-- section end -->
+</div>
+<!-- 2013/12/28 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/12/29 start -->
+<h2><a name="20131229" href="201312c.html#20131229">2013-12-29 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="201312291" title="201312291" href="201312c.html#201312291">■</a> 
+蛍光灯ペンダント</h3>
+<p>
+外側の32Wがついにつかなくなったのでamazonで適当に安いのを発注。<br>
+発注する際に物の名前がわからなくてちょっと難儀した。<br>
+最初は「蛍光灯 丸型」で検索したら蛍光灯そのものがずーっと続いたが、<br>
+何ページも送っていると写真入りで「洋風ペンダント」とか出てきた。<br>
+つまり「蛍光灯ペンダント」が正解のようで。<br>
+一昨日頼んだら昨日の夜にはもう着いていた。<br>
+この立て込んでる時期にしてはやけに速いな。
+</p>
+<p>
+最近のは1回引っぱっても外側が消えるわけじゃなくて、<br>
+全体的にちょっと暗くなるようで。70%と説明書には書いてあった。<br>
+省エネモードか。はっきり言ってあまり変わらないので常に省エネモードでいい感じだ。<br>
+豆球は使わないので、常に2回引っぱればいいわけだな。
+</p>
+<!-- section end -->
+</div>
+<!-- 2013/12/29 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/12/30 start -->
+<h2><a name="20131230" href="201312c.html#20131230">2013-12-30 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="201312301" title="201312301" href="201312c.html#201312301">■</a> 
+1時から24時に対応したつもりがいけてない</h3>
+<p>
+例のアメダスのRSSの件だけど、2回同じものが出てくることがあって不思議だったが、<br>
+こんなケースがあった。<br>
+まずアメダスの情報は毎時10分すぎぐらいに更新される。<br>
+Yahoo! Pipesの巡回がたまたまその10分よりも前の5分とかに来ると、<br>
+時間がずれるというのは気づいてたのでこれは対処できた。<br>
+しかし夜中の0時だけは日付が変わってしまうので対処できない。<br>
+それもこれもアメダスの情報がなぜか0時から23時じゃなくて、<br>
+1時から24時になっているからだ。<br>
+24時ってことは翌日なわけでここだけNOWで時刻を拾ってしまうとずれてしまう。<br>
+そこで、JSTじゃなくてGMT+0800にしたわけだけど、<br>
+どういうわけか最近夜中の0時台に来ないで1時台にずれこむことが多い。<br>
+まあ、そうなると結局日付がそこで変わるので同じことになってしまう。<br>
+</p>
+<p>
+根本的には日付をNOWじゃなくてHTMLから拾う必要があるが、<br>
+まあ、そこはrowspanの扱いが難しすぎてXPathでなんとかできるのかどうか。
+</p>
+<!-- section end -->
+</div>
+<!-- 2013/12/30 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/12/31 start -->
+<h2><a name="20131231" href="201312c.html#20131231">2013-12-31 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="201312311" title="201312311" href="201312c.html#201312311">■</a> 
+お・も・て・な・し</h3>
+<p>
+いろいろ集めてみた。
+</p>
+<pre>
+% echo おもてなし | sed 's/\B/・/g'        
+お・も・て・な・し
+% echo おもてなし | gawk 'gsub(/\B/, &quot;・&quot;)'     
+お・も・て・な・し
+% echo おもてなし | ruby -ple 'gsub(/\B/, &quot;・&quot;)'     
+お・も・て・な・し
+% echo おもてなし | perl -CIO -Mutf8 -ple 's/\B/・/g'
+お・も・て・な・し
+% echo おもてなし | bash -c 'set $(grep -o .);IFS=&quot;・&quot;;echo &quot;$*&quot;'
+お・も・て・な・し
+% echo おもてなし | zsh -c 'read a;echo ${(j:・:)${(s::)a}}'
+お・も・て・な・し
+</pre>
+<p>
+これって普通に
+</p>
+<pre>
+% echo おもてなし | grep -o . | paste -sd&quot;・&quot;
+</pre>
+<p>
+でいいんじゃないかという気がするが、<br>
+pasteの-dはマルチバイト対応してないので、<br>
+泣き別れになってしまう。
+</p>
+<!-- section end -->
+</div>
+<!-- 2013/12/31 end -->
+
+<hr>
+<div>
+<a href="201312b.html">&lt;Prev(,)</a> | 
+<a href="201401a.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

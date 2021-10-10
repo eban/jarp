@@ -1,0 +1,378 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2009-8-c</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="200908b.html">
+<link rel="next" href="200909a.html">
+
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2009年8月下旬〜</p>
+<hr>
+<div>
+<a href="200908b.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="200909a.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2009/08/21 start -->
+<h2><a name="20090821" href="200908c.html#20090821">2009-08-21 (Fri)</a></h2>
+<!-- 2009-08-22 13:08:47 -->
+
+<div class="entry1">
+<h3><a name="200908211" title="200908211" href="200908c.html#200908211">■</a> 
+[Ruby] バージョンが合わない件</h3>
+<p>
+朝起きるとすでになかださんが対応していた。さすがだ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2009/08/21 end -->
+
+
+
+<hr class="hide">
+<!-- 2009/08/22 start -->
+<h2><a name="20090822" href="200908c.html#20090822">2009-08-22 (Sat)</a></h2>
+<!-- 2009-08-23 02:16:15 -->
+
+<div class="entry1">
+<h3><a name="200908221" title="200908221" href="200908c.html#200908221">■</a> 
+<a href="http://www.commandlinefu.com/site/api">[Web] API | commandlinefu.com</a></h3>
+<p>
+commandlinefuのAPIが結構便利。たとえばfavouritesをplain textで得たければ、<br>
+
+<a href="http://www.commandlinefu.com/commands/favourites">http://www.commandlinefu.com/commands/favourites</a>に/plaintextを追加して、<br>
+
+<a href="http://www.commandlinefu.com/commands/favourites/plaintext">http://www.commandlinefu.com/commands/favourites/plaintext</a>
+にアクセスすればいい。
+</p>
+
+<p>
+クッキーがあれば
+</p>
+
+<pre>
+% curl -b cookies.txt http://www.commandlinefu.com/commands/favourites/plaintext
+</pre>
+<p>
+でコマンドライン上でも自分のfavouritesを表示可能。
+</p>
+<!-- section end -->
+</div>
+<!-- 2009/08/22 end -->
+
+
+
+<hr class="hide">
+<!-- 2009/08/23 start -->
+<h2><a name="20090823" href="200908c.html#20090823">2009-08-23 (Sun)</a></h2>
+<!-- 2009-08-24 01:45:26 -->
+
+<div class="entry1">
+<h3><a name="200908231" title="200908231" href="200908c.html#200908231">■</a> 
+[Ruby] real_cross_compiling?</h3>
+<p>
+mingw32のクロス関連をcommitしようと思って、ac_cv*をconfigure.inへ整理したら、<br>
+なぜかでき上がったMakefile等がクロスじゃなくなっていた。<br>
+調べてみるとcross_compiling=$real_cross_compilingてのが邪魔しているんだけど、<br>
+なんだろな、これ。保存しとけばいいのかな。あとで調べる。
+</p>
+<!-- section end -->
+</div>
+<!-- 2009/08/23 end -->
+
+
+
+<hr class="hide">
+<!-- 2009/08/24 start -->
+<h2><a name="20090824" href="200908c.html#20090824">2009-08-24 (Mon)</a></h2>
+<!-- 2009-08-25 01:18:03 -->
+
+<div class="entry1">
+<h3><a name="200908241" title="200908241" href="200908c.html#200908241">■</a> 
+<a href="http://www.commandlinefu.com/commands/view/3035/formatting-number-with-comma">[Tips] formatting number with comma | commandlinefu.com</a></h3>
+<p>
+これってbashや/usr/bin/printfではいけるけど、zshのprintfでは使えない。残念。
+</p>
+
+<pre>
+% bash -c &quot;printf %\'d\\\n 1234567&quot;
+1,234,567
+% /usr/bin/printf &quot;%'d\n&quot; 1234567
+1,234,567
+% printf &quot;%'d\n&quot; 1234567
+printf: %': invalid directive
+</pre>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200908242" title="200908242" href="200908c.html#200908242">■</a> 
+[Ruby] real_cross_compilingの件</h3>
+<p>
+なかださんが修正した。解決。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200908243" title="200908243" href="200908c.html#200908243">■</a> 
+[Ruby] _whyとruby ml</h3>
+<p>
+気になってちょっと調べてみた。<br>
+_whyはまだruby-coreとruby-talkはunsubscribeしてない。<br>
+単にそこまで気が回ってないだけかもしれないが。でもmail.logを見ると
+</p><blockquote><p>
+(delivery temporarily suspended: connect to
+mail.whytheluckystiff.net[72.232.19.34]: Connection refused)
+</p></blockquote><p>
+なのでもうメールも読んでない状態のようだ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2009/08/24 end -->
+
+
+
+<hr class="hide">
+<!-- 2009/08/25 start -->
+<h2><a name="20090825" href="200908c.html#20090825">2009-08-25 (Tue)</a></h2>
+<!-- 2009-08-26 01:30:55 -->
+
+<div class="entry1">
+<h3><a name="200908251" title="200908251" href="200908c.html#200908251">■</a> 
+<a href="http://golf.shinh.org/p.rb?seq">[Ruby] seq</a></h3>
+<p>
+それにしてもRubyの17Bは驚き。乱数でもそこまで縮むとは思えない。<br>
+まだ締め切りまで時間があるけど、さすがにこれ以上は縮まないだろうな。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200908252" title="200908252" href="200908c.html#200908252">■</a> 
+[Net] name server不調</h3>
+<p>
+sharedなsshセッションが残っているので日記は更新できているが、<br>
+昨日からname serverが不調なため外からアクセスできない状況。<br>
+まあ、それも一興。
+</p>
+<!-- section end -->
+</div>
+<!-- 2009/08/25 end -->
+
+
+
+<hr class="hide">
+<!-- 2009/08/26 start -->
+<h2><a name="20090826" href="200908c.html#20090826">2009-08-26 (Wed)</a></h2>
+<!-- 2009-08-27 01:35:47 -->
+
+<div class="entry1">
+<h3><a name="200908261" title="200908261" href="200908c.html#200908261">■</a> 
+<a href="http://golf.shinh.org/p.rb?seq#Ruby">[Golf] seq</a></h3>
+<p>
+思えないと書いたが、実際は乱数というか運任せだった。<br>
+やっぱあれが最短か。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200908262" title="200908262" href="200908c.html#200908262">■</a> 
+<a href="http://golf.shinh.org/p.rb?find+minimum+cyclic+parts">[Golf] find minimum cyclic parts</a></h3>
+<p>
+RubyとPerlはまったく同じになったけど、同じじゃだめなんだろうな。
+</p>
+
+<p>
+で、思い直してPerlを縮めた。正規表現の戻り値の違いなんてあったのか。
+</p>
+<!-- section end -->
+</div>
+<!-- 2009/08/26 end -->
+
+
+
+<hr class="hide">
+<!-- 2009/08/27 start -->
+<h2><a name="20090827" href="200908c.html#20090827">2009-08-27 (Thu)</a></h2>
+<!-- 2009-08-27 23:51:07 -->
+
+<div class="entry1">
+<h3><a name="200908271" title="200908271" href="200908c.html#200908271">■</a> 
+[Net] 復活</h3>
+<p>
+兄者ありがとー。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200908272" title="200908272" href="200908c.html#200908272">■</a> 
+<a href="http://golf.shinh.org/p.rb?Sum+of+Divisors+for+OCaml+Golf+Competition">[Golf] Sum of Divisors for OCaml Golf Competition</a></h3>
+<p>
+約数の和。素直に解くとすぐタイムアウトしてしまう。<br>
+やっぱ素因数分解して例の公式か？
+</p>
+<!-- section end -->
+</div>
+<!-- 2009/08/27 end -->
+
+
+
+<hr class="hide">
+<!-- 2009/08/28 start -->
+<h2><a name="20090828" href="200908c.html#20090828">2009-08-28 (Fri)</a></h2>
+<!-- 2009-08-29 12:10:03 -->
+
+<div class="entry1">
+<h3><a name="200908281" title="200908281" href="200908c.html#200908281">■</a> 
+<a href="http://golf.shinh.org/reveal.rb?PubSubHubbub//1251112255&amp;pl">[Golf] PubSubHubbub</a></h3>
+<p>
+これは素晴らしい。<br>
+bubがあるおかげでこっちのほうが短かくなるというのも絶妙な名前だな。
+</p>
+<!-- section end -->
+</div>
+<!-- 2009/08/28 end -->
+
+
+
+<hr class="hide">
+<!-- 2009/08/29 start -->
+<h2><a name="20090829" href="200908c.html#20090829">2009-08-29 (Sat)</a></h2>
+<!-- 2009-08-30 02:26:33 -->
+
+<div class="entry1">
+<h3><a name="200908291" title="200908291" href="200908c.html#200908291">■</a> 
+[Linux] ssh先のscreenの中でさらにsshするときの話</h3>
+<p>
+最初はいいんだけど、次回のときにSSH_AUTH_SOCKが古いままになってしまい、<br>
+ForwardAgent yesが無意味になってしまって困る。<br>
+いちいちSSH_AUTH_SOCK=/tmp/...とか手で打ってるわけだけど、<br>
+これってどうにかならないかな。
+</p>
+
+<p>
+ぐぐったら、
+<a href="http://d.hatena.ne.jp/mteramoto/20090614/p2">ssh agent forwardingをscreenの中で使う - mteramotoの日記</a>
+とか結構あるね。<br>
+なるほどsymlinkを使うわけか。
+</p>
+<!-- section end -->
+</div>
+<!-- 2009/08/29 end -->
+
+
+
+<hr class="hide">
+<!-- 2009/08/30 start -->
+<h2><a name="20090830" href="200908c.html#20090830">2009-08-30 (Sun)</a></h2>
+<!-- 2009-08-31 00:58:59 -->
+
+<div class="entry1">
+<h3><a name="200908301" title="200908301" href="200908c.html#200908301">■</a> 
+<a href="http://awk.info/?news/libmawk">[Awk] awk.info &gt;&gt; How to call Awk form &quot;C&quot; with Libmawk</a></h3>
+<p>
+へえ、こんなのあるんだ。
+</p><blockquote><p>
+Libmawk has the following main features:
+<ul>
+<li>load and run multiple awk scripts independently, in parallel
+<li>scripts do not read stdin but a memory buffer the embedding process can fill from time to time
+<li>running scripts in (mostly) non-blocking manner - that is, the script will not block if the process can not provide new input
+<li>all these without threads or fork()
+<li>call awk functions from C, using vararg for smooth integration
+<li>call C functions from awk scripts
+<li>resolve existing awk variables from C - read or write variables 
+</ul></blockquote>
+<!-- section end -->
+</div>
+<!-- 2009/08/30 end -->
+
+
+
+<hr class="hide">
+<!-- 2009/08/31 start -->
+<h2><a name="20090831" href="200908c.html#20090831">2009-08-31 (Mon)</a></h2>
+<!-- 2009-09-01 00:49:23 -->
+
+<div class="entry1">
+<h3><a name="200908311" title="200908311" href="200908c.html#200908311">■</a> 
+[選挙] 小選挙区マジック</h3>
+<p>
+実際の小選挙区得票数が自民党2700万に対して民主党3300万。<br>
+これが議席数では64 : 221と実に3.7倍の開きになっている。<br>
+十数%の浮動票がどっちに転ぶかで大差になるわけだね。
+</p>
+<!-- section end -->
+</div>
+<!-- 2009/08/31 end -->
+
+<hr>
+<div>
+<a href="200908b.html">&lt;Prev(,)</a> | 
+<a href="200909a.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

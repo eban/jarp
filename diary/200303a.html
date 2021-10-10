@@ -1,0 +1,631 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2003-3-a</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="200302c.html">
+<link rel="next" href="200303b.html">
+
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2003年3月上旬〜</p>
+<hr>
+<div>
+<a href="200302c.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="200303b.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2003/03/01 start -->
+<h2><a name="20030301" href="200303a.html#20030301">2003-03-01 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="200303011" title="200303011" href="200303a.html#200303011">■</a> 
+2月のspam</h3>
+<p>
+442通。bsprocのために残しておこう。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200303012" title="200303012" href="200303a.html#200303012">■</a> 
+[Ruby] prefix対応</h3>
+<p>
+mswin32で試しててたら、やはり
+<a href="200302b.html#200302111">/usr/usr</a>になってしまった。
+つまり今まではprefixの設定ができなかったので、
+DESTDIRで代用していたというのが真相か？
+</p>
+<pre>
+!if !defined(prefix)
+prefix = /usr
+!endif
+!if !defined(DESTDIR)
+DESTDIR =
+!endif
+</pre>
+<p>
+と変更するのが筋だと思うけど、これだと
+</p>
+<pre>
+&gt; nmake DESTDIR=c:/ruby install
+</pre>
+<p>
+と実行するとc:/ruby/usrにインストールされてしまう。これからは
+</p>
+<pre>
+&gt; nmake DESTDIR=c:/ruby prefix= install
+</pre>
+<p>
+と実行する必要があるけど、いいよね？あ、それだけじゃだめだ。
+</p>
+<pre>
+&gt; nmake prefix=
+&gt; nmake DESTDIR=c:/ruby prefix= install
+</pre>
+<p>
+としないといけない。となると受け入れ難いか？
+</p>
+<pre>
+!if !defined(prefix)
+prefix =
+!endif
+!if !defined(DESTDIR)
+DESTDIR = /usr
+!endif
+</pre>
+<p>
+と変更すれば今まで通りだけど、なんか変だよね。
+おそらく/usrにインストールする人はあまりいないと思うので、
+</p>
+<pre>
+!if !defined(prefix)
+prefix =
+!endif
+!if !defined(DESTDIR)
+DESTDIR =
+!endif
+</pre>
+<p>
+と何も設定しないほうがよさそう。
+って、じゃあ、この6行はなくてもいいじゃん。
+</p>
+
+<p>
+ここで改めてwin32/README.win32を読んでみると
+</p>
+<pre>
+(6) Run `((%nmake DESTDIR=&lt;install_directory&gt; install%))'
+</pre>
+<p>
+と書いてあった。やはりprefix = /usrはだめだな。
+何も設定しないのが無難か。
+</p>
+<!-- section end -->
+</div>
+<!-- 2003/03/01 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/03/02 start -->
+<h2><a name="20030302" href="200303a.html#20030302">2003-03-02 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="200303021" title="200303021" href="200303a.html#200303021">■</a> 
+<a href="http://raa.ruby-lang.org/project/xtemplate/">[Ruby] xtemplate 0.5.2</a></h3>
+<p>
+更新。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200303022" title="200303022" href="200303a.html#200303022">■</a> 
+<a href="http://raa.ruby-lang.org/project/oocp/">[Ruby] oocp 2.00.00</a></h3>
+<p>
+更新。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200303023" title="200303023" href="200303a.html#200303023">■</a> 
+[Ruby] Borland makeの謎</h3>
+<p>
+prefix対応の確認のためbccwin32でも試してみたが、なんか変だ。
+</p>
+<pre>
+!ifndef prefix
+prefix = /usr
+!endif
+all:
+        @echo $(prefix)
+</pre>
+<p>
+というMakefileを作って
+</p>
+<pre>
+% bmake prefix=
+</pre>
+<p>
+と実行するとなぜか1と表示する。この1はどこから来るのだ？
+</p>
+
+<p>
+helpを見ると
+</p>
+<pre>
+-Dマクロ             1文字でマクロを定義する。これを行うとメイクファ
+                     イルに記述された式!ifdefマクロは真を返す
+[-D]マクロ=[文字列]  文字列でマクロを定義する。文字列にスペースやタ
+                     ブを含める場合は文字列を引用符で囲む。-Dは省略
+                     可能
+</pre>
+<p>
+とあった。つまり文字列を指定しなかった場合は真にするために1にしてるんだろう。
+-Dというオプション名からしてCPPと同じ考え方だ。
+</p>
+
+<p>
+ext/extmk.rbで無条件にDESTDIR=を追加するのをやめよう。
+</p>
+
+<p>
+それはそれとして、もしbcc32/Makefile.subで
+</p>
+<pre>
+!ifndef prefix
+prefix = /usr
+!endif
+</pre>
+<p>
+としてしまうとmakeの引数でprefixを空にすることはできないということになる。
+といった意味でもなくしたほうがよさそうだ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200303024" title="200303024" href="200303a.html#200303024">■</a> 
+[Ruby] bmake</h3>
+<p>
+上のbmakeは実はshell scriptで
+</p>
+<pre>
+#! /bin/sh
+case &quot;${0##*/}&quot; in
+  bmake) cmd=make;;
+  *) cmd=${0##*/};;
+esac
+PATH=/c/borland/bcc55/bin:$PATH exec $cmd &quot;$@&quot;
+</pre>
+<p>
+としてる。bcc32は
+</p>
+<pre>
+% ls -l bcc32
+lrwxrwxrwx    1 watanabe ruby           90 Jan  2 16:41 bcc32 -&gt; bmake
+</pre>
+<p>
+てな感じで。makeの中からしか呼ばないならこのsymlinkは要らないんだけど。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200303025" title="200303025" href="200303a.html#200303025">■</a> 
+[Ruby] prefix対応</h3>
+<p>
+mingw32のほうでmake DESTDIR=c:/fooとしてもだめだということに気づいた。
+ext/**/Makefileは
+</p>
+<pre>
+prefix = $(DESTDIR)/usr/local
+</pre>
+<p>
+となっていても、topdirのMakefileは
+</p>
+<pre>
+prefix = /usr/local
+</pre>
+<p>
+なので、prefix対応するとext/**/Makefileでの設定は無効になるから。
+preview2に入れるのは見送ろう。単純にtopdirのMakefileのほうも
+</p>
+<pre>
+prefix = $(DESTDIR)/usr/local
+</pre>
+<p>
+にすればいいかどうか、もうちょっと確認が必要だな。
+</p>
+
+<p>
+一応今日までの変更を
+<a href="../files/ruby-1.8-prefix-support.diff">ここ</a>に置いておこう。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200303026" title="200303026" href="200303a.html#200303026">■</a> 
+<a href="http://kitaj.no-ip.com/tdiary/20030303.html#p02">[花粉症] スギ抗原米</a></h3>
+<p>
+「実用化のめどは2006年です」と言ってました。
+</p>
+<!-- section end -->
+</div>
+<!-- 2003/03/02 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/03/03 start -->
+<h2><a name="20030303" href="200303a.html#20030303">2003-03-03 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="200303031" title="200303031" href="200303a.html#200303031">■</a> 
+[Ruby] Ruby 1.8.0 preview2</h3>
+<p>
+区切りということで、あまり意味はない。
+その昔、Nemacsのひなまつりバージョンってのがあったなあ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2003/03/03 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/03/04 start -->
+<h2><a name="20030304" href="200303a.html#20030304">2003-03-04 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="200303041" title="200303041" href="200303a.html#200303041">■</a> 
+[Ruby] prefix対応</h3>
+<p>
+いろいろ考えてみたけど、topdirのprefixでDESTDIRを展開して、
+その結果を各ext/**/Makefileが使うようになればいいんだよね。
+つまりext/extmk.rbではDESTDIRを扱う必要なし。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200303042" title="200303042" href="200303a.html#200303042">■</a> 
+<a href="http://tamura.tdiary.net/20030304.html#p05">[Ruby] uClibc?</a></h3>
+<p>
+スタティックにリンクすればuClibcじゃなくても依存しないはず。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200303043" title="200303043" href="200303a.html#200303043">■</a> 
+<a href="http://www.uclibc.org/">[Linux] uClibc 0.9.19</a></h3>
+<p>
+更新。
+</p>
+<!-- section end -->
+</div>
+<!-- 2003/03/04 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/03/05 start -->
+<h2><a name="20030305" href="200303a.html#20030305">2003-03-05 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="200303051" title="200303051" href="200303a.html#200303051">■</a> 
+<a href="http://raa.ruby-lang.org/project/narray/">[Ruby] narray 0.5.7</a></h3>
+<p>
+更新。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200303052" title="200303052" href="200303a.html#200303052">■</a> 
+<a href="http://raa.ruby-lang.org/project/druby/">[Ruby] druby 2.0.2</a></h3>
+<p>
+更新。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200303053" title="200303053" href="200303a.html#200303053">■</a> 
+[Ruby] CFLAGS</h3>
+<p>
+考えてみると
+</p>
+<pre>
+% make CFLAGS=-O3
+</pre>
+<p>
+とかしたくなるんだから、
+CFLAGSは-gと-O関係ぐらいにしといたほうがいいのかもしれない。
+そうするとLDFLAGSも同じか？
+</p>
+<!-- section end -->
+</div>
+<!-- 2003/03/05 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/03/06 start -->
+<h2><a name="20030306" href="200303a.html#20030306">2003-03-06 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="200303061" title="200303061" href="200303a.html#200303061">■</a> 
+[Ruby] ext/Win32API/Win32API.c</h3>
+<p>
+asm statementに比べれば無駄が多いが、
+たぶんコンパイラの挙動にはもう影響は受けないだろうという変更にした。
+構造体を引数で渡してるだけなんだけど。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200303062" title="200303062" href="200303a.html#200303062">■</a> 
+<a href="http://www.jin.gr.jp/~nahi/link-ruby-diary.html">[Ruby] Linkavailable</a></h3>
+<p>
+kogさんが二人いるけど、
+<a href="http://pure.fan.gr.jp/simm/d/">*Messages*</a>のほうはSHIMADAさんだよね。
+</p>
+<!-- section end -->
+</div>
+<!-- 2003/03/06 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/03/07 start -->
+<h2><a name="20030307" href="200303a.html#20030307">2003-03-07 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="200303071" title="200303071" href="200303a.html#200303071">■</a> 
+[Ruby] QDBM対応</h3>
+<p>
+RubyでQDBMを使えるように、とりあえずNDBM互換APIで対応してみた。
+と言ってもext/dbm/extconf.rbに&quot;qdbm&quot; =&gt; [&quot;relic.h&quot;]を追加しただけなんだけど。
+</p>
+
+<!-- section end -->
+</div>
+<!-- 2003/03/07 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/03/08 start -->
+<h2><a name="20030308" href="200303a.html#20030308">2003-03-08 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="200303081" title="200303081" href="200303a.html#200303081">■</a> 
+<a href="http://raa.ruby-lang.org/project/bruby/">[Ruby] bRubyパッチ</a></h3>
+<p>
+bRubyを動かすにはparse.yとeval.cにパッチをあてないといけない。
+というわけで、Ruby binariesもパッチをあててからmakeすることにした。
+</p>
+
+<p>
+まず最初に作ったのがこんなMakefile。
+</p>
+<pre>
+all: parse.y eval.c
+eval.c: ../ruby16/eval.c ../eval.c.patch
+        patch -o eval.c ../ruby16/eval.c ../eval.c.patch
+parse.y: ../ruby16/parse.y ../parse.y.patch
+        patch -o parse.y ../ruby16/parse.y ../parse.y.patch
+</pre>
+<p>
+$&lt;とか$@を使えばコマンド部分は
+</p>
+<pre>
+patch -o $@ $&lt; ../$(&lt;F).patch
+</pre>
+<p>
+と書けそうだ。これとStatic Pattern Ruleを使ってまとめると
+</p>
+<pre>
+all: parse.y eval.c
+parse.y eval.c: % : ../ruby16/% ../%.patch
+        patch -o $@ $&lt; ../$(&lt;F).patch
+</pre>
+<p>
+となる。
+</p>
+<!-- section end -->
+</div>
+<!-- 2003/03/08 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/03/09 start -->
+<h2><a name="20030309" href="200303a.html#20030309">2003-03-09 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="200303091" title="200303091" href="200303a.html#200303091">■</a> 
+[Spam] Eban, sick of spam? here is solution</h3>
+<p>
+anti-spam toolを買わないかというspamが来た。
+その商売に矛盾を感じないのか？
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200303092" title="200303092" href="200303a.html#200303092">■</a> 
+[Ruby] 1.8のRuby Binaries</h3>
+<p>
+とりあえず各々1.8/を作ってそこに置くことにした。
+拡張ライブラリはアルファベット順に作る。
+あ、ディレクトリは違うけど同じファイル名になってしまうなあ。
+Rubyのバージョンを含めるべきか？
+うささんのバイナリは-i586-mswin32-1.6.zipという感じか。
+じゃ-i386-*-1.8.tar.gzにしよう。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200303093" title="200303093" href="200303a.html#200303093">■</a> 
+<a href="http://raa.ruby-lang.org/project/bdb/">[Ruby] bdb 0.4.0</a></h3>
+<p>
+amrita, aspectr, bdbと進めて、
+bdb 0.4.0を作る前にBerkeley DBを4.1.25に上げようとしていたことを思い出した。
+4.1.24のビルドディレクトリは残っていたので、それを参考に4.1.25を作った。
+時間はかかるが作業は簡単。
+</p>
+
+<p>
+と思ったらdb_version_4000がundefinedに。これはdb_versionでよさそうだ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2003/03/09 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/03/10 start -->
+<h2><a name="20030310" href="200303a.html#20030310">2003-03-10 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="200303101" title="200303101" href="200303a.html#200303101">■</a> 
+[Ruby] 1.8のRuby Binaries</h3>
+<p>
+ところどころ抜けはあるが
+<a href="http://raa.ruby-lang.org/project/ruby-google/">ruby-google</a>まで完。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200303102" title="200303102" href="200303a.html#200303102">■</a> 
+[Ruby][Cygwin] setup.ini</h3>
+<p>
+foo-1.0-i386-cygwin-1.8.tar.gzという名前だと、
+結局fooというパッケージのversion 1.0なので、
+setup.exeにとっては変化がない。setup.iniで
+</p>
+<pre>
+@ foo-1.8
+</pre>
+<p>
+にすればいいのかなあ。あとcategoryとして無理矢理Rubyとしたらどうなるんだろう？
+なんかよさげだ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200303103" title="200303103" href="200303a.html#200303103">■</a> 
+<a href="http://raa.ruby-lang.org/project/rdoc/">[Ruby] rdoc 0.9.0</a></h3>
+<p>
+rdocがやっとbetaが取れた。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200303104" title="200303104" href="200303a.html#200303104">■</a> 
+<a href="http://raa.ruby-lang.org/project/rdtool/">[Ruby] rdtool 0.6.13</a></h3>
+<p>
+更新。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200303105" title="200303105" href="200303a.html#200303105">■</a> 
+[Ruby] Config::CONFIG['libdir']</h3>
+<p>
+うーむ。/usr/local/mingw/libなってた。まずいなあ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2003/03/10 end -->
+
+<hr>
+<div>
+<a href="200302c.html">&lt;Prev(,)</a> | 
+<a href="200303b.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

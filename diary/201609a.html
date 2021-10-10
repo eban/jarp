@@ -1,0 +1,457 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2016-9-a</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="201608c.html">
+<link rel="next" href="201609b.html">
+
+<link rel="stylesheet" type="text/css" href="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.css">
+<script async type="text/javascript" src="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.js"></script>
+<script type="text/javascript">
+<!--       
+$(document).ready(function() {
+  prettyPrint();
+});
+-->
+</script>
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2016年9月上旬〜</p>
+<hr>
+<div>
+<a href="201608c.html" accesskey=",">&lt;Older(,)</a> | 
+<a href="201609b.html" accesskey=".">Newer(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2016/09/01 start -->
+<h2><a name="20160901" href="201609a.html#20160901">2016-09-01 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="201609011" title="201609011" href="201609a.html#201609011">■</a> 
+<a href="https://blog.ueda.asia/?p=8592">Q6 置き換え #シェル芸</a></h3>
+<p>
+まずは数を数えて、
+</p>
+<pre>
+% grep -o '玉子\|卵' Q6 | sort | uniq -c | sort -n 
+     12 卵
+     15 玉子
+</pre>
+<p>
+sedで実行できる形式にawkで変換して、
+</p>
+<pre>
+% grep -o '玉子\|卵' Q6 | sort | uniq -c | sort -n | paste -s | awk '$0=&quot;s/&quot;$2&quot;/&quot;$4&quot;/g&quot;'
+s/卵/玉子/g
+</pre>
+<p>
+できあがり。
+<pre>
+% grep -o '玉子\|卵' Q6 | sort | uniq -c | sort -n | paste -s | awk '$0=&quot;s/&quot;$2&quot;/&quot;$4&quot;/g&quot;' | sed -f - Q6
+玉子玉子玉子玉子玉子玉子玉子玉子玉子玉子玉子玉子玉子玉子玉子玉子玉子玉子玉子玉子玉子玉子玉子玉子玉子玉子玉子
+</pre>
+</p>
+<p>
+模範解答とほぼ同じだな。
+</p>
+<!-- section end -->
+</div>
+<!-- 2016/09/01 end -->
+
+
+
+<hr class="hide">
+<!-- 2016/09/02 start -->
+<h2><a name="20160902" href="201609a.html#20160902">2016-09-02 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="201609021" title="201609021" href="201609a.html#201609021">■</a> 
+<a href="https://blog.ueda.asia/?p=8592">Q7 同じ数字構成のuniq #シェル芸</a></h3>
+<p>
+そのままだと行数分sortしないといけない問題。<br>
+でもちょっと考えると昇順で並んでいるものだけを抜き出せばいいと気づく。
+</p>
+<pre>
+% seq -w 0 99999 | awk -F &quot;&quot; '$1&lt;=$2&amp;&amp;$2&lt;=$3&amp;&amp;$3&lt;=$4&amp;&amp;$4&lt;=$5'
+% seq -w 0 99999 | perl -F\| -ane 'print if $F[0]&lt;=$F[1]&amp;&amp;$F[1]&lt;=$F[2]&amp;&amp;$F[2]&lt;=$F[3]&amp;&amp;$F[3]&lt;=$F[4]'
+% seq -w 0 99999 | ruby -F\| -ane 'print if $F[0]&lt;=$F[1]&amp;&amp;$F[1]&lt;=$F[2]&amp;&amp;$F[2]&lt;=$F[3]&amp;&amp;$F[3]&lt;=$F[4]'
+</pre>
+<p>
+perlとrubyはまったく同じである。<br>
+5桁ぐらいなら全部書いちゃったほうが短いが、もっと桁が増えたときは面倒。<br>
+というわけで別解。gawkにはasortという関数が存在するのでこれを利用する。<br>
+各桁ごとにsplitして、sortしてjoinして!b[$0]++でuniq。<br>
+OFSは空白になっているので&quot;&quot;にする。
+</p>
+<pre>
+% seq -w 0 99999 | gawk '{split($0,a,&quot;&quot;);asort(a);for(i in a)$i=a[i]}!b[$0]++' OFS=
+</pre>
+<p>
+rubyやperlならsortして自分自身と等しい数字ならという条件でいける。
+</p>
+<pre>
+% seq -w 0 99999 | ruby -lne 'print if $_.chars.sort.join==$_'
+% seq -w 0 99999 | perl -ne 'print if $_==join(&quot;&quot;,sort(/./g))'
+</pre>
+<p>
+jqでやってみたが面白みに欠ける。
+</p>
+<pre>
+% seq -w 0 99999 | jq -sRr 'split(&quot;\n&quot;)|map(select(.==(split(&quot;&quot;)|sort|join(&quot;&quot;))))[:-1][]'
+</pre>
+<p>
+最後にzshで。
+</p>
+<pre>
+% time seq -w 0 99999 | zsh -c 'while read a;do [ $a = ${(j::)${(os::)a}} ] &amp;&amp; echo $a;done'
+</pre>
+<!-- section end -->
+</div>
+<!-- 2016/09/02 end -->
+
+
+
+<hr class="hide">
+<!-- 2016/09/03 start -->
+<h2><a name="20160903" href="201609a.html#20160903">2016-09-03 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="201609031" title="201609031" href="201609a.html#201609031">■</a> 
+<a href="https://blog.ueda.asia/?p=8592">Q8-1 1から7をすべてを含む7桁の組み合わせ #シェル芸</a></h3>
+<p>
+sedで同じ数字が出てくる正規表現は\(.\).*\1なので、dで消せばいい。
+</p>
+<pre>
+% time seq 1234567 7654321 | sed '/[890]/d;/\(.\).*\1/d' &gt; q
+seq 1234567 7654321  0.26s user 0.04s system 7% cpu 3.992 total
+sed '/[890]/d;/\(.\).*\1/d' &gt; q  3.98s user 0.02s system 99% cpu 4.000 total
+</pre>
+<p>
+ちょっと時間がかかる。マルチコアの場合2つに分けてパイプにつないだほうが速くなる。
+</p>
+<pre>
+% time seq 1234567 7654321 | sed '/[890]/d' | sed '/\(.\).*\1/d' &gt; q
+seq 1234567 7654321  0.34s user 0.05s system 12% cpu 3.142 total
+sed '/[890]/d'  1.52s user 0.05s system 49% cpu 3.150 total
+sed '/\(.\).*\1/d' &gt; q  2.92s user 0.00s system 91% cpu 3.180 total
+</pre>
+<p>
+同じことをgrepでやると
+</p>
+<pre>
+% time seq 1234567 7654321 | grep -v -e '[890]' -e '\(.\).*\1' &gt; q
+seq 1234567 7654321  0.14s user 0.03s system 3% cpu 4.586 total
+grep -v -e '[890]' -e '\(.\).*\1' &gt; q  4.58s user 0.02s system 99% cpu 4.596 total
+% time seq 1234567 7654321 | grep -v '[890]' | grep -v '\(.\).*\1' &gt; q
+seq 1234567 7654321  0.14s user 0.02s system 5% cpu 3.000 total
+grep -v '[890]'  0.30s user 0.01s system 10% cpu 3.000 total
+grep -v '\(.\).*\1' &gt; q  3.04s user 0.01s system 99% cpu 3.047 total
+</pre>
+<p>
+だいたい似たような感じになる。PCREを使わせると、
+</p>
+<pre>
+% time seq 1234567 7654321 | grep -v '[890]' | grep -Pv '(.).*\1' &gt; q
+seq 1234567 7654321  0.15s user 0.00s system 33% cpu 0.459 total
+grep -v '[890]'  0.29s user 0.03s system 69% cpu 0.459 total
+grep -Pv '(.).*\1' &gt; q  0.40s user 0.00s system 87% cpu 0.464 total
+</pre>
+<p>
+のように断然速くなる。
+</p>
+<p>
+参考にperlとrubyの解。例によってまったく同じ。
+</p>
+<pre>
+% time seq 1234567 7654321 | perl -ne 'print unless /[890]/ || /(.).*\1/' &gt;q 
+seq 1234567 7654321  0.13s user 0.14s system 10% cpu 2.500 total
+perl -ne 'print unless /[890]/ || /(.).*\1/' &gt; q  2.49s user 0.01s system 99% cpu 2.503 total
+% time seq 1234567 7654321 | ruby -ne 'print unless /[890]/ || /(.).*\1/' &gt;q
+seq 1234567 7654321  0.21s user 0.08s system 6% cpu 4.817 total
+ruby -ne 'print unless /[890]/ || /(.).*\1/' &gt; q  4.80s user 0.02s system 99% cpu 4.825 total
+</pre>
+でも、やっぱ下記の愚直な方法のわかりやすさにはなんか敵わないような。
+<pre>
+% time seq 1234567 7654321 | awk '/1/&amp;&amp;/2/&amp;&amp;/3/&amp;&amp;/4/&amp;&amp;/5/&amp;&amp;/6/&amp;&amp;/7/' &gt; q
+seq 1234567 7654321  0.19s user 0.06s system 18% cpu 1.408 total
+awk '/1/&amp;&amp;/2/&amp;&amp;/3/&amp;&amp;/4/&amp;&amp;/5/&amp;&amp;/6/&amp;&amp;/7/' &gt; q  1.39s user 0.01s system 98% cpu 1.416 total
+% time seq 1234567 7654321 | grep 1 | grep 2 | grep 3 | grep 4 | grep 5 | grep 6 | grep 7 &gt; q
+seq 1234567 7654321  0.14s user 0.02s system 20% cpu 0.743 total
+grep 1  0.71s user 0.02s system 98% cpu 0.742 total
+grep 2  0.41s user 0.01s system 56% cpu 0.739 total
+grep 3  0.23s user 0.02s system 33% cpu 0.736 total
+grep 4  0.10s user 0.00s system 13% cpu 0.733 total
+grep 5  0.04s user 0.00s system 4% cpu 0.730 total
+grep 6  0.01s user 0.00s system 1% cpu 0.727 total
+grep 7 &gt; q  0.00s user 0.00s system 0% cpu 0.725 total
+</pre>
+<!-- section end -->
+</div>
+<!-- 2016/09/03 end -->
+
+
+
+<hr class="hide">
+<!-- 2016/09/04 start -->
+<h2><a name="20160904" href="201609a.html#20160904">2016-09-04 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="201609041" title="201609041" href="201609a.html#201609041">■</a> 
+<a href="https://blog.ueda.asia/?p=8592">Q8-2 2011年日本数学オリンピック予選第3問改題 #シェル芸</a></h3>
+<p>
+8-1の結果を使ってもいいと書いてあるが、実は使わないほうが簡単。<br>
+まず、素数ということは計算結果は奇数にならないといけない。
+a*b*c*d + e*f*gのように2つグループに分けるときに、<br>
+両グループに偶数が分かれると結果は偶数になってしまう。<br>
+つまり2,4,6は同じグループになければいけない。<br>
+さらに3,6も分かれると結果は3の倍数になってしまうので同じグループにする必要がある。<br>
+つまり 2*3*4*6 + 1*5*7 しかない。<br>
+結果は179で素数。<br>
+とまあ、これで解けてしまうわけだ。<br>
+あとは組み合わせ。
+</p>
+<pre>
+% echo $[2*3*4*6 + 1*5*7] | factor
+179: 179
+% printf &quot;%s\n&quot; {2,3,4,6}{2,3,4,6}{2,3,4,6}{2,3,4,6}+{1,5,7}{1,5,7}{1,5,7} | grep -Pv '(.).*\1' | head
+2346+157
+2346+175
+2346+517
+2346+571
+2346+715
+2346+751
+2364+157
+2364+175
+2364+517
+2364+571
+% printf &quot;%s\n&quot; {2,3,4,6}{2,3,4,6}{2,3,4,6}{2,3,4,6}+{1,5,7}{1,5,7}{1,5,7} | grep -Pv '(.).*\1' | wc -l
+144
+% echo $[4*3*2*1 * 3*2*1]
+144
+</pre>
+<p>
+全部で144個。
+</p>
+<p>
+8-1の結果を使う方法もついでに。<br>
+「その時のa〜gの数字を全て求めましょう」とあるのでfactorを使うのはあまりいい方法じゃない。<br>
+素数かどうかの判断は愚直に余りを求めればいいので結構簡単。<br>
+桁数もそれほどじゃないのでエラトステネスのふるいとか考えなくてもok。
+</p>
+<pre>
+% awk -F &quot;&quot; '{for(r=s=a=$1*$2*$3*$4+$5*$6*$7;s%--r;);if(r&lt;2)print $0, a}' tmp | head
+2346157 179
+2346175 179
+2346517 179
+2346571 179
+2346715 179
+2346751 179
+2364157 179
+2364175 179
+2364517 179
+2364571 179
+% awk -F &quot;&quot; '{for(r=s=a=$1*$2*$3*$4+$5*$6*$7;s%--r;);if(r&lt;2)print $0, a}' tmp | wc -l
+144
+</pre>
+<p>
+自分自身よりも小さい整数を順々に試して、1まで行ったら素数決定。
+</p>
+<!-- section end -->
+</div>
+<!-- 2016/09/04 end -->
+
+
+
+<hr class="hide">
+<!-- 2016/09/05 start -->
+<h2><a name="20160905" href="201609a.html#20160905">2016-09-05 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="201609051" title="201609051" href="201609a.html#201609051">■</a> 
+Perlの呪文 #perlgolf</h3>
+<p>
+Q2へのへのもへじのuniqでのPerlの解の解説。日本語である必要もないのでababcadで。
+</p>
+<pre>
+% echo ababcad | perl -pe 's/./$&amp;x~$`!~~$&amp;/ge'                               
+abcd
+</pre>
+<p>
+eなのでevalしてるわけでこの部分の呪文をばらして、わかりやすく別名にして()で囲む。
+</p>
+<pre>
+s/./$MATCH x (~$PREMATCH !~ ~$MATCH)/ge
+</pre>
+<p>
+まずは()の中の~を除外して考える。
+</p>
+<pre>
+$PREMATCH !~ $MATCH
+</pre>
+<p>
+これは先行する部分にマッチした文字がなければ1になることを意味する。<br>
+その場合は$MATCH x 1でそのまま残る。<br>
+マッチした場合は0になり$MATCH x 0でその文字は消える。<br>
+以上によりuniq処理となる。
+</p>
+<p>
+では~はなんのためという話になるが、!~は正規表現というところがミソで、<br>
+$MATCHにメタ文字が含まれていた場合を考えるとまずいとわかる。
+</p>
+<pre>
+% echo abab.cad | perl -MEnglish -pe 's/./$MATCH x ($PREMATCH !~ $MATCH)/ge' 
+abcd
+</pre>
+<p>
+のように.はワイルドカードなのでどんな文字にもマッチして消えてしまう。<br>
+これを防ぐにはescapeしてやる必要がある。
+</p>
+<pre>
+% echo abab.cad | perl -MEnglish -pe 's/./$MATCH x ($PREMATCH !~ quotemeta $MATCH)/ge'
+ab.cd
+</pre>
+<p>
+という処理をゴルフすると~を使う方法になる。<br>
+~でビット反転するとメタ文字には絶対にならないので、quotemetaの代わりに使える。<br>
+よくこんな方法を思い付くよな。
+</p>
+<pre>
+% echo abab.cad | perl -MEnglish -pe 's/./$MATCH x (~$PREMATCH !~ ~$MATCH)/ge'
+ab.cd
+</pre>
+<p>
+というわけでへのへのもへじの場合は~がなくてもいい。
+</p>
+<!-- section end -->
+</div>
+<!-- 2016/09/05 end -->
+
+
+
+<hr class="hide">
+<!-- 2016/09/06 start -->
+<h2><a name="20160906" href="201609a.html#20160906">2016-09-06 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="201609061" title="201609061" href="201609a.html#201609061">■</a> 
+GNU findのprintf</h3>
+<p>
+findしてlsってなんか二度手間っぽいので、GNU findを使っているなら-printfオプションがお勧め。
+</p>
+<pre>
+% find typhoon -type f -printf &quot;%CF %CT %p\n&quot; | sort | head
+2016-09-01 16:19:36.6287212150 typhoon/japan_near_2016-09-01-09-00-00-large.jpg
+2016-09-01 16:19:36.9047139800 typhoon/japan_near_2016-09-01-12-00-00-large.jpg
+2016-09-01 16:19:37.1567073750 typhoon/japan_near_2016-09-01-15-00-00-large.jpg
+2016-09-02 07:13:13.6201514790 typhoon/japan_near_2016-09-01-18-00-00-large.jpg
+2016-09-02 07:13:13.9401440760 typhoon/japan_near_2016-09-01-21-00-00-large.jpg
+2016-09-02 07:13:14.0801408380 typhoon/japan_near_2016-09-01-22-00-00-large.jpg
+2016-09-02 07:13:14.1561390800 typhoon/japan_near_2016-09-01-23-00-00-large.jpg
+2016-09-02 07:13:25.4878769220 typhoon/japan_near_2016-09-02-01-00-00-large.jpg
+2016-09-02 07:13:25.5878746080 typhoon/japan_near_2016-09-02-02-00-00-large.jpg
+2016-09-02 07:13:25.7158716460 typhoon/japan_near_2016-09-02-03-00-00-large.jpg
+</pre>
+<!-- section end -->
+</div>
+<!-- 2016/09/06 end -->
+
+
+
+<hr class="hide">
+<!-- 2016/09/07 start -->
+<h2><a name="20160907" href="201609a.html#20160907">2016-09-07 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="201609071" title="201609071" href="201609a.html#201609071">■</a> 
+なぜかdiigoのアカウントが消えた</h3>
+<p>
+2,3日経つがやはり復活してないので新たに別名アカウントで作った。<br>
+たぶん登録したアイテム数は10万を越えていたと思われるが、<br>
+もやは既読フラグとしてしか使ってないので過去はなくてもどうでもいいのであった。
+</p>
+<!-- section end -->
+</div>
+<!-- 2016/09/07 end -->
+
+
+
+<hr class="hide">
+<!-- 2016/09/10 start -->
+<h2><a name="20160910" href="201609a.html#20160910">2016-09-10 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="201609101" title="201609101" href="201609a.html#201609101">■</a> 
+Sony Reader PRS-T1のアップデート</h3>
+<p>
+自分で作ったEPUB3の文書をPRS-T1で見るとなぜかページ単位が1,1-2,2とか<br>
+わけのわからない表示になって気持ち悪かったんだけど、<br>
+全然本体のアップデートもしてないし確認したらどうもそれらしいアップデート内容が。<br>
+「EPUB3形式の書籍の表示品質を改善しました。」これは期待できる。<br>
+T3と違って専用のツールを使わないとアップデートできないもんだから気づかなかったが、<br>
+2年も前にすでに存在していた。適用したら解消した。なんでもっと早く確認しなかったのか。
+</p>
+<!-- section end -->
+</div>
+<!-- 2016/09/10 end -->
+
+<hr>
+<div>
+<a href="201608c.html">&lt;Older(,)</a> | 
+<a href="201609b.html">Newer(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

@@ -1,0 +1,995 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2002-12-c</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="200212b.html">
+<link rel="next" href="200301a.html">
+
+<link rel="stylesheet" type="text/css" href="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.css">
+<script async type="text/javascript" src="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.js"></script>
+<script type="text/javascript">
+<!--       
+$(document).ready(function() {
+  prettyPrint();
+});
+-->
+</script>
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2002年12月下旬〜</p>
+<hr>
+<div>
+<a href="200212b.html" accesskey=",">&lt;Older(,)</a> | 
+<a href="200301a.html" accesskey=".">Newer(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2002/12/21 start -->
+<h2><a name="20021221" href="200212c.html#20021221">2002-12-21 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="200212211" title="200212211" href="200212c.html#200212211">■</a> 
+[Ruby] 新しいMinGW対応</h3>
+<p>
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-dev/19149">[ruby-dev:19149]</a>とconflictしそうな気もするので、
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-talk/59691">この件</a>はとりあえず保留。
+あ、でも1.6を望んでるのか。
+</p>
+
+<p>
+Cygwinもgcc 3.2になってspecsが変更されたから、
+そろそろちゃんと対応してあげよう。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200212212" title="200212212" href="200212c.html#200212212">■</a> 
+<a href="http://www.ruby-lang.org/raa/list.rhtml?name=bz2">[Ruby] BZ2 0.1.5</a></h3>
+<p>
+更新。
+</p>
+<!-- section end -->
+</div>
+<!-- 2002/12/21 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/12/22 start -->
+<h2><a name="20021222" href="200212c.html#20021222">2002-12-22 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="200212221" title="200212221" href="200212c.html#200212221">■</a> 
+<a href="http://www.dm4lab.to/~usa/ruby/d/200212c.html#id20021221_P1_1">[Ruby] version.h(1)</a></h3>
+<p>
+たとえばversion.hを
+</p>
+<pre>
+#define RUBY_VERSION &quot;1.7.3&quot;
+#define RUBY_RELEASE_DATE &quot;2002-12-20&quot;
+#define RUBY_VERSION_CODE 173
+#define RUBY_RELEASE_CODE 20021220
+#if 0
+MAJOR=1
+MINOR=7
+TEENY=3
+#endif
+</pre>
+<p>
+としてしまえば、configure.inも単に
+</p>
+<pre>
+. $srcdir/version.h
+</pre>
+<p>
+で済むし、win32/Makefile.subも!includeを使えるんじゃないかと思ったりする。
+でも1と7と3をversion.hの中に更に増やしてどうする。ボツだな。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200212222" title="200212222" href="200212c.html#200212222">■</a> 
+[Ruby] version.h(2)</h3>
+<p>
+それはそれとして、同じものを2回書くのはやはり避けたい。
+ANSI Cが必須となった今なら
+</p>
+<pre>
+#define RUBY_MAJOR 1
+#define RUBY_MINOR 7
+#define RUBY_TEENY 3
+#define RUBY_YEAR 2002
+#define RUBY_MONTH 12
+#define RUBY_DAY 20
+
+#define __S(x) #x
+#define _S(x) __S(x)
+#define __C(x,y,z) x ## y ## z
+#define _C(x,y,z) __C(x,y,z)
+
+#define RUBY_VERSION _S(RUBY_MAJOR) &quot;.&quot; _S(RUBY_MINOR) &quot;.&quot; _S(RUBY_TEENY)
+#define RUBY_RELEASE_DATE _S(RUBY_YEAR) &quot;-&quot; _S(RUBY_MONTH) &quot;-&quot; _S(RUBY_DAY)
+#define RUBY_VERSION_CODE _C(RUBY_MAJOR, RUBY_MINOR, RUBY_TEENY)
+#define RUBY_RELEASE_CODE _C(RUBY_YEAR, RUBY_MONTH, RUBY_DAY)
+</pre>
+<p>
+という手もあるか？これで最後の4つはそれぞれ
+</p>
+<pre>
+&quot;1&quot; &quot;.&quot; &quot;7&quot; &quot;.&quot; &quot;3&quot;
+&quot;2002&quot; &quot;-&quot; &quot;12&quot; &quot;-&quot; &quot;20&quot;
+173
+20021220
+</pre>
+<p>
+と展開される。
+</p>
+<pre>
+#define _S(x) __S(x)
+#define _C(x,y,z) __C(x,y,z)
+</pre>
+<p>
+の部分は意味がないように思えるが、
+K&amp;R2にも書いてあるように間接的に参照する必要がある。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200212223" title="200212223" href="200212c.html#200212223">■</a> 
+[ruby-talk:59748] KLEZ</h3>
+<p>
+ぎりぎり128KB制限に収まっているようだ。
+htmlメールを受け付けないようにすれば、
+spamも減るし、碌でもないメールも減るし、
+一石二鳥どころか三鳥にもなる気が。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200212224" title="200212224" href="200212c.html#200212224">■</a> 
+<a href="http://www.ruby-lang.org/raa/list.rhtml?name=xmlscan">[Ruby] xmlscan 0.1.2</a></h3>
+<p>
+パッケージングしたら同じ名前で更新されていた。
+一部ドキュメントが追加されたようだ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200212225" title="200212225" href="200212c.html#200212225">■</a> 
+[Ruby] pure ruby library対応mkmf.rb</h3>
+<p>
+foo.soのような共有ライブラリを必要としない、
+pure rubyなライブラリしかないxmlscanのようなライブラリをサポートするために、
+mkmf.rbを改造してみた。1.6, 1.7共にcommit済み。
+構造としてはスクリプトがlib/配下に置かれていればいい。
+</p>
+
+<p>
+たとえばxmlscanなら
+</p>
+<pre>
+% ruby -rmkmf -e 'create_makefile(&quot;xmlscan&quot;)'
+% sudo make site-install
+</pre>
+<p>
+だけでいける。
+</p>
+<!-- section end -->
+</div>
+<!-- 2002/12/22 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/12/23 start -->
+<h2><a name="20021223" href="200212c.html#20021223">2002-12-23 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="200212231" title="200212231" href="200212c.html#200212231">■</a> 
+[Ruby] 新version.h対応 - djgpp/mkver.sed</h3>
+<p>
+djgpp/mkver.sedがversion.hに依存しているので対応する。
+元々RUBY_VERSIONの行から
+</p>
+<pre>
+s,@MAJOR@,1,;s,@MINOR@,7,;s,@TEENY@,3,
+</pre>
+<p>
+というsedスクリプトを生成するsedスクリプトだが、単に
+</p>
+<pre>
+s/^#define RUBY_\(MAJOR\|MINOR\|TEENY\) \([0-9][0-9]*\)$/s,@\1@,\2,/p
+</pre>
+<p>
+を追加するだけで、新旧両方のversion.hに対応できることに気づく。
+新version.hを食わせると
+</p>
+<pre>
+s,@MAJOR@,1,
+s,@MINOR@,7,
+s,@TEENY@,3,
+</pre>
+<p>
+となる。最初はgcc -Eを使おうと思ったけど、
+このほうが変更が少なくてよさそうだ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200212232" title="200212232" href="200212c.html#200212232">■</a> 
+[Ruby] 新version.h対応 - configure.in</h3>
+<pre>
+#include &quot;version.h&quot;
+MAJOR=RUBY_MAJOR
+MINOR=RUBY_MINOR
+TEENY=RUBY_TEENY
+</pre>
+<p>
+をAC_TRY_CPPした結果をsourceするという作戦でいこうと思ったが、
+新旧対応しといたほうが何かと便利か？ま、いいや。シンプルに行こう。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200212233" title="200212233" href="200212c.html#200212233">■</a> 
+<a href="http://www.ruby-lang.org/raa/list.rhtml?name=rexml-stable">[Ruby] rexml 2.4.5</a></h3>
+<p>
+更新。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200212234" title="200212234" href="200212c.html#200212234">■</a> 
+<a href="http://procps.sourceforge.net/">[Linux] psproc 3.1.5</a></h3>
+<p>
+更新。
+</p>
+<!-- section end -->
+</div>
+<!-- 2002/12/23 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/12/24 start -->
+<h2><a name="20021224" href="200212c.html#20021224">2002-12-24 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="200212241" title="200212241" href="200212c.html#200212241">■</a> 
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-list/36826">[Ruby] Ruby 1.6.8 release</a></h3>
+<p>
+油断してたらリリースされてしまった。明日だと思ってたんだけどなあ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200212242" title="200212242" href="200212c.html#200212242">■</a> 
+[Ruby] version.h</h3>
+<p>
+結局
+</p>
+<pre>
+RUBY_VERSION_MAJOR
+RUBY_VERSION_MINOR
+RUBY_VERSION_TEENY
+RUBY_RELEASE_YEAR
+RUBY_RELEASE_MONTH
+RUBY_RELEASE_DAY
+</pre>
+<p>
+という名前になった。
+最終的には3つに増えたわけだけど、
+これは手で修正するのではなくスクリプトを介して変更するということで。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200212243" title="200212243" href="200212c.html#200212243">■</a> 
+[Ruby] 1.6.8の残務</h3>
+<p>
+そういえば
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-dev/19115">ext/dbm/extconf.rbの&quot;&quot;で囲む件</a>はすっかり忘れてた。まずいなあ。
+MLをもう一度見てみると
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-dev/19088">[ruby-dev:19088]</a>や
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-list/36821">[ruby-list:36821]</a>が気になる。Cygwinに関しては多分その人の環境の問題だと思うから、
+とりあえずいいとして、Solaris 8の件はやっぱ
+</p>
+<pre>
+try_link(&lt;&lt;EOF, $libs)
+try_run(&lt;&lt;EOF, $libs)
+</pre>
+<p>
+とすべきか？
+</p>
+<!-- section end -->
+</div>
+<!-- 2002/12/24 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/12/25 start -->
+<h2><a name="20021225" href="200212c.html#20021225">2002-12-25 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="200212251" title="200212251" href="200212c.html#200212251">■</a> 
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-dev/19173">[Ruby] syncver.rb</a></h3>
+<p>
+RUBY_RELEASE_で統一されたので
+</p>
+<pre>
+formats = {
+  'RELEASE_DATE' =&gt; [/&quot;.+&quot;/, '&quot;%Y-%m-%d&quot;'],
+  'RELEASE_CODE' =&gt; [/\d+/, '%Y%m%d'],
+  'RELEASE_YEAR' =&gt; [/\d+/, '%Y'],
+  'RELEASE_MONTH' =&gt; [/\d+/, '%m'],
+  'RELEASE_DAY' =&gt; [/\d+/, '%d']
+}
+</pre>
+<p>
+でいいわけだが、そうすると今度は共通項のRELEASE_を外に出して
+</p>
+<pre>
+formats = {
+  'DATE' =&gt; [/&quot;.+&quot;/, '&quot;%Y-%m-%d&quot;'],
+  'CODE' =&gt; [/\d+/, '%Y%m%d'],
+  'YEAR' =&gt; [/\d+/, '%Y'],
+  'MONTH' =&gt; [/\d+/, '%m'],
+  'DAY' =&gt; [/\d+/, '%d']
+}
+</pre>
+<p>
+として
+</p>
+<pre>
+if /RUBY_RELEASE_(#{formats.keys.join('|')})/o =~ line
+</pre>
+<p>
+としたくなるよね。やっぱ。
+<a href="../files/syncver.rb">ここ</a>に置いとこう。
+</p>
+<pre>
+% ruby syncver.rb
+#define RUBY_VERSION &quot;1.8.0&quot;
+#define RUBY_RELEASE_DATE &quot;2002-12-25&quot;
+#define RUBY_VERSION_CODE 180
+#define RUBY_RELEASE_CODE 20021225
+
+#define RUBY_VERSION_MAJOR 1
+#define RUBY_VERSION_MINOR 8
+#define RUBY_VERSION_TEENY 0
+#define RUBY_RELEASE_YEAR 2002
+#define RUBY_RELEASE_MONTH 12
+#define RUBY_RELEASE_DAY 25
+</pre>
+<p>
+で確認して
+</p>
+<pre>
+% ruby -i~ syncver.rb
+</pre>
+<p>
+てな感じで書き換える。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200212252" title="200212252" href="200212c.html#200212252">■</a> 
+[Ruby] make -n, make -k</h3>
+<p>
+最近のCygwinのmakeは最初から--unix相当になっているらしく、
+MAKE_MODEでunixと設定する必要もないようだ。
+それはそれとして、MFLAGSとMAKEFLAGSは
+</p>
+<pre>
+% cat -T Makefile
+all:
+^I@echo $(MFLAGS)
+^I@echo $(MAKEFLAGS)
+% make
+- --unix
+--unix
+</pre>
+<p>
+となるので、ext/extmk.rbには
+</p>
+<pre>
+./miniruby.exe ../ruby/instruby.rb --make=&quot;make&quot; --make-flags=&quot;- --unix --unix&quot;
+</pre>
+<p>
+が渡される。
+- --unixってのはかなり謎だが、というか最初の-はバグじゃない？
+</p>
+
+<p>
+それとCygwin上ではMAKEFLAGSは-がそのまま残るが、
+Linuxだと-は削除される。
+</p>
+<pre>
+Linux:
+% make -n
+echo -n
+echo n
+Cygwin:
+% make -n
+echo - --unix -n
+echo  --unix -n
+</pre>
+<p>
+versionはどちらも3.79.1なので、CygwinのGNU makeはかなり手が入っているということか。
+</p>
+<!-- section end -->
+</div>
+<!-- 2002/12/25 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/12/26 start -->
+<h2><a name="20021226" href="200212c.html#20021226">2002-12-26 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="200212261" title="200212261" href="200212c.html#200212261">■</a> 
+[Ruby] mkmf.rb; 好きな場所にインストール</h3>
+<pre>
+% ruby -rmkmf -e 'create_makefile(&quot;foo&quot;)'
+% make rubylibdir=$HOME/ruby install
+</pre>
+<p>
+ってことじゃないんだよね、たぶん。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200212262" title="200212262" href="200212c.html#200212262">■</a> 
+[Ruby] commit</h3>
+<p>
+躊躇してると油断になってしまうので、どんどんcommitしていこうと思う。
+mingwはinstallできなくなっていた。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200212263" title="200212263" href="200212c.html#200212263">■</a> 
+[Ruby] commit miss</h3>
+<p>
+なぜかconfigure.inとChangeLogがcommitされなかった。
+historyを見ると引数に指定されてるんだけどなあ。
+あれ？version.hもだ。しまったなあ。
+日付が変わる直前にcommitするとこういう目に会うのか。うーむ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200212264" title="200212264" href="200212c.html#200212264">■</a> 
+<a href="http://www.rubycolor.org/r/200212c.html#24_t1">[Ruby] Ruby 1.6.8</a></h3>
+<p>
+え？1.6.8って1.6系の最後なの？
+だとすると例のdbmの件もcommitしても無駄なんだろうか？
+確かに1.8が順調に出れば事実上最後になっても不思議はないけど。
+</p>
+<!-- section end -->
+</div>
+<!-- 2002/12/26 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/12/27 start -->
+<h2><a name="20021227" href="200212c.html#20021227">2002-12-27 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="200212271" title="200212271" href="200212c.html#200212271">■</a> 
+[Ruby] make -n install</h3>
+<p>
+debugしてたらなかださんが直してくれた。まいどです。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200212272" title="200212272" href="200212c.html#200212272">■</a> 
+[Ruby] nmakeとborland make</h3>
+<p>
+ext/extmk.rbの動きを追っていたらどうにも腑に落ちない挙動に出喰わす。
+勝手にquoteしてる感じだ。簡単なMakefileを書いて検証してみる。
+</p>
+<pre>
+% cat Makefile
+all:
+        ruby -e 'p ARGV' foo=&quot;a b&quot; &quot;a&quot;
+        ruby -e 'p ARGV' foo &quot;a b&quot; &quot;a&quot;
+% nmake -nologo
+        ruby -e 'p ARGV' foo=&quot;a b&quot; &quot;a&quot;
+[&quot;foo=\&quot;a b\&quot;&quot;, &quot;a&quot;]
+        ruby -e 'p ARGV' foo &quot;a b&quot; &quot;a&quot;
+[&quot;foo&quot;, &quot;a b&quot;, &quot;a&quot;]
+</pre>
+<p>
+と=の有無で挙動が変わる。borland makeでも同様。
+</p>
+<pre>
+% make
+ruby -e 'p ARGV' foo=&quot;a b&quot; &quot;a&quot;
+[&quot;foo=a b&quot;, &quot;a&quot;]
+ruby -e 'p ARGV' foo &quot;a b&quot; &quot;a&quot;
+[&quot;foo&quot;, &quot;a b&quot;, &quot;a&quot;]
+</pre>
+<p>
+となって欲しいんだけどねえ。{win32,bcc32}/Makefile.subでは
+</p>
+<pre>
+--make-flags=&quot;-$(MFLAGS)$(MAKEFLAGS) DESTDIR=$(DESTDIR)&quot;
+</pre>
+<p>
+のようにext/extmk.rbの引数として渡しているので、&quot;&quot;が残ってしまう。
+つまり、ext/extmk.rbでの
+</p>
+<pre>
+$mflags = Shellwords.shellwords($OPT['make-flags'] || &quot;&quot;)
+</pre>
+<p>
+が機能しないので、
+</p>
+<pre>
+% nmake DESTDIR=c:/ruby install
+</pre>
+<p>
+とした場合、DESTDIRの値が正しく伝わらない。というわけで
+</p>
+<pre>
+--make-flags &quot;-$(MFLAGS)$(MAKEFLAGS)&quot;
+</pre>
+<p>
+と=は削除したほうがいいね。
+</p>
+
+<p>
+あ、instruby.rbも変更しなきゃだめだな。こっちもgetoptsを使おう。
+</p>
+
+<p>
+dryrunはだめみたい。
+</p>
+<pre>
+bccwin32:
+% make -n install
+MAKE Version 5.2  Copyright (c) 1987, 2000 Borland
+        .\miniruby.exe C:/cygwin/home/watanabe/ruby/ruby/instruby.rb --make &quot;make&quot; --make-flags &quot;-l -n -o &quot; /usr
+        .\miniruby.exe C:/cygwin/home/watanabe/ruby/ruby/ext/extmk.rb --make &quot;make&quot; --make-flags &quot;-l -n -o  DESTDIR=/usr&quot; install
+mswin32:
+% PATH=/c/vc/bin:$PATH nmake -n install      
+
+Microsoft (R) Program Maintenance Utility Version 7.10.2197.8
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+        .\miniruby.exe ../ruby/instruby.rb -N                  /usr
+        .\miniruby.exe ../ruby/ext/extmk.rb --make &quot;nmake&quot; --make-flags &quot;-N                  DESTDIR=/usr&quot; install
+</pre>
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200212273" title="200212273" href="200212c.html#200212273">■</a> 
+[Ruby] dryrun</h3>
+<p>
+mingwは、あれ？エラーになるなあ。これは
+<a href="http://www.dm4lab.to/~usa/ruby/d/200212b.html#id20021218_P2_1">例のsystem問題</a>がからんでるねえ。
+</p>
+<pre>
+$mflags.unshift(&quot;INSTALL_PROG=install -m 0755&quot;,
+                &quot;INSTALL_DATA=install -m 0644&quot;) if $dryrun
+</pre>
+<p>
+で
+</p>
+<pre>
+system($make, *$mflags)
+</pre>
+<p>
+という感じで実行されるので。今のmingw32版rubyではquoteする必要がある。
+あ、
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-dev/19130">[ruby-dev:19130]</a>はそういう意味か。でもそうすると正しく動くsystemを持つ処理系では
+</p>
+<pre>
+&quot;install -m 0755&quot; win32ole.so /usr/local/lib/ruby/1.8/i386-cygwin
+</pre>
+<p>
+と残るんだよねえ。うささんがやる気なしモードに入ってしまったのが痛い。うーむ。
+とりあえず致命的じゃないし放っておくか。
+</p>
+<!-- section end -->
+</div>
+<!-- 2002/12/27 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/12/28 start -->
+<h2><a name="20021228" href="200212c.html#20021228">2002-12-28 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="200212281" title="200212281" href="200212c.html#200212281">■</a> 
+[Ruby] commit miss</h3>
+<p>
+まただ。instruby.rb, ChangeLog, version.hがなぜかcommitされなかった。うーむ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200212282" title="200212282" href="200212c.html#200212282">■</a> 
+[Ruby] Ruby BinariesをRAAへ登録</h3>
+<p>
+そういえばなぜ
+<a href="http://www.ruby-lang.org/~eban/ruby/binaries/">Ruby Binaries</a>を登録してなかったんだろう？
+お願いされるまで全く思い付かなかったようだ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200212283" title="200212283" href="200212c.html#200212283">■</a> 
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-talk/60000">[Ruby] ruby-talk 60000</a></h3>
+<p>
+50000が9/12だから3ヶ月で10000か。
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-talk/60013">[ruby-talk:60013]</a></p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200212284" title="200212284" href="200212c.html#200212284">■</a> 
+[TEPCO] 東京電力</h3>
+<p>
+3ヶ月振りにCMを見た。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200212285" title="200212285" href="200212c.html#200212285">■</a> 
+[Ruby] gdbm.lib</h3>
+<p>
+nmakeした後にtouch win32/Makefile.subしてnmakeすると、
+インポートライブラリext/gdbm/gdbm.libが存在するため
+</p>
+<pre>
+fatal error LNK1149: 出力ファイル名と入力ファイル名 \
+'C:\cygwin\home\watanabe\ruby\mswin\ext\gdbm\gdbm.lib' が同じです。
+</pre>
+<p>
+となってしまう。DLLIBのコマンドに
+</p>
+<pre>
+mfile.print &quot;@-$(RM) $(TARGET).lib\n\t&quot; if $mswin
+</pre>
+<p>
+を足しとこう。
+</p>
+<!-- section end -->
+</div>
+<!-- 2002/12/28 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/12/29 start -->
+<h2><a name="20021229" href="200212c.html#20021229">2002-12-29 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="200212291" title="200212291" href="200212c.html#200212291">■</a> 
+[Ruby] CROSS_COMPILING</h3>
+<p>
+いちいちdefined?しなきゃいけないのは使い難いから、
+普通のときはnilにしたいなあ。
+今はfake.rbで設定しているから、mkconfig.rbをいじってrbconfig.rbの最後に
+</p>
+<pre>
+CROSS_COMPILING = nil unless defined? CROSS_COMPILING
+</pre>
+<p>
+を入れるようにしよう。
+</p>
+
+<p>
+Config::CONFIGに入れちゃうと、
+crossで作ったbinaryをnativeでmkmf.rbする時に困ったことになりそう。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200212292" title="200212292" href="200212c.html#200212292">■</a> 
+[Ruby] quote問題 その1</h3>
+<p>
+結局ext/extmk.rbで最後のsystemのquote処理と同じようなことをしないとい
+けないことになったと思ったら、
+<a href="http://www.moonwolf.com/~arcml/cgi-bin/arcml/?rm=view&amp;list_id=1&amp;ml_count=429">patch</a>が出てきてしまった。
+</p>
+
+<p>
+それはそれとして、ext/extmk.rb側で対応するとしたら
+</p>
+<pre>
+host = (defined?(CROSS_COMPILING) ? CROSS_COMPILING : RUBY_PLATFORM)
+/mswin|bccwin|mingw|djgpp|human|os2|macos/ =~ host
+</pre>
+<p>
+の部分をまとめる必要がありそうだ。CROSS_COMPILINGの話はここにつながる。
+nilになってれば
+</p>
+<pre>
+/mswin|bccwin|mingw|djgpp|human|os2|macos/ =~ (CROSS_COMPILING || RUBY_PLATFORM)
+</pre>
+<p>
+ですむ。
+それはそれとしてdjgppは本当にこうする必要があるのだろうか？
+というより、system複数引数問題はdjgppにもあるじゃん。
+joinしてsystemしてるだけだし。djgppもhuman68kを参考にspawnを使うようにしよう。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200212293" title="200212293" href="200212c.html#200212293">■</a> 
+<a href="http://www.ruby-lang.org/raa/list.rhtml?name=ri">[Ruby] ri 0.8a</a></h3>
+<p>
+いつのまにか0.8aになってた。気づくの遅すぎ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200212294" title="200212294" href="200212c.html#200212294">■</a> 
+<a href="http://www.ruby-lang.org/raa/list.rhtml?name=bz2">[Ruby] BZ2 0.1.6</a></h3>
+<p>
+更新。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200212295" title="200212295" href="200212c.html#200212295">■</a> 
+<a href="http://www.moonwolf.com/~arcml/cgi-bin/arcml/?rm=view&amp;list_id=1&amp;ml_count=434">[Ruby] quote問題 その2</a></h3>
+<p>
+そうか。なるほど。ruby以外のプログラムで検証すべきだった。
+</p>
+<!-- section end -->
+</div>
+<!-- 2002/12/29 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/12/30 start -->
+<h2><a name="20021230" href="200212c.html#20021230">2002-12-30 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="200212301" title="200212301" href="200212c.html#200212301">■</a> 
+<a href="http://www.ruby-lang.org/raa/list.rhtml?name=bdb">[Ruby] bdb 0.3.8</a></h3>
+<p>
+更新。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200212302" title="200212302" href="200212c.html#200212302">■</a> 
+<a href="200212c.html#200212272">[Ruby] make -n</a></h3>
+<p>
+そもそもなぜGNU makeだとmake -nでminirubyが起動されるんだろう？
+どう考えても挙動としてはnmake系のほうが正しい。
+info makeしてGNU makeの仕様を眺めてみるとFeature of GNU `make'に以下の記述が見つかった。
+</p>
+<pre>
+* Execution of recursive commands to run `make' via the variable
+  `MAKE' even if `-n', `-q' or `-t' is specified.  *Note Recursive
+  Use of `make': Recursion.
+</pre>
+<p>
+Noteを読むとMAKE変数について書いてあった。
+</p>
+<pre>
+How the `MAKE' Variable Works
+-----------------------------
+
+   Recursive `make' commands should always use the variable `MAKE', not
+the explicit command name `make', as shown here:
+
+     subsystem:
+             cd subdir &amp;&amp; $(MAKE)
+
+   The value of this variable is the file name with which `make' was
+invoked.  If this file name was `/bin/make', then the command executed
+is `cd subdir &amp;&amp; /bin/make'.  If you use a special version of `make' to
+run the top-level makefile, the same special version will be executed
+for recursive invocations.
+
+   As a special feature, using the variable `MAKE' in the commands of a
+rule alters the effects of the `-t' (`--touch'), `-n' (`--just-print'),
+or `-q' (`--question') option.  Using the `MAKE' variable has the same
+effect as using a `+' character at the beginning of the command line.
+*Note Instead of Executing the Commands: Instead of Execution.
+</pre>
+<p>
+なるほど。MAKEという変数を参照することに意味があるわけだ。
+all:もinstall:もコマンドには--make &quot;$(MAKE)&quot;という形で使われている。
+instruby.rbには--makeは必要ないが、
+このMAKE変数を使わなきゃいけないという点で外しちゃいけないわけか。
+実は消しちゃおうと思っていたところだったのだ。あぶない。あぶない。
+</p>
+<pre>
+% cat Makefile
+all:
+        @echo hello
+        @echo $(MAKE)
+% make
+hello
+make
+% make -n
+echo hello
+echo make
+make
+</pre>
+<p>
+GNU makeの機能だから当然他のmakeでは使えない。
+だったら、別のターゲットを用意すればいい？
+dryrunとかdryrun-installとか。apel系のwhat-whereでもいいかな。
+どうせ-nしたくなるのはmake installの時だけだから。
+</p>
+
+<p>
+Perlもそのあたりは同じだから調べてみると、
+5.6以降はno-installというターゲットが用意されてるようだ。
+やはり人間考えることは同じらしい。
+</p>
+<pre>
+no-install:
+        $(MAKE) install.perl install.man STRIPFLAGS=$(STRIPFLAGS) INSTALLFLAGS=-n
+</pre>
+
+<!-- section end -->
+</div>
+<!-- 2002/12/30 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/12/31 start -->
+<h2><a name="20021231" href="200212c.html#20021231">2002-12-31 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="200212311" title="200212311" href="200212c.html#200212311">■</a> 
+[Ruby] system問題</h3>
+<p>
+djgppだけでもなんとかするためにprocess.cをいじる。
+defined(_WIN32)を2個所ほど追加すればいいようにしとけば、
+うささんが戻ってきたときに簡単に対応できるかな。
+</p>
+
+<p>
+ためしにhuman68kのコードを活かしてmsvcrt.dllのspawnvを使ってみたが、
+やはり空白があってもquoteしてくれなかった。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200212312" title="200212312" href="200212c.html#200212312">■</a> 
+<a href="http://www.ruby-lang.org/raa/list.rhtml?name=testunit">[Ruby] Test::Unit 0.1.6</a></h3>
+<p>
+12/29に更新してたのだった。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200212313" title="200212313" href="200212c.html#200212313">■</a> 
+<a href="http://www.nongnu.org/cvs/">[Linux] CVS 1.11.4</a></h3>
+<p>
+NEWSを見ても特に大きな変更はないようだ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2002/12/31 end -->
+
+<hr>
+<div>
+<a href="200212b.html">&lt;Older(,)</a> | 
+<a href="200301a.html">Newer(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

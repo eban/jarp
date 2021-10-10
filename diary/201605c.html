@@ -1,0 +1,395 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2016-5-c</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="201605b.html">
+<link rel="next" href="201606a.html">
+
+<link rel="stylesheet" type="text/css" href="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.css">
+<script async type="text/javascript" src="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.js"></script>
+<script type="text/javascript">
+<!--       
+$(document).ready(function() {
+  prettyPrint();
+});
+-->
+</script>
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2016年5月下旬〜</p>
+<hr>
+<div>
+<a href="201605b.html" accesskey=",">&lt;Older(,)</a> | 
+<a href="201606a.html" accesskey=".">Newer(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2016/05/21 start -->
+<h2><a name="20160521" href="201605c.html#20160521">2016-05-21 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="201605211" title="201605211" href="201605c.html#201605211">■</a> 
+GNU coreutils dateに空の日付を渡すと今日の0時を意味する</h3>
+<p>
+空も0も同じのようで。
+</p>
+<pre>
+% date -d '' 
+Sat May 21 00:00:00 JST 2016
+% date -d 0
+Sat May 21 00:00:00 JST 2016
+</pre>
+<p>
+問題になるのは-f-で空行を送っちゃった場合。
+</p>
+<pre>
+% echo {2001..2016}-{01..12}-13$'\n' | date -f- +'%F %a' | tail
+2016-04-13 Wed
+2016-05-13 Fri
+2016-06-13 Mon
+2016-07-13 Wed
+2016-08-13 Sat
+2016-09-13 Tue
+2016-10-13 Thu
+2016-11-13 Sun
+2016-12-13 Tue
+2016-05-21 Sat
+</pre>
+<p>
+最後に余計な行が出現する。
+</p>
+<!-- section end -->
+</div>
+<!-- 2016/05/21 end -->
+
+
+
+<hr class="hide">
+<!-- 2016/05/22 start -->
+<h2><a name="20160522" href="201605c.html#20160522">2016-05-22 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="201605221" title="201605221" href="201605c.html#201605221">■</a> 
+synergyでこんなメッセージが: ERROR: failed to load hook library, synwinhk.dll is missing or invalid</h3>
+<p>
+単に32ビット版から64ビット版へアップグレードしたときのゴミなので、<br>
+まずアンインストールしフォルダが残ってたらそれも消してから、<br>
+64ビット版をインストールすればok。
+</p>
+<!-- section end -->
+</div>
+<!-- 2016/05/22 end -->
+
+
+
+<hr class="hide">
+<!-- 2016/05/23 start -->
+<h2><a name="20160523" href="201605c.html#20160523">2016-05-23 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="201605231" title="201605231" href="201605c.html#201605231">■</a> 
+jacocoのmissedとcovered</h3>
+<p>
+jacocoのmissedとcoveredはxmllintを使うと下のような感じで、値を取り出せる。
+</p>
+<pre>
+% xmllint --xpath &quot;number(//report/counter[@type='INSTRUCTION']/@covered)&quot; jacoco.xml                      
+% xmllint --xpath &quot;number(//report/counter[@type='INSTRUCTION']/@missed)&quot; jacoco.xml                      
+% xmllint --xpath &quot;number(//report/counter[@type='BRANCH']/@covered)&quot; jacoco.xml                      
+% xmllint --xpath &quot;number(//report/counter[@type='BRANCH']/@missed)&quot; jacoco.xml                      
+</pre>
+<p>
+後はINSTRUCTIONのほうがC0になりBRANCHのほうがC1になる。
+</p>
+<!-- section end -->
+</div>
+<!-- 2016/05/23 end -->
+
+
+
+<hr class="hide">
+<!-- 2016/05/24 start -->
+<h2><a name="20160524" href="201605c.html#20160524">2016-05-24 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="201605241" title="201605241" href="201605c.html#201605241">■</a> 
+gzipした結果を結合してもgzip -dで全部伸長可能。</h3>
+<p>
+どういうことかというとこんな感じ。
+</p>
+<pre>
+% seq 10000&gt;10000
+% mkdir tmp
+% cd tmp
+% split ../10000
+% ls
+xaa  xab  xac  xad  xae  xaf  xag  xah  xai  xaj
+% ls -l
+total 76
+-rw-r--r-- 1 eban eban 3893 2016-05-24 14:20:36 xaa
+-rw-r--r-- 1 eban eban 5000 2016-05-24 14:20:36 xab
+-rw-r--r-- 1 eban eban 5000 2016-05-24 14:20:36 xac
+-rw-r--r-- 1 eban eban 5000 2016-05-24 14:20:36 xad
+-rw-r--r-- 1 eban eban 5000 2016-05-24 14:20:36 xae
+-rw-r--r-- 1 eban eban 5000 2016-05-24 14:20:36 xaf
+-rw-r--r-- 1 eban eban 5000 2016-05-24 14:20:36 xag
+-rw-r--r-- 1 eban eban 5000 2016-05-24 14:20:36 xah
+-rw-r--r-- 1 eban eban 5000 2016-05-24 14:20:36 xai
+-rw-r--r-- 1 eban eban 5001 2016-05-24 14:20:36 xaj
+% gzip *
+% ls -l
+total 40
+-rw-r--r-- 1 eban eban 1852 2016-05-24 14:20:36 xaa.gz
+-rw-r--r-- 1 eban eban 1690 2016-05-24 14:20:36 xab.gz
+-rw-r--r-- 1 eban eban 1690 2016-05-24 14:20:36 xac.gz
+-rw-r--r-- 1 eban eban 1690 2016-05-24 14:20:36 xad.gz
+-rw-r--r-- 1 eban eban 1690 2016-05-24 14:20:36 xae.gz
+-rw-r--r-- 1 eban eban 1690 2016-05-24 14:20:36 xaf.gz
+-rw-r--r-- 1 eban eban 1691 2016-05-24 14:20:36 xag.gz
+-rw-r--r-- 1 eban eban 1690 2016-05-24 14:20:36 xah.gz
+-rw-r--r-- 1 eban eban 1686 2016-05-24 14:20:36 xai.gz
+-rw-r--r-- 1 eban eban 1689 2016-05-24 14:20:36 xaj.gz
+% cat *.gz &gt; ../all.gz
+% cd ..
+% zcat all.gz &gt;10000-ungziped
+% ls -l 10000*
+-rw-r--r-- 1 eban eban 48894 2016-05-24 14:20:22 10000
+-rw-r--r-- 1 eban eban 48894 2016-05-24 14:21:50 10000-ungziped
+% cmp 10000*
+</pre>
+<p>
+何がうれしいかというとgzip *のところでparallel gzipすれば並列実行できる。<br>
+しかもparallelにはsplit機能もあるのでman parallelにあるような例が可能。
+</p>
+<pre>
+% cat bigfile | parallel --pipe --recend '' -k gzip -9 &gt; bigfile.gz
+</pre>
+<p>
+何げなくgzipが出てくるがこれは上と同じように別々に分割されて各々がgzipされる。<br>
+だから&gt;で結合されるわけだ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2016/05/24 end -->
+
+
+
+<hr class="hide">
+<!-- 2016/05/25 start -->
+<h2><a name="20160525" href="201605c.html#20160525">2016-05-25 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="201605251" title="201605251" href="201605c.html#201605251">■</a> 
+CircleCIにfull output log機能がない</h3>
+<p>
+CircleCIのログが長くなると全部まとめてダウンロードしてlessで見たくなる。<br>
+でもいくら探してもそんな機能はないようで。<br>
+まじめに調べてみたら本当になかった。<br>
+<a href="https://discuss.circleci.com/t/view-or-download-full-output-logs/247">View or Download Full Output Logs</a><br>
+去年にrequestされてるが、まだ実装されてない。
+</p>
+<!-- section end -->
+</div>
+<!-- 2016/05/25 end -->
+
+
+
+<hr class="hide">
+<!-- 2016/05/26 start -->
+<h2><a name="20160526" href="201605c.html#20160526">2016-05-26 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="201605261" title="201605261" href="201605c.html#201605261">■</a> 
+dateのそれぞれの値を変数へ代入</h3>
+<p>
+twitterで見かけた方法。
+</p>
+<pre>
+$ read s Y m d H M S ms ns &lt;&lt;&lt; &quot;$(date +'%s %Y %m %d %H %M %S %3N %9N')&quot;
+</pre>
+<p>
+なるほどと思ったが、そういえば
+</p>
+<pre>
+$ read s Y m d H M S ms ns &lt; &lt;(date +'%s %Y %m %d %H %M %S %3N %9N') 
+</pre>
+<p>
+としていたのであった。どちらもpipeじゃないところがミソ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2016/05/26 end -->
+
+
+
+<hr class="hide">
+<!-- 2016/05/27 start -->
+<h2><a name="20160527" href="201605c.html#20160527">2016-05-27 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="201605271" title="201605271" href="201605c.html#201605271">■</a> 
+Github APIでtarballのダウンロード</h3>
+<p>
+Browserを使えば簡単だが、Github APIがあるようで、curlでダウンロード可能。<br>
+あらかじめtokenを取得しておく。
+</p>
+<pre>
+% curl -L -H &quot;Authorization: token xxxx&quot; https://api.github.com/repos/user/repository-name/tarball/branch -o user-repository-name-branch.tar.gz
+</pre>
+<p>
+tarballをzipballにすればzipにしてくれる。
+</p>
+<!-- section end -->
+</div>
+<!-- 2016/05/27 end -->
+
+
+
+<hr class="hide">
+<!-- 2016/05/28 start -->
+<h2><a name="20160528" href="201605c.html#20160528">2016-05-28 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="201605281" title="201605281" href="201605c.html#201605281">■</a> 
+AWS CloudWatch Logsの保存期間</h3>
+<p>
+何も設定しないと失効しないが、たとえば7日間とlog group設定しても、<br>
+実際に削除されるのは各イベントだけでlog streamが消されない。<br>
+log streamが消されないのでlog groupも消されない。<br>
+この仕様が結構やっかい。<br>
+log group数には制限があって、普通は500。<br>
+deploy毎に新たにlog groupを作るといつか500に到達してしまう。<br>
+つまり中身が空のlog streamの削除とか中身が空のlog groupの削除みたいなことは、<br>
+自前で用意しないといけない。
+</p>
+<!-- section end -->
+</div>
+<!-- 2016/05/28 end -->
+
+
+
+<hr class="hide">
+<!-- 2016/05/29 start -->
+<h2><a name="20160529" href="201605c.html#20160529">2016-05-29 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="201605291" title="201605291" href="201605c.html#201605291">■</a> 
+CloudWatch Logsの面倒臭さ</h3>
+<p>
+昨日のつづき。<br>
+log streamの中身が空かどうかはget-log-eventsしないとわからない。<br>
+ってことはdescribe-log-groupsして各々のlog groupに対して<br>
+describe-log-streamsして各々のlog streamに対して<br>
+get-log-eventsしないといけないわけだ。面倒くせー。
+</p>
+<!-- section end -->
+</div>
+<!-- 2016/05/29 end -->
+
+
+
+<hr class="hide">
+<!-- 2016/05/30 start -->
+<h2><a name="20160530" href="201605c.html#20160530">2016-05-30 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="201605301" title="201605301" href="201605c.html#201605301">■</a> 
+log streamが空かどうかの判断</h3>
+<p>
+get-log-eventsしてevents配列が空かどうかで判断しないとけないのは、<br>
+保存期間を過ぎてeventが消されてもlog streamsは残っているからなんだけど、<br>
+よく見たらdescribe-log-streamsの結果のstoredBytesが0ならeventは空とみなせるようで、<br>
+get-log-eventsする必要はなさげ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2016/05/30 end -->
+
+
+
+<hr class="hide">
+<!-- 2016/05/31 start -->
+<h2><a name="20160531" href="201605c.html#20160531">2016-05-31 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="201605311" title="201605311" href="201605c.html#201605311">■</a> 
+<a href="http://dev.classmethod.jp/cloud/aws/get-aws-account-id-with-get-caller-identity/">AWS Account ID</a></h3>
+<p>
+つまり
+</p>
+<pre>
+% aws sts get-caller-identity --query Account --output text
+</pre>
+<p>
+で取れると。今までは
+</p>
+<pre>
+aws iam get-user --query User.Arn | cut -d: -f5
+</pre>
+<p>
+のようにARNから抜き出していたが、cutしなくていいならそっちのほうがよさげ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2016/05/31 end -->
+
+<hr>
+<div>
+<a href="201605b.html">&lt;Older(,)</a> | 
+<a href="201606a.html">Newer(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

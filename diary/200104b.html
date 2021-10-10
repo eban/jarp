@@ -1,0 +1,721 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2001-4-b</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="200104a.html">
+<link rel="next" href="200104c.html">
+
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2001年4月中旬〜</p>
+<hr>
+<div>
+<a href="200104a.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="200104c.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2001/04/11 start -->
+<h2><a name="20010411" href="200104b.html#20010411">2001-04-11 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="200104111" title="200104111" href="200104b.html#200104111">■</a> 
+[Cygwin] GNU dbm</h3>
+最初からなぜかMakefile.cygwinが存在してる。
+よく見るとCYGWIN-PATCHES/gdbm-1.8.0.READMEもあって
+<pre>
+unpack gdbm-1.8.0-X-src.tar.gz
+cd gdbm-1.8.0
+./configure
+cp Makefile.cygwin Makefile
+make
+make progs
+make install
+make install-compat
+</pre>
+と書いてある。なんのためのconfigure? 結局無視することにして、そのまま
+<pre>
+% make CFLAGS='-Os -DGDBM_STATIC'
+</pre>
+と実行。CFLAGSもMakefile.inを見ると-O決め打ちなところが気になるが、
+無事終了。ロックするしないはwin32/win32.cを参考にこんな感じ。
+<pre>
+--- gdbmopen.c.orig	Sun Jul 30 12:46:41 2000
++++ gdbmopen.c	Sun Apr  8 23:57:52 2001
+@@ -54,2 +54,3 @@
+    
++#include &lt;windows.h&gt;
+ 
+@@ -111,2 +112,13 @@
+   dbf-&gt;coalesce_blocks = FALSE; /* Default to not coalescing blocks. */
++
++  {
++    OSVERSIONINFO osver;
++    memset(&amp;osver, 0, sizeof(OSVERSIONINFO));
++    osver.dwOSVersionInfoSize = sizeof(OSVERSIONINFO);
++    GetVersionEx(&amp;osver);
++    if (osver.dwPlatformId == VER_PLATFORM_WIN32_WINDOWS)
++      {
++        dbf-&gt;file_locking = FALSE;
++      }
++  }
+</pre>
+あ、#ifdef入れるの忘れてるなあ。あとは
+<pre>
+% sudo make install install-compat
+</pre>
+でいいはずだが、prefixはなぜか/usr/localのまま。
+Makefile.inを見ると
+<pre>
+prefix = /usr/local
+</pre>
+になってる。うう。君は本当にGNUのソフトなのか？
+<pre>
+% sudo make install install-compat prefix=/usr/local/cygwin
+</pre>
+ヘッダを見るとlibgdbm.dll.aがデフォルトになってるので、
+<pre>
+#define GDBM_STATIC
+</pre>
+をgdbm.h,ndbm.h,dbm.hに入れる。
+が、そんなことをするならオリジナルから作ったほうがよかったんじゃない？
+もしくは/usr/local/binにcyggdbm.dllを置くとか。
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200104112" title="200104112" href="200104b.html#200104112">■</a> 
+JARH</h3>
+<pre>
+print %w.J u s t \ a n o t h e r \ R u b y \ h a c k e r ,.
+</pre>
+<!-- section end -->
+</div>
+<!-- 2001/04/11 end -->
+
+
+
+<hr class="hide">
+<!-- 2001/04/12 start -->
+<h2><a name="20010412" href="200104b.html#20010412">2001-04-12 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="200104121" title="200104121" href="200104b.html#200104121">■</a> 
+出張</h3>
+Makefileについてなぜかコンサルしてたり。
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200104122" title="200104122" href="200104b.html#200104122">■</a> 
+Vim 6.0aa</h3>
+zの次はaaになったわけで、
+じゃ6.0はいつ出るかというと少なくとも数ヶ月はかかるらしい。
+今年は出ないと見た。
+
+<h4><a name="200104122S1" href="200104b.html#200104122S1">_</a> <strong>[Cygwin]</strong>: </h4>
+<div class="sub">
+あらかじめlibiconv 1.6.1をインストールしとく。
+<pre>
+% ./configure \
+  --enable-rubyinterp \
+  --enable-perlinterp
+  --enable-multibyte
+&lt;中略&gt;
+/USR/LOCAL/lib/ruby/1.6/i386-cygwin/rbconfig.rb:5: ruby lib version \
+(1.6.3) doesn't match executable version (1.6.4) (RuntimeError)
+</pre>
+あ、やばい。1.6.4になってたんだ。Linuxのほうを上げるの忘れてた。
+fake.rbはRUBY_VERSIONもいじるべきか。
+って、Vimいじってる場合じゃないよ、ドラえも〜ん。
+
+</div>
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200104123" title="200104123" href="200104b.html#200104123">■</a> 
+JARH</h3>
+<pre>
+print String [%[Just another Ruby hacker,]]
+</pre>
+<!-- section end -->
+</div>
+<!-- 2001/04/12 end -->
+
+
+
+<hr class="hide">
+<!-- 2001/04/13 start -->
+<h2><a name="20010413" href="200104b.html#20010413">2001-04-13 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="200104131" title="200104131" href="200104b.html#200104131">■</a> 
+パッケージ</h3>
+何が原因だったのか、いつからだったのか、
+確認しないで消しちゃったのでわからないけどCygwin版は壊れてた。
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200104132" title="200104132" href="200104b.html#200104132">■</a> 
+[Cygwin] Vim</h3>
+<h4><a name="200104132S1" href="200104b.html#200104132S1">_</a> <strong>Perl</strong>: </h4>
+<div class="sub">
+--enable-perlinterpしたらリンク時にundefined。
+これは後で考えるとして外す。
+
+</div>
+<h4><a name="200104132S2" href="200104b.html#200104132S2">_</a> <strong>Ruby</strong>: </h4>
+<div class="sub">
+--enable-rubyinterpのほうはリンクできてる。
+が、
+<pre>
+:ruby print &quot;Hello&quot;
+</pre>
+するとSEGVる。お約束ではあるが、gdbから起動すると
+<pre>
+Vim: Warning: Output is not to a terminal
+Vim: Warning: Input is not from a terminal
+</pre>
+と言われてしまい、入力もできない。
+だが、Cygwin版のgdbはWINPIDを指定することでattachできるのであった。
+落ちる場所はif_ruby.cに決まってるから
+<pre>
+% cd src
+% rm if_ruby.o
+% make CC='gcc -g'
+% ./vim
+</pre>
+しとく。他の端末から
+<pre>
+% ps                                   
+      PID    PPID    PGID     WINPID TTY  UID    STIME COMMAND
+  4074869       1 4074869 4290892427  -1  500 22:27:58 /USR/SBIN/INETD
+I 3971881       1 3971881 4291007071   1  500 00:21:37 /usr/bin/ZSH
+  3925365 3971881 3971881 4291041931   1  500 00:21:37 /usr/bin/ZSH
+  4025705 4074869 4025705 4291047239  -1  500 00:21:59 /USR/SBIN/IN.RLOGIND
+  3975465 4025705 3975465 4290991527   0  500 00:22:00 /usr/bin/ZSH
+  3935269 4074869 3935269 4291065563  -1  500 00:22:07 /USR/SBIN/IN.RLOGIND
+  3931221 3935269 3931221 4291036547   2  500 00:22:07 /usr/bin/ZSH
+  3906537 3931221 3906537 4291071671   2  500 00:24:54 /HOME/WATANABE/CYGWIN/VIM60AA/SRC/VIM
+  3908173 3975465 3908173 4291084283   0  500 00:25:58 /usr/bin/PS
+</pre>
+としてWINPIDを調べる。このWINPIDを指定してgdbを起動。
+<pre>
+% gdb --quiet --nw ./vim.exe 4291071671
+/home/watanabe/cygwin/vim60aa/src/4291071671: No such file or directory.
+Attaching to program `/home/watanabe/cygwin/vim60aa/src/./vim.exe', process -3895625
+[Switching to thread -3895625.0xffc4815b]
+</pre>
+gdbに制御が移るのでcontinueする。
+<pre>
+(gdb) c
+Continuing.
+</pre>
+ここで元の端末に戻り
+<pre>
+:ruby print &quot;Hello&quot;
+</pre>
+と入力。するとgdb側に
+<pre>
+Program received signal SIGSEGV, Segmentation fault.
+0x4b249c in ruby_io_init () at if_ruby.c:494
+494         rb_defout = rb_obj_alloc(rb_cObject);
+</pre>
+と表示される。listを見る。
+<pre>
+(gdb) l
+489
+490     static void ruby_io_init(void)
+491     {
+492         extern VALUE rb_defout;
+493
+494         rb_defout = rb_obj_alloc(rb_cObject);
+495         rb_define_singleton_method(rb_defout, &quot;write&quot;, vim_message, 1);
+496         rb_define_global_function(&quot;p&quot;, f_p, -1);
+497     }
+498
+</pre>
+なるほど。この
+<pre>
+492         extern VALUE rb_defout;
+</pre>
+が原因だ。EXTERNにしないとね。
+
+</div>
+<h4><a name="200104132S3" href="200104b.html#200104132S3">_</a> <strong>EXTERN</strong>: </h4>
+<div class="sub">
+if_ruby.cの最初に
+<pre>
+#undef EXTERN
+</pre>
+とある。VimもEXTERNを使っているのか。うーむ。ややこしいなあ。
+Tcl/TkもEXTERNを使ってるし、EXTERNはやめるべきか？
+
+</div>
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200104133" title="200104133" href="200104b.html#200104133">■</a> 
+JARH</h3>
+<pre>
+print catch(:x){throw :x, 'Just another Ruby hacker,'}
+</pre>
+<!-- section end -->
+</div>
+<!-- 2001/04/13 end -->
+
+
+
+<hr class="hide">
+<!-- 2001/04/14 start -->
+<h2><a name="20010414" href="200104b.html#20010414">2001-04-14 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="200104141" title="200104141" href="200104b.html#200104141">■</a> 
+サイエンスアイ(再)</h3>
+やはりPearlのままだった。
+Cのソースのタブが消えてた。
+@nifty経由？んなこたあない。
+
+<h4><a name="200104141S1" href="200104b.html#200104141S1">_</a> <strong>cat</strong>: </h4>
+<div class="sub">
+CもRubyもたぶんどっちもcatだったと思う。
+記憶の断片にあるARGなんとかとlineとprintを組み合わせるとこうなる。
+<pre>
+ARGF.each{|line|print line}
+</pre>
+1行で書けてCより簡単という話だったが
+<pre>
+% touch cat
+% ruby -p cat files
+</pre>
+なら0バイトだ。いやそれじゃTV的にはNGだよ。
+
+</div>
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200104142" title="200104142" href="200104b.html#200104142">■</a> 
+[Cygwin] w3m</h3>
+動いてるプログラムにattachできるなら、w3mもそれでわかったんじゃない？
+まったくその通りである。
+ただ起動時にいきなり死んでしまうとattachする暇もないので、
+mainの最初にsleep(30);とか余裕を入れとく。
+そうすればいいと今になって気づく。
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200104143" title="200104143" href="200104b.html#200104143">■</a> 
+[Cygwin] Vim 6.0aa</h3>
+EXTERN以前に-DUSEIMPORTLIBも必要。
+それをまとめたパッチを
+<a href="../files/vim60aa-ruby.diff">ここ</a>に置く。
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200104144" title="200104144" href="200104b.html#200104144">■</a> 
+ri 0.7a</h3>
+<a href="http://www.pragmaticprogrammer.com/ruby/downloads/ri.html">ri</a>がバージョンアップしてた。
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200104145" title="200104145" href="200104b.html#200104145">■</a> 
+JARH</h3>
+<pre>
+print DATA.gets.chomp
+__END__
+Just another Ruby hacker,
+</pre>
+<!-- section end -->
+</div>
+<!-- 2001/04/14 end -->
+
+
+
+<hr class="hide">
+<!-- 2001/04/15 start -->
+<h2><a name="20010415" href="200104b.html#20010415">2001-04-15 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="200104151" title="200104151" href="200104b.html#200104151">■</a> 
+Vim 6.0aa</h3>
+Linuxにもインストールした。
+ただ、iconvの出来が悪くて自動判別とかかなり確率で失敗する。
+libiconv 1.6.1にすると少しはよくなるけど、やっぱ変。
+
+<h4><a name="200104151S1" href="200104b.html#200104151S1">_</a> <strong>&quot;z&quot;.succ</strong>: </h4>
+<div class="sub">
+<pre>
+% ruby -e 'p &quot;z&quot;.succ'
+&quot;aa&quot;
+</pre>
+どうせなら6.0viまで突き進んでくれ。
+<pre>
+% ruby -e 'p +(&quot;aa&quot;..&quot;vi&quot;).to_a.size'
+555
+</pre>
+かなり無理があるが。
+
+</div>
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200104152" title="200104152" href="200104b.html#200104152">■</a> 
+IceWM</h3>
+実は1年半ほど前からIceWMを使ってるわけだが、
+なんか流行ってきてるようでちょっとうれしい。<br>
+こんなのを~/.icewm/preferencesに追加してる。
+<pre>
+KeyWinRaise=&quot;Alt+u&quot;
+KeyWinPrev=&quot;Alt+k&quot;
+KeyWinNext=&quot;Alt+j&quot;
+KeyWinMinimize=&quot;Alt+i&quot;
+KeyWinRollup=&quot;Alt+r&quot;
+KeySysWindowList=&quot;Alt+l&quot;
+</pre>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200104153" title="200104153" href="200104b.html#200104153">■</a> 
+真夜中は純潔</h3>
+きよずみまよという名前になったらしい。
+「潔純真夜」ってことか。
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200104154" title="200104154" href="200104b.html#200104154">■</a> 
+JARH</h3>
+<pre>
+r,w = IO::pipe;w.print 'Just another Ruby hacker,';w.close;print r.gets
+</pre>
+<!-- section end -->
+</div>
+<!-- 2001/04/15 end -->
+
+
+
+<hr class="hide">
+<!-- 2001/04/16 start -->
+<h2><a name="20010416" href="200104b.html#20010416">2001-04-16 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="200104161" title="200104161" href="200104b.html#200104161">■</a> 
+rim 遅延 (23:33)</h3>
+
+<p>
+
+<a href="http://www.rim.or.jp/sp/rim/announce/article/troub_www010416.html">CGIが原因とか</a>
+
+書いてあるが、http serverとmail serverぐらいわけてくれないかなあ。
+まじで。てゆうか、今popできないし。今日はメール読めないかも。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200104162" title="200104162" href="200104b.html#200104162">■</a> 
+JARH</h3>
+<pre>
+print sprintf '%s', format '%s' % '%s', 'Just another Ruby hacker,'
+</pre>
+<!-- section end -->
+</div>
+<!-- 2001/04/16 end -->
+
+
+
+<hr class="hide">
+<!-- 2001/04/17 start -->
+<h2><a name="20010417" href="200104b.html#20010417">2001-04-17 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="200104171" title="200104171" href="200104b.html#200104171">■</a> 
+Perl 5.6.1, Perl 5.7.1</h3>
+<p>
+なんかあまり話題になってないが先週出てる。
+5.6.0自体あまり使われてない気もするし、各distroはどうなってんだろう？
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200104172" title="200104172" href="200104b.html#200104172">■</a> 
+<a href="http://kei.cwru.edu/nikki/nikki.el">nikki.el </a></h3>
+<p>
+気に入ってしまいそう。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200104173" title="200104173" href="200104b.html#200104173">■</a> 
+<a href="http://homepage2.nifty.com/zn/nnikki/200104.html#14_t4">Makefile </a></h3>
+<p>
+ Makefileに
+</p>
+<pre>
+@rem = %qd
+</pre>
+<p>
+と書くとどう解釈されるかというと、
+@remという変数に代入したことになる。
+</p>
+<pre>
+% echo '@rem = %qd\nall:;@echo $(@rem)' &gt; Makefile
+% make
+%qd
+</pre>
+<p>
+GNU makeだけかもしれないけど。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200104174" title="200104174" href="200104b.html#200104174">■</a> 
+JARH</h3>
+<pre>
+print eval 'Just another Ruby hacker,'.inspect
+</pre>
+<!-- section end -->
+</div>
+<!-- 2001/04/17 end -->
+
+
+
+<hr class="hide">
+<!-- 2001/04/18 start -->
+<h2><a name="20010418" href="200104b.html#20010418">2001-04-18 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="200104181" title="200104181" href="200104b.html#200104181">■</a> 
+Vim 6.0 (21:17)</h3>
+
+<p>
+Vim 6.0を使っていてつい
+command-line modeで&lt;C-B&gt;とか押して非常にせつなくなるんだけど、
+実は
+</p>
+<pre>
+:help cmdline
+</pre>
+<p>
+すると例があって
+
+<a href="#20010418F1"><sup><small>*1</small></sup></a>
+</p>
+<pre>
+:cnoremap &lt;C-A&gt; &lt;Home&gt;
+:cnoremap &lt;C-F&gt; &lt;Right&gt;
+:cnoremap &lt;C-B&gt; &lt;Left&gt;
+:cnoremap &lt;Esc&gt;b &lt;S-Left&gt;
+:cnoremap &lt;Esc&gt;f &lt;S-Right&gt;
+</pre>
+<p>
+とすればいいとわかる。最後のふたつは使わないからどうでもいいが、
+&lt;C-D&gt;には候補のリストを表示するなんてのを割り当てるよりは
+</p>
+<pre>
+:cnoremap &lt;C-D&gt; &lt;Del&gt;
+</pre>
+<p>
+でしょう、やっぱ。
+</p>
+
+<hr align="left" width="40%">
+<div>
+<a name="20010418F1" href="200104b.html#20010418F1"><small>*1</small></a>:
+なぜか*emacs-style*じゃなくて*tcsh-style*というタグが打ってある。
+</div>
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200104182" title="200104182" href="200104b.html#200104182">■</a> 
+JARH</h3>
+<pre>
+/#{print 'Just another Ruby hacker,'}/
+</pre>
+<!-- section end -->
+</div>
+<!-- 2001/04/18 end -->
+
+
+
+<hr class="hide">
+<!-- 2001/04/19 start -->
+<h2><a name="20010419" href="200104b.html#20010419">2001-04-19 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="200104191" title="200104191" href="200104b.html#200104191">■</a> 
+start</h3>
+<p>
+Cygwinで
+</p>
+<pre>
+PATH=/usr/local/bin:/usr/X11R6/bin:/usr/bin:/bin
+</pre>
+<p>
+てな設定にして使っているんだけど、
+たまに.xlsなファイルを見なきゃいけないときにがあったりすると、
+そのときだけExploreを立ち上げるのがすごくいやだった。
+だったらPATHに加えとけばいいんだろうけど、
+アプリケーション毎に違うとこにあるしなんかもったいない。
+が、
+</p>
+<pre>
+start() {
+    c:/winnt/system32/cmd /c start &quot;$@&quot;
+}
+</pre>
+<p>
+としとけばいいのか。
+</p>
+<pre>
+% start foo.xls
+</pre>
+<p>
+あとはstartがよろしくやってくれる。<br>
+WinNTはstartが内部コマンドなんだね。
+start.exeを探しまくったよ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200104192" title="200104192" href="200104b.html#200104192">■</a> 
+盗み見</h3>
+<p>
+
+<a href="http://www3.freeweb.ne.jp/diary/yamaya/nsmm/">nsmm</a>
+はNuSuMiMiではない(はずだ)。
+<!-- 無理矢理読まないように、田中さん。 -->
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200104193" title="200104193" href="200104b.html#200104193">■</a> 
+JARH</h3>
+<pre>
+print 'Just another Ruby hacker,'.scan(/./).collect{|x|x[0]}.pack'U*'
+</pre>
+<!-- section end -->
+</div>
+<!-- 2001/04/19 end -->
+
+
+
+<hr class="hide">
+<!-- 2001/04/20 start -->
+<h2><a name="20010420" href="200104b.html#20010420">2001-04-20 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="200104201" title="200104201" href="200104b.html#200104201">■</a> 
+Vim 6.0ab</h3>
+<p>
+vim-jp MLによると6.0abが出たらしいが、ftp://ftp.vim.org/にまったくつながらない。<br>
+mirrorを調べるのも面倒なのでCVSで追い掛けることにした。
+てゆうかたぶん調べる手間はどっちも同じだよ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200104202" title="200104202" href="200104b.html#200104202">■</a> 
+JARH</h3>
+<pre>
+print [&lt;&lt;'+'.delete(&quot;\n&quot;).gsub(/./){format'%02b',$&amp;[0]-?A}].pack'B*'
+BACCBDBBBDADBDBAACAABCABBCDCBCDDBDBABCCABCBBBDACAC
+AABBACBDBBBCACBDCBACAABCCABCABBCADBCCDBCBBBDACACDA
++
+</pre>
+<!-- section end -->
+</div>
+<!-- 2001/04/20 end -->
+
+<hr>
+<div>
+<a href="200104a.html">&lt;Prev(,)</a> | 
+<a href="200104c.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

@@ -1,0 +1,329 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2013-1-c</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="201301b.html">
+<link rel="next" href="201302a.html">
+
+<link rel="stylesheet" type="text/css" href="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.css">
+<script type="text/javascript" src="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.js"></script>
+<script type="text/javascript">
+<!--       
+$(document).ready(function() {
+  prettyPrint();
+});
+-->
+</script>
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2013年1月下旬〜</p>
+<hr>
+<div>
+<a href="201301b.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="201302a.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2013/01/21 start -->
+<h2><a name="20130121" href="201301c.html#20130121">2013-01-21 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="201301211" title="201301211" href="201301c.html#201301211">■</a> 
+ruby fitbit gem</h3>
+<p>
+すでに2年間放置されてるプロジェクトで残念ながら動かなかった。<br>
+昨日のPerl版もこれも画面のscrapingなので保守されないとすぐだめになるよねえ。<br>
+Official API版はないようで。
+</p>
+<!-- section end -->
+</div>
+<!-- 2013/01/21 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/01/22 start -->
+<h2><a name="20130122" href="201301c.html#20130122">2013-01-22 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="201301221" title="201301221" href="201301c.html#201301221">■</a> 
+<a href="http://golf.shinh.org/p.rb?Grouping">Grouping</a></h3>
+<p>
+これをBashでxarg,sort,uniq,sort,awkを使ったら、案の定タイムアウト。<br>
+富豪では無理のようだ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2013/01/22 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/01/23 start -->
+<h2><a name="20130123" href="201301c.html#20130123">2013-01-23 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="201301231" title="201301231" href="201301c.html#201301231">■</a> 
+rubyciの復活案</h3>
+<p>
+RSSをどこかに吐けばいいと思っていたが、iftttを使えばgmailからtwitterへポストできるよな。<br>
+ruby-cvs MLを受けてtwitterへ流せばいいわけだ。<br>
+で、自分のアカウントで試そうとして、ふとこれは自分宛のメールが流出する危険性が高いことに気づいた。<br>
+やっぱ別のアカウントを作ったほうがいいな。明日試す。
+</p>
+<!-- section end -->
+</div>
+<!-- 2013/01/23 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/01/24 start -->
+<h2><a name="20130124" href="201301c.html#20130124">2013-01-24 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="201301241" title="201301241" href="201301c.html#201301241">■</a> 
+rubyciはgmaneを利用することに</h3>
+<p>
+昨日のつづき。<br>
+gmailのアカウントを実際に作って試してみたらあっさりと成功した。<br>
+でも単にsubjectだけなのがさびしい。<br>
+ここでどこかにRSSがないかと探してみたら、gmaneにあった。<br>
+ruby-cvs MLをアーカイブしてたんだなあ。<br>
+というわけでgmaneを利用することに。<br>
+gmaneへのリンクになるが、まあそこはいいよね。
+</p>
+<p>
+結局iftttをそのまま使っているので15分間隔になった。<br>
+twitterfeedは30分だったので、少しは改善された。
+</p>
+<!-- section end -->
+</div>
+<!-- 2013/01/24 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/01/25 start -->
+<h2><a name="20130125" href="201301c.html#20130125">2013-01-25 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="201301251" title="201301251" href="201301c.html#201301251">■</a> 
+twitterfeedにログインできなくなった</h3>
+<p>
+<a href="200911c.html#200911261">以前にもOpenIDプロバイダー忘れたと書いた</a>けど、そのときは設定していたtwitter側で認証可能だった。<br>
+で、rubyciはもうiftttを使うようになったしtwitterfeedはアカウント削除しようと思ったら、<br>
+もうtwitterで認証が使えなくなっていた。<br>
+でなんとかdiigoとかで自分のブックマークを検索してみたらidproxyだと思い出した。<br>
+で、行ってみたらもうサービス終了していた。<br>
+あのときに別なプロバイダーを登録しておけばよかったが、後の祭りだ。<br>
+こうなるともうどうにもならない。<br>
+今さらcia.vcが復活するとも思えないし、問い合わせるのも面倒なので放置。<br>
+</p>
+<!-- section end -->
+</div>
+<!-- 2013/01/25 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/01/26 start -->
+<h2><a name="20130126" href="201301c.html#20130126">2013-01-26 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="201301261" title="201301261" href="201301c.html#201301261">■</a> 
+awkで$2から$NFまで出力</h3>
+<p>
+awkだったら{$1=&quot;&quot;}1でいいかと思ったが、先頭に空白が残る。<br>
+$1と空白が消えればいいなら{sub($1&quot; &quot;, &quot;&quot;)}1でいいか。<br>
+いや$1に*とかあったらだめだな。<br>
+とすると{sub(/[^ ]* /, &quot;&quot;)}1ぐらいか。
+</p>
+<!-- section end -->
+</div>
+<!-- 2013/01/26 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/01/27 start -->
+<h2><a name="20130127" href="201301c.html#20130127">2013-01-27 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="201301271" title="201301271" href="201301c.html#201301271">■</a> 
+fitbit: curlで体重更新</h3>
+<p>
+ブラウザのクッキーを使えばcurlで簡単に更新できることがわかった。
+</p>
+<pre>
+curl -b cookies.txt -F kg=体重 -F bodyFat=体脂肪率 -F date=2013-01-27 -F weightState=METRIC \
+'http://www.fitbit.com/measure/measurements?log=on&amp;apiFormat=json'
+</pre>
+<p>
+てな感じで。
+</p>
+<!-- section end -->
+</div>
+<!-- 2013/01/27 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/01/28 start -->
+<h2><a name="20130128" href="201301c.html#20130128">2013-01-28 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="201301281" title="201301281" href="201301c.html#201301281">■</a> 
+まためがねのテンプルがぽきっと</h3>
+<p>
+<a href="200911c.html#200911271">以前交換しためがねのテンプル</a>がまたぽきっと折れた。<br>
+同じように使っているからやっぱ3年ぐらいか。<br>
+合計6年なのでまあよく保ったほうなんだろう。<br>
+<a href="200912a.html#200912091">前回この部品は最後の1個</a>と言ってたので新調。<br>
+遠近っぽくして流行りのブルーライトをブロックするコーティングで。<br>
+できあがりは来週末。
+</p>
+<!-- section end -->
+</div>
+<!-- 2013/01/28 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/01/29 start -->
+<h2><a name="20130129" href="201301c.html#20130129">2013-01-29 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="201301291" title="201301291" href="201301c.html#201301291">■</a> 
+bash4のprintfとzshのprintのstrftime機能</h3>
+<p>
+<a href="http://www.commandlinefu.com/commands/view/11813/print-todays-date-in-iso-format-without-calling-an-external-command-bash-4">これ</a>を見てzshでもできたような気がしてマニュアルを見たらprint -Pでいけた。
+</p>
+<pre>
+% bash -c 'printf &quot;%(%F %T)T\n&quot; -1'
+2013-01-29 21:56:35
+% zsh -c 'print -P &quot;%D{%F %T}&quot;'
+2013-01-29 21:57:14
+</pre>
+<p>
+残念ながらzshのprintfにはない。
+</p>
+<!-- section end -->
+</div>
+<!-- 2013/01/29 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/01/30 start -->
+<h2><a name="20130130" href="201301c.html#20130130">2013-01-30 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="201301301" title="201301301" href="201301c.html#201301301">■</a> 
+zshの空の変数名</h3>
+<p>
+bashではエラーになるが、zshでは参照できるようで。
+</p>
+<pre>
+% zsh -c 'echo ${}'
+
+% bash -c 'echo ${}'
+bash: ${}: 誤った代入です
+</pre>
+<p>
+まあ、これができて何がうれしいかというと、変数を介さずにpromptで使える%展開が可能になる。
+</p>
+<pre>
+% zsh -c 't=&quot;%D{%F}&quot;;echo ${(%)t}'
+2013-01-30
+% zsh -c 'echo ${(%):-%D{%F}}'
+2013-01-30
+</pre>
+<p>
+(%)でpromptの%展開。普通は${(%)var:-default}}のように使うが、<br>
+空の変数を参照しても当然値は設定されてないので、%D{%F}が使われる。
+</p>
+<!-- section end -->
+</div>
+<!-- 2013/01/30 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/01/31 start -->
+<h2><a name="20130131" href="201301c.html#20130131">2013-01-31 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="201301311" title="201301311" href="201301c.html#201301311">■</a> 
+Zapierを使い日記のrssをtwitterへ</h3>
+<p>
+iftttと同じようなことができる。<br>
+今は
+<a href="https://zapier.com/app/settings/plans">無料でも15分間隔</a>になってるのでそんなに悪くない。<br>
+設定終えて本番と思ったらtwitter側に障害が。<br>
+さてどうなることか。
+</p>
+<!-- section end -->
+</div>
+<!-- 2013/01/31 end -->
+
+<hr>
+<div>
+<a href="201301b.html">&lt;Prev(,)</a> | 
+<a href="201302a.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

@@ -1,0 +1,535 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2002-11-a</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="200210c.html">
+<link rel="next" href="200211b.html">
+
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2002年11月上旬〜</p>
+<hr>
+<div>
+<a href="200210c.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="200211b.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2002/11/01 start -->
+<h2><a name="20021101" href="200211a.html#20021101">2002-11-01 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="200211011" title="200211011" href="200211a.html#200211011">■</a> 
+10月のspam</h3>
+<p>
+452通。あっさり400を越えた。そのうち129通が韓国から。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200211012" title="200211012" href="200211a.html#200211012">■</a> 
+<a href="http://www.ruby-lang.org/en/raa-list.rhtml?name=RDtool">[Ruby] RDtool 0.6.12</a></h3>
+<p>
+更新。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/11/01 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/11/02 start -->
+<h2><a name="20021102" href="200211a.html#20021102">2002-11-02 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="200211021" title="200211021" href="200211a.html#200211021">■</a> 
+<a href="http://tcl.activestate.com/">[Cygwin][Tcl/Tk] Tcl/Tk 8.4.1</a></h3>
+<p>
+どちらもwin/にconfigureがあるのでmakeは簡単。
+</p>
+<pre>
+/usr/include/w32api/winsock2.h:95:2: warning: #warning &quot;fd_set and associated macros have been defined in sys/types.      This may cause runtime problems with W32 sockets&quot; 
+</pre>
+<p>
+が気にならないでもないがwish84も動いたのでよしとしよう。
+でも、tcltklib.soはだめだなあ。
+</p>
+<pre>
+% ruby -rtcltklib -e0
+</pre>
+<p>
+が返ってこない。--enable-tcltk_stubsがまずいようだ。うーむ。
+ActiveTcl 8.4.0もSEGVるし、どうもTcl/Tk stubはバイナリ互換がなくなったような感じだ。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/11/02 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/11/03 start -->
+<h2><a name="20021103" href="200211a.html#20021103">2002-11-03 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="200211031" title="200211031" href="200211a.html#200211031">■</a> 
+[Ruby] sys_nerr</h3>
+<p>
+たまっていたメールをやっと全部読んだ。
+</p>
+<pre>
+ruby: * error.c (init_syserr): remove sys_nerr dependency.
+</pre>
+<p>
+というSubjectのruby-cvsのcommit mailはChangeLogしかcommitされてない。
+報告しとこう。
+</p>
+
+<p>
+それはそれとしてsys_nerrを使わないようにしたんだろうか？
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200211032" title="200211032" href="200211a.html#200211032">■</a> 
+[Ruby] Tcl/Tk STUBS</h3>
+<p>
+Linux上でext/tk/sampleにあるスクリプトを試してみると、一応動く。
+tkhello.rbだけはquitで終了すると
+</p>
+<pre>
+Tcl_Release couldn't find reference for 0x80b7960
+zsh: abort      ruby tkhello.rb
+</pre>
+<p>
+となるのが気になる。window managerの×ボタンを押すと正常に終了する。
+lib{tcl,tk}8.3.soを指定すれば問題ない。
+tkbiff.rbはよくわからない挙動なので無視。
+</p>
+
+<p>
+Win32のほうで動かないのはなぜだ？
+ActiveStateがまたなんかいじったんだろうか？
+ActivePerlもそうだったけど、どうもActiveStateってとこは余計な仕事だけ増やしてくれるので好きじゃない。jperlも苦労したんだよねえ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200211033" title="200211033" href="200211a.html#200211033">■</a> 
+[Ruby] Google search</h3>
+<p>
+ほとんどこの日記がヒットしてしまうのはいかがなもんでしょう？
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/11/03 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/11/04 start -->
+<h2><a name="20021104" href="200211a.html#20021104">2002-11-04 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="200211041" title="200211041" href="200211a.html#200211041">■</a> 
+[Ruby] make install</h3>
+<p>
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-dev/18628">[ruby-dev:18628]</a>を調べようとしたら、knuさんが変更した-j対応の所為か、
+ext/配下のmake installが全く機能していなことに気づいた。
+makeにinstallという引数が渡ってないようだ。
+</p>
+
+<p>
+というわけで、まずはknuさんの修正を待つ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200211042" title="200211042" href="200211a.html#200211042">■</a> 
+振替休日とハッピーマンディー</h3>
+<p>
+月曜日ばかり休みになるのはあまりhappyじゃない。
+飛び石連休の間を埋める楽しみもなくなるし。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/11/04 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/11/05 start -->
+<h2><a name="20021105" href="200211a.html#20021105">2002-11-05 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="200211051" title="200211051" href="200211a.html#200211051">■</a> 
+[Ruby] livedoor倒産</h3>
+<p>
+そういえば
+<a href="http://jarh.hoops.livedoor.com/">http://jarh.hoops.livedoor.com/</a>はどうなるだろう？実は退会する方法がわからず放置しておいたんだが、
+まだ残ってる？
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200211052" title="200211052" href="200211a.html#200211052">■</a> 
+<a href="http://w3m.sf.net/">[Linux] w3m 0.3.2</a></h3>
+<p>
+frame bufferもサポートされたようだ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200211053" title="200211053" href="200211a.html#200211053">■</a> 
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-talk/54881">Matz Roundtable Summary</a></h3>
+<p>
+なんか雰囲気が伝わって面白い。
+</p>
+<!-- section end -->
+</div>
+<!-- 2002/11/05 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/11/06 start -->
+<h2><a name="20021106" href="200211a.html#20021106">2002-11-06 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="200211061" title="200211061" href="200211a.html#200211061">■</a> 
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-dev/18628">[Ruby] ./configure --prefix=/tmp/$USER</a></h3>
+<p>
+tmpreaperとはいったい何だろう？
+googleで検索してみるとDebianにあるパッケージらしい。
+説明を読んでみるとtime_spec時間以上アクセスされなかったファイルを消すということらしい。
+ちょっと試してみても特に問題は見当たらなかった。
+tmpreaperで何が消されたのかがわからないと再現は難しそう。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/11/06 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/11/07 start -->
+<h2><a name="20021107" href="200211a.html#20021107">2002-11-07 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="200211071" title="200211071" href="200211a.html#200211071">■</a> 
+<a href="http://cygwin.com/ml/cygwin-announce/2002-11/msg00004.html">[Cygwin] Cygwin 1.3.15-1</a></h3>
+<p>
+ChangesにSergey Okhapkinさんの名が。懐しい。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200211072" title="200211072" href="200211a.html#200211072">■</a> 
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-talk/55128">[Ruby] Yet another Ruby parser</a></h3>
+<p>
+確かになぜかparserを作る人が多い。XML parserもいっぱいあるし。
+Ruby界には数学好きが多いからなんだろうか？
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200211073" title="200211073" href="200211a.html#200211073">■</a> 
+[Ruby] net/telnet (PR#357)</h3>
+<p>
+ruby-bugs-jaに
+</p>
+<pre>
+RUBYのバグでは無いのですが、
+net/telnet内のputメソッドは改行を含めないと
+ありますが、どうやら改行付きで送信されてしまうようです。
+</pre>
+<p>
+と報告があった。Net::Telnetにはputメソッドは存在しないし、
+putsだとすると改行は含んで当たり前だし、
+「あります」とはどのドキュメントにあるんだろう？
+</p>
+
+<p>
+あ、実はputじゃなくてprintで、
+lib/net/telnet.rbのコメントに書いてあるこの部分か？
+</p>
+<pre>
+Telnet#puts() adds &quot;\n&quot; to the last of &quot;string&quot;.
+
+WARNING: Telnet#print() NOT adds &quot;\n&quot; to the last of &quot;string&quot;, in the future.
+</pre>
+<p>
+としたらin the futureだよね。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200211074" title="200211074" href="200211a.html#200211074">■</a> 
+OOPSLA</h3>
+<p>
+まつもとさんはまだ帰国してなかったようだ。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/11/07 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/11/08 start -->
+<h2><a name="20021108" href="200211a.html#20021108">2002-11-08 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="200211081" title="200211081" href="200211a.html#200211081">■</a> 
+<a href="http://znz.s1.xrea.com/t/?date=20021108#p02">タイムゾーン</a></h3>
+<p>
+Rubyのメーリングリストのことなら、元のDateはPostedフィールドに残ってます。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200211082" title="200211082" href="200211a.html#200211082">■</a> 
+<a href="http://cygwin.com/ml/cygwin/2002-11/msg00388.html">[Cygwin] binutils-20021107-1</a></h3>
+<p>
+なんだかんだで、-2になったようだ。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/11/08 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/11/09 start -->
+<h2><a name="20021109" href="200211a.html#20021109">2002-11-09 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="200211091" title="200211091" href="200211a.html#200211091">■</a> 
+[Ruby] Linux上でExerb</h3>
+<p>
+ExerbをLinuxへ移植することは可能だと思うけど、それって意味があるのだろうか？
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200211092" title="200211092" href="200211a.html#200211092">■</a> 
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-talk/55362">[Ruby] 3.times</a></h3>
+<p>
+うーむ。
+</p>
+<pre>
+% irb
+irb(main):001:0&gt; 3.times do |i| p i end
+0
+1
+2
+3
+</pre>
+<p>
+となるので4回だと思う人もいるわけだ。そういえば以前もirbで誤解してる人がいたよね。
+3はtimesの戻り値で
+</p>
+<pre>
+irb(main):002:0&gt; 1 * 3
+3
+</pre>
+<p>
+の3と同じ意味。そのあたりはユーザもいじれるけど、lib/irb/init.rbの@CONF[:PROMPT]のdefaultは
+</p>
+<pre>
+:DEFAULT =&gt; {
+  :PROMPT_I =&gt; &quot;%N(%m):%03n:%i&gt; &quot;,
+  :PROMPT_S =&gt; &quot;%N(%m):%03n:%i%l &quot;,
+  :PROMPT_C =&gt; &quot;%N(%m):%03n:%i* &quot;,
+  :RETURN =&gt; &quot;=&gt; %s\n&quot;
+},
+</pre>
+<p>
+としたほうがよさそう。
+</p>
+<pre>
+% irb
+irb(main):001:0&gt; 3.times do |i| p i end
+0
+1
+2
+=&gt; 3
+</pre>
+<p>
+これなら誤解しようがない。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200211093" title="200211093" href="200211a.html#200211093">■</a> 
+<a href="http://www.ruby-lang.org/en/raa-list.rhtml?name=csv">[Ruby] csv 1.2.0</a></h3>
+<p>
+更新。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/11/09 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/11/10 start -->
+<h2><a name="20021110" href="200211a.html#20021110">2002-11-10 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="200211101" title="200211101" href="200211a.html#200211101">■</a> 
+<a href="http://www.uclibc.org/">[Linux] uClibc 0.9.16</a></h3>
+<p>
+configurationが
+<a href="http://www.xs4all.nl/~zippel/lc/">LinuxKernelConf</a>ベースになった。これからはmake oldconfigができるからちょっと楽になるかな。
+</p>
+
+<p>
+localeをyesにしたらエラーになった。
+</p>
+<pre>
+../../../include/bits/uClibc_locale.h:95:37: \
+  bits/uClibc_locale_data.h: No such file or directory
+</pre>
+<p>
+まだlocaleはexperimentだし、次のリリースに期待しよう。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200211102" title="200211102" href="200211a.html#200211102">■</a> 
+[Ruby] uClibc</h3>
+<p>
+久し振りにRubyをuClibcでmakeしてみると拡張ライブラリを作るところで
+</p>
+<pre>
+/usr/i386-linux-uclibc/lib/crt0.o: In function `_start':
+/usr/i386-linux-uclibc/lib/crt0.o(.text+0x25): undefined reference to `main'
+</pre>
+<p>
+となってしまう。例の-no-undefinedが原因だ。
+glibcは-sharedのときはmainを参照しないようにcrt?.oが分かれているが、
+uClibcはそこまでは考えてないらしい。
+mainは必要ないけどsymbolとしては必要なので
+</p>
+<pre>
+-Wl,--defsym,main=_start
+</pre>
+<p>
+としてごまかしてみよう。_startはentry symbolだから必ず存在する。
+とりあえずよさそう。configure.inでuClibcかどうか判断するか。
+</p>
+
+<p>
+あ、ひょっとしてlibruby.soにmain.oを含めれば解決するかな？
+いけたよ。とすると例の作戦も悪くないかもしれない。って何だっけ？
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/11/10 end -->
+
+<hr>
+<div>
+<a href="200210c.html">&lt;Prev(,)</a> | 
+<a href="200211b.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

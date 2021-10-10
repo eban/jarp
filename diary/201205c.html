@@ -1,0 +1,350 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2012-5-c</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="201205b.html">
+<link rel="next" href="201206a.html">
+
+<link rel="stylesheet" type="text/css" href="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.css">
+<script type="text/javascript" src="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.js"></script>
+<script type="text/javascript">
+<!--       
+$(document).ready(function() {
+  prettyPrint();
+});
+-->
+</script>
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2012年5月下旬〜</p>
+<hr>
+<div>
+<a href="201205b.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="201206a.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2012/05/21 start -->
+<h2><a name="20120521" href="201205c.html#20120521">2012-05-21 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="201205211" title="201205211" href="201205c.html#201205211">■</a> 
+さくらのVPS 2G</h3>
+<p>
+先週の金曜日に乗り換えついでに2Gにした。<br>
+Ubuntu 12.04 LTSはまだメニューには出てこない。<br>
+</p>
+<p>
+古い方は来月まで使えるので、もう壊してもいいし、<br>
+いろんなOS入れて試してみよう。
+</p>
+<!-- section end -->
+</div>
+<!-- 2012/05/21 end -->
+
+
+
+<hr class="hide">
+<!-- 2012/05/22 start -->
+<h2><a name="20120522" href="201205c.html#20120522">2012-05-22 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="201205221" title="201205221" href="201205c.html#201205221">■</a> 
+オーバーレイスクロールバーを無効に</h3>
+<p>
+環境変数LIBOVERLAY_SCROLLBARを0にすればいいらしい。<br>
+どこで設定するのがいいかと思ったが、Xなので~/.xsessionrcに<br>
+export LIBOVERLAY_SCROLLBAR=0を追加した。<br>
+あのスクロールバーにしたところで大して広くならないよね。<br>
+その割りには使い勝手が悪いし。
+</p>
+<!-- section end -->
+</div>
+<!-- 2012/05/22 end -->
+
+
+
+<hr class="hide">
+<!-- 2012/05/23 start -->
+<h2><a name="20120523" href="201205c.html#20120523">2012-05-23 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="201205231" title="201205231" href="201205c.html#201205231">■</a> 
+InstapaperのePubが化けないようになってた</h3>
+<p>
+たぶん3月のSony Readerのバージョンアップでの対応なのか、InstapaperのePubが化けなくなってた。<br>
+これで手軽にるびまもePub化できるわけで、さっそく
+<a href="http://jp.rubyist.net/magazine/?0038">0038号</a>で試したらいけた。<br>
+でもなんかおかしいページもあるな。まあ、Hotlinksだけでも読めればいいか。
+</p>
+<!-- section end -->
+</div>
+<!-- 2012/05/23 end -->
+
+
+
+<hr class="hide">
+<!-- 2012/05/24 start -->
+<h2><a name="20120524" href="201205c.html#20120524">2012-05-24 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="201205241" title="201205241" href="201205c.html#201205241">■</a> 
+Linuxでuser ebanをgroup adminへ加える方法</h3>
+<p>
+なんでこんなにいっぱいあるんだろう。
+</p>
+<pre>
+gpasswd -a eban admin
+adduser eban admin
+usermod -G admin eban
+</pre>
+<p>
+さすがに最近はvigrなんてのは使わなくなったが。
+</p>
+<!-- section end -->
+</div>
+<!-- 2012/05/24 end -->
+
+
+
+<hr class="hide">
+<!-- 2012/05/25 start -->
+<h2><a name="20120525" href="201205c.html#20120525">2012-05-25 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="201205251" title="201205251" href="201205c.html#201205251">■</a> 
+うたまっぷカウントダウンのミスチル率の高さ</h3>
+<p>
+M-ONで毎週うたまっぷカウントダウンというランキング番組をやってるんだけど、<br>
+毎回やけにミスチル率が高いなと
+<a href="http://svre.utamap.com/utamap_countdown/index.html">確認</a>してみたら、TOP20のうち6曲も入っていた。<br>
+そんなにミスチルの歌詞を検索してるのかと、<br>
+<a href="http://www.utamap.com/accessranking/120523accessranking.html">本家のうたまっぷ歌詞weeklyランキング</a>を見たらそれどころじゃなかった。<br>
+TOP20には9曲もあった。TOP100を見てもミスチルだらけだ。<br>
+<a href="http://www.utamap.com/accessranking/120516accessranking.html">先週のランキング</a>を確認したら、なんとTOP20に13曲もあった。<br>
+つまりM-ONのうたまっぷカウントダウンは遠慮して6曲に留めているにすぎなかったのか。<br>
+ミスチルランキングといっても過言ではない。
+</p>
+<!-- section end -->
+</div>
+<!-- 2012/05/25 end -->
+
+
+
+<hr class="hide">
+<!-- 2012/05/26 start -->
+<h2><a name="20120526" href="201205c.html#20120526">2012-05-26 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="201205261" title="201205261" href="201205c.html#201205261">■</a> 
+静かな大安です</h3>
+<p>
+個人的には空耳アワード2012グランプリは「静かな大安です」だと思っているが、<br>
+あのVでは日めくりの5月28日の曜日がなぜか月曜日じゃなくて火曜日になってる。<br>
+大安なのは間違いないがそこまで調べといて曜日間違えてどうする。
+</p>
+<!-- section end -->
+</div>
+<!-- 2012/05/26 end -->
+
+
+
+<hr class="hide">
+<!-- 2012/05/27 start -->
+<h2><a name="20120527" href="201205c.html#20120527">2012-05-27 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="201205271" title="201205271" href="201205c.html#201205271">■</a> 
+今月はすでに90冊をスキャン</h3>
+<p>
+なかなかいいペースだ。解体した本も30冊ほど残ってるし、久し振りに100冊越えそう。<br>
+そろそろ合計で500冊に届きそうだけど、もう数えるのも面倒なくらい。
+</p>
+<!-- section end -->
+</div>
+<!-- 2012/05/27 end -->
+
+
+
+<hr class="hide">
+<!-- 2012/05/28 start -->
+<h2><a name="20120528" href="201205c.html#20120528">2012-05-28 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="201205281" title="201205281" href="201205c.html#201205281">■</a> 
+100冊</h3>
+<p>
+今月は今日でちょうど100冊。合計444冊。来月500冊いけたらいいな。
+
+</p>
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="201205282" title="201205282" href="201205c.html#201205282">■</a> 
+マウスカーソルのフォーカス</h3>
+<p>
+最近だとクリックしたらそのウィンドウにフォーカスが移るという挙動が多い。<br>
+単にマウスカーソルを移動させただけでフォーカスが移るほうが好きなんだけど、<br>
+CCSMにその設定があってうれしい。<br>
+ただグローバルメニューとの相性は悪い。<br>
+トップにカーソルを移動させるには間に別のウィンドウがあるとたどりつけない。<br>
+グローバルメニューも結局のところ移動距離が長くなるだけで、使いにくいから無効にするか。
+</p>
+<!-- section end -->
+</div>
+<!-- 2012/05/28 end -->
+
+
+
+<hr class="hide">
+<!-- 2012/05/29 start -->
+<h2><a name="20120529" href="201205c.html#20120529">2012-05-29 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="201205291" title="201205291" href="201205c.html#201205291">■</a> 
+convertでファイル名ソート</h3>
+<p>
+p1can.jpg,p2can.jpg,...,p482can.jpgと482個のファイルがあるときに、<br>
+convertなら%03d.jpgへ簡単に変換できる。<br>
+'p%dcan.jpg'だけだとp100can.jpgが先頭になってしまうが、
+</p>
+<pre>
+% convert 'p%dcan.jpg[1-482]' -scene 1 %03d.jpg
+</pre>
+<p>
+これで001.jpg,002.jpg,...,482.jpgになる。<br>
+ただし再変換されちゃうので注意。<br>
+pngとか-depth 4とかいろいろ変換するときは便利。
+</p>
+<p>
+そういえば名前変えるだけならrename(1)を使えば簡単にできるか。
+</p>
+<pre>
+% rename 's/p(\d+)can/sprintf&quot;%03d&quot;,$1/e' *.jpg
+</pre>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="201205292" title="201205292" href="201205c.html#201205292">■</a> 
+Sony Table S1のシステムバージョンアップ</h3>
+<p>
+Android4になった。しばらく鍵が開けられなくて困った。指をすべらせればいいようだ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2012/05/29 end -->
+
+
+
+<hr class="hide">
+<!-- 2012/05/30 start -->
+<h2><a name="20120530" href="201205c.html#20120530">2012-05-30 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="201205301" title="201205301" href="201205c.html#201205301">■</a> 
+さよならbitly</h3>
+<p>
+今回の電撃的な改悪はひどすぎる。<br>
+手軽に現在のページのタイトルとURLをtweetできるから使ってたのに。<br>
+短縮URL機能はt.coでさらに変換されてて二重化していてよくないと思ってたので、<br>
+いい機会だからそのtweet機能はbitlyを使うのやめよう。<br>
+twitterはまだ
+</p>
+<pre>
+http://twitter.com/?status=hoge
+</pre>
+<p>
+が使えるみたいなので、これで十分か。<br>
+いままでbitlyで使ってたbookmarkletをちょこっと変更してこっちでtweetするようにした。
+</p>
+<p>
+dlvr.itの設定はどうしたもんかな。昨日の日記はちゃんと短縮されてるみたいだからこのままでもいいか。<br>
+dlvr.itの短縮URL機能を使うと余計なもんがつくからいやなんだよなあ。<br>
+まあ、でもとりあえず戻してみよう。
+</p>
+<!-- section end -->
+</div>
+<!-- 2012/05/30 end -->
+
+
+
+<hr class="hide">
+<!-- 2012/05/31 start -->
+<h2><a name="20120531" href="201205c.html#20120531">2012-05-31 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="201205311" title="201205311" href="201205c.html#201205311">■</a> 
+inetdからのご請求がspam扱いに</h3>
+<p>
+おそれていたことがついに起こった。inetdからのご請求メールがspamフォルダに。<br>
+たまたま去年の日記をなんとなく読んでたらそういえば今年はまだ見てないことに気づき、<br>
+spamフォルダを確認してみるとやはりあった。しかも期限は今日までだった。なんというタイミング。<br>
+さっそく支払いを済ませたが、考えてみるともう解約してもいいんだよな。まあ、いいか。
+</p>
+<!-- section end -->
+</div>
+<!-- 2012/05/31 end -->
+
+<hr>
+<div>
+<a href="201205b.html">&lt;Prev(,)</a> | 
+<a href="201206a.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

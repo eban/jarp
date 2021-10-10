@@ -1,0 +1,394 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2014-3-b</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="201403a.html">
+<link rel="next" href="201403c.html">
+
+<link rel="stylesheet" type="text/css" href="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.css">
+<script type="text/javascript" src="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.js"></script>
+<script type="text/javascript">
+<!--       
+$(document).ready(function() {
+  prettyPrint();
+});
+-->
+</script>
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2014年3月中旬〜</p>
+<hr>
+<div>
+<a href="201403a.html" accesskey=",">&lt;Older(,)</a> | 
+<a href="201403c.html" accesskey=".">Newer(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2014/03/11 start -->
+<h2><a name="20140311" href="201403b.html#20140311">2014-03-11 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="201403111" title="201403111" href="201403b.html#201403111">■</a> 
+sshでSendEnvをキャンセルさせるには</h3>
+<p>
+sshするとLANG等が勝手に引き継がれるのは、Ubuntuだと/etc/ssh/ssh_configに
+</p>
+<pre>
+    SendEnv LANG LC_*
+</pre>
+<p>
+と書いてあるからだとわかったが、これをやめる方法が見つからない。<br>
+ぐぐってみるとなんとほんとにないそうだ。<br>
+<a href="https://bugzilla.mindrot.org/show_bug.cgi?id=1285">Bug 1285 – provide fallback options /etc/ssh/ssh_config</a><br>
+2007年に報告されている。最後の2013年11月には
+</p>
+<pre>
+Damien Miller 2013-11-16 02:03:24 EST
+Created attachment 2375 [details]
+Add UnSendEnv option<br>
+This adds an UnSendEnv option that allows cancelling SendEnv. It supports
+wildcards, so &quot;UnSendEnv LC*&quot; will cancel sending all environment variables
+starting with &quot;LC&quot;.
+</pre>
+<p>
+とあるが、これって次あたりのバージョンに入るんかな。<br>
+しかしUnSendEnvって名前はどうなんだ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2014/03/11 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/03/12 start -->
+<h2><a name="20140312" href="201403b.html#20140312">2014-03-12 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="201403121" title="201403121" href="201403b.html#201403121">■</a> 
+<a href="http://www.commandlinefu.com/commands/view/13232/hold-off-any-screensaverstimeouts">Hold off any screensavers/timeouts</a></h3>
+<p>
+わらった。<br>
+ぴくっと1pixelだけ動かして戻すってのを4分ごとに実行するらしい。
+</p>
+<p>
+それはそれとしてxdotoolが便利そうだ。<br>
+マウスだけでなくキー入力もできる。
+</p>
+<pre>
+% xdotool getactivewindow windowmove --relative 100 0
+</pre>
+<p>
+とすれば現在使ってるターミナルを移動できる。<br>
+相対なのに0 0でも移動するのは謎ではあるが。
+</p>
+<!-- section end -->
+</div>
+<!-- 2014/03/12 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/03/13 start -->
+<h2><a name="20140313" href="201403b.html#20140313">2014-03-13 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="201403131" title="201403131" href="201403b.html#201403131">■</a> 
+視聴予約</h3>
+<p>
+4極ミニプラグがあればRD-H1へもつなげられるが、<br>
+考えてみると予約しようがない。<br>
+と思ったら、視聴予約なるものがあった。<br>
+チューナーは3つあるので2番組同時録画の他に普通に視聴できるわけだが、<br>
+こんな使いかたもあるわけか。<br>
+まあ、torneとnasneもあるのでさすがに出番はないはず。<br>
+でも面白そうなので4極ミニプラグを用意しておこう。
+</p>
+<!-- section end -->
+</div>
+<!-- 2014/03/13 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/03/14 start -->
+<h2><a name="20140314" href="201403b.html#20140314">2014-03-14 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="201403141" title="201403141" href="201403b.html#201403141">■</a> 
+またまた月末の日付</h3>
+<p>
+GNU coreutilsのdateは-dで日付を指定できる。<br>
+なぜか簡単な足算引き算もできる。<br>
+afterとかagoとか+とか-とか。<br>
+これを利用すると先月末は簡単に得られる。<br>
+今日から今日の日付を引けば0日になるが、これが先月末を意味する。
+</p>
+<pre>
+% date +%-d
+14
+% date -d &quot;`date +%d` days ago&quot; +%-m/%-d
+2/28
+</pre>
+<p>
+ただ直接0日とは指定できない。
+</p>
+<pre>
+% date -d 3/1
+Sat Mar  1 00:00:00 JST 2014
+% date -d 3/0
+date: `3/0' は無効な日付です
+</pre>
+<p>
+では先月末じゃなくて今月末はどうするかというと、<br>
++1 monthしておけばいい。これだと3/31に実行してもうまくいくはず。
+</p>
+<pre>
+% date -d &quot;+1 month `date +%d` days ago&quot; +%-m/%-d
+3/31
+</pre>
+<p>
+3/31に忘れずに確認せんと。
+</p>
+<!-- section end -->
+</div>
+<!-- 2014/03/14 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/03/15 start -->
+<h2><a name="20140315" href="201403b.html#20140315">2014-03-15 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="201403151" title="201403151" href="201403b.html#201403151">■</a> 
+faketimeで任意の日時でコマンド実行</h3>
+<p>
+31日まで待ってらんないので調べた。<br>
+faketimeというコマンドでシステムタイムを騙せるらしい。<br>
+</p>
+<pre>
+% faketime 3/31 date
+Mon Mar 31 00:00:00 JST 2014
+</pre>
+<p>
+なるほど。これは便利だ。早速月末の件を検証してみる。
+</p>
+<pre>
+% faketime 3/31 date -d &quot;-1day month `faketime 3/31 date +'%Y%m01'`&quot; +%-m/%-d
+3/31
+% faketime 3/31 date -d &quot;+1 month `faketime 3/31 date +%d` days ago&quot; +%-m/%-d
+3/31
+</pre>
+<p>
+どっちも合ってるようだ。<br>
+faketimeはLD_PRELOADでtime(2)とかもろもろ差し替えているので、コマンドごとに必要。
+</p>
+<p>
+faketimeは他に10倍速とかできて面白い。
+</p>
+<pre>
+% faketime -f '+2y x10' ruby -e '10.times{p Time.now; sleep 1}'
+2016-03-14 23:50:37 +0900
+2016-03-14 23:50:47 +0900
+2016-03-14 23:50:57 +0900
+2016-03-14 23:51:07 +0900
+2016-03-14 23:51:17 +0900
+2016-03-14 23:51:27 +0900
+2016-03-14 23:51:37 +0900
+2016-03-14 23:51:47 +0900
+2016-03-14 23:51:57 +0900
+2016-03-14 23:52:07 +0900
+</pre>
+<p>
++2yで2年後、x10で10倍速になっている。
+</p>
+<!-- section end -->
+</div>
+<!-- 2014/03/15 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/03/16 start -->
+<h2><a name="20140316" href="201403b.html#20140316">2014-03-16 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="201403161" title="201403161" href="201403b.html#201403161">■</a> 
+faketimeをもっと簡単に</h3>
+<p>
+コマンドの前に一々つけるのも面倒。<br>
+要はLD_PRELOAD環境変数が設定されていればいいので、zshを起動しちゃえばいいわけだ。<br>
+その中はもう全部新たな時間の世界になる。
+</p>
+<pre>
+% faketime 3/31 zsh
+% date
+Mon Mar 31 00:00:25 JST 2014
+% date -d &quot;-1day month `date +'%Y%m01'`&quot; +%-m/%-d
+3/31
+% date -d &quot;+1 month `date +%d` days ago&quot; +%-m/%-d
+3/31
+</pre>
+<p>
+うまくいってる。
+</p>
+<!-- section end -->
+</div>
+<!-- 2014/03/16 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/03/17 start -->
+<h2><a name="20140317" href="201403b.html#20140317">2014-03-17 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="201403171" title="201403171" href="201403b.html#201403171">■</a> 
+Yahoo! Pipesが不安定</h3>
+<p>
+先週末あたりからYahoo! Pipesの調子が悪くてbotが数時間置きにしか動かない。<br>
+ここにきてやっと安定してきたが、iftttのほうがなかなか元の間隔に戻らないようで、<br>
+なかなか難しい。
+</p>
+<!-- section end -->
+</div>
+<!-- 2014/03/17 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/03/18 start -->
+<h2><a name="20140318" href="201403b.html#20140318">2014-03-18 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="201403181" title="201403181" href="201403b.html#201403181">■</a> 
+grep -Pなら速度低下あまりなし</h3>
+<p>
+grepが遅い話は
+<a href="200203c.html#200203233">10年以上前</a>に書いたが、それ以降はLANG=C grepしてごまかしていた。<br>
+極端に遅くなるからああそうだったと^CしてLANG=Cを指定しなおしてたりしてたわけだけど、<br>
+そういえば-PのPCREだとどうなんだと実験してみる。
+</p>
+<pre>
+% time grep foo /tmp/big.log
+grep foo /tmp/big.log  0.00s user 0.02s system 74% cpu 0.027 total
+% time grep -i foo /tmp/big.log
+grep -i foo /tmp/big.log  1.99s user 0.04s system 93% cpu 2.168 total<br>
+% time grep -P foo /tmp/big.log 
+grep -P foo /tmp/big.log  0.05s user 0.01s system 82% cpu 0.073 total
+% time grep -Pi foo /tmp/big.log
+grep -Pi foo /tmp/big.log  0.08s user 0.01s system 86% cpu 0.097 total
+</pre>
+<p>
+なんかすごいいい感じだ。あまり速度低下がない。<br>
+ただし-Pのマルチバイト対応は2.15から。
+</p>
+<!-- section end -->
+</div>
+<!-- 2014/03/18 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/03/19 start -->
+<h2><a name="20140319" href="201403b.html#20140319">2014-03-19 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="201403191" title="201403191" href="201403b.html#201403191">■</a> 
+アナログ録画</h3>
+<p>
+4極プラグがやっと来た。つないだらちゃんときれいに映ってた。<br>
+これで5番組同時録画できる環境になったわけだが、<br>
+日曜の夜がなんかやたらと見たい番組が重なってるので、<br>
+まあそのうち出番も。
+</p>
+<!-- section end -->
+</div>
+<!-- 2014/03/19 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/03/20 start -->
+<h2><a name="20140320" href="201403b.html#20140320">2014-03-20 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="201403201" title="201403201" href="201403b.html#201403201">■</a> 
+torneのアンテナ線が外れていたが結構なんとかなっていた</h3>
+<p>
+しかし特に問題なく使えてたもんだから気づかなかったんだけど、<br>
+4極プラグをRD-H1につないだ際にその辺りをもろもろいじってるうちに、<br>
+絶妙な配置が変化したらしくNHK、Eテレに影響が出た模様。<br>
+NEWS7の録画が失敗してやっと気づいた。<br>
+全然映らないわけじゃなくしばらく経つと問題なく映る。<br>
+録画時だとタイムアウトなんだろうな。<br>
+ぎりぎりの電界強度だったわけだな。
+</p>
+<p>
+それにしてもいったいいつから外れていたのか。
+</p>
+<!-- section end -->
+</div>
+<!-- 2014/03/20 end -->
+
+<hr>
+<div>
+<a href="201403a.html">&lt;Older(,)</a> | 
+<a href="201403c.html">Newer(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

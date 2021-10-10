@@ -1,0 +1,477 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2010-8-c</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="201008b.html">
+<link rel="next" href="201009a.html">
+
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2010年8月下旬〜</p>
+<hr>
+<div>
+<a href="201008b.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="201009a.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2010/08/21 start -->
+<h2><a name="20100821" href="201008c.html#20100821">2010-08-21 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="201008211" title="201008211" href="201008c.html#201008211">■</a> 
+<a href="http://savannah.gnu.org/forum/forum.php?forum_id=6446">[GNU] GNU make 3.82</a></h3>
+<p>
+なんかリリースノートが見当たらないのでNEWSから抜粋した。
+</p><blockquote><p>
+Version 3.82<br>
+A complete list of bugs fixed in this version is available here:<br>
+<a href="http://sv.gnu.org/bugs/index.php?group=make&amp;report_id=111&amp;fix_release_id=104&amp;set=custom">http://sv.gnu.org/bugs/index.php?group=make&amp;report_id=111&amp;fix_release_id=104&amp;set=custom</a><ul>
+<li>Compiling GNU make now requires a conforming ISO C 1989 compiler and<br>
+  standard runtime library.<br><br>
+<li>WARNING: Backward-incompatibility!<br>
+  The POSIX standard for make was changed in the 2008 version in a<br>
+  fundamentally incompatible way: make is required to invoke the shell as if<br>
+  the '-e' flag were provided.  Because this would break many makefiles that<br>
+  have been written to conform to the original text of the standard, the<br>
+  default behavior of GNU make remains to invoke the shell with simply '-c'.<br>
+  However, any makefile specifying the .POSIX special target will follow the<br>
+  new POSIX standard and pass '-e' to the shell.  See also .SHELLFLAGS<br>
+  below.<br><br>
+<li>WARNING: Backward-incompatibility!<br>
+  The '$?' variable now contains all prerequisites that caused the target to<br>
+  be considered out of date, even if they do not exist (previously only<br>
+  existing targets were provided in $?).<br><br>
+<li>WARNING: Backward-incompatibility!<br>
+  Wildcards were not documented as returning sorted values, but the results<br>
+  have been sorted up until this release..  If your makefiles require sorted<br>
+  results from wildcard expansions, use the $(sort ...)  function to request<br>
+  it explicitly.<br><br>
+<li>WARNING: Backward-incompatibility!<br>
+  In previous versions of make it was acceptable to list one or more explicit<br>
+  targets followed by one or more pattern targets in the same rule and it<br>
+  worked &quot;as expected&quot;.  However, this was not documented as acceptable and if<br>
+  you listed any explicit targets AFTER the pattern targets, the entire rule<br>
+  would be mis-parsed.  This release removes this ability completely: make<br>
+  will generate an error message if you mix explicit and pattern targets in<br>
+  the same rule.<br><br>
+<li>WARNING: Backward-incompatibility!<br>
+  As a result of parser enhancements, three backward-compatibility issues<br>
+  exist: first, a prerequisite containing an &quot;=&quot; cannot be escaped with a<br>
+  backslash any longer.  You must create a variable containing an &quot;=&quot; and<br>
+  use that variable in the prerequisite.  Second, variable names can no<br>
+  longer contain whitespace, unless you put the whitespace in a variable and<br>
+  use the variable.  Third, in previous versions of make it was sometimes<br>
+  not flagged as an error for explicit and pattern targets to appear in the<br>
+  same rule.  Now this is always reported as an error.<br><br>
+<li>WARNING: Backward-incompatibility!<br>
+  The pattern-specific variables and pattern rules are now applied in the<br>
+  shortest stem first order instead of the definition order (variables<br>
+  and rules with the same stem length are still applied in the definition<br>
+  order). This produces the usually-desired behavior where more specific<br>
+  patterns are preferred. To detect this feature search for 'shortest-stem'<br>
+  in the .FEATURES special variable.<br><br>
+<li>WARNING: Backward-incompatibility!<br>
+  The library search behavior has changed to be compatible with the standard<br>
+  linker behavior. Prior to this version for prerequisites specified using<br>
+  the -lfoo syntax make first searched for libfoo.so in the current<br>
+  directory, vpath directories, and system directories. If that didn't yield<br>
+  a match, make then searched for libfoo.a in these directories. Starting<br>
+  with this version make searches first for libfoo.so and then for libfoo.a<br>
+  in each of these directories in order.<br><br>
+<li>New command line option: --eval=STRING causes STRING to be evaluated as<br>
+  makefile syntax (akin to using the $(eval ...) function).  The evaluation<br>
+  is performed after all default rules and variables are defined, but before<br>
+  any makefiles are read.<br><br>
+<li>New special variable: .RECIPEPREFIX allows you to reset the recipe<br>
+  introduction character from the default (TAB) to something else.  The<br>
+  first character of this variable value is the new recipe introduction<br>
+  character.  If the variable is set to the empty string, TAB is used again.<br>
+  It can be set and reset at will; recipes will use the value active when<br>
+  they were first parsed.  To detect this feature check the value of<br>
+  $(.RECIPEPREFIX).<br><br>
+<li>New special variable: .SHELLFLAGS allows you to change the options passed<br>
+  to the shell when it invokes recipes.  By default the value will be &quot;-c&quot;<br>
+  (or &quot;-ec&quot; if .POSIX is set).<br><br>
+<li>New special target: .ONESHELL instructs make to invoke a single instance<br>
+  of the shell and provide it with the entire recipe, regardless of how many<br>
+  lines it contains.  As a special feature to allow more straightforward<br>
+  conversion of makefiles to use .ONESHELL, any recipe line control<br>
+  characters ('@', '+', or '-') will be removed from the second and<br>
+  subsequent recipe lines.  This happens _only_ if the SHELL value is deemed<br>
+  to be a standard POSIX-style shell.  If not, then no interior line control<br>
+  characters are removed (as they may be part of the scripting language used<br>
+  with the alternate SHELL).<br><br>
+<li>New variable modifier 'private': prefixing a variable assignment with the<br>
+  modifier 'private' suppresses inheritance of that variable by<br>
+  prerequisites.  This is most useful for target- and pattern-specific<br>
+  variables.<br><br>
+<li>New make directive: 'undefine' allows you to undefine a variable so that<br>
+  it appears as if it was never set. Both $(flavor) and $(origin) functions<br>
+  will return 'undefined' for such a variable. To detect this feature search<br>
+  for 'undefine' in the .FEATURES special variable.<br><br>
+<li>The parser for variable assignments has been enhanced to allow multiple<br>
+  modifiers ('export', 'override', 'private') on the same line as variables,<br>
+  including define/endef variables, and in any order.  Also, it is possible<br>
+  to create variables and targets named as these modifiers.<br><br>
+<li>The 'define' make directive now allows a variable assignment operator<br>
+  after the variable name, to allow for simple, conditional, or appending<br>
+  multi-line variable assignment.<br>
+</ul></blockquote>
+<!-- section end -->
+</div>
+<!-- 2010/08/21 end -->
+
+
+
+<hr class="hide">
+<!-- 2010/08/22 start -->
+<h2><a name="20100822" href="201008c.html#20100822">2010-08-22 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="201008221" title="201008221" href="201008c.html#201008221">■</a> 
+[Ruby] version.hの担当</h3>
+<p>
+これを見れば一目瞭然なのである。
+</p>
+<pre>
+% git log --pretty=format:&quot;%an&quot; version.h | sort | uniq -c | sort -nr | head
+    853 eban
+    610 svn
+    598 nobu
+    363 matz
+    177 usa
+     68 ko1
+     34 naruse
+     28 knu
+     21 akr
+     16 ocean
+</pre>
+<p>
+svnに抜かれるのは来年か。
+</p>
+<!-- section end -->
+</div>
+<!-- 2010/08/22 end -->
+
+
+
+<hr class="hide">
+<!-- 2010/08/23 start -->
+<h2><a name="20100823" href="201008c.html#20100823">2010-08-23 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="201008231" title="201008231" href="201008c.html#201008231">■</a> 
+[Ruby] 超欲張り無欲マッチ</h3>
+<p>
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-list/47323">この無欲マッチ</a>の話は結局バックトラックを抑制すればいいので、
+</p>
+<pre>
+/_(\{.+?\})\\mrm\{([CHP])\}_(\{.+?\})
+</pre>
+<p>
+を
+</p>
+<pre>
+/_(?&gt;\{.+?\})\\mrm\{([CHP])\}_(\{.+?\})
+</pre>
+<p>
+とすればいける。
+<a href="http://www.ruby-lang.org/ja/man/html/_C0B5B5ACC9BDB8BD.html">正規表現 - Rubyリファレンスマニュアル</a>によると(?&gt;)は超欲張りマッチということなので、<br>
+合わせ技で「超欲張り無欲マッチ」となる。<br>
+何を言ってるのかよくわからんが。
+</p>
+<p>
+マニュアルによればなくなるかもしれないので使用禁止なのが痛い。
+</p>
+<!-- section end -->
+</div>
+<!-- 2010/08/23 end -->
+
+
+
+<hr class="hide">
+<!-- 2010/08/24 start -->
+<h2><a name="20100824" href="201008c.html#20100824">2010-08-24 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="201008241" title="201008241" href="201008c.html#201008241">■</a> 
+[Bash] Bashにはchdirがない</h3>
+<p>
+ちょっと悩んだ。シェルスクリプトでなんとなくcdではなくchdirと書いたら
+</p>
+<pre>
+bash: chdir: command not found
+</pre>
+<p>
+と言われてしまった。そんな馬鹿なことあるかいと、コマンドラインで試してみると本当にない。<br>
+cdだけなのか。意外だ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2010/08/24 end -->
+
+
+
+<hr class="hide">
+<!-- 2010/08/25 start -->
+<h2><a name="20100825" href="201008c.html#20100825">2010-08-25 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="201008251" title="201008251" href="201008c.html#201008251">■</a> 
+<a href="http://dic.nicovideo.jp/a/%E3%82%A7%E3%83%BB%E3%83%BB%E3%83%BB">ェ</a></h3>
+<p>
+最近よく見るがなんだかよくわからない「ェ」を調べてみたらニコニコ大百科に書いてあった。
+</p>
+</p><blockquote><p>
+近年では上記の台詞から語尾の「ェ・・・」の部分が独立し、ある対象に対する愛しさ・憤怒・哀れみ・失望　等々の様々な感情が昂った時に、それらを一心にこめて「◯◯ェ・・・」と呟くのが一部で流行っているとかいないとか。くっつける対象の単語の語尾がエ段である必要は全くないため(例：ナルトェ・・・)どんな物を対象にしても気軽に使えるのが強みである。
+</p></blockquote><p>
+<!-- section end -->
+</div>
+<!-- 2010/08/25 end -->
+
+
+
+<hr class="hide">
+<!-- 2010/08/26 start -->
+<h2><a name="20100826" href="201008c.html#20100826">2010-08-26 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="201008261" title="201008261" href="201008c.html#201008261">■</a> 
+[RubyKaigi] 宿</h3>
+<p>
+意外にも前日でも宿の予約ができた。通うのはちょっとつらいよね。<br>
+ショッカー人形も用意したし準備はいいかな。
+</p>
+<!-- section end -->
+</div>
+<!-- 2010/08/26 end -->
+
+
+
+<hr class="hide">
+<!-- 2010/08/27 start -->
+<h2><a name="20100827" href="201008c.html#20100827">2010-08-27 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="201008271" title="201008271" href="201008c.html#201008271">■</a> 
+[rubykaigi2010] 1日目</h3>
+<p>
+ネットワーク環境が2年前に比べて悪化してしまった。参加人数の差だろうか。<br>
+家のPCにsshでログインできない。使えるポートは限られているらしい。<br>
+こういうときはVPSとか使えると便利だな。
+</p>
+<p>
+1日目はほとんど、開発者会議で使われた部屋にいた。<br>
+その後GCとclassboxの話。<br>
+LazySweepのデモは面白かったが、効果がわかりにくい。<br>
+binding(1)は欲しいな。
+</p>
+<p>
+それにしてもホテルにモデムが置いてあるのには驚いた。<br>
+有線でつないでくれときたもんだ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2010/08/27 end -->
+
+
+
+<hr class="hide">
+<!-- 2010/08/28 start -->
+<h2><a name="20100828" href="201008c.html#20100828">2010-08-28 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="201008281" title="201008281" href="201008c.html#201008281">■</a> 
+[rubykaigi2010] 2日目</h3>
+<p>
+去年も書いた気がするが「ドラを鳴らすまでがLT」。<br>
+時間内に終わらせちゃだめ。
+</p>
+<p>
+今日も濃い内容で面白かったなあ。<br>
+裏番組にもいいのがあって困る。<br>
+明日の午後も困る。
+</p>
+<!-- section end -->
+</div>
+<!-- 2010/08/28 end -->
+
+
+
+<hr class="hide">
+<!-- 2010/08/29 start -->
+<h2><a name="20100829" href="201008c.html#20100829">2010-08-29 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="201008291" title="201008291" href="201008c.html#201008291">■</a> 
+[rubykaigi2010] 3日目</h3>
+<p>
+今日も朝から濃い話を聞く。午後は須藤さんの話を聞いて野良ビルダーでまったりと。<br>
+途中休憩時間に折り紙を折ったり。
+</p>
+<p>
+基調講演は英語だったので半分以上寝てた。
+</p>
+<p>
+closingはラ王的なお約束なのかどうか不明だが、みなさんお疲れさま。
+</p>
+<p>
+PS. 帰りに夏祭り客に飲み込まれてひどい目にあった。
+</p>
+<!-- section end -->
+</div>
+<!-- 2010/08/29 end -->
+
+
+
+<hr class="hide">
+<!-- 2010/08/30 start -->
+<h2><a name="20100830" href="201008c.html#20100830">2010-08-30 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="201008301" title="201008301" href="201008c.html#201008301">■</a> 
+<a href="http://cygwin.com/ml/cygwin-announce/2010-08/msg00034.html">[Perl6] rakudo-star on cygwin</a></h3>
+<p>
+早くもcygwinにrakudo starが。
+
+</p>
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="201008302" title="201008302" href="201008c.html#201008302">■</a> 
+<a href="http://weblog.rubyonrails.org/2010/8/29/rails-3-0-it-s-done">[Rails] Riding Rails: Rails 3.0: It's ready!</a></h3>
+<p>
+記念にインストール。
+</p>
+<pre>
+% gem-trunk install rails
+Successfully installed activesupport-3.0.0
+Successfully installed builder-2.1.2
+Successfully installed i18n-0.4.1
+Successfully installed activemodel-3.0.0
+Successfully installed rack-1.2.1
+Successfully installed rack-test-0.5.4
+Successfully installed rack-mount-0.6.12
+Successfully installed tzinfo-0.3.23
+Successfully installed abstract-1.0.0
+Successfully installed erubis-2.6.6
+Successfully installed actionpack-3.0.0
+Successfully installed arel-1.0.1
+Successfully installed activerecord-3.0.0
+Successfully installed activeresource-3.0.0
+Successfully installed mime-types-1.16
+Successfully installed polyglot-0.3.1
+Successfully installed treetop-1.4.8
+Successfully installed mail-2.2.5
+Successfully installed actionmailer-3.0.0
+Successfully installed thor-0.14.0
+Successfully installed railties-3.0.0
+Successfully installed bundler-1.0.0
+Successfully installed rails-3.0.0
+23 gems installed
+&lt;後略&gt;
+</pre>
+<p>
+いっぱい入ったな。
+</p>
+<!-- section end -->
+</div>
+<!-- 2010/08/30 end -->
+
+
+
+<hr class="hide">
+<!-- 2010/08/31 start -->
+<h2><a name="20100831" href="201008c.html#20100831">2010-08-31 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="201008311" title="201008311" href="201008c.html#201008311">■</a> 
+10日連続猛暑日</h3>
+<p>
+いや10日どころかこの先1週間猛暑日という
+<a href="http://tenki.jp/forecast/point-544.html">予報</a>になってる。<br>
+なんだよ、土曜日の38度て。
+</p>
+<p>
+とはいうものの最低気温はここ2,3日25度を下回っているわけで、<br>
+確実に涼しくなってきてはいる。
+
+</p>
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="201008312" title="201008312" href="201008c.html#201008312">■</a> 
+さくらVPS</h3>
+<p>
+ベータ版から継続での申し込みは昨日までだったようで。<br>
+そういうわけでもう壊れてもいいのでUbuntu 10.04をインストールしてみたら15分ぐらいで終了。<br>
+びっくり。続いてOS再インストールをぽちっとしたら2,3分でCentOSに戻った。<br>
+これはいい!新規に申し込もう。
+</p>
+<!-- section end -->
+</div>
+<!-- 2010/08/31 end -->
+
+<hr>
+<div>
+<a href="201008b.html">&lt;Prev(,)</a> | 
+<a href="201009a.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

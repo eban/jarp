@@ -1,0 +1,496 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2004-9-a</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="200408c.html">
+<link rel="next" href="200409b.html">
+
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2004年9月上旬〜</p>
+<hr>
+<div>
+<a href="200408c.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="200409b.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2004/09/01 start -->
+<h2><a name="20040901" href="200409a.html#20040901">2004-09-01 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="200409011" title="200409011" href="200409a.html#200409011">■</a> 
+8月のspam</h3>
+<p>
+4372通。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200409012" title="200409012" href="200409a.html#200409012">■</a> 
+<a href="http://raa.ruby-lang.org/project/deplate/">[Ruby] Deplate 0.5</a></h3>
+<p>
+どうせなら直接PDFを生成してくれというか。
+</p>
+
+<p>
+About:
+</p><blockquote class="cite"><p>
+deplate is a tool for converting documents written in an 
+unobtrusive, wiki-like markup to LaTeX, DocBook, HTML, or &quot;HTML slides&quot;.
+It  supports embedded LaTeX code, footnotes, citations, bibliographies, 
+automatic generation of an index, etc. In contrast to many wiki engines, 
+it is made for &quot;offline&quot; use as a document preparation tool. In this 
+respect it is similar to tools like aft or txt2tags. It aims to be 
+modular and easily extensible. It is the accompanying converter for  the
+Vim viki plugin.
+</p></blockquote><p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200409013" title="200409013" href="200409a.html#200409013">■</a> 
+[Mail] BloglinesのEmail SubscriptionでMLを講読</h3>
+<p>
+
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-talk/111178">[ruby-talk:111178]</a>のFromを見てちょっとおどろく。
+確かに自分も
+<a href="http://cygwin.com/ml/cygwin-announce/">cygwin-announce ML</a>
+をEmail Subscriptionに登録して見てたりするが、
+それは各記事が独立していてスレッド機能が要らないからであって、
+ruby-talkのような議論が白熱する場をBloglinesで見たいとは思わない。
+というか、何が便利なのか？あ、使い捨てのメールアドレスとして使えるか。
+いつでも捨てられるし、何個でも登録できるし。でもそこまでしないか。
+</p>
+<!-- section end -->
+</div>
+<!-- 2004/09/01 end -->
+
+
+
+<hr class="hide">
+<!-- 2004/09/02 start -->
+<h2><a name="20040902" href="200409a.html#20040902">2004-09-02 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="200409021" title="200409021" href="200409a.html#200409021">■</a> 
+[Font] firefoxの文字化け</h3>
+<p>
+firefoxというかGTK+2全般の話だと思うんだけど、例の16進の文字化けは環境変数GDK_USE_XFT=0で直る。
+で、そのままの状態というのもなんなので、Xft2の設定をちゃんとしてみよう。
+と、決意はしたもののまずはフォントを用意しなきゃいけないか。
+そういえばUNIX USER 9月号にさざなみフォントがついていたな。
+</p>
+<pre>
+% echo '&lt;dir&gt;~/.fonts&lt;/dir&gt;' &gt; ~/.fonts.conf
+% mkdir ~/.fonts
+</pre>
+<p>
+としてさざなみフォント(*.ttf)を~/.fontsにコピー。
+これだけでちゃんとfirefoxで日本語が表示されるようになった。
+結構いい感じだ。くー。もっと早くやっとくべきだった。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200409022" title="200409022" href="200409a.html#200409022">■</a> 
+[Mail] 遅延</h3>
+<p>
+最近やたらとメールが遅延している。半日以上遅れるとちょっと困るな。
+</p>
+<!-- section end -->
+</div>
+<!-- 2004/09/02 end -->
+
+
+
+<hr class="hide">
+<!-- 2004/09/03 start -->
+<h2><a name="20040903" href="200409a.html#20040903">2004-09-03 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="200409031" title="200409031" href="200409a.html#200409031">■</a> 
+<a href="http://fcron.free.fr/">[Soft] fcron 2.9.5</a></h3>
+<p>
+About:
+</p><blockquote class="cite"><p>
+Fcron is a periodical command scheduler which aims at replacing
+vixie cron, so it implements most of its functionality. It does not assume
+that your system is running either all the time or regularly: you can, for
+instance, tell fcron to execute tasks every x hours y minutes of system
+uptime or to do a job only once in a specified interval of time. You can
+also set a nice value to a job, run it depending on the system load
+average, and much more.
+</p></blockquote><p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200409032" title="200409032" href="200409a.html#200409032">■</a> 
+<a href="http://www.grass-japan.org/FOSS4G/readme-grass-i18n-ipafonts.eucjp.htm">[Font] IPAフォント</a></h3>
+<p>
+UNIX USER 9月号にはIPAフォントもついていた。早速~/.fontsにコピー。
+これはきれいだな。でも\が表示されない。なんで？
+</p>
+<!-- section end -->
+</div>
+<!-- 2004/09/03 end -->
+
+
+
+<hr class="hide">
+<!-- 2004/09/04 start -->
+<h2><a name="20040904" href="200409a.html#20040904">2004-09-04 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="200409041" title="200409041" href="200409a.html#200409041">■</a> 
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-talk/111469">[Ruby] [ANN] narf 0.5.1 released</a></h3>
+<p>
+目玉はfastcgi, mod_ruby, webrick対応。
+そろそろ不満の多いcgi.rbと置き換え時か？
+</p><blockquote class="cite"><p>
+NARF is a replacement for and derivative of the Ruby CGI library.
+</p></blockquote><p>
+と謡っているぐらいだし。
+
+<p>
+
+<a href="http://www.narf-lib.org/">http://www.narf-lib.org/</a>
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200409042" title="200409042" href="200409a.html#200409042">■</a> 
+[Mail] rdeliver</h3>
+<p>
+エラーになる件は原因不明のまま、いまだに起こる。
+たまにしか起きないから調査もしづらいし困ったな。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200409043" title="200409043" href="200409a.html#200409043">■</a> 
+[PC] 160GB HD</h3>
+<p>
+sofmapで9480円。安くなったなあ。さて、どういう構成にしようか。
+とりあえずはバックアップに使おう。
+</p>
+<!-- section end -->
+</div>
+<!-- 2004/09/04 end -->
+
+
+
+<hr class="hide">
+<!-- 2004/09/05 start -->
+<h2><a name="20040905" href="200409a.html#20040905">2004-09-05 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="200409051" title="200409051" href="200409a.html#200409051">■</a> 
+[RSS] Firefox Sageでcontent:encodedを表示</h3>
+<p>
+RSS Reader PanelからSageへ移行して不満に感じるのは、なぜかitemのdescriptionだけでcontent:encodedを表示してくれないことだ。
+というわけでquick hack。
+</p>
+
+<p>
+まずはsage.jarをunzipで展開。
+</p>
+<pre>
+% sagedir=$(dirname $(find ~/.mozilla/firefox -name sage.jar))
+% cd $sagedir
+% unzip sage.jar content/\*.js
+% grep '&quot;description&quot;' content/*.js
+content/feedlib.js
+</pre>
+<p>
+このファイルか。descriptionを取り出しているのはこの部分(itemNodesのforループ)。
+</p>
+<pre>
+case &quot;description&quot;:
+        item.content = CommonFunc.getInnerText(j);
+        break;
+</pre>
+<p>
+switch-caseの他の部分を見ても、content:encodedに関する処理はない。
+とりあえずここに1行追加してみる。
+</p>
+<pre>
+case &quot;description&quot;:
+case &quot;encoded&quot;:
+        item.content = CommonFunc.getInnerText(j);
+        break;
+</pre>
+<p>
+たいていのRSSはdescriptionよりcontent:encodedのほうが後に書いてあるので、
+これでほとんどの場合content:encodedが優先されるはず。
+</p>
+<pre>
+% zip sage.jar content/feedlib.js
+</pre>
+<p>
+で更新してFirefoxを再起動。おお、出てきたよ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200409052" title="200409052" href="200409a.html#200409052">■</a> 
+<a href="http://cygwin.com/ml/cygwin-announce/2004-09/msg00002.html">[Cygwin] Updated: cygwin-1.5.11-1</a></h3>
+<p>
+Changes:
+</p><blockquote class="cite"><p>
+This version fixes problems with creating special files on  disk,
+fixes some problems with audio file handling, and  includes some other
+random bugfixes.
+</p></blockquote><p>
+<!-- section end -->
+</div>
+<!-- 2004/09/05 end -->
+
+
+
+<hr class="hide">
+<!-- 2004/09/06 start -->
+<h2><a name="20040906" href="200409a.html#20040906">2004-09-06 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="200409061" title="200409061" href="200409a.html#200409061">■</a> 
+[Cygwin] Updated: Updated: w32api-3.1, mingw-runtime-3.5-1</h3>
+<p>
+毎度のことではあるが、ChangeLogをそのまま載せられても困る。
+</p>
+
+<p>
+
+<a href="http://cygwin.com/ml/cygwin-announce/2004-09/msg00003.html">http://cygwin.com/ml/cygwin-announce/2004-09/msg00003.html</a><br>
+
+<a href="http://cygwin.com/ml/cygwin-announce/2004-09/msg00004.html">http://cygwin.com/ml/cygwin-announce/2004-09/msg00004.html</a>
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200409062" title="200409062" href="200409a.html#200409062">■</a> 
+[RSS] Sageの文字の大きさ</h3>
+<p>
+「ユーザCSSを使う」という設定を発見。
+これで文字を大きくして、ついでに二段組もやめよう。
+</p>
+<!-- section end -->
+</div>
+<!-- 2004/09/06 end -->
+
+
+
+<hr class="hide">
+<!-- 2004/09/07 start -->
+<h2><a name="20040907" href="200409a.html#20040907">2004-09-07 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="200409071" title="200409071" href="200409a.html#200409071">■</a> 
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-talk/111663">[Blog] Gmail-based blog</a></h3>
+<p>
+Gmailベースのblogときたか。
+データベースに使っているだけかと思ったら、
+
+<a href="http://pcweb.mycom.co.jp/news/2004/09/07/005.html">試せるのはGmailアカウント保有者だけらしい</a>
+。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200409072" title="200409072" href="200409a.html#200409072">■</a> 
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-talk/111710">[Ruby] [ANN] Firefox Ruby sidebar</a></h3>
+<p>
+Programming Rubyがサイドバーに。
+</p>
+<!-- section end -->
+</div>
+<!-- 2004/09/07 end -->
+
+
+
+<hr class="hide">
+<!-- 2004/09/08 start -->
+<h2><a name="20040908" href="200409a.html#20040908">2004-09-08 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="200409081" title="200409081" href="200409a.html#200409081">■</a> 
+<a href="http://yaml4r.sourceforge.net/doc/">[Ruby] Yamlのドキュメント</a></h3>
+<p>
+ここにあったのか。
+
+<a href="http://yaml4r.sourceforge.net/doc/page/examples.htm">Examples</a>
+はなかなか便利。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200409082" title="200409082" href="200409a.html#200409082">■</a> 
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-dev/24234">[Ruby] foo.hoge? = true</a></h3>
+<p>
+まあ今でもsendは可能だったりするわけだけど、全然解決になってない。
+</p>
+<pre>
+class Foo
+  attr_accessor 'hoge?'
+end
+foo = Foo.new
+foo.send('hoge?=', true)
+</pre>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200409083" title="200409083" href="200409a.html#200409083">■</a> 
+[TV] マンハッタンラブストーリー</h3>
+<p>
+なんとなく
+<a href="200310c.html#200310231">1年前</a>に見逃した回の再放送を今見てるような気がする。
+</p>
+<!-- section end -->
+</div>
+<!-- 2004/09/08 end -->
+
+
+
+<hr class="hide">
+<!-- 2004/09/09 start -->
+<h2><a name="20040909" href="200409a.html#20040909">2004-09-09 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="200409091" title="200409091" href="200409a.html#200409091">■</a> 
+<a href="http://gcc.gnu.org/">[GNU] GCC 3.4.2</a></h3>
+<p>
+いつものように。
+</p>
+<pre>
+% CFLAGS=-Os CXXFLAGS=-Os CC=/usr/bin/gcc ../configure \
+  --enable-languages=c++ --with-system-zlib \
+  --enable-sjlj-exceptions --enable-threads \
+  --disable-version-specific-runtime-libs --disable-nls \           
+  --without-included-gettext --without-catgets
+% make CFLAGS=-Os LIBCFLAGS=-Os LIBCXXFLAGS=-Os \
+  STAGE1_CFLAGS=-Os BOOT_CFLAGS=-Os bootstrap
+</pre>
+
+<!-- section end -->
+</div>
+<!-- 2004/09/09 end -->
+
+
+
+<hr class="hide">
+<!-- 2004/09/10 start -->
+<h2><a name="20040910" href="200409a.html#20040910">2004-09-10 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="200409101" title="200409101" href="200409a.html#200409101">■</a> 
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-dev/24240">[Ruby] tcltk-stubs 有効時 Tcl 側 exit で abort</a></h3>
+<p>
+気になったのでLinuxで試してみたが再現しない。Tcl/Tkのバージョンかな。
+うちは8.3だった。永井さんは8.4か。
+というわけで、Linuxでも8.4.7をインストールしてみる。
+再現した。うーむ。このあたりに原因があるわけか。
+またなにか初期化が足りない？
+</p>
+
+<pre>
+% RUBY_TCL_DLL=libtcl8.3.so RUBY_TK_DLL=libtk8.3.so \
+  ruby -r tcltklib -e 'TclTkIp.new._eval(&quot;exit&quot;)'
+% ruby -r tcltklib -e 'TclTkIp.new._eval(&quot;exit&quot;)' 
+Tcl_Release couldn't find reference for 0x80b89a8
+zsh: abort      ruby -r tcltklib -e 'TclTkIp.new._eval(&quot;exit&quot;)'
+</pre>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200409102" title="200409102" href="200409a.html#200409102">■</a> 
+[BTS] TrackBackでバグ報告</h3>
+<p>
+なんてのを思いついた。そうすると自然にRSSでfeedできたり。
+</p>
+<!-- section end -->
+</div>
+<!-- 2004/09/10 end -->
+
+<hr>
+<div>
+<a href="200408c.html">&lt;Prev(,)</a> | 
+<a href="200409b.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

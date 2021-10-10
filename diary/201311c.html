@@ -1,0 +1,429 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2013-11-c</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="201311b.html">
+<link rel="next" href="201312a.html">
+
+<link rel="stylesheet" type="text/css" href="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.css">
+<script type="text/javascript" src="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.js"></script>
+<script type="text/javascript">
+<!--       
+$(document).ready(function() {
+  prettyPrint();
+});
+-->
+</script>
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2013年11月下旬〜</p>
+<hr>
+<div>
+<a href="201311b.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="201312a.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2013/11/21 start -->
+<h2><a name="20131121" href="201311c.html#20131121">2013-11-21 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="201311211" title="201311211" href="201311c.html#201311211">■</a> 
+ebook-convertの--output-profileに困る</h3>
+<p>
+sonyを指定すると縦が754に強制的にサイズ変更してしまうのでどうにも困った。<br>
+--output-profileなしでもなぜか754になってしまうしなあ。<br>
+とりあえずsony900とかいうのでごまかしているが、まだ小さい。<br>
+サイズ無制限みたいなprofileがあるか調べる。
+</p>
+<!-- section end -->
+</div>
+<!-- 2013/11/21 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/11/22 start -->
+<h2><a name="20131122" href="201311c.html#20131122">2013-11-22 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="201311221" title="201311221" href="201311c.html#201311221">■</a> 
+Calibreの出力プロファイルにタイミングよくT3用が</h3>
+<p>
+なんか更新があるよというので1.12.0にアップデートしてみると、タイミングよくT3が現われた。<br>
+758x934とプロファイルの説明にはあるね。<br>
+それはそれとして、Tabletを選べば画像のリサイズはしないようだ。<br>
+ebook-convert的には--output-profile Tabletで。
+</p>
+<!-- section end -->
+</div>
+<!-- 2013/11/22 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/11/23 start -->
+<h2><a name="20131123" href="201311c.html#20131123">2013-11-23 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="201311231" title="201311231" href="201311c.html#201311231">■</a> 
+ImageMagick convertのファイル名の扱い</h3>
+<p>
+parallel convertしててちょっと困るのはファイル名の扱い。<br>
+in/*.pngをout/*.pngへ変換したいときには、どうしても1度cd inしないと処理しづらくなる。<br>
+つまり
+</p>
+<pre>
+% parallel -i convert '{}' 'out/{}' -- in/*.png
+</pre>
+<p>
+とは書けない。{}はin/001.pngという感じなので、<br>
+出力はout/in/001.pngのようになってしまう。<br>
+というわけでcd inが必要になる。
+</p>
+<pre>
+% cd in; parallel -i convert '{}' '../out/{}' -- *.png
+</pre>
+<p>
+実はconvertはファイル名をいろんな形で参照する方法がある。
+</p>
+<pre>
+% parallel -i convert '{}' -set filename:t %t 'out/%[filename:t].png' -- in/*.png
+</pre>
+<p>
+%tはなんとも都合のいいプロパティで、ほかに%d,%f,%eとかもある。
+</p>
+<pre>
+%d   directory component of path
+%e   filename extension or suffix
+%f   filename (including suffix)
+%t   filename without directory or extension (suffix)
+</pre>
+<p>
+-setでfilename:tというkeyに設定するとファイル名を指定するときに、<br>
+%[filename:t]で参照できる。<br>
+いきなり'out/%t.png'とは書けないようで、一度-setする必要がある。
+</p>
+<p>
+%tなら拡張子も除かれるのでin/*.jpgでもout側は*.pngにできる。<br>
+*.jpg.pngみたいにみっともない名前にしなくていい。<br>
+parallel使わなきゃshell scriptにするところだが。
+</p>
+<p>
+参考:
+<a href="http://www.imagemagick.org/script/escape.php">ImageMagick: Format and Print Image Properties</a></p>
+<!-- section end -->
+</div>
+<!-- 2013/11/23 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/11/24 start -->
+<h2><a name="20131124" href="201311c.html#20131124">2013-11-24 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="201311241" title="201311241" href="201311c.html#201311241">■</a> 
+no-ipから例のメールがやってきた</h3>
+<p>
+実を言うとno-ipの件は解決しておらず、<br>
+毎月あと1週間で切れるぞとのメールがやってきている。<br>
+ちゃんとメールを読んでみたらどうもIPアドレスが変わらないと、<br>
+Pending Deletionという状態になってしまうらしい。<br>
+<a href="http://www.noip.com/support/knowledgebase/why-is-my-host-not-updating-or-why-is-it-pending-deletion/">Why is my host not updating or why is it pending deletion?</a><br>
+これを解決する方法は3つあって
+<ul>
+<li>ホスト名変える
+<li>IPアドレスを変える
+<li>お金を払う
+</ul>
+<p>
+ということで、これはもうIPアドレスを無理矢理変えるしかない。<br>
+幸い更新リクエストでIPアドレスを指定しているので2回送ればいいんだろう。<br>
+1回目は適当に127.0.0.1で、2回目に本物を。<br>
+これでまた23日後の16日あたりのお楽しみということで。
+</p>
+<!-- section end -->
+</div>
+<!-- 2013/11/24 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/11/25 start -->
+<h2><a name="20131125" href="201311c.html#20131125">2013-11-25 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="201311251" title="201311251" href="201311c.html#201311251">■</a> 
+tenki jpのアメダス気温の計測値が10分単位に</h3>
+<p>
+実にすばらしい。22日の夜中にURLが変わったなと思ったらそんな変更まで。<br>
+それはそれとしてアメダスのRSSが
+<a href="http://tenki.jp/webservice/rss/">tenki RSS</a>からなくなっているんだけど、<br>
+これってどうなるんだろう。<br>
+一応まだ死んでないのでアクセスはできる。<br>
+10分間隔のRSSがあるかと思って見に行ったら、<br>
+予想外の結果だった。
+</p>
+<!-- section end -->
+</div>
+<!-- 2013/11/25 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/11/26 start -->
+<h2><a name="20131126" href="201311c.html#20131126">2013-11-26 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="201311261" title="201311261" href="201311c.html#201311261">■</a> 
+Headlessで立ち上げたAndroid emulatorを終了させる</h3>
+<p>
+CTRL+Cってのも乱暴というかsnapshotを残してくれるかどうかわからないし、<br>
+どうしたもんかと思ったら、telnet localhost 5554してkillでいいようだ。<br>
+ポート番号はadb devicesで出てくる名前(emulator-5554)でわかる。
+ああ、adb -e emu killでいいのか。
+</p>
+<!-- section end -->
+</div>
+<!-- 2013/11/26 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/11/27 start -->
+<h2><a name="20131127" href="201311c.html#20131127">2013-11-27 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="201311271" title="201311271" href="201311c.html#201311271">■</a> 
+awkで連続した数列を範囲形式に</h3>
+<p>
+<a href="http://blog.ueda.asia/?p=1663">何度もawkとsedとtr使う</a>んなら1回awk使うだけで十分でしょう。
+</p>
+<pre>
+% echo 0 1 2 3 5 7 8 23 24 25 50 100 101 102 103 110 | \
+  awk '{a=$1;for(i=0;b=_$++i;a=b)if(a+1==b)$i=-$i;OFS=&quot;,&quot;;gsub(/,-([0-9]+,-)*/,&quot;-&quot;)}1'
+0-3,5,7-8,23-25,50,100-103,110
+</pre>
+<p>
+0も対応したが、負はまあ表記上のわかりにくさもあるしいいよね。
+</p>
+<p>
+一応説明すると、連続してる部分を負に変換。
+</p>
+<pre>
+% echo 0 1 2 3 5 7 8 23 24 25 50 100 101 102 103 110 | \
+  awk '{a=$1;for(i=0;b=_$++i;a=b)if(a+1==b)$i=-$i}1'   
+0 -1 -2 -3 5 7 -8 23 -24 -25 50 100 -101 -102 -103 110
+</pre>
+<p>
+OFS=&quot;,&quot;で区切りを&quot;,&quot;に。
+</p>
+<pre>
+% echo 0 1 2 3 5 7 8 23 24 25 50 100 101 102 103 110 | \
+  awk '{a=$1;for(i=0;b=_$++i;a=b)if(a+1==b)$i=-$i;OFS=&quot;,&quot;}1'
+0,-1,-2,-3,5,7,-8,23,-24,-25,50,100,-101,-102,-103,110
+</pre>
+<p>
+じーっと見ると,-(数字+,-)*を-へ置き換えれば目的の形式になるとわかる。
+</p>
+<pre>
+% echo 0 1 2 3 5 7 8 23 24 25 50 100 101 102 103 110 | \
+  awk '{a=$1;for(i=0;b=_$++i;a=b)if(a+1==b)$i=-$i;OFS=&quot;,&quot;;gsub(/,-([0-9]+,-)*/,&quot;-&quot;)}1'
+0-3,5,7-8,23-25,50,100-103,110
+</pre>
+<p>
+mawkの場合はOFSをいじった後に$1=$1のようにして$0を再構成させる必要がある。
+</p>
+<pre>
+% echo 0 1 2 3 5 7 8 23 24 25 50 100 101 102 103 110 | \
+  mawk '{a=$1;for(i=0;b=_$++i;a=b)if(a+1==b)$i=-$i;OFS=&quot;,&quot;;gsub(/,-([0-9]+,-)*/,&quot;-&quot;)}1'
+0 -1 -2 -3 5 7 -8 23 -24 -25 50 100 -101 -102 -103 110
+% echo 0 1 2 3 5 7 8 23 24 25 50 100 101 102 103 110 | \
+  mawk '{a=$1;for(i=0;b=_$++i;a=b)if(a+1==b)$i=-$i;OFS=&quot;,&quot;;$1=$1;gsub(/,-([0-9]+,-)*/,&quot;-&quot;)}1'
+0-3,5,7-8,23-25,50,100-103,110
+</pre>
+<p>
+<a href="http://builder.japan.zdnet.com/script/sp_ruby-doukaku-panel/20369264/">大元の形式</a>にするなら
+</p>
+<pre>
+% echo 0 1 2 3 5 7 8 23 24 25 50 100 101 102 103 110 | \
+  awk '{a=$1;for(i=0;b=_$++i;a=b)if(a+1==b)$i=-$i;OFS=&quot;, &quot;;$NF=$NF&quot;.&quot;;gsub(/, -([0-9]+, -)*/,&quot;-&quot;)}1' 
+0-3, 5, 7-8, 23-25, 50, 100-103, 110.
+</pre>
+<p>
+という感じ。こっちならmawkでもokだ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2013/11/27 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/11/28 start -->
+<h2><a name="20131128" href="201311c.html#20131128">2013-11-28 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="201311281" title="201311281" href="201311c.html#201311281">■</a> 
+GNU coreutils 8.20のseq -sがバグってる</h3>
+<p>
+昨日の連続した数列を作る際に気づいたが、seq -sがおかしい。
+</p>
+<pre>
+% seq -s, 10
+1
+2,3,4,5,6,7,8,9,10,
+</pre>
+<p>
+1個ずれてるし、変な改行もあるし。 8.21のNEWSを見ると
+</p>
+<pre>
+seq -s no longer prints an erroneous newline after the first number, and
+outputs a newline after the last number rather than a trailing separator.
+Also seq no longer ignores a specified step value when the end value is 1.
+[bugs introduced in coreutils-8.20]
+</pre>
+<p>
+ということで、どうも8.20だけのバグのようで。numfmtもあるし8.21に早く上げてくれー。
+</p>
+<!-- section end -->
+</div>
+<!-- 2013/11/28 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/11/29 start -->
+<h2><a name="20131129" href="201311c.html#20131129">2013-11-29 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="201311291" title="201311291" href="201311c.html#201311291">■</a> 
+DQ</h3>
+<p>
+Nexus7(2012)はいけたが、Sony Tabletは未対応だそうで。<br>
+FCとSFCで最低2回はやってるが、もう20年前ですっかり忘れている。<br>
+まあ、ちょうどいい。また楽しめるし。<br>
+</p>
+<p>
+メモを残さなくても、ここで例のadb shell screencap -pが使えるわけで。
+</p>
+<pre>
+% adb shell &quot;/data/local/tmp/busybox stty nl;screencap -p&quot; | convert - -resize 30% PNG8:000.png
+</pre>
+<p>
+てな感じで。いやー便利になったもんだ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2013/11/29 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/11/30 start -->
+<h2><a name="20131130" href="201311c.html#20131130">2013-11-30 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="201311301" title="201311301" href="201311c.html#201311301">■</a> 
+最後の引数</h3>
+<p>
+bashの場合:
+</p>
+<pre>
+% bash -c 'echo &quot;${!#}&quot;' a b c
+c
+</pre>
+<p>
+zshの場合:
+</p>
+<pre>
+% zsh -c 'echo &quot;${@:$#}&quot;' a b c
+c
+</pre>
+<p>
+ついでにdashの場合:
+</p>
+<pre>
+% dash -c 'eval echo &quot;\$$((${#@}-1))&quot;' a b c
+</pre>
+<p>
+最初の引数は$0になるので-1しないといけない。
+</p>
+<pre>
+% dash -c 'echo $0' a b c                   
+a
+</pre>
+<p>
+まあ、それはbashでもzshでも同じだが。
+</p>
+<pre>
+% bash -c 'echo $0' a b c
+a
+% zsh -c 'echo $0' a b c
+a
+</pre>
+<!-- section end -->
+</div>
+<!-- 2013/11/30 end -->
+
+<hr>
+<div>
+<a href="201311b.html">&lt;Prev(,)</a> | 
+<a href="201312a.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

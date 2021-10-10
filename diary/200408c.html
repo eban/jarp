@@ -1,0 +1,525 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2004-8-c</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="200408b.html">
+<link rel="next" href="200409a.html">
+
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2004年8月下旬〜</p>
+<hr>
+<div>
+<a href="200408b.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="200409a.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2004/08/21 start -->
+<h2><a name="20040821" href="200408c.html#20040821">2004-08-21 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="200408211" title="200408211" href="200408c.html#200408211">■</a> 
+<a href="http://www.openssh.org/">[Soft] OpenSSH 3.9p1</a></h3>
+<p>
+更新。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200408212" title="200408212" href="200408c.html#200408212">■</a> 
+<a href="http://cygwin.com/ml/cygwin-announce/2004-08/msg00034.html">[Cygwin] Updated: gcc-3.3.3-3</a></h3>
+<p>
+なんかよくわからんが、3がいっぱい並んだ記念に。
+</p><blockquote class="cite"><p>
+In this release the option '-fschedule-insns2' was disabled for '-O2' or
+greater optimization because there are some problems when compiling with
+this option as Corinna reported me.  I.e. cygserver &amp; openssh should
+build ok now when '-fschedule-insns2' is disabled.
+</p></blockquote><p>
+<!-- section end -->
+</div>
+<!-- 2004/08/21 end -->
+
+
+
+<hr class="hide">
+<!-- 2004/08/22 start -->
+<h2><a name="20040822" href="200408c.html#20040822">2004-08-22 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="200408221" title="200408221" href="200408c.html#200408221">■</a> 
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-talk/110000">[Ruby] ruby-talk 110000</a></h3>
+<p>
+いつのまにか110000を越えていた。
+<a href="200405b.html#200405131">10000からは3ヶ月ちょっと</a>。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200408222" title="200408222" href="200408c.html#200408222">■</a> 
+<a href="http://raa.ruby-lang.org/project/bluecloth/">[Ruby] BlueCloth</a></h3>
+<p>
+
+<a href="http://raa.ruby-lang.org/project/bluecloth/">BlueCloth</a>を試してみた。使いかたは簡単なRDocよりもさらに簡単。
+</p>
+<pre>
+require 'bluecloth'
+puts BlueCloth.new(input_string).to_html
+</pre>
+<p>
+詳しくは本家
+<a href="http://daringfireball.net/projects/markdown/">Markdown</a>の
+
+<a href="http://daringfireball.net/projects/markdown/syntax/">syntax</a>を参照。
+</p><blockquote class="cite"><p>
+Markdown is a text-to-HTML conversion tool for web writers. Markdown
+allows you to write using an easy-to-read, easy-to-write plain text
+format, then convert it to structurally valid XHTML (or HTML).
+</p></blockquote><p>
+
+<p>
+とここまでをMarkdownで書いてみると
+</p>
+<pre>
+### \[Ruby\] [BlueCloth][]
+[BlueCloth][]を試してみた。使いかたはRDocよりもさらに簡単:
+
+    require 'bluecloth'
+    puts BlueCloth::new(input_string).to_html
+
+詳しくは本家[Markdown][]の
+[syntax][]を参照。
+
+&gt; Markdown is a text-to-HTML conversion tool for web writers. Markdown
+allows you to write using an easy-to-read, easy-to-write plain text
+format, then convert it to structurally valid XHTML (or HTML).
+
+[BlueCloth]: http://raa.ruby-lang.org/project/bluecloth/
+[Markdown]: http://daringfireball.net/projects/markdown/
+[syntax]: http://daringfireball.net/projects/markdown/syntax/
+</pre>
+<p>
+という感じ。linkはinlineじゃなくてreferenceを使ってみた。
+この形式のほうが見易くていいな。
+</p>
+
+<p>
+引用はメールと同じで&gt; なんだけど、
+最初の行だけ書けば後は省略してもいいってのも面白い仕様だ。
+しかしcode blockはcolonが必要ってことになかなか気づかなかった。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200408223" title="200408223" href="200408c.html#200408223">■</a> 
+<a href="http://raa.ruby-lang.org/project/redcloth/">[Ruby] RedCloth</a></h3>
+<p>
+RedClothは本家の
+<a href="http://hobix.com/textile/">Textile</a>を見ると、なんか中途半端な印象が否めないので試すのをやめた。
+</p>
+<!-- section end -->
+</div>
+<!-- 2004/08/22 end -->
+
+
+
+<hr class="hide">
+<!-- 2004/08/23 start -->
+<h2><a name="20040823" href="200408c.html#20040823">2004-08-23 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="200408231" title="200408231" href="200408c.html#200408231">■</a> 
+<a href="http://www.sudo.ws/sudo/">[Soft] sudo 1.6.8</a></h3>
+<p>
+Changes:
+</p><blockquote class="cite"><p>
+Major changes include support for storing sudoers info in LDAP, a
+new &quot;sudoedit&quot; command to allow users to safely edit files with the editor
+of their choice, support for disabling execve(2) in dynamic executables
+run by sudo, and a new -i option to simulate initial login.
+</p></blockquote><p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200408232" title="200408232" href="200408c.html#200408232">■</a> 
+[Ruby] RDocでhyperlink</h3>
+<p>
+
+<a href="200408b.html#200408171">SM::ToHtml</a>だけではhyperlinkにならないことが判明。
+rdoc/READMEに書いてある仕様にするには、
+rdoc/generators/html_generator.rbのようにhandle_special_HYPERLINKを定義してadd_specialしないといけない。ちょっと面倒だなあ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2004/08/23 end -->
+
+
+
+<hr class="hide">
+<!-- 2004/08/24 start -->
+<h2><a name="20040824" href="200408c.html#20040824">2004-08-24 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="200408241" title="200408241" href="200408c.html#200408241">■</a> 
+[Ruby] RDocのテンプレート</h3>
+<p>
+あまり知られていないが、RDocにもテンプレートがある。
+RDoc自身がなぜかriのデータ対象になってないのでri RDocしてもヒットしないが、
+</p>
+<pre>
+% rdoc -1 -q /usr/local/lib/ruby/1.9/rdoc/template.rb &gt; template.html
+</pre>
+<p>
+と実行すればドキュメントを見ることができる。
+</p>
+<pre>
+require 'rdoc/template'
+
+values = {&quot;a&quot; =&gt; &quot;1&quot;, &quot;b&quot; =&gt; &quot;2&quot;}
+template = TemplatePage.new(&lt;&lt;'EOT')
+a = %a%
+b = %b%
+EOT
+res = ''
+p template.write_html_on(res, values)
+</pre>
+<p>
+結果は&quot;a = 1\nb = 2&quot;となる。なぜか最終行の改行がない。
+</p>
+
+<p>
+さっき作ったtemplate.htmlも確認してみると確かにない。
+</p>
+<pre>
+% tail -1 template.html |od -tx1z
+0000000 3c 2f 68 74 6d 6c 3e                             &gt;&lt;/html&gt;&lt;
+0000007
+</pre>
+<p>
+まあ、HTMLならいいのか。
+</p>
+<!-- section end -->
+</div>
+<!-- 2004/08/24 end -->
+
+
+
+<hr class="hide">
+<!-- 2004/08/25 start -->
+<h2><a name="20040825" href="200408c.html#20040825">2004-08-25 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="200408251" title="200408251" href="200408c.html#200408251">■</a> 
+<a href="http://raa.ruby-lang.org/project/cvsspam/">[Ruby] CVSspam 0.2.10</a></h3>
+<p>
+cvsとspamにいったいどんな関係があるのか？
+と思ったら、単にcommit mailをHTMLで色づけして送るからそういう名前になったらしい。
+たしかにそんなもんが送られてきたら高い確率でspamと判定される。
+</p>
+<!-- section end -->
+</div>
+<!-- 2004/08/25 end -->
+
+
+
+<hr class="hide">
+<!-- 2004/08/26 start -->
+<h2><a name="20040826" href="200408c.html#20040826">2004-08-26 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="200408261" title="200408261" href="200408c.html#200408261">■</a> 
+<a href="http://www.gnu.org/software/gawk/">[GNU] gawk 3.1.4</a></h3>
+<p>
+NEWSから気になった機能を。
+</p><blockquote class="cite"><p>
+2. Gawk now supports the ' flag in printf. E.g., %'d in a locale with
+thousands separators includes the thousands separator in the value,
+e.g. 12,345.
+</p></blockquote><p>
+3桁毎に&quot;,&quot;で区切る。これは便利だ。
+</p><blockquote class="cite"><p>
+This has one problem; the ' flag is next to impossible to use on the
+command line, without major quoting games.  Oh well, TANSTAAFL.
+</p></blockquote><p>
+たしかにその通り。試そうとしてちょっと悩んだ。
+<pre>
+% gawk 'BEGIN{printf &quot;%'&quot;'&quot;'d\n&quot;, 12345}'
+12,345
+</pre>
+<p>
+どうせなら %,dにすればいいのにと思ったり。
+</p>
+<!-- section end -->
+</div>
+<!-- 2004/08/26 end -->
+
+
+
+<hr class="hide">
+<!-- 2004/08/27 start -->
+<h2><a name="20040827" href="200408c.html#20040827">2004-08-27 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="200408271" title="200408271" href="200408c.html#200408271">■</a> 
+[Mail] Thunderbirdの訓練</h3>
+<p>
+今回は非常によいこに育っているようだ。前回育てそこねた原因はなんなのか理由を考えてみた。
+違いはというと、とある通知メールがspam扱いになるので思い切り学習させたくらいだ。
+ってそれか。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200408272" title="200408272" href="200408c.html#200408272">■</a> 
+[TV] タモリ倶楽部</h3>
+<p>
+フェーン現象の仕組み。そうだったのか。ってぐぐればちゃんと書いてあるな。
+</p>
+<!-- section end -->
+</div>
+<!-- 2004/08/27 end -->
+
+
+
+<hr class="hide">
+<!-- 2004/08/28 start -->
+<h2><a name="20040828" href="200408c.html#20040828">2004-08-28 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="200408281" title="200408281" href="200408c.html#200408281">■</a> 
+[Ruby] id</h3>
+<p>
+
+<a href="200408b.html#200408201">YAMLとERB</a>でテンプレートエンジンもどきを作ったはいいが、idという名前が出てきて困った。
+</p>
+<pre>
+% ruby -e 'p id'
+538098892
+</pre>
+<p>
+なのでmethod_missingが呼ばれない。
+MyTemplateにidというメソッドを追加したところで、
+printだのselectだの出てきたら切りがない。
+やっぱ無名のmoduleか何かの中でメソッドを定義するか。
+いやevalを使えって。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200408282" title="200408282" href="200408c.html#200408282">■</a> 
+[TV] 鳥人間</h3>
+<p>
+再放送かという内容が続いてどうしたんだと思ったら途中で中止になった。
+この時期に台風が来るなんてあまり考えられないもんなあ。残念。
+</p>
+<!-- section end -->
+</div>
+<!-- 2004/08/28 end -->
+
+
+
+<hr class="hide">
+<!-- 2004/08/29 start -->
+<h2><a name="20040829" href="200408c.html#20040829">2004-08-29 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="200408291" title="200408291" href="200408c.html#200408291">■</a> 
+[Ruby] 無名moduleをextend</h3>
+<p>
+昨日の続き。結局evalを使わずにmethodを定義してみた。
+</p>
+<pre>
+require 'yaml'
+require 'erb'
+
+module MyTemplate
+  def self.define_vars(vars)
+    Module.new do
+      vars.each do |name, val|
+        define_method name do val end
+      end
+    end
+  end
+  def self.emit(template, vars)
+    extend define_vars(vars)
+    ERB.new(template).result(binding)
+  end
+end
+
+vars = YAML.load(&lt;&lt;-'end')
+  ---
+  a: 1
+  b: 2
+  id: 3
+end
+print MyTemplate.emit(&lt;&lt;'end', vars)
+a = &lt;%=a%&gt;
+b = &lt;%=b%&gt;
+id = &lt;%=id%&gt;
+end
+</pre>
+<p>
+でも2回目以降に問題があるな。YAMLにidがなくても3のままだ。
+</p>
+<pre>
+module MyTemplate
+  def self.emit(template, vars)
+    Module.new do
+      vars.each do |name, val|
+        define_method name do val end
+      end
+      extend self
+      return ERB.new(template).result(binding)
+    end
+  end
+end
+</pre>
+<p>
+とするか。
+</p>
+<!-- section end -->
+</div>
+<!-- 2004/08/29 end -->
+
+
+
+<hr class="hide">
+<!-- 2004/08/30 start -->
+<h2><a name="20040830" href="200408c.html#20040830">2004-08-30 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="200408301" title="200408301" href="200408c.html#200408301">■</a> 
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-talk/110943">[Ruby] Gentooで--enable-install-docがコメントアウトされてる理由</a></h3>
+<p>
+つまりsyckが不安定だからか。
+ってことは1.8のデフォルトを--enable-install-docにすると、
+逆にGentooは--disable-install-docになってしまいそうな予感。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200408302" title="200408302" href="200408c.html#200408302">■</a> 
+[Ruby] template</h3>
+<p>
+それにしても
+<a href="http://raa.ruby-lang.org/">RAA</a>で
+<a href="http://raa.ruby-lang.org/project/template/">template</a>を検索するといっぱい出てくる。
+今のおいらの用途だとERBを使わなくても
+<a href="http://raa.ruby-lang.org/project/texttemplate/">TextTemplate</a>で十分か。
+まあ、でもERBだとRuby 1.8以降ならついてくるというのは大きい。
+</p>
+<!-- section end -->
+</div>
+<!-- 2004/08/30 end -->
+
+
+
+<hr class="hide">
+<!-- 2004/08/31 start -->
+<h2><a name="20040831" href="200408c.html#20040831">2004-08-31 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="200408311" title="200408311" href="200408c.html#200408311">■</a> 
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-talk/111069">[Ruby] BlueCloth 1.0.0fc3</a></h3>
+<p>
+今週末に1.0.0が出る予定らしい。
+fcって何かと思ったらfinal candidateらしい。
+</p>
+
+<p>
+
+<a href="http://daringfireball.net/projects/markdown/">Markdown</a>では
+</p>
+<pre>
+# Within tags, encode * and _ so they don't conflict
+# with their use in Markdown for italics and strong.
+# We're replacing each such character with its
+# corresponding MD5 checksum value; this is likely
+# overkill, but it should prevent us from colliding
+# with the escape values by accident.
+</pre>
+<p>
+というコメントにもあるように、
+MD5を使って過剰とも言えるエスケープをしている。
+BlueClothはどうかなと確認してみると、やはり同じようにMD5を使ってる。
+そこまで真似しなくてもという気はする。
+</p>
+<!-- section end -->
+</div>
+<!-- 2004/08/31 end -->
+
+<hr>
+<div>
+<a href="200408b.html">&lt;Prev(,)</a> | 
+<a href="200409a.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

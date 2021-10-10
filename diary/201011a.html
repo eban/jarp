@@ -1,0 +1,327 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2010-11-a</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="201010c.html">
+<link rel="next" href="201011b.html">
+
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2010年11月上旬〜</p>
+<hr>
+<div>
+<a href="201010c.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="201011b.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2010/11/01 start -->
+<h2><a name="20101101" href="201011a.html#20101101">2010-11-01 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="201011011" title="201011011" href="201011a.html#201011011">■</a> 
+<a href="http://www.pell.portland.or.us/~orc/Code/discount/#v2.0.1">Discount 2.0.1</a></h3>
+<p>
+BlueCloth 2で使われている。
+</p><blockquote><dl>
+<dt>
+Description:
+<dd>
+Discount is an implementation of John Gruber’s Markdown text to HTML
+language with some extensions from PHP Markdown Extra, Pandoc, and other
+implementations of Markdown.
+</dl></blockquote>
+<!-- section end -->
+</div>
+<!-- 2010/11/01 end -->
+
+
+
+<hr class="hide">
+<!-- 2010/11/02 start -->
+<h2><a name="20101102" href="201011a.html#20101102">2010-11-02 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="201011021" title="201011021" href="201011a.html#201011021">■</a> 
+[日記] 日記復旧</h3>
+<p>
+rsyncするだけなので復活させるのは簡単。静的だと楽だね。<br>
+dlvr.itのほうはaler mailに張られていたリンクをクリックしてアクティベート。<br>
+忘れていたので結構時間が経っていたが。
+</p>
+<!-- section end -->
+</div>
+<!-- 2010/11/02 end -->
+
+
+
+<hr class="hide">
+<!-- 2010/11/03 start -->
+<h2><a name="20101103" href="201011a.html#20101103">2010-11-03 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="201011031" title="201011031" href="201011a.html#201011031">■</a> 
+<a href="http://fedoraproject.org/wiki/Fedora_14_announcement">Fedora 14 announcement</a></h3>
+<p>
+Fedora 14が出たということで、/dev/hdbに入れてみるかー。<br>
+それにしてもFor desktop usersに書かれているのが、<br>
+libjpeg-turboとSpiceしかないんだけどあまり変化ないんかな。
+</p>
+<!-- section end -->
+</div>
+<!-- 2010/11/03 end -->
+
+
+
+<hr class="hide">
+<!-- 2010/11/04 start -->
+<h2><a name="20101104" href="201011a.html#20101104">2010-11-04 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="201011041" title="201011041" href="201011a.html#201011041">■</a> 
+[sh] ${a=b}と${a:=b}との違い</h3>
+<p>
+man shしてもman bashしても${a=b}の挙動についての説明はないが、zshにはあった。
+</p>
+<pre>
+${name=word}
+${name:=word}
+${name::=word}
+       In the first form, if name is unset then set it to word; in the second form, if name is unset  or  null
+       then  set it to word; and in the third form, unconditionally set name to word.  In all forms, the value
+       of the parameter is then substituted.
+</pre>
+<p>
+つまりこういう違い:
+</p>
+<pre>
+% a=;echo ${a=b}
+
+% unset a;echo ${a=b} 
+b
+% a=;echo ${a:=b}    
+b
+% unset a;echo ${a:=b}
+b
+</pre>
+<p>
+zshじゃなくてもshもbashも同じ。
+</p>
+<pre>
+% for i in sh bash zsh; do $i -c 'a=;echo -n ${a=b},${a:=b},;unset a;echo ${a=b},${a:=b}'; done
+,b,b,b
+,b,b,b
+,b,b,b
+</pre>
+<p>
+::=はなんかよくわからないねえ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2010/11/04 end -->
+
+
+
+<hr class="hide">
+<!-- 2010/11/05 start -->
+<h2><a name="20101105" href="201011a.html#20101105">2010-11-05 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="201011051" title="201011051" href="201011a.html#201011051">■</a> 
+<a href="http://www.dolda2000.com/~fredrik/ashd/">A Sane HTTP Daemon</a></h3>
+<blockquote><dl>
+<dt>
+Description:
+<dd>
+Ashd is a modular HTTP server based on a multi-program architecture. Whereas
+most other HTTP servers are monolithic programs with, perhaps, loadable
+modules, Ashd is composed of several different programs, each of which handles
+requests in different ways, passing requests to each other over a simple
+protocol (not unlike Unix pipelines). The design of Ashd brings it a number of
+nice properties, the following being the most noteworthy ones.
+</dl></blockquote>
+<!-- section end -->
+</div>
+<!-- 2010/11/05 end -->
+
+
+
+<hr class="hide">
+<!-- 2010/11/06 start -->
+<h2><a name="20101106" href="201011a.html#20101106">2010-11-06 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="201011061" title="201011061" href="201011a.html#201011061">■</a> 
+マンガ10冊レンタル</h3>
+<p>
+こんなにいつも借りないんだけど、なんか今日は手では持ち切れないのでカゴに入れるほどの量借りたら、<br>
+なぜかいつもより安かった。10冊だと1冊50円になるらしい。しかも1週間。<br>
+ふつうに借りると2泊で60円、7泊で80円だからびっくりした。<br>
+微妙に7,8冊とかよく借りてたからかなり損してたな。
+
+</p>
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="201011062" title="201011062" href="201011a.html#201011062">■</a> 
+[sh] ${a=b}の話のつづき</h3>
+<p>
+knuさんからちゃんとman bashにも書いてあると
+<a href="http://twitter.com/#!/knu/status/735302314364928">指摘</a>された。ありがとうございます。<br>
+たしかにあった。man shというかman dashにもあった。<br>
+</p><blockquote><p>
+omission of the colon results in a test for a parameter that is only unset.
+</p></blockquote><p>
+:の有無は=に限らないのでまとめて書いてあったわけか。
+</p>
+<!-- section end -->
+</div>
+<!-- 2010/11/06 end -->
+
+
+
+<hr class="hide">
+<!-- 2010/11/07 start -->
+<h2><a name="20101107" href="201011a.html#20101107">2010-11-07 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="201011071" title="201011071" href="201011a.html#201011071">■</a> 
+[DVD] FRINGE</h3>
+<p>
+相棒も借り終わったのでどこかで評判だったフリンジを借りてみた。<br>
+どこかで評判のわりには貸出中にはなってなくて人気ない？<br>
+いや、ファーストシーズンなんか今頃借りてるやつはいないか。<br>
+X-Filesっぽいような。とりあえずもう1枚借りて判断しよう。
+</p>
+<!-- section end -->
+</div>
+<!-- 2010/11/07 end -->
+
+
+
+<hr class="hide">
+<!-- 2010/11/08 start -->
+<h2><a name="20101108" href="201011a.html#20101108">2010-11-08 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="201011081" title="201011081" href="201011a.html#201011081">■</a> 
+[Fedora] Feodra 13から14へyumでupgrade</h3>
+<p>
+今回も
+<a href="http://fedoraproject.org/wiki/Upgrading_Fedora_using_yum">Upgrading Fedora using yum</a>に従って進める。
+</p>
+<pre>
+% sudo rpm --import https://fedoraproject.org/static/97A1071F.txt
+% sudo yum update yum
+% sudo yum --releasever=14 update --skip-broken
+% sudo yum distro-sync
+% sudo yum groupupdate Base
+% sudo grub-install /dev/sda
+% cd /etc/rc.d/init.d; for f in *; do sudo /sbin/chkconfig $f resetpriorities; done
+% sudo grub-install /dev/sda
+% sudo reboot
+</pre>
+肝はyum --releasever=14 update --skip-brokenだ。
+<!-- section end -->
+</div>
+<!-- 2010/11/08 end -->
+
+
+
+<hr class="hide">
+<!-- 2010/11/09 start -->
+<h2><a name="20101109" href="201011a.html#20101109">2010-11-09 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="201011091" title="201011091" href="201011a.html#201011091">■</a> 
+[Fedora] Fedora 14のdovecotの設定</h3>
+<p>
+いろいろ変わっててあれだが、とりあえずは/etc/dovecot/conf.d/10-auth.confで<br>
+disable_plaintext_authをnoに。なんちゃって証明書作るか。
+</p>
+<!-- section end -->
+</div>
+<!-- 2010/11/09 end -->
+
+
+
+<hr class="hide">
+<!-- 2010/11/10 start -->
+<h2><a name="20101110" href="201011a.html#20101110">2010-11-10 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="201011101" title="201011101" href="201011a.html#201011101">■</a> 
+[Fedora] dovecot用になんちゃって証明書を用意</h3>
+<p>
+ぐぐってみたら
+<a href="http://doc.fedoraproject.org/en-US/Fedora_Draft_Documentation/0.1/html/Deployment_Guide/s1-email-mua.html">13.5. Mail User Agents</a>を発見。<br>
+/etc/pki/dovecot/*/dovecot.pemがすでに用意されているが内容は<br>
+/etc/pki/dovecot/dovecot-openssl.confに書かれてる通りなので、自分の環境に合わせて変更。<br>
+あとはdovecot.pemを消してから/usr/libexec/dovecot/mkcert.shを実行し、dovecotをrestartして完了。<br>
+ThunderbirdのConnection securityはSTARTTLSにすればok。
+</p>
+<!-- section end -->
+</div>
+<!-- 2010/11/10 end -->
+
+<hr>
+<div>
+<a href="201010c.html">&lt;Prev(,)</a> | 
+<a href="201011b.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

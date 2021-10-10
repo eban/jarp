@@ -1,0 +1,317 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2010-11-c</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="201011b.html">
+<link rel="next" href="201012a.html">
+
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2010年11月下旬〜</p>
+<hr>
+<div>
+<a href="201011b.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="201012a.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2010/11/21 start -->
+<h2><a name="20101121" href="201011c.html#20101121">2010-11-21 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="201011211" title="201011211" href="201011c.html#201011211">■</a> 
+<a href="http://golf.shinh.org/p.rb?trimming">[Golf] trimming</a></h3>
+<p>
+見た目よりも難しい。できたと思ったら思わぬところに空白が。
+</p>
+<!-- section end -->
+</div>
+<!-- 2010/11/21 end -->
+
+
+
+<hr class="hide">
+<!-- 2010/11/22 start -->
+<h2><a name="20101122" href="201011c.html#20101122">2010-11-22 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="201011221" title="201011221" href="201011c.html#201011221">■</a> 
+[VPS] ServersManのdebianでの日本語設定</h3>
+<p>
+なんかlocaleの設定がされてないらしく、dpkg-reconfigure localesしないと<br>
+perlとかreadlineとかでいろいろ困るらしいよ。<br>
+今のところServersManを使う予定はないんだけど、知人から聞かされた。
+</p>
+<!-- section end -->
+</div>
+<!-- 2010/11/22 end -->
+
+
+
+<hr class="hide">
+<!-- 2010/11/23 start -->
+<h2><a name="20101123" href="201011c.html#20101123">2010-11-23 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="201011231" title="201011231" href="201011c.html#201011231">■</a> 
+<a href="https://www.dropbox.com/free">[Dropbox] Get extra space free!</a></h3>
+<p>
+Dropboxの使える容量が増えると聞いて早速手続き。<br>
+このために退会したfacebookを復活させた(256BM分)が、まあどうでもいい。<br>
+6*128MBで768MBだな。<br>
+前回も+768MBだったのでこれで合計3.5GBになったようだ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2010/11/23 end -->
+
+
+
+<hr class="hide">
+<!-- 2010/11/24 start -->
+<h2><a name="20101124" href="201011c.html#20101124">2010-11-24 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="201011241" title="201011241" href="201011c.html#201011241">■</a> 
+<a href="http://golf.shinh.org/p.rb?electronic+dice">[Golf] electronic dice</a></h3>
+<p>
+いやー、
+<a href="http://golf.shinh.org/reveal.rb?electronic+dice/yvl_1290347819&amp;rb">すごい解</a>だよね。天才だ。<br>
+この問題見たら普通は9桁の2進数とかやっちゃうよねえ。
+<a href="http://golf.shinh.org/reveal.rb?electronic+dice/eban_1290152388&amp;rb">おれ</a>だ。<br>
+yvlさんの場合は賽の目のパーツごとに2進数で考えてるわけだ。<br>
+たとえば左上に注目すると6から1までだと1,1,1,1,0,0なので、0を考慮すれば
+</p>
+<pre>
+% ruby -e 'p 0b1111000.chr'
+&quot;x&quot;
+</pre>
+<p>
+となる。同じように他の目を計算するとあの解のできあがり。うーむ。
+</p>
+<p>
+補足:Integer#[]はnth番目のビット(最下位ビット(LSB)が0番目)が立っている時1を、そうでなければ0を返す。<br>
+<a href="http://www.ruby-lang.org/ja/man/html/Integer.html#self.5bnth.5d">self[nth]</a></p>
+<!-- section end -->
+</div>
+<!-- 2010/11/24 end -->
+
+
+
+<hr class="hide">
+<!-- 2010/11/25 start -->
+<h2><a name="20101125" href="201011c.html#20101125">2010-11-25 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="201011251" title="201011251" href="201011c.html#201011251">■</a> 
+[PC] ワイヤレスマウス</h3>
+<p>
+勝手にスクロールするマウスが気になってきたので、もうちょっとましなワイヤレスマウスをと思い購入。<br>
+しかし今度はやたらとスリープに入る時間が短い。10秒も放っておくともう眠ってる。<br>
+触るたびに起こしてやらないとなると、単に反応の悪いマウスでしかない。困ったもんだよ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2010/11/25 end -->
+
+
+
+<hr class="hide">
+<!-- 2010/11/26 start -->
+<h2><a name="20101126" href="201011c.html#20101126">2010-11-26 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="201011261" title="201011261" href="201011c.html#201011261">■</a> 
+スギ花粉</h3>
+<p>
+先週ぐらいからやけにくしゃみが連発する日があったりで、症状はまるで花粉症。<br>
+驚いたことにほんとにスギ花粉が飛んでるらしい。<br>
+<a href="http://blogs.yahoo.co.jp/wth_map/60085283.html">季節外れのスギ花粉</a></p>
+<!-- section end -->
+</div>
+<!-- 2010/11/26 end -->
+
+
+
+<hr class="hide">
+<!-- 2010/11/27 start -->
+<h2><a name="20101127" href="201011c.html#20101127">2010-11-27 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="201011271" title="201011271" href="201011c.html#201011271">■</a> 
+<a href="http://www.commandlinefu.com/commands/view/7150/binary-clock">Binary clock</a></h3>
+<p>
+bashならやはりここは{.,\*}を使うのが簡単。
+</p>
+<pre>
+$ date +%H:%M; a=({.,\*}{.,\*}{.,\*}{.,\*}); for i in $(date +%H%M|fold -1); do echo &quot;${a[i]}&quot;; done
+01:35
+....
+...*
+..**
+.*.*
+</pre>
+<p>
+zshの場合は1からなので${a[i+1]}にする必要あり。<br>
+たまにはcommandlinefuへ投稿してみるかな。
+</p>
+<!-- section end -->
+</div>
+<!-- 2010/11/27 end -->
+
+
+
+<hr class="hide">
+<!-- 2010/11/28 start -->
+<h2><a name="20101128" href="201011c.html#20101128">2010-11-28 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="201011281" title="201011281" href="201011c.html#201011281">■</a> 
+<a href="http://d.hatena.ne.jp/yaneurao/20101127#p1">左巻先生</a></h3>
+<p>
+びっくりした。中学のときの担任の名前が突然出てきた。<br>
+同姓同名かと思いぐぐってみたらなんと
+<a href="http://ja.wikipedia.org/wiki/%E5%B7%A6%E5%B7%BB%E5%81%A5%E7%94%B7">wikipedia</a>にまで載ってる！同一人物だな。<br>
+いつのまにかえろい人になっていたようだ。
+</p>
+<p>
+理科の先生なんだけど教科書は全然使わないし、<br>
+テストでは「人はなぜブタを食うのにブタにならないのか？」とか問題に出したり、<br>
+面白い先生だったよ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2010/11/28 end -->
+
+
+
+<hr class="hide">
+<!-- 2010/11/29 start -->
+<h2><a name="20101129" href="201011c.html#20101129">2010-11-29 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="201011291" title="201011291" href="201011c.html#201011291">■</a> 
+ls -v</h3>
+<p>
+lsは文字でsortしちゃうので
+</p>
+<pre>
+% touch {1..10}
+% ls
+1  10  2  3  4	5  6  7  8  9
+</pre>
+<p>
+のように1 10と並ぶが、GNU coreutilsのlsは-vオプションを使うと数字として扱ってくれる。
+</p>
+<pre>
+% ls -v
+1  2  3  4  5  6  7  8	9  10
+</pre>
+<p>
+数字というかバージョンなので、
+</p>
+<pre>
+% touch 1.{1..10}
+% ls
+1.1  1.10  1.2	1.3  1.4  1.5  1.6  1.7  1.8  1.9
+% ls -v
+1.1  1.2  1.3  1.4  1.5  1.6  1.7  1.8	1.9  1.10
+</pre>
+<p>
+てな感じになる。よくこんなルールでファイル名つけられてることがあるよね。
+</p>
+<pre>
+% ls
+foo1.jpg  foo10.jpg  foo2.jpg  foo3.jpg  foo4.jpg  foo5.jpg  foo6.jpg  foo7.jpg  foo8.jpg  foo9.jpg
+% ls -v
+foo1.jpg  foo2.jpg  foo3.jpg  foo4.jpg	foo5.jpg  foo6.jpg  foo7.jpg  foo8.jpg	foo9.jpg  foo10.jpg
+% feh `ls -v`
+</pre>
+<p>
+順番に見たいときは結構便利。
+</p>
+<!-- section end -->
+</div>
+<!-- 2010/11/29 end -->
+
+
+
+<hr class="hide">
+<!-- 2010/11/30 start -->
+<h2><a name="20101130" href="201011c.html#20101130">2010-11-30 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="201011301" title="201011301" href="201011c.html#201011301">■</a> 
+<a href="http://libgit2.github.com/">libgit2: a linkable library for Git</a></h3>
+<blockquote><dl>
+<dt>
+libgit2:
+<dd>
+libgit2 is a portable, pure C implementation of the Git core methods provided as a re-entrant linkable library with a solid API, allowing you to write native speed custom Git applications in any language which supports C bindings. 
+</dl></blockquote><p>
+via 
+<a href="https://github.com/blog/752-libgit2-a-git-linkable-library">libgit2: a Git Linkable Library - GitHub</a></p>
+<!-- section end -->
+</div>
+<!-- 2010/11/30 end -->
+
+<hr>
+<div>
+<a href="201011b.html">&lt;Prev(,)</a> | 
+<a href="201012a.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

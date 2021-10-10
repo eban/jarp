@@ -1,0 +1,768 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2001-8-a</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="200107c.html">
+<link rel="next" href="200108b.html">
+
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2001年8月上旬〜</p>
+<hr>
+<div>
+<a href="200107c.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="200108b.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2001/08/01 start -->
+<h2><a name="20010801" href="200108a.html#20010801">2001-08-01 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="200108011" title="200108011" href="200108a.html#200108011">■</a> 
+CONFIG_REISERFS_CHECK</h3>
+<p>
+linux-users MLで話題になってが、うちのもyになってた。
+それほど遅くなってない気もする。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200108012" title="200108012" href="200108a.html#200108012">■</a> 
+pocketruby</h3>
+<p>
+importされた。が、やっぱ*.exeだの*.dllはやめて欲しい。
+と思ったら消された。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200108013" title="200108013" href="200108a.html#200108013">■</a> 
+[FFX] 武器と防具</h3>
+<p>
+これ以上持てないから捨てろと言われてしまった。
+捨てるくらいなら売りたいんだが、公司はないし、奴はいないし、先は長そうだし、引
+き返すのもかなりありそうだし、困りましたな。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2001/08/01 end -->
+
+
+
+<hr class="hide">
+<!-- 2001/08/02 start -->
+<h2><a name="20010802" href="200108a.html#20010802">2001-08-02 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="200108021" title="200108021" href="200108a.html#200108021">■</a> 
+<a href="http://bochs.sourceforge.net/">Bochs</a></h3>
+<p>
+ここに移動してたのか。
+Win32版を試したらdlxlinuxてのが入ってて簡単に遊べるね。
+でも時計がやたらと早く進むのはなぜ？
+bogomips値もそのせいか0.82とすごく小さい。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200108022" title="200108022" href="200108a.html#200108022">■</a> 
+[FFX] ワープ</h3>
+<p>
+結局戻ったら、ワープポイントを発見。
+さらに消化してないイベントまであった。戻って正解だ。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2001/08/02 end -->
+
+
+
+<hr class="hide">
+<!-- 2001/08/03 start -->
+<h2><a name="20010803" href="200108a.html#20010803">2001-08-03 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="200108031" title="200108031" href="200108a.html#200108031">■</a> 
+.mgpファイルをPDFファイルに変換</h3>
+<p>
+MagicPointでプレゼンした資料をWebに載せてくれと言われた。
+大した量でもないのでHTMLに手で変換しようと思ったが、
+PowerPointじゃないならPDFでもいいと言う。
+ふーん、じゃ、PDFに変換してやろう。
+</p>
+
+<p>
+すぐに思いつくのはmgp2psしてps2pdfだ。
+でもPSファイルはgvでlandscapeにすればいいんだけど、
+ps2pdfで変換したPDFファイルはAcrobat Readerでlandscape表示できない
+<a href="#20010803F1"><sup><small>*1</small></sup></a>。
+</p>
+
+<p>
+googleでps2pdf landscapeをキーに検索するとやっぱ似たような悩みの人がいる。
+それをまとめると
+</p>
+<pre>
+% mgp2ps foo.mgp | pstops &quot;0R(0,21cm)&quot; &gt; tmp.ps
+% ps2pdf -g8420x5950 tmp.ps foo.pdf
+</pre>
+<p>
+これでAcrobat Readerでちゃんと見れるPDFファイルができた。
+ps2pdfは標準入力から読めないのかあ。
+シェルスクリプトだから何とでもなるけど。
+</p>
+
+<p>
+pstopsはman pstopsすると
+</p>
+<pre>
+PSUtils Release 1 Patchlevel 17
+</pre>
+<p>
+に含まれているらしい。特に意識して入れた覚えもないが、
+PlamoだとRequiredなのかな。
+</p>
+
+
+<hr align="left" width="40%">
+<div>
+<a name="20010803F1" href="200108a.html#20010803F1"><small>*1</small></a>:
+できるんならだれか教えて。
+</div>
+<!-- section end -->
+</div>
+<!-- 2001/08/03 end -->
+
+
+
+<hr class="hide">
+<!-- 2001/08/04 start -->
+<h2><a name="20010804" href="200108a.html#20010804">2001-08-04 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="200108041" title="200108041" href="200108a.html#200108041">■</a> 
+glibc 2.2.3</h3>
+<p>
+xmmsが動かないのはどうもpthreadがらみのような気がして、
+glibc 2.2.3を自分でmakeすることにした。
+makeかけたのは寝る前だったんだが起きてもまだやってた。
+結局これだけ時間がかかった。
+</p>
+<pre>
+make  32116.38s user 4529.07s system 95% cpu 10:41:39.70 total
+</pre>
+<p>
+すごいね。GCC 3.0で一応最後まで通ったけど、立ち上がるかどうか不安だ。
+不安なのでmake installはしてない。って意味ないよ、それじゃ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200108042" title="200108042" href="200108a.html#200108042">■</a> 
+Ogg Vorbis</h3>
+<p>
+音質はMP3よりいいというので今頃になって試す。
+「ザ☆ピ〜ス！」だと
+</p>
+<pre>
+% cdda2wav -Icooked_ioctl -q -D/dev/hdd -t 1 - | oggenc -o peace01.ogg
+Opening with wav module: WAV file reader
+Encoding &quot;peace01.ogg&quot; [ 01.3%] [ 16m22s remaining] /
+</pre>
+<p>
+と出た。1曲16分かあ。見てるとほとんどCD-ROMをアクセスしてない。
+</p>
+<pre>
+Done encoding file &quot;peace01.ogg&quot;
+
+        File length:  5m 17.0s
+        Elapsed time: 17m 28.6s
+        Rate:         0.3030
+        Average bitrate: 127.3 kb/s
+</pre>
+<p>
+0.3倍速だ。今日はCPUパワーをより実感する日となった。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2001/08/04 end -->
+
+
+
+<hr class="hide">
+<!-- 2001/08/05 start -->
+<h2><a name="20010805" href="200108a.html#20010805">2001-08-05 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="200108051" title="200108051" href="200108a.html#200108051">■</a> 
+Ogg Vorbis</h3>
+<pre>
+% ogg123 peace01.ogg
+</pre>
+<p>
+してみると、全然音が出ない。なぜだ？
+</p>
+<pre>
+% man ogg123
+No manual entry for ogg123
+</pre>
+<p>
+えっ、ないの？man oggencはちゃんと出るのに。ソースにはちゃんとあるじゃん。
+よくわからんが
+</p>
+<pre>
+% cd ogg123
+% make install-man mandir=/usr/local/man
+</pre>
+<p>
+しとく。man ogg123してみると
+</p>
+<pre>
+-d device, --device device
+       Specify output device.  See DEVICES section  for  a
+       list  of  devices.   Any  number  of devices may be
+       specified.
+</pre>
+<p>
+が怪しい。DEVICESを見るとnull, oss, alsa等がある。
+うちの場合はalsaが入ってるのでalsaかossが使えるはず。
+</p>
+<pre>
+% ogg123 -d alsa peace01.ogg
+</pre>
+<p>
+でやっと音がでた。ossでも出る。
+毎回指定するのもなんだから~/.ogg123rcに
+</p>
+<pre>
+default_device=oss
+</pre>
+<p>
+を指定。ossなのは特に意味はないが、
+ほんとにkernelのossを使うこともあるかもしれないので。
+</p>
+
+<p>
+肝心の音質のほうはというと全然わからない。
+てゆか1000円のスピーカに期待しちゃいかんよ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200108052" title="200108052" href="200108a.html#200108052">■</a> 
+glibc 2.2.3</h3>
+<p>
+不安だと書きながら無謀にもmake installしてみたわけだが、案の定失敗だ。
+/lib/libc.so.6のsymlinkを書き換えた後はもうなんにも動かない状態に。
+</p>
+
+<h4><a name="200108052S1" href="200108a.html#200108052S1">_</a> <strong>リセット</strong>: </h4>
+<div class="sub">
+<p>
+Linuxにはほとんどstaticにlinkされてるものがないから、
+こうなるとあきらめてrebootするしかない。
+が、umountもできなければrebootコマンドも動かないからリセットするしかない。
+が、リセットしたところで、実は何も状況は変わらない。
+以前のglibcに戻さないといけないわけだ。
+</p>
+
+</div>
+<h4><a name="200108052S2" href="200108a.html#200108052S2">_</a> <strong>旧環境</strong>: </h4>
+<div class="sub">
+<p>
+実は以前の環境も別のパーティションに残してあるので、
+こっちからbootすることでアクセス可能だ。
+だから、不安だと書きながら暴挙に出たわけだが。
+で、こっちからprefixを/mnt/usrにしてインストールしてみたらどうだろうと考えた。
+これが大失敗で、prefixだけじゃなくてslibとかも指定しないといけない仕組みになっていて、旧環境も/libを上書きしちまった。いや実に困ったね。
+</p>
+
+</div>
+<h4><a name="200108052S3" href="200108a.html#200108052S3">_</a> <strong>旧環境の復旧</strong>: </h4>
+<div class="sub">
+<p>
+インストールフロッピーで立ち上げて、
+CD-ROMにあるglibc2.tgzを展開すればいいと簡単に考えてたら、
+ReiserFSにしちゃったからそのパーティションにはアクセスできない。
+というわけでまずは旧環境のほうを復活させて、
+その後で今使ってる新環境を復旧するという二段階で攻めた。
+</p>
+
+<p>
+手順としては
+</p>
+<pre>
+1. NTでPlamo用のインストールフロッピーを作る。
+2. これで立ち上げ、旧環境の/dev/hdcのほうをmountする。
+   $ mount /dev/hdc5 /mnt
+   $ mount /dev/hdc6 /mnt/usr
+3. CD-ROMをmount。
+   $ mount -r /dev/hdd /cdrom
+4. 必要なものを展開。
+   $ cd /mnt
+   $ tar xfvz /cdrom/plamo/a1/glibc2.tgz
+   $ sh install/doinst.sh
+   $ tar xfvz /cdrom/plamo/d1/libc.tgz
+   $ sh install/doinst.sh
+   $ tar xfvz /cdrom/plamo/a1/ldso.tgz
+   $ sh install/doinst.sh
+</pre>
+<p>
+てな感じ。これで旧環境の復旧完。
+</p>
+
+</div>
+<h4><a name="200108052S4" href="200108a.html#200108052S4">_</a> <strong>旧環境の再破壊</strong>: </h4>
+<div class="sub">
+<p>
+次に新環境のほうは旧環境を立ち上げてPlamo 2.2をインストール。
+ここで、欲を出してinstallpkgでいいじゃんとか思ったのが大きな間違い。
+ldso.tgzのinstall/doinst.shは/sbin/ldconfigが存在するときはそれを実行するように書かれている。
+ldconfigというやつは余計なお節介というか最新のlibraryがあると勝手にsymlinkまで更新してしまうようだ。
+/lib/*-2.2.3.soを消してなかったので、旧環境がまた同じように破壊された。
+がーん。
+</p>
+
+</div>
+<h4><a name="200108052S5" href="200108a.html#200108052S5">_</a> <strong>新環境の復旧</strong>: </h4>
+<div class="sub">
+<p>
+もう一度旧環境を復旧させ、速攻で/lib/*-2.2.3.soを消す。
+新環境のほうも消しておく。
+あとは旧環境と同じ手順で新環境の復旧させた。
+ldso.tgzのdoinst.shを見ると大して意味のあることをやってるわけじゃないので実行しないことにした。
+ちなみにインストールフロッピーで立ち上げたときは/sbin/ldconfigは存在しないので問題ない。
+</p>
+
+</div>
+<h4><a name="200108052S6" href="200108a.html#200108052S6">_</a> <strong>GCC 3.0</strong>: </h4>
+<div class="sub">
+<p>
+なぜ動かないのかいまいちよくわからんのだが、やっぱGCC 3.0のせい？
+なにしろmakeに10時間かかるからおいそれと実験できないし。うーむ。
+あ、
+</p>
+<pre>
+% make check
+</pre>
+<p>
+を省略しているのがそもそもの間違いのような気がする。
+</p>
+
+</div>
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200108053" title="200108053" href="200108a.html#200108053">■</a> 
+rescue disk</h3>
+<p>
+ReiserFS用のrescue diskを作るべきだな。
+あ、2.4.xのkernelを採用してるdistroのインストールフロッピーでもいいか。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200108054" title="200108054" href="200108a.html#200108054">■</a> 
+[FFX] 休み</h3>
+<p>
+んなことばかりしてたのでFFXは3日もやってない。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200108055" title="200108055" href="200108a.html#200108055">■</a> 
+似て蝶</h3>
+<p>
+松嶋菜々子とBoA。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2001/08/05 end -->
+
+
+
+<hr class="hide">
+<!-- 2001/08/06 start -->
+<h2><a name="20010806" href="200108a.html#20010806">2001-08-06 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="200108061" title="200108061" href="200108a.html#200108061">■</a> 
+<a href="http://www.linux.or.jp/JM/html/mpg123/man1/mpg123.1.html">mpg123のマニュアル</a></h3>
+<p>
+JMにはすでにあったのか。
+</p>
+<pre>
+-b size, --buffer size
+  オーディオの出力バッファを size K バイト使用します。これは一時的に
+  システム動作が重くなった時の影響を回避する際に便利です。というのも、
+  このような状況ではオーディオ出力に割り込みが入ることが通常だからで
+  す。バッファのサイズには少なくとも 1024 (つまり 1MB。これは 6 秒分
+  のオーディオデータに相当します) を指定すべきです。300 以下だとほと
+  んど意味がありません。デフォルト値は 0 (バッファリングが無効)です。
+</pre>
+<p>
+つーわけで、-b 1024に変更。
+</p>
+
+<p>
+googleで見つけたんだけど、それ以前に
+</p>
+<pre>
+% locate mpg123.1
+/old/usr/local/man/cat1/mpg123.1.gz
+/old/usr/local/man/man1/mpg123.1
+/pub/linux/mpg123-0.59r/mpg123.1
+/usr/local/man/man1/mpg123.1
+/usr/man/ja_JP.eucJP/man1/mpg123.1.gz
+</pre>
+<p>
+ちゃんとここにあるじゃん。
+あ、コマンドがあるかどうか無関係にJMには存在しているのか。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200108062" title="200108062" href="200108a.html#200108062">■</a> 
+glibc 2.2.3</h3>
+<p>
+相変わらずいろいろ試している。会社のPentium II 400MHzでは
+</p>
+<pre>
+make  1857.91s user 283.73s system 87% cpu 40:41.03 total
+</pre>
+<p>
+だ。ってまじかよー。gcc 2.95.3を使ったという違いはあるが。
+あ、それか原因は。3.0がもの凄く遅いんだな。
+てゆかやっぱglibc 2.2.3にはgcc 3.0じゃだめらしい。
+glibc-2.2.3-nss.diffも必要らしい。
+あまりにもこの辺の情報知らなすぎ。
+</p>
+
+<p>
+make checkしてみると失敗。
+-Osが悪いのかと思い、-Oにしてもう一度make checkしても失敗。
+が、さっきと違うところだ。
+まさかと思いそのままもう一度make checkするとまた違うとこで失敗。
+がーん。こりゃメモリがいかれてるな。
+以前の
+<a href="200106a.html#200106082">kernel panic</a> もこれが原因だろう。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200108063" title="200108063" href="200108a.html#200108063">■</a> 
+eruby 0.9.6</h3>
+<p>
+更新。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200108064" title="200108064" href="200108a.html#200108064">■</a> 
+オホーツク海高気圧</h3>
+<p>
+涼しいねえ。このまま勢力を保ち続けて欲しいもんだ。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2001/08/06 end -->
+
+
+
+<hr class="hide">
+<!-- 2001/08/07 start -->
+<h2><a name="20010807" href="200108a.html#20010807">2001-08-07 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="200108071" title="200108071" href="200108a.html#200108071">■</a> 
+glibc 2.2.3</h3>
+<p>
+install時はprefixじゃなくてinstall_rootを使うんだね。
+</p>
+<pre>
+# make install install_root=/mnt
+</pre>
+<p>
+が正解だったのか。とりあえず~/glibcへインストールしてみよう。
+</p>
+<pre>
+% make install install_root=$HOME/glibc
+% mkdir ~/glibc/bin
+% cp /bin/{bash,ls} ~/glibc/bin
+% ldd /bin/bash
+        libncurses.so.5 =&gt; /lib/libncurses.so.5 (0x4001a000)
+        libdl.so.2 =&gt; /lib/libdl.so.2 (0x4005b000)
+        libc.so.6 =&gt; /lib/libc.so.6 (0x4005e000)
+        /lib/ld-linux.so.2 =&gt; /lib/ld-linux.so.2 (0x40000000)
+% cp /lib/libncurses.so.5 ~/glibc/lib
+% sudo chroot ~/glibc /bin/bash
+# ls
+bin   etc   lib   sbin  usr
+</pre>
+<p>
+よさそう。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2001/08/07 end -->
+
+
+
+<hr class="hide">
+<!-- 2001/08/08 start -->
+<h2><a name="20010808" href="200108a.html#20010808">2001-08-08 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="200108081" title="200108081" href="200108a.html#200108081">■</a> 
+glibc 2.2.3</h3>
+<p>
+やっと立ち上がった。が、localeがおかしい。
+</p>
+<pre>
+Gdk-WARNING **: locale not supported by C library
+</pre>
+<p>
+となってしまう。どこかミスってるなあ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200108082" title="200108082" href="200108a.html#200108082">■</a> 
+xmms 1.2.5</h3>
+<p>
+xmmsもちゃんと起動するようになった。
+localeがだめだめだから、やっぱPLAYLISTに日本語が出ない。
+setlocaleがNULLを返してるわけか。
+うーむ。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2001/08/08 end -->
+
+
+
+<hr class="hide">
+<!-- 2001/08/09 start -->
+<h2><a name="20010809" href="200108a.html#20010809">2001-08-09 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="200108091" title="200108091" href="200108a.html#200108091">■</a> 
+glibc 2.2.3</h3>
+<p>
+インストールが中途半端だったらしい。INSTALLを見ると
+</p>
+<pre>
+% sudo make localedata/install-locales
+</pre>
+<p>
+が必要。これでxmmsも日本語表示されるようなった。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200108092" title="200108092" href="200108a.html#200108092">■</a> 
+<a href="http://homepage1.nifty.com/~tetsu/ruby/diary/0108.html#8">ruby-1.7.1 2001-08-06</a></h3>
+<p>
+すでに
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-list/30838">こう</a> なっています。
+&amp;&amp;も同じです。というわけで
+</p>
+<pre>
+if true &amp;&amp; ~ /regex/
+</pre>
+<p>
+と書きなさいということになると思います。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200108093" title="200108093" href="200108a.html#200108093">■</a> 
+<a href="http://www.dm4lab.to/~usa/dekigoto/200108a.html#id20010809_P3_3">mkmf.rb</a></h3>
+<p>
+いやbuild directoryを別に用意してる人のほうが多いでしょう。
+</p>
+<pre>
+% echo '#include &quot;foo.h&quot;' &gt;foo.c
+% touch foo.h
+% mkdir bar
+% cd bar
+% cc -E ../foo.c
+# 1 &quot;../foo.c&quot;
+# 1 &quot;../foo.h&quot; 1
+# 2 &quot;../foo.c&quot; 2
+</pre>
+<p>
+VC++がそこまで面倒見てくれないとすると、-I$(srcdir)も必要ですね。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200108094" title="200108094" href="200108a.html#200108094">■</a> 
+[FFX] 辞書</h3>
+<p>
+今頃になって2巻を見つける。遅いよ。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2001/08/09 end -->
+
+
+
+<hr class="hide">
+<!-- 2001/08/10 start -->
+<h2><a name="20010810" href="200108a.html#20010810">2001-08-10 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="200108101" title="200108101" href="200108a.html#200108101">■</a> 
+[Cygwin] gdb, Tcl/Tk</h3>
+<p>
+gdbが動かない原因は
+</p>
+<pre>
+% objdump -p /bin/gdb.exe | grep 'DLL Name'
+        DLL Name: cygitcl30.dll
+        DLL Name: cygitk30.dll
+        DLL Name: cygtcl80.dll
+        DLL Name: tix4180.dll
+        DLL Name: cygtk80.dll
+        DLL Name: COMDLG32.DLL
+        DLL Name: GDI32.dll
+        DLL Name: KERNEL32.dll
+        DLL Name: cygwin1.dll
+        DLL Name: SHELL32.DLL
+        DLL Name: USER32.dll
+% tar tfvz tcltk-20001125-1.tar.gz | grep dll
+-rwxrwxrwx cgf/group     82944 2000-12-05 15:04 usr/bin/cygitcl30.dll
+-rwxrwxrwx cgf/group     35328 2000-12-05 15:04 usr/bin/cygitk30.dll
+-rw-rw-rw- cgf/group    399360 2000-12-05 15:04 usr/bin/cygtcl80.dll
+-rw-rw-rw- cgf/group      4608 2000-12-05 15:04 usr/bin/cygtclpip80.dll
+-rw-rw-rw- cgf/group     10240 2000-12-05 15:04 usr/bin/cygtclreg80.dll
+-rw-rw-rw- cgf/group    637952 2000-12-05 15:04 usr/bin/cygtk80.dll
+-rwxrwxrwx cgf/group    204288 2000-12-05 15:04 usr/bin/tix4180.dll
+</pre>
+<p>
+だった。ntsecにしたときはx permissionが必要なんだよね。
+Chrisだめじゃん。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200108102" title="200108102" href="200108a.html#200108102">■</a> 
+<a href="http://www.dm4lab.to/~usa/dekigoto/200108a.html#id20010810_P3_1">ぐる？</a></h3>
+<p>
+なるほど。たしかにそういう場合はccに関係なく-Iが必要ですね。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2001/08/10 end -->
+
+<hr>
+<div>
+<a href="200107c.html">&lt;Prev(,)</a> | 
+<a href="200108b.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

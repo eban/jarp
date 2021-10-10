@@ -1,0 +1,765 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2001-3-a</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="200102c.html">
+<link rel="next" href="200103b.html">
+
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2001年3月上旬〜</p>
+<hr>
+<div>
+<a href="200102c.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="200103b.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2001/03/01 start -->
+<h2><a name="20010301" href="200103a.html#20010301">2001-03-01 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="200103011" title="200103011" href="200103a.html#200103011">■</a> 
+cURL</h3>
+niftyのflinuxで紹介されてた
+<a href="http://curl.haxx.se">cURL</a>を後で試してみよう。これでnif.rbよりは速くアクセスできる？
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200103012" title="200103012" href="200103a.html#200103012">■</a> 
+_stat</h3>
+ホスト名が違うけど気にしないでね。
+<pre>
+WinNT:
+//eban/pub: -1
+//eban/pub/: -1
+//eban/pub\: 0
+//eban/pub/ruby: 0
+//eban/pub/ruby/: 0
+//eban/pub/ruby\: -1
+\\eban\pub: -1
+\\eban\pub/: -1
+\\eban\pub\: 0
+\\eban\pub\ruby: 0
+\\eban\pub\ruby/: 0
+\\eban\pub\ruby\: -1
+
+Win2K:
+//eban/pub: -1
+//eban/pub/: 0
+//eban/pub\: 0
+//eban/pub/ruby: 0
+//eban/pub/ruby/: -1
+//eban/pub/ruby\: -1
+\\eban\pub: -1
+\\eban\pub/: 0
+\\eban\pub\: 0
+\\eban\pub\ruby: 0
+\\eban\pub\ruby/: -1
+\\eban\pub\ruby\: -1
+</pre>
+とやっぱりWinNTだけとても変だ。
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200103013" title="200103013" href="200103a.html#200103013">■</a> 
+JARH</h3>
+print %%\%s%%%%Just another Ruby hacker,%%%%%%%%%
+<!-- section end -->
+</div>
+<!-- 2001/03/01 end -->
+
+
+
+<hr class="hide">
+<!-- 2001/03/02 start -->
+<h2><a name="20010302" href="200103a.html#20010302">2001-03-02 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="200103021" title="200103021" href="200103a.html#200103021">■</a> 
+<a href="http://curl.haxx.se">cURL</a></h3>
+そのまま取ってくるとHTML形式になり、しかも余計な情報が多くついてくる。
+「保存」というボタンを押すと1メッセージがそのまま保存できるようだ。
+つまりPOSTできればいい。<br>
+たとえばnifty fgalts mes 7の8446番の発言なら
+<pre>
+% curl --sslv2 -F msg000='7?8446' -F download=message \
+  https://iw.nifty.com/iw/nifty/fgalts/mes/7/fgalts_7_8446.log
+</pre>
+てな感じでいける。余計なものは
+<pre>
+この発言に対するコメント
+https://iw.nifty.com/iw/nifty/fgalts/mes/7/com.cgi?8446
+</pre>
+だけなのでこれなら許せる。最後のfgalts_7_8446.logはなんでもいいみたい。
+この形式はtelnet r2.nifty.ne.jpと同じなので、
+nif.rbのlog2mailを通せばmbox形式に変換できる。
+未読がどーのこーのというボタンもあるから、
+まとめてダウンロードすることもできると思う。
+たぶんr2.nifty.ne.jpを使うよりは速いだろう。
+特にデータライブラリなんかは。<br>
+そういえばRubyにもSSLを扱うモジュールがあったよね。
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200103022" title="200103022" href="200103a.html#200103022">■</a> 
+<a href="http://www.ruby-lang.org/~rubikitch/diary/010302.html#1">strftime</a></h3>
+(format-time-string &quot;%y%m%d.rrd&quot;)
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200103023" title="200103023" href="200103a.html#200103023">■</a> 
+JARH</h3>
+print !?????:???%?Just another Ruby hacker,?:??
+<!-- section end -->
+</div>
+<!-- 2001/03/02 end -->
+
+
+
+<hr class="hide">
+<!-- 2001/03/03 start -->
+<h2><a name="20010303" href="200103a.html#20010303">2001-03-03 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="200103031" title="200103031" href="200103a.html#200103031">■</a> 
+cURL</h3>
+<a href="200103a.html#200103021">昨日</a>書き忘れたけど、パスワードとかは~/.netrcに書いてある。
+</p><blockquote><p>
+machine iw.nifty.com login ABC00000 password ひみちゅ
+</p></blockquote><p>
+で~/.curlrcはこんな設定にしてある。
+</p><blockquote><p>
+--netrc
+</p></blockquote><p>
+実際に送られてくるHTMLファイルを解析しながらの思考錯誤だから、
+未読の管理がいまいちよくわからん。<br>
+あ、終わったらちゃんとlogoutしないと。
+</p><blockquote><p>
+https://iw.nifty.com/iw/nifty/bye.html
+</p></blockquote><p>
+放っておくとタイムアウトするまで課金される。
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200103032" title="200103032" href="200103a.html#200103032">■</a> 
+_stat</h3>
+<h4><a name="200103032S1" href="200103a.html#200103032S1">_</a> <strong>msvcrt.dll</strong>: </h4>
+<div class="sub">
+<a href="http://www.dm4lab.to/~usa/dekigoto/200103a.html#20010302_P1_2">その</a>ほうがいい気がしますね。
+ってこれでstdioもRubyが持つって例の話が実現したりすると、
+なんだかんだで最終的にはRubyCRT.DLLになってしまうのだろうか？
+
+</div>
+<h4><a name="200103032S2" href="200103a.html#200103032S2">_</a> <strong>Cygwin</strong>: </h4>
+<div class="sub">
+ところで例のテストプログラムをs/_stat/stat/gしてCygwinで試すと
+全部成功する。ということはCygwinを参考にすればいいのか。
+
+</div>
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200103033" title="200103033" href="200103a.html#200103033">■</a> 
+RubyWin 0.0.2.9</h3>
+いつものように
+<a href="../files/rubywin.diff">-mwin32パッチ</a>をあてて作ったらなんかサイズが大きい。なるほどuconvを組み込んだんだ。<br>
+うーむ。こういうのって難しいね。
+ruby-talk MLでもXMLParserとexpatを標準配布に含めようという
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-list/28408">提案</a>もあったりするけど。<br>
+Windowsだったら
+</p><blockquote><p>
+MultiByteToWideChar
+</p></blockquote><p>
+とか
+</p><blockquote><p>
+WideCharToMultiByte
+</p></blockquote><p>
+を使えばUnicodeのテーブルを抱く必要はない気もする。
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200103034" title="200103034" href="200103a.html#200103034">■</a> 
+JARH</h3>
+({}.default='Just another Ruby hacker,')[0].display
+<!-- section end -->
+</div>
+<!-- 2001/03/03 end -->
+
+
+
+<hr class="hide">
+<!-- 2001/03/04 start -->
+<h2><a name="20010304" href="200103a.html#20010304">2001-03-04 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="200103041" title="200103041" href="200103a.html#200103041">■</a> 
+RubyWin 0.0.2.9</h3>
+なぜかCygwinだとeval bufferが動かない。
+しかたないので0.0.2.7に戻すことにした。
+既にtarballも消してたが、
+作業ディレクトリは残ってたのでパッケージし直すだけで済んだ。
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200103042" title="200103042" href="200103a.html#200103042">■</a> 
+AW:, SV:</h3>
+最近SubjectにAW:やSV:がついてるメールをたまに見かけるようになった。
+なにかと思ったらそれぞれの言語でのRe:という意味らしい。
+AWはドイツだな。SVはわからん。そういえば「返:」というのも見たことがある。
+ったくOutlookってやつは余計なことばかりする。
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200103043" title="200103043" href="200103a.html#200103043">■</a> 
+<a href="http://homepage2.nifty.com/zn/nnikki/200102.html#28_t1">特異メソッド</a></h3>
+()をつければ大文字でも呼び出せます。
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200103044" title="200103044" href="200103a.html#200103044">■</a> 
+<a href="http://www.ruby-lang.org/~rubikitch/diary/010303.html#6">Perl for Win32</a></h3>
+<a href="http://www.ActiveState.com/ActivePerl/">ActivePerl</a>
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200103045" title="200103045" href="200103a.html#200103045">■</a> 
+JARH</h3>
+print Hash['Just another ', 'Ruby hacker,']
+<!-- section end -->
+</div>
+<!-- 2001/03/04 end -->
+
+
+
+<hr class="hide">
+<!-- 2001/03/05 start -->
+<h2><a name="20010305" href="200103a.html#20010305">2001-03-05 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="200103051" title="200103051" href="200103a.html#200103051">■</a> 
+AW</h3>
+Antwort
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200103052" title="200103052" href="200103a.html#200103052">■</a> 
+<a href="http://www.freeml.com/ml_info.php?ml=rubyist">rubyist ML</a></h3>
+なんか同じようなメールが来るなあとまぬけなことに今日になって気づく。
+どうも土曜日あたりから2通ずつ来てる気がするけど、みなさんのとこではどう？
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200103053" title="200103053" href="200103a.html#200103053">■</a> 
+JARH</h3>
+<pre>
+#include &lt;stdio.h&gt;
+#if 0
+=begin
+=end
+def main() yield end
+&lt;&lt;sub
+=cut
+sub
+#endif
+main(){ printf(&quot;Just another Ruby hacker,&quot;); }
+#if 0
+=begin
+=end
+&lt;&lt;main
+=cut
+main
+#endif
+</pre>
+<!-- section end -->
+</div>
+<!-- 2001/03/05 end -->
+
+
+
+<hr class="hide">
+<!-- 2001/03/06 start -->
+<h2><a name="20010306" href="200103a.html#20010306">2001-03-06 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="200103061" title="200103061" href="200103a.html#200103061">■</a> 
+cURLでnifty</h3>
+結局こんな感じでまとめてダウンロードできることはわかった。
+<pre>
+% curl --sslv2 -F download=room \
+  -F roomlist=&quot;0102030405060708091011121314151617181920&quot; \
+  -F room05='1580?1586?1' -F room07='8000?8005?1' -F save=on \
+  -o q.log https://iw.nifty.com/iw/nifty/fgalts/mes/fgalts.log
+</pre>
+mes 5の1580から1586までとmes 7の8000から8005までという意味。
+?1は本当は未読の数を指定するんだと思うんだけど適当に1にしてみた。
+0だとエラーになる。ダウンロードしても未読位置は変化しない。
+既読の設定はsave=の代わりにread=を指定する。valueはなんでもいいようだ。
+というわけで未読の管理はniftyに任せるのではなく、
+自前で管理したほうが簡単かもしれない。<br>
+あ、だとするとものすごい大きな数を指定してもエラーにならないと助かる。
+<pre>
+% curl --sslv2 -F download=room \
+  -F roomlist=&quot;07&quot; -F room07='8480?99999?1' -F save=on \
+  -O https://iw.nifty.com/iw/nifty/fgalts/mes/fgalts.log
+</pre>
+okだ。<br>
+お次はSSLSocketを使ってダウンロードかな。
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200103062" title="200103062" href="200103a.html#200103062">■</a> 
+昨日と今日のJARH</h3>
+Ruby, Perl, Cで解釈できる。
+さらにshを追加しようとしてるんだけど、なかなかうまくいかない。
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200103063" title="200103063" href="200103a.html#200103063">■</a> 
+JARH</h3>
+<pre>
+#include &lt;stdio.h&gt;
+
+#if 0
+eval &quot;def main() yield if block_given? end;def sub() end&quot; if $KCODE;
+sub
+#endif
+
+main(){ printf(&quot;Just another Ruby hacker,&quot;); } 
+
+#if 0
+main
+#endif
+</pre>
+<!-- section end -->
+</div>
+<!-- 2001/03/06 end -->
+
+
+
+<hr class="hide">
+<!-- 2001/03/07 start -->
+<h2><a name="20010307" href="200103a.html#20010307">2001-03-07 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="200103071" title="200103071" href="200103a.html#200103071">■</a> 
+<a href="http://homepage1.nifty.com/susho/diary/2001/03.html#d3.1">mkmf.rb</a></h3>
+のバグではないです。そもそもライブラリを$LDFLAGSに追加してはいけません。
+mswin32も考慮に入れるなら
+<pre>
+$libs = append_library($libs, &quot;hoge&quot;)
+</pre>
+という感じかな。
+あ、という意味ではなぜ$LIBSという名前じゃないのという疑問はあるかもしれない。
+てゆうかおいらも今そう思ったし。
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200103072" title="200103072" href="200103a.html#200103072">■</a> 
+<a href="http://neomueller.org/~isamu/line/">LINE</a></h3>
+Cygwin MLでは
+<a href="http://neomueller.org/~isamu/line/">LINE</a>がちょっとしたブームになってる。
+<a href="http://yendot.org/">yendot</a>でも昨日紹介されてた。
+<pre>
+LINE Is Not an Emulator. LINE is a utility which executes unmodified
+Linux applications on Windows by intercepting Linux system calls. The
+Linux applications themselves are not emulated. They run directly on
+the CPU just like all other Windows applications.
+</pre>
+っつーことなんだけど、BOWみたいなもんだな。
+LinuxのバイナリをそのままWindows上で動かすソフトだ。
+早速minirubyをstaticにlinkして試したらちゃんと動いた。
+/lib/*.soだのは面倒なので試してない。<br>
+Screen Shotsを見るとX Serverも動いているような印象を受けるが、
+あれはWindows上のX Serverを使っているのでそのあたりは誤解しないように。
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200103073" title="200103073" href="200103a.html#200103073">■</a> 
+iw.nifty.com</h3>
+お気に入りを使うと未読の管理も簡単になる。
+一括保存するとGOだのMREADだの裏の事情がわかる。
+ってそんなとこまで見せてくれなくてもいいんだけど。
+<pre>
+% curl --sslv2 \
+  -F save=on \
+  -F /iw/nifty/fext/mes/1/index.html=checked \
+  -F /iw/nifty/flinux/mes/1/index.html=checked \
+  -F /iw/nifty/fgalts/mes/1/index.html=checked \
+  -F /iw/nifty/funix/mes/1/index.html=checked \
+  https://iw.nifty.com/iw/nifty/mylist/nifty.log &gt; nifty.log
+</pre>
+のように巡回したいところを追加すればok。
+あ、未読管理中にしておけば未読位置もいっしょに更新される。
+そのあたりはあらかじめ設定しておいたほうがいい。
+<pre>
+  -F logout=on
+</pre>
+で終わったら自動的にログアウトできる。<br>
+ひょっとして会議室番号ってallもあり？
+やってみると
+<pre>
+MREAD ROOM:1
+</pre>
+が単に
+<pre>
+MREAD
+</pre>
+になった。ってことは最終的には
+<pre>
+% curl --sslv2 \
+  -F save=on \
+  -F /iw/nifty/fext/mes/all/index.html=checked \
+  -F /iw/nifty/fgalts/mes/all/index.html=checked \
+  -F /iw/nifty/flinux/mes/all/index.html=checked \
+  -F /iw/nifty/funix/mes/all/index.html=checked \
+  https://iw.nifty.com/iw/nifty/mylist/nifty.log &gt; nifty.log
+</pre>
+のようにすれば簡単に会議室の巡回ができる。<br>
+コメントや新規発言はどうする？それはnif.rbでいっか。
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200103074" title="200103074" href="200103a.html#200103074">■</a> 
+<a href="http://homepage2.nifty.com/zn/nnikki/200103.html#07_t1">Ruby,Perl,C JARH</a></h3>
+おお、ナイスです。
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200103075" title="200103075" href="200103a.html#200103075">■</a> 
+JARH</h3>
+print 'Just ' 'another ' 'Ruby ' 'hacker,'
+<!-- section end -->
+</div>
+<!-- 2001/03/07 end -->
+
+
+
+<hr class="hide">
+<!-- 2001/03/08 start -->
+<h2><a name="20010308" href="200103a.html#20010308">2001-03-08 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="200103081" title="200103081" href="200103a.html#200103081">■</a> 
+SSLSocket</h3>
+<a href="http://www.ruby-lang.org/en/raa.html">RAA</a>に登録されてる
+<a href="http://www.ruby-lang.org/en/raa-list.rhtml?name=SSLSocket">SSLSocket</a>はちょっと古いようだ。今日現在の最新はssl-0.2.0.tar.gzだ
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-list/27560">[ruby-list:27560]</a>。
+これを使えばcurlのようなことも可能なはず。
+
+<h4><a name="200103081S1" href="200103a.html#200103081S1">_</a> <strong>まずはLinux</strong>: </h4>
+<div class="sub">
+<pre>
+% ruby extconf.rb
+checking for ssl.h... no
+</pre>
+あら？いきなりnoか。おもむろにextconf.rbを見ると決め打ちで
+<pre>
+$CFLAGS += &quot;-I/usr/include/openssl &quot;
+$LDFLAGS += &quot;-lcrypto &quot;
+</pre>
+となってる。うーむ。どうもdir_config()が浸透してないなあ。
+それとまた$LDFLAGSにライブラリを指定してる。
+<pre>
+dir_config(&quot;openssl&quot;)
+$CFLAGS += &quot;-I/usr/include/openssl &quot;
+$libs = append_library($libs, &quot;crypto&quot;)
+</pre>
+に変更。
+<pre>
+% ruby extconf.rb --with-openssl-dir=/usr/local/ssl 
+checking for ssl.h... no
+</pre>
+まだだめか。あ、opensslって変則的な構造になってるのか。
+<pre>
+/usr/local/ssl/include/openssl
+/usr/local/ssl/lib
+</pre>
+じゃ、別々に指定するしかないね。
+<pre>
+% ruby extconf.rb \
+  --with-openssl-include=/usr/local/ssl/include/openssl \
+  --with-openssl-lib=/usr/local/ssl/lib
+checking for ssl.h... no
+</pre>
+だめ。/usr/local/ssl/include/openssl/ssl.hを見ると
+<pre>
+#include &lt;openssl/comp.h&gt;
+</pre>
+てな感じになってる。それじゃ
+<pre>
+-I/usr/local/ssl/include
+</pre>
+も必要じゃん。てゆうか元々
+<pre>
+#include &lt;openssl/ssl.h&gt;
+</pre>
+で使ってくれという意味なんだろうか？
+そういう方針でssl.cも書き換えて、
+extconfig.rbも&quot;openssl/ssl.h&quot;を試すようにすると
+<pre>
+% ruby extconf.rb --with-openssl-dir=/usr/local/ssl 
+checking for openssl/ssl.h... yes
+checking for SSLv23_method() in -lssl... yes
+creating Makefile
+</pre>
+いけてるじゃん。makeもあっさり通った。
+
+</div>
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200103082" title="200103082" href="200103a.html#200103082">■</a> 
+<a href="http://homepage2.nifty.com/zn/nnikki/200103.html#07_t2">rubyist ML</a></h3>
+ってことはおいらのとこだけか。うーむ。
+とりあえず違うメールアドレスを送信先として設定してみた。
+これでしばらく様子を見てみよう。
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200103083" title="200103083" href="200103a.html#200103083">■</a> 
+JARH</h3>
+print File.dirname 'Just another Ruby hacker,/Just another Ruby porter,'
+<!-- section end -->
+</div>
+<!-- 2001/03/08 end -->
+
+
+
+<hr class="hide">
+<!-- 2001/03/09 start -->
+<h2><a name="20010309" href="200103a.html#20010309">2001-03-09 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="200103091" title="200103091" href="200103a.html#200103091">■</a> 
+SSLSocket</h3>
+あ、append_libraryじゃなくて素直にhave_libraryでいいよね。
+have_libraryは第2引数を省略すると&quot;main&quot;になるけど、
+これって失敗したなあ。当然nilにすべきだった。
+</p><blockquote><p>
+have_library(&quot;crypto&quot;)
+</p></blockquote><p>
+で済む話が
+</p><blockquote><p>
+have_library(&quot;crypto&quot;, nil)
+</p></blockquote><p>
+か
+</p><blockquote><p>
+have_library(&quot;crypto&quot;, &quot;&quot;)
+</p></blockquote><p>
+としなきゃいけないし。もちろんちゃんと
+</p><blockquote><p>
+have_library(&quot;crypto&quot;, &quot;crypt&quot;)
+</p></blockquote><p>
+と書けばいいんだけど、ライブラリの存在だけ調べれば十分でしょう。
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200103092" title="200103092" href="200103a.html#200103092">■</a> 
+JARH</h3>
+def $_.singleton_method_added(*) print 'Just another Ruby hacker,' end
+<!-- section end -->
+</div>
+<!-- 2001/03/09 end -->
+
+
+
+<hr class="hide">
+<!-- 2001/03/10 start -->
+<h2><a name="20010310" href="200103a.html#20010310">2001-03-10 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="200103101" title="200103101" href="200103a.html#200103101">■</a> 
+SSLSocketでNifty</h3>
+<h4><a name="200103101S1" href="200103a.html#200103101S1">_</a> <strong>svr.rb, cli.rb</strong>: </h4>
+<div class="sub">
+SSLSocketにはsample/にいろいろ例がある。
+まずはsvr.rb, cli.rbでSSLSocket自体がちゃんと動くか試してみよう。
+<pre>
+% ruby svr.rb
+[&quot;2000&quot;, &quot;sample.key&quot;, &quot;sample.crt&quot;]
+</pre>
+で待ちに入る。別のターミナルから
+<pre>
+% ruby cli.rb
+connect to 127.0.0.1.
+SSLSocket initialized.
+SSLSocket connected.
+serialNumber = 1
+subject      = /C=JP/ST=Some-State/L=Some-City/O=Some-Group/CN=J. Random User
+issuer       = /C=JP/ST=Some-State/L=Some-City/O=Some-CA/CN=GOTOU YUUZOU
+notBefore    = Jan  1 20:46:13 2001 GMT
+notAfter     = Jan  1 20:46:13 2002 GMT
+</pre>
+することでセッションが始まる。このときにサーバ側には
+<pre>
+connect from 127.0.0.1.
+SSLSocket initialized.
+SSLSocket accepted.
+</pre>
+と表示される。
+ここでクライアント側でなにか入力するとサーバ側はそのままpで表示する。
+helloなら&quot;hello\n&quot;という具合に。
+ここまで動けばSSLSocket自体は正しくインストールされてると考えていいだろう。
+
+</div>
+<h4><a name="200103101S2" href="200103a.html#200103101S2">_</a> <strong>wget.rb</strong>: </h4>
+<div class="sub">
+wget.rbをちょっと書き換えて簡単に試してみよう。
+まずはユーザ名とパスワードだ。
+curlは-vオプションをつけるとverbose modeになる。
+これを見ると
+<pre>
+Authorization: Basic QUJDMDAwMDA6cGFzc3dvcmQ=
+</pre>
+がそれにあたる。
+見るからにbase64でエンコードされてることがわかる。
+<pre>
+% ruby -e 'p &quot;QUJDMDAwMDA6cGFzc3dvcmQ=&quot;.unpack(&quot;m&quot;)'
+[&quot;ABC00000:password&quot;]
+</pre>
+つまり
+<pre>
+'Authorization: Basic' + [&quot;#{username}:#{password}&quot;].pack('m').chomp + &quot;\r\n&quot;
+</pre>
+をヘッダに追加すればいい。
+これでデータライブラリのダウンロードは可能になる。
+なぜか直接ダウンロードするのは許されてないので
+<pre>
+https://iw.nifty.com/iw/nifty/iwforum/index.html
+</pre>
+であらかじめログイン操作をしておく。<br>
+最初のほうにある
+<pre>
+print &quot;pid = #{$$}\n&quot;
+</pre>
+はリダイレクトするとまずいのでSTDERRに出すか削除しよう。<br>
+とりあえずは直接
+<pre>
+sock.write &quot;Authorization: Basic QUJDMDAwMDA6cGFzc3dvcmQ=\r\n&quot;
+</pre>
+をGETの次の行に入れて実験。これで
+<pre>
+% ruby wget.rb \
+  https://iw.nifty.com:443/iw/nifty/fgalts/lib/1/DLB.259/FDVR0303.LZH \
+  &gt; fdvr0303.lzh
+</pre>
+という感じでダウンロードできる。
+ポート番号を指定してるのはhttpsというschemeが/etc/servicesになかったから。<br>
+GET methodの場合はこれくらいで済んだけど、
+POST methodだともうちょっとやることが増える。
+
+
+</div>
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200103102" title="200103102" href="200103a.html#200103102">■</a> 
+JARH</h3>
+print ['Just another Ruby hacker,'].delete_at(0)
+<!-- section end -->
+</div>
+<!-- 2001/03/10 end -->
+
+<hr>
+<div>
+<a href="200102c.html">&lt;Prev(,)</a> | 
+<a href="200103b.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

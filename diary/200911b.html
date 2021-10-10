@@ -1,0 +1,432 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2009-11-b</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="200911a.html">
+<link rel="next" href="200911c.html">
+
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2009年11月中旬〜</p>
+<hr>
+<div>
+<a href="200911a.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="200911c.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2009/11/11 start -->
+<h2><a name="20091111" href="200911b.html#20091111">2009-11-11 (Wed)</a></h2>
+<!-- 2009-11-12 05:11:00 -->
+
+<div class="entry1">
+<h3><a name="200911111" title="200911111" href="200911b.html#200911111">■</a> 
+[SSH] sshの総当たり攻撃対策</h3>
+<p>
+port 22を開けるとやはり攻撃されるのでちょっと対策を。<br>
+/etc/hosts.denyで管理するDenyHostsが簡単そうだったので入れてみた。
+</p>
+
+<pre>
+% sudo yum install denyhosts
+% sudo chkconfig denyhosts on
+% sudo service denyhosts start
+</pre>
+<p>
+設定はdefaultのままでok。<br>
+/var/log/secureを見張っていて何度も攻撃してくるサイトを/etc/hosts.denyに登録する。<br>
+その関係上常にちょっと遅れた対応になるが、<br>
+/var/log/secureを見るとrefused connectというログを残して終了しているのが<br>
+ちらほら見つかったので効果はありそう。
+</p>
+
+<p>
+とりあえずはこれで様子見。
+</p>
+<!-- section end -->
+</div>
+<!-- 2009/11/11 end -->
+
+
+
+<hr class="hide">
+<!-- 2009/11/12 start -->
+<h2><a name="20091112" href="200911b.html#20091112">2009-11-12 (Thu)</a></h2>
+<!-- 2009-11-13 00:46:46 -->
+
+<div class="entry1">
+<h3><a name="200911121" title="200911121" href="200911b.html#200911121">■</a> 
+[SSH] sshへの攻撃をiptablesでブロック</h3>
+<p>
+
+<a href="http://blog.browncat.org/2007/07/sshiptables2.html">sshへの総当り攻撃をiptablesの2行で防ぐ方法</a>
+という記事があったので早速試したが、<br>
+今のFedora 11とはちょっと違うようで修正が必要だった。
+</p>
+
+<pre>
+-A RH-Firewall-1-INPUT -p tcp --dport 22 -m state --state NEW -m recent --set --name SSH
+-A RH-Firewall-1-INPUT -p tcp --dport 22 -m state --state NEW -m recent --update --seconds 60 --hitcount 8 --rttl --name SSH -j DROP
+</pre>
+<p>
+のRH-Firewall-1-INPUTの部分をINPUTに変更。
+</p>
+
+<pre>
+-A INPUT -p tcp --dport 22 -m state --state NEW -m recent --set --name SSH
+-A INPUT -p tcp --dport 22 -m state --state NEW -m recent --update --seconds 60 --hitcount 8 --rttl --name SSH -j DROP
+</pre>
+<p>
+これを
+</p>
+
+<pre>
+-A INPUT -m state --state NEW -m tcp -p tcp --dport 22 -j ACCEPT
+</pre>
+<p>
+の前に挿入する。あとはsudo service iptables restartでok。<br>
+8回目以降はタイムアウトするような感じになる。
+</p>
+
+<p>
+でもここに書いてしまうと[システム]-[管理]-[ファイアーウォール]で設定を変えると<br>
+上書きされるのでipt_recentの設定は無効になってしまう。さてどうしたもんか。
+</p>
+<!-- section end -->
+</div>
+<!-- 2009/11/12 end -->
+
+
+
+<hr class="hide">
+<!-- 2009/11/13 start -->
+<h2><a name="20091113" href="200911b.html#20091113">2009-11-13 (Fri)</a></h2>
+<!-- 2009-11-14 01:05:54 -->
+
+<div class="entry1">
+<h3><a name="200911131" title="200911131" href="200911b.html#200911131">■</a> 
+[SSH] sshdを別ポートで動かすことで対応</h3>
+<p>
+
+<a href="200911b.html#200911121">昨日</a>のつづき。
+</p>
+
+<p>
+ファイアーウォールの設定には「カスタムルール」というのあって、<br>
+ここにiptablesの文法で書けば追加されるようになっている。<br>
+別ファイルで昨日の設定を書けばよさそうだが追加なので順番がまずい。<br>
+というわけで、ポート22じゃなくて10022あたりを開けることにした。<br>
+</p>
+
+<pre>
+-A INPUT -p tcp --dport 10022 -m state --state NEW -m recent --set --name SSH
+-A INPUT -p tcp --dport 10022 -m state --state NEW -m recent --update --seconds 60 --hitcount 8 --rttl --name SSH -j DROP
+-A INPUT -m state --state NEW -m tcp -p tcp --dport 10022 -j ACCEPT
+</pre>
+<p>
+全部別ファイルに追い出せば確実に順番は保たれる。<br>
+しかもポート22をやめれば攻撃される確率も減る。一石二鳥だ。
+</p>
+
+<p>
+この設定で1日放置してみたらお客さんが一人も来なかった。<br>
+ポートを変える効果のほうが絶大だった。というオチ。最初からそうすればよかったな。
+</p>
+<!-- section end -->
+</div>
+<!-- 2009/11/13 end -->
+
+
+
+<hr class="hide">
+<!-- 2009/11/14 start -->
+<h2><a name="20091114" href="200911b.html#20091114">2009-11-14 (Sat)</a></h2>
+<!-- 2009-11-15 03:00:30 -->
+
+<div class="entry1">
+<h3><a name="200911141" title="200911141" href="200911b.html#200911141">■</a> 
+[DS] 光の4戦士</h3>
+<p>
+一昨日まで存在すら知らなかったが、近所のGEOにあったので買ってしまった。<br>
+なんか気づくと午前2時だったりで結構はまってるようだ。<br>
+たいまつとかアイテムの数の制限とかなんか初期のドラクエのよう。<br>
+逆に新鮮だなあ。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2009/11/14 end -->
+
+
+
+<hr class="hide">
+<!-- 2009/11/15 start -->
+<h2><a name="20091115" href="200911b.html#20091115">2009-11-15 (Sun)</a></h2>
+<!-- 2009-11-16 01:08:36 -->
+
+<div class="entry1">
+<h3><a name="200911151" title="200911151" href="200911b.html#200911151">■</a> 
+<a href="http://golang.org/doc/go_spec.html#Defer_statements">[Go] Defer statements</a></h3>
+<p>
+deferが面白いね。
+</p><blockquote><p>
+The expression must be a function or method call. Each time the
+&quot;defer&quot; statement executes, the parameters to the function call are
+evaluated and saved anew but the function is not invoked. Deferred
+function calls are executed in LIFO order immediately before the
+surrounding function returns, but after the return values, if any,
+have been evaluated.
+</p></blockquote><p>
+すぐに実行しないで関数がreturnする直前にLIFOで呼ばれる。
+</p>
+
+<pre>
+// prints 3 2 1 0 before surrounding function returns
+for i := 0; i &lt;= 3; i++ {
+    defer fmt.Print(i);
+}
+</pre>
+
+
+<!-- section end -->
+</div>
+<!-- 2009/11/15 end -->
+
+
+
+<hr class="hide">
+<!-- 2009/11/16 start -->
+<h2><a name="20091116" href="200911b.html#20091116">2009-11-16 (Mon)</a></h2>
+<!-- 2009-11-17 01:02:41 -->
+
+<div class="entry1">
+<h3><a name="200911161" title="200911161" href="200911b.html#200911161">■</a> 
+[Go] Goの面白いところ: iota</h3>
+<p>
+やっぱギリシャ語かな。iに通ずるってことで。<br>
+呼ばれるごとに順に0から1ずつincrementされる。constは
+</p><blockquote><p>
+Omitting the list of expressions is therefore equivalent to repeating
+the previous list.
+</p></blockquote><p>
+って感じで省略すると繰り返しを意味する。<br>
+
+<a href="http://stackoverflow.com/questions/1712172/whats-your-take-on-the-programming-language-go/1712502#1712502">ここの例</a>
+にあるように、KB, MB, ...が簡単に表現できる。
+</p>
+
+<pre>
+package main
+const (
+  _ = iota;
+  KB = 1 &lt;&lt; (10 * iota);
+  MB;
+  GB;
+)
+func main() {
+  println(KB);
+  println(MB);
+  println(GB);
+}
+</pre>
+<p>
+実行すると
+</p>
+
+<pre>
+1024
+1048576
+1073741824
+</pre>
+<p>
+となる。
+</p>
+<!-- section end -->
+</div>
+<!-- 2009/11/16 end -->
+
+
+
+<hr class="hide">
+<!-- 2009/11/17 start -->
+<h2><a name="20091117" href="200911b.html#20091117">2009-11-17 (Tue)</a></h2>
+<!-- 2009-11-18 00:32:02 -->
+
+<div class="entry1">
+<h3><a name="200911171" title="200911171" href="200911b.html#200911171">■</a> 
+<a href="http://golang.org/doc/gccgo_install.html">[Go] gccgo</a></h3>
+<p>
+gccgoにはまだ手を出さないほうがいい。svn coするだけで2GBもディスクを食うし、<br>
+makeの途中2時間ほどで失敗する割りには作業用にさらに2GBも食うしで、<br>
+がっかり感が倍増する。おつかれさまです。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2009/11/17 end -->
+
+
+
+<hr class="hide">
+<!-- 2009/11/18 start -->
+<h2><a name="20091118" href="200911b.html#20091118">2009-11-18 (Wed)</a></h2>
+<!-- 2009-11-19 04:26:57 -->
+
+<div class="entry1">
+<h3><a name="200911181" title="200911181" href="200911b.html#200911181">■</a> 
+[Fedora] yum upgradeでFedora 12へ上げようとするも失敗</h3>
+<p>
+いつものように進めると依存関係もすんなり通ってこりゃ楽だと思ったら、
+</p>
+
+<pre>
+Transaction Check Error:
+  installing package kernel-PAE-2.6.31.5-127.fc12.i686 needs 15MB on the /boot filesystem
+  installing package cyrus-sasl-plain-2.1.23-4.fc12.i686 needs 15MB on the /boot filesystem
+...
+  installing package boost-graph-1.39.0-8.fc12.i686 needs 8MB on the /boot filesystem
+  installing package libthai-0.1.12-2.fc12.i686 needs 8MB on the /boot filesystem
+
+Error Summary
+-------------
+Disk Requirements:
+  At least 15MB needed on the /boot filesystem.
+</pre>
+<p>
+と言われて終了。なんだよそれ？<br>
+まさか/bootに全部インストールしようってんじゃないよね？<br>
+</p>
+<!-- section end -->
+</div>
+<!-- 2009/11/18 end -->
+
+
+
+<hr class="hide">
+<!-- 2009/11/19 start -->
+<h2><a name="20091119" href="200911b.html#20091119">2009-11-19 (Thu)</a></h2>
+<!-- 2009-11-20 03:29:32 -->
+
+<div class="entry1">
+<h3><a name="200911191" title="200911191" href="200911b.html#200911191">■</a> 
+[Fedora] VirtualBox上でF11→F12を試すと問題なし</h3>
+<p>
+/bootパーティションの存在とかほぼ同じなんだけどなあ。<br>
+気になるのは失敗したマシンはFC6の頃から順に上げてるってことだけど、<br>
+なんかゴミみたいなもんがあるのか？
+</p>
+
+<p>
+いずれにせよ家のPCはext4にするつもりでいたので避けられるんだよね。放置。
+</p>
+<!-- section end -->
+</div>
+<!-- 2009/11/19 end -->
+
+
+
+<hr class="hide">
+<!-- 2009/11/20 start -->
+<h2><a name="20091120" href="200911b.html#20091120">2009-11-20 (Fri)</a></h2>
+<!-- 2009-11-21 02:25:46 -->
+
+<div class="entry1">
+<h3><a name="200911201" title="200911201" href="200911b.html#200911201">■</a> 
+[GRUB] USBフラッシュにVFATでGRUBをインストール</h3>
+<p>
+GRUBのイメージをそのままUSBフラッシュに書き込むと、<br>
+フロッピー分しか使えないのでもったいない。<br>
+というわけでVFATにGRUBをインストールしてみた。<br>
+F12への布石でもある。
+</p>
+
+<pre>
+% fdisk /dev/sdd # 下記のようなパーティション作成
+% fdisk -l /dev/sdd
+
+ディスク /dev/sdd: 261 MB, 261881856 バイト
+ヘッド 9, セクタ 56, シリンダ 1014
+Units = シリンダ数 of 504 * 512 = 258048 バイト
+Disk identifier: 0x6f20736b
+
+デバイス ブート     始点        終点    ブロック   Id システム
+/dev/sdd1   *           1        1014      255500    b  W95 FAT32
+
+% mkfs -t vfat -v -n 256MB /dev/sdd1
+ここで一度USBフラッシュを外して改めてつなぐと自動でマウントされる
+% grub-install --root-directory=/media/256MB --no-floppy /dev/sdd
+</pre>
+<p>
+これで再起動するとGRUBプロンプトが表示される。
+</p>
+
+<p>
+でもUSBフラッシュがhd0になってしまって非常に面倒な自体に。<br>
+BIOSの設定かdevice.mapでなんとかなるもんかな。
+</p>
+<!-- section end -->
+</div>
+<!-- 2009/11/20 end -->
+
+<hr>
+<div>
+<a href="200911a.html">&lt;Prev(,)</a> | 
+<a href="200911c.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

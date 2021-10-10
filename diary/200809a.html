@@ -1,0 +1,335 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2008-9-a</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="200808c.html">
+<link rel="next" href="200809b.html">
+
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2008年9月上旬〜</p>
+<hr>
+<div>
+<a href="200808c.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="200809b.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2008/09/01 start -->
+<h2><a name="20080901" href="200809a.html#20080901">2008-09-01 (Mon)</a></h2>
+<!-- 2008-09-02 00:49:10 -->
+
+<div class="entry1">
+<h3><a name="200809011" title="200809011" href="200809a.html#200809011">■</a> 
+<a href="http://www.nicovideo.jp/watch/sm4441405">[ニコニコ動画] 男だけど「ライオン」歌ったらご飯が炊けた【ピコ】‐ニコニコ動画(夏)</a></h3>
+<p>
+あまりに凄くて笑った。
+</p>
+<!-- section end -->
+</div>
+<!-- 2008/09/01 end -->
+
+
+
+<hr class="hide">
+<!-- 2008/09/02 start -->
+<h2><a name="20080902" href="200809a.html#20080902">2008-09-02 (Tue)</a></h2>
+<!-- 2008-09-03 00:19:59 -->
+
+<div class="entry1">
+<h3><a name="200809021" title="200809021" href="200809a.html#200809021">■</a> 
+[TV] テレビ東京が臨時ニュース</h3>
+<p>
+SUGOI☆日本人とかいう番組を偶然録ってたよ。日本オワタ。<br>
+しかし延長するかと思ったら無理矢理その間カットされていた。<br>
+そんなんありか。ミスタータナカって誰なんだよ!
+</p>
+<!-- section end -->
+</div>
+<!-- 2008/09/02 end -->
+
+
+
+<hr class="hide">
+<!-- 2008/09/03 start -->
+<h2><a name="20080903" href="200809a.html#20080903">2008-09-03 (Wed)</a></h2>
+<!-- 2008-09-04 00:57:50 -->
+
+<div class="entry1">
+<h3><a name="200809031" title="200809031" href="200809a.html#200809031">■</a> 
+[Linux] ffmpegでmp4からmp3とかogg/vorbisへ</h3>
+<p>
+ffmpeg -i foo.mp4すると
+</p>
+
+<pre>
+Stream #0.0(und): Video: h264, yuv420p, 512x384,  5.00 tb(r)
+Stream #0.1(und): Audio: mpeg4aac, 22050 Hz, stereo
+</pre>
+<p>
+となるような動画は-acodec copyじゃmp3にならないのでエンコードが必要(当たり前)。
+</p>
+
+<pre>
+% ffmpeg -i foo.mp4 -vn -acodec libmp3lame -ar 44100 -ab 128k foo.mp3
+% ffmpeg -i foo.mp4 -vn -acodec vorbis -ar 44100 -ab 128k foo.ogg
+</pre>
+
+<p>
+ビットレート(-ab)は適当。oggは-acodec vorbisにしないといけない。ここで悩んだ。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2008/09/03 end -->
+
+
+
+<hr class="hide">
+<!-- 2008/09/04 start -->
+<h2><a name="20080904" href="200809a.html#20080904">2008-09-04 (Thu)</a></h2>
+<!-- 2008-09-05 00:54:49 -->
+
+<div class="entry1">
+<h3><a name="200809041" title="200809041" href="200809a.html#200809041">■</a> 
+[Cygwin] CygwinのVim 7.2-1で文字化け</h3>
+<p>
+なんか急に文字が化けるようになったと思ったら
+</p>
+
+<pre>
+% vim --version |grep -o .iconv
+-iconv
+</pre>
+<p>
+iconvがoffになってら。面倒なのでsetup.exeでVim 7.1-1に戻した。
+</p>
+<!-- section end -->
+</div>
+<!-- 2008/09/04 end -->
+
+
+
+<hr class="hide">
+<!-- 2008/09/05 start -->
+<h2><a name="20080905" href="200809a.html#20080905">2008-09-05 (Fri)</a></h2>
+<!-- 2008-09-06 23:51:26 -->
+
+<div class="entry1">
+<h3><a name="200809051" title="200809051" href="200809a.html#200809051">■</a> 
+<a href="http://www.nicovideo.jp/watch/sm2913543">[ニコニコ動画]  【宇多田ヒカル + AI】 Story -Keep Tryin'- 【Melodyne】</a></h3>
+<p>
+うーむ。信じられん。何がどうなっているのか。
+</p>
+<!-- section end -->
+</div>
+<!-- 2008/09/05 end -->
+
+
+
+<hr class="hide">
+<!-- 2008/09/06 start -->
+<h2><a name="20080906" href="200809a.html#20080906">2008-09-06 (Sat)</a></h2>
+<!-- 2008-09-07 14:41:29 -->
+
+<div class="entry1">
+<h3><a name="200809061" title="200809061" href="200809a.html#200809061">■</a> 
+<a href="http://www.nicovideo.jp/watch/sm4536591">[ニコニコ動画]  思わず光る泥団子を作りたくなる動画</a></h3>
+<p>
+ツイスト面白すぎ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2008/09/06 end -->
+
+
+
+<hr class="hide">
+<!-- 2008/09/07 start -->
+<h2><a name="20080907" href="200809a.html#20080907">2008-09-07 (Sun)</a></h2>
+<!-- 2008-09-08 01:09:41 -->
+
+<div class="entry1">
+<h3><a name="200809071" title="200809071" href="200809a.html#200809071">■</a> 
+[Google] Google Chrome</h3>
+<p>
+なんだかんだ言ってLinuxじゃ使えないので週末まったく触ることがないわけで、<br>
+熱が冷めてしまった。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200809072" title="200809072" href="200809a.html#200809072">■</a> 
+[Twitter] 実験用のTwitterのアカウントを削除</h3>
+<p>
+musicとか含んでいたせいかやたらとspamっぽいfollowersだらけになったので、<br>
+さくっと削除。
+</p>
+
+<p>
+本当にさよならですかと言われてちょっとどきっとした。
+</p>
+
+<pre>
+本当にさよならですか？
+
+削除をしても本当によいですか？ ？ ..
+アカウントを削除する前に
+
+   1. もしユーザー名を変更したい場合は、アカウントを削除する必要はありません。設定画面を使ってユーザー名を変更できます。
+   2. あなたのアカウントは削除されてから数日はTwittreのサイトで表示される場合があります。
+   3. もし新しいアカウントに同じ電話番号やメールアドレスを登録したい場合は、登録中の内容を他のものに変更してから、アカウントを削除してください。
+   4. Googleのような検索サイトでインデックスされたコンテんツにはTwitterはカンチしません。
+   5. この作業は取り消しできません。
+</pre>
+
+<p>
+「コンテんツ」とか「カンチ」とかわらった。
+</p>
+
+<!-- section end -->
+</div>
+<!-- 2008/09/07 end -->
+
+
+
+<hr class="hide">
+<!-- 2008/09/08 start -->
+<h2><a name="20080908" href="200809a.html#20080908">2008-09-08 (Mon)</a></h2>
+<!-- 2008-09-09 01:24:07 -->
+
+<div class="entry1">
+<h3><a name="200809081" title="200809081" href="200809a.html#200809081">■</a> 
+<a href="http://golf.shinh.org/p.rb?CALC+fixed">[Golf] CALC fixed</a></h3>
+<p>
+Bashで書いてみたが3番目がタイムアウトしてしまう。
+</p>
+
+<pre>
+while read a;do
+b=`sed 's/[0-9]\+/&amp;)/g'&lt;&lt;&lt;$a`
+c=${b//[!)]}
+echo $a=$[${c//)/(}$b]
+done|sed 's/[^0-9]/ &amp; /g'
+</pre>
+<p>
+毎回呼んでるsedをやめればいけそうではあるんだけど。
+</p>
+<!-- section end -->
+</div>
+<!-- 2008/09/08 end -->
+
+
+
+<hr class="hide">
+<!-- 2008/09/09 start -->
+<h2><a name="20080909" href="200809a.html#20080909">2008-09-09 (Tue)</a></h2>
+<!-- 2008-09-10 01:20:17 -->
+
+<div class="entry1">
+<h3><a name="200809091" title="200809091" href="200809a.html#200809091">■</a> 
+<a href="http://golf.shinh.org/p.rb?CALC+fixed">[Golf] CALC fixed</a></h3>
+<p>
+計算結果が負になるケースで破綻。
+</p>
+
+<pre>
+52 + 22 - 56 - 36 + 5 + 37 - 77 + 2 - 16 - 91 =  - 158
+</pre>
+<p>
+となってしまう。あ、でも
+</p>
+
+<pre>
+s/  - / -/
+</pre>
+<p>
+を追加でいいのか。
+</p>
+<!-- section end -->
+</div>
+<!-- 2008/09/09 end -->
+
+
+
+<hr class="hide">
+<!-- 2008/09/10 start -->
+<h2><a name="20080910" href="200809a.html#20080910">2008-09-10 (Wed)</a></h2>
+<!-- 2008-09-11 01:17:15 -->
+
+<div class="entry1">
+<h3><a name="200809101" title="200809101" href="200809a.html#200809101">■</a> 
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-talk/314431">[Ruby] Rake 0.8.2 Released</a></h3>
+<p>
+なんか久し振りにリリースされたようけど、trunkのほうは反映されてないよな。
+</p><blockquote><p>
+Rake version 0.8.2 is a new release of rake that includes a number of
+new features and numerous bug fixes.
+</p></blockquote>
+<!-- section end -->
+</div>
+<!-- 2008/09/10 end -->
+
+<hr>
+<div>
+<a href="200808c.html">&lt;Prev(,)</a> | 
+<a href="200809b.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

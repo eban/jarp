@@ -1,0 +1,341 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2015-9-b</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="201509a.html">
+<link rel="next" href="201509c.html">
+
+<link rel="stylesheet" type="text/css" href="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.css">
+<script async type="text/javascript" src="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.js"></script>
+<script type="text/javascript">
+<!--       
+$(document).ready(function() {
+  prettyPrint();
+});
+-->
+</script>
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2015年9月中旬〜</p>
+<hr>
+<div>
+<a href="201509a.html" accesskey=",">&lt;Older(,)</a> | 
+<a href="201509c.html" accesskey=".">Newer(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2015/09/11 start -->
+<h2><a name="20150911" href="201509b.html#20150911">2015-09-11 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="201509111" title="201509111" href="201509b.html#201509111">■</a> 
+kimono labsとIFTTTとの相性</h3>
+<p>
+いろいろkimonoでAPIを作っているが、IFTTTとの相性が悪いのか時間経つとTimeoutしてしまうものがある。<br>
+IFTTTのログはまったくもって役に立たないので原因がわからないんだよなあ。<br>
+まじで生のログを見せてほしい。
+</p>
+<!-- section end -->
+</div>
+<!-- 2015/09/11 end -->
+
+
+
+<hr class="hide">
+<!-- 2015/09/12 start -->
+<h2><a name="20150912" href="201509b.html#20150912">2015-09-12 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="201509121" title="201509121" href="201509b.html#201509121">■</a> 
+IFTTTのタイムアウトの原因がわかった気がする</h3>
+<p>
+descriptionに画像のURLを
+</p>
+<pre>
+&lt;img src=&quot;http://.../foo.jpg&quot;&gt;
+</pre>
+<p>
+のように埋め込んで置くとIFTTTでEntryImageUrlで受け取れるが、<br>
+どうもこれが悪さしてるようで。外したら調子いい。<br>
+そういえばもう1個動かしてるほうは画像なしのせいか調子いい。<br>
+しかしそうなると画像つきtweetが使えないのは痛いな。
+</p>
+<!-- section end -->
+</div>
+<!-- 2015/09/12 end -->
+
+
+
+<hr class="hide">
+<!-- 2015/09/13 start -->
+<h2><a name="20150913" href="201509b.html#20150913">2015-09-13 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="201509131" title="201509131" href="201509b.html#201509131">■</a> 
+console.log %j</h3>
+<p>
+JSON.stringifyって書くの面倒だなと思ったら、console.logには%jなんてものがあった。
+</p>
+<pre>
+% node -e 'console.log({foo:{bar:{baz:{hoge:1}}}})'
+{ foo: { bar: { baz: [Object] } } }
+% node -e 'console.log(&quot;%j&quot;, {foo:{bar:{baz:{hoge:1}}}})'
+{&quot;foo&quot;:{&quot;bar&quot;:{&quot;baz&quot;:{&quot;hoge&quot;:1}}}}
+% node -e 'console.log(JSON.stringify({foo:{bar:{baz:{hoge:1}}}}))'
+{&quot;foo&quot;:{&quot;bar&quot;:{&quot;baz&quot;:{&quot;hoge&quot;:1}}}}
+</pre>
+<p>
+内部的には単にJSON.stringifyを呼んでるだけなので結果も同じだ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2015/09/13 end -->
+
+
+
+<hr class="hide">
+<!-- 2015/09/14 start -->
+<h2><a name="20150914" href="201509b.html#20150914">2015-09-14 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="201509141" title="201509141" href="201509b.html#201509141">■</a> 
+天気予報のRSSをtwitterへ流そう</h3>
+<p>
+<a href="http://weather.livedoor.com/">livedoor天気情報</a>は今時珍しくRSSでも配信していて助かる。<br>
+しかし、これをtwitterへbotとして流そうとすると困ることになる。<br>
+たとえばさいたまだと
+<a href="http://weather.livedoor.com/area/forecast/110010">こんな感じのページ</a>になっているが、これは1週間分予報として存在する。<br>
+RSSの中身も1週間分あるが、一番新しいのは1週間後の天気になる。<br>
+つまりIFTTTでrecipe作ってもtwitterに流れるのは常に1週間後の天気になる。<br>
+どうしろと。
+</p>
+<!-- section end -->
+</div>
+<!-- 2015/09/14 end -->
+
+
+
+<hr class="hide">
+<!-- 2015/09/15 start -->
+<h2><a name="20150915" href="201509b.html#20150915">2015-09-15 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="201509151" title="201509151" href="201509b.html#201509151">■</a> 
+kimono labsでhourly</h3>
+<p>
+1時間に1回という指定にすると、どうもsleep 60m的な処理になってるらしくだんだんずれていく。<br>
+そうなるとbot的にはいつか1個飛ばしになるわけでちょっと体裁が悪い。<br>
+そのために頻度を上げるのもどうかと思うし、<br>
+そもそも1時間より細かい設定はできないしで痛し痒し。
+</p>
+<pre>
+Sep 15, 2015 12:23 PM
+Sep 15, 2015 1:25 PM
+Sep 15, 2015 2:32 PM
+Sep 15, 2015 3:34 PM
+Sep 15, 2015 4:35 PM
+Sep 15, 2015 5:37 PM
+Sep 15, 2015 6:38 PM
+</pre>
+<!-- section end -->
+</div>
+<!-- 2015/09/15 end -->
+
+
+
+<hr class="hide">
+<!-- 2015/09/16 start -->
+<h2><a name="20150916" href="201509b.html#20150916">2015-09-16 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="201509161" title="201509161" href="201509b.html#201509161">■</a> 
+集中線</h3>
+<p>
+convertでできるのか調べてみると
+<a href="http://www.imagemagick.org/Usage/advanced/">Advanced Techniques -- IM v6 Examples</a>の後ろのほうに書いてある方法でできそうな気がする。<br>
+でもなんかまた違った効果になりそうな。<br>
+このあたりになると何やってるのかさっぱりわからんな。
+</p>
+<!-- section end -->
+</div>
+<!-- 2015/09/16 end -->
+
+
+
+<hr class="hide">
+<!-- 2015/09/17 start -->
+<h2><a name="20150917" href="201509b.html#20150917">2015-09-17 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="201509171" title="201509171" href="201509b.html#201509171">■</a> 
+白黒画像だと挿絵がつぶれる</h3>
+<p>
+単純な二値化じゃしょうがないとも言える。<br>
+どうにかするには挿絵だけはditherで処理するしかないが、<br>
+はたして挿絵と文章のページはconvertで自動的に判断可能かどうか。<br>
+挿絵のページは少ないとはいえ手動じゃちょっとやってられない。<br>
+ヒストグラムを取ればいけそうな気もする。<br>
+ああ、つぶれるなら2二値化して黒の画素数が一定以上だったら絵とみなせばいいか。
+</p>
+<!-- section end -->
+</div>
+<!-- 2015/09/17 end -->
+
+
+
+<hr class="hide">
+<!-- 2015/09/18 start -->
+<h2><a name="20150918" href="201509b.html#20150918">2015-09-18 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="201509181" title="201509181" href="201509b.html#201509181">■</a> 
+kimono labsのREST API</h3>
+<p>
+<a href="https://www.kimonolabs.com/apidocs">kimono labsのAPIドキュメント</a>を見るとなんとStart a crawlなんてAPIがある。<br>
+つまりkimonoに任せなくても外から制御可能なわけだ。<br>
+ここで適当なcrontabからじゃ面白くないので何か手はないかと探しまくる。<br>
+IFTTTのDate&amp;Timeが使えそう。これで1時間に1回というタイマーが設定できる。<br>
+さらにMakerを使うとhttpで叩くことが可能。完璧だ。<br>
+というわけで設定してみた。
+</p>
+<p>
+ドキュメントがものすごく不親切だが、要するに以下のような感じでいける。
+</p>
+<pre>
+% curl -sL -H 'Content-Type: application/json' \
+  --data '{&quot;apikey&quot;:&quot;my api key&quot;}' \
+  https://www.kimonolabs.com/kimonoapis/{API_ID}/startcrawl
+</pre>
+<p>
+kimonoapisがまさかそのままの意味だとは思わなかった。<br>
+IFTTTのMakerもPOSTとかContent-Typeの指定もできるので至れり尽くせり。
+</p>
+<!-- section end -->
+</div>
+<!-- 2015/09/18 end -->
+
+
+
+<hr class="hide">
+<!-- 2015/09/19 start -->
+<h2><a name="20150919" href="201509b.html#20150919">2015-09-19 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="201509191" title="201509191" href="201509b.html#201509191">■</a> 
+IFTTT Date&amp;Timeの実力</h3>
+<p>
+それほど期待してなかったがまあ問題ない範囲で使えるようだ。
+</p>
+<pre>
+Sep 19, 2015 2:22 AM
+Sep 19, 2015 3:29 AM
+Sep 19, 2015 4:20 AM
+Sep 19, 2015 5:20 AM
+Sep 19, 2015 6:21 AM
+Sep 19, 2015 7:22 AM
+Sep 19, 2015 8:19 AM
+Sep 19, 2015 9:19 AM
+Sep 19, 2015 10:19 AM
+Sep 19, 2015 11:19 AM
+Sep 19, 2015 12:22 PM
+Sep 19, 2015 1:20 PM
+Sep 19, 2015 2:18 PM
+Sep 19, 2015 3:19 PM
+Sep 19, 2015 4:18 PM
+Sep 19, 2015 5:20 PM
+Sep 19, 2015 6:18 PM
+Sep 19, 2015 7:20 PM
+Sep 19, 2015 8:19 PM
+Sep 19, 2015 9:20 PM
+Sep 19, 2015 10:20 PM
+Sep 19, 2015 11:20 PM
+</pre>
+<p>
+毎時15分に発火するようにしてkimono labsのCRAWL HISTORYで確認したところ、<br>
+だいたい20分あたりで実行されたようで。<br>
+というわけで、<br>
+IFTTTからkimono APIを叩きRSSのcacheを作らせ、<br>
+IFTTTのFeedを読む巡回が適当に動いて、<br>
+twitterへ配信するというbotが完成。
+</p>
+<!-- section end -->
+</div>
+<!-- 2015/09/19 end -->
+
+
+
+<hr class="hide">
+<!-- 2015/09/20 start -->
+<h2><a name="20150920" href="201509b.html#20150920">2015-09-20 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="201509201" title="201509201" href="201509b.html#201509201">■</a> 
+IFTTTもkimono labsもとばっちり</h3>
+<p>
+バックエンドはawsなのかherokuなのかはわからないけど、両方とも障害を起こすとは。<br>
+そういえばIFTTTの障害ってあまり聞いたことないな。
+</p>
+<!-- section end -->
+</div>
+<!-- 2015/09/20 end -->
+
+<hr>
+<div>
+<a href="201509a.html">&lt;Older(,)</a> | 
+<a href="201509c.html">Newer(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

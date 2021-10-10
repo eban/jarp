@@ -1,0 +1,399 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2011-12-a</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="201111c.html">
+<link rel="next" href="201112b.html">
+
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2011年12月上旬〜</p>
+<hr>
+<div>
+<a href="201111c.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="201112b.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2011/12/01 start -->
+<h2><a name="20111201" href="201112a.html#20111201">2011-12-01 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="201112011" title="201112011" href="201112a.html#201112011">■</a> 
+tmux attach</h3>
+<p>
+~/.tmux.confの最後にnew-sessionと書いておけばtmux attach || tmuxみたいなことをしなくても、<br>
+常にtmux attachと実行するだけでよくなる。<br>
+なければちゃんと新しいセッションを作ってくれるし、あればそいつにattachしてくれる。<br>
+毎回新たなセッションが作られるわけでもない。完璧だ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2011/12/01 end -->
+
+
+
+<hr class="hide">
+<!-- 2011/12/02 start -->
+<h2><a name="20111202" href="201112a.html#20111202">2011-12-02 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="201112021" title="201112021" href="201112a.html#201112021">■</a> 
+ディスクカッターとスキャナ</h3>
+<p>
+自炊してみた。カッターはDC-210N。<br>
+ちょっと大目に切っておかないと内部に接着剤が染み込んでることがある。<br>
+くっついたままだとジャムる。裁断は大胆に。これはしかし切れ味が気持ちいい。くせになる。
+</p>
+<p>
+スキャナはScanSnap S1500。Ubuntuだとつなぐだけでok。<br>
+あとはxsaneで両面もちゃんとスキャンできる。すばらしい。<br>
+まずは要らない本でやってみたが、Sony Readerで見てもまずまずのでき。<br>
+246ページの新書が17MBのepubになった。<br>
+でももうちょっとdpiとか位置とかパラメータをいじる必要あるな。<br>
+それとちょっと斜めになってるような？<br>
+windows版のソフトも試してみるか。<br>
+まあ、冬休みになれば時間も取れるだろう。
+</p>
+<!-- section end -->
+</div>
+<!-- 2011/12/02 end -->
+
+
+
+<hr class="hide">
+<!-- 2011/12/03 start -->
+<h2><a name="20111203" href="201112a.html#20111203">2011-12-03 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="201112031" title="201112031" href="201112a.html#201112031">■</a> 
+本をばらばらに</h3>
+<p>
+ディスクカッターに入れるには本を40枚ぐらいに分割してやらないといけない。<br>
+で、この作業をしてると接着剤から結構簡単にはがれることに気づく。<br>
+でもはがれても圧がかかってるのと接着剤の残りとかで、軽くくっついている。<br>
+これがくせもので手では簡単にばらせるが、さすがにフィーダーでは無理。<br>
+1枚1枚ばらす作業が入ってしまい時間がかかる。<br>
+結局カッターで裁断したほうが速いことになる。
+</p>
+<p>
+とはいいつつもテレビ見ながらだと手元を見なくてもばらばらにできるので、<br>
+地道な作業をしてたりする。
+
+</p>
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="201112032" title="201112032" href="201112a.html#201112032">■</a> 
+xsaneの使い方</h3>
+<p>
+手でXYのサイズとか入力してたけど、そんなことしなくてもプレビューウィンドウで<br>
+プレビューすればいいことに今日になって気づいた。<br>
+ちゃんと自動でスキャンエリアを認識してるし、微調整で広げればいいだけになってる。<br>
+あとは裏の字が透けなくらいのコントラストを設定すればok。<br>
+結構ななめになるので、それを補正したいができないかな。
+</p>
+<!-- section end -->
+</div>
+<!-- 2011/12/03 end -->
+
+
+
+<hr class="hide">
+<!-- 2011/12/04 start -->
+<h2><a name="20111204" href="201112a.html#20111204">2011-12-04 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="201112041" title="201112041" href="201112a.html#201112041">■</a> 
+RD-H1からの完了通知メールが来ない</h3>
+<p>
+SMTPサーバーがYahooのSMTPサーバーのままだったので、<br>
+RD-H1から録画予約完了通知メールが来ていなかった。<br>
+そりゃ、回線変えたんだからブロックされるよな。<br>
+じゃあどこにするかと考えたが、考えるまでもなくこのマシンでPostfix動かしてるんだった。<br>
+最近は最初から厳しめに第三者中継は許さない設定になってるので、そのあたりゆるめたり。<br>
+inet_interfacesがloopback-onlyじゃだめってことに気づくのに時間がかかった。
+</p>
+<!-- section end -->
+</div>
+<!-- 2011/12/04 end -->
+
+
+
+<hr class="hide">
+<!-- 2011/12/05 start -->
+<h2><a name="20111205" href="201112a.html#20111205">2011-12-05 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="201112051" title="201112051" href="201112a.html#201112051">■</a> 
+ディレクトリにあるjpgファイル群をCalibreで追加</h3>
+<p>
+Calibreの「本を追加」ボタンではディレクトリ自体を指定できないが、
+</p>
+<pre>
+% ls *.jpg|xargs printf '&lt;img src=&quot;%s&quot;&gt;\n&lt;span style=&quot;page-break-before: always&quot;&gt; &lt;/span&gt;\n' &gt;index.html
+</pre>
+<p>
+のようになんちゃってindex.htmlを作ってこれを指定すれば取り込める。
+
+</p>
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="201112052" title="201112052" href="201112a.html#201112052">■</a> 
+Calibreの書誌情報</h3>
+<p>
+「書誌を編集」ボタンで書名を検索すればamazonから情報を取ってきてくれるが、<br>
+その前に「設定」「書誌情報のダウンロード」で日本のamazonを使うようにしておく。<br>
+そのままだと日本の本はやっぱ見つからない。<br>
+カバーもスキャンしてもいいけど、どうせここでamazonから取ってくるのでその必要ないかもしれない。<br>
+カバーは切らないので大きさが違うから、ちょっとやっかい。
+</p>
+<!-- section end -->
+</div>
+<!-- 2011/12/05 end -->
+
+
+
+<hr class="hide">
+<!-- 2011/12/06 start -->
+<h2><a name="20111206" href="201112a.html#20111206">2011-12-06 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="201112061" title="201112061" href="201112a.html#201112061">■</a> 
+Rubyの-lオプションがなぜchompではないのか？</h3>
+<p>
+実に単純な理由で、chompは-lオプションよりも後に追加されたメソッドだから。<br>
+その時に-lオプションもchompにすべきだったと思うが、みんな忘れてたと思うよ。<br>
+一方Perlはちゃんとchompになっている。
+</p>
+<p>
+でもこれが問題になるのはEOFに改行がない場合で
+<a href="http://golf.shinh.org/">ゴルフ</a>ぐらいかな。<br>
+いや、これのおかげでどんだけ泣かされているか。<br>
+ゴルファーならこの違いに敏感なはずである。
+</p>
+<p>
+参考:
+<a href="http://sakuro.tumblr.com/post/13824288811">/var/log/messages - Rubyオプションあれこれ</a></p>
+<!-- section end -->
+</div>
+<!-- 2011/12/06 end -->
+
+
+
+<hr class="hide">
+<!-- 2011/12/07 start -->
+<h2><a name="20111207" href="201112a.html#20111207">2011-12-07 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="201112071" title="201112071" href="201112a.html#201112071">■</a> 
+でかいWEB+DB PRESS総集編PDFをなんとかする</h3>
+<p>
+そうそう。総集編買ってたよなと改めてDVD見てみると90MBのPDFとかが並んでいてがっくりきた。<br>
+T1に入れてみたがやはり無理。2ページ目まではなんとか出たが3ページ目はお待ちくださいのまま返ってこない。<br>
+戻るボタンでキャンセルした。というわけで見れるようになんとかする。
+</p>
+<p>
+考えつくのはPDFを画像データに変換してしまえばあとはスキャナでスキャンしたものと同じ。<br>
+convertで変換可能だ。たとえばVol.50の「はじめてのGit」を抜き出したければ
+</p>
+<pre>
+% convert -density 150x150 -resize 512x webdb_vol50.pdf'[52-96]' git.jpg
+</pre>
+<p>
+と実行すればok。53ページから97ページまでgit-52.jpg .. git-96.jpgというファイルになる。<br>
+ページは[]で指定できるが、0から始まるので注意。サイズはデバイスに合わせる。
+</p>
+<p>
+これでまあなんとか辛うじて読めないこともないが、元がA4サイズなのでやはり字が小さすぎる。<br>
+回りのページ番号や表題のような情報を削除してなるべく記事だけを残したいところ。<br>
+あまりなんとかなってない。pdftoppmのほうがいいかな。
+</p>
+<pre>
+% pdftoppm -W 844 -H 1234 -x 118 -y 170 -f 53 -l 97 -jpeg -gray webdb_vol50.pdf git
+</pre>
+<p>
+でよさげだ。オフセットを-x,-yで指定してcropするサイズを-W,-Hで指定する。<br>
+-f 53 -f 97がページ指定でgit-053.jpgからgit-097.jpgまでできあがる。あとはcalibreでepubに変換。<br>
+これだとT1でもほぼ問題なく読める。
+</p>
+<p>
+WEB+DB PRESSの目次は
+<a href="https://docs.google.com/spreadsheet/pub?hl=ja&amp;key=0AjbGMS73rIkDdFF6R0k5N19WMy0wTmhoYmUwT1NRanc&amp;output=html">Google Docs</a>で管理されてるらしい。検索はここからCSVを取ってきてgrepしたほうがいい。
+</p>
+<!-- section end -->
+</div>
+<!-- 2011/12/07 end -->
+
+
+
+<hr class="hide">
+<!-- 2011/12/08 start -->
+<h2><a name="20111208" href="201112a.html#20111208">2011-12-08 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="201112081" title="201112081" href="201112a.html#201112081">■</a> 
+16階調Grayscale PNG</h3>
+<p>
+T1も当然のことながら16階調なのであった。というわけで昨日のはこうなった。
+</p>
+<pre>
+% mkdir ppm jpg4 png4
+% pdftoppm -W 844 -H 1234 -x 118 -y 170 -f 53 -l 97 webdb_vol50.pdf ppm/git
+% for i in {053..097};do convert ppm/git-$i.ppm -type GrayScale -resize 514x751 -level 30,100% -depth 4 jpg4/git-$i.jpg;done
+% for i in {053..097};do convert ppm/git-$i.ppm -type GrayScale -resize 514x751 -level 30,100% -depth 4 png4/git-$i.png;done
+% du -sh jpg4 png4
+6.8M	jpg4
+2.5M	png4
+</pre>
+<p>
+最終的にはjpegよりpngのほうがサイズが小さくなる。あと字がうすいのでレベル補正。<br>
+T1はpngのepubでも読めた。
+</p>
+<p>
+でもまだ字が小さい。2段組になってるのでさらに4分割するという手もあるか。
+</p>
+<!-- section end -->
+</div>
+<!-- 2011/12/08 end -->
+
+
+
+<hr class="hide">
+<!-- 2011/12/09 start -->
+<h2><a name="20111209" href="201112a.html#20111209">2011-12-09 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="201112091" title="201112091" href="201112a.html#201112091">■</a> 
+{0..50..10}</h3>
+<p>
+{0..50..10}と見慣れぬ形式を見かけた。<br>
+マニュアルを見るとブレース展開で3つ目にステップ数を指定できるらしい。<br>
+知らなかった。
+</p>
+<pre>
+% zsh -c 'echo {0..50..10}' 
+0 10 20 30 40 50
+% bash -c 'echo {0..50..10}'
+0 10 20 30 40 50
+</pre>
+<p>
+zshやbashで使える。面白いのはzshで、負のときの挙動。
+</p>
+<pre>
+% zsh -c 'echo {0..50..-10}'
+50 40 30 20 10 0
+</pre>
+<p>
+のように前の2つを入れ替えなくていい。というか入れ替えると
+</p>
+<pre>
+% zsh -c 'echo {50..0..-10}' 
+0 10 20 30 40 50
+</pre>
+<p>
+と逆の逆で元に戻る。一方bashは-の有無は関係ない。
+</p>
+<pre>
+% bash -c 'echo {0..50..-10}'
+0 10 20 30 40 50
+</pre>
+<p>
+それもどうかと思うが。
+</p>
+<!-- section end -->
+</div>
+<!-- 2011/12/09 end -->
+
+
+
+<hr class="hide">
+<!-- 2011/12/10 start -->
+<h2><a name="20111210" href="201112a.html#20111210">2011-12-10 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="201112101" title="201112101" href="201112a.html#201112101">■</a> 
+Cygwinのうっとうしい警告</h3>
+<p>
+最近なぜかCygwinのzshで補完するとたまにこんな警告が出るようになった。
+<pre>
+cygwin warning:
+  MS-DOS style path detected: ./foo.txt\~ 
+  Preferred POSIX equivalent is: ./foo.txt/~ 
+  CYGWIN environment variable option &quot;nodosfilewarning&quot; turns off this warning.
+  Consult the user's guide for more details about POSIX paths:
+    http://cygwin.com/cygwin-ug-net/using.html#using-pathnames
+</pre>
+</p>
+<p>
+どこにもMS-DOSスタイルがあるようには見えないが、<br>
+まあお勧めにしたがってexport CYGWIN=nodosfilewarningしておこう。<br>
+環境変数CYGWINなんて設定するの久し振りだな。
+</p>
+<!-- section end -->
+</div>
+<!-- 2011/12/10 end -->
+
+<hr>
+<div>
+<a href="201111c.html">&lt;Prev(,)</a> | 
+<a href="201112b.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

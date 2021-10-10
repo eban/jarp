@@ -1,0 +1,391 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2009-6-b</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="200906a.html">
+<link rel="next" href="200906c.html">
+
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2009年6月中旬〜</p>
+<hr>
+<div>
+<a href="200906a.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="200906c.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2009/06/11 start -->
+<h2><a name="20090611" href="200906b.html#20090611">2009-06-11 (Thu)</a></h2>
+<!-- 2009-06-12 01:30:45 -->
+
+<div class="entry1">
+<h3><a name="200906111" title="200906111" href="200906b.html#200906111">■</a> 
+[Fedora] Firefoxを3.0.10へ戻そうと思ったら落ちるの巻</h3>
+<p>
+やっぱFLDRが使いたいと思って3.0.10に戻したらなぜかあちこちのページで落ちる。<br>
+こまったなあと3.5 Beta 4を使ってみたらなんとFLDRが表示できるようになってた。<br>
+さすがだ。なんか一部設定が変だったり調子悪いぐりもんがあるようだけど、<br>
+これくらいなら問題ない。
+</p>
+
+<p>
+やっぱ3.5は速いね。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200906112" title="200906112" href="200906b.html#200906112">■</a> 
+[Thunderbird] Thunderbirdを2.0.0.21へ戻した</h3>
+<p>
+Thunderbird 3だとなぜか新着確認でbusy状態になってしまう。<br>
+2.0.0.21を取ってきて戻した。
+</p>
+<!-- section end -->
+</div>
+<!-- 2009/06/11 end -->
+
+
+
+<hr class="hide">
+<!-- 2009/06/12 start -->
+<h2><a name="20090612" href="200906b.html#20090612">2009-06-12 (Fri)</a></h2>
+<!-- 2009-06-13 01:17:33 -->
+
+<div class="entry1">
+<h3><a name="200906121" title="200906121" href="200906b.html#200906121">■</a> 
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-talk/339023">[Ruby] RIP RAA</a></h3>
+<p>
+たしかにNew Arrivalsはspamだらけだよな。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200906122" title="200906122" href="200906b.html#200906122">■</a> 
+<a href="http://hellorip.com/about.html">[Ruby] Rip: Ruby's Intelligent Packaging</a></h3>
+<p>
+まったく別な話のRip。
+</p><blockquote><p>
+Rip is an attempt to create a next generation packaging system for Ruby.
+</p></blockquote><p>
+Rubygemsを補うものなのかな。
+</p>
+<!-- section end -->
+</div>
+<!-- 2009/06/12 end -->
+
+
+
+<hr class="hide">
+<!-- 2009/06/13 start -->
+<h2><a name="20090613" href="200906b.html#20090613">2009-06-13 (Sat)</a></h2>
+<!-- 2009-06-14 01:19:53 -->
+
+<div class="entry1">
+<h3><a name="200906131" title="200906131" href="200906b.html#200906131">■</a> 
+[Firefox] Firefoxがなぜか毎回オフラインモードで立ち上がってしまう</h3>
+<p>
+F11からなぜか毎回オフラインモード立ち上がるんだけど、何の嫌がらせ？<br>
+ぐぐってみるとNetworkManagerが原因らしい。<br>
+
+<a href="http://l-w-i.net/t/fedora/firefox_100.txt">[Fedora] Firefoxがオフラインモードで起動してしまう - Life with IT</a><br>
+たしかにNetworkManagerは使ってないので、ここに書いてあるように実行。
+</p>
+
+<pre>
+% sudo service NetworkManager stop
+NetworkManager デーモンを停止中:                           [  OK  ]
+% sudo chkconfig --del NetworkManager
+% sudo chkconfig --level 2345 network on
+% sudo chkconfig --add network
+% sudo service network start
+ループバックインターフェイスを呼び込み中                   [  OK  ]
+インターフェース eth0 を活性化中:  RTNETLINK answers: File exists
+                                                           [  OK  ]
+RTNETLINK answers: File exists
+RTNETLINK answers: File exists
+RTNETLINK answers: File exists
+RTNETLINK answers: File exists
+RTNETLINK answers: File exists
+RTNETLINK answers: File exists
+RTNETLINK answers: File exists
+RTNETLINK answers: File exists
+RTNETLINK answers: File exists
+% sudo service network restart
+インターフェース eth0 を終了中:                            [  OK  ]
+ループバックインターフェースを終了中                       [  OK  ]
+ループバックインターフェイスを呼び込み中                   [  OK  ]
+インターフェース eth0 を活性化中:                          [  OK  ]
+</pre>
+<p>
+networkはrestartじゃないとまずいな。<br>
+これで解決。
+</p>
+<!-- section end -->
+</div>
+<!-- 2009/06/13 end -->
+
+
+
+<hr class="hide">
+<!-- 2009/06/14 start -->
+<h2><a name="20090614" href="200906b.html#20090614">2009-06-14 (Sun)</a></h2>
+<!-- 2009-06-15 02:13:32 -->
+
+<div class="entry1">
+<h3><a name="200906141" title="200906141" href="200906b.html#200906141">■</a> 
+<a href="http://golf.shinh.org/p.rb?numof+1+bits+in+0+to+255#Bash">[Golf] numof 1 bits in 0 to 255</a></h3>
+<p>
+
+<a href="http://www.commandlinefu.com/commands/view/2415/count-to-65535-in-binary-for-no-apparent-reason">Count to 65535 in binary</a>
+を見て思いついた。printf使うよりは直接書いたほうが短い。<br>
+?が使えるんだな。ってことはワイルドカード全般が使えるってことか。
+</p>
+<!-- section end -->
+</div>
+<!-- 2009/06/14 end -->
+
+
+
+<hr class="hide">
+<!-- 2009/06/15 start -->
+<h2><a name="20090615" href="200906b.html#20090615">2009-06-15 (Mon)</a></h2>
+<!-- 2009-06-16 00:22:00 -->
+
+<div class="entry1">
+<h3><a name="200906151" title="200906151" href="200906b.html#200906151">■</a> 
+[Fedora11] Fedora11でその後気づいたこと</h3>
+<p>
+そういえば/etc/X11/Xorg.confからOption &quot;AccelMethod&quot; &quot;XAA&quot;を外してみたが、<br>
+全然問題ない。
+</p>
+
+<p>
+警告音が気持ち悪い。しかもxset b offが効かないし。<br>
+常にoffにしたいわけじゃないからコマンドラインで制御したかったんだけどなあ。<br>
+[システム]-[設定]-[サウンド]-[サウンドの効果音]-[警告の音量]-[ミュート]<br>
+で我慢するか。しかし犬て。
+</p>
+<!-- section end -->
+</div>
+<!-- 2009/06/15 end -->
+
+
+
+<hr class="hide">
+<!-- 2009/06/16 start -->
+<h2><a name="20090616" href="200906b.html#20090616">2009-06-16 (Tue)</a></h2>
+<!-- 2009-06-17 01:02:07 -->
+
+<div class="entry1">
+<h3><a name="200906161" title="200906161" href="200906b.html#200906161">■</a> 
+[Prism] PrismでuserContent.css</h3>
+<p>
+PrismでStylishを使っててスタイルをインストールするのが面倒になってきた。<br>
+どうせすぐ終了させちゃうのでuserContent.cssで十分。<br>
+Prismの該当するprofileディレクトリが見たがchromeがない。<br>
+なくても作ればいいかとchrome/userContent.cssを用意したらちゃんと読んでくれた。
+</p>
+
+<p>
+しかしFirefox 3.5 Beta 4のPrismは全然Prismじゃないよね、これ。<br>
+もう一回拡張をインストールし直してみるかな。
+</p>
+<!-- section end -->
+</div>
+<!-- 2009/06/16 end -->
+
+
+
+<hr class="hide">
+<!-- 2009/06/17 start -->
+<h2><a name="20090617" href="200906b.html#20090617">2009-06-17 (Wed)</a></h2>
+<!-- 2009-06-18 01:04:42 -->
+
+<div class="entry1">
+<h3><a name="200906171" title="200906171" href="200906b.html#200906171">■</a> 
+<a href="http://www.commandlinefu.com/commands/view/2422/extract-all-urls-from-firefox-sessionstore">[Firefox] extract all urls from firefox sessionstore</a></h3>
+<p>
+sessionstore.jsからURLを抜き出すスクリプト。<br>
+なんかうまくいかない。sessionstore.jsを見てみると、<br>
+url:じゃなくて&quot;url&quot;:になっていた。なるほど。<br>
+それはいいとして、
+</p>
+
+<pre>
+grep url | awk -F&quot;,&quot; '{ print $1 }'
+</pre>
+<p>
+ってのはひどいな。awk使ってんだからこのgrepいらないよね。
+</p>
+
+<pre>
+awk -F, '/url/{ print $1 }'
+</pre>
+<p>
+と書いて欲しい。いじってるうちに
+</p>
+
+<pre>
+% grep -o '&quot;url&quot;:&quot;http[^&quot;]*' sessionstore.js | cut -b8-
+</pre>
+<p>
+でいいんじゃないのと思った。GNU grep限定ではあるが。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200906172" title="200906172" href="200906b.html#200906172">■</a> 
+[Firefox] sessionstore.jsを無理矢理Rubyに読ませてみる</h3>
+<p>
+sessionstore.jsを見てるとほぼRubyだと気づく。<br>
+試しに:を=&gt;へ変換してみると通っちゃったよ。
+</p>
+
+<pre>
+% sed 's/&quot;:/&quot;=&gt;/g' sessionstore.js|ruby -cw           
+Syntax OK
+</pre>
+<p>
+なにかに使えるかもしれない。
+</p>
+<!-- section end -->
+</div>
+<!-- 2009/06/17 end -->
+
+
+
+<hr class="hide">
+<!-- 2009/06/18 start -->
+<h2><a name="20090618" href="200906b.html#20090618">2009-06-18 (Thu)</a></h2>
+<!-- 2009-06-19 01:40:27 -->
+
+<div class="entry1">
+<h3><a name="200906181" title="200906181" href="200906b.html#200906181">■</a> 
+[Amazon] 1200円+500円</h3>
+<p>
+1200円の本をamazonで1 clickした。<br>
+1500円に足りないので500円ぐらいの本を追加で1 clickしたら、<br>
+なぜか次の日に500円のが来て、その次の日に1200円の本が来た。<br>
+翌日届いた時点で驚いたが急いでないしなんでまとめて配送しないかな。<br>
+それをばらばらにしたら送料無料の意味がないと思うんだが。
+</p>
+<!-- section end -->
+</div>
+<!-- 2009/06/18 end -->
+
+
+
+<hr class="hide">
+<!-- 2009/06/19 start -->
+<h2><a name="20090619" href="200906b.html#20090619">2009-06-19 (Fri)</a></h2>
+<!-- 2009-06-20 19:31:31 -->
+
+<div class="entry1">
+<h3><a name="200906191" title="200906191" href="200906b.html#200906191">■</a> 
+[Fedora] Comixが速くなった</h3>
+<p>
+久し振りにComixを使ってみたが、体感できるくらい速くなっているな。<br>
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200906192" title="200906192" href="200906b.html#200906192">■</a> 
+[Music] May J.とMAY'SとMay'n</h3>
+<p>
+Mステ見ててなんでMayばかりと思って調べた。Wikipediaより。<br>
+May J.はMay (Jamileh) Hashimoto。<br>
+MAY'Sは2人とも5月生まれ。舞子だからってマイズではない。<br>
+May'nは中林芽依。
+</p>
+<!-- section end -->
+</div>
+<!-- 2009/06/19 end -->
+
+
+
+<hr class="hide">
+<!-- 2009/06/20 start -->
+<h2><a name="20090620" href="200906b.html#20090620">2009-06-20 (Sat)</a></h2>
+<!-- 2009-06-21 02:25:09 -->
+
+<div class="entry1">
+<h3><a name="200906201" title="200906201" href="200906b.html#200906201">■</a> 
+[Prism] Prism 1.0b1でgmailがなぜかクラッシュ</h3>
+<p>
+inboxが表示される頃にクラッシュしてしまう。<br>
+Firefox 3.5B4拡張のPrismでは終了時にクラッシュ。<br>
+まあ、終了時なので特に問題ないが気持ち悪い。
+</p>
+<!-- section end -->
+</div>
+<!-- 2009/06/20 end -->
+
+<hr>
+<div>
+<a href="200906a.html">&lt;Prev(,)</a> | 
+<a href="200906c.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

@@ -1,0 +1,366 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2009-7-c</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="200907b.html">
+<link rel="next" href="200908a.html">
+
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2009年7月下旬〜</p>
+<hr>
+<div>
+<a href="200907b.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="200908a.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2009/07/21 start -->
+<h2><a name="20090721" href="200907c.html#20090721">2009-07-21 (Tue)</a></h2>
+<!-- 2009-07-22 02:41:28 -->
+
+<div class="entry1">
+<h3><a name="200907211" title="200907211" href="200907c.html#200907211">■</a> 
+[Ruby] md5sum</h3>
+<p>
+artonさんのセッションを聞いていて、<br>
+un.rbにmd5sumとsha256sumがあるといいのかもしれないと思った。<br>
+こんなやつ。
+</p>
+
+<pre>
+##
+# Print or check MD5 (128-bit) checksums.
+#
+#   ruby -run -e md5sum -- [OPTION] FILE
+#
+
+def md5sum
+  require 'digest'
+  setup do |argv, options|
+    argv.each do |fname|
+      puts Digest::MD5.file(fname).hexdigest + &quot;  &quot; + fname
+    end
+  end
+end
+</pre>
+
+<p>
+fileメソッドを使うとちまちま読んでくれる。<br>
+sha256sumは同じように作るか、メタで。もしくは
+</p>
+
+<pre>
+Ruby 1.9.2-preview1
+* ftp://ftp.ruby-lang.org/pub/ruby/1.9/ruby-1.9.2-preview1.tar.bz2
+ SIZE:   7487008 bytes
+ MD5:    0b8f27ea78afcdc54d5d23e569aa0150
+ SHA256: 0681204e52207153250da80b3cc46812f94107807458a7d64b17554b6df71120
+</pre>
+<p>
+をstdinへコピペすると
+</p>
+
+<pre>
+ruby-1.9.2-preview1.tar.bz2
+7487008
+0b8f27ea78afcdc54d5d23e569aa0150
+0681204e52207153250da80b3cc46812f94107807458a7d64b17554b6df71120
+</pre>
+<p>
+を抜き出してきて全部計算して合ってるかどうかチェックするほうが楽か。
+</p>
+<!-- section end -->
+</div>
+<!-- 2009/07/21 end -->
+
+
+
+<hr class="hide">
+<!-- 2009/07/22 start -->
+<h2><a name="20090722" href="200907c.html#20090722">2009-07-22 (Wed)</a></h2>
+<!-- 2009-07-23 02:25:45 -->
+
+<div class="entry1">
+<h3><a name="200907221" title="200907221" href="200907c.html#200907221">■</a> 
+[Subversion] post-unlock hook</h3>
+<p>
+post-unlockというhookが目についたので試してみた。<br>
+残念ながらsvn commitとは関係ないようでsvn unlockのときに呼ばれるhookだった。
+</p>
+<!-- section end -->
+</div>
+<!-- 2009/07/22 end -->
+
+
+
+<hr class="hide">
+<!-- 2009/07/23 start -->
+<h2><a name="20090723" href="200907c.html#20090723">2009-07-23 (Thu)</a></h2>
+<!-- 2009-07-24 01:14:09 -->
+
+<div class="entry1">
+<h3><a name="200907231" title="200907231" href="200907c.html#200907231">■</a> 
+[Bash] $[]記法</h3>
+<p>
+Bashで$[]の中に{}を書くとどういうわけか展開される。
+</p>
+
+<pre>
+% bash -c 'echo $[1 2 3]'  
+bash: 1 2 3: 表現にシンタックスエラー (error token is &quot;2 3&quot;)
+% bash -c 'echo $[{1,2,3}]'
+1 2 3
+</pre>
+<p>
+golfでは結構有用。
+</p>
+<!-- section end -->
+</div>
+<!-- 2009/07/23 end -->
+
+
+
+<hr class="hide">
+<!-- 2009/07/24 start -->
+<h2><a name="20090724" href="200907c.html#20090724">2009-07-24 (Fri)</a></h2>
+<!-- 2009-07-25 01:32:19 -->
+
+<div class="entry1">
+<h3><a name="200907241" title="200907241" href="200907c.html#200907241">■</a> 
+[Subversion] Rubyのpost-commitをbatch化</h3>
+<p>
+Rubyの場合はhooks/post-commitから別のpost-commit.shを呼ぶようにしてるので、<br>
+こっちをbatchコマンド経由にしてみた。<br>
+これがうまくいったら例のversion.hコミット対象対応する。
+</p>
+<!-- section end -->
+</div>
+<!-- 2009/07/24 end -->
+
+
+
+<hr class="hide">
+<!-- 2009/07/25 start -->
+<h2><a name="20090725" href="200907c.html#20090725">2009-07-25 (Sat)</a></h2>
+<!-- 2009-07-26 16:12:12 -->
+
+<div class="entry1">
+<h3><a name="200907251" title="200907251" href="200907c.html#200907251">■</a> 
+[Ruby] version.h自動更新</h3>
+<p>
+というわけで、version.hがcommit対象のときも日付けを更新するようにした。<br>
+結果は気長に待つ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2009/07/25 end -->
+
+
+
+<hr class="hide">
+<!-- 2009/07/26 start -->
+<h2><a name="20090726" href="200907c.html#20090726">2009-07-26 (Sun)</a></h2>
+<!-- 2009-07-27 03:05:35 -->
+
+<div class="entry1">
+<h3><a name="200907261" title="200907261" href="200907c.html#200907261">■</a> 
+[動画] 静止画から動画へ変換</h3>
+<p>
+man mencoderから
+</p>
+
+<pre>
+% mencoder &quot;mf://*.jpg&quot; -mf fps=1 -o output.avi -ovc lavc -lavcopts vcodec=mpeg4
+</pre>
+<p>
+fpsは適当に調整。
+</p>
+
+<p>
+これって1枚だけでBGMつけてFLVへ変換すれば、<br>
+ニコニコ動画へアップロードできる形式になるのかな？
+</p>
+<!-- section end -->
+</div>
+<!-- 2009/07/26 end -->
+
+
+
+<hr class="hide">
+<!-- 2009/07/27 start -->
+<h2><a name="20090727" href="200907c.html#20090727">2009-07-27 (Mon)</a></h2>
+<!-- 2009-07-28 01:50:48 -->
+
+<div class="entry1">
+<h3><a name="200907271" title="200907271" href="200907c.html#200907271">■</a> 
+[Subversion] 新version.h自動更新</h3>
+<p>
+
+<a href="http://svn.ruby-lang.org/cgi-bin/viewvc.cgi?view=rev&amp;revision=24285">r24285</a>
+,
+
+<a href="http://svn.ruby-lang.org/cgi-bin/viewvc.cgi?view=rev&amp;revision=24286">r24286</a>
+を見ると新version.h自動更新もうまくいってるようだ。<br>
+日付け以外の部分が変更されてるときに日付けだけ更新する。
+</p>
+<!-- section end -->
+</div>
+<!-- 2009/07/27 end -->
+
+
+
+<hr class="hide">
+<!-- 2009/07/28 start -->
+<h2><a name="20090728" href="200907c.html#20090728">2009-07-28 (Tue)</a></h2>
+<!-- 2009-07-29 01:40:10 -->
+
+<div class="entry1">
+<h3><a name="200907281" title="200907281" href="200907c.html#200907281">■</a> 
+[TV] 相棒</h3>
+<p>
+相棒のシーズン2の再放送の視聴率が10%越えたりすることもあってなんかすげーんだけど、<br>
+14話の次が17話だったりで傑作選的な再放送のようだ。<br>
+やっぱDVDで借りないとだめか。
+</p>
+<!-- section end -->
+</div>
+<!-- 2009/07/28 end -->
+
+
+
+<hr class="hide">
+<!-- 2009/07/29 start -->
+<h2><a name="20090729" href="200907c.html#20090729">2009-07-29 (Wed)</a></h2>
+<!-- 2009-07-30 00:47:00 -->
+
+<div class="entry1">
+<h3><a name="200907291" title="200907291" href="200907c.html#200907291">■</a> 
+[Life] 新しいショルダーバッグ</h3>
+<p>
+リュックのジッパーの取っ手がぽろっと取れて使い辛いったらありゃしないので、<br>
+新たなかばん的なものをLOFTで物色。<br>
+EeePC入れても邪魔にならないくらいの大きさのショルダーバッグにしてみた。
+</p>
+<!-- section end -->
+</div>
+<!-- 2009/07/29 end -->
+
+
+
+<hr class="hide">
+<!-- 2009/07/30 start -->
+<h2><a name="20090730" href="200907c.html#20090730">2009-07-30 (Thu)</a></h2>
+<!-- 2009-07-31 01:38:31 -->
+
+<div class="entry1">
+<h3><a name="200907301" title="200907301" href="200907c.html#200907301">■</a> 
+<a href="http://shipinsea.nablog.net/blog/20229170.html">[逆SEO] 民主党マニフェストを検索しても引っかからない理由</a></h3>
+<p>
+カタカナの「ニ」が漢数字の「二」、カタカナの「ト」が漢字の「卜」になっているという話。<br>
+読まれないための工夫。ここまでくるとさすがに感心する。
+</p>
+<!-- section end -->
+</div>
+<!-- 2009/07/30 end -->
+
+
+
+<hr class="hide">
+<!-- 2009/07/31 start -->
+<h2><a name="20090731" href="200907c.html#20090731">2009-07-31 (Fri)</a></h2>
+<!-- 2009-08-01 02:15:54 -->
+
+<div class="entry1">
+<h3><a name="200907311" title="200907311" href="200907c.html#200907311">■</a> 
+[Linux] useradd -Gとgpasswd</h3>
+<p>
+userというユーザをgroupというグループに属させるのにvigrを使っていたが、<br>
+コマンドラインでできる方法を探った。<br>
+useraddあたりにそんな機能がありそうな気がして、<br>
+man useraddしてみたら-Gか？<br>
+</p><blockquote><p>
+ユーザの属する補助グループ (supplementary groups) のリスト。グルー
+プ はコンマで区切り、間に空白を入れてはならない。指定できるグループ
+には -g オプションと同様の制限がある。デフォルトでは、ユーザは主グ
+ループのみに属する。
+</p></blockquote><p>
+試してみたら指定したグループのみの設定になってしまった。<br>
+過去に属していたグループはリセットされる。<br>
+追加ではないわけで、いちいち今まで属していたグループもリストで指定しないといけない。<br>
+まあ、ユーザを追加するコマンドなのでそういうもんなんだろうな。<br>
+というわけで使い方には注意。
+</p>
+
+<p>
+つづいて調べてみるとgpasswdというコマンドを発見。<br>
+gpasswd -a user groupで追加できるようだ。<br>
+そうそう、そういうのを探してた。<br>
+昔はこんなコマンドはなかったよなあ。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2009/07/31 end -->
+
+<hr>
+<div>
+<a href="200907b.html">&lt;Prev(,)</a> | 
+<a href="200908a.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

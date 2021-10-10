@@ -1,0 +1,490 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2007-6-c</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="200706b.html">
+<link rel="next" href="200707a.html">
+
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2007年6月下旬〜</p>
+<hr>
+<div>
+<a href="200706b.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="200707a.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2007/06/21 start -->
+<h2><a name="20070621" href="200706c.html#20070621">2007-06-21 (Thu)</a></h2>
+<!-- 2007-06-22 01:14:07 -->
+
+<div class="entry1">
+<h3><a name="200706211" title="200706211" href="200706c.html#200706211">■</a> 
+<a href="https://addons.mozilla.org/ja/firefox/addon/3559">[Firefox] QuickRestart</a></h3>
+<p>
+RestartFirefoxがなくなってしまったので、
+
+<a href="https://addons.mozilla.org/ja/firefox/addon/3559">QuickRestart</a>
+を入れた。
+</p><blockquote><p>
+This simple extension adds a &quot;Restart Firefox&quot; item to the Tools
+menu. You can also use the Ctrl+Alt+R (1.0.1) keyboard shortcut, or
+the new toolbar button (1.1.0).
+</p></blockquote>
+<!-- section end -->
+</div>
+<!-- 2007/06/21 end -->
+
+
+
+<hr class="hide">
+<!-- 2007/06/22 start -->
+<h2><a name="20070622" href="200706c.html#20070622">2007-06-22 (Fri)</a></h2>
+<!-- 2007-06-23 01:36:11 -->
+
+<div class="entry1">
+<h3><a name="200706221" title="200706221" href="200706c.html#200706221">■</a> 
+電車が止まった</h3>
+<p>
+大宮駅に行ったらすごいことになっていたので、家で待機することにした。<br>
+そのままなかなか復旧しないので今日は休むことに。<br>
+運転士のミスっぽいね、これは。<br>
+20数年前の秋葉原でのケーブル切断事件の時を思い出した。
+</p>
+<!-- section end -->
+</div>
+<!-- 2007/06/22 end -->
+
+
+
+<hr class="hide">
+<!-- 2007/06/23 start -->
+<h2><a name="20070623" href="200706c.html#20070623">2007-06-23 (Sat)</a></h2>
+<!-- 2007-06-24 01:55:10 -->
+
+<div class="entry1">
+<h3><a name="200706231" title="200706231" href="200706c.html#200706231">■</a> 
+[Comic] クレイモア</h3>
+<p>
+4巻まで借りてきて読む。アニメは比較的忠実に再現されているようだ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200706232" title="200706232" href="200706c.html#200706232">■</a> 
+<a href="http://www.morishima.net/~naoto/software/elscreen/index.php.ja">[Emacs] elscreen</a></h3>
+<p>
+windows.elがEmacs 22で使えないので、
+
+<a href="http://www.morishima.net/~naoto/software/elscreen/index.php.ja">elscreen</a>
+を試す。<br>
+だいたいわかった。しかしC-zが押しづらい。どのキーがいいか迷う。
+</p>
+
+<p>
+ああ、元々はwindow-configuration-to-register(C-x r w)と<br>
+jump-to-register(C-x r j)なんてのがあるんだね。知らなかった。
+</p>
+<!-- section end -->
+</div>
+<!-- 2007/06/23 end -->
+
+
+
+<hr class="hide">
+<!-- 2007/06/24 start -->
+<h2><a name="20070624" href="200706c.html#20070624">2007-06-24 (Sun)</a></h2>
+<!-- 2007-06-25 01:14:57 -->
+
+<div class="entry1">
+<h3><a name="200706241" title="200706241" href="200706c.html#200706241">■</a> 
+<a href="http://golf.shinh.org/p.rb?Quine#Ruby">[Ruby] Ruby Quine Golf</a></h3>
+<p>
+実行すると自分自身を表示するというスクリプト。<br>
+自分自身を読み込んでそれをそのまま表示するというのは今回は反則ということで。
+</p>
+
+<p>
+Ruby Quineをいろいろ考えたのでその軌跡をさらす。
+</p>
+
+<pre>
+$a=%q($&gt;&lt;&lt;&quot;$a=%q(#$a);eval$a&quot;);eval$a
+</pre>
+<p>
+37B。たぶんどこかで見たPerl Quineからの移植。だから$aのまま。
+</p>
+
+<pre>
+a=%q($&gt;&lt;&lt;&quot;a=%q(#{a});eval a&quot;);eval a
+</pre>
+<p>
+のほうが1B短いんだけど、すぐに変形してしまったので。
+</p>
+
+<pre>
+eval$a=%q($&gt;&lt;&lt;&quot;eval$a=%q(#$a)&quot;)
+</pre>
+<p>
+31B。ここで$aをaにすると
+</p>
+
+<pre>
+eval a=%q($&gt;&lt;&lt;&quot;eval a=%q(#{a})&quot;)
+</pre>
+<p>
+のようになぜか1B増えるという不思議。<br>
+このテクニックは覚えておくとたまに役に立つ。<br>
+ちなみにPerlだと
+</p>
+
+<pre>
+% perl -e 'eval$a=&quot;&quot;'
+Can't modify eval &quot;string&quot; in scalar assignment at -e line 1, at EOF
+Execution of -e aborted due to compilation errors.
+</pre>
+<p>
+とエラーになるので$a=...;eval$aという形式にならざるを得ない。
+</p>
+
+<pre>
+eval$s=&quot;$&gt;&lt;&lt;'eval$s=';p$s&quot;
+</pre>
+<p>
+26B。とつぜんpを使う方法を思いつく。なぜか変数名が$sに変わる。<br>
+ここはsにしてもサイズは同じ。
+</p>
+
+<pre>
+s=&quot;s=%p;$&gt;&lt;&lt;s%%s&quot;;$&gt;&lt;&lt;s%s
+</pre>
+<p>
+25B。そういえば%pなんてあったよねと思いつく。<br>
+今回は$sだと増えるのでsへ。
+</p>
+
+<p>
+で、ふたを開けてみるとふらたんとまったく同じだった。<br>
+実を言うと
+</p>
+
+<pre>
+$&gt;&lt;&lt;s=&quot;$&gt;&lt;&lt;s=%p%%s&quot;%s
+</pre>
+<p>
+で21Bじゃんと思ったのだが、優先順位の関係で()が必要となり25Bになる。<br>
+それも
+<a href="http://golf.shinh.org/reveal.rb?Quine/ksk/1182347266">kskさんの作品</a>
+に出てきていて驚いた。
+</p>
+
+<p>
+なんとなくpを使う方法をつきつめるともっと縮むんじゃないかという気がしてる。
+</p>
+<!-- section end -->
+</div>
+<!-- 2007/06/24 end -->
+
+
+
+<hr class="hide">
+<!-- 2007/06/25 start -->
+<h2><a name="20070625" href="200706c.html#20070625">2007-06-25 (Mon)</a></h2>
+<!-- 2007-06-26 01:13:49 -->
+
+<div class="entry1">
+<h3><a name="200706251" title="200706251" href="200706c.html#200706251">■</a> 
+[Bash] Bash Quine</h3>
+<p>
+つづいてBash Quineの変遷。
+</p>
+
+<p>
+まずはどこかにあったのをそのままぱくり75B。
+</p>
+
+<pre>
+read a&lt;&lt;'EOF';eval $a
+echo 'read a&lt;&lt;'&quot;'EOF'&quot;';eval $a';echo $a;echo EOF
+EOF
+</pre>
+
+<p>
+もういっちょぱくって56B。
+</p>
+
+<pre>
+q=&quot;'&quot; r='echo q=\&quot;$q\&quot; r=${q}$r$q;echo eval \$r'
+eval $r
+</pre>
+
+<p>
+それを変形して51B。
+</p>
+
+<pre>
+q=\' r='echo q=\\$q r=$q$r$q;echo eval \$r'
+eval $r
+</pre>
+
+<p>
+さらに変形して48B。
+</p>
+
+<pre>
+q=\' r='echo q=\\$q r=$q$r$q\;eval \$r';eval $r
+</pre>
+
+<p>
+マニュアルとにらめっこしてたら素敵な変数を発見して19B。
+</p>
+
+<pre>
+echo $BASH_COMMAND
+</pre>
+
+<p>
+Perlの
+</p>
+
+<pre>
+print&lt;&lt;''x2,&quot;\n&quot;
+print&lt;&lt;''x2,&quot;\n&quot;
+
+</pre>
+<p>
+というのを見て、Bashへ移植したらhere docのデリミタがなくてもいいことを発見して18Bに。
+</p>
+
+<pre>
+sed p&lt;&lt;_
+sed p&lt;&lt;_
+</pre>
+
+<p>
+しかし
+<a href="http://golf.shinh.org/reveal.rb?Quine/notogawa/1182395277">ps</a>ってのはすごいな。
+</p>
+<!-- section end -->
+</div>
+<!-- 2007/06/25 end -->
+
+
+
+<hr class="hide">
+<!-- 2007/06/26 start -->
+<h2><a name="20070626" href="200706c.html#20070626">2007-06-26 (Tue)</a></h2>
+<!-- 2007-06-27 01:30:25 -->
+
+<div class="entry1">
+<h3><a name="200706261" title="200706261" href="200706c.html#200706261">■</a> 
+[Linux] 127.0.0.1 hostname localhost</h3>
+<p>
+/etc/hostsに
+</p>
+
+<pre>
+127.0.0.1 hostname localhost
+</pre>
+<p>
+というような記述があると、postfixのmain.cfで
+</p>
+
+<pre>
+inet_interfaces = $myhostname, localhost
+</pre>
+<p>
+があってもどっちも127.0.0.1になってメールを受け取れないという罠にはまった。<br>
+アップグレード後に受け取れないことに気づいたので、<br>
+やっぱyum upgradeでそんなことやってるってことだよなあ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2007/06/26 end -->
+
+
+
+<hr class="hide">
+<!-- 2007/06/27 start -->
+<h2><a name="20070627" href="200706c.html#20070627">2007-06-27 (Wed)</a></h2>
+<!-- 2007-06-28 01:31:57 -->
+
+<div class="entry1">
+<h3><a name="200706271" title="200706271" href="200706c.html#200706271">■</a> 
+[Twitter] Twitter spam?</h3>
+<p>
+なんか最近addしてくるのってspamまがいなものばかり。<br>
+あきらかに人じゃないんだよねえ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200706272" title="200706272" href="200706c.html#200706272">■</a> 
+<a href="http://svn.collab.net/repos/svn/trunk/tools/hook-scripts/commit-email.rb">[SVN] commit-email.rb</a></h3>
+<p>
+なんかたまにエラーになる。
+</p>
+
+<pre>
+NoMethodError: undefined method `diffs2' for Svn::Core::Property:Module
+</pre>
+<p>
+どうもaddされたときにむりやりdiffを取ろうとしてるような。
+</p>
+<!-- section end -->
+</div>
+<!-- 2007/06/27 end -->
+
+
+
+<hr class="hide">
+<!-- 2007/06/28 start -->
+<h2><a name="20070628" href="200706c.html#20070628">2007-06-28 (Thu)</a></h2>
+<!-- 2007-06-29 02:03:22 -->
+
+<div class="entry1">
+<h3><a name="200706281" title="200706281" href="200706c.html#200706281">■</a> 
+今年初クーラー</h3>
+<p>
+家に帰ってから室温が30℃のまま下がらない。さすがにクーラーオン。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200706282" title="200706282" href="200706c.html#200706282">■</a> 
+[Fedora7] yum調子悪し</h3>
+<p>
+最近yum updateすると
+</p>
+
+<pre>
+Could not retrieve mirrorlist http://mirrors.fedoraproject.org/mirrorlist?repo=fedora-7&amp;arch=i386 error was
+[Errno 12] Timeout: &lt;urlopen error timed out&gt;
+Error: Cannot find a valid baseurl for repo: fedora
+</pre>
+<p>
+というのばかりで全然更新ができない。面倒なので
+</p>
+
+<pre>
+% while ! sudo yum -y update;do sleep 60;done
+</pre>
+<p>
+として放っておくことにした。
+</p>
+
+<p>
+ひょっとしてfastestmirror pluginがだめなんかな。
+</p>
+<!-- section end -->
+</div>
+<!-- 2007/06/28 end -->
+
+
+
+<hr class="hide">
+<!-- 2007/06/29 start -->
+<h2><a name="20070629" href="200706c.html#20070629">2007-06-29 (Fri)</a></h2>
+<!-- 2007-06-30 13:10:17 -->
+
+<div class="entry1">
+<h3><a name="200706291" title="200706291" href="200706c.html#200706291">■</a> 
+<a href="http://desktop.google.com/">[Google] Google Desktop for Linux</a></h3>
+<p>
+昨日入れたが、今朝になってもインデックス作成が終わらない。<br>
+cron.hourlyでの
+</p><blockquote><p>
+  Update should only be occurred every 24 to 30 (randomly) hours.
+</p></blockquote><p>
+という小細工はdailyだとアクセスが集中するか？
+</p>
+<!-- section end -->
+</div>
+<!-- 2007/06/29 end -->
+
+
+
+<hr class="hide">
+<!-- 2007/06/30 start -->
+<h2><a name="20070630" href="200706c.html#20070630">2007-06-30 (Sat)</a></h2>
+<!-- 2007-07-01 02:17:18 -->
+
+<div class="entry1">
+<h3><a name="200706301" title="200706301" href="200706c.html#200706301">■</a> 
+[Mail] PDF spam</h3>
+<p>
+最近PDFファイルだけ添付されてくるspamが増えてるけど、<br>
+これはどうやってGmailでブロックしたもんかな。<br>
+学習させても無駄のような気がするし。
+</p>
+<!-- section end -->
+</div>
+<!-- 2007/06/30 end -->
+
+<hr>
+<div>
+<a href="200706b.html">&lt;Prev(,)</a> | 
+<a href="200707a.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

@@ -1,0 +1,435 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2008-1-b</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="200801a.html">
+<link rel="next" href="200801c.html">
+
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2008年1月中旬〜</p>
+<hr>
+<div>
+<a href="200801a.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="200801c.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2008/01/11 start -->
+<h2><a name="20080111" href="200801b.html#20080111">2008-01-11 (Fri)</a></h2>
+<!-- 2008-01-12 01:45:25 -->
+
+<div class="entry1">
+<h3><a name="200801111" title="200801111" href="200801b.html#200801111">■</a> 
+<a href="http://golf.shinh.org/p.rb?Palindromic+Quine">[Golf] Palindromic Quine</a></h3>
+<p>
+改行の扱いが結構面倒。<br>
+ふつうの問題なら最終行の改行の有無は問題にならないが、<br>
+Quineだけは厳密に同じものを求められる。
+</p>
+
+<p>
+すでに
+<a href="http://golf.shinh.org/p.rb?Quine">Quine</a>を解いているので、それをベースにBashはできた。<br>
+Bashにはif,fiやcase,esacがあって一番相性がいい言語と思われる。<br>
+いや実のところ今日記を書いてて思いついただけで出番はまったくなかった。
+</p>
+
+<p>
+これを解くには頻繁に文字列を反転する必要にせまられるが、<br>
+vimなら
+</p>
+
+<pre>
+:.!rev
+</pre>
+<p>
+で現在行を反転することができる。revコマンドは別に必要。
+</p>
+<!-- section end -->
+</div>
+<!-- 2008/01/11 end -->
+
+
+
+<hr class="hide">
+<!-- 2008/01/12 start -->
+<h2><a name="20080112" href="200801b.html#20080112">2008-01-12 (Sat)</a></h2>
+<!-- 2008-01-13 02:36:29 -->
+
+<div class="entry1">
+<h3><a name="200801121" title="200801121" href="200801b.html#200801121">■</a> 
+<a href="http://www.kt.rim.or.jp/%7ekbk/zakkicho/08/zakkicho0801b.html#D20080111-4">[Golf] Dancing Kidsで空目？</a></h3>
+<p>
+さすがにそんなことは。
+</p>
+
+<p>
+
+<a href="http://golf.shinh.org/p.rb?Dancing+Kids#sed">sed</a>の別解を晒しとこう
+</p>
+
+<pre>
+s:$: ('-')\
+ /|_|\\\
+  | |:
+/l/{s:):&amp;/:;s:\\::}
+/r/{s: :\\:;s: /:  :}
+s:.*t::
+</pre>
+<p>
+で77B。最初は両手を下げているとこから始まる。<br>
+lがあれば左手を上げ、rがあれば右手を上げる。<br>
+特に変なこともしてない。
+</p>
+<!-- section end -->
+</div>
+<!-- 2008/01/12 end -->
+
+
+
+<hr class="hide">
+<!-- 2008/01/13 start -->
+<h2><a name="20080113" href="200801b.html#20080113">2008-01-13 (Sun)</a></h2>
+<!-- 2008-01-14 02:31:45 -->
+
+<div class="entry1">
+<h3><a name="200801131" title="200801131" href="200801b.html#200801131">■</a> 
+<a href="http://d.hatena.ne.jp/murky-satyr/20080113/1200197229">[Golf] false.to_sが&quot;&quot;だとうれしい理由</a></h3>
+<p>
+たとえば複数形のsを処理したい時、って99 bottles限定な気もするけど、
+</p>
+
+<pre>
+&quot;bottle#{i&gt;1&amp;&amp;:s}&quot;
+</pre>
+<p>
+と書けるわけです。
+</p>
+
+<pre>
+&quot;bottle#{'s'if i&gt;1}&quot;
+</pre>
+<p>
+よりも2B短い。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200801132" title="200801132" href="200801b.html#200801132">■</a> 
+[Vim] Vimでgorubyもsyntaxはrubyで</h3>
+<p>
+色がつかないと寂しいので
+</p>
+
+<pre>
+au BufNewFile,BufRead *.grb setl filetype=ruby
+</pre>
+<p>
+を~/.vimrcに追加。
+</p>
+<!-- section end -->
+</div>
+<!-- 2008/01/13 end -->
+
+
+
+<hr class="hide">
+<!-- 2008/01/14 start -->
+<h2><a name="20080114" href="200801b.html#20080114">2008-01-14 (Mon)</a></h2>
+<!-- 2008-01-15 02:12:10 -->
+
+<div class="entry1">
+<h3><a name="200801141" title="200801141" href="200801b.html#200801141">■</a> 
+[goruby] 今日のgoruby</h3>
+<p>
+某ふらたんからのパッチを全面的に取り入れた。<br>
+アルゴリズムが全面的に変わって、<br>
+1文字ごとに.*を入れるとみなす正規表現で検索することになった。<br>
+たとえばputsはpsでいけるようになる。
+</p>
+
+<pre>
+% goruby -e 'p Kernel.methods.grep(/^p.*s.*/)[0]'  
+:puts
+</pre>
+<p>
+こうなると予想不可能なので、これを探すのがshortest_abbreviation。
+</p>
+
+<pre>
+% goruby -e 'p shortest_abbreviation :puts'
+&quot;ps&quot;
+</pre>
+<p>
+のように教えてくれる。また
+</p>
+
+<pre>
+% goruby -e 'p shortest_abbreviation :shortest_abbreviation'
+&quot;sh&quot;
+</pre>
+<p>
+なので
+</p>
+
+<pre>
+% goruby -e 'p sh :puts'
+&quot;ps&quot;
+</pre>
+<p>
+でok。
+</p>
+
+<p>
+あとStringにArrayのmethodが混入というか、
+</p>
+
+<pre>
+% goruby -e 'p &quot;123&quot;.map{|x|x*2}'                           
+&quot;112233&quot;
+</pre>
+<p>
+ということができるようになってたりとか、<br>
+do_whileやdo_untilが入ってたりする。
+</p>
+<!-- section end -->
+</div>
+<!-- 2008/01/14 end -->
+
+
+
+<hr class="hide">
+<!-- 2008/01/15 start -->
+<h2><a name="20080115" href="200801b.html#20080115">2008-01-15 (Tue)</a></h2>
+<!-- 2008-01-16 02:31:23 -->
+
+<div class="entry1">
+<h3><a name="200801151" title="200801151" href="200801b.html#200801151">■</a> 
+<a href="http://www.nicovideo.jp/watch/sm1921778">[ニコニコ動画]【オリジナル曲】自動演奏ピアノのために【カオス】</a></h3>
+<p>
+MIDIアニメ職人が帰ってきてた。
+</p>
+<!-- section end -->
+</div>
+<!-- 2008/01/15 end -->
+
+
+
+<hr class="hide">
+<!-- 2008/01/16 start -->
+<h2><a name="20080116" href="200801b.html#20080116">2008-01-16 (Wed)</a></h2>
+<!-- 2008-01-17 02:40:02 -->
+
+<div class="entry1">
+<h3><a name="200801161" title="200801161" href="200801b.html#200801161">■</a> 
+[Golf] vim -Wでキー入力を記録</h3>
+<p>
+vimには-Wオプションがあるからこれを利用するとgolf作業が楽になる。
+</p>
+
+<pre>
+-W &lt;scriptout&gt;       入力した全コマンドをファイル &lt;scriptout&gt; に保存する
+</pre>
+<p>
+実際には
+</p>
+
+<pre>
+% vim -u NONE -W foo.log # いろいろ試行錯誤
+% mv foo.log foo.vim
+% vim foo.vim # 無駄を省く
+% vim -u NONE -W foo.log -s foo.vim # いろいろ試行錯誤
+% mv foo.log foo.vim
+% vim foo.vim # 無駄を省く
+% vim -u NONE -W foo.log -s foo.vim # いろいろ試行錯誤
+</pre>
+<p>
+というように段階踏むような感じで繰り返していけば間違いなく作業できる。
+</p>
+<!-- section end -->
+</div>
+<!-- 2008/01/16 end -->
+
+
+
+<hr class="hide">
+<!-- 2008/01/17 start -->
+<h2><a name="20080117" href="200801b.html#20080117">2008-01-17 (Thu)</a></h2>
+<!-- 2008-01-18 00:55:32 -->
+
+<div class="entry1">
+<h3><a name="200801171" title="200801171" href="200801b.html#200801171">■</a> 
+[Firefox] Firefox 3 beta 2を試す</h3>
+<p>
+about:configでextensions.checkCompatibilityと<br>
+extensions.checkUpdateSecurityをfalseに。<br>
+keyconfigは
+<a href="http://d.hatena.ne.jp/ComputerHead/20071228/1198853043">この変更で。</a>
+
+Tab Mix Plusは
+<a href="http://tmp.garyr.net/dev-builds/">開発バージョン</a>を使う。<br>
+あとはそのままで問題なく動いてる。
+</p>
+
+<p>
+Fx2に比べるとすごく軽い。このまま使ってみることにした。
+</p>
+<!-- section end -->
+</div>
+<!-- 2008/01/17 end -->
+
+
+
+<hr class="hide">
+<!-- 2008/01/18 start -->
+<h2><a name="20080118" href="200801b.html#20080118">2008-01-18 (Fri)</a></h2>
+<!-- 2008-01-19 01:18:17 -->
+
+<div class="entry1">
+<h3><a name="200801181" title="200801181" href="200801b.html#200801181">■</a> 
+<a href="http://beta.bloglines.com/">[RSS] βloglines</a></h3>
+<p>
+いつのまにかスペースバーがjとスクロールが合体したような感じになってて心地いい。<br>
+スペースバーだけ押してれば未読が全部読める。
+</p>
+<!-- section end -->
+</div>
+<!-- 2008/01/18 end -->
+
+
+
+<hr class="hide">
+<!-- 2008/01/19 start -->
+<h2><a name="20080119" href="200801b.html#20080119">2008-01-19 (Sat)</a></h2>
+<!-- 2008-01-20 02:07:38 -->
+
+<div class="entry1">
+<h3><a name="200801191" title="200801191" href="200801b.html#200801191">■</a> 
+[Azureus] Fedora 8のAzureusを更新したら立ち上がらない件</h3>
+<p>
+Azureusがなんかテーマがらみでエラーになって立ち上がらないわけで。
+</p>
+
+<pre>
+[1 20, 00:50] Error initialize Main Window org/gnu/gtk/IconTheme
+</pre>
+<p>
+ぐぐってみると
+<a href="http://www.fedoraforum.org/forum/showthread.php?t=178454">New azureus doesn't work</a>
+まさにそのものだ。<br>
+jvmを変えるといけるとの情報もあるがそんなの面倒だしなあ。<br>
+とりあえず、野良のazureusを起動したら動いた。というかなんか別物になってる!<br>
+テーマが変わりすぎだ。Advancedってタグを選んだら戻った。<br>
+いやVUZEってロゴはそのままだな。なんだよVUZEって。
+</p>
+<!-- section end -->
+</div>
+<!-- 2008/01/19 end -->
+
+
+
+<hr class="hide">
+<!-- 2008/01/20 start -->
+<h2><a name="20080120" href="200801b.html#20080120">2008-01-20 (Sun)</a></h2>
+<!-- 2008-01-21 01:48:54 -->
+
+<div class="entry1">
+<h3><a name="200801201" title="200801201" href="200801b.html#200801201">■</a> 
+<a href="http://shibuyarb.org/">[Ruby] Nice Boat.</a></h3>
+<p>
+
+<a href="http://shibuyarb.org/">Shibuya.rb</a>のNice Boat.がRuby 1.9で動かないと、<br>
+会長が嘆いていた。問題は今ruby-devでも話題になってるString#[]。
+</p>
+
+<pre>
+'Nice Boat.'.gsub(/./){|m|$Z||=[5,-1,6,-3,85,55,-14,-51,-2,52];(m[0]+$Z.shift).chr}
+</pre>
+<p>
+のm[0]が1.9だとStringになってしまうのでまずい。<br>
+m.ordにすれば通るが1.8では通らない。<br>
+というわけで、1.8にもordをという話も出てたりする。
+</p>
+
+<p>
+見た感じbytesしてzipを使いたいところだが、<br>
+zipはブロックを使うとnilを返すからなあ。<br>
+そこが使い辛いな。
+</p>
+
+<p>
+ああ、mapを挟めばいいのか。
+</p>
+
+<pre>
+'Nice Boat.'.bytes.zip([5,-1,6,-3,85,55,-14,-51,-2,52]).map{|m,z|(m+z).chr}.join
+</pre>
+
+
+<!-- section end -->
+</div>
+<!-- 2008/01/20 end -->
+
+<hr>
+<div>
+<a href="200801a.html">&lt;Prev(,)</a> | 
+<a href="200801c.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

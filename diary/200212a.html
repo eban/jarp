@@ -1,0 +1,1218 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2002-12-a</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="200211c.html">
+<link rel="next" href="200212b.html">
+
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2002年12月上旬〜</p>
+<hr>
+<div>
+<a href="200211c.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="200212b.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2002/12/01 start -->
+<h2><a name="20021201" href="200212a.html#20021201">2002-12-01 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="200212011" title="200212011" href="200212a.html#200212011">■</a> 
+11月のspam</h3>
+<p>
+ちょうど400通。そのうち112通が韓国から。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200212012" title="200212012" href="200212a.html#200212012">■</a> 
+[Linux] __ctype_b</h3>
+<p>
+reiserfsをモジュールにしようと思い
+</p>
+<pre>
+% PATH=/usr/bin:$PATH make menuconfig
+</pre>
+<p>
+したら、__ctype_bがundefinedになってしまう。
+なぜかlibncurses.aをリンクしにいこうとする。
+libncurses.soもちゃんと存在するのに。
+gcc 2.95.3だとこうなってしまうのかあ。うーむ。
+ncursesをglibc 2.3.1の環境でmakeしてみるかな。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200212013" title="200212013" href="200212a.html#200212013">■</a> 
+[Linux] ncurses 5.3</h3>
+<p>
+いろいろ考えた結果
+</p>
+<pre>
+% mkdir linux; cd linux
+% CFLAGS=-Os ../configure --prefix=/usr \
+  --with-shared --without-debug --without-cxx
+</pre>
+<p>
+でいくことにした。なぜか--enable-sharedではないので注意。
+元々のlibncurses.so{,.5*}は/libにあったのでこれを消去。
+libncurses.so.3*のsymlinkは/usr/libへ移動。
+これでgcc 2.95.3でもok。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200212014" title="200212014" href="200212a.html#200212014">■</a> 
+<a href="http://w3m.sf.net/">[Linux] w3m 0.3.2.1</a></h3>
+<p>
+w3mでgoogleを見ると画像を表示するところで固まってしまうようになってしまった。
+w3mimgdisplayが返ってこない。
+</p>
+
+<p>
+どうせmakeし直すならと、-m17nパッチもあてることにする。
+ついでにgdk-pixbufもインストールしてアニメーションGIFも表示できるようにしよう。
+<a href="ftp://ftp.gnome.org/pub/gnome/sources/gdk-pixbuf/">ftp://ftp.gnome.org/pub/gnome/sources/gdk-pixbuf/</a>からgdk-pixbuf-0.21.0を取ってきて適当にインストール。
+w3mは出たばかりの0.3.2.1を使い、w3m-m17nは
+<a href="http://www2u.biglobe.ne.jp/%7Ehsaka/w3m/index-ja.html">坂本さんのページ</a>からw3m-0.3.2.1-m17n-20021127.patch.gzとlibwc-latest.tar.gzを入手。
+後は
+</p>
+<pre>
+% tar xfvz w3m-0.3.2.1.tar.gz
+% cd w3m-0.3.2.1
+% gzip -dc ../w3m-0.3.2.1-m17n-20021127.patch.gz | patch -p1
+% tar xfvz ../libwc-latest.tar.gz
+% ./configure
+% make
+</pre>
+<p>
+てな感じでいいかと思ったら、-lgpmでまた__ctype_bがundefinedに。
+失敗したなあ。gpmなんか使わないからインストールするんじゃなかった。
+面倒なので
+</p>
+<pre>
+% sudo removepkg gpm
+</pre>
+<p>
+してしまう。もう一度configureし直してmakeしたらok。
+</p>
+
+<p>
+これでutf-8なページも見ることができる。
+アニメーションGIFはlとかhを連打する。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200212015" title="200212015" href="200212a.html#200212015">■</a> 
+[Linux] ext3</h3>
+<p>
+何も考えずにext3をモジュールにしたんだけど、
+initrdにもしてないのになぜパニックを起こさないのか不思議に思う。
+dmesgを見ると
+</p>
+<pre>
+EXT2-fs warning (device ide1(22,2)): ext2_read_super: mounting ext3 filesystem a
+s ext2
+
+VFS: Mounted root (ext2 filesystem) readonly.
+Freeing unused kernel memory: 212k freed
+NET4: Unix domain sockets 1.0/SMP for Linux NET4.0.
+Journalled Block Device driver loaded
+kjournald starting.  Commit interval 5 seconds
+EXT3 FS 2.4-0.9.19, 19 August 2002 on ide1(22,1), internal journal
+EXT3-fs: mounted filesystem with ordered data mode.
+</pre>
+<p>
+とあった。なるほど。とりあえずext2としてread-onlyでmountされたわけだ。
+で、実際に/etc/fstabに従ってmountするときは、
+/lib以下は見えているのでext3モジュールは見つかる。
+なかなか興味深い。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200212016" title="200212016" href="200212a.html#200212016">■</a> 
+[Linux] diet libc, icc, uClibc</h3>
+<p>
+旧環境からそのまま/optと/usr/i386-linux-uclibcをコピー。
+これで揃ったかな。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200212017" title="200212017" href="200212a.html#200212017">■</a> 
+<a href="http://www3.big.or.jp/~sian/linux/products/xmms/">[Linux] xmms 1.2.7j-20021012</a></h3>
+<p>
+<a href="200203c.html#200203302">このような変な技</a>は使えなくなったので、日本語対応版をインストールする。
+あれでSJISになるほうが不思議ではあるが。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200212018" title="200212018" href="200212a.html#200212018">■</a> 
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-talk/57185">[Ruby] Cipher book for ruby</a></h3>
+<p>
+結局のところ、初心者にとっては記号は暗号にしか見えないらしい。
+でも、この人の最近の投稿を見てると、
+ドキュメントがあろうがなかろうが全く理解する気がないようではあるが。
+というか脊髄反射でリプライしすぎ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200212019" title="200212019" href="200212a.html#200212019">■</a> 
+<a href="http://www.ruby-lang.org/en/raa-list.rhtml?name=BZ2">[Ruby] BZ2 0.1.3</a></h3>
+<p>
+更新。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="2002120110" title="2002120110" href="200212a.html#2002120110">■</a> 
+[Linux] /bin/ash</h3>
+<p>
+ところどころ
+</p>
+<pre>
+#! /bin/ash
+</pre>
+<p>
+と書いたスクリプトがあることが判明。
+いや自分で書いたんだけど、なんでわざわざ/bin/ashと指定してるのか謎だ。
+それはそれとして、また
+<a href="200201b.html#2002012014">diet libc版ash</a>をインストールしとく。今回はmakeの引数で対応してみよう。
+使ったのは例によってCygwinのash-20020731-1-src.tar.bz2。
+</p>
+<pre>
+% CC='diet gcc' CC_BUILD='diet gcc' ./configure
+% make CFLAGS='-Os -D_BSD_SOURCE -Dquad_t=long -Du_quad_t=&quot;unsigned long&quot; -D__S_ISVTX=S_ISVTX'
+</pre>
+<p>
+てな感じだ。
+</p>
+
+<p>
+gcc 3.2.1でコンパイルしたら以前より小さくなってる。
+</p>
+<pre>
+% ls -l /plamo-old/bin/ash /bin/ash
+-rwxr-xr-x    1 root     root        70952 Dec  1 21:48 /bin/ash
+-rwxr-xr-x    1 root     root        78808 Jan 20  2002 /plamo-old/bin/ash
+
+</pre>
+
+<!-- section end -->
+</div>
+<!-- 2002/12/01 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/12/02 start -->
+<h2><a name="20021202" href="200212a.html#20021202">2002-12-02 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="200212021" title="200212021" href="200212a.html#200212021">■</a> 
+<a href="http://busybox.net/">[Linux] BusyBox 0.60.5</a></h3>
+<p>
+やっぱdiet libcでコンパイルしたいねってことで、
+</p>
+<pre>
+% make DOSTATIC=true CC='diet gcc' \
+  CFLAGS_EXTRA='-D__uid_t=uid_t -D__gid_t=gid_t' LIBRARIES=-lcompat
+</pre>
+<p>
+としてみたが、結構あちこちでひっかかる。
+主に__GLIBC__がらみなんだけど、とりあえず
+<a href="../files/busybox-0.60.5-dietlibc.diff">こう</a>してみる。ついでにviも活かそう。Config.hのBB_VIをuncomment out。
+まずはdateを試す。
+</p>
+<pre>
+% ./busybox date
+zsh: segmentation fault  ./busybox date
+</pre>
+<p>
+いきなりかよ。他のコマンドは問題ないようだ。
+ってことはdateだけだな。うーむ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200212022" title="200212022" href="200212a.html#200212022">■</a> 
+<a href="http://www.fefe.de/dietlibc/">[Linux] dietlibc 0.21</a></h3>
+<p>
+結局tznameがちゃんと初期化されなくて、
+それを参照しているstrftimeで0番地にアクセスしてる模様。
+/etc/localtimeの中を見てるようだけど、
+これってglibcが作るもんだしなあ。ちゃんと読めるのか？
+またしても
+<a href="../files/dietlibc-0.21-strftime.c.diff">quick hack</a>でごまかす。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200212023" title="200212023" href="200212a.html#200212023">■</a> 
+[Linux] BusyBoxふたたび</h3>
+<p>
+timezoneは表示されなくてもどうでもいいかと、
+とりあえず思うことにする。
+</p>
+<pre>
+% ./busybox date; date -u
+Sun Dec  1 16:11:53  2002
+Sun Dec  1 16:11:53 UTC 2002
+</pre>
+<p>
+ってUTCじゃん。意味なし。--helpを見ると
+</p>
+<pre>
+Options:
+        -R              Outputs RFC-822 compliant date string
+        -d STRING       display time described by STRING, not `now'
+        -s              Sets time described by STRING
+        -u              Prints or sets Coordinated Universal Time
+</pre>
+<p>
+のように-uを指定しなきゃlocaltimeのようにも思えるのだが。
+</p>
+
+<p>
+サイズはこのくらい。
+</p>
+<pre>
+% ls -l busybox
+-rwxr-xr-x    1 watanabe ruby       235924 Dec  2 01:04 busybox
+</pre>
+<p>
+/binへコピーしとこう。非常時にはこれだけで復旧できるはず。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200212024" title="200212024" href="200212a.html#200212024">■</a> 
+<a href="http://www.xmms.org/">[Linux] xmms 1.2.7</a></h3>
+<p>
+ふと思い立って
+</p>
+<pre>
+% sudo localedef -i ja_JP -c -f SJIS ja_JP.SJIS
+</pre>
+<p>
+としてSJISのlocale環境を作ってみる。
+</p>
+<pre>
+character map `SHIFT_JIS' is not ASCII compatible, locale not ISO C compliant
+</pre>
+<p>
+と文句を言われるが一応完了する。で、xmmsを1.2.7のオリジナルに戻して
+</p>
+<pre>
+% LC_ALL=ja_JP.SJIS xmms
+</pre>
+<p>
+のように起動すると、ちゃんとSJISなID3タグが表示された。
+が、例によってメニューは化け化けなので、LANGUAGE指定は必要。
+</p>
+<pre>
+% LC_ALL=ja_JP.SJIS LANGUAGE=C xmms
+</pre>
+<p>
+ということは
+<a href="200203c.html#200203302">以前</a>はjapaneseでSJISな環境になっていたってことか。
+それはそれでかなり不可解ではあるが。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200212025" title="200212025" href="200212a.html#200212025">■</a> 
+[JR東日本] 埼京線</h3>
+<p>
+遅れるほど混むとは。明日は湘南新宿ラインにしてみよう。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/12/02 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/12/03 start -->
+<h2><a name="20021203" href="200212a.html#20021203">2002-12-03 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="200212031" title="200212031" href="200212a.html#200212031">■</a> 
+[Linux] murasaki</h3>
+<p>
+boot時とshutdown時になんかエラーメッセージが出てる。
+</p>
+<pre>
+sh: /proc/sys/kernel/hotplug: No such file or directory
+</pre>
+<p>
+どうも/etc/rc.d/rc.murasakiが出してるようだ。
+SoftwareDesignの11月号を見るとmurasakiはUSB関係のツールらしい。
+とするとこのマシンには関係ない。x permissionだけ落としとこう。
+</p>
+<pre>
+% sudo chmod -x /etc/rc.d/rc.murasaki
+</pre>
+<p>
+rc.0でも呼んでるようなので、
+</p>
+<pre>
+for i in /etc/rc.d/init.d/*; do
+  if [ -x $i ]; then
+    $i stop
+  fi
+done
+</pre>
+<p>
+に変更。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200212032" title="200212032" href="200212a.html#200212032">■</a> 
+<a href="http://homepage1.nifty.com/markey/memo/200212.html#120302">[Cygwin] CygTermとirb</a></h3>
+<p>
+全く問題ないんだけど、何がどうなるんでしょう？
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/12/03 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/12/04 start -->
+<h2><a name="20021204" href="200212a.html#20021204">2002-12-04 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="200212041" title="200212041" href="200212a.html#200212041">■</a> 
+<a href="http://www.ruby-lang.org/en/raa-list.rhtml?name=RubyMail">[Ruby] RubyMail 0.9</a></h3>
+<p>
+インストーラはついてないようだ。とりあえず
+</p>
+<pre>
+% ruby tests/runtests.rb
+</pre>
+<p>
+してみたが、
+</p>
+<pre>
+./tests/testmboxreader.rb:11:in `require': No such file to load -- \
+  rmail/mailbox/mboxreader (LoadError)
+</pre>
+<p>
+となる。たしかにmboxreader.rbは存在しない。
+バックアップファイルが残ってるのも気になる。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200212042" title="200212042" href="200212a.html#200212042">■</a> 
+[MinGW] ImageMagick</h3>
+<p>
+RMagick 0.9.2をmakeするにはまずImageMagickの移植が必要だ。
+</p>
+<pre>
+% PATH=/usr/local/mingw/bin:$PATH \
+  ac_cv_lib_bz2_BZ2_bzCompress=yes \
+  ac_cv_lib_bz2_BZ2_bzDecompress=yes \
+  ac_cv_jpeg_version_ok=yes \
+  CFLAGS=-Os CXXFLAGS=-Os \
+  CC='i686-pc-cygwin-gcc -mno-cygwin' \
+  ../configure \
+  --target=i386-mingw32 --host=i686-pc-cygwin --build=i586-pc-linux-gnu \
+  --without-magick-plus-plus --without-perl \
+  --prefix=/usr/local/mingw --enable-shared --without-x \
+  --without-threads --without-tiff --cache=config.cache
+</pre>
+<p>
+でやってみた。freetype2がまずいようだ。更新が必要かも。
+tiffなしってのも寂しいから、tiffもなんとかすべきか。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/12/04 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/12/05 start -->
+<h2><a name="20021205" href="200212a.html#20021205">2002-12-05 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="200212051" title="200212051" href="200212a.html#200212051">■</a> 
+[Mail] nullmailer</h3>
+<p>
+メールを出していた気になっていたが、nullmailerが動いてなかった。
+何か変だと思ってたんだけど、queueに溜っていただけとは。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200212052" title="200212052" href="200212a.html#200212052">■</a> 
+[Ruby] mod_ruby</h3>
+<p>
+CFLAGSを削除した責任を取ってパッチを書く。
+erubyも同じか。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200212053" title="200212053" href="200212a.html#200212053">■</a> 
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-talk/57649">[Ruby] irb</a></h3>
+<p>
+プロンプトを変えても文句は言われるわけだ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200212054" title="200212054" href="200212a.html#200212054">■</a> 
+<a href="http://www.openwall.com/linux/">[Linux] Linux kernel patch from the Openwall Project</a></h3>
+<p>
+セキュリティを強化するパッチを試す。make oldconfigで全部yに設定。
+</p>
+<pre>
+* Security options
+*
+Non-executable user stack area (CONFIG_HARDEN_STACK) [N/y/?] (NEW) y
+  Autodetect and emulate GCC trampolines (CONFIG_HARDEN_STACK_SMART) [N/y/?] (NEW) y
+Restricted links in /tmp (CONFIG_HARDEN_LINK) [N/y/?] (NEW) y
+Restricted FIFOs in /tmp (CONFIG_HARDEN_FIFO) [N/y/?] (NEW) y
+Restricted /proc (CONFIG_HARDEN_PROC) [N/y/?] (NEW) y
+Enforce RLIMIT_NPROC on execve(2) (CONFIG_HARDEN_RLIMIT_NPROC) [N/y/?] (NEW) y
+Destroy shared memory segments not in use (CONFIG_HARDEN_SHM) [N/y/?] (NEW) y
+</pre>
+<p>
+テストは明日。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/12/05 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/12/06 start -->
+<h2><a name="20021206" href="200212a.html#20021206">2002-12-06 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="200212061" title="200212061" href="200212a.html#200212061">■</a> 
+<a href="http://www.openwall.com/linux/">[Linux] Linux kernel patch from the Openwall Project</a></h3>
+<p>
+昨日makeしたkernelを試す。optional/stacktest.cをコンパイルして実行。
+</p>
+<pre>
+% ./a.out -e
+Attempting to simulate a buffer overflow exploit...
+zsh: segmentation fault  ./a.out -e
+</pre>
+<p>
+ちゃんとSEGVになる。Openwallパッチをあてる前は
+</p>
+<pre>
+% ./a.out -e
+Attempting to simulate a buffer overflow exploit...
+Succeeded.
+</pre>
+<p>
+とexploitが成功してしまう。機能してるようだ。
+</p>
+
+<p>
+でも、PPxPが動かなくなってしまった。
+全部yにしたうちのどれかが原因のはずだが、
+とりあえず明日はCONFIG_HARDEN_STACKだけをyにしてみよう。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200212062" title="200212062" href="200212a.html#200212062">■</a> 
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-core/00587">[Ruby] irbはnkfを使ってるか？</a></h3>
+<p>
+ちょっと面倒なのでここに書いてしまいますが、
+irb/locale.rbでkconvを使ってます。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200212063" title="200212063" href="200212a.html#200212063">■</a> 
+[Ruby] ruby-talk</h3>
+<p>
+てゆか、ruby-talk爆発気味じゃない？
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200212064" title="200212064" href="200212a.html#200212064">■</a> 
+<a href="http://bb.yahoo.co.jp/">[BB] Yahoo! BB</a></h3>
+<p>
+駅前のキャンペーンで2ヶ月無料で試せるというので、
+Yohoo! BBのADSLモデムを持って帰った。
+NTTの設定は2週間後ぐらいという話だが、
+そんなに早くできるようになったのか。
+</p>
+
+<p>
+あ、TVでSo-netが3ヶ月無料と歌ってる…。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/12/06 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/12/07 start -->
+<h2><a name="20021207" href="200212a.html#20021207">2002-12-07 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="200212071" title="200212071" href="200212a.html#200212071">■</a> 
+<a href="http://www.ruby-lang.org/raa/list.rhtml?name=bigfloat">[Ruby] bigfloat 1.2.1</a></h3>
+<p>
+更新。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200212072" title="200212072" href="200212a.html#200212072">■</a> 
+<a href="http://www.ruby-lang.org/raa/list.rhtml?name=eruby">[Ruby] eruby 1.0.0</a></h3>
+<p>
+更新。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200212073" title="200212073" href="200212a.html#200212073">■</a> 
+<a href="200212a.html#200212061">[Linux] Openwallパッチ</a></h3>
+<p>
+CONFIG_HARDEN_STACKだけをyにしたkernelでもppxpは動かず。
+ここが原因なのか。一番欲しい機能だっただけに残念だ。
+なにしろ何のメッセージもなくプロンプトに戻ってきてしまうから原因がわからない。
+</p>
+
+<p>
+ltraceしてみたら、なんと動いてしまった。うーむ。
+あ、Plamo 3.0はちゃとstraceが動くね。
+straceしてみると、サブプロセスがSEGVしてるようだ。
+</p>
+<pre>
+read(3, 0x123000, 4096)                 = ? ERESTARTSYS (To be restarted)
+--- SIGCHLD (Child exited) ---
+read(3, &quot;&quot;, 4096)                       = 0
+close(3)                                = 0
+wait4(106, [WIFSIGNALED(s) &amp;&amp; WTERMSIG(s) == SIGSEGV], 0, NULL) = 106
+</pre>
+<p>
+と思ったらltraceでも動かないときもある。タイミングなのか？
+このサブプロセスはppxpdだな。これを単独で起動すると確かにSEGVになる。
+</p>
+<pre>
+% /usr/local/sbin/ppxpd
+interface: tun0
+zsh: segmentation fault  /usr/local/sbin/ppxpd
+</pre>
+<p>
+そのわりには残っていたりするのが不思議なんだけど。
+</p>
+<pre>
+% ps x |grep '[p]pxpd'
+  229 ?        S      0:00 /usr/local/sbin/ppxpd
+</pre>
+<p>
+この状態でppxpを起動するとちゃんと動く。
+</p>
+<pre>
+% ppxp
+PPxP version 2001080415
+interface: tun0
+ppxp&gt; 
+</pre>
+<p>
+dialもできる。うーむ。
+</p>
+
+<p>
+-debugを試すと問題なし。とするとdaemon化のしかたがまずいと言える。
+ソースを見るとsrc/main.cにDaemon()という名前の関数が見つかる。
+ここで
+</p>
+<pre>
+  if ((child = fork()) == -1) return;
+  if (child) {
+      static void QuitParent(int sig) {
+          exit(0);
+      }
+      signal(SIGTERM, QuitParent);
+      pause();
+  }
+</pre>
+<p>
+という記述があった。
+GCCのnested functionを使ってsignalのハンドラ関数を定義してるわけか。
+なるほど。nested functionはこういう時に便利だな、って、
+その関数はどこに作られるんだ？
+親の関数から抜ければ用済みだから、スタック上に作られる可能性は高い。
+だとしたら原因はこれか？試しに以下のテストプログラムで検証。
+</p>
+<pre>
+% cat foo.c
+main()
+{
+    void foo(){}
+    foo();
+}
+% gcc foo.c
+% ./a.out
+</pre>
+<p>
+あれ？問題ない。-Sをつけてfoo.sを見ても静的に作られたfoo()を直接呼んでいる。
+とすると、関数ポインタを渡すところか？
+</p>
+<pre>
+% cat foo.c
+bar(void (*func)())
+{
+    func();
+}
+main()
+{
+    void foo(){}
+    bar(foo);
+}
+% gcc foo.c
+% ./a.out
+zsh: segmentation fault  ./a.out
+</pre>
+<p>
+これだな。foo.sを見ると確かにコードをわざわざスタックにコピーしてる。
+foo()をmain()の外へ出せばもちろん何の問題もない。
+というわけで無事解決。いやでもスタックにコピーする理由がよくわからない。
+スコープ的に親の関数から抜けたら無効だということを意味させたかったんだろうか？
+info gccを見るとどうもそういうことらしい。
+</p>
+<pre>
+   If you try to call the nested function through its address after the
+containing function has exited, all hell will break loose.  If you try
+to call it after a containing scope level has exited, and if it refers
+to some of the variables that are no longer in scope, you may be lucky,
+but it's not wise to take the risk.  If, however, the nested function
+does not refer to anything that has gone out of scope, you should be
+safe.
+</pre>
+<p>
+続きを読んでみる。
+</p>
+<pre>
+   GCC implements taking the address of a nested function using a
+technique called &quot;trampolines&quot;.  A paper describing them is available as
+
+`http://people.debian.org/~aaronl/Usenix88-lexic.pdf'.
+</pre>
+<p>
+trampolinesってどこかで見たよ。configしたときだ。
+</p>
+<pre>
+Autodetect and emulate GCC trampolines (CONFIG_HARDEN_STACK_SMART)
+</pre>
+<p>
+これだ。ということはautodetectがうまく働いてないのか？
+Openwallパッチのoptional/stacktest.cを見ると、
+-tはまさにさっきのテストプログラムそのものだった。ぐはぁ。
+</p>
+
+<p>
+それはそれとしてnested functionにする必要もないので、
+<a href="../files/ppxp-ow.diff">外に出す</a>ことにしよう。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/12/07 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/12/08 start -->
+<h2><a name="20021208" href="200212a.html#20021208">2002-12-08 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="200212081" title="200212081" href="200212a.html#200212081">■</a> 
+<a href="http://www2u.biglobe.ne.jp/~hsaka/w3m/index-ja.html">[Linux] w3m-0.3.2.2-stable-m17n-20021207</a></h3>
+<p>
+すでにパッチがあたったものをインストール。
+前回configureした結果はconfig.paramに残っているのでこれをコピーしてからconfigureする。
+あとは
+</p>
+<pre>
+% ./configure --nonstop
+</pre>
+<p>
+でいける。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200212082" title="200212082" href="200212a.html#200212082">■</a> 
+<a href="http://www.gnu.org/software/grub/grub.html">[Linux] GRUB 0.93</a></h3>
+<p>
+0.93がリリースされたということなので、
+CVSでupdateしてるソースを使って更新。
+</p>
+<pre>
+% mkdir objs; cd objs
+% CFLAGS=-Os ../grub-current/configure --prefix=/usr
+% make
+% sudo make install
+% sudo grub-install '(hd0)'
+</pre>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200212083" title="200212083" href="200212a.html#200212083">■</a> 
+<a href="200212a.html#200212073">[Linux] Openwallパッチ</a></h3>
+<p>
+全部yにしたカーネルに戻すとtrampolineテストプログラムはちゃんと成功する。
+ということはsignalだと駄目なのか？
+</p>
+<pre>
+% cat signal.c
+#include &lt;stdio.h&gt;
+#include &lt;signal.h&gt;
+
+main()
+{
+    void term(int sig)
+    {
+	printf(&quot;%d\n&quot;, sig);
+    }
+    signal(SIGTERM, term);
+    raise(SIGTERM);
+}
+% gcc signal.c
+% ./a.out
+zsh: segmentation fault  ./a.out
+</pre>
+<p>
+どうもそういうことらしい。自動では検出できないようだ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200212084" title="200212084" href="200212a.html#200212084">■</a> 
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-talk/58203">[Ruby] case</a></h3>
+<p>
+これは知らなかった。省略するとそういう意味になるのか。
+リファレンスマニュアルにも
+<a href="http://www.ruby-lang.org/ja/man-1.6/?cmd=view;name=%C0%A9%B8%E6%B9%BD%C2%A4#case">そう</a>書いてある。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200212085" title="200212085" href="200212a.html#200212085">■</a> 
+[Linux] BitKeeper</h3>
+<p>
+いままでbkの使い方を間違えていたようだ。
+</p>
+<pre>
+% cd /usr/src
+% bk clone -l /path/to/repo/for/linux-2.4 linux-2.4
+% cd linux-2.4
+% bk -r edit
+% cp ../linux-2.4.config .config
+% make oldconfig
+...
+</pre>
+<p>
+という手順でカーネルをmakeしていた。
+常に最新をmakeしていたときはこれでなんの疑問も持たなかったんだけど、
+linux 2.4.20 vanillaを取り出すにはどうすればいいのかさっぱりわからなくなる。
+bk help topicsでいろいろ見てみるとbk exportでいいと気づく。というわけで
+</p>
+<pre>
+% bk export -w -rv2.4.20 /path/to/repo/for/linux-2.4 linux-2.4.20
+</pre>
+<p>
+てな感じで使ってみる。
+でもexportしたファイルを更新することはできないんだよね。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200212086" title="200212086" href="200212a.html#200212086">■</a> 
+<a href="http://www.gnu.org/software/fileutils/">[Linux] fileutils 4.1</a></h3>
+<p>
+Plamo 3.0のfileutilsは3.16と古いので4.1に上げる。
+diet libcだと
+<a href="200111c.html#200111261">面倒</a>なのでuClibcを使う。
+</p>
+<pre>
+% CC='/usr/i386-linux-uclibc/usr/bin/gcc -static' \
+  CFLAGS=-Os am_cv_lib_error_at_line=no \
+  ../configure --prefix=/usr --libexecdir=/bin --bindir=/bin \
+  --disable-nls --cache=config.cache
+</pre>
+<p>
+uClibcのerror()関数の表示が微妙に違うのでlib/error.cを使うように
+</p>
+<pre>
+am_cv_lib_error_at_line=no
+</pre>
+<p>
+とした。こうしないとmake checkでひっかかる。
+</p>
+<pre>
+% make
+% make check
+% sudo make install
+</pre>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200212087" title="200212087" href="200212a.html#200212087">■</a> 
+JARH</h3>
+<pre>
+print case when true then &quot;Just another Ruby hacker,&quot; end
+</pre>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/12/08 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/12/09 start -->
+<h2><a name="20021209" href="200212a.html#20021209">2002-12-09 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="200212091" title="200212091" href="200212a.html#200212091">■</a> 
+初雪</h3>
+<p>
+寒いっす。
+</p>
+
+<p>
+駅までの道、なぜか逆流する人が多い。そういえば踏切の警報機が全然鳴ってない。
+この時間なら5分に1本は来るはず。
+駅に着くと案の定電車が走ってなかった。
+駅員に対して現状を説明しろと叫ぶ会社員。ま、聞いても無駄だろう。
+階段までごったがえしていてホームへたどり着くのに15分かかる。
+でも電車は来ない。
+</p>
+<pre>
+「ただいまとりはねを出ました」
+</pre>
+<p>
+とアナウンス。どこだよ？そんな駅名は聞いたこともない。
+諦めて外へ出るにしてもまた15分かかるだろうし、どうするか悩む。
+雪道を15分ほど歩いてバス停に行くのもいやだし、待つことにする。
+その後はまったくアナウンスなし。20分ぐらいしてやっと来た。
+が、まったく乗れる隙はない。降りる人もやっと出られてほっとしてる様子。
+その時曇ったガラスになぜか忍者ハットリ君を書く女子高生。
+殺伐とした空気が一瞬和む。3本見送った。結局電車に乗れるまでに1時間かかる。
+少年ジャンプはとっくに読み終わっていた。大宮駅に着いたら
+</p>
+<pre>
+「降雪のため列車が乱れたことをお詫び致します」
+</pre>
+<p>
+と2回繰り返された。乱れたのはダイヤだろと小声でツッコむ。
+</p>
+
+<p>
+暑いっす。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200212092" title="200212092" href="200212a.html#200212092">■</a> 
+[Ruby] ++, elsif, concat, ...</h3>
+<p>
+文句ばっか。いい加減うざい。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200212093" title="200212093" href="200212a.html#200212093">■</a> 
+<a href="http://www.gnu.org/software/parted/">[Linux] GNU parted</a></h3>
+<p>
+<a href="http://fchabaud.free.fr/English/Tricks/Laptop/Swsusp/Doc/Software-suspend.html">Software-suspend-mini-HOWTO</a>を見てたら、
+<a href="http://fchabaud.free.fr/English/Tricks/Laptop/Swsusp/Doc/Software-suspend-2.html#ss2.6">2.6章に</a></p>
+<pre>
+You must have a swap partition on your disk. This swap partition should be at
+least 30% larger than your RAM
+</pre>
+<p>
+と書いてあった。その後に128Mだったら160Mのswapを用意しろとある。
+現在は
+</p>
+<pre>
+% fdisk -l /dev/hdc
+
+Disk /dev/hdc: 255 heads, 63 sectors, 4865 cylinders
+Units = cylinders of 16065 * 512 bytes
+
+   Device Boot    Start       End    Blocks   Id  System
+/dev/hdc1             1        13    104391   83  Linux
+/dev/hdc2   *        14      4850  38853202+  83  Linux
+/dev/hdc3          4851      4865    120487+  82  Linux swap
+</pre>
+<p>
+と足りない。というわけで、partedでresizeに挑戦だ。
+hdc2を小さくしてhdc3を大きくするので、手順としては
+</p>
+<pre>
+hdc3を削除
+hdc2を小さくする
+hdc3を作る
+</pre>
+<p>
+となる。rootパーティションを変更することになるので、
+partboot, partrootをフロッピーに書き込んで起動する。
+イメージは
+<a href="ftp://ftp.gnu.org/gnu/parted/bootdisk/">ftp://ftp.gnu.org/gnu/parted/bootdisk/</a>から入手可能。フロッピーでブートしてparted /dev/hdcで起動。
+</p>
+<pre>
+(parted) p                                                                
+Disk geometry for /dev/hdc: 0.000-38166.679 megabytes
+Disk label type: msdos
+Minor    Start       End     Type      Filesystem  Flags
+1          0.031    101.975  primary   ext3        
+2        101.975  38044.556  primary   ext3        boot
+3      37044.556  38162.219  primary   linux-swap  
+(parted) rm 3
+(parted) resize 2 101.975 38000
+(parted) p
+Disk geometry for /dev/hdc: 0.000-38166.679 megabytes
+Disk label type: msdos
+Minor    Start       End     Type      Filesystem  Flags
+1          0.031    101.975  primary   ext3        
+2        101.975  37997.490  primary   ext3        boot
+(parted) mkpartfs primary linux-swap 37997.491 38162.219
+(parted) p
+Disk geometry for /dev/hdc: 0.000-38166.679 megabytes
+Disk label type: msdos
+Minor    Start       End     Type      Filesystem  Flags
+1          0.031    101.975  primary   ext3        
+2        101.975  37997.490  primary   ext3        boot
+3      37997.490  38162.219  primary   linux-swap  
+(parted) quit
+# fdisk -l /dev/hdc
+
+Disk /dev/hdc: 255 heads, 63 sectors, 4865 cylinders
+Units = cylinders of 16065 * 512 bytes
+
+   Device Boot    Start       End    Blocks   Id  System
+/dev/hdc1             1        13    104391   83  Linux
+/dev/hdc2   *        14      4844  38805007+  83  Linux
+/dev/hdc3          4845      4865    168682+  82  Linux swap
+</pre>
+<p>
+よさげだ。再起動もokだ。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/12/09 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/12/10 start -->
+<h2><a name="20021210" href="200212a.html#20021210">2002-12-10 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="200212101" title="200212101" href="200212a.html#200212101">■</a> 
+[Ruby] RHG</h3>
+<p>
+届きました。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200212102" title="200212102" href="200212a.html#200212102">■</a> 
+[Linux] leafnode+</h3>
+<p>
+すっかり忘れていた。もう要らないかなあ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200212103" title="200212103" href="200212a.html#200212103">■</a> 
+<a href="http://lynx.browser.org/">[Linux] lynx 2.8.4</a></h3>
+<p>
+肝は--with-screen=ncursesらしい。にしてもdefaultの色使いがひどいよね。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200212104" title="200212104" href="200212a.html#200212104">■</a> 
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-core/00609">[Ruby] -lruby-static</a></h3>
+<p>
+--disable-sharedで拡張ライブラリを作るときに-lruby-staticをリンクしちゃうのはまずいね。
+have_funcのときだけにしないと。
+拡張ライブラリが無駄に太るだけなので、それが原因とも思えないんだけど。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200212105" title="200212105" href="200212a.html#200212105">■</a> 
+「とりはね」の正体</h3>
+<p>
+あ、豊春か。すっきりした。って「と」と「は」しか合ってねー。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/12/10 end -->
+
+<hr>
+<div>
+<a href="200211c.html">&lt;Prev(,)</a> | 
+<a href="200212b.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

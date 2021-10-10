@@ -1,0 +1,1647 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2001-12-c</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="200112b.html">
+<link rel="next" href="200201a.html">
+
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2001年12月下旬〜</p>
+<hr>
+<div>
+<a href="200112b.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="200201a.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2001/12/21 start -->
+<h2><a name="20011221" href="200112c.html#20011221">2001-12-21 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="200112211" title="200112211" href="200112c.html#200112211">■</a> 
+雪</h3>
+<p>
+予報通りの雪。うっすら雪化粧という感じ。非常に寒い。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200112212" title="200112212" href="200112c.html#200112212">■</a> 
+最近の略語</h3>
+<p>
+本の題名ではあるが。
+</p>
+<pre>
+TRW - The Ruby Way
+TYS - Teach YourSelf
+TYR21D - Teach Yourself Ruby in 21 Days
+</pre>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200112213" title="200112213" href="200112c.html#200112213">■</a> 
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-talk/29210">RES</a></h3>
+<p>
+ブラジルのOutlookはRESになるのか？ブラジルじゃなくてポルトガル語か。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200112214" title="200112214" href="200112c.html#200112214">■</a> 
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-dev/15526">^P</a></h3>
+<p>
+^Lじゃないと改頁にならないです。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200112215" title="200112215" href="200112c.html#200112215">■</a> 
+bareruby</h3>
+<p>
+makeをRubyで書く話がruby-talkで続いているが、
+たぶんbootstrapに関しては何も考えてないんだろう。
+というわけでbarerubyだ。
+microとかtinyだと別なのもを想像するのでbareにした。
+</p>
+
+<h4><a name="200112215S1" href="200112c.html#200112215S1">_</a> <strong>gcc -c *.c</strong>: </h4>
+<div class="sub">
+<p>
+まずは1.6.6のCVS版で一個一個gcc -cしてみる。
+</p>
+<pre>
+% gcc -c array.c
+In file included from array.c:15:
+ruby.h:21:20: config.h: No such file or directory
+</pre>
+<p>
+config.hが必要だ。面倒だから全部まとめてコンパイルだ。
+</p>
+<pre>
+% touch config.h
+% gcc -c *.c
+エラーがいっぱい
+% ls *.o
+array.o   dmyext.o  hash.o     math.o     range.o    st.o        version.o
+bignum.o  enum.o    inits.o    numeric.o  re.o       string.o
+class.o   error.o   main.o     object.o   regex.o    struct.o
+compar.o  gc.o      marshal.o  prec.o     sprintf.o  variable.o
+% ls *.c
+array.c   dmyext.c  hash.c     math.c     random.c  sprintf.c  variable.c
+bignum.c  enum.c    inits.c    numeric.c  range.c   st.c       version.c
+class.c   error.c   io.c       object.c   re.c      string.c
+compar.c  eval.c    lex.c      pack.c     regex.c   struct.c
+dir.c     file.c    main.c     prec.c     ruby.c    time.c
+dln.c     gc.c      marshal.c  process.c  signal.c  util.c
+</pre>
+<p>
+ふむ。半分以上はコンパイル可能。順番に見てこう。
+</p>
+
+</div>
+<h4><a name="200112215S2" href="200112c.html#200112215S2">_</a> <strong>dir.c</strong>: </h4>
+<div class="sub">
+<pre>
+dir.c:232: parse error before &quot;DIR&quot;
+</pre>
+<p>
+がすべてを物語っているわけだが、なんかいきなり難関にぶちあたった気もする。
+barerubyは少くともextmk.rbやmkmf.rbが動かないと意味がないわけでdir.cは必須だ。
+簡単なconfigureみたいなものが必要かな。
+gcc *.c -o barerubyってわけにもいかないので
+
+<a href="#20011221F1"><sup><small>*1</small></sup></a>、
+どっちにしてもshell scriptは必要だろう。
+dirent.h, direct.h, sys/ndir.h, sys/dir.h, ndir.hをcheckしよう。
+</p>
+
+</div>
+<h4><a name="200112215S3" href="200112c.html#200112215S3">_</a> <strong>dln.c</strong>: </h4>
+<div class="sub">
+<pre>
+dln.c:1675: `X_OK' undeclared (first use in this function)
+</pre>
+<p>
+unistd.hをcheck。
+</p>
+
+</div>
+<h4><a name="200112215S4" href="200112c.html#200112215S4">_</a> <strong>eval.c</strong>: </h4>
+<div class="sub">
+<pre>
+eval.c:81: redefinition of `struct timeval'
+</pre>
+<p>
+sys/time.hをcheck。
+</p>
+<pre>
+eval.c:5336: `DLEXT' undeclared here (not in a function)
+</pre>
+<p>
+これってdlが使えないなら参照しないようにしたほうがよさそうだな。
+とりあえず、ソースを直すのは後にして、
+</p>
+<pre>
+#define DLEXT &quot;.so&quot;
+</pre>
+<p>
+をconfig.hに追加しよう。
+</p>
+<pre>
+eval.c:6614: `free' undeclared (first use in this function)
+</pre>
+<p>
+stdlib.hをcheck。他にstring関係でwarningが出てるのでstring.hもcheck。
+</p>
+
+</div>
+<h4><a name="200112215S5" href="200112c.html#200112215S5">_</a> <strong>file.c</strong>: </h4>
+<div class="sub">
+<pre>
+file.c:124: `free' undeclared (first use in this function)
+</pre>
+<p>
+これはeval.cと同じでstdlib.h。
+</p>
+<pre>
+file.c:396: parse error before &quot;GETGROUPS_T&quot;
+</pre>
+<p>
+group_memberの為にある。
+</p>
+<pre>
+#define GETGROUPS_T int
+</pre>
+<p>
+でごまかしとこう。
+</p>
+
+</div>
+<h4><a name="200112215S6" href="200112c.html#200112215S6">_</a> <strong>io.c</strong>: </h4>
+<div class="sub">
+<pre>
+io.c:1281: `O_RDONLY' undeclared (first use in this function)
+</pre>
+<p>
+fcntl.hをcheck。
+</p>
+
+</div>
+<h4><a name="200112215S7" href="200112c.html#200112215S7">_</a> <strong>parse.c</strong>: </h4>
+<div class="sub">
+<p>
+を忘れてた。が、今までのheaderのcheckでいけてる。
+</p>
+
+</div>
+<h4><a name="200112215S8" href="200112c.html#200112215S8">_</a> <strong>pack.c</strong>: </h4>
+<div class="sub">
+<pre>
+pack.c:82: `TOKEN_PASTE' declared as function returning a function
+</pre>
+<p>
+これは##だね。ANSI Cを前提にしちゃおうかな。
+</p>
+<pre>
+#define TOKEN_PASTE(x,y) x##y
+</pre>
+<p>
+##をcheckしてだめなら/**/にするか。
+</p>
+
+</div>
+<h4><a name="200112215S9" href="200112c.html#200112215S9">_</a> <strong>process.c</strong>: </h4>
+<div class="sub">
+<pre>
+process.c:594: `hfunc' undeclared (first use in this function)
+process.c:594: `qfunc' undeclared (first use in this function)
+process.c:594: `ifunc' undeclared (first use in this function)
+</pre>
+<p>
+RETSIGTYPEか。
+barerubyとしてはforkしないでsystemですませたいので、
+rb_syswaitもなくてもいい感じだ。とりあえず
+</p>
+<pre>
+#define RETSIGTYPE void
+</pre>
+<p>
+して先に進める。
+</p>
+
+</div>
+<h4><a name="200112215S10" href="200112c.html#200112215S10">_</a> <strong>random.c</strong>: </h4>
+<div class="sub">
+<pre>
+random.c:158: `RAND_MAX' undeclared (first use in this function)
+</pre>
+<p>
+extmk.rb的には必要ないのが、stdlib.hをcheckすればいいだろう。
+</p>
+
+</div>
+<h4><a name="200112215S11" href="200112c.html#200112215S11">_</a> <strong>ruby.c</strong>: </h4>
+<div class="sub">
+<pre>
+ruby.c:266: `RUBY_SITE_LIB2' undeclared (first use in this function)
+ruby.c:270: `RUBY_SITE_ARCHLIB' undeclared (first use in this function)
+ruby.c:271: `RUBY_SITE_LIB' undeclared (first use in this function)
+ruby.c:273: `RUBY_LIB' undeclared (first use in this function)
+ruby.c:277: `RUBY_ARCHLIB' undeclared (first use in this function)
+</pre>
+<p>
+全部&quot;&quot;にしておく。
+</p>
+
+</div>
+<h4><a name="200112215S12" href="200112c.html#200112215S12">_</a> <strong>signal.c</strong>: </h4>
+<div class="sub">
+<pre>
+signal.c:348: parse error before &quot;sighandle&quot;
+signal.c:378: parse error before &quot;sigbus&quot;
+signal.c:465: `func' undeclared (first use in this function)
+</pre>
+<p>
+全部RETSIGTYPE。
+</p>
+
+</div>
+<h4><a name="200112215S13" href="200112c.html#200112215S13">_</a> <strong>time.c</strong>: </h4>
+<div class="sub">
+<pre>
+time.c:22: redefinition of `struct timeval'
+time.c:60: `free' undeclared (first use in this function)
+</pre>
+<p>
+これもすでに対応済み。
+</p>
+
+</div>
+<h4><a name="200112215S14" href="200112c.html#200112215S14">_</a> <strong>util.c</strong>: </h4>
+<div class="sub">
+<pre>
+util.c:90: `W_OK' undeclared (first use in this function)
+</pre>
+<p>
+対応済み。
+</p>
+
+</div>
+<h4><a name="200112215S15" href="200112c.html#200112215S15">_</a> <strong>gcc -o bareruby *.o</strong>: </h4>
+<div class="sub">
+<p>
+これだけでうまくいけば簡単なんだけどね。
+</p>
+<pre>
+file.o(.text+0x1ae6): the `getwd' function is dangerous and should not be used.
+</pre>
+<p>
+これは警告なので、とりあえず無視。
+</p>
+<pre>
+array.o(.text+0x483): undefined reference to `RSHIFT'
+</pre>
+<p>
+そうか。RSHIFTはconfigure.inからひっぱってこよう。
+</p>
+<pre>
+bignum.o(.text+0x2e62): undefined reference to `pow'
+</pre>
+<p>
+あ-lmが必要だ。
+</p>
+<pre>
+pack.o(.text+0xd47): undefined reference to `NUM2U32'
+</pre>
+<p>
+そうかSIZEOF_HOGEをなんとかしないといけないんだな。
+bareならpackもunpackも要らないか。bareinits.cを用意してpackは外そう。
+</p>
+<pre>
+re.o(.text+0x2e6): undefined reference to `ruby_re_mbcinit'
+re.o(.text+0xc07): undefined reference to `ruby_re_compile_pattern'
+re.o(.text+0xdcb): undefined reference to `ruby_re_copy_registers'
+re.o(.text+0x13ef): undefined reference to `ruby_re_search'
+re.o(.text+0x1ba0): undefined reference to `ruby_re_free_pattern'
+re.o(.text+0x2caa): undefined reference to `ruby_re_set_casetable'
+regex.o(.text+0x198f): undefined reference to `xrealloc'
+regex.o(.text+0x3680): undefined reference to `scan_hex'
+regex.o(.text+0x36bb): undefined reference to `scan_oct'
+</pre>
+<p>
+RUBY_PLATFORMを&quot;unknown-unknown&quot;と定義する。
+</p>
+<pre>
+string.o(.text+0x60bc): undefined reference to `crypt'
+</pre>
+<p>
+-lcryptか。LIBSを用意しとこ。
+</p>
+
+</div>
+<hr align="left" width="40%">
+<div>
+<a name="20011221F1" href="200112c.html#20011221F1"><small>*1</small></a>:
+実は*.cだとlex.cの存在が邪魔だったりする。
+</div>
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200112216" title="200112216" href="200112c.html#200112216">■</a> 
+<a href="../files/bareruby.sh">bareruby.sh</a></h3>
+<pre>
+% LIBS='-lm -lcrypt' sh bareruby.sh
+% ./bareruby -v
+ruby 1.6.6 (2001-12-21) [unknown-unknown]
+</pre>
+<p>
+できたね。packのテストを外してsample/test.rbを実行してみる。
+</p>
+<pre>
+% ln -s bareruby miniruby
+% ./bareruby sample/test.rb
+(snip)
+marshal
+not ok marshal 1 -- sample/test.rb:1063
+(snip)
+test: 314 failed 1
+</pre>
+<p>
+というわけでmarshalだけだ。これもたぶんSIZEOFだな。
+marshalは外そう。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200112217" title="200112217" href="200112c.html#200112217">■</a> 
+Cygwinでbareruby.sh</h3>
+<pre>
+% CC=gcc LIBS=-lcrypt bash ./bareruby.sh
+</pre>
+<p>
+compileは問題なく進む。MAXPATHLENのredefined警告がうるさい。
+Cygwinはunistd.hをincludeすると定義されるらしい。
+とりあえずsys/param.hもcheckしよう。
+</p>
+<pre>
+file.o(.text+0x250b):file.c: undefined reference to `flock'
+</pre>
+<p>
+__CHECKER__を定義しよう。って__CHECKER__ってなんだ？
+</p>
+<pre>
+io.o(.text+0x1ca):io.c: undefined reference to `ReadDataPending'
+</pre>
+<p>
+これは苦しいね。常に0を返すか？bareinits.cに入れてみよう。
+</p>
+<pre>
+signal.o(.text+0xb9a):signal.c: undefined reference to `sigmask'
+signal.o(.text+0xbd0):signal.c: undefined reference to `sigsetmask'
+signal.o(.text+0xbfc):signal.c: undefined reference to `sigsetmask'
+signal.o(.text+0xcc3):signal.c: undefined reference to `sigblock'
+</pre>
+<p>
+面倒だなあ。いっそsignal.oも外すか。ってそれは無理だ。
+bareinits.cにdummyを用意しよう。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200112218" title="200112218" href="200112c.html#200112218">■</a> 
+MinGWでbareruby.sh</h3>
+<pre>
+%  CC='gcc -mno-cygwin' ./bareruby.sh
+(snip)
+gcc -mno-cygwin -I.   -c dir.c
+dir.c: In function `dir_s_mkdir':
+dir.c:484: too many arguments to function `mkdir'
+</pre>
+<p>
+そりゃそうだ。不本意ながらmingw32のcheckを入れよう。
+</p>
+<pre>
+warning: `va_start' redefined
+</pre>
+<p>
+がうるさいが、コンパイルはok。が、リンクでundefinedがいっぱい。
+win32/win32.cを無視してるからだ。
+crypt.cも対応して、LIBSに-lwsock32を入れてみると
+</p>
+<pre>
+bignum.o(.text+0x1276):bignum.c: undefined reference to `isinf'
+bignum.o(.text+0x12bd):bignum.c: undefined reference to `isnan'
+file.o(.text+0x3054):file.c: undefined reference to `getwd'
+</pre>
+<p>
+てな感じ。やっぱ関数をcheckしないのは無理があるか？
+getwdに関してはdir.cではifdefなしでgetcwdを使っているので、
+getcwdにしても問題なさそう。
+missing/{isinf,isnan}.cをコピーするか。
+</p>
+
+<p>
+これでtestも通った。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200112219" title="200112219" href="200112c.html#200112219">■</a> 
+FreeBSD 3.3, NetBSD 1.5でbareruby.sh</h3>
+<p>
+問題なし。比較的新しいOSなら通るでしょう。
+</p>
+
+<p>
+とりあえずここまでできたから、思う存分makeを作ってくれ。
+が、その前にconfigure.rbが必要だと気づいた。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="2001122110" title="2001122110" href="200112c.html#2001122110">■</a> 
+Ruby 1.7でbareruby.sh</h3>
+<p>
+bignum.cで思い切りエラー。世の中そんなに甘くないのである。
+明日へつづく(たぶん)。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2001/12/21 end -->
+
+
+
+<hr class="hide">
+<!-- 2001/12/22 start -->
+<h2><a name="20011222" href="200112c.html#20011222">2001-12-22 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="200112221" title="200112221" href="200112c.html#200112221">■</a> 
+sourceforgeのftp</h3>
+<p>
+ftp://ftp1.sf.net/pub/sourceforge/プロジェクト名という感じでftpでアクセスできる。
+たとえばmingwなら
+<a href="ftp://ftp1.sf.net/pub/sourceforge/mingw/">こう</a> だ。
+
+<a href="http://p4w.sourceforge.net/download.shtml">P4W</a> からの情報。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200112222" title="200112222" href="200112c.html#200112222">■</a> 
+Ruby 1.7でbareruby.sh</h3>
+<p>
+結局SIZEOFを解決させないとbignum.cはコンパイルできない。これも外すか？
+それは絶対無理だな。
+逆にSIZEOF対応すればmarshalもpack.cもいけるわけだよね。
+そっちの線でいったほうがいいか。
+小さいものを作ろうとしてるわけでもないし、外さない方向のほうがいいか。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200112223" title="200112223" href="200112c.html#200112223">■</a> 
+SIZEOF_FOO</h3>
+<p>
+configureを見るとsizeof(foo)をfprintfしてcatするだけ。
+autoconf-2.5xだとクロスの場合にも対応してて、
+なんだかよくわからない方法でsizeを計算してる。
+そこまでやらなくてもという気がするので、
+barerubyをクロス対応させるときは環境変数だな。
+</p>
+
+<p>
+調べるのはint, short, long, long long, __int64, void *, float, doubleだ。
+とりあえずできた(
+<a href="../files/bareruby.sh">bareruby.sh</a> )。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200112224" title="200112224" href="200112c.html#200112224">■</a> 
+getwd</h3>
+<p>
+ふむ。1.7ではすでにgetwdは駆逐されてたのか。
+じゃ、HAVE_GETCWDを無条件でdefineしとこう。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200112225" title="200112225" href="200112c.html#200112225">■</a> 
+Cygwin Ruby 1.7でbareruby.sh</h3>
+<p>
+testしたらSEGVってしまった。普通に作れば問題ないので何かが足りないようだ。
+gc.cの
+</p>
+<pre>
+# define STACK_LEVEL_MAX 655300
+</pre>
+<p>
+が大きすぎるからか。gc.cにパッチをあてよう。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200112226" title="200112226" href="200112c.html#200112226">■</a> 
+MinGW Ruby 1.7でbareruby.sh</h3>
+<p>
+こっちはsystemと表示したっきり返ってこない。
+</p>
+<pre>
+% ./bareruby -e 'system &quot;echo foo&quot;'
+foo
+</pre>
+<p>
+でpromptに戻らない。systemがなんかまずいって、あ、RETSIGTYPEか？
+もちろん普通に作れば問題ない。こっちも何かが足りないようだ。
+</p>
+
+<p>
+同じ名前で*.oを作ると共存できないので、barray.oのように名前を変えよう。
+</p>
+
+<p>
+HAVE_WAITPIDだった。
+win32/win32.cを見るとwait()はreturn 0;だから無限ループになるのも無理はない。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200112227" title="200112227" href="200112c.html#200112227">■</a> 
+Linux 2.4.17</h3>
+<p>
+出たね。クリスマスにはちょっと早いが。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200112228" title="200112228" href="200112c.html#200112228">■</a> 
+SUPER MILD</h3>
+<p>
+広末がCMに出てるとこを久し振りに見る。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2001/12/22 end -->
+
+
+
+<hr class="hide">
+<!-- 2001/12/23 start -->
+<h2><a name="20011223" href="200112c.html#20011223">2001-12-23 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="200112231" title="200112231" href="200112c.html#200112231">■</a> 
+elif</h3>
+<p>
+shにelifがないのが痛い。
+{}を使って
+</p>
+<pre>
+{ test -e foo.c &amp;&amp; src=foo.c; } ||
+{ test -e bar.c &amp;&amp; src=bar.c; } ||
+{ src=hoge.c; }
+</pre>
+<p>
+という手を捻り出してみた。
+{}はconfigureでも使ってるので、まあ、いいかな。
+;を忘れるとエラーになる。zshだと;はなくてもいい。
+</p>
+
+<p>
+てゆか、なぜおいらはelifがないと思ったんだろう？
+あるに決まってるじゃん。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200112232" title="200112232" href="200112c.html#200112232">■</a> 
+<a href="../files/bareruby.sh">bareruby.sh</a></h3>
+<p>
+bareruby.shはsrcdir対応にした。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200112233" title="200112233" href="200112c.html#200112233">■</a> 
+RubyUnit 0.5.1</h3>
+<p>
+更新。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200112234" title="200112234" href="200112c.html#200112234">■</a> 
+FreeBSD 3.3でbareruby.sh</h3>
+<p>
+FreeBSD 3.3でRuby 1.6.6をbareruby.shすると
+</p>
+<pre>
+bpack.o: In function `pack_pack':
+bpack.o(.text+0xf6d): undefined reference to `NUM2U32'
+</pre>
+<p>
+となる。どうも
+</p>
+<pre>
+#if SIZEOF_SHORT != 2 || SIZEOF_LONG != 4
+# define NATINT_PACK
+#endif
+</pre>
+<p>
+が真になってしまうのが原因のようだ。でもconfig.hはちゃんと
+</p>
+<pre>
+#define SIZEOF_INT 4
+#define SIZEOF_SHORT 2
+#define SIZEOF_LONG_LONG 8
+#define SIZEOF_LONG 4
+#define SIZEOF___INT64 0
+#define SIZEOF_VOIDP 4
+#define SIZEOF_FLOAT 4
+#define SIZEOF_DOUBLE 8
+</pre>
+<p>
+となっているんだけどなあ。不思議だ。
+</p>
+
+<p>
+なお1.7だと問題ない。そのあたりに違いはないのに。
+</p>
+
+<p>
+あ、SIZEOF対応前のconfig.hがsource directoryにあったからか。
+-I.を後に置いたほうがいいな。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200112235" title="200112235" href="200112c.html#200112235">■</a> 
+NHKスペシャル</h3>
+<p>
+25分も遅れるなよー。明日からは2時間で予約しとこ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200112236" title="200112236" href="200112c.html#200112236">■</a> 
+Solaris 2.5でbareruby.sh</h3>
+<p>
+isinf, snprintf, vsnprintfがundefined。
+missingは全部リンクしちゃうか？
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2001/12/23 end -->
+
+
+
+<hr class="hide">
+<!-- 2001/12/24 start -->
+<h2><a name="20011224" href="200112c.html#20011224">2001-12-24 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="200112241" title="200112241" href="200112c.html#200112241">■</a> 
+RubyUnit 0.5.2</h3>
+<p>
+更新。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200112242" title="200112242" href="200112c.html#200112242">■</a> 
+GNU make</h3>
+<p>
+GNU makeを作るにはmakeがないことも考えられていて、
+build.shというのがついてくる。いやbuild.sh.inがついてくる。
+build.shはconfigureすると作られる。
+なるほど。そういう手もあるのか。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200112243" title="200112243" href="200112c.html#200112243">■</a> 
+bareruby.bat</h3>
+<p>
+mswin32に関しては特に何も考えてない。
+調べる必要がないから、最初から決めうちでいいわけだし。
+</p>
+<pre>
+nmake -n
+</pre>
+<p>
+した結果をそのままbareruby.batにするぐらいでいいんじゃないかな。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200112244" title="200112244" href="200112c.html#200112244">■</a> 
+djgppでbareruby</h3>
+<p>
+bareruby.batで思い出した。というかすっかり存在を忘れてた。
+今クロスしか環境ないから試せないんだよねえ。
+ちなみに
+</p>
+<pre>
+% ../bareruby.sh \
+  --srcdir=../ruby16 \
+  --CC=i586-pc-msdosdjgpp-gcc \
+  --RSHIFT_SIGN=yes \
+  --SIZEOF_INT=4 \
+  --SIZEOF_SHORT=2 \
+  --SIZEOF_LONG=4 \
+  --SIZEOF_LONG_LONG=8 \
+  --SIZEOF___INT64=0 \
+  --SIZEOF_VOIDP=4 \
+  --SIZEOF_FLOAT=4 \
+  --SIZEOF_DOUBLE=8 \
+  --yacc='bison -y'
+</pre>
+<p>
+ぐらいは通ってたりする。作ってみてこれほど意味のないものはないと思うが。
+barerubyはminirubyと同じで、その場で実行できないと意味がない。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200112245" title="200112245" href="200112c.html#200112245">■</a> 
+今日の最終bareruby.sh</h3>
+
+<h4><a name="200112245S1" href="200112c.html#200112245S1">_</a> <strong>missing/</strong>: </h4>
+<div class="sub">
+<p>
+missing/strftime.cはLinuxではコンパイルできない。
+djgppでもtimezoneがundefinedになったりで、あまりportableではないらしい。
+結局missingからやばそうなmkdir.c, os2.c, strftime.c, x68.cを除いて足すことにした。
+つまりOS/2とX68kは別に対応しないといけないわけか？
+</p>
+
+</div>
+<h4><a name="200112245S2" href="200112c.html#200112245S2">_</a> <strong>b*.o -&gt; _*.o</strong>: </h4>
+<div class="sub">
+<p>
+rm b*.oだとbignum.oも消えてしまうので、_をprefixすることにした。
+</p>
+
+</div>
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200112246" title="200112246" href="200112c.html#200112246">■</a> 
+NHKスペシャル</h3>
+<p>
+今日は10分遅れだ。やはり定刻通りには始まらない。
+鬼界カルデラってなんか怖そうな名前だ。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2001/12/24 end -->
+
+
+
+<hr class="hide">
+<!-- 2001/12/25 start -->
+<h2><a name="20011225" href="200112c.html#20011225">2001-12-25 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="200112251" title="200112251" href="200112c.html#200112251">■</a> 
+GCC 3.0.3</h3>
+<p>
+
+<a href="http://yendot.org">Yendot</a> で知る。
+</p>
+
+<p>
+今回は別のPCで
+</p>
+<pre>
+% ./configure \
+  --enable-languages=c,c++ \
+  --with-system-zlib \
+  --enable-sjlj-exceptions \
+  --enable-threads \
+  i586-pc-linux-gnu
+% make bootstrap
+% make prefix=$HOME/gcc-3.0.3/usr/local install
+% cd ~/gcc-3.0.3
+% tar cfvz gcc-3.0.3-bin.tar.gz usr
+</pre>
+<p>
+してtarballを作ってみた。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200112252" title="200112252" href="200112c.html#200112252">■</a> 
+Hybris</h3>
+<p>
+そんなクリスマスプレゼントはいらない、ocnのsomebody。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200112253" title="200112253" href="200112c.html#200112253">■</a> 
+Dirと空白</h3>
+<p>
+Ruby 1.7になって空白はファイル名の一部とみなすようになった。でも
+</p>
+<pre>
+Dir[&quot;foo/*&quot;, &quot;bar/*&quot;]
+</pre>
+<p>
+はどうなったんだっけ？
+どっちにしても1.6と共存を考えた場合、
+実装されてもしばらくは使わないほうがいいだろう。
+Cygwin用に
+<a href="http://cygwin.com/setup.html#setup.ini">setup.ini</a>
+を作るスクリプトを考えてたんだけど、
+</p>
+<pre>
+Dir[&quot;ruby-*-i386-cygwin.tar.gz ext/*.tar.gz&quot;]
+</pre>
+<p>
+が出てきてしまった。しかたないので空白を使わない方法を考えよう。
+</p>
+
+<h4><a name="200112253S1" href="200112c.html#200112253S1">_</a> <strong>安直に2つに分けてから足す</strong>: </h4>
+<div class="sub">
+<p>
+Dir::[]はArrayを返すので2つに分けて足せばいい。
+</p>
+<pre>
+Dir[&quot;ruby-*-i386-cygwin.tar.gz&quot;] + Dir[&quot;ext/*.tar.gz&quot;]
+</pre>
+<p>
+でもなんかださい。
+</p>
+
+</div>
+<h4><a name="200112253S2" href="200112c.html#200112253S2">_</a> <strong>dir.cをいじってDir::[], Dir::globが複数の文字列を受けとれるようにする</strong>: </h4>
+<div class="sub">
+<pre>
+Dir[&quot;ruby-*-i386-cygwin.tar.gz&quot;, &quot;ext/*.tar.gz&quot;]
+</pre>
+<p>
+互換性の点から実装されてもあまり使いたくない。
+</p>
+
+</div>
+<h4><a name="200112253S3" href="200112c.html#200112253S3">_</a> <strong>{,}を使う</strong>: </h4>
+<div class="sub">
+<p>
+Dir::[]では{,}が使用可能。
+実は空白はすべて{,}で置き換えることが可能なのだ。
+</p>
+<pre>
+Dir[&quot;{ruby-*-i386-cygwin.tar.gz,ext/*.tar.gz}&quot;]
+</pre>
+<p>
+というわけで、結論としては
+</p>
+<pre>
+dir.cはいじる必要なし
+複数パターンを指定したいときは{,}を使え
+</pre>
+<p>
+ということになる。
+</p>
+
+</div>
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200112254" title="200112254" href="200112c.html#200112254">■</a> 
+Release</h3>
+<p>
+今日は出ないか。
+</p>
+
+
+
+
+<!-- section end -->
+</div>
+<!-- 2001/12/25 end -->
+
+
+
+<hr class="hide">
+<!-- 2001/12/26 start -->
+<h2><a name="20011226" href="200112c.html#20011226">2001-12-26 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="200112261" title="200112261" href="200112c.html#200112261">■</a> 
+Ruby 1.6.6</h3>
+<p>
+JST的には間に合わなかったが、ruby-talk的には十分Merry Christmasか。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200112262" title="200112262" href="200112c.html#200112262">■</a> 
+<a href="http://znz.s1.xrea.com/t/?date=20011225#p01">w3m</a></h3>
+<p>
+そのundefined具合から想像するに相当な移植作業が必要です。
+socket関係は&lt;winsock.h&gt;あたりをincludeして-lwsock32をlinkすればよさそうだけど、
+大きなところではtermiosの代わりを書くとかselectとか。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200112263" title="200112263" href="200112c.html#200112263">■</a> 
+<a href="../files/setup.ini.rb">setup.ini.rb</a></h3>
+<p>
+いちいちuploadして試さないといけないのかと思ったら、setup.exeで
+</p>
+<pre>
+Install from Local Directory
+</pre>
+<p>
+を選べばlocalでtestできることに、今頃気づいた。
+というわけで、これから充実させようと思う。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2001/12/26 end -->
+
+
+
+<hr class="hide">
+<!-- 2001/12/27 start -->
+<h2><a name="20011227" href="200112c.html#20011227">2001-12-27 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="200112271" title="200112271" href="200112c.html#200112271">■</a> 
+drb 1.3.4.2</h3>
+<p>
+更新。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200112272" title="200112272" href="200112c.html#200112272">■</a> 
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-talk/29459">News Gateway</a></h3>
+<p>
+1.6.6のnet/smtpの仕様変更で動かなくなっていたらしい。
+失敗しても何のエラー表示もないようなので要確認。
+</p>
+
+<p>
+で、何が変更されたんでしょう？
+</p>
+
+<p>
+
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-talk/29473">これ</a> を見ると、
+元の記事はruby-talk MLへ流れてない。
+ここ2日ほどcomp.lang.rubyへ投稿された記事は、
+このままruby-talk MLへは来ないのかもしれない。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200112273" title="200112273" href="200112c.html#200112273">■</a> 
+Linux 2.4.18-pre1</h3>
+<p>
+Makefileはこのままだと
+</p>
+<pre>
+2.4.18pre1
+</pre>
+<p>
+になってしまうけどいいのか？
+</p>
+<pre>
+EXTRAVERSION = -pre1-preempt
+</pre>
+<p>
+とした。preempt patchもなんかつけて欲しいなあ。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2001/12/27 end -->
+
+
+
+<hr class="hide">
+<!-- 2001/12/28 start -->
+<h2><a name="20011228" href="200112c.html#20011228">2001-12-28 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="200112281" title="200112281" href="200112c.html#200112281">■</a> 
+skk ML</h3>
+<p>
+今月のspam率は21/153だ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200112282" title="200112282" href="200112c.html#200112282">■</a> 
+Broken link on your website</h3>
+<p>
+最初はよくあるspamだと思ったんだけど、
+よく見るとNextへのリンクが切れてるという内容で
+
+<a href="#20011228F1"><sup><small>*1</small></sup></a>、
+このモニタリングサービスを受けたければclickしろとかあって、
+結局spamなのか？
+そのページへアクセスするのも負けた気がするし、放っておくことにする。
+</p>
+
+<p>
+それはそれとして、Nextへのリンクを来年一年分用意しとこう。
+</p>
+
+<hr align="left" width="40%">
+<div>
+<a name="20011228F1" href="200112c.html#20011228F1"><small>*1</small></a>:
+切れてるのがそれしかないというのも驚きだ。
+</div>
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200112283" title="200112283" href="200112c.html#200112283">■</a> 
+ruby-talk ML</h3>
+<p>
+流量が元に戻ってきた。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200112284" title="200112284" href="200112c.html#200112284">■</a> 
+[Cygwin] setup.ini</h3>
+<p>
+[test]があるとメニューに出てこない。困ったな。
+</p>
+
+
+
+
+<!-- section end -->
+</div>
+<!-- 2001/12/28 end -->
+
+
+
+<hr class="hide">
+<!-- 2001/12/29 start -->
+<h2><a name="20011229" href="200112c.html#20011229">2001-12-29 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="200112291" title="200112291" href="200112c.html#200112291">■</a> 
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-talk/29541">The [ruby-talk:12345] in mailing list subject lines should:</a></h3>
+<p>
+こんなアンケート取ってたのか。
+</p>
+
+<p>
+あ、
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-talk/29553">とうとう外すことにしたらしい</a> 。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200112292" title="200112292" href="200112c.html#200112292">■</a> 
+<a href="http://www.dm4lab.to/~usa/dekigoto/200112c.html#id20011228_P4">Ruby/GD</a></h3>
+<p>
+熱とか帰省でそれどころじゃないかもしれませんが、
+今ならmkmf.logを残すようになっているので、
+これを見ると原因がわかるかもしれません。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200112293" title="200112293" href="200112c.html#200112293">■</a> 
+<a href="http://znz.s1.xrea.com/t/?date=20011227#p02">[sh] シェルスクリプト</a></h3>
+<p>
+CVS限定でいいのならcvsの終了ステータスを見るのが一番軽いかも。
+</p>
+<pre>
+% cvs diff -u1 version.h
+% echo $?
+0
+% echo &quot;&quot; &gt;&gt;version.h
+% cvs diff -u1 version.h &gt;/dev/null
+% echo $?
+1
+</pre>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200112294" title="200112294" href="200112c.html#200112294">■</a> 
+News Gateway</h3>
+<p>
+今気づいたんだけどPostedを見ると12/25の記事が来てる。
+ということは徐々に流れて来てたのか。
+</p>
+
+<p>
+違った。単にoutboxに残っていたらしい。いわゆる
+<a href="http://namazu.org/~satoru/diary/?200112c&amp;to=200112222#200112222">送信箱問題</a> か。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200112295" title="200112295" href="200112c.html#200112295">■</a> 
+[Cygwin] Ruby/GTK 0.26</h3>
+<p>
+やっぱり、SEGVってしまうなあ。0.24で試してみよう。
+</p>
+
+<p>
+じゃなくて
+<a href="200107c.html#200107241">これ</a> を解決してなかったんだ。
+gdbで実行してみると、src/rbgtk.cのrbgtk_poll()で起きてる。
+あれ？ここは使わないはずなんだけどなあ。
+わかった。
+<a href="200105a.html#200105012">_WIN32</a> は今のCygwinでは定義されてない。
+素直に-DNATIVE_WIN32しよう。というわけで
+
+<a href="../files/ruby-gtk-0.26-extconf.rb.diff">こう</a> してみた。
+</p>
+
+<p>
+0.26からはgtkじゃなくてruby-gtkになってる。
+gtk-0.25は消したほうがいいか？
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200112296" title="200112296" href="200112c.html#200112296">■</a> 
+nakatanihirokatsu</h3>
+<p>
+だからBadtrans.Bを送ってこないように。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200112297" title="200112297" href="200112c.html#200112297">■</a> 
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-talk/29526">Re: I think I found the problem with the gateway </a></h3>
+<p>
+結局Net::SMTP.{new,start}の最初の引数であるSMTP serverが省略不可になったんだけど、
+Daveさんのスクリプトの例外処理に不備があり捕らえることができなかったというのが原因のようだ。
+仕様変更とはそういうことか。
+1.6.5では省略した場合'localhost'とみなしている。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2001/12/29 end -->
+
+
+
+<hr class="hide">
+<!-- 2001/12/30 start -->
+<h2><a name="20011230" href="200112c.html#20011230">2001-12-30 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="200112301" title="200112301" href="200112c.html#200112301">■</a> 
+<a href="http://www.dm4lab.to/~usa/dekigoto/200112c.html#id20011229_P1">Ruby/GDその2</a></h3>
+<p>
+なるほど。-lmはRuby/GDだけの問題じゃないはずなので、
+extmk.rb.in,mkmf.rbのhave_libraryを書き換えて、
+&quot;m&quot;だったらmswin32では無条件でappend_libraryしないで成功させてしまってもよさそうですね。mingw32も同じか。
+</p>
+<pre>
+     if /mswin32|mingw/ =~ RUBY_PLATFORM
++      return true if lib == 'm'
+       r = try_link(&lt;&lt;&quot;SRC&quot;, libs)
+</pre>
+<p>
+てな感じで。commitしとこう。ぐは。yesを表示しなきゃだめだ。
+</p>
+
+<p>
+また間違えた。ext/extmk.rb.inはyesを表示しちゃだめ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200112302" title="200112302" href="200112c.html#200112302">■</a> 
+UETA, Masayuki</h3>
+<pre>
+Re: [ruby-list:27433] Re: Cygwin + Oracle...
+</pre>
+<p>
+というSubjectでBadtrans.Bが来た。
+Badtrans.Bってそんな小細工もするのか。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200112303" title="200112303" href="200112c.html#200112303">■</a> 
+&quot;Seiichiro Nanjo&quot;</h3>
+<p>
+急にBadtrans.Bが増えたのはなぜ？
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200112304" title="200112304" href="200112c.html#200112304">■</a> 
+uconv 0.48</h3>
+<p>
+更新。
+</p>
+<!-- section end -->
+</div>
+<!-- 2001/12/30 end -->
+
+
+
+<hr class="hide">
+<!-- 2001/12/31 start -->
+<h2><a name="20011231" href="200112c.html#20011231">2001-12-31 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="200112311" title="200112311" href="200112c.html#200112311">■</a> 
+<a href="http://homepage1.nifty.com/markey/memo/200112.html#dec3001">Telnet daemon of Cygwin</a></h3>
+<p>
+サービスで動かしたときはuserが自分ではないので、
+mount tableがない状態になってます。mount -sで設定すればいけます。
+</p>
+
+<p>
+あとntsecとnteaは元々同時には使えません。
+nteaでは使い物にならないので、ntsecができたようなもんなので。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200112312" title="200112312" href="200112c.html#200112312">■</a> 
+configure.rb.in</h3>
+<p>
+autoconf.rbもあることだし、そろそろconfigure.rb.inに手を出すか。
+大晦日はことのほか暇だったりする。
+最初はそのまま1.7のconfigure.inを一行一行変換していくことにする。
+最近Rubyのスクリプトもあまり書いてないので、丁度いい練習にもなるかな。
+</p>
+
+<h4><a name="200112312S1" href="200112c.html#200112312S1">_</a> <strong>autoconf.rb</strong>: </h4>
+<div class="sub">
+<p>
+いまのところCVSだけ。configure.rb.inはmod_ruby, erubyに付属のものが参考になる。
+</p>
+<pre>
+% cvs -d :pserver:anonymous@www.modruby.net:/var/cvs login
+Logging in to :pserver:anonymous@www.modruby.net:2401/var/cvs
+CVS password: そのままReturn
+% cvs -d :pserver:anonymous@www.modruby.net:/var/cvs co autoconf_ruby
+</pre>
+
+</div>
+<h4><a name="200112312S2" href="200112c.html#200112312S2">_</a> <strong>MAJOR, MINOR, TEENY</strong>: </h4>
+<div class="sub">
+<p>
+まずはversion.hからMAJOR, MINOR, TEENYを取り出すとこから。
+configure.inではgrepでRUBY_VERSIONのある行を選び、
+さらにexprでMAJOR, MINOR, TEENYを得ている。
+Ruby的にはいい例題かもしれない。
+</p>
+
+</div>
+<h4><a name="200112312S3" href="200112c.html#200112312S3">_</a> <strong>File.foreach</strong>: </h4>
+<div class="sub">
+<p>
+Rubyで一行一行を見ていく方法はいくつかある。
+</p>
+
+</p><ol>
+<li>openしてwhile fh.getsと全部書く<br><br>
+
+<li>openしてreadやreadlinesで一気に読みこんで扱う<br><br>
+
+<li>File.foreach<br><br>
+
+</ol><p>
+<p>
+やっぱFile.foreachが簡単か。最初はこんな感じになる。
+</p>
+<pre>
+File.foreach File.join $srcdir, &quot;version.h&quot; do |line|
+  if /RUBY_VERSION &quot;(\d+)\.(\d+)\.(\d+)&quot;/ =~ line
+     $MAJOR, $MINOR, $TEENY = $1, $2, $3
+     break
+  end
+end
+AC_SUBST(&quot;MAJOR&quot;)
+AC_SUBST(&quot;MINOR&quot;)
+AC_SUBST(&quot;TEENY&quot;)
+</pre>
+<p>
+これはversion.hのRUBY_VERSIONが変更されたら、
+configureし直さなければならないことを意味している。
+CVSで追っかけてる人は要注意。
+</p>
+
+<p>
+erubyではこういう感じ。
+</p>
+<pre>
+$MAJOR, $MINOR, $TEENY =
+  open(File.join($srcdir, &quot;eruby.h&quot;)).
+    grep(/ERUBY_VERSION/)[0].
+      scan(/(\d+).(\d+).(\d+)/)[0]
+</pre>
+<p>
+長くなったので改行を入れたが実質one linerだ。
+FileはIOのサブクラスでIOはEnumerableをincludeしてるのでgrepがいきなり使える。
+</p>
+
+</div>
+<h4><a name="200112312S4" href="200112c.html#200112312S4">_</a> <strong>Array#indexes, Array#indices, Array#select</strong>: </h4>
+<div class="sub">
+<p>
+3個ぐらいなら並べたほうが早いが、いっぱいあるときは
+</p>
+<pre>
+$~.to_a.indexes(1, 2, 3)
+</pre>
+<p>
+とかしたくなるかもしれない。
+が、Array#indexes, Array#indicesは1.7.2では
+</p>
+<pre>
+warning: Array#indexes is deprecated; use Array#select
+warning: Array#indices is deprecated; use Array#select
+</pre>
+<p>
+を喰らってしまう。
+かといって1.6.6にはArray#selectはないので、selectを積極的に使いたくない。
+都合が悪いことにselectはEnumerableのメソッドなので、
+respond_to?の結果を使ったaliasもできない。
+</p>
+
+</div>
+<h4><a name="200112312S5" href="200112c.html#200112312S5">_</a> <strong>respond_to?</strong>: </h4>
+<div class="sub">
+<p>
+ここでちょっとrespond_to?の利用法を。
+以前のRubyではArray#collect!はArray#filterという名前だった。
+その過渡期にはcollect!を直接使うのも互換性の問題があるので、
+</p>
+<pre>
+unless [].respond_to? :collect!
+  class Array
+    alias collect! filter
+  end
+end
+</pre>
+<p>
+という方法が使われていた。
+Arrayにcollect!がなければaliasしてしまうわけだ。
+</p>
+
+</div>
+<h4><a name="200112312S6" href="200112c.html#200112312S6">_</a> <strong>gcc checking</strong>: </h4>
+<div class="sub">
+<p>
+続いて--without-gcc対応であるが、こんな感じかな。
+</p>
+<pre>
+AC_ARG_WITH('gcc', '--without-gcc             never use gcc') do |withval|
+  case withval
+  when /^no$/
+    $CC ||= 'cc'
+  when /^yes$/
+    $CC ||= 'gcc'
+  else
+    $CC = withval
+  end
+end
+</pre>
+<p>
+autoconf.rbは--without, --disableには対応してないようだ。
+たぶん前田さんはもうautoconf.rbをいじらないようが気がするので、
+やはりおれがいじるべきか？
+</p>
+
+<p>
+それはそれとして$CCはこの前で設定されてるので、||=しても意味ないなあ。
+うーむ。
+</p>
+
+</div>
+<h4><a name="200112312S7" href="200112c.html#200112312S7">_</a> <strong>importenv.rb</strong>: </h4>
+<div class="sub">
+<p>
+このままだと、
+</p>
+<pre>
+% CC=foo-cc ruby configure.rb
+</pre>
+<p>
+としても$CCに伝わらないので、
+</p>
+<pre>
+require 'importenv'
+</pre>
+<p>
+も入れとこう。
+</p>
+
+<p>
+importenvは環境変数を$FOOといったグローバル変数へマッピングしてくれるlibraryだ。
+</p>
+<pre>
+% CC=gcc ruby -e 'p $CC'
+nil
+% CC=gcc ruby -rimportenv -e 'p $CC'
+&quot;gcc&quot;
+</pre>
+
+</div>
+<h4><a name="200112312S8" href="200112c.html#200112312S8">_</a> <strong>mkmf.rb</strong>: </h4>
+<div class="sub">
+<p>
+autoconf.rbしてみると、いきなりrequire &quot;mkmf&quot;があった。
+mkmf.rbはrbconfig.rbをrequireしてる。
+でもこれはminirubyが作るもので、
+今考えているのはrubyを作るためのconfigure.rb.inを書いてるわけだから、
+mkmf.rbをrequireしてはいけない。
+やはりautoconf.rbを相当いじらないとだめか。
+</p>
+
+<p>
+というより、autoconf.rbはembedded rubyのためにあるんだよね、やっぱ。
+</p>
+
+<p>
+来年につづく(のか？)。
+</p>
+
+</div>
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200112313" title="200112313" href="200112c.html#200112313">■</a> 
+Win32OLE 0.3.2</h3>
+<p>
+更新。
+</p>
+<!-- section end -->
+</div>
+<!-- 2001/12/31 end -->
+
+<hr>
+<div>
+<a href="200112b.html">&lt;Prev(,)</a> | 
+<a href="200201a.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

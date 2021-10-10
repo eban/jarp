@@ -1,0 +1,435 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2010-3-a</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="201002c.html">
+<link rel="next" href="201003b.html">
+
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2010年3月上旬〜</p>
+<hr>
+<div>
+<a href="201002c.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="201003b.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2010/03/01 start -->
+<h2><a name="20100301" href="201003a.html#20100301">2010-03-01 (Mon)</a></h2>
+<!-- 2010-03-02 01:24:24 -->
+
+<div class="entry1">
+<h3><a name="201003011" title="201003011" href="201003a.html#201003011">■</a> 
+[Firefox] Firefoxのpopup最大値</h3>
+<p>
+FLDRでvし続けると20個でもうポップアップできないみたいなエラーになる。<br>
+これの最大値を設定していたんだけど、<br>
+先日のprefs.jsの件でリセットされちゃったもんだから、<br>
+何だったか思い出せない。<br>
+バックアップから以前のprefs.jsをgrep popup prefs.jsして、<br>
+やっとdom.popup_maximumであることが判明。100ぐらいにしとこう。
+</p>
+<!-- section end -->
+</div>
+<!-- 2010/03/01 end -->
+
+
+
+<hr class="hide">
+<!-- 2010/03/02 start -->
+<h2><a name="20100302" href="201003a.html#20100302">2010-03-02 (Tue)</a></h2>
+<!-- 2010-03-03 01:20:23 -->
+
+<div class="entry1">
+<h3><a name="201003021" title="201003021" href="201003a.html#201003021">■</a> 
+[Tips] lsvdvの意外な機能</h3>
+<p>
+lsdvdはどういうわけか結果を各種言語のhashで表現できるようで。
+</p>
+
+<pre>
+% lsdvd -h |&amp; grep -A5 Formatting
+        Formatting:
+          -Oh output as human readable (default)
+          -Op output as Perl
+          -Oy output as Python
+          -Or output as Ruby
+          -Ox output as XML
+% lsdvd -Or
+{
+  :device =&gt; '/dev/dvd',
+  :title =&gt; 'AIBOU_S4_5',
+  :vmg_id =&gt; 'DVDVIDEO-VMG',
+  :provider_id =&gt; '',
+  :track =&gt; [    {
+      :ix =&gt; 1,
+      :length =&gt; 285.000,
+      :vts_id =&gt; 'DVDVIDEO-VTS',
+    },
+    {
+      :ix =&gt; 2,
+      :length =&gt; 64.000,
+      :vts_id =&gt; 'DVDVIDEO-VTS',
+    },
+&lt;中略&gt;
+    {
+      :ix =&gt; 17,
+      :length =&gt; 33.020,
+      :vts_id =&gt; 'DVDVIDEO-VTS',
+    },
+    {
+      :ix =&gt; 18,
+      :length =&gt; 8098.000,
+      :vts_id =&gt; 'DVDVIDEO-VTS',
+    },
+  ],
+  :longest_track =&gt; 18,
+}
+</pre>
+<p>
+コマンドの出力を解析するとかよくある話で、<br>
+実際このlongest_trackってやつが欲しい値。
+</p>
+
+<pre>
+% lsdvd -Or | ruby -n0e 'p eval($_)[:longest_track]'
+18
+</pre>
+<p>
+シンボルを使ってるとこがまた渋いね。
+</p>
+<!-- section end -->
+</div>
+<!-- 2010/03/02 end -->
+
+
+
+<hr class="hide">
+<!-- 2010/03/03 start -->
+<h2><a name="20100303" href="201003a.html#20100303">2010-03-03 (Wed)</a></h2>
+<!-- 2010-03-04 00:22:54 -->
+
+<div class="entry1">
+<h3><a name="201003031" title="201003031" href="201003a.html#201003031">■</a> 
+<a href="http://wiki.github.com/mooz/keysnail/keysnail-japanese">[Firefox] KeySnail</a></h3>
+<p>
+やっとKeySnailを試した。<br>
+デフォルトの状態でほとんど自分の好みになってるから、<br>
+もうkeyconfigから乗り換えることにした。<br>
+再起動なしで設定ファイルを読み直せるから手軽にいろいろ試せる。<br>
+jsが別ファイルになってるから他のマシンにも簡単に持っていける。
+</p>
+
+<p>
+あれ？gmailのstyleが効かなくなったな。ってこれはstyleが古いだけだった。<br>
+そういえばgmailはTbでしか見てなかったしな。Fxで開くのは久し振りだ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2010/03/03 end -->
+
+
+
+<hr class="hide">
+<!-- 2010/03/04 start -->
+<h2><a name="20100304" href="201003a.html#20100304">2010-03-04 (Thu)</a></h2>
+<!-- 2010-03-05 01:23:18 -->
+
+<div class="entry1">
+<h3><a name="201003041" title="201003041" href="201003a.html#201003041">■</a> 
+[Firefox] KeySnailとDiigo</h3>
+<p>
+KeySnailのエスケープキーとDiigoのquick bookmarkがC-qで衝突してしまった。<br>
+いや元々DiigoのほうはC-M-qだった気もするがC-qで慣れちゃったしな。<br>
+どうしたもんか。C-M-qは押しにくい。M-qで我慢しとくかな。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="201003042" title="201003042" href="201003a.html#201003042">■</a> 
+[Firefox] KeySnailでbookmarkletを呼び出す</h3>
+<p>
+今日はせっせとbookmarkletの設定をしていた。<br>
+基本はこんな感じで
+</p>
+
+<pre>
+key.setViewKey('x', function () {
+    if (window.loadURI) {
+        loadURI(getShortcutOrURI(&quot;keyword&quot;, {}));
+    }   
+}, 'description');
+</pre>
+<p>
+あとは~/.keysnail.jsを各マシンにコピーするだけ。楽だ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2010/03/04 end -->
+
+
+
+<hr class="hide">
+<!-- 2010/03/05 start -->
+<h2><a name="20100305" href="201003a.html#20100305">2010-03-05 (Fri)</a></h2>
+<!-- 2010-03-06 15:16:48 -->
+
+<div class="entry1">
+<h3><a name="201003051" title="201003051" href="201003a.html#201003051">■</a> 
+2月のspam</h3>
+<p>
+3000通ほど。28日しかないのに増えてる。<br>
+それにしてもspamの数ってどんどんもんでもなくて、<br>
+数千のレベルで落ち着いてしまっているね。<br>
+業者の数が一定数まで行ってしまいもう増えないということなのか。
+</p>
+
+<p>
+で、久し振りにsubjectを眺めてみたら日本語spamの少ないことに驚いた。<br>
+Gmailでは1ページ100通ずつ表示してるけど、<br>
+その1ページに日本語spamが1通あるかないかという程度。<br>
+なんか日本からのspamは非常に少ないという報道があった気もするが本当だったんだな。
+</p>
+<!-- section end -->
+</div>
+<!-- 2010/03/05 end -->
+
+
+
+<hr class="hide">
+<!-- 2010/03/06 start -->
+<h2><a name="20100306" href="201003a.html#20100306">2010-03-06 (Sat)</a></h2>
+<!-- 2010-03-07 02:01:24 -->
+
+<div class="entry1">
+<h3><a name="201003061" title="201003061" href="201003a.html#201003061">■</a> 
+[Cygwin] vim-noxが+iconvに</h3>
+<p>
+いつのまにかCygwinのvim-noxでまたiconvが使えるように戻っていた。
+</p>
+
+<pre>
+% vim-nox --version|grep -o '[-+]'iconv
++iconv
+</pre>
+<p>
+これでalias vi=gvimは必要なくなった。
+</p>
+<!-- section end -->
+</div>
+<!-- 2010/03/06 end -->
+
+
+
+<hr class="hide">
+<!-- 2010/03/07 start -->
+<h2><a name="20100307" href="201003a.html#20100307">2010-03-07 (Sun)</a></h2>
+<!-- 2010-03-07 23:43:20 -->
+
+<div class="entry1">
+<h3><a name="201003071" title="201003071" href="201003a.html#201003071">■</a> 
+[Subversion] svnで特定のディレクトリのupdateを無視する</h3>
+<p>
+たとえばLinuxではWin32APIとかwin32oleはあっても意味がないので消したいという要求あったとする。<br>
+でも単に消すだけでは次回のupdateで復活してしまう。そういうときは
+</p>
+
+<pre>
+% svn update --set-depth exclude ext/Win32API
+D         ext/Win32API
+</pre>
+<p>
+のように一度--set-depth excludeを指定するといいらしい。<br>
+これでext/Win32API以下が削除されて次回のupdateでも復活しない。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="201003072" title="201003072" href="201003a.html#201003072">■</a> 
+[Subversion] version.hだけcheckoutする</h3>
+<p>
+
+<a href="200802b.html#200802111">以前かなり強引な方法</a>でversion.hだけcheckoutする方法を書いたが、<br>
+今なら--depthを使えばいいんだな。
+</p>
+
+<pre>
+% svn co --depth empty http://svn.ruby-lang.org/repos/ruby/trunk 
+ U   trunk
+リビジョン 26843 をチェックアウトしました。
+% cd trunk
+% svn up version.h
+A    version.h
+リビジョン 26843 に更新しました。
+</pre>
+<p>
+--depth emptyで.svnだけ存在する空ディレクトリを作ってくれる。<br>
+あとは欲しいファイルを指定してupdateすればok。
+</p>
+<!-- section end -->
+</div>
+<!-- 2010/03/07 end -->
+
+
+
+<hr class="hide">
+<!-- 2010/03/08 start -->
+<h2><a name="20100308" href="201003a.html#20100308">2010-03-08 (Mon)</a></h2>
+<!-- 2010-03-09 01:12:16 -->
+
+<div class="entry1">
+<h3><a name="201003081" title="201003081" href="201003a.html#201003081">■</a> 
+[Soft] diffの微妙なオプション</h3>
+<p>
+diff --helpすると
+</p>
+
+<pre>
+-D NAME  --ifdef=NAME  差分を「#ifdef NAME」で示す併合ファイルを出力。
+--GTYPE-group-format=GFMT  同様だが、GTYPEの入力群をGFMTで整形。
+</pre>
+<p>
+と出てくる。これで自分の好きなような形式でdiffの結果を表示できる。<br>
+でも-rとの組み合わせが使えない。残念。
+</p>
+
+<pre>
+% diff -r --new-group-format=$'+%dN\n' --old-group-format=$'-%dn\n' \
+  --changed-group-format=$'-%dn+%dN\n' --unchanged-group-format= \
+  org new
+diff: -Dオプションはディレクトリーでのサポートをしていません
+</pre>
+
+
+<!-- section end -->
+</div>
+<!-- 2010/03/08 end -->
+
+
+
+<hr class="hide">
+<!-- 2010/03/09 start -->
+<h2><a name="20100309" href="201003a.html#20100309">2010-03-09 (Tue)</a></h2>
+<!-- 2010-03-10 00:35:07 -->
+
+<div class="entry1">
+<h3><a name="201003091" title="201003091" href="201003a.html#201003091">■</a> 
+<a href="http://gauc.no-ip.org/awk-users-jp/blis.cgi/DoukakuAWK_266">[AWK] 文字の間に w を挟む関数</a></h3>
+<p>
+そういえば\Bなんてのがあったよなと思いやってみるといけた。
+</p>
+
+<pre>
+% echo うはおけ | gawk 'gsub(/\B/, &quot; w &quot;)'
+う w は w お w け
+% echo うはおけ | sed 's/\B/ w /g'
+う w は w お w け
+% echo うはおけ | perl -CIO -ple 's/\B/ w /g'
+う w は w お w け
+% echo うはおけ | ruby -Ku -ple 'gsub(/\B/, &quot; w &quot;)'
+う w は w お w け
+</pre>
+<p>
+PerlとRubyは-lをつけないと改行込みになるので注意。
+</p>
+
+<pre>
+% echo &quot;うはおけ&quot; | ruby -Ku -pe 'gsub(/\B/, &quot; w &quot;)'       
+う w は w お w け
+ w 
+</pre>
+
+<!-- section end -->
+</div>
+<!-- 2010/03/09 end -->
+
+
+
+<hr class="hide">
+<!-- 2010/03/10 start -->
+<h2><a name="20100310" href="201003a.html#20100310">2010-03-10 (Wed)</a></h2>
+<!-- 2010-03-11 01:11:51 -->
+
+<div class="entry1">
+<h3><a name="201003101" title="201003101" href="201003a.html#201003101">■</a> 
+おれおれ詐欺</h3>
+<p>
+おれおれじゃなくて振り込め詐欺か。<br>
+なんかおれがケータイを落としたらしいよ。<br>
+あいにく最初から持ってないから親にはそんな嘘は通じない。<br>
+面白いから騙された振りして話を続けようとしたが、<br>
+あまりにお粗末すぎて感づいた向こうが切っちゃったらしい。
+</p>
+
+<p>
+それにしても電話番号はどこでばれるのか？
+</p>
+<!-- section end -->
+</div>
+<!-- 2010/03/10 end -->
+
+<hr>
+<div>
+<a href="201002c.html">&lt;Prev(,)</a> | 
+<a href="201003b.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

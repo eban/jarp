@@ -1,0 +1,622 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2005-1-a</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="200412c.html">
+<link rel="next" href="200501b.html">
+
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2005年1月上旬〜</p>
+<hr>
+<div>
+<a href="200412c.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="200501b.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2005/01/01 start -->
+<h2><a name="20050101" href="200501a.html#20050101">2005-01-01 (Sat)</a></h2>
+<!-- 2005-01-02 03:07:23 -->
+
+<div class="entry1">
+<h3><a name="200501011" title="200501011" href="200501a.html#200501011">■</a> 
+12月のspam</h3>
+<p>
+3830通。ruby-lang.org宛はそっちでブロックするようにしたら結構減った。
+でそっちはというと1587通。やはり足すといつもと同じか。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200501012" title="200501012" href="200501a.html#200501012">■</a> 
+[Mail] man Mail::SpamAssassin::Conf</h3>
+<p>
+昨日の設定が全然効いてないことに気づいた。
+man Mail::SpamAssassin::Confしてみると
+</p>
+<pre>
+include filename
+    Include configuration lines from &quot;filename&quot;.   Relative paths are
+    considered relative to the current configuration file or user
+    preferences file.
+</pre>
+<p>
+と書いてあるので、user_prefsからの相対だと思ったんだけど、
+実際はspamassassinを実行したディレクトリになるようだ。
+~/.spamassassinで実験してたから気づかなかった。
+バグっぽいな。
+</p>
+<!-- section end -->
+</div>
+<!-- 2005/01/01 end -->
+
+
+
+<hr class="hide">
+<!-- 2005/01/02 start -->
+<h2><a name="20050102" href="200501a.html#20050102">2005-01-02 (Sun)</a></h2>
+<!-- 2005-01-03 02:21:25 -->
+
+<div class="entry1">
+<h3><a name="200501021" title="200501021" href="200501a.html#200501021">■</a> 
+[Linux] Fedora Core 3でビデオキャプチャ</h3>
+<p>
+/var/log/messageを見てたらsaa7134がどうのこうのと、どうやらkudzuで自動認識されてる模様。
+1年前に衝動買いしたNOVACのPRIME TV 7135という安物ではあるが、
+Linuxで使えるとは思ってもみなかったので試してなかったんだけど、
+ちょっとやってみよう。
+</p>
+
+<p>
+ぐぐってみるとやはり情報はほとんどない。試しに自分でmakeしたmplayerで
+</p>
+<pre>
+% mplayer tv:// -tv driver=v4l2:input=2:chanlist=japan-bcast \
+  -tv norm=NTSC:forceaudio:width=704:height=480
+</pre>
+<p>
+としてみると、なんとS-Videoからの入力がちゃんと映像として出てきた。
+すばらしい。でも白黒だ。
+いろいろ試してみるとcard=5でmodprobeすればカラーになった。
+</p>
+<pre>
+% sudo rmmod saa7134;sudo modprobe saa7134 card=5
+</pre>
+<p>
+音声はなにをやってもAudio: no soundとつれないが。
+</p>
+
+<p>
+mencoderで録画もできる。
+</p>
+<pre>
+% mencoder tv:// -tv driver=v4l2:input=2:chanlist=japan-bcast \
+  -tv norm=NTSC:forceaudio:width=704:height=480 \
+  -ovc xvid -xvidencopts fixed_quant=3 \
+  -oac mp3lame -lameopts cbr:br=32:mode=3:vol=3 -o tv.avi
+</pre>
+<p>
+てな感じで。
+</p>
+
+<p>
+うーむ。あとは音がなんとかなればなあ。残念。
+DQ8なら音がなくてもプレイできるか。10分ほど遊ぶ。
+スクリーンセーバが邪魔だと気づく。
+</p>
+
+<p>
+ちなみに
+</p>
+<pre>
+inputs: 0 = Television; 1 = Composite1; 2 = S-Video;
+</pre>
+<p>
+ということで、input=1でコンポジットだとなぜかこちらは白黒のままだった。
+チューナはシリコンチューナとか書いてあるから、たぶんだめだろうなあ。
+</p>
+<pre>
+v4l2: ioctl dequeue buffer failed: 入力/出力エラーです, idx = 0
+</pre>
+<p>
+となってしまう。
+まあ、チューナはなくてもいいので、
+Linuxで使えるビデオキャプチャを調べてみるか。
+</p>
+<!-- section end -->
+</div>
+<!-- 2005/01/02 end -->
+
+
+
+<hr class="hide">
+<!-- 2005/01/03 start -->
+<h2><a name="20050103" href="200501a.html#20050103">2005-01-03 (Mon)</a></h2>
+<!-- 2005-01-04 04:09:22 -->
+
+<div class="entry1">
+<h3><a name="200501031" title="200501031" href="200501a.html#200501031">■</a> 
+[Mail] spam</h3>
+<p>
+年が明けてからなぜかbogofilterをすりぬけてくるspamが多くなった。
+なんか変な学習したのか、spamが賢くなったのか。
+0.989でUnsureってのはなんか納得いかないので、しきい値を下げてみよう。
+といいつつもちょっと弱気に--spam_cutoff=0.95ぐらいから。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200501032" title="200501032" href="200501a.html#200501032">■</a> 
+[X] gkrellmでビープ音を(xkbbell)</h3>
+<p>
+IceWMのときはメールが来たときにビープ音が出てたけど、
+GNOMEだと音を出すプログラムを指定するようになってるらしい。
+gkrellmも使ってるから、こっちで指定することにした。
+</p>
+
+<p>
+音はビープ音でいいから、とりあえず
+</p>
+<pre>
+echo &quot;\007&quot;
+</pre>
+<p>
+でいいかと安易に試すがそんなに甘くはない。ttyが割り当てられるわけないか。
+というわけで、Xでビープ音を鳴らすプログラムがないかと探してみると、意外にも
+</p>
+<pre>
+% ls /usr/X11R6/bin/x*bell
+/usr/X11R6/bin/xkbbell
+</pre>
+<p>
+で見つかった。man Xにちらっとしか出てこないがちゃんと鳴るし、これでいいや。
+</p>
+<!-- section end -->
+</div>
+<!-- 2005/01/03 end -->
+
+
+
+<hr class="hide">
+<!-- 2005/01/04 start -->
+<h2><a name="20050104" href="200501a.html#20050104">2005-01-04 (Tue)</a></h2>
+<!-- 2005-01-05 00:19:38 -->
+
+<div class="entry1">
+<h3><a name="200501041" title="200501041" href="200501a.html#200501041">■</a> 
+[RSS] はてなのRSS</h3>
+<p>
+しかしこれはどうしたもんかな。Bloglinesの設定でUpdate ItemsをIgnoreにするしかない？
+それはそれで面倒だしなあ。
+</p>
+
+<p>
+全然変更のない日記のRSSを確認してみると、RSS自体はどこも書き換わってない。
+last-modified:もちゃんとあるんだけど、小文字が気に入らない？
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200501042" title="200501042" href="200501a.html#200501042">■</a> 
+<a href="http://www.namikilab.tuat.ac.jp/%7Esasada/diary/200501.html#d4">[Cygwin] malloc/free</a></h3>
+<p>
+Cygwinのreallocはめちゃめちゃ遅かった記憶があるので、malloc/freeも同じように遅いかもしれない。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200501043" title="200501043" href="200501a.html#200501043">■</a> 
+[Mail] spam</h3>
+<p>
+結局11月にdumpしたテキストファイルからデータベースを作り直した。
+同じメールに対して実行してみても、やはりspamicity値が全然違うな。
+変な学習してしまったらしい。
+</p>
+<!-- section end -->
+</div>
+<!-- 2005/01/04 end -->
+
+
+
+<hr class="hide">
+<!-- 2005/01/05 start -->
+<h2><a name="20050105" href="200501a.html#20050105">2005-01-05 (Wed)</a></h2>
+<!-- 2005-01-06 04:12:38 -->
+
+<div class="entry1">
+<h3><a name="200501051" title="200501051" href="200501a.html#200501051">■</a> 
+<a href="http://d.hatena.ne.jp/hatenadiary/20050105/1104895566">[RSS] はてなダイアリーRSSの不具合について</a></h3>
+<p>
+直ったようだ。文字数ってことはContent-Length:が間違っていたのか。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200501052" title="200501052" href="200501a.html#200501052">■</a> 
+<a href="http://www.xinehq.de/">[Soft] xine 1.0</a></h3>
+<p>
+1.0が出た記念にインストール。mplayerよりいいかも。
+さてこれはどう読むのか？
+<a href="http://www.xinehq.de/index.php/faq#PRONOUNCE">FAQ</a>
+を見ると
+</p><blockquote><dl>
+<dt>
+How do I pronounce &quot;xine&quot;?
+<dd>
+As long as people know what you are talking about, you are free to
+pronounce it the way you like, but the official pronounciation is
+[ksi:n], like the name &quot;Maxine&quot; with the &quot;Ma&quot; removed.
+</dl></blockquote><p>
+くしーんらしい。ざいんかと思った。
+</p>
+
+<p>
+mplayerにもあった気もするけど、ascii artで表示するaaxineがすばらしい。
+</p>
+<!-- section end -->
+</div>
+<!-- 2005/01/05 end -->
+
+
+
+<hr class="hide">
+<!-- 2005/01/06 start -->
+<h2><a name="20050106" href="200501a.html#20050106">2005-01-06 (Thu)</a></h2>
+<!-- 2005-01-07 01:33:01 -->
+
+<div class="entry1">
+<h3><a name="200501061" title="200501061" href="200501a.html#200501061">■</a> 
+<a href="http://qdbm.sf.net">[Soft] QDBM 1.8.20</a></h3>
+<p>
+Changes:
+</p><blockquote><p>
+Sparse file support was added. Using sparse files, this release
+can use huge hash tables.
+</p></blockquote>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200501062" title="200501062" href="200501a.html#200501062">■</a> 
+冬休み</h3>
+<p>
+10日までの予定だったが、明日は急拠出社することに。
+何もしないと決めた冬休みも今日でおしまい。
+でも、3連休は残ってるか。
+</p>
+<!-- section end -->
+</div>
+<!-- 2005/01/06 end -->
+
+
+
+<hr class="hide">
+<!-- 2005/01/07 start -->
+<h2><a name="20050107" href="200501a.html#20050107">2005-01-07 (Fri)</a></h2>
+<!-- 2005-01-08 03:07:21 -->
+
+<div class="entry1">
+<h3><a name="200501071" title="200501071" href="200501a.html#200501071">■</a> 
+<a href="http://www.gnu.org/software/gnu-arch/">[Soft] arch revision control system 1.3 (tla Stable)</a></h3>
+<p>
+Changes:
+</p><blockquote><p>
+This release contains a number of bugfixes and feature 
+enhancements. Important changes include reverting the 1k  tagline boundary
+error to a warning, allowing old archives to  continue to be accessed,
+fixing a regression in get- changeset, fixing the &quot;one-way&quot; star-merge
+bug, and once  more  recognizing patch logs from archives beginning with a
+digit.
+</p></blockquote>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200501072" title="200501072" href="200501a.html#200501072">■</a> 
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-talk/125427">[Ruby] [QUIZ] LCD Numbers (#14)</a></h3>
+<p>
+やっぱクイズはこのくらいのやつがいいね。
+</p>
+<!-- section end -->
+</div>
+<!-- 2005/01/07 end -->
+
+
+
+<hr class="hide">
+<!-- 2005/01/08 start -->
+<h2><a name="20050108" href="200501a.html#20050108">2005-01-08 (Sat)</a></h2>
+<!-- 2005-01-09 03:17:19 -->
+
+<div class="entry1">
+<h3><a name="200501081" title="200501081" href="200501a.html#200501081">■</a> 
+[Ruby] wineでOne Click Ruby Installer</h3>
+<p>
+
+<a href="http://www.winehq.org/site/download-rh">winehq</a>からRPMをダウンロードしてwineをインストール。
+20041201の最新を使用。続いて
+
+<a href="http://sidenet.ddo.jp/winetips/config.html">wine-config-sidenet</a>
+を使って設定。ついでにIE6もインストール。簡単に動いた。
+</p>
+
+<p>
+さらに
+
+<a href="http://rubyforge.org/frs/?group_id=167">One-Click Installer - Windows</a>
+をインストール。いつのまにかfirefoxもダウンロードしようとすると、
+Open with wine(default)なんて出るようになっている。
+そのままwineで開けばインストーラが起動される。
+インストールもなにごともなく終了する。
+</p>
+
+<p>
+wcmd上でPATHを設定しTkのdemos-jpを試してみた。
+</p>
+<pre>
+% cd ~/c
+% wcmd
+c:\&gt;path c:\ruby\bin;%PATH%
+c:\&gt;ruby -v
+ruby 1.8.2 (2004-12-25) [i386-mswin32]
+c:\&gt;cd ruby\samples\tk\demos-jp
+c:\ruby\samples\tk\demos-jp&gt;ruby widget
+</pre>
+<p>
+でデモが動いた。ちゃんと日本語も表示されている。すげー。
+</p>
+
+<p>
+あ、IE6のツールバーのアイコンが表示されないと思ったら、FAQに書いてあった。
+</p>
+<pre>
+Q: I can't see any toolbar icons in Internet Explorer.
+A: This is bug in wine 20041201. Try another version.
+</pre>
+<p>
+そうか。古いのを使おう。古いのだとFC3用はまだないようだ。
+FC3が出たのって11月だっけ？というわけで20041019のFC2用で代用。
+ちゃんと表示された。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200501082" title="200501082" href="200501a.html#200501082">■</a> 
+[wine] Cygwinのsetup.exe</h3>
+<p>
+残念ながら[次へ]とか[キャンセル]ボタンが表示されない。
+
+<a href="200305a.html#200305072">以前ためした</a>ときはそんなことはなかったんだけどなあ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2005/01/08 end -->
+
+
+
+<hr class="hide">
+<!-- 2005/01/09 start -->
+<h2><a name="20050109" href="200501a.html#20050109">2005-01-09 (Sun)</a></h2>
+<!-- 2005-01-10 13:41:14 -->
+
+<div class="entry1">
+<h3><a name="200501091" title="200501091" href="200501a.html#200501091">■</a> 
+[wine] wineでcygwin</h3>
+<p>
+cygwinの場合はとりあえずcygwin1.dllがあればいいので、wineで動くかどうか試してみた。
+まずはcygwin1.dllを用意。適当に
+<a href="http://cygwin.com/mirros.html">mirror site</a>
+からrelease/cygwin/cygwin-1.5.12-1.tar.bz2をダウンロード。
+その中からusr/bin/cygwin1.dllを展開。あとは適当に実行ファイルを作って実行。
+</p>
+<pre>
+% tar xfv cygwin-1.5.12-1.tar.bz2 usr/bin/cygwin1.dll --bz -O &gt;cygwin1.dll
+% echo 'main(){}' |i686-pc-cygwin-gcc -xc -
+% wine a.exe
+err:comm:GetCommState tcgetattr or ioctl error 'Invalid argument'
+fixme:ntdll:NtQueryObject Unsupported information class 1
+fixme:ntdll:NtQueryObject Unsupported information class 1
+fixme:ntdll:NtQueryObject Unsupported information class 1
+zsh: segmentation fault  wine a.exe
+</pre>
+<p>
+残念ながらwine自身がSEGVだ。
+</p>
+
+<p>
+つまりsetup.exeでインストールできたとしても、cygwin自身が動かないから意味がない、と。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200501092" title="200501092" href="200501a.html#200501092">■</a> 
+[Ruby] ネタ</h3>
+<p>
+ああ、ruby-talk MLにまた爆発しそうなネタが。
+</p>
+<!-- section end -->
+</div>
+<!-- 2005/01/09 end -->
+
+
+
+<hr class="hide">
+<!-- 2005/01/10 start -->
+<h2><a name="20050110" href="200501a.html#20050110">2005-01-10 (Mon)</a></h2>
+<!-- 2005-01-11 02:55:45 -->
+
+<div class="entry1">
+<h3><a name="200501101" title="200501101" href="200501a.html#200501101">■</a> 
+<a href="http://msmtp.sf.net/">[Soft] msmtp 1.3.3</a></h3>
+<p>
+Changes:
+</p><blockquote><p>
+This release adds Remote Message Queue Starting support (SMTP keyword:
+ETRN) and the ability to print information about the peer's TLS
+certificate.
+</p></blockquote>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200501102" title="200501102" href="200501a.html#200501102">■</a> 
+[Firefox] 検索プラグイン</h3>
+<p>
+Firefoxで何気なく右上のgoogle検索アイコンをクリックしてみるとAdd Enginesというのがあった。
+それ以前にYahooだのeBayだのいろんなもんが検索できるんだと、
+今更ながらに気づいたわけだが、これってどうなってんだとちょっと調べた。
+</p>
+
+<p>
+まずはAdd Enginesでwikipediaあたりを追加してみる。変化なし。
+うーむ。なぜか追加できない。
+</p>
+
+<p>
+Windowsではどうだろうと、wineでインストールしてみると問題ない。
+てゆか、firefoxも楽勝で動くかー、wineよ。
+ってのはどうでもよくて、どこに追加されたのかfindしてみると、
+</p>
+<pre>
+% cd ~/c
+% find . -iname 'wikipedia*'
+./Program Files/Mozilla Firefox/searchplugins/wikipedia.src
+./Program Files/Mozilla Firefox/searchplugins/wikipedia.png
+</pre>
+<p>
+なんてとこにあった。なるほど。プロファイルじゃないのか。
+つまりLinuxの場合は/usr/lib/firefox-1.0/searchplugins/になるから、
+ぱんぴーは書けない。chmodしとこう。どうせおいらだけだし。
+</p>
+
+<p>
+で、改めて*.srcを見ると非常に簡単な仕組みになってる。
+google.srcはこんな感じ。
+</p>
+<pre>
+# Mozilla/Google plug-in by amitp+mozilla@google.com
+
+&lt;search 
+   name=&quot;Google&quot;
+   description=&quot;Google Search&quot;
+   method=&quot;GET&quot;
+   action=&quot;http://www.google.com/search&quot;
+   update=&quot;http://www.google.com/mozilla/google.src&quot;
+   updateCheckDays=1   
+   queryEncoding=&quot;utf-8&quot;
+   queryCharset=&quot;utf-8&quot;
+&gt;
+
+&lt;input name=&quot;q&quot; user&gt;
+&lt;inputnext name=&quot;start&quot; factor=&quot;10&quot;&gt;
+&lt;inputprev name=&quot;start&quot; factor=&quot;10&quot;&gt;
+&lt;input name=&quot;ie&quot; value=&quot;utf-8&quot;&gt;
+&lt;input name=&quot;oe&quot; value=&quot;utf-8&quot;&gt;
+
+&lt;interpret 
+    browserResultType=&quot;result&quot; 
+    charset = &quot;UTF-8&quot;
+    resultListStart=&quot;&lt;!--a--&gt;&quot; 
+    resultListEnd=&quot;&lt;!--z--&gt;&quot; 
+    resultItemStart=&quot;&lt;!--m--&gt;&quot; 
+    resultItemEnd=&quot;&lt;!--n--&gt;&quot;
+&gt;
+&lt;/search&gt;
+</pre>
+<p>
+実際の入力はinputのuserで基本的にはcgiのパラメータを並べればいいようだ。
+interpretがよくわからん。あ、結果の文字コードとかを指定するのか。
+あとはアイコン用の画像を用意すればいいわけだ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200501103" title="200501103" href="200501a.html#200501103">■</a> 
+<a href="http://log.utashiro.com/pub/project_mg/">[Perl] mg 5.0.1.3 release</a></h3>
+<p>
+3年ぶりのリリースらしい。
+</p>
+<!-- section end -->
+</div>
+<!-- 2005/01/10 end -->
+
+<hr>
+<div>
+<a href="200412c.html">&lt;Prev(,)</a> | 
+<a href="200501b.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

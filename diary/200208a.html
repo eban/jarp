@@ -1,0 +1,533 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2002-8-a</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="200207c.html">
+<link rel="next" href="200208b.html">
+
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2002年8月上旬〜</p>
+<hr>
+<div>
+<a href="200207c.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="200208b.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2002/08/01 start -->
+<h2><a name="20020801" href="200208a.html#20020801">2002-08-01 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="200208011" title="200208011" href="200208a.html#200208011">■</a> 
+7月のspam</h3>
+<p>
+240通。そのうち韓国から48通。6,7月がピークか？
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200208012" title="200208012" href="200208a.html#200208012">■</a> 
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-talk/45910">How to copy string from in a file from some string onward?</a></h3>
+<p>
+JARH的には
+</p>
+<pre>
+x = y[/#{z}.*$/]
+</pre>
+<p>
+なんだけど、そうか、quoteしないとだめだ。
+</p>
+<pre>
+x = y[/#{Regexp.quote(z)}.*$/]
+</pre>
+<p>
+いまいち。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/08/01 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/08/02 start -->
+<h2><a name="20020802" href="200208a.html#20020802">2002-08-02 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="200208021" title="200208021" href="200208a.html#200208021">■</a> 
+initstate</h3>
+<p>
+実は7/26の変更でrandom.cが全面的に置き換わっている。
+昨日のconfigure.inの変更でdrand48(), random()のチェックが削除された。
+initstate()も消しとこう。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200208022" title="200208022" href="200208a.html#200208022">■</a> 
+[VIM] CTRL-TとCTRL-D</h3>
+<p>
+VIMでindentはCTRL-TとCTRL-Dだと思うんだけど、あまり使われてないのだろうか？
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200208023" title="200208023" href="200208a.html#200208023">■</a> 
+ディスククラッシュ</h3>
+<p>
+会社のPCのディスクがクラッシュした。
+異音はしないが物理的になんかだめだ。
+ハードディスクは40GBが一個余ってたので、
+リカバリCDで復活したが、あれやこれやが失われた。
+というか、なにがなくなったんだかわからん。
+別のLinux boxがメインだから、それほど損害はないはずだけど、
+何か大事なことを忘れているような、
+忘れてるくらいだから大したことないような、どっちだ？
+あ、OpenOfficeの日本語設定が面倒かも。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200208024" title="200208024" href="200208a.html#200208024">■</a> 
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-dev/17882">nested method</a></h3>
+<p>
+ほんとだ。
+</p>
+<pre>
+% cat nest.rb
+def foo
+  def bar
+    p &quot;bar&quot;
+  end
+  bar
+end
+
+foo
+% ruby-1.7.2 nest.rb
+&quot;bar&quot;
+</pre>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/08/02 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/08/03 start -->
+<h2><a name="20020803" href="200208a.html#20020803">2002-08-03 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="200208031" title="200208031" href="200208a.html#200208031">■</a> 
+<a href="http://www.ruby-lang.org/en/raa-list.rhtml?name=RubyUnit">[Ruby] RubyUnit 0.5.5</a></h3>
+<p>
+更新。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200208032" title="200208032" href="200208a.html#200208032">■</a> 
+<a href="http://www.ruby-lang.org/en/raa-list.rhtml?name=Win32OLE">[Ruby] Win32OLE 0.4.8.1</a></h3>
+<p>
+更新。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/08/03 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/08/04 start -->
+<h2><a name="20020804" href="200208a.html#20020804">2002-08-04 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="200208041" title="200208041" href="200208a.html#200208041">■</a> 
+<a href="http://kernel.org/">Linux 2.4.19</a></h3>
+<p>
+しかし、パッチでこのサイズってのはすごいね。
+</p>
+<pre>
+% ls -l patch-2.4.19.bz2 
+-rw-r--r--    1 watanabe ruby      4701829 Aug  3 09:40 patch-2.4.19.bz2
+</pre>
+<p>
+YACC='bison -y'とした以外は問題なし。
+</p>
+
+<p>
+続いて-ac1も試す。これもでかいな。
+</p>
+<pre>
+% ls -l patch-2.4.19-ac1.bz2 
+-rw-r--r--    1 watanabe ruby      1863737 Aug  4 02:56 patch-2.4.19-ac1.bz2
+</pre>
+<p>
+JFSパッチも含んでいるから、このサイズなのか？
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200208042" title="200208042" href="200208a.html#200208042">■</a> 
+<a href="http://www.ruby-lang.org/en/raa-list.rhtml?name=Win32OLE">[Ruby] Win32OLE 0.4.8.1-01</a></h3>
+<p>
+更新。ちょっとバージョンが細かすぎない？
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200208043" title="200208043" href="200208a.html#200208043">■</a> 
+<a href="200201c.html#200201232">Don't stop the music/今井絵理子</a></h3>
+<p>
+東風じゃなくてFIRE CLACKERだった。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/08/04 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/08/05 start -->
+<h2><a name="20020805" href="200208a.html#20020805">2002-08-05 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="200208051" title="200208051" href="200208a.html#200208051">■</a> 
+<a href="ftp://ftp.kernel.org/pub/linux/utils/kernel/modutils/v2.4/">[Linux] modutils 2.4.19</a></h3>
+<p>
+ついでにmodutilsも上げとく。CC='diet gcc'でもokだ。
+でも、unix.oでwarningが出てる気がする。これっていつからだ？
+</p>
+<!-- section end -->
+</div>
+<!-- 2002/08/05 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/08/06 start -->
+<h2><a name="20020806" href="200208a.html#20020806">2002-08-06 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="200208061" title="200208061" href="200208a.html#200208061">■</a> 
+[Ruby] Exerb-developer ML</h3>
+<p>
+加入してみた。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200208062" title="200208062" href="200208a.html#200208062">■</a> 
+<a href="http://homepage1.nifty.com/markey/memo/200208.html#080501">Win32OLEのヴァージョン</a></h3>
+<p>
+0.4.8.1の時点でかなり細かいなあと思っていたのに、
+さらに-01がついたからです。
+Cygwinのバイナリにはさらに-1をつけるルールにしてるので、
+</p>
+<pre>
+0.4.8.1-01-1
+</pre>
+<p>
+と、もうなんだかわからない状態です。
+いや、それは助田さんの所為じゃないんですが。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200208063" title="200208063" href="200208a.html#200208063">■</a> 
+<a href="http://www.tux.org/lkml/#export-tainted">18. What does it mean for a module to be tainted?</a></h3>
+<p>
+insmodのwarningは
+</p>
+<pre>
+insmod:   See http://www.tux.org/lkml/#export-tainted for information about tainted modules
+insmod: loading /lib/modules/2.4.19-ac1/kernel/net/unix/unix.o will taint the kernel: no license
+</pre>
+<p>
+と表示されてた。さっそく読んでみたが、
+どうもunix.oにだけMODULE_LICENSEをつけ忘れたって感じだ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200208064" title="200208064" href="200208a.html#200208064">■</a> 
+warning: deprecated use of label at end of compound statement</h3>
+<p>
+今日のext/racc/cparse/cparse.cの変更:
+</p>
+<pre>
+% echo 'foo(){label:}' &gt;label.c
+% gcc-2.95.3 -c label.c
+% gcc -c label.c
+label.c: In function `foo':
+label.c:1: warning: deprecated use of label at end of compound statement
+% echo 'foo(){label: ;}' &gt;label.c
+% gcc -c label.c
+%
+</pre>
+<p>
+labelはstatementにつけるものだから空でも用意する必要あり。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/08/06 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/08/07 start -->
+<h2><a name="20020807" href="200208a.html#20020807">2002-08-07 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="200208071" title="200208071" href="200208a.html#200208071">■</a> 
+ディスククラッシュその後</h3>
+<p>
+会社と家でブックマークを共有しようと思って、
+
+<a href="http://www.bookmark.ne.jp/">Bookま〜く</a> にアップロードしておいたわけだが、
+ハードディスクがクラッシュしてみるとかなり助かってる。
+</p>
+
+<p>
+Cygwinのほうはvimがせっかくlibiconvがあるんだから、
+configureしなおして+iconvになるようにした。
+もう日本語に関しては何でも来いだ。
+それと意外にもlftpがないとすごいストレスを感じるのでこれもインストール。
+makeしたら例のlibtool問題が発生したのでバイナリを取ってきた。
+lessも日本語patchをあててインストール。
+</p>
+
+<p>
+ブラウザはNetscape7のpreview1を試す。
+あれ？Netscapeってこんなに遅かったっけ？Opera恐るべし。
+タブの使い勝手もOperaに慣れしまった所為かちょっと不満に感じる。
+</p>
+
+<p>
+Windows 2000自体domainにlogonするのをやめてworkgroupにしたら、
+Cygwinからsambaへのaccessが面倒なことになってしまった。
+いちいちnet useしないとだめなんだよね。
+samba serverのほうもsecurity = domainをやめてuserにしてみるか。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/08/07 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/08/08 start -->
+<h2><a name="20020808" href="200208a.html#20020808">2002-08-08 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="200208081" title="200208081" href="200208a.html#200208081">■</a> 
+<a href="http://www.ruby-lang.org/en/raa-list.rhtml?name=OptionParser">[Ruby] OptParser 0.10</a></h3>
+<p>
+更新。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200208082" title="200208082" href="200208a.html#200208082">■</a> 
+binutils 2.13</h3>
+<p>
+上げとこう。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200208083" title="200208083" href="200208a.html#200208083">■</a> 
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-talk/46563">[Ruby] Win32API</a></h3>
+<p>
+Wineの所為だろうかと思い最新版を取ってきてmakeしてみたが、
+libkernel32.dll.soという名前だった。
+have_library(&quot;kernel32&quot;)が成功するとは思えない。
+うーむ。不思議だ。
+プラットフォームをずらずら並べるのも芸がないから、
+kernel32.dllのimport libraryの存在で判断するようにしたんだけど、裏目ったか？
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200208084" title="200208084" href="200208a.html#200208084">■</a> 
+トム・ソーヤ</h3>
+<p>
+今頃気づいたが、ruby-talk MLにTom Sawyerがいる。Mark Twainもびっくりだ。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/08/08 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/08/09 start -->
+<h2><a name="20020809" href="200208a.html#20020809">2002-08-09 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="200208091" title="200208091" href="200208a.html#200208091">■</a> 
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-talk/46637">[Ruby] Win32API</a></h3>
+<p>
+昔はlibkernel32.soだったのか。
+--opt-include=/usr/include/wineできっと通ってしまうんだろうなあ。
+動かないけど。have_header(&quot;windows.h&quot;)も追加した。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200208092" title="200208092" href="200208a.html#200208092">■</a> 
+<a href="http://cygwin.com/ml/cygwin-announce/2002-08/msg00004.html">[Cygwin] GNU emacs 21.2-1</a></h3>
+<p>
+GUIはXのみ。rxvt上でemacs -nwもできた。日本語もokだ。
+emacsに.exeがついてないので、
+Cygwin上のshellからじゃないと実行できないんじゃない？
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200208093" title="200208093" href="200208a.html#200208093">■</a> 
+<a href="http://www.rim.or.jp/support/announce/trouble/2002/aug08-1.html">トラブル</a></h3>
+<p>
+攻撃するなよ。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/08/09 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/08/10 start -->
+<h2><a name="20020810" href="200208a.html#20020810">2002-08-10 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="200208101" title="200208101" href="200208a.html#200208101">■</a> 
+<a href="http://www.ruby-lang.org/en/raa-list.rhtml?name=Win32OLE">[Ruby] Win32OLE 0.4.9</a></h3>
+<p>
+更新。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200208102" title="200208102" href="200208a.html#200208102">■</a> 
+Zsh 4.0.5</h3>
+<p>
+
+<a href="http://www.zsh.org/">ここ</a> を見ても何が変わったのかわかんないよね。
+てゆか、4.0.4のままで変更されてないし。
+デンマークのほうもまだだな。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/08/10 end -->
+
+<hr>
+<div>
+<a href="200207c.html">&lt;Prev(,)</a> | 
+<a href="200208b.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

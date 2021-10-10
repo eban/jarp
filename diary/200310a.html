@@ -1,0 +1,446 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2003-10-a</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="200309c.html">
+<link rel="next" href="200310b.html">
+
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2003年10月上旬〜</p>
+<hr>
+<div>
+<a href="200309c.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="200310b.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2003/10/01 start -->
+<h2><a name="20031001" href="200310a.html#20031001">2003-10-01 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="200310011" title="200310011" href="200310a.html#200310011">■</a> 
+9月のspam</h3>
+<p>
+1284通。
+ruby-bugs, ruby-bugs-jaのブロックで100通程減ってる勘定。
+</p>
+
+<p>
+ruby-talk ML宛は136通。
+ruby-talk MLはSpamAssassin 2.20を通しているが、
+これをSpamAssassin 2.60で再チェックしてみると、
+そのうちの85通がspamとして認識された。
+やっぱ新しくするとそれなりの利点があるね。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200310012" title="200310012" href="200310a.html#200310012">■</a> 
+<a href="http://www.openssl.org/">[Soft] OpenSSL 0.9.7c</a></h3>
+<p>
+更新。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200310013" title="200310013" href="200310a.html#200310013">■</a> 
+<a href="200302a.html#200302021">[IRC] 今日から10月</a></h3>
+<p>
+適当すぎてOctを忘れてるよ。だめじゃん。
+</p>
+<!-- section end -->
+</div>
+<!-- 2003/10/01 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/10/02 start -->
+<h2><a name="20031002" href="200310a.html#20031002">2003-10-02 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="200310021" title="200310021" href="200310a.html#200310021">■</a> 
+[Mail] Bogofilterのデータベースをコンパクトに</h3>
+<p>
+doc/bogofilter-faq.htmlによるとbogoutilでデータベースを小さくできるらしい。
+</p>
+<pre>
+% bogoutil -d wordlist.db | bogoutil -l wordlist.db.new
+% ls -l
+total 5944
+-rw-r--r--    1 watanabe ruby      3756032 Oct  2 23:00 wordlist.db
+-rw-r--r--    1 watanabe ruby      2322432 Oct  2 23:32 wordlist.db.new
+</pre>
+<p>
+結構小さくなるね。
+</p>
+<!-- section end -->
+</div>
+<!-- 2003/10/02 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/10/03 start -->
+<h2><a name="20031003" href="200310a.html#20031003">2003-10-03 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="200310031" title="200310031" href="200310a.html#200310031">■</a> 
+[Worm] Swen</h3>
+<p>
+ようやく減ってきた。今日は3通。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200310032" title="200310032" href="200310a.html#200310032">■</a> 
+a-ha</h3>
+<p>
+ごとけんさんのせいでTake On Meのイントロから歌い出しに入れなくなる。
+いつまでも繰り返される。
+</p>
+<!-- section end -->
+</div>
+<!-- 2003/10/03 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/10/04 start -->
+<h2><a name="20031004" href="200310a.html#20031004">2003-10-04 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="200310041" title="200310041" href="200310a.html#200310041">■</a> 
+<a href="http://bogofilter.sf.net/">[Soft] Bogofilter 0.15.6</a></h3>
+<p>
+更新。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200310042" title="200310042" href="200310a.html#200310042">■</a> 
+<a href="http://sources.redhat.com/gsl/">[Soft] GNU GSL 1.4</a></h3>
+<p>
+Bogofilter 0.15.4からはGNU GSLが使えるということなのでインストールしとく。
+</p>
+<!-- section end -->
+</div>
+<!-- 2003/10/04 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/10/05 start -->
+<h2><a name="20031005" href="200310a.html#20031005">2003-10-05 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="200310051" title="200310051" href="200310a.html#200310051">■</a> 
+<a href="http://cygwin.com/ml/cygwin-announce/2003-10/msg00003.html">notice of package removal: gcc2-2.95-*</a></h3>
+<p>
+gcc2 packagesは終了らしい。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200310052" title="200310052" href="200310a.html#200310052">■</a> 
+<a href="http://www.xfce.org/">[Soft] Xfce 4.0.0</a></h3>
+<p>
+tarballを取ってきて展開したらすごいことになってた。
+</p>
+<pre>
+% ls *.tar.gz
+dbh-1.0.15.tar.gz              xfce4-systray-4.0.0.tar.gz
+gtk-xfce-engine-2.1.6.tar.gz   xfce4-themes-4.0.0.tar.gz
+libxfce4mcs-4.0.0.tar.gz       xfce4-toys-4.0.0.tar.gz
+libxfce4util-4.0.0.tar.gz      xfce4-trigger-launcher-4.0.0.tar.gz
+libxfcegui4-4.0.0.tar.gz       xfdesktop-4.0.0.tar.gz
+xfce-mcs-manager-4.0.0.tar.gz  xffm-4.0.0.tar.gz
+xfce-mcs-plugins-4.0.0.tar.gz  xffm-icons-4.0.0.tar.gz
+xfce-utils-4.0.0.tar.gz        xfprint-4.0.0.tar.gz
+xfce4-iconbox-4.0.0.tar.gz     xfwm4-4.0.0.tar.gz
+xfce4-mixer-4.0.0.tar.gz       xfwm4-themes-4.0.0.tar.gz
+xfce4-panel-4.0.0.tar.gz
+</pre>
+<p>
+<a href="http://www.xfce.org/en/documentation.html">Documentation</a>を見てその順番で作った。なるほどきれいだ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2003/10/05 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/10/06 start -->
+<h2><a name="20031006" href="200310a.html#20031006">2003-10-06 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="200310061" title="200310061" href="200310a.html#200310061">■</a> 
+[Ruby][Win32] bcc32のテキストモード</h3>
+<p>
+msvcrtのテキストモードは入力時に&quot;\r\n&quot;を&quot;\n&quot;に変換するが、
+bcc32だと&quot;\r&quot;を削除するという処理になる。
+つまりgsub(/\r\n/, &quot;\n&quot;)とdelete(&quot;\r&quot;)の違い。
+この挙動のおかげでcsv.rbのテストでひっかかる。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200310062" title="200310062" href="200310a.html#200310062">■</a> 
+<a href="http://www.isi.edu/~johnh/SOFTWARE/LAVAPS/">右上のあれ</a></h3>
+<p>
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-dev/19454">[ruby-dev:19454]</a>によると
+<a href="http://www.isi.edu/~johnh/SOFTWARE/LAVAPS/">lavaps</a>らしい
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200310063" title="200310063" href="200310a.html#200310063">■</a> 
+<a href="http://web.sfc.keio.ac.jp/~s01397ms/d/?date=20031006#p02">[Ruby] rdtsc</a></h3>
+<p>
+そのあたりはコンパイラに任せてしまうのが簡単。
+</p>
+<pre>
+long long exec_rdtsc(void)
+{
+  asm volatile (&quot;  rdtsc&quot;);
+}
+</pre>
+<p>
+-O3あたりでコンパイルすれば、exec_rdtsc自体展開されてしまう。
+</p>
+<pre>
+% objdump -d --start 0x40 rdtsc.o
+
+rdtsc.o:     file format elf32-i386
+
+Disassembly of section .text:
+
+00000040 &lt;rdtsc_count&gt;:
+  40:   55                      push   %ebp
+  41:   89 e5                   mov    %esp,%ebp
+  43:   53                      push   %ebx
+  44:   83 ec 0c                sub    $0xc,%esp
+  47:   e8 00 00 00 00          call   4c &lt;rdtsc_count+0xc&gt;
+  4c:   5b                      pop    %ebx
+  4d:   81 c3 03 00 00 00       add    $0x3,%ebx
+  53:   0f 31                   rdtsc  
+  55:   52                      push   %edx
+  56:   50                      push   %eax
+  57:   e8 fc ff ff ff          call   58 &lt;rdtsc_count+0x18&gt;
+  5c:   8b 5d fc                mov    0xfffffffc(%ebp),%ebx
+  5f:   89 ec                   mov    %ebp,%esp
+  61:   5d                      pop    %ebp
+  62:   c3                      ret    
+</pre>
+
+<!-- section end -->
+</div>
+<!-- 2003/10/06 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/10/07 start -->
+<h2><a name="20031007" href="200310a.html#20031007">2003-10-07 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="200310071" title="200310071" href="200310a.html#200310071">■</a> 
+[Mail][Perl] SpamAssassinとデータベース</h3>
+<p>
+sa-learnしてもbayes*が更新されない。
+なんか変なので試しにDB_Fileをインストールしたら更新されるようになった。
+SpamAssassin 2.60をインストールしたのが9/25で、
+Perl 5.8.1をインストールしたのが9/28だからこのあたりに不整合が起きたか？
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200310072" title="200310072" href="200310a.html#200310072">■</a> 
+[Mail] ruby-talk</h3>
+<p>
+SpamAssassin 2.60を使うように変更。
+ついでにベイジアンフィルタも使えるようにしよう。
+</p>
+<!-- section end -->
+</div>
+<!-- 2003/10/07 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/10/08 start -->
+<h2><a name="20031008" href="200310a.html#20031008">2003-10-08 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="200310081" title="200310081" href="200310a.html#200310081">■</a> 
+<a href="http://raa.ruby-lang.org/project/bz2/">[Ruby] bz2 0.1.9</a></h3>
+<p>
+更新。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200310082" title="200310082" href="200310a.html#200310082">■</a> 
+[Ruby] ruby-talk ML</h3>
+<p>
+chownし忘れて、約一日止まってしまった。もうしわけない。
+新しいSpamAssassinならベイジアンフィルタをも使えるし、
+かなりspamをブロックできるはず。
+</p>
+<!-- section end -->
+</div>
+<!-- 2003/10/08 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/10/09 start -->
+<h2><a name="20031009" href="200310a.html#20031009">2003-10-09 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="200310091" title="200310091" href="200310a.html#200310091">■</a> 
+<a href="ftp://ftp.astron.com/pub/file/">[Soft] file 4.05</a></h3>
+<p>
+SpamAssassinのdbがちゃんとBerkeley DBになったかどうか調べてみたら
+</p>
+<pre>
+% file bayes_toks 
+bayes_toks: data
+</pre>
+<p>
+と、悲しい結果に。fileを上げよう。
+</p>
+<pre>
+% file bayes_toks
+bayes_toks: Berkeley DB (Hash, version 8, native byte-order)
+</pre>
+<p>
+okだ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2003/10/09 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/10/10 start -->
+<h2><a name="20031010" href="200310a.html#20031010">2003-10-10 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="200310101" title="200310101" href="200310a.html#200310101">■</a> 
+[Ruby] ruby-talk</h3>
+<p>
+news gatewayから半年以上前の記事が流れてきた。
+fmlの設定がよくわからないので、応急処置としてSpamAssassinのuser_prefsに
+</p>
+<pre>
+header TOO_OLD_DATE Date =~ /(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep) 2003/i
+describe TOO_OLD_DATE Too old message
+score TOO_OLD_DATE 99
+</pre>
+<p>
+を追加して、spamとしてrejectさせるようにした。
+</p>
+
+<p>
+fmlのほうはなかださん提案の
+</p>
+<pre>
+$OLDEST_POST_DAYS = 30;
+$DISTRIBUTE_FILTER_HOOK .= q#
+    require 'libmti.pl';
+    if ($OLDEST_POST_DAYS &amp;&amp; &amp;Date2UnixTime($e{'h:Posted:'}) &lt; time - 86400*$OLDEST_POST_DAYS) {
+      return &quot;Posted date was older than $OLDEST_POST_DAYS days.&quot;;
+    }
+#;
+</pre>
+<p>
+をcfに追加。30日以前のメールはreject。
+昼間5時間程止まってしまったのは、おいらがrequireを忘れたせい。
+もうしわけない(こればっか)。
+</p>
+<!-- section end -->
+</div>
+<!-- 2003/10/10 end -->
+
+<hr>
+<div>
+<a href="200309c.html">&lt;Prev(,)</a> | 
+<a href="200310b.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

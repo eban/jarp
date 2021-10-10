@@ -1,0 +1,712 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2002-10-c</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="200210b.html">
+<link rel="next" href="200211a.html">
+
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2002年10月下旬〜</p>
+<hr>
+<div>
+<a href="200210b.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="200211a.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2002/10/21 start -->
+<h2><a name="20021021" href="200210c.html#20021021">2002-10-21 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="200210211" title="200210211" href="200210c.html#200210211">■</a> 
+<a href="http://marc.theaimsgroup.com/?l=linux-kernel&amp;m=103514324522397&amp;w=2">[Ruby][Linux] linux kernel conf 1.1</a></h3>
+<p>
+なんか面白そう。
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-talk/53625">[ruby-talk:53625]</a>から。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200210212" title="200210212" href="200210c.html#200210212">■</a> 
+<a href="http://homepage1.nifty.com/markey/memo/200210.html#102001">[Ruby] Ruby 1.7.3 (2002-10-18) [i686-linux]</a></h3>
+<p>
+追試してみると起きない。
+</p>
+<pre>
+% ./configure CC='gcc -V 3.1'
+% make 
+% make test
+</pre>
+<p>
+もちろん3.2でも問題ない。うーむ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200210213" title="200210213" href="200210c.html#200210213">■</a> 
+<a href="http://www.thekelleys.org.uk/dnsmasq/doc.html">[Linux] Dnsmasq 1.9</a></h3>
+<p>
+gccを/usr/i386-linux-uclibc/bin/i386-uclibc-gcc -staticに書き換えてインストール。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200210214" title="200210214" href="200210c.html#200210214">■</a> 
+<a href="http://www.gnu.org/software/coreutils/">[GNU] Coreutils</a></h3>
+<p>
+この先fileutils, shellutils, textutilsはcoreutilsで統一されるんだろうか？
+まだalpha状態らしいが。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200210215" title="200210215" href="200210c.html#200210215">■</a> 
+[TV] ダーク・エンジェル</h3>
+<p>
+11/3に最終話を放映するためにいきなり話が飛んだ。
+最終話のためには今日の話は外せないしねえ。
+そのままIIを続けるとも思えないし、打ち切りか？
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/10/21 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/10/22 start -->
+<h2><a name="20021022" href="200210c.html#20021022">2002-10-22 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="200210221" title="200210221" href="200210c.html#200210221">■</a> 
+[Ruby] ルービ</h3>
+<p>
+ひょっとして英語だとルービに近い発音になるのだろうか？
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200210222" title="200210222" href="200210c.html#200210222">■</a> 
+[Ruby] configure.in: RUBY_CPPOUTFILE</h3>
+<p>
+--cache-fileを指定したときに、2回目以降のconfigure実行時にCPPOUTFILEが空になってしまうことが判明。
+空になっても実害はないがまぬけすぎだ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200210223" title="200210223" href="200210c.html#200210223">■</a> 
+[Ruby] mkmf.rb: link_command</h3>
+<p>
+なかださんのpatchがcommitされたのでCygwinでチェックしてみるとなぜかext/cursesがコンパイルされない。
+mkmf.logを見ると
+</p>
+<pre>
+... -lncurses conftest.c ...
+</pre>
+<p>
+という順番になってしまいinitscr()がundefinedになってる。
+そうかtry_linkのoptってどっちかというとlibsとして使われることが多いのか。
+try_funcがまさにそう。というわけでlink_commandのoptに位置を
+</p>
+<pre>
+'LIBS' =&gt; &quot;#$LIBRUBYARG ${opt} #$LIBS&quot;
+</pre>
+<p>
+へ移動しよう。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200210224" title="200210224" href="200210c.html#200210224">■</a> 
+[Ruby] mkconfig.rb: Config::expand</h3>
+<p>
+上のlink_commandを見てて気づいた。
+Config::expandの2つ目の引数はCONFIGをいじらないで一時的に展開したいときに使うわけだ。ふむ。
+やはり
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-dev/18541">[ruby-dev:18541]</a>のパッチは的外れだったようだ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200210225" title="200210225" href="200210c.html#200210225">■</a> 
+[どもっ] つっこみにっき？</h3>
+<p>
+金光さんから意味不明なメールをもらう。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200210226" title="200210226" href="200210c.html#200210226">■</a> 
+[Ruby] mkmf.rb: link_command その2</h3>
+<p>
+あ、typoしてる。もうしわけない。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200210227" title="200210227" href="200210c.html#200210227">■</a> 
+[Ruby] mkmf.rb: init_mkmf</h3>
+<p>
+dir_config(&quot;opt&quot;)を追加。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/10/22 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/10/23 start -->
+<h2><a name="20021023" href="200210c.html#20021023">2002-10-23 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="200210231" title="200210231" href="200210c.html#200210231">■</a> 
+[Ruby] gcc 3.2</h3>
+<p>
+gcc 3.2はサイズの最適化がかなり効いてるようだ。
+</p>
+
+<p>
+gcc 2.95.3:
+</p>
+<pre>
+579584 2002-10-19 00:24:03 cygwin-ruby16.dll
+</pre>
+<p>
+gcc 3.2:
+</p>
+<pre>
+513536 2002-10-23 21:57:45 cygwin-ruby16.dll
+</pre>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200210232" title="200210232" href="200210c.html#200210232">■</a> 
+<a href="http://www.tuxedo.org/~esr/fetchmail/index.html">[Linux] fetchmail 6.1.1</a></h3>
+<p>
+更新。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200210233" title="200210233" href="200210c.html#200210233">■</a> 
+<a href="http://www.ruby-lang.org/en/raa-list.rhtml?name=XML-RPC">[Ruby] XML-RPC 1.7.12</a></h3>
+<p>
+更新。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200210234" title="200210234" href="200210c.html#200210234">■</a> 
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-list/36188">[Ruby] spam?</a></h3>
+<p>
+ruby-listにspamとは珍しいと思っていたが、今はonly members can postだからspamは基本的にないはず。
+CGI::unescapeHTMLしてみるとutf-8で書かれていた。
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-list/36174">[ruby-list:36174]</a>の続きのようだ。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/10/23 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/10/24 start -->
+<h2><a name="20021024" href="200210c.html#20021024">2002-10-24 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="200210241" title="200210241" href="200210c.html#200210241">■</a> 
+<a href="http://www.ruby-lang.org/ja/raa.html">[Ruby] RAA: Ruby Application Archive</a></h3>
+<p>
+off-lineでは検索できなくなったことに気づく。
+YARAAのAllを使おうと思ったらRAAが新しくなったせいかYARAAの情報は古いままのようだ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200210242" title="200210242" href="200210c.html#200210242">■</a> 
+<a href="http://www.ruby-lang.org/en/raa-list.rhtml?name=XML-RPC">[Ruby] XML-RPC 1.7.13</a></h3>
+<p>
+更新。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200210243" title="200210243" href="200210c.html#200210243">■</a> 
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-talk/53995">[Perl] perl -le 'print (@) - $; +$ (- % _); * *+* *'</a></h3>
+<p>
+gidが出力されるんだけど、全然理解できん。
+わかるところから解読していこう。
+最後の
+</p>
+<pre>
+* *
+</pre>
+<p>
+は
+</p>
+<pre>
+*main::*
+</pre>
+<p>
+なのでtype globか。結局
+</p>
+<pre>
+*main::* + *main::*
+</pre>
+<p>
+なので0 + 0と同じ。
+</p>
+
+<p>
+@を1にしてみると
+</p>
+<pre>
+% perl -le 'print (1) - $; +$ (- % _); * *+* *'
+syntax error at -e line 1, near &quot;% _)&quot;
+</pre>
+<p>
+となる。ということは@)は配列なのか？
+</p>
+<pre>
+% perl -le '@) = (0,1,2,3); print $)[3]'
+3
+</pre>
+<p>
+そのようだ。そんな配列名がありとは。$;は空なので
+</p>
+<pre>
+@) - $;
+</pre>
+<p>
+は0 - 0だな。肝心の真ん中は
+</p>
+<pre>
++$( - % _
+</pre>
+<p>
+で$(はgetgroupsに相当するから
+</p>
+<pre>
+1000 1001 6 5 1000
+</pre>
+<p>
+という感じ。%_はハッシュだけど-なので0と同じ。
+</p>
+<pre>
++&quot;1000 1001 6 5 1000&quot; - 0
+</pre>
+<p>
+だからこれは1000になる。これが結果だ。以上まとめると
+</p>
+<pre>
+perl -le 'print (0 - 0 + &quot;1000 1001 6 5 1000&quot; - 0); 0 + 0'
+</pre>
+<p>
+と同じ。つまり$)の最初の値を表示するone-linerということになる。
+</p>
+<pre>
+perl -le 'print (1000)'
+</pre>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200210244" title="200210244" href="200210c.html#200210244">■</a> 
+<a href="http://www.gnu.org/software/sed/">[GNU] sed 4.0</a></h3>
+<p>
+-i(in-place)とかできるようになってる。
+</p>
+<pre>
+Changes: This release has been merged with super-sed and supports all of
+its features, except for Perl regular expressions. This includes in-place
+editing, new sed commands, better documentation, and support for changing
+the case of the characters with the `s' command. The performance and
+correctness of the regular expression matcher have also been improved.
+</pre>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/10/24 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/10/25 start -->
+<h2><a name="20021025" href="200210c.html#20021025">2002-10-25 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="200210251" title="200210251" href="200210c.html#200210251">■</a> 
+[Ruby] Ruby 1.7のDJGPP対応</h3>
+<p>
+すっかり忘れていた。
+そういえばdjgppをインストールしてあったマシンがクラッシュしたんだった。
+まずは
+</p>
+<pre>
+bnu213b.zip, bsh204.zip, bsn135b.zip, djdev203.zip, fil41b.zip,
+gcc32b.zip, gdbm180b.zip gwk311b.zip, mak3791b.zip, rdln22b.zip,
+sed3028b.zip, shl2011b.zip, txt20b.zip
+</pre>
+<p>
+をインストールしよう。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/10/25 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/10/26 start -->
+<h2><a name="20021026" href="200210c.html#20021026">2002-10-26 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="200210261" title="200210261" href="200210c.html#200210261">■</a> 
+<a href="http://www.ruby-lang.org/en/raa.html">[Ruby] RAA</a></h3>
+<p>
+<a href="http://ruby.yi.org/raa/ja/">YARAA</a>がsyncするようになったので、off-lineでも
+<a href="http://ruby.yi.org/raa/ja/all-flat.html">all-flat</a>が使えるということで、検索の問題は解決。
+YARAAならURLがidじゃなくてnameになるので、こちらの利用が増えそう。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200210262" title="200210262" href="200210c.html#200210262">■</a> 
+<a href="http://www.ruby-lang.org/en/raa-list.rhtml?name=csv">[Ruby] csv 1.1.2</a></h3>
+<p>
+HomepageがNot Foundになってしまう。まだ用意されてない？
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200210263" title="200210263" href="200210c.html#200210263">■</a> 
+<a href="http://cygwin.com/ml/cygwin-announce/2002-10/msg00013.html">[Cygwin] Cygwin 1.3.14-1</a></h3>
+<p>
+さて今回はどうでしょう？
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/10/26 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/10/27 start -->
+<h2><a name="20021027" href="200210c.html#20021027">2002-10-27 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="200210271" title="200210271" href="200210c.html#200210271">■</a> 
+[Ruby] Ruby 1.7: IO高速化とbinary mode</h3>
+<p>
+DJGPPでconfigureして、makeしてみると途中でエラーになる。
+rbconfig.rbがうまくできてない。調べてみると
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-list/35005">例の問題</a>が出てるようだ。症状が全く同じ。
+</p>
+<pre>
+% ./miniruby -e 'p ARGF.gets;p ARGF.gets' config.status
+&quot;#! /dev/env/DJDIR/bin/sh.exe\n#&quot;
+&quot; Generated by configure.\n#&quot;
+</pre>
+<p>
+config.statusをLF endingsにすればok。
+</p>
+
+<p>
+とりあえず、遅くなるとは思うけど
+</p>
+<pre>
+READ_DATA_PENDING_COUNT
+READ_DATA_PENDING_PTR
+</pre>
+<p>
+を#undefしよう。本当は
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-dev/17085">[ruby-dev:17085]</a>に従い「テキストモードならバッファの直接アクセスを止め」たかったんだけど、
+変更量が多くなりそうなのでやめた。
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-list/35033">[ruby-list:35033]</a>はよくわからない。
+libc側は全部binary modeにしてRuby側でtext modeをサポートするほうがよさそう。
+でもそうするならstdioを捨てたくなるよね。うーむ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200210272" title="200210272" href="200210c.html#200210272">■</a> 
+[Ruby] Ruby 1.7: DJGPP対応</h3>
+<p>
+それはそれとして、djgpp/configure.batでmakeできるようにした。
+ふつうにconfigureもできるし、djgpp/configure.batは要らないか。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200210273" title="200210273" href="200210c.html#200210273">■</a> 
+<a href="200210c.html#200210215">[TV] ダーク・エンジェル II</a></h3>
+<p>
+と思ったら11/4からIIを始めるらしい。なぜ飛ばす必要が。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/10/27 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/10/28 start -->
+<h2><a name="20021028" href="200210c.html#20021028">2002-10-28 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="200210281" title="200210281" href="200210c.html#200210281">■</a> 
+<a href="http://www.ruby-lang.org/en/raa-list.rhtml?name=Ruby+GetText+Package">[Ruby] Ruby GetText Package 0.4.0</a></h3>
+<p>
+更新。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200210282" title="200210282" href="200210c.html#200210282">■</a> 
+[会社] セミナー</h3>
+<p>
+今週はセミナーでなんか心に余裕なし。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/10/28 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/10/29 start -->
+<h2><a name="20021029" href="200210c.html#20021029">2002-10-29 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="200210291" title="200210291" href="200210c.html#200210291">■</a> 
+[autoconf][sed] t t</h3>
+<p>
+autoconf 2.5xで作ったconfigureだとconfig.statusの中に
+</p>
+<pre>
+s,@SHELL@,/bin/bash,;t t
+</pre>
+<p>
+というような行がいっぱい出てくる。;t tがなんか余計に思える。
+一体なんのためだろう？
+t自体は置換が行なわれていれば指定したラベル(t)へ飛べという意味だ。
+だから:tがどこかにないといけないわけだが、あ、検索すると離れたところにあるね。
+</p>
+<pre>
+:t
+/@[a-zA-Z_][a-zA-Z_0-9]*@/!b
+</pre>
+<p>
+これはこの正規表現にマッチしなければスクリプトの最後に飛べという意味。
+</p>
+
+<p>
+あ、わかった。
+</p>
+<pre>
+:t
+/@[a-zA-Z_][a-zA-Z_0-9]*@/!b
+s,@SHELL@,/bin/bash,;t t
+s,@PATH_SEPARATOR@,:,;t t
+s,@PACKAGE_NAME@,,;t t
+s,@PACKAGE_TARNAME@,,;t t
+s,@PACKAGE_VERSION@,,;t t
+...
+</pre>
+<p>
+のようにずらずら並べて、置換が起こったら :tへ飛び、
+@FOO@がまだあるか調べて、なければもうsコマンドを実行する必要がないからスクリプトの最後に飛び、入力の次の行へ移行するということか。
+sの行数が多ければそれなりに効くのかもしれない。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/10/29 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/10/30 start -->
+<h2><a name="20021030" href="200210c.html#20021030">2002-10-30 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="200210301" title="200210301" href="200210c.html#200210301">■</a> 
+<a href="http://tcl.activestate.com/">[Tcl/Tk] Tcl/Tk 8.4.1</a></h3>
+<pre>
+Changes: This release updates support for compiling with Cygwin and either
+mingw or gcc, ...
+</pre>
+<p>
+週末にでも試してみよう。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/10/30 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/10/31 start -->
+<h2><a name="20021031" href="200210c.html#20021031">2002-10-31 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="200210311" title="200210311" href="200210c.html#200210311">■</a> 
+<a href="http://www.ruby-lang.org/en/raa-list.rhtml?name=Import+Module">[Ruby] Import Module 0.75</a></h3>
+<p>
+パッケージングしてみる。
+</p>
+<pre>
+% awk '/\r/ {print FILENAME;nextfile}' **/*(.)
+import-module-single-thread.rb
+statics.rb
+test
+times-do.sh
+</pre>
+<p>
+だったので、
+</p>
+<pre>
+% ruby -i~ -pe '$_.delete!(&quot;\r&quot;)' \
+  $(awk '/\r/ {print FILENAME;nextfile}' **/*(.))
+</pre>
+<p>
+としとこう。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200210312" title="200210312" href="200210c.html#200210312">■</a> 
+メール</h3>
+<p>
+うーむ。2日ほどメールが溜まってるなあ。読んでる暇がない。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/10/31 end -->
+
+<hr>
+<div>
+<a href="200210b.html">&lt;Prev(,)</a> | 
+<a href="200211a.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

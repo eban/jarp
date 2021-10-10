@@ -1,0 +1,423 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2006-6-a</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="200605c.html">
+<link rel="next" href="200606b.html">
+
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2006年6月上旬〜</p>
+<hr>
+<div>
+<a href="200605c.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="200606b.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2006/06/01 start -->
+<h2><a name="20060601" href="200606a.html#20060601">2006-06-01 (Thu)</a></h2>
+<!-- 2006-06-02 01:34:05 -->
+
+<div class="entry1">
+<h3><a name="200606011" title="200606011" href="200606a.html#200606011">■</a> 
+5月のspam</h3>
+<p>
+558通。Gmail側約5000スレッド。微妙に増えた。
+なんか最近Gmailのspam判定が甘いような。日本語のspamが目立つ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2006/06/01 end -->
+
+
+
+<hr class="hide">
+<!-- 2006/06/02 start -->
+<h2><a name="20060602" href="200606a.html#20060602">2006-06-02 (Fri)</a></h2>
+<!-- 2006-06-03 01:34:22 -->
+
+<div class="entry1">
+<h3><a name="200606021" title="200606021" href="200606a.html#200606021">■</a> 
+[Vim] Vimでバイナリファイルを編集</h3>
+<p>
+Vimでバイナリファイルを編集するにはいくつか方法がある。
+</p>
+
+<p>
+:help edit-binaryすると-bオプションかset binaryせよとある。
+set display=uhexとすれば表示できない文字も16進数で表示される。
+</p><blockquote><p>
+&lt;Nul&gt; characters are shown on the screen as ^You can enter them with
+&quot;CTRL-V CTRL-or &quot;CTRL-V 000&quot; {Vi cannot handle &lt;Nul&gt; characters in the
+file}
+</p></blockquote><p>
+コードはCTRL-V x0fとかすれば16進数でも入力できる。
+いちいちCTRL-Vって打つのが面倒であるが。
+</p>
+
+<p>
+そこで真打。:help xxdを参照。
+</p><blockquote><p>
+If one has a particular extension that one uses for binary files (such as exe,
+bin, etc), you may find it helpful to automate the process with the following
+bit of autocmds for your &lt;.vimrc&gt;.  Change that &quot;*.bin&quot; to whatever
+comma-separated list of extension(s) you find yourself wanting to edit: &gt;
+</p></blockquote><p>
+とあって、以下を.vimrcへ追加しろとある。
+</p>
+<pre>
+&quot; vim -b : edit binary using xxd-format!
+augroup Binary
+  au!
+  au BufReadPre  *.bin let &amp;bin=1
+  au BufReadPost *.bin if &amp;bin | %!xxd 
+  au BufReadPost *.bin set ft=xxd | endif
+  au BufWritePre *.bin if &amp;bin | %!xxd -r
+  au BufWritePre *.bin endif
+  au BufWritePost *.bin if &amp;bin | %!xxd
+  au BufWritePost *.bin set nomod | endif
+augroup END
+</pre>
+<p>
+すばらしい。これで*.binという拡張子にしとけば16進ダンプ形式で編集できる。
+ただxxdコマンドは2バイト単位がデフォルトなので
+</p>
+<pre>
+% echo hoge |xxd
+0000000: 686f 6765 0a                             hoge.
+</pre>
+<p>
+となってしまう。やっぱ1バイト単位のほうがわかりやすいので
+</p>
+<pre>
+&quot; vim -b : edit binary using xxd-format!
+augroup Binary
+  au!
+  au BufReadPre  *.bin let &amp;bin=1
+  au BufReadPost *.bin if &amp;bin | silent %!xxd -g 1
+  au BufReadPost *.bin set ft=xxd | endif
+  au BufWritePre *.bin if &amp;bin | %!xxd -r
+  au BufWritePre *.bin endif
+  au BufWritePost *.bin if &amp;bin | silent %!xxd -g 1
+  au BufWritePost *.bin set nomod | endif
+augroup END
+</pre>
+<p>
+のようにxxdコマンドの実行に-g 1を追加。
+</p>
+<pre>
+% echo hoge |xxd -g 1
+0000000: 68 6f 67 65 0a                                   hoge.
+</pre>
+<p>
+こんな感じになる。
+silentは「続けるにはENTERを押すかコマンドを入力してください」
+というメッセージで止まるのを抑止。
+右側のアスキー文字列を編集しても無効なので注意。
+</p>
+<!-- section end -->
+</div>
+<!-- 2006/06/02 end -->
+
+
+
+<hr class="hide">
+<!-- 2006/06/03 start -->
+<h2><a name="20060603" href="200606a.html#20060603">2006-06-03 (Sat)</a></h2>
+<!-- 2006-06-04 03:31:56 -->
+
+<div class="entry1">
+<h3><a name="200606031" title="200606031" href="200606a.html#200606031">■</a> 
+[TV] 白銀比</h3>
+<p>
+なんだか怪しい番組で1:√2を白銀比と呼ぶと言ってた。
+個人的には黄金比より白銀比のほうが美しく感じる。
+</p>
+<!-- section end -->
+</div>
+<!-- 2006/06/03 end -->
+
+
+
+<hr class="hide">
+<!-- 2006/06/04 start -->
+<h2><a name="20060604" href="200606a.html#20060604">2006-06-04 (Sun)</a></h2>
+<!-- 2006-06-05 01:42:23 -->
+
+<div class="entry1">
+<h3><a name="200606041" title="200606041" href="200606a.html#200606041">■</a> 
+[freshmeat] spamになってたfreshmeatのNewsletter</h3>
+<p>
+今日来たfreshmeatがなんか新鮮な気分なのでなぜかと思ったら、
+ここ1週間ほど来てないことに気づいた。
+Gmailにてin:spam freshmeatで検索したらわらわらと1週間分が出てきた。
+ここで食われてたか。しかしなぜ急に？
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200606042" title="200606042" href="200606a.html#200606042">■</a> 
+<a href="http://www.hpi.uni-potsdam.de/footiefox/?L=1">[Firefox] FootieFox</a></h3>
+<p>
+W杯に備えて
+<a href="http://www.hpi.uni-potsdam.de/footiefox/?L=1">FootieFox</a>を入れた。
+いつでも来い。
+</p><blockquote><p>
+Key Features
+<ul>
+<li>display of current soccer scores in your status bar
+<li>all matches at a glance on the customizable score board
+<li>support of more than 18 European leagues plus many international championships
+<li>visual and acoustic notification when goals are scored
+<li>kick-off times in local time, world cup teams in local language
+</ul></blockquote>
+<!-- section end -->
+</div>
+<!-- 2006/06/04 end -->
+
+
+
+<hr class="hide">
+<!-- 2006/06/05 start -->
+<h2><a name="20060605" href="200606a.html#20060605">2006-06-05 (Mon)</a></h2>
+<!-- 2006-06-06 02:33:54 -->
+
+<div class="entry1">
+<h3><a name="200606051" title="200606051" href="200606a.html#200606051">■</a> 
+[Vim] Vim6とVim7の:a,:i時のautoindentの挙動の違い</h3>
+<p>
+Vimでinsert modeで貼りつけると、たとえばRuby modeだったりすると、
+階段状になったり余計に深いindentになったりで非常にうっとうしいことになることがしばしば。
+そこで:a,:iして貼りつけて&quot;.&quot;で終了という有名な技がある。
+でもVim7だとinsert modeと同じ挙動になってしまっているようで、どうしたもんだか。
+</p>
+
+<p>
+gvimだったらふつうに貼りつければいいようだ。
+gvimってあまり使わないしなあ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2006/06/05 end -->
+
+
+
+<hr class="hide">
+<!-- 2006/06/06 start -->
+<h2><a name="20060606" href="200606a.html#20060606">2006-06-06 (Tue)</a></h2>
+<!-- 2006-06-07 02:35:05 -->
+
+<div class="entry1">
+<h3><a name="200606061" title="200606061" href="200606a.html#200606061">■</a> 
+[Vim] autoindentをやめてみる</h3>
+<p>
+昔々の名残りでずーっと~/.vimrcでset aiしてたけど、
+やめてもちゃんとautoindentだったりするのはなぜ？
+filetypeとかsyntaxで決まるもんなのかな。
+</p>
+
+<p>
+というわけで、
+<a href="200606a.html#200606051">昨日の問題</a>は解決。
+</p>
+<!-- section end -->
+</div>
+<!-- 2006/06/06 end -->
+
+
+
+<hr class="hide">
+<!-- 2006/06/07 start -->
+<h2><a name="20060607" href="200606a.html#20060607">2006-06-07 (Wed)</a></h2>
+<!-- 2006-06-08 01:49:48 -->
+
+<div class="entry1">
+<h3><a name="200606071" title="200606071" href="200606a.html#200606071">■</a> 
+[C] Cの+と&lt;&lt;の優先順位</h3>
+<p>
+今日はちょっとはまった。Cで
+</p>
+<pre>
+x = 1 &lt;&lt; 8 + 1;
+</pre>
+<p>
+とやるとxは0x0101になると思っていた。でも実際は0x0200になる。つまり
+</p>
+<pre>
+x = (1 &lt;&lt; 8) + 1;
+</pre>
+<p>
+ではなく
+</p>
+<pre>
+x = 1 &lt;&lt; (8 + 1);
+</pre>
+<p>
+ということだ。&lt;&lt;よりも+のほうが優先順位が高い。
+ここは
+</p>
+<pre>
+x = 1 &lt;&lt; 8 | 1;
+</pre>
+<p>
+と+ではなく|を使えば思った通りになる。逆に+を使いたければ
+</p>
+<pre>
+x = 1 * 256 + 1;
+</pre>
+<p>
+とすればいい。
+</p>
+
+<p>
+ビット演算と算術演算を混ぜるな危険ってことで。
+</p>
+<!-- section end -->
+</div>
+<!-- 2006/06/07 end -->
+
+
+
+<hr class="hide">
+<!-- 2006/06/08 start -->
+<h2><a name="20060608" href="200606a.html#20060608">2006-06-08 (Thu)</a></h2>
+<!-- 2006-06-09 03:04:35 -->
+
+<div class="entry1">
+<h3><a name="200606081" title="200606081" href="200606a.html#200606081">■</a> 
+[Ruby] unpackのテンプレート文字列X</h3>
+<p>
+1バイト整数と3バイト整数(ビッグエンディアン)というバイナリデータがあって、それをRubyでどうやって読むかというのが今日のお題。
+1バイトのほうは種別みたいなもので、3バイトのほうはそのあとの続くデータのサイズと思ってくれればいい。
+素直に書くと
+</p>
+<pre>
+type, *s = data.unpack(&quot;C4&quot;)
+size = s[0] &lt;&lt; 16 | s[1] &lt;&lt; 8 | s[0]
+</pre>
+<p>
+という感じになるというか、実は
+<a href="200606a.html#200606071">昨日の話</a>はこれをCで書いていたわけなんだけど、
+RubyでもPerlでもやはりCと同じ優先順位なんだね。
+それはそれとして、sという一時変数がなんか無駄なのでなくしたい。
+Nを使えばいいか。
+</p>
+<pre>
+size = data.unpack(&quot;N&quot;)
+type = size &gt;&gt; 24
+size &amp;= 0xffffff
+</pre>
+<p>
+てな感じで。あ、Xで戻るのもありだな。もうちょっと工夫してみる。
+</p>
+<pre>
+type, size = data.unpack(&quot;CXN&quot;)
+size &amp;= 0xffffff
+</pre>
+<p>
+Xなんて何に使うんだと思っていたけど、意外にも役に立つことがあるもんだ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2006/06/08 end -->
+
+
+
+<hr class="hide">
+<!-- 2006/06/09 start -->
+<h2><a name="20060609" href="200606a.html#20060609">2006-06-09 (Fri)</a></h2>
+<!-- 2006-06-10 01:21:04 -->
+
+<div class="entry1">
+<h3><a name="200606091" title="200606091" href="200606a.html#200606091">■</a> 
+[PC] マウス</h3>
+<p>
+マウスのホイールの調子が悪い。回しても回してもスクロールが進まない。
+進まないというかむしろ戻る。やはり安物だけあってへたれるのも早い？
+</p>
+<!-- section end -->
+</div>
+<!-- 2006/06/09 end -->
+
+
+
+<hr class="hide">
+<!-- 2006/06/10 start -->
+<h2><a name="20060610" href="200606a.html#20060610">2006-06-10 (Sat)</a></h2>
+<!-- 2006-06-11 01:06:23 -->
+
+<div class="entry1">
+<h3><a name="200606101" title="200606101" href="200606a.html#200606101">■</a> 
+<a href="http://jp.rubyist.net/RubyKaigi2006/">[Ruby] 日本 Ruby カンファレンス 2006</a></h3>
+<p>
+暑い。そして
+<a href="http://jp.rubyist.net/RubyKaigi2006/program0610.html#l26">akrさんの発表</a>
+に感動した。
+</p>
+<!-- section end -->
+</div>
+<!-- 2006/06/10 end -->
+
+<hr>
+<div>
+<a href="200605c.html">&lt;Prev(,)</a> | 
+<a href="200606b.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

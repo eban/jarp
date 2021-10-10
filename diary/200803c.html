@@ -1,0 +1,373 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2008-3-c</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="200803b.html">
+<link rel="next" href="200804a.html">
+
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2008年3月下旬〜</p>
+<hr>
+<div>
+<a href="200803b.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="200804a.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2008/03/21 start -->
+<h2><a name="20080321" href="200803c.html#20080321">2008-03-21 (Fri)</a></h2>
+<!-- 2008-03-22 01:45:17 -->
+
+<div class="entry1">
+<h3><a name="200803211" title="200803211" href="200803c.html#200803211">■</a> 
+<a href="http://golf.shinh.org/p.rb?Set+symmetric+difference">[Golf] Set symmetric difference</a></h3>
+<p>
+ソートしないといけないというあたりがBash有利な問題。<br>
+GolfScriptにはかなわないが。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200803212" title="200803212" href="200803c.html#200803212">■</a> 
+[Soft] mp3splt</h3>
+<p>
+そもそもはよくある長い無音の後のボーナストラックを分割したかったわけなんだけど、<br>
+実際に聴いてみたら無音部分が残っていて何の解決にもなってなかった。<br>
+で、よくよくマニュアルを読んでみたら-p rmで消せるらしい。<br>
+おお、ナイス。oggにも対応してるので無駄に再エンコする必要もない。
+</p>
+<!-- section end -->
+</div>
+<!-- 2008/03/21 end -->
+
+
+
+<hr class="hide">
+<!-- 2008/03/22 start -->
+<h2><a name="20080322" href="200803c.html#20080322">2008-03-22 (Sat)</a></h2>
+<!-- 2008-03-23 02:20:30 -->
+
+<div class="entry1">
+<h3><a name="200803221" title="200803221" href="200803c.html#200803221">■</a> 
+<a href="http://www.diigo.com/">[Diigo] Diigo 3.0</a></h3>
+<p>
+年末ぐらいにベータテストしない？というメールがきて2,3回試して忘れていたDiigo 3だが、<br>
+なんかやたらと認証を求められて欝陶しいことこの上ない。<br>
+拡張は古いままだったので新しいのを入れたら、調子よくなった。<br>
+が、del.icio.usとの連携がなんか変だ。反映されない。<br>
+いや、しばらくしたら反映されてる。<br>
+そういえばポップアップのメッセージが出なくなった。<br>
+ポップアップしてる最中はキーを受け付けなくて欝陶しかったが、<br>
+なくなってすっきり。これは改良といえる。<br>
+だが、あの間にdel.icio.usにポストしていたわけで、<br>
+ver 3からはどこかのキューに入れて後で処理してるってことになるな、こりゃ。<br>
+Live HTTP headersで見張ってみてもdel.icio.usにアクセスしてる形跡はない。<br>
+ってことはDiigo側からdel.icio.usへポストしてるのか。ふーむ
+</p>
+<!-- section end -->
+</div>
+<!-- 2008/03/22 end -->
+
+
+
+<hr class="hide">
+<!-- 2008/03/23 start -->
+<h2><a name="20080323" href="200803c.html#20080323">2008-03-23 (Sun)</a></h2>
+<!-- 2008-03-24 01:17:53 -->
+
+<div class="entry1">
+<h3><a name="200803231" title="200803231" href="200803c.html#200803231">■</a> 
+[RSS] ニコニコ動画の吐くRSSがLDRで並ばない件</h3>
+<p>
+どこかで嘆いていた人がいたような気がするが、<br>
+ニコニコ動画が吐くRSSの中身を確認すると実はちゃんと1から順番に並んでる。<br>
+ではなぜLDRで一見ばらばらのように表示されるかというと、<br>
+LDRでは新着順か旧着順でしか表示できない。<br>
+つまり登録日でソートされると順位とは無関係に見えてしまう。これが原因。
+</p>
+<!-- section end -->
+</div>
+<!-- 2008/03/23 end -->
+
+
+
+<hr class="hide">
+<!-- 2008/03/24 start -->
+<h2><a name="20080324" href="200803c.html#20080324">2008-03-24 (Mon)</a></h2>
+<!-- 2008-03-25 02:38:30 -->
+
+<div class="entry1">
+<h3><a name="200803241" title="200803241" href="200803c.html#200803241">■</a> 
+[OpenID] DiigoでOpenID</h3>
+<p>
+Diigo V3ではOpenIDに対応しているというので、<br>
+早速
+<a href="http://auth.livedoor.com/openid/">livedoor Auth OpenID(β)</a>
+で試したら使えない。<br>
+
+<a href="http://www.openid.ne.jp/">OpenID.ne.jp</a>なら大丈夫。<br>
+バージョンの違い？
+</p>
+
+<p>
+こうやってなんだかんだで複数のOpenIDサービスに登録しちゃうんだよなあ。<br>
+自前で用意すりゃいいのか。
+</p>
+<!-- section end -->
+</div>
+<!-- 2008/03/24 end -->
+
+
+
+<hr class="hide">
+<!-- 2008/03/25 start -->
+<h2><a name="20080325" href="200803c.html#20080325">2008-03-25 (Tue)</a></h2>
+<!-- 2008-03-26 01:10:47 -->
+
+<div class="entry1">
+<h3><a name="200803251" title="200803251" href="200803c.html#200803251">■</a> 
+靴</h3>
+<p>
+前回買った靴は血だらけになるくらいの靴擦れを起こして大変な目にあったが、<br>
+今回買った靴だとマメだらけになってる。やっぱ歩き方がおかしいのか？<br>
+安物ばかり買うのがまずいんだろうけど。
+</p>
+<!-- section end -->
+</div>
+<!-- 2008/03/25 end -->
+
+
+
+<hr class="hide">
+<!-- 2008/03/26 start -->
+<h2><a name="20080326" href="200803c.html#20080326">2008-03-26 (Wed)</a></h2>
+<!-- 2008-03-27 01:47:10 -->
+
+<div class="entry1">
+<h3><a name="200803261" title="200803261" href="200803c.html#200803261">■</a> 
+引越しの影響</h3>
+<p>
+考えてみると今週は元いた場所と引越した先との往復があったりで、<br>
+やたらと歩いているのであった。5000歩は余計に歩いてるな。<br>
+一番の収穫は団扇が5個も手元にあること。<br>
+なぜか暖房が効きすぎてて重宝がられてる。
+</p>
+<!-- section end -->
+</div>
+<!-- 2008/03/26 end -->
+
+
+
+<hr class="hide">
+<!-- 2008/03/27 start -->
+<h2><a name="20080327" href="200803c.html#20080327">2008-03-27 (Thu)</a></h2>
+<!-- 2008-03-28 01:13:46 -->
+
+<div class="entry1">
+<h3><a name="200803271" title="200803271" href="200803c.html#200803271">■</a> 
+[Amazon] The Ruby Programming Language</h3>
+<p>
+Amazonのショッピングカートを開いてみたら
+</p><blockquote><p>
+The Ruby Programming Languageの価格は、お客様がショッピングカートに入
+れたときの ¥ 4,053 から ¥ 3,747 に変更されています。
+</p></blockquote><p>
+と言われたんでぽちっとしてしまったわけで。
+</p>
+<!-- section end -->
+</div>
+<!-- 2008/03/27 end -->
+
+
+
+<hr class="hide">
+<!-- 2008/03/28 start -->
+<h2><a name="20080328" href="200803c.html#20080328">2008-03-28 (Fri)</a></h2>
+<!-- 2008-03-29 03:01:11 -->
+
+<div class="entry1">
+<h3><a name="200803281" title="200803281" href="200803c.html#200803281">■</a> 
+<a href="http://www.swftools.org/">[Soft] SWFTOOLS</a></h3>
+<p>
+最近のニコ動だとsmじゃなくてnmな場合があったりするので<br>
+
+<a href="http://www.swftools.org/">swftools</a>をインストールした。<br>
+</p>
+
+<pre>
+% swfextract -m foo.swf
+</pre>
+<p>
+でmp3が取り出せる。
+</p>
+<!-- section end -->
+</div>
+<!-- 2008/03/28 end -->
+
+
+
+<hr class="hide">
+<!-- 2008/03/29 start -->
+<h2><a name="20080329" href="200803c.html#20080329">2008-03-29 (Sat)</a></h2>
+<!-- 2008-03-30 02:55:30 -->
+
+<div class="entry1">
+<h3><a name="200803291" title="200803291" href="200803c.html#200803291">■</a> 
+[Fedora8] kernel 2.6.24.3-50.fc8.i686</h3>
+<p>
+今回は大丈夫かな？
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200803292" title="200803292" href="200803c.html#200803292">■</a> 
+[Mail] ruby-talk</h3>
+<p>
+unsubscribe作業を今日も。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200803293" title="200803293" href="200803c.html#200803293">■</a> 
+<a href="http://blog.segment7.net/articles/2008/03/29/rubygems-1-1-0">[Ruby] RubyGems 1.1.0</a></h3>
+<p>
+なんか速くなったらしいよ。
+</p>
+
+<p>
+New features:
+<ul>
+<li>RubyGems now uses persistent connections on index updates. Index updates are much faster now.
+<li>RubyGems only updates from a latest index by default, cutting candidate gems for updates to roughly 1/4 (at present). Index updates are even faster still.
+<li>gem list -r may only show the latest version of a gem, add --all to see all gems.
+<li>gem spec now extracts specifications from .gem files.
+<li>gem query --installed to aid automation of checking for gems.
+</ul>
+<!-- section end -->
+</div>
+<!-- 2008/03/29 end -->
+
+
+
+<hr class="hide">
+<!-- 2008/03/30 start -->
+<h2><a name="20080330" href="200803c.html#20080330">2008-03-30 (Sun)</a></h2>
+<!-- 2008-03-31 02:40:51 -->
+
+<div class="entry1">
+<h3><a name="200803301" title="200803301" href="200803c.html#200803301">■</a> 
+[Diigo] Diigoですでに読んだフラグ</h3>
+<p>
+あとで読まないのでなるべくその場で読むようにしてるんだけど、<br>
+Diigoだとブックマークしてあるページがボタンの色が赤くなるので便利。<br>
+すでに読んだことがわかる。<br>
+V3ではQuickDボタンがその機能を持つようになったのがいいね。<br>
+他のボタンは使わないから隠せるし。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200803302" title="200803302" href="200803c.html#200803302">■</a> 
+<a href="http://userscripts.org/scripts/show/22702">[Firefox] LDR Full Feed 0.0.12</a></h3>
+<p>
+Fx3Beta4で死ななくなった。うれしい。
+</p>
+<!-- section end -->
+</div>
+<!-- 2008/03/30 end -->
+
+
+
+<hr class="hide">
+<!-- 2008/03/31 start -->
+<h2><a name="20080331" href="200803c.html#20080331">2008-03-31 (Mon)</a></h2>
+<!-- 2008-04-01 01:54:50 -->
+
+<div class="entry1">
+<h3><a name="200803311" title="200803311" href="200803c.html#200803311">■</a> 
+[Ruby] るびまゴルフ</h3>
+<p>
+$_.sizeは~/$/でokと以前
+<a href="http://d.hatena.ne.jp/niha/">niha</a>さんに教えてもらった。
+</p>
+
+<pre>
+#!ruby -alp
+$&gt;&lt;&lt;[$.,$F.size,~/$/,p]*&quot; &quot;
+</pre>
+<p>
+で40B。
+</p>
+<!-- section end -->
+</div>
+<!-- 2008/03/31 end -->
+
+<hr>
+<div>
+<a href="200803b.html">&lt;Prev(,)</a> | 
+<a href="200804a.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

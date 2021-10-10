@@ -1,0 +1,702 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2005-1-b</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="200501a.html">
+<link rel="next" href="200501c.html">
+
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2005年1月中旬〜</p>
+<hr>
+<div>
+<a href="200501a.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="200501c.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2005/01/11 start -->
+<h2><a name="20050111" href="200501b.html#20050111">2005-01-11 (Tue)</a></h2>
+<!-- 2005-01-12 01:13:04 -->
+
+<div class="entry1">
+<h3><a name="200501111" title="200501111" href="200501b.html#200501111">■</a> 
+[Linux] VMware</h3>
+<p>
+勘違いしていた。うまくいったと思ったのは再起動のときだった。
+なるほど。/etc/rc.d/rc6.d/K08vmwareか。
+</p>
+<pre>
+% sudo ln -s /etc/rc.d/init.d/vmware /etc/rc.d/rc0.d/K08vmware
+</pre>
+<p>
+としとこう。
+</p>
+
+<p>
+Link: 
+<a href="200412c.html#200412241">shutdown時のvmware</a>
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200501112" title="200501112" href="200501b.html#200501112">■</a> 
+[Firefox] ブックマークのキーワード</h3>
+<p>
+意外と知らない人が多いようだ。
+</p>
+
+<p>
+たとえば以下のような設定でブックマークに登録する。
+</p><blockquote><dl>
+<dt>
+Name:
+<dd>
+ruby-talk ML
+<dt>
+Location:
+<dd>
+http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-talk/%s
+<dt>
+Keyword:
+<dd>
+ruby-talk
+</dl></blockquote><p>
+あとはアドレスバーで
+</p>
+<pre>
+ruby-talk 123456
+</pre>
+<p>
+と入力すれば
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-talk/123456">[ruby-talk:123456]</a>へ飛べる。
+Quick Searchにはgoogleというキーワードもある。
+</p>
+
+<p>
+これをruby-list, ruby-devと作ってもいいんだけど、
+[ruby-talk:123456]というタグ形式が使えたほうがコピペしやすいということで、
+</p>
+<pre>
+http://www.rubyist.net/~eban/goto/%s
+</pre>
+<p>
+を用意した。
+</p><blockquote><dl>
+<dt>
+Name:
+<dd>
+Ruby MLs
+<dt>
+Location:
+<dd>
+http://www.rubyist.net/~eban/goto/%s
+<dt>
+Keyword:
+<dd>
+r
+</dl></blockquote><p>
+という感じで登録してアドレスバーで
+</p>
+<pre>
+r ruby-talk:123456
+</pre>
+<p>
+と入力すれば飛べる。ruby-listでもruby-devでも。
+</p>
+
+<p>
+てなことを検索プラグインでやろうと思ったんだけど、
+プラグインを作るまでもなかった。
+</p>
+
+<p>
+ちなみにFirefoxの場合、CTRL+Lでアドレスバーを選択できる。
+</p>
+<!-- section end -->
+</div>
+<!-- 2005/01/11 end -->
+
+
+
+<hr class="hide">
+<!-- 2005/01/12 start -->
+<h2><a name="20050112" href="200501b.html#20050112">2005-01-12 (Wed)</a></h2>
+<!-- 2005-01-13 02:27:23 -->
+
+<div class="entry1">
+<h3><a name="200501121" title="200501121" href="200501b.html#200501121">■</a> 
+<a href="http://www.frieve.com/friejyu/">[wine] Friejyu 1.01</a></h3>
+<p>
+そういえば
+<a href="http://www.frieve.com/friejyu/">Friejyu</a>はwineで動くんだろうかと早速試す。
+インストールも問題ないが、起動してみるとなぜか音が出ない。
+よく見るとエラーメッセージが出てた。
+</p>
+<pre>
+err:wave:DSDB_MapBuffer Could not map sound device for direct access (Input/output error)
+err:wave:DSDB_MapBuffer Use: &quot;HardwareAcceleration&quot; = &quot;Emulation&quot; in the [dsound] section of your config file.
+</pre>
+<p>
+なるほどと、&quot;HardwareAcceleration&quot; = &quot;Emulation&quot;を
+[dsound]セクションに追加というか既にコメントととして存在してたのでコメントを外した。
+すばらしい。ちゃんと音も出た。
+</p>
+<!-- section end -->
+</div>
+<!-- 2005/01/12 end -->
+
+
+
+<hr class="hide">
+<!-- 2005/01/13 start -->
+<h2><a name="20050113" href="200501b.html#20050113">2005-01-13 (Thu)</a></h2>
+<!-- 2005-01-14 02:29:59 -->
+
+<div class="entry1">
+<h3><a name="200501131" title="200501131" href="200501b.html#200501131">■</a> 
+[Desktop] KDE</h3>
+<p>
+GNOMEばかりってのもなんだから、今日からKDEにしてみよう。
+しかし、あまり見た目が変わらん。
+</p>
+
+<p>
+[コントロールセンター]-[KDEコンポーネント]-[vimコンポーネントの設定]というのが気になった。
+これってどうやって使うもんなんだろう？
+一応/usr/X11R6/bin/gvimでテストはしてみたもののやはりよくわからない。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200501132" title="200501132" href="200501b.html#200501132">■</a> 
+<a href="http://del.icio.us/">[Bookmark] del.icio.us</a></h3>
+<p>
+これは面白いなあ。ちょっとはまりそう。
+</p>
+<!-- section end -->
+</div>
+<!-- 2005/01/13 end -->
+
+
+
+<hr class="hide">
+<!-- 2005/01/14 start -->
+<h2><a name="20050114" href="200501b.html#20050114">2005-01-14 (Fri)</a></h2>
+<!-- 2005-01-15 01:43:23 -->
+
+<div class="entry1">
+<h3><a name="200501141" title="200501141" href="200501b.html#200501141">■</a> 
+<a href="http://www.linuxpages.org/cko_en.php">[Linux] cko 1.1</a></h3>
+<p>
+ckoと言ってもcygwin方面ではない。
+</p>
+
+<p>
+About:
+</p><blockquote><p>
+cko (Colored Kernel Output) is a Linux 2.4 and 2.6 kernel patch
+that colors kernel messages in the BSD style.
+</p></blockquote><p>
+なんだそりゃと思ってスクリーンショットを見ると、
+確かにメッセージに色がついてる。
+BSD styleって書いてあるけど、そういえばNetBSDも色がついてたような記憶が。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200501142" title="200501142" href="200501b.html#200501142">■</a> 
+<a href="http://commitmessage.tigris.org/">[Soft] CommitMessage 2.0-rc3</a></h3>
+<p>
+About:
+</p><blockquote><p>
+CommitMessage is a modular, easy-to-use approach to CVS and SVN
+commit emails. It consists of a controller for each supported system
+(currently CVS and SVN), which populates a generic model with the entire
+commit, and then passes the model to the configured views. The views are
+written as Python classes, and are configured in the configuration file.
+</p></blockquote>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200501143" title="200501143" href="200501b.html#200501143">■</a> 
+<a href="http://www.srnet.cz/~stepan/en/sw/webcheck.shtml">[Soft] Web Check 0.2</a></h3>
+<p>
+About:
+</p><blockquote><p>
+Web Check is an offline Web consistency tester (a dead link
+checker). It is highly configurable to be able to work with very complex
+sites. A Web server is not needed, because testing is done offline on the
+source files.
+</p></blockquote>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200501144" title="200501144" href="200501b.html#200501144">■</a> 
+[SKK] skkinput</h3>
+<p>
+FC3でcannaを使い出して早一ヶ月。今日skkinputが存在することに気づいた。
+やっぱskkは快適だ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200501145" title="200501145" href="200501b.html#200501145">■</a> 
+[Magazine] Linux magaizne休刊</h3>
+<p>
+なぜか今月号(2005 2月号)で休刊と勘違いしてる人がちらほら。
+来月号までだよ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2005/01/14 end -->
+
+
+
+<hr class="hide">
+<!-- 2005/01/15 start -->
+<h2><a name="20050115" href="200501b.html#20050115">2005-01-15 (Sat)</a></h2>
+<!-- 2005-01-16 00:21:31 -->
+
+<div class="entry1">
+<h3><a name="200501151" title="200501151" href="200501b.html#200501151">■</a> 
+<a href="http://www.zsh.org/">[shell] Zsh 4.2.3</a></h3>
+<p>
+Changes:
+</p><blockquote><p>
+This release featured completion system enhancements and a few
+minor new features.
+</p></blockquote>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200501152" title="200501152" href="200501b.html#200501152">■</a> 
+[Acronym] n00b</h3>
+<p>
+やっぱnewbieという意味だよね。[n00b]ってわかりやすくなってないような。
+</p>
+
+<p>
+Link: 
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-talk/126555">[ruby-talk:126555]</a>
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200501153" title="200501153" href="200501b.html#200501153">■</a> 
+<a href="http://redhanded.hobix.com/">[Blog] whyのblog</a></h3>
+<p>
+昨日はおいらがネタになったようだが、今日はakrさんが
+<a href="http://redhanded.hobix.com/cult/theCodeClutteredLandscapeOfTanaka-san.html">対象</a>に。
+例のあれの一環？
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200501154" title="200501154" href="200501b.html#200501154">■</a> 
+[FC3] switchdesk</h3>
+<p>
+デスクトップ環境を切り替えるコマンドはswitchdesk。
+</p>
+<pre>
+% switchdesk kde
+Red Hat Linux switchdesk 4.0
+Copyright (C) 1999-2004 Red Hat, Inc
+Redistributable under the terms of the GNU General Public License
+Desktop now set up to run KDE.
+</pre>
+<p>
+switchdesk-guiをインストールすればGUIで操作できる。
+</p>
+<!-- section end -->
+</div>
+<!-- 2005/01/15 end -->
+
+
+
+<hr class="hide">
+<!-- 2005/01/16 start -->
+<h2><a name="20050116" href="200501b.html#20050116">2005-01-16 (Sun)</a></h2>
+<!-- 2005-01-17 00:15:36 -->
+
+<div class="entry1">
+<h3><a name="200501161" title="200501161" href="200501b.html#200501161">■</a> 
+[FC3] chkconfig</h3>
+<p>
+手でsymlink張ったりしてたけど、chkconfigを使うのが礼儀らしい。
+今までは何でも直接いじっていたからなあ。
+</p>
+
+<p>
+shutdown時にvmwareをstopさせたければ
+</p>
+<pre>
+% sudo chkconfig --level 0 vmware off
+</pre>
+<p>
+でいいわけだ。
+</p>
+
+<p>
+GUIのsystem-config-servicesだとrunlevel 0とかが設定できない？
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200501162" title="200501162" href="200501b.html#200501162">■</a> 
+<a href="http://p7zip.sf.net/">[Soft] p7zip 4.14</a></h3>
+<p>
+Changes:
+</p><blockquote><p>
+This release supports Split(001) archives.
+</p></blockquote>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200501163" title="200501163" href="200501b.html#200501163">■</a> 
+[Ruby] rubyforge BTS -&gt; ruby-core</h3>
+<p>
+backslashの扱いにバグがあるようだ。
+
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-core/04256">[ruby-core:04256]</a>だけを見たら、
+
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-core/04257">[ruby-core:04257]</a>という反応になるよねえ、やっぱ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2005/01/16 end -->
+
+
+
+<hr class="hide">
+<!-- 2005/01/17 start -->
+<h2><a name="20050117" href="200501b.html#20050117">2005-01-17 (Mon)</a></h2>
+<!-- 2005-01-18 02:20:16 -->
+
+<div class="entry1">
+<h3><a name="200501171" title="200501171" href="200501b.html#200501171">■</a> 
+[Ruby] subyってなに？</h3>
+<p>
+さて問題はruby-talk MLに突然他から転送されてきた[suby-ruby]だ。
+subyってなに？ぐぐると人の名前のようだし。
+</p>
+
+<p>
+そのままsuby-rubyでぐぐると
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-talk/110164">[ruby-talk:110164]</a>が見つかった。
+suggestionか。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200501172" title="200501172" href="200501b.html#200501172">■</a> 
+<a href="http://www.darcs.net/">[Soft] darcs</a></h3>
+<p>
+なんだかんだでdarcsを使い始める。
+結論としてはghcはインストールするのが大変だ。cvsupのmodula-3を思い出す。
+で、
+<a href="http://www.carpetcode.org/get-carpet-darcs.html">スタティックにリンクされたバイナリ</a>
+を最初から使う。rpmもあるらしいけど、ghcがでかいしねえ。
+で、あちこちでdarcs initしてaddしてるんで、_darcs/だらけになった。
+</p>
+
+<p>
+この日記もrsyncじゃなくてdarcsで管理すれば、
+--deleteでうっかり消したりしなくなるかななんて思ったり。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200501173" title="200501173" href="200501b.html#200501173">■</a> 
+[shell] shellで複数行をコメントアウト</h3>
+<p>
+そういえばあまり聞かない。
+でも
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-talk/126847">[ruby-talk:126847]</a>のようにそんな機能はないと言われれば、
+なにをーと思うわけで、またしても:を使った方法を思いついた。
+それが
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-talk/126854">[ruby-talk:126854]</a>で、
+</p>
+<pre>
+: &lt;&lt;'COMMENT'
+this is a comment
+I can write anything here
+COMMENT
+</pre>
+<p>
+てな感じ。まあ、:に何を与えても無視されるだけなので。
+:とheredocはたいていのshellで使えるから、汎用性はあると思う。
+</p>
+
+<p>
+Rubyに=begin, =endがない頃は
+</p>
+<pre>
+&lt;&lt;'COMMENT'
+this is a comment
+I can write anything here
+COMMENT
+</pre>
+<p>
+としていたもんだよって、以前にも書いた気がしないでもない。
+</p>
+<!-- section end -->
+</div>
+<!-- 2005/01/17 end -->
+
+
+
+<hr class="hide">
+<!-- 2005/01/18 start -->
+<h2><a name="20050118" href="200501b.html#20050118">2005-01-18 (Tue)</a></h2>
+<!-- 2005-01-19 02:22:10 -->
+
+<div class="entry1">
+<h3><a name="200501181" title="200501181" href="200501b.html#200501181">■</a> 
+[FC3] wireless-toolsの依存関係が変</h3>
+<p>
+yumでupdateできない。
+wireless-toolsなんて要らないからremoveするかと思えば、
+NetworkManagerとかなんか重要そうなパッケージも消すぞと脅すし。
+どうしろと。
+</p>
+
+<p>
+そういえばいつのまにかRed Hat Network通知アイコンが起動失敗するようになってしまった。
+あちこち壊れてきてる？
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200501182" title="200501182" href="200501b.html#200501182">■</a> 
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-core/04266">[Ruby] &lt;%と&lt;?</a></h3>
+<p>
+確かに&lt;%は打ち辛い。&lt;?は並んでる。結構ポイント高い。
+</p>
+
+<p>
+Link: 
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-core/04266">[ruby-core:04266]</a>
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200501183" title="200501183" href="200501b.html#200501183">■</a> 
+<a href="http://msmtp.sf.net/">[Soft] msmtp 1.3.4</a></h3>
+<p>
+Changes:
+</p><blockquote><p>
+The built-in CRAM-MD5 code works again. Various cleanups,
+bugfixes, and enhancements have been made. 
+</p></blockquote>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200501184" title="200501184" href="200501b.html#200501184">■</a> 
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-talk/127013">[Ruby] [ANN] WWW::Mechanize alike in Ruby</a></h3>
+<p>
+おお、すばらしい。
+viewcvsってrubyも色付けできるんだ。ってそっちじゃない。
+</p>
+
+<p>
+Link: 
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-talk/127013">[ruby-talk:127013]</a>
+</p>
+<!-- section end -->
+</div>
+<!-- 2005/01/18 end -->
+
+
+
+<hr class="hide">
+<!-- 2005/01/19 start -->
+<h2><a name="20050119" href="200501b.html#20050119">2005-01-19 (Wed)</a></h2>
+<!-- 2005-01-20 03:15:51 -->
+
+<div class="entry1">
+<h3><a name="200501191" title="200501191" href="200501b.html#200501191">■</a> 
+[Ruby] 行末がCR+LFなスクリプト</h3>
+<p>
+問題になるのはshebangの行でCR(&quot;\r&quot;)も込みでコマンド名とOSに認識されてしまう。
+Rubyの場合は--\rの\rは無視するので
+</p>
+<pre>
+#! /usr/local/bin/ruby --
+</pre>
+<p>
+としとけばいける。確か1.6ぐらいから使える。実はPerlでも同じ。
+というかPerlのほうが先に実装されたわけだけど。
+</p>
+
+<p>
+Link: 
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-talk/127123">[ruby-talk:127123]</a>
+</p>
+<!-- section end -->
+</div>
+<!-- 2005/01/19 end -->
+
+
+
+<hr class="hide">
+<!-- 2005/01/20 start -->
+<h2><a name="20050120" href="200501b.html#20050120">2005-01-20 (Thu)</a></h2>
+<!-- 2005-01-21 01:42:49 -->
+
+<div class="entry1">
+<h3><a name="200501201" title="200501201" href="200501b.html#200501201">■</a> 
+[FC3] wireless-toolsが消えた</h3>
+<p>
+wireless-toolsを更新しろという情報が消えた。
+やはりなにか間違ってたのか。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200501202" title="200501202" href="200501b.html#200501202">■</a> 
+<a href="http://bakefile.sf.net/">[Soft] Bakefile 0.1.5</a></h3>
+<p>
+About:
+</p><blockquote><p>
+Bakefile is cross-platform, cross-compiler generator of native
+makefiles. It takes a compiler-independent description of build tasks as
+input and generates a native makefile. Its supported output formats
+include autoconf's Makefile.in, Visual C++ projects, and bcc makefiles. 
+</p></blockquote>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200501203" title="200501203" href="200501b.html#200501203">■</a> 
+<a href="http://www.vimoutliner.org/">[Soft] Vim Outliner 0.3.3a</a></h3>
+<p>
+About:
+</p><blockquote><p>
+Vim Outliner is a Vim plugin that make it behave as a full-
+featured outliner of the likes of MaxThink, Grandview,  ThinkTank, and
+more. It has its own add-ons for checkboxes  and hoisting and is
+compatible with Vim spell-checkers like  vimspell and engspeak. There are
+several scripts available  from other to convert text outlines to HTML
+pages, Docbook  files, and Open Office Impress files. 
+</p></blockquote>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200501204" title="200501204" href="200501b.html#200501204">■</a> 
+<a href="http://cwrapper.sourceforge.net/">[Soft] color wrapper 1.0.8</a></h3>
+<p>
+Changes:
+</p><blockquote><p>
+A bug that could cut off the last lines of long output from
+programs that process faster than cw was fixed. Passing of the exit value
+was added. The &quot;ifos&quot;, &quot;ifnos&quot;, ifos-else&quot; and &quot;ifarg-else&quot; definition
+instructions were added for more specific coloring situatons. The
+&quot;nobackground&quot; definition instruction was added to disable stopping the
+program (with ^Z). Support for stopping the program while running (with
+^Z) was added. Support for Solaris and Cygwin was added. The deprecated
+&quot;OS=&quot; argument used in conjunction with &quot;ifarg&quot; was removed. The pre-made
+groups, arp, mount, ping, lsof, ps, and df definition files were added or
+revised. 
+</p></blockquote>
+<!-- section end -->
+</div>
+<!-- 2005/01/20 end -->
+
+<hr>
+<div>
+<a href="200501a.html">&lt;Prev(,)</a> | 
+<a href="200501c.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

@@ -1,0 +1,585 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2014-8-a</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="201407c.html">
+<link rel="next" href="201408b.html">
+
+<link rel="stylesheet" type="text/css" href="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.css">
+<script async type="text/javascript" src="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.js"></script>
+<script type="text/javascript">
+<!--       
+$(document).ready(function() {
+  prettyPrint();
+});
+-->
+</script>
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2014年8月上旬〜</p>
+<hr>
+<div>
+<a href="201407c.html" accesskey=",">&lt;Older(,)</a> | 
+<a href="201408b.html" accesskey=".">Newer(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2014/08/01 start -->
+<h2><a name="20140801" href="201408a.html#20140801">2014-08-01 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="201408011" title="201408011" href="201408a.html#201408011">■</a> 
+ruby-talk ML</h3>
+<p>
+なんか急にruby-talk MLが止まってしまって、<br>
+どうなってるのかログを見てもよくわからず、<br>
+週末にでもじっくり調べようと思っていたら、<br>
+今日になって突然流れてきた。<br>
+単に寂れただけ？<br>
+他のruby-coreとかは動いていたしなあ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2014/08/01 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/08/02 start -->
+<h2><a name="20140802" href="201408a.html#20140802">2014-08-02 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="201408021" title="201408021" href="201408a.html#201408021">■</a> 
+<a href="http://blog.ueda.asia/?p=3535">第12回本当は怖くないシェル芸勉強会</a></h3>
+<p>
+Q6をzshで。
+</p>
+<pre>
+% printf &quot;5\n3\n4\n10\n2\n&quot; | while read a;do echo ${(l:2:)a} ${(l:a::*:)};done
+ 5 *****
+ 3 ***
+ 4 ****
+10 **********
+ 2 **
+</pre>
+<p>
+awkで文字を繰り返すにはOFSを使う手もある。
+</p>
+<pre>
+% awk 'BEGIN{NF=5+1; OFS=&quot;*&quot;; print}'                                          
+*****
+% printf &quot;5\n3\n4\n10\n2\n&quot; | awk '{printf &quot;%2d &quot;, $1; NF=$1+1; $1=&quot;&quot;}OFS=&quot;*&quot;'   
+ 5 *****
+ 3 ***
+ 4 ****
+10 **********
+ 2 **
+</pre>
+<p>
+区切りは間にあるのでフィールド数は1つ大きい。
+</p>
+<p>
+Q2をGNU sedで。
+</p>
+<pre>
+% &lt; kaibun sed 'h;s/.*/echo &amp;|rev/e;x;G;s/\n.//'
+たけやぶやけた
+わたしまけましたわ
+</pre>
+<p>
+小問1のほうはzshならこんな方法も。
+</p>
+<pre>
+% echo わたしまけ &gt; &gt;(rev) | sed 'N;s/\n.//'
+わたしまけましたわ
+</pre>
+<p>
+teeだとfdが違うようでstdoutひとつにはまとまらなくなる。
+</p>
+<pre>
+% echo わたしまけ | tee &gt;(rev) | sed 'N;s/\n.//'
+けましたわ
+わたしまけ
+% (echo わたしまけ | tee &gt;(rev)) | sed 'N;s/\n.//'
+わたしまけましたわ
+</pre>
+<!-- section end -->
+</div>
+<!-- 2014/08/02 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/08/03 start -->
+<h2><a name="20140803" href="201408a.html#20140803">2014-08-03 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="201408031" title="201408031" href="201408a.html#201408031">■</a> 
+<a href="http://blog.ueda.asia/?p=3535">Q5 各行の数字を大きい順にソートしてください</a></h3>
+<p>
+Q5をzshで。
+<pre>
+% cat input
+A 31 1234 -42 4
+B 10 31.1 -34 94
+% &lt; input while read -A a;do echo ${(nO)a};done
+A 1234 31 4 -42
+B 94 31.1 10 -34
+</pre>
+</p>
+<p>
+本来ならAとBは別に処理して
+</p>
+<pre>
+% &lt; input while read -A a;do echo $a[1] ${(nO)a[2,-1]};done
+A 1234 31 4 -42
+B 94 31.1 10 -34
+</pre>
+<p>
+のようにすべきだが、大きい順だとうまい具合にまとめてソートしても題意と合ってしまう。<br>
+numeric sortでも数値よりもアルファベットのほうが大きいらしい。
+</p>
+<p>
+処理を分けるなら
+</p>
+<pre>
+% &lt; input while read a b;do echo $a ${(s: :nO)b};done
+A 1234 31 4 -42
+B 94 31.1 10 -34
+</pre>
+<p>
+のように数字の部分だけsplitする手もあるかな。
+</p>
+<!-- section end -->
+</div>
+<!-- 2014/08/03 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/08/04 start -->
+<h2><a name="20140804" href="201408a.html#20140804">2014-08-04 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="201408041" title="201408041" href="201408a.html#201408041">■</a> 
+文字列の繰り返し</h3>
+<p>
+awkで素直に書くとloopになる。
+</p>
+<pre>
+% awk 'BEGIN{for(i=0;i&lt;5;i++)$0=$0&quot;*&quot;;print}'                    
+*****
+</pre>
+<p>
+結構短い。&quot;%*s&quot;の空白を利用する手もある。
+</p>
+<pre>
+% awk 'BEGIN{$0=sprintf(&quot;%*s&quot;,5,&quot;&quot;);gsub(/./,&quot;*&quot;);print}'
+*****
+</pre>
+<p>
+これはシェルスクリプトでも使われる。
+</p>
+<pre>
+% s=`printf &quot;%*s&quot; 5`;echo &quot;${s// /*}&quot;
+*****
+</pre>
+<p>
+5バイトならなんでもいいので
+<pre>
+% s=`w|head -c5`;echo &quot;${s//?/*}&quot;
+*****
+</pre>
+</p>
+<p>
+という手もある。長いときはyesで。<br>
+先日は
+</p>
+<pre>
+% awk 'BEGIN{OFS=&quot;*&quot;;NF=6;print}'
+*****
+</pre>
+<p>
+と書いたが、
+</p>
+<pre>
+% awk 'BEGIN{$5=OFS=&quot;*&quot;;print}'
+*****
+</pre>
+<p>
+のほうが5という数字が出てくるのでわかりやすいかもしれない。短いし。
+</p>
+<pre>
+% printf &quot;5\n3\n4\n10\n2\n&quot; | awk '$1=sprintf(&quot;%2d &quot;,$1){$$1=OFS=&quot;*&quot;}1' 
+ 5 *****
+ 3 ***
+ 4 ****
+10 **********
+ 2 **
+</pre>
+<!-- section end -->
+</div>
+<!-- 2014/08/04 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/08/05 start -->
+<h2><a name="20140805" href="201408a.html#20140805">2014-08-05 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="201408051" title="201408051" href="201408a.html#201408051">■</a> 
+たいへんよくできましたハンコをむりやり縦書きに</h3>
+<p>
+今日はハンコの日なので縦書きに挑戦してみた。<br>
+まずは
+</p>
+<pre>
+% printf &quot;たいへん\nよくでき\nました\n&quot;
+たいへん
+よくでき
+ました
+</pre>
+<p>
+をなんとかする。3つの部分を別々に処理しよう。というわけでこんなのを考えた。
+</p>
+<pre>
+% printf &quot;たいへん\nよくでき\nました\n&quot;|tac|xargs -n1 -I% sh -c \
+  'echo &quot;%&quot;|grep -o .|convert -pointsize 40 -font 梅明朝-Regular -gravity northeast -stroke red -strokewidth 4 label:@- -trim miff:-' | \
+  convert - +append tydtyd.png
+</pre>
+<p>
+やってる内容はだいたいこんな感じ。
+</p>
+<pre>
+% alias tate='convert -pointsize 40 -font 梅明朝-Regular -gravity northeast -stroke red -strokewidth 4 label:@- -trim' 
+% printf &quot;た\nい\nへ\nん&quot;|tate taihen.png
+% printf &quot;よ\nく\nで\nき&quot;|tate yokudeki.png
+% printf &quot;ま\nし\nた&quot;| tate mashita.png
+% convert mashita.png yokudeki.png taihen.png +append tydtyd.png
+</pre>
+<p>
+<img src="../images/tydtyd.png" alt="">
+</p>
+<p>
+あとは
+<a href="201308a.html#201308101">昨年作ったガワ</a>と組み合わせて完成。
+</p>
+<pre>
+% convert tyd.png \( tydtyd.png -resize 50% \) -gravity center -compose multiply +composite -rotate -20 tyd2014-20.png
+</pre>
+<p>
+<img src="../images/tyd2014-20.png" alt="">
+</p>
+<!-- section end -->
+</div>
+<!-- 2014/08/05 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/08/06 start -->
+<h2><a name="20140806" href="201408a.html#20140806">2014-08-06 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="201408061" title="201408061" href="201408a.html#201408061">■</a> 
+環境変数が設定されていたら実行する</h3>
+<p>
+まあ、普通はこんな感じのdebug文になると思う。
+</p>
+<pre>
+% sh -c 'if [ -n &quot;$debug&quot; ]; then echo foo; fi'         
+% debug=1 sh -c 'if [ -n &quot;$debug&quot; ]; then echo foo; fi'
+foo
+</pre>
+<p>
+短くするにしても&amp;&amp;を使うぐらい。<br>
+でもそれよりもっと簡単に書けることに最近気づいた。<br>
+変数展開にいまいち使い途のよくわからない+があるが、<br>
+これがぴったりはまる。先の例は
+</p>
+<pre>
+% sh -c '${debug:+echo foo}'                     
+% debug=1 sh -c '${debug:+echo foo}'
+foo
+</pre>
+<p>
+で済んでしまう。debugが設定されていればecho fooに置き換わるので。
+</p>
+<pre>
+${parameter:+word}
+	Use Alternate Value.  If parameter is null or unset, nothing is
+        substituted, otherwise the expansion of word is substituted.
+</pre>
+<p>
+環境変数さえ設定されていれば値は空でもいいとするなら:+を+にすればいい。
+</p>
+<pre>
+% debug= sh -c '${debug:+echo foo}' 
+% debug= sh -c '${debug+echo foo}' 
+foo
+</pre>
+<!-- section end -->
+</div>
+<!-- 2014/08/06 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/08/07 start -->
+<h2><a name="20140807" href="201408a.html#20140807">2014-08-07 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="201408071" title="201408071" href="201408a.html#201408071">■</a> 
+ls -lのサイズを3桁区切りに</h3>
+<p>
+英語ではcommifyというが、ls -lしてもcommaで区切ってくれない。
+</p>
+<pre>
+% ls -l saitama-temp.log
+-rw-r--r-- 1 eban eban 1871583 2013-09-25 14:55:00 saitama-temp.log
+</pre>
+<p>
+GNU coreutilsのnumfmtを使えばフィールド指定もできるのでピンポイントで変換可能。
+</p>
+<pre>
+% ls -l saitama-temp.log | numfmt --grouping --field=5
+-rw-r--r-- 1 eban eban 1,871,583 2013-09-25 14:55:00 saitama-temp.log
+</pre>
+<p>
+GNU coreutilsのいくつかのコマンドはオプション--block-sizeか、<br>
+BLOCK_SIZE環境変数で'を指定すると区切ってくれる。
+</p>
+<pre>
+% BLOCK_SIZE=\'1 LC_NUMERIC=en_US.UTF-8 ls -l saitama-temp.log
+-rw-r--r-- 1 eban eban 1,871,583 2013-09-25 14:55:00 saitama-temp.log
+% BLOCK_SIZE=\'1 LC_NUMERIC=en_US.UTF-8 du saitama-temp.log
+1,871,872	saitama-temp.log
+% BLOCK_SIZE=\'1 LC_NUMERIC=en_US.UTF-8 df .                 
+Filesystem             1B-blocks            Used         Available Use% Mounted on
+/dev/sda2      1,960,461,266,944 841,254,100,992 1,019,597,889,536  46% /
+</pre>
+<p>
+localeも適切に指定してやる必要がある。
+</p>
+<pre>
+   A block size specification preceded by `'' causes output sizes to be
+displayed with thousands separators.  The `LC_NUMERIC' locale specifies
+the thousands separator and grouping.  For example, in an American
+English locale, `--block-size=&quot;'1kB&quot;' would cause a size of 1234000
+bytes to be displayed as `1,234'.  In the default C locale, there is no
+thousands separator so a leading `'' has no effect.
+</pre>
+<!-- section end -->
+</div>
+<!-- 2014/08/07 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/08/08 start -->
+<h2><a name="20140808" href="201408a.html#20140808">2014-08-08 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="201408081" title="201408081" href="201408a.html#201408081">■</a> 
+表形式を整形する(columnとsc)</h3>
+<p>
+columnを使うときれいに整形されるが、数値でも左詰めにしてしまう。
+</p>
+<pre>
+% seq 100 | xargs -n10                 
+1 2 3 4 5 6 7 8 9 10
+11 12 13 14 15 16 17 18 19 20
+21 22 23 24 25 26 27 28 29 30
+31 32 33 34 35 36 37 38 39 40
+41 42 43 44 45 46 47 48 49 50
+51 52 53 54 55 56 57 58 59 60
+61 62 63 64 65 66 67 68 69 70
+71 72 73 74 75 76 77 78 79 80
+81 82 83 84 85 86 87 88 89 90
+91 92 93 94 95 96 97 98 99 100
+% seq 100 | xargs -n10 | column -t
+1   2   3   4   5   6   7   8   9   10
+11  12  13  14  15  16  17  18  19  20
+21  22  23  24  25  26  27  28  29  30
+31  32  33  34  35  36  37  38  39  40
+41  42  43  44  45  46  47  48  49  50
+51  52  53  54  55  56  57  58  59  60
+61  62  63  64  65  66  67  68  69  70
+71  72  73  74  75  76  77  78  79  80
+81  82  83  84  85  86  87  88  89  90
+91  92  93  94  95  96  97  98  99  100
+</pre>
+<p>
+むかしからあるがあまり使われないコマンドにscがある。<br>
+これを使うと右詰めになる。
+</p>
+<pre>
+% seq 100 | xargs -n10 | psc | sc -W% -
+  1  2  3  4  5  6  7  8  9  10
+ 11 12 13 14 15 16 17 18 19  20
+ 21 22 23 24 25 26 27 28 29  30
+ 31 32 33 34 35 36 37 38 39  40
+ 41 42 43 44 45 46 47 48 49  50
+ 51 52 53 54 55 56 57 58 59  60
+ 61 62 63 64 65 66 67 68 69  70
+ 71 72 73 74 75 76 77 78 79  80
+ 81 82 83 84 85 86 87 88 89  90
+ 91 92 93 94 95 96 97 98 99 100
+</pre>
+<p>
+ただ、今度は文字列も右詰めにしてしまうし、<br>
+計算式らしいものはそれなりに評価されてしまう。
+</p>
+<pre>
+% ls -l
+total 1832
+-rw-r--r-- 2 eban eban 1871583 2013-09-25 14:55:00 a.txt
+-rw-r--r-- 2 eban eban    2880 2014-07-26 09:18:54 foo.txt
+% ls -l | psc | sc -W% -
+      total 1832
+ -rw-r--r--    2 eban eban 1871583       1979 14:55:00   a.txt
+ -rw-r--r--    2 eban eban    2880       1981 09:18:54 foo.txt
+</pre>
+<p>
+元々スプレッドシートだしねえ。awkで書くか。
+</p>
+<p>
+scといえば面白い機能があって、簡単にtrasnposeできる。
+</p>
+<pre>
+% seq 100 | xargs -n10 | psc -r | sc -W% -
+  1 11 21 31 41 51 61 71 81  91
+  2 12 22 32 42 52 62 72 82  92
+  3 13 23 33 43 53 63 73 83  93
+  4 14 24 34 44 54 64 74 84  94
+  5 15 25 35 45 55 65 75 85  95
+  6 16 26 36 46 56 66 76 86  96
+  7 17 27 37 47 57 67 77 87  97
+  8 18 28 38 48 58 68 78 88  98
+  9 19 29 39 49 59 69 79 89  99
+ 10 20 30 40 50 60 70 80 90 100
+</pre>
+<!-- section end -->
+</div>
+<!-- 2014/08/08 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/08/09 start -->
+<h2><a name="20140809" href="201408a.html#20140809">2014-08-09 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="201408091" title="201408091" href="201408a.html#201408091">■</a> 
+scanimageの--swdespeckオプション</h3>
+<p>
+なかなかすごいオプションを発見した。
+</p>
+<pre>
+--swdespeck 0..9 (in steps of 1) [0]
+    Maximum diameter of lone dots to remove from scan.
+</pre>
+<p>
+英語だったのであまりよく見てなかったが、<br>
+これは孤立した点のようなノイズを除去してくれるということだな。
+</p>
+<p>
+早速0と9でどのくらい違うかやってみた。
+</p>
+<p>
+<img src="../images/swdespeck0.png" alt="">
+<img src="../images/swdespeck9.png" alt="">
+</p>
+<p>
+いやー、これはすばらしい。三点リーダーが完全に消えている。<br>
+って消えちゃだめだから真ん中の5ぐらいにしとくか。<br>
+あと本当の小さいノイズもちゃんと消えてる。
+</p>
+<!-- section end -->
+</div>
+<!-- 2014/08/09 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/08/10 start -->
+<h2><a name="20140810" href="201408a.html#20140810">2014-08-10 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="201408101" title="201408101" href="201408a.html#201408101">■</a> 
+ImageMagickのconvertはfoo.pbm.gzでもok</h3>
+<p>
+scanimageでスキャンするとpbmとかpgmになるが、<br>
+pngにするよりはそのままgzip *.pbmで圧縮したほうが簡単なので、<br>
+最近はpbm.gzだらけになっている。<br>
+ふとconvert foo.pbm.gzでひょっとしたらいけるのかと思って試したら全然問題なく処理できた。<br>
+このあたりは気が利いてるな。
+</p>
+<p>
+bzip2でもいけるが、xzはだめのようだ。delegates.xmlに書けばいけるのかもしれないが。
+</p>
+<!-- section end -->
+</div>
+<!-- 2014/08/10 end -->
+
+<hr>
+<div>
+<a href="201407c.html">&lt;Older(,)</a> | 
+<a href="201408b.html">Newer(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

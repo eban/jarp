@@ -1,0 +1,400 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2012-10-c</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="201210b.html">
+<link rel="next" href="201211a.html">
+
+<link rel="stylesheet" type="text/css" href="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.css">
+<script type="text/javascript" src="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.js"></script>
+<script type="text/javascript">
+<!--       
+$(document).ready(function() {
+  prettyPrint();
+});
+-->
+</script>
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2012年10月下旬〜</p>
+<hr>
+<div>
+<a href="201210b.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="201211a.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2012/10/21 start -->
+<h2><a name="20121021" href="201210c.html#20121021">2012-10-21 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="201210211" title="201210211" href="201210c.html#201210211">■</a> 
+Ubuntu 12.10で気になったこと</h3>
+<p>
+リムーバブルストレージのマウント場所が、<br>
+/media/eban/uuidみたいにアカウント名をはさむようになった。<br>
+おかげであちこちsymlinkを書き換えるはめに。<br>
+まあ、そこはもうちょっとましな運用にしとけと自分につっこんだが。<br>
+これってXfce4だからってわけじゃないよな、たぶん。
+</p>
+<p>
+その他は前と違いが全然わからないこと。これはいいことなんだか悪いことなんだか。<br>
+って、あらかじめUnityを使うのやめてXfce4にしておいたからかも。<br>
+次に再インストールするときは最初からXubuntuにしてしまおう。
+</p>
+<!-- section end -->
+</div>
+<!-- 2012/10/21 end -->
+
+
+
+<hr class="hide">
+<!-- 2012/10/22 start -->
+<h2><a name="20121022" href="201210c.html#20121022">2012-10-22 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="201210221" title="201210221" href="201210c.html#201210221">■</a> 
+Ubuntu 12.10を古いマシンにインストール</h3>
+<p>
+会社の古いマシンに入れてみたら、Unityが起動せず。<br>
+例のエミュレーションで動くはずだが、ウィンドウマネージャーが機能しないまま。<br>
+ランチャーとかグローバルメニューとか10分ぐらい放置したがまったく出てこない。<br>
+ショートカットキーは活きてたのでCTRL+ALT+Tで端末開いて、Xfce4をインストール。<br>
+ログアウトはCTRL+ALT+DELで。<br>
+これで何とか使えるようになったが、やっぱUnity 2Dをやめたのは大失敗だと思うよ。<br>
+ただでさえ非力なマシンにエミュレーションは無理がありすぎ。<br>
+もう最初からXubuntuとか入れろってことか。
+</p>
+<!-- section end -->
+</div>
+<!-- 2012/10/22 end -->
+
+
+
+<hr class="hide">
+<!-- 2012/10/23 start -->
+<h2><a name="20121023" href="201210c.html#20121023">2012-10-23 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="201210231" title="201210231" href="201210c.html#201210231">■</a> 
+apt.confの位置</h3>
+<p>
+最初からXfce4を使うとシステムのプロキシを設定する機会がなく、apt.confを/etcに置いてみたが機能せず。<br>
+ぐぐってみてそこに置いたわけだが、情報が古かったようで/etc/apt/に置かないといけないらしい。<br>
+しかもAqcuire{}とかじゃなくてAcquire::http::proxy &quot;http://your.proxy.address:8080/&quot;;だった。<br>
+そこを見るとapt.conf.d/もあったのでそっちに99proxyを作って置いてみた。<br>
+まあ、apt.conf自体存在してなかったのでどっちでもいいのかもしれないが。
+</p>
+<!-- section end -->
+</div>
+<!-- 2012/10/23 end -->
+
+
+
+<hr class="hide">
+<!-- 2012/10/24 start -->
+<h2><a name="20121024" href="201210c.html#20121024">2012-10-24 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="201210241" title="201210241" href="201210c.html#201210241">■</a> 
+sftpのput -rにはまる</h3>
+<p>
+sftpで再帰的にディレクトリごとコピーしようとput -rしてみるとなぜかエラーになってしまう。
+</p>
+<pre>
+% mkdir foo
+% echo &gt; foo/{a,b,c}
+% ls -l foo
+合計 12
+-rw-r--r-- 1 eban eban 1 2012-10-24 22:51:47 a
+-rw-r--r-- 1 eban eban 1 2012-10-24 22:51:47 b
+-rw-r--r-- 1 eban eban 1 2012-10-24 22:51:47 c
+% sftp localhost
+Connected to localhost.
+sftp&gt; put -r foo
+Uploading foo/ to /home/eban/foo
+Couldn't canonicalise: No such file or directory
+Unable to canonicalise path &quot;/home/eban/foo&quot;
+sftp&gt; mkdir foo
+sftp&gt; put -r foo
+Uploading foo/ to /home/eban/foo
+foo/b                                                                                 100%    1     0.0KB/s   00:00    
+foo/c                                                                                 100%    1     0.0KB/s   00:00    
+foo/a                                                                                 100%    1     0.0KB/s   00:00    
+sftp&gt; 
+</pre>
+<p>
+つまりコピーするには相手側にディレクトリが存在しないといけないようなんだけど、<br>
+ほんとにそんな仕様なのか？複雑な階層になったらどうすんだ？
+</p>
+<!-- section end -->
+</div>
+<!-- 2012/10/24 end -->
+
+
+
+<hr class="hide">
+<!-- 2012/10/25 start -->
+<h2><a name="20121025" href="201210c.html#20121025">2012-10-25 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="201210251" title="201210251" href="201210c.html#201210251">■</a> 
+<a href="http://www.diigo.net/about/domain">diigoがドメインハイジャックされたようで</a></h3>
+<p>
+寝落ちから覚めた早朝そんな自体になっていた。
+</p><blockquote><p>
+Dear Diigo users,<br>
+We’re terribly sorry to inform you that we’re experiencing domain hijacking, ie. someone gained access to our Yahoo domain registrar account, and illegally hijacked the domain, www.diigo.com. Very soon www.diigo.com may not be accessible to you until this issue is resolved
+</p></blockquote><p>
+diigo.netでも使えるのでbookmarkletでしのいでくれとのこと。
+</p>
+<p>
+元々
+<a href="http://www.diigo.com/javascripts/readlater.js">http://www.diigo.com/javascripts/readlater.js</a>を使っていたので<br>
+<a href="http://www.diigo.net/javascripts/readlater.js">http://www.diigo.net/javascripts/readlater.js</a>を使えばいいかと思ったら、中身は.comを参照していて意味がない。<br>
+しょうがないのでコピーして書き換えて使っている。<br>
+</p>
+<p>
+なんか長引きそうな予感。
+</p>
+<!-- section end -->
+</div>
+<!-- 2012/10/25 end -->
+
+
+
+<hr class="hide">
+<!-- 2012/10/26 start -->
+<h2><a name="20121026" href="201210c.html#20121026">2012-10-26 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="201210261" title="201210261" href="201210c.html#201210261">■</a> 
+diigo復活のついでに設定を見直す</h3>
+<p>
+夕方には復活していた。めでたい。<br>
+そのついでに設定を見直してみたら、deliciousの連携がまた外れていた。<br>
+delicious側で確認してみると7月からのようで。<br>
+たまに外れるんだけどなにが原因なのか。
+</p>
+<!-- section end -->
+</div>
+<!-- 2012/10/26 end -->
+
+
+
+<hr class="hide">
+<!-- 2012/10/27 start -->
+<h2><a name="20121027" href="201210c.html#20121027">2012-10-27 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="201210271" title="201210271" href="201210c.html#201210271">■</a> 
+400 Bad Request - Request Header Or Cookie Too Large</h3>
+<p>
+とエラーになってしまうページがあって、どうしたもんかと思っていたが、<br>
+ぐぐってみると単にcookieを消せばいいらしい。<br>
+Google Chromeの場合は「設定」-「詳細設定を表示...」-「プライバシー」-「コンテンツの設定...」-「Cookie」-<br>
+「すべてのCookieとサイトデータ...」でサイトごとのcookieが選べるようになってるので、<br>
+ここでそのサイトのcookieを消せる。これで表示されるようになった。
+</p>
+<!-- section end -->
+</div>
+<!-- 2012/10/27 end -->
+
+
+
+<hr class="hide">
+<!-- 2012/10/28 start -->
+<h2><a name="20121028" href="201210c.html#20121028">2012-10-28 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="201210281" title="201210281" href="201210c.html#201210281">■</a> 
+<a href="https://play.google.com/store/apps/details?id=com.homeysoft.nexususb.importer&amp;hl=ja">Nexus Media Importer</a></h3>
+<p>
+2000円の使い途として。安いので買ってみたが、これ別にアダプタが必要でamazonで買った。<br>
+さっそくPerfect Viewerで使ってみたが、どうも本体にコピーしないといけないようで、<br>
+直接Micro SDの中身が見れるわけではない。アプリによっては対応してるのもあるらしい。<br>
+</p>
+<p>
+今のところ結局本体の空きがないとどうにもならないので、役に立つかどうかは不明。
+</p>
+<!-- section end -->
+</div>
+<!-- 2012/10/28 end -->
+
+
+
+<hr class="hide">
+<!-- 2012/10/29 start -->
+<h2><a name="20121029" href="201210c.html#20121029">2012-10-29 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="201210291" title="201210291" href="201210c.html#201210291">■</a> 
+subversion 1.7</h3>
+<p>
+Ubuntu 12.10のsubversionは1.7になったので、作業ディレクトリをupgradeしないといけない。
+</p>
+<pre>
+% svn update
+svn: E155036: Please see the 'svn upgrade' command
+svn: E155036: Working copy '/home/eban/ruby/ruby/trunk' is too old (format 10, created by Subversion 1.6)
+% cd ~/ruby/ruby/trunk
+% svn upgrade
+svn: E155019: Can't upgrade '/home/eban/ruby/ruby/trunk' as it is not a pre-1.7 working copy root, the root is '/home/eban/ruby/ruby'
+</pre>
+<p>
+ああ、そうか。もう一個上じゃないとだめだ。
+</p>
+<pre>
+% cd ..
+% ls
+branches  trunk
+% svn upgrade
+</pre>
+<p>
+これで1.7用の作業ディレクトリへ変換された。gitのようにトップの.svnに集約される。<br>
+チェックアウトしたときのコピーのファイル名はsha1を元にしてるようだ。
+</p>
+<pre>
+% sha1sum .svn/pristine/aa/aa0cb785210a8a6ad357016ae1eecb23977f83f5.svn-base
+aa0cb785210a8a6ad357016ae1eecb23977f83f5  .svn/pristine/aa/aa0cb785210a8a6ad357016ae1eecb23977f83f5.svn-base
+</pre>
+<!-- section end -->
+</div>
+<!-- 2012/10/29 end -->
+
+
+
+<hr class="hide">
+<!-- 2012/10/30 start -->
+<h2><a name="20121030" href="201210c.html#20121030">2012-10-30 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="201210301" title="201210301" href="201210c.html#201210301">■</a> 
+gnome-terminalのサイズ</h3>
+<p>
+上部のメニュー表示をONにしておくと、タブを増やしたりすると列と行のサイズが減る。<br>
+それ以前に120x50で設定してるのに実際にstty -aで確認してみると119になってしまうのはなぜか？<br>
+まったくもって不可思議。
+</p>
+<!-- section end -->
+</div>
+<!-- 2012/10/30 end -->
+
+
+
+<hr class="hide">
+<!-- 2012/10/31 start -->
+<h2><a name="20121031" href="201210c.html#20121031">2012-10-31 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="201210311" title="201210311" href="201210c.html#201210311">■</a> 
+驚異的な圧縮率ながらたぶん使い物にならないkgb</h3>
+<p>
+<a href="http://cygwin.com/ml/cygwin-announce/2012-10/msg00034.html">cygwin-announce ML</a>で見つけた。gzip, bzip2, xzと共にどんなもんか比較してみた(全部-9オプションつき)。
+</p>
+<pre>
+% stat -c '%8s %n' ruby-1.9.3-p286.tar{,.gz,.bz2,.xz,.kgb}
+60037120 ruby-1.9.3-p286.tar
+12291440 ruby-1.9.3-p286.tar.gz
+ 9961892 ruby-1.9.3-p286.tar.bz2
+ 7384520 ruby-1.9.3-p286.tar.xz
+ 5718849 ruby-1.9.3-p286.tar.kgb
+</pre>
+<p>
+なかなかすごい圧縮率だ。ただこれ処理時間がちょっと次元が違う。
+</p>
+<pre>
+% kgb -9 ruby-1.9.3-p286.tar.kgb ruby-1.9.3-p286.tar
+ruby-1.9.3-p286.tar          58630KB -&gt; 5584KB
+58630KB -&gt; 5584KB w 1341.92s. (9.53% czas: 45 KB/s)
+kgb -9 ruby-1.9.3-p286.tar.kgb ruby-1.9.3-p286.tar  1340.96s user 1.04s system 99% cpu 22:28.02 total
+</pre>
+<p>
+60MBほどのファイルを圧縮するのになんと22分もかかっている。他のはかかっても20秒ぐらいだ。<br>
+伸長するのが速いなら使えるかもと思うが、これも同じぐらい時間がかかる。
+</p>
+<pre>
+% mkdir tmp; cd tmp
+% kgb ../ruby-1.9.3-p286.tar.kgb
+Extracting archive KGB_arch -9 ../ruby-1.9.3-p286.tar.kgb ...
+     58630KB ruby-1.9.3-p286.tar: extracted
+5584KB -&gt; 58630KB w 1317.85s. (9.53% czas: 46 KB/s)
+kgb ../ruby-1.9.3-p286.tar.kgb  1316.43s user 1.50s system 99% cpu 22:03.69 total
+</pre>
+<p>
+どうしろと。<br>
+あと、これはzipのようなアーカイバなわけなんだけど、リストはmoreで見てくれというなんともすごい仕様。
+</p>
+<pre>
+% more ruby-1.9.3-p286.tar.kgb
+KGB_arch -9
+60037120        ruby-1.9.3-p286.tar
+</pre>
+<p>
+先頭にサイズとファイル名が埋まってる。この後ろに実はCTRL+Z,CTRL+C,\000も埋まってる。<br>
+moreは\000までで1ページになるようで。
+</p>
+<!-- section end -->
+</div>
+<!-- 2012/10/31 end -->
+
+<hr>
+<div>
+<a href="201210b.html">&lt;Prev(,)</a> | 
+<a href="201211a.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

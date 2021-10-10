@@ -1,0 +1,889 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2002-5-a</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="200204c.html">
+<link rel="next" href="200205b.html">
+
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2002年5月上旬〜</p>
+<hr>
+<div>
+<a href="200204c.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="200205b.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2002/05/01 start -->
+<h2><a name="20020501" href="200205a.html#20020501">2002-05-01 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="200205011" title="200205011" href="200205a.html#200205011">■</a> 
+[Ruby] -DNT -DIMPORT</h3>
+<p>
+embeddedなrubyを作る際に、ruby-talk MLでも-DNT -DIMPORTのつけ忘れが目立つ。
+ということは逆にしたほうが使い易いと言える。
+NTはdefines.hで
+</p>
+<pre>
+#if defined _MSC_VER || defined __MINGW32__ || defined __BORLANDC__
+#define NT 1
+#endif
+</pre>
+<p>
+とし、
+defaultはIMPORTにしてRuby DLLをcompileするときは-DEXPORTにするのはどうだろう？
+現在win32/win32.hでは
+</p>
+<pre>
+#undef EXTERN
+#if defined(IMPORT)
+#define EXTERN extern __declspec(dllimport)
+#elif defined(EXPORT)
+#define EXTERN extern __declspec(dllexport)
+#endif
+</pre>
+<p>
+となっているが、実際EXPORTは使われていない。
+def fileを作っているから必要ないというのもあるけど。
+つまり
+</p>
+<pre>
+#undef EXTERN
+#if defined(RUBY_EXPORT)
+# define EXTERN extern __declspec(dllexport)
+#else
+# define EXTERN extern __declspec(dllimport)
+#endif
+</pre>
+<p>
+とするわけだ。
+単にIMPORTとかEXPORTだとぶつかる可能性が高すぎるので名前を変えた。
+で、これをどうやって定義するかがいまいち困るわけだが、
+やはり別の変数が必要だな。Makefile.inで
+</p>
+<pre>
+CFLAGS = @CFLAGS@ @RUBY_EXPORT@
+</pre>
+<p>
+みたいな。
+</p>
+
+<p>
+実際試してみるとmissing/flock.c, ext/socket/getaddrinfo.cで破綻してしまった。
+でも単にdefines.hをincludeすればいいだけか。
+どちらもconfig.hはincludeしてるからここでNTを定義したほうが簡単かもしれない。
+ext/socket/getnameinfo.cもそうか。
+うーむ。ext/Win32API/Win32API.cはruby.hを最初にincludeしないとだめだ。
+ということは拡張ライブラリを書き換えてもらう必要が出てくるわけか。
+これはちょっと受け入れられないかもしれないな。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200205012" title="200205012" href="200205a.html#200205012">■</a> 
+<a href="http://www.ruby-lang.org/en/raa-list.rhtml?name=http-access2">http-access2 E</a></h3>
+<p>
+更新。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/05/01 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/05/02 start -->
+<h2><a name="20020502" href="200205a.html#20020502">2002-05-02 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="200205021" title="200205021" href="200205a.html#200205021">■</a> 
+4月のspam</h3>
+<p>
+192通。韓国からは45通。今月は200通を越えるのか？昨日だけで既に8通来てるし。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200205022" title="200205022" href="200205a.html#200205022">■</a> 
+<a href="http://znz.s1.xrea.com/t/?date=20020502#p06">[vim] UndoのUndo</a></h3>
+<p>
+Redo(CTRL-R)です。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/05/02 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/05/03 start -->
+<h2><a name="20020503" href="200205a.html#20020503">2002-05-03 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="200205031" title="200205031" href="200205a.html#200205031">■</a> 
+<a href="http://www.ruby-lang.org/en/raa-list.rhtml?name=Ruby%2FGoogle">[Ruby] Ruby/Google 0.4.0</a></h3>
+<p>
+更新。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200205032" title="200205032" href="200205a.html#200205032">■</a> 
+<a href="http://www.ruby-lang.org/en/raa-list.rhtml?name=date2">[Ruby] date2 3.0.1</a></h3>
+<p>
+更新。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200205033" title="200205033" href="200205a.html#200205033">■</a> 
+<a href="http://znz.s1.xrea.com/t/?date=20020502#p05">[emacs] Undo</a></h3>
+<p>
+窓使いの憂鬱だと
+</p>
+<pre>
+window  PuTTY /putty.*\.exe:/ : Global
+  key C-Slash =&gt; C-S-HyphenMinus
+</pre>
+<p>
+という手はあります。
+default.mayuのTeraTermProのとこに書いてある通りですが。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200205034" title="200205034" href="200205a.html#200205034">■</a> 
+[Ruby] AC_CHECK_DECLS</h3>
+<p>
+sys_nerrはAC_CHECK_DECLSで宣言が必要かどうかを調べるようになった。
+でも$ac_includes_defaultには&lt;errno.h&gt;がない。
+cygwinだと&lt;errno.h&gt;にsys_nerrの宣言があるのでちょっとまずい。
+新しいldならauto-importがdefaultなので問題ない。
+おそらく 
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-talk/39482">[ruby-talk:39482]</a>
+は古いldを使ってるんじゃないかと思う。
+</p>
+
+<p>
+ま、warningをなくす意味でも
+</p>
+<pre>
+AC_CHECK_DECLS([sys_nerr], [], [], [#include &lt;errno.h&gt;])
+</pre>
+<p>
+としてみた。が、これだと逆に$ac_includes_defaultがなくなるので最終的には
+</p>
+<pre>
+AC_CHECK_DECLS([sys_nerr], [], [], [$ac_includes_default
+#include &lt;errno.h&gt;])
+</pre>
+<p>
+とした。
+</p>
+
+<p>
+あ、たぶんwin32/config.h.inにも
+</p>
+<pre>
+#define HAVE_DECL_SYS_NERR 1
+</pre>
+<p>
+が必要だな。追加しとこ。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/05/03 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/05/04 start -->
+<h2><a name="20020504" href="200205a.html#20020504">2002-05-04 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="200205041" title="200205041" href="200205a.html#200205041">■</a> 
+[Cygwin] /proc</h3>
+<p>
+/proc/registryとかが使えるようになるらしい。
+fhandler_proc.ccを見ると今はまだ/proc/versionと/proc/uptimeだけのようだ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200205042" title="200205042" href="200205a.html#200205042">■</a> 
+<a href="http://www.fefe.de/dietlibc/">[Linux] diet-libc 0.17</a></h3>
+<p>
+更新。CHANGESを見ると
+</p>
+<pre>
+our i386 memchr,memcmp were broken for the count=0 case
+</pre>
+<p>
+ということで、
+<a href="200202c.html#200202244">例の件</a> も直ってるようだ。
+てゆかmemcmpもまずかったのか。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200205043" title="200205043" href="200205a.html#200205043">■</a> 
+[Ruby] diet-libc対応</h3>
+<p>
+というわけで対応してみる。configure時のオプションは
+</p>
+<pre>
+--with-gcc='ccache diet gcc -nostdinc'
+</pre>
+<p>
+を追加。
+</p>
+<pre>
+io.c: In function `pipe_open':
+io.c:1859: `NOFILE' undeclared (first use in this function)
+io.c:1859: (Each undeclared identifier is reported only once
+io.c:1859: for each function it appears in.)
+</pre>
+<p>
+NOFILEがないらしい。
+</p>
+<pre>
+/* EMX has sys/param.h, but.. */
+#if defined(HAVE_SYS_PARAM_H) &amp;&amp; !(defined(__EMX__) || defined(__HIUX_MPP__))
+# include &lt;sys/param.h&gt;
+#else
+# define NOFILE 64
+#endif
+</pre>
+<p>
+となっているが、&lt;sys/param.h&gt;にない場合が多いのだろう。
+HIUXも最近新たに加わったようだ。BeOSとまとめて
+</p>
+<pre>
+#if defined(HAVE_SYS_PARAM_H) 
+# include &lt;sys/param.h&gt;
+#endif
+
+#if !defined NOFILE
+# if defined OPEN_MAX
+#  define NOFILE OPEN_MAX
+# else
+#  define NOFILE 64
+# endif
+#endif
+</pre>
+<p>
+ぐらいがいいのかもしれない。
+</p>
+<pre>
+signal.c:291: redefinition of `sighandler_t'
+/opt/diet/include/signal.h:87: `sighandler_t' previously declared here
+</pre>
+<p>
+これは困るね。configure.inに
+</p>
+<pre>
+AC_CHECK_TYPES([sighandler_t], [], [], [#include &lt;signal.h&gt;])
+</pre>
+<p>
+を入れて、signal.cのほうは
+</p>
+<pre>
+#if !defined HAVE_SIGHANDLER_T
+typedef RETSIGTYPE (*sighandler_t)_((int));
+#endif
+</pre>
+<p>
+としてみよう。
+</p>
+<pre>
+math.o(.text+0x4cc): undefined reference to `frexp'
+numeric.o(.text+0x90d): undefined reference to `modf'
+sprintf.o(.text+0xbb1): undefined reference to `frexp'
+time.o(.text+0x385): undefined reference to `modf'
+</pre>
+<p>
+うーむ。これは結構面倒な気がする。
+</p>
+<!-- section end -->
+</div>
+<!-- 2002/05/04 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/05/05 start -->
+<h2><a name="20020505" href="200205a.html#20020505">2002-05-05 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="200205051" title="200205051" href="200205a.html#200205051">■</a> 
+<a href="http://www.opera.com/">Opera</a></h3>
+<p>
+
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-talk/39581">Operaでfull screenモードにすると</a>
+見易いらしい。
+とりあえずOpera 5 for Linuxをダウンロードしてみる。
+なぜかSlide 30以降へ進めなくなる。しょうがないのでOpera 6のbeta版をダウンロード。
+こっちは4.3MBもある。もちろんQTなど入れてないのでstatic版だ。
+おお、いい感じ。最初からこっちダウンロードしとけばよかった。
+5よりも圧倒的に速いし。
+</p>
+<pre>
+the fastest browser on earth!
+</pre>
+<p>
+と自信満々なメッセージを出すだけのことはある。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200205052" title="200205052" href="200205a.html#200205052">■</a> 
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-talk/39614">NFS mount</a></h3>
+<p>
+うーむ。そうだよね。すっかり忘れてた。
+install時はxsystemしないのでlogを作る必要はない。
+$installを見てopenするしないを判断すべきか？
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200205053" title="200205053" href="200205a.html#200205053">■</a> 
+sf.net</h3>
+<p>
+最近ダウンロードしようとするとミラーへ飛ばされて、ちと不便。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200205054" title="200205054" href="200205a.html#200205054">■</a> 
+<a href="http://znz.s1.xrea.com/t/?date=20020505#p03">[Ruby] 付箋</a></h3>
+<p>
+単にbin/がないだけのようです。
+</p>
+<pre>
+% mkdir bin
+</pre>
+<p>
+でsetupもok。
+あとsrc/をlib/にrenameしないとインストールされないとか、
+そうしちゃうとpre-setup.rbがまずそうとか、
+まだ不完全のよう。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200205055" title="200205055" href="200205a.html#200205055">■</a> 
+[Ruby] frexp, modf</h3>
+<p>
+glibcやnewlibcやuClibcやDJGPPを見るとどれもCopyrightは同じで
+Sun Microsystemsらしい。というかどうもNetBSD経由らしい。
+rcsidに$NetBSDの文字が。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/05/05 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/05/06 start -->
+<h2><a name="20020506" href="200205a.html#20020506">2002-05-06 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="200205061" title="200205061" href="200205a.html#200205061">■</a> 
+<a href="http://www.ruby-lang.org/en/raa-list.rhtml?name=SOAP4R">SOAP4R 1.4.4</a></h3>
+<p>
+更新。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200205062" title="200205062" href="200205a.html#200205062">■</a> 
+<a href="http://www.ruby-lang.org/en/raa-list.rhtml?name=Devel%3A%3AWhich">Devel::Which 0.2.0</a></h3>
+<p>
+更新。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200205063" title="200205063" href="200205a.html#200205063">■</a> 
+[zsh] サイズが0のファイル</h3>
+<pre>
+% touch a b c
+% ls *(L0)
+a  b  c
+</pre>
+<p>
+ほんとzshって何でもありだよね。
+誰かが書いてたけど、Rubyで使えるzsh globライブラリは欲しい気がする。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200205064" title="200205064" href="200205a.html#200205064">■</a> 
+血</h3>
+<p>
+TV Bros.を見るとテレビ埼玉の18:00から「血」一文字だけの番組がある。
+かなり不気味だ。見てみると「赤き血のイレブン」だった。懐しすぎ。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/05/06 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/05/07 start -->
+<h2><a name="20020507" href="200205a.html#20020507">2002-05-07 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="200205071" title="200205071" href="200205a.html#200205071">■</a> 
+<a href="http://www.ruby-lang.org/en/raa-list.rhtml?name=SOAP4R">SOAP4R 1.4.4.1</a></h3>
+<p>
+更新。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200205072" title="200205072" href="200205a.html#200205072">■</a> 
+<a href="http://www.ruby-lang.org/en/raa-list.rhtml?name=XML-RPC">XML-RPC 1.7.10</a></h3>
+<p>
+更新。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200205073" title="200205073" href="200205a.html#200205073">■</a> 
+<a href="http://www.ruby-lang.org/en/raa-list.rhtml?name=TMail">Tmail 0.10.3</a></h3>
+<p>
+更新。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200205074" title="200205074" href="200205a.html#200205074">■</a> 
+[Ruby] modf(3)</h3>
+<p>
+manを見ると
+</p>
+<pre>
+#include &lt;math.h&gt;
+double modf(double x, double *iptr);
+
+modf() 関数は、引数 x を整数部分と小数部分に分割する。この
+と き、ふたつの値はともに x と同じ符号を持っている。整数部
+分は iptr に保存される。
+</pre>
+<p>
+ということらしい。
+一見
+</p>
+<pre>
+double modf(double x, double *iptr)
+{
+    *iptr = (int)x;
+    return x - *iptr;
+}
+</pre>
+<p>
+でよさそうな気がするが、
+考えてみるとdoubleってのはintなんかよりかなり範囲が広いのでこれじゃだめなのだ。
+たとえばtime.cでは
+</p>
+<pre>
+double f, d;
+
+d = modf(RFLOAT(time)-&gt;value, &amp;f);
+t.tv_sec = (time_t)f;
+if (f != t.tv_sec) {
+    rb_raise(rb_eRangeError, &quot;%f out of Time range&quot;, RFLOAT(time)-&gt;value);
+</pre>
+<p>
+というようにそれを積極的に利用している。
+</p>
+
+<p>
+ちょっと変形して
+</p>
+<pre>
+double modf(double x, double *iptr)
+{
+    *iptr = x &lt; 0.0 ? ceil(x) : floor(x);
+    return x - *iptr;
+}
+</pre>
+<p>
+でどう？-100のように負で小数部がないときに-0.0にはならないけど、ま、いっか。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200205075" title="200205075" href="200205a.html#200205075">■</a> 
+<a href="http://ftp.xfree86.org/pub/XFree86/4.2.0/binaries/">XFree86 4.2.0</a></h3>
+<p>
+Cygwinのバイナリも用意されてるのか。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/05/07 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/05/08 start -->
+<h2><a name="20020508" href="200205a.html#20020508">2002-05-08 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="200205081" title="200205081" href="200205a.html#200205081">■</a> 
+[Ruby] frexp(3)</h3>
+<p>
+またman frexpを見ていろいろ考える。
+</p>
+<pre>
+#include &lt;math.h&gt;
+double frexp(double x, int *exp);
+
+説明
+  frexp()関数は浮動小数点実数 x を正規化分数と
+  exp に保存される指数に分解する。
+返り値
+  frexp()  関数は正規化分数を返す。引数 x がゼロでないなら、
+  この正規化分数は x に2のべき乗を乗じた も の で あ り、 常
+  に1/2から1の範囲となる(ただし1自体は含まれない)。 x がゼロ
+  の場合、正規化分数はゼロになり exp にはゼロが保存される。
+</pre>
+<p>
+要するにlog2()があれば簡単な話なんだが、
+そんな関数はないので、log(x)をlog(2.0)で割ることで代用。
+こんな感じか？
+</p>
+<pre>
+#if !defined M_LN2
+#define M_LN2 0.69314718055994530942
+#endif
+
+double frexp(double x, int *exp)
+{
+    double sign = 1.0;
+
+    if (x == 0.0) {
+        *exp = 0;
+        return 0.0;
+    } else if (x &lt; 0.0) {
+        sign = -1.0;
+        x = -x;
+    }
+    *exp = log(x) / M_LN2 + 1;
+    return sign * x / (2 &lt;&lt; (*exp - 1));
+}
+</pre>
+<p>
+うーむ。shiftしちゃだめだ。overflowする。
+2のべき乗だからpowかldexpを使えばいいのか。
+pow.Sとldexp.Sを比較するとldexpのほうが圧倒的に速そうな気がする。
+それと、xがちょうど2のべき乗のときに*expが1.0になってしまうのもまずい。
+というわけで
+</p>
+<pre>
+    double f;
+    ...
+    f = ldexp(1.0, *exp);
+    if (x == f) {
+        (*exp)++;
+        f *= 2.0;
+    }
+    return sign * x / f;
+</pre>
+<p>
+でどうだろう？
+</p>
+
+<p>
+明日にはminirubyができそうだ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200205082" title="200205082" href="200205a.html#200205082">■</a> 
+<a href="http://www.ruby-lang.org/en/raa-list.rhtml?name=iconv">iconv 0.5</a></h3>
+<p>
+更新。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/05/08 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/05/09 start -->
+<h2><a name="20020509" href="200205a.html#20020509">2002-05-09 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="200205091" title="200205091" href="200205a.html#200205091">■</a> 
+[Ruby] diet libc版miniruby</h3>
+<p>
+missing/{modf,frexp}.cを作って、
+modfとfrexpをconfigure.inのAC_REPLACE_FUNCSに追加。
+configureし直して、とりあえずmake minirubyを実行。
+link時にsprintfを使うなとかstdioを使うと7KB余分に消費するぞとか例の警告が出るが、
+これでminirubyはできた。
+</p>
+
+<p>
+ここで一度testしてみよう。
+</p>
+<pre>
+% ln -s miniruby ruby
+% make test
+sample/test.rb:1025:\
+  in `sleep': Invalid argument - &quot;sleep&quot; (Errno::EINVAL)
+        from sample/test.rb:1025
+test failed
+</pre>
+<p>
+流石に一度ではうまくいかないようだ。エラーになったのは
+</p>
+<pre>
+sleep 0.1
+</pre>
+<p>
+で、これは
+<a href="200205a.html#200205074">一昨日書いたところ</a> が非常に怪しい。
+gdbでbreakして何を返しているか見てみると全然でたらめな値になってる。
+なぜ？しばらく考えてmodf(3)の宣言がないからintを返しているのが原因と気づく。
+そりゃそうだよね。modfがないから作ったわけだし。
+ってことは他にもあるんじゃないかと思ってチェックしてみると、
+hypot, acosh(asinh, atanh)がまずい。
+なにしろLinuxとか使ってると最初からすべてあるという状態だからなかなか気づかない。
+これでmake testも通った。
+</p>
+
+<p>
+frexpのほうはMath.frexpでRubyから呼べるので試してみる。
+</p>
+<pre>
+% ./miniruby -e 'p Math.frexp 10'
+[2.5, 4]
+% ruby -e 'p Math.frexp 10' 
+[0.625, 4]
+</pre>
+<p>
+だめじゃん。うーむ。そうか、diet libcの&lt;math.h&gt;にはldexp(3)の宣言がない。
+不完全だなあ。#ifdef __dietlibc__しないとだめだ。
+</p>
+<pre>
+% ./miniruby -e 'p Math.frexp 10'
+[0.625, 4]
+</pre>
+<p>
+よさそう。
+</p>
+<pre>
+% ./miniruby -e 'p Math.frexp -10'
+[-.625, 4]
+</pre>
+<p>
+printf系は0を省略するのか。これは問題にならないよね？
+</p>
+<pre>
+% ruby -e 'p -.1'
+-0.1
+</pre>
+<p>
+なので、evalもできるから大丈夫だろう。
+</p>
+
+<p>
+明日は拡張ライブラリだ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200205092" title="200205092" href="200205a.html#200205092">■</a> 
+<a href="http://tamura.tdiary.net/20020428.html#p03">inetd.co.jp</a></h3>
+<p>
+なんかよさそうなので、とりあえず1年間で契約してみた。
+さっそくCVSでRuby 1.7.2を取ってきてmake all testした。
+その前にautoconf 2.53をインストールしたり。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/05/09 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/05/10 start -->
+<h2><a name="20020510" href="200205a.html#20020510">2002-05-10 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="200205101" title="200205101" href="200205a.html#200205101">■</a> 
+[Ruby] ruby-core ML</h3>
+<p>
+動き始めた。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200205102" title="200205102" href="200205a.html#200205102">■</a> 
+[Ruby] missing.h</h3>
+<p>
+missing.hにプロトタイプ宣言を入れることになった。
+でもvsnprintfとか結構面倒だね。
+&lt;stdarg.h&gt;をincludeしなきゃいけないとか。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200205103" title="200205103" href="200205a.html#200205103">■</a> 
+[Ruby] _snprintf, _vsnprintf</h3>
+<p>
+msvcrt.dllでは_snprintf, _vsnprintfというシンボルだということに、
+今更ながら気づく。
+win32/win32.hで
+</p>
+<pre>
+#define vsnprintf  _vsnprintf
+#define snprintf   _snprintf
+</pre>
+<p>
+としているのでMinGWでは無駄にvsnprintf.oがリンクされてしまう。
+MinGWのときはそれを削除したいが、
+LIBOBJSなのでconfigure.inの中では手を出すことはできない。
+しかたないのでcygwin/GNUmakefile.inで対処しよう。
+</p>
+<pre>
+ARCH=@arch@
+
+ifeq ($(ARCH),i386-mingw32)
+  MISSING := $(filter-out vsnprintf.o,$(MISSING))
+endif
+</pre>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/05/10 end -->
+
+<hr>
+<div>
+<a href="200204c.html">&lt;Prev(,)</a> | 
+<a href="200205b.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

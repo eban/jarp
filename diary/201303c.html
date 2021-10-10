@@ -1,0 +1,360 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2013-3-c</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="201303b.html">
+<link rel="next" href="201304a.html">
+
+<link rel="stylesheet" type="text/css" href="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.css">
+<script async type="text/javascript" src="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.js"></script>
+<script type="text/javascript">
+<!--       
+$(document).ready(function() {
+  prettyPrint();
+});
+-->
+</script>
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2013年3月下旬〜</p>
+<hr>
+<div>
+<a href="201303b.html" accesskey=",">&lt;Older(,)</a> | 
+<a href="201304a.html" accesskey=".">Newer(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2013/03/21 start -->
+<h2><a name="20130321" href="201303c.html#20130321">2013-03-21 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="201303211" title="201303211" href="201303c.html#201303211">■</a> 
+User foo not allowed because account is locked</h3>
+<p>
+useradd -m fooして.ssh/authorized_keysを置いて準備完了と思ったらpermission deniedで入れないと言われた。<br>
+permission的にはどこもまずいとこはなさげだしどういうことかと/var/log/auth.logを見たら、
+</p>
+<pre>
+User foo not allowed because account is locked
+</pre>
+<p>
+と出ていた。さっそくぐぐったらUsePam Noだとパスワードを設定しないとこれが出るらしい。<br>
+sshでログインするならパスワード不要だしなあ。<br>
+とはいうもののどうせsudoでパスワードは必要になるので、素直に設定した。<br>
+そもそもなんでUsePam Noにしているのかなぞだ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2013/03/21 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/03/22 start -->
+<h2><a name="20130322" href="201303c.html#20130322">2013-03-22 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="201303221" title="201303221" href="201303c.html#201303221">■</a> 
+instapaperのbookmarklet</h3>
+<p>
+diigoとかpocketとかreadabilityとか使ってんだからもういい加減いいだろうという気もするが、<br>
+instapaperは各フォルダへの保存bookmarkletがあるのでなんだかんだで手放せない。<br>
+るびまのepub化には活躍する。<br>
+それはそれとしてこのbookmarkletを使うとたまに数十ページもカウントすることがあって焦る。<br>
+確認すると1つしか保存されないのであのカウントはなんだったのかと不思議に思っていたが、<br>
+Textボタンを押してみてようやく理解した。pagerizeだったんだな。<br>
+次のページがあるとまとめられる。だから数十ページもあると開くのに時間がかかる。<br>
+bookmarkletが起動されたタイミングでいくつまであるよという情報を残して、<br>
+実際に開くときに集めているようだ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2013/03/22 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/03/23 start -->
+<h2><a name="20130323" href="201303c.html#20130323">2013-03-23 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="201303231" title="201303231" href="201303c.html#201303231">■</a> 
+twitterfeedの件</h3>
+<p>
+cia.vcが復活したら面倒なのでrubyciのtwitterfeedトリガーをなんとか無効にしたいが、<br>
+考えてみると単にtwitter側でrevokeすればいいのであった。
+</p>
+<!-- section end -->
+</div>
+<!-- 2013/03/23 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/03/24 start -->
+<h2><a name="20130324" href="201303c.html#20130324">2013-03-24 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="201303241" title="201303241" href="201303c.html#201303241">■</a> 
+ぽすれんをスポットに変更</h3>
+<p>
+今月も8枚借りたので来月からはスポット(借りなきゃ無料)で。<br>
+今日は近所のGEOがキャンペーンで旧作7泊で50円とか。<br>
+そんなことやってるとどっちも力尽きそうな気もするが、<br>
+まあぽすれんをスポットにする理由でもある。
+</p>
+<!-- section end -->
+</div>
+<!-- 2013/03/24 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/03/25 start -->
+<h2><a name="20130325" href="201303c.html#20130325">2013-03-25 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="201303251" title="201303251" href="201303c.html#201303251">■</a> 
+X11 forwardingが失敗する</h3>
+<p>
+CentOS5にssh -Xしてもなぜか失敗してしまう。
+</p>
+<pre>
+Warning: untrusted X11 forwarding setup failed: xauth key data not generated
+Warning: No xauth data; using fake authentication data for X11 forwarding.
+</pre>
+<p>
+xauthということなのでyum searchしてみるとxorg-x11-xauthがあやしい。<br>
+これを入れたら解決した。最初から入っていてもいいようなものだが。
+</p>
+<!-- section end -->
+</div>
+<!-- 2013/03/25 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/03/26 start -->
+<h2><a name="20130326" href="201303c.html#20130326">2013-03-26 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="201303261" title="201303261" href="201303c.html#201303261">■</a> 
+使うのをやめたらdlvrからメールがきた</h3>
+<p>
+なんか最近静かだけどどうしたんだい的な。ちゃんと見張ってるんだねえ。<br>
+同期が15分間隔と短縮URL使わないという選択ができるのでこの日記もiftttにした。
+</p>
+<!-- section end -->
+</div>
+<!-- 2013/03/26 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/03/27 start -->
+<h2><a name="20130327" href="201303c.html#20130327">2013-03-27 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="201303271" title="201303271" href="201303c.html#201303271">■</a> 
+cygwinのwgetはNTLMが使えない</h3>
+<p>
+Ubuntuのwgetは+ntlmになっている。
+</p>
+<pre>
+% wget --version | head -n3
+GNU Wget 1.13.4 built on linux-gnu.
+
++digest +https +ipv6 +iri +large-file +nls +ntlm +opie +ssl/openssl 
+</pre>
+<p>
+でもcygwinは-ntlm。
+</p>
+<pre>
+% wget --version | head -n3
+GNU Wget 1.13.4 built on cygwin.
+
++digest +https +ipv6 +iri +large-file +nls -ntlm +opie +ssl/gnutls
+</pre>
+<p>
+このせいでShaprePointに置かれてるファイルがダウンロードできない。<br>
+まあ、でもcURLではONになってるので特に問題にはならないが。
+</p>
+<pre>
+% curl --version
+curl 7.24.0 (i686-pc-cygwin) libcurl/7.24.0 OpenSSL/1.0.1 zlib/1.2.5 libidn/1.22 libssh2/1.4.0
+Protocols: dict file ftp ftps gopher http https imap imaps ldap ldaps pop3 pop3s rtsp scp sftp smtp smtps telnet tftp
+Features: GSS-Negotiate IDN IPv6 Largefile NTLM NTLM_WB SSL libz TLS-SRP
+</pre>
+<p>
+プロトコルはなんかいろいろ盛り沢山だな。
+</p>
+<!-- section end -->
+</div>
+<!-- 2013/03/27 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/03/28 start -->
+<h2><a name="20130328" href="201303c.html#20130328">2013-03-28 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="201303281" title="201303281" href="201303c.html#201303281">■</a> 
+iftttのレシピで改行</h3>
+<p>
+iftttのレシピで改行を入れても空白に戻されちゃってとても悲しくなる。
+</p>
+<pre>
+{{EntryTitle}}
+{{EntryUrl}}
+</pre>
+<p>
+と書いてUpdateするとなぜか
+</p>
+<pre>
+{{EntryTitle}} {{EntryUrl}}
+</pre>
+<p>
+に戻ってしまう。いろいろぐぐってみるとなんと&lt;br&gt;が使えるらしい。というわけで
+</p>
+<pre>
+{{EntryTitle}}&lt;br&gt;{{EntryUrl}}
+</pre>
+<p>
+とすれば間に改行が入る。rubyciもこの日記もそうしてみた。
+</p>
+<!-- section end -->
+</div>
+<!-- 2013/03/28 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/03/29 start -->
+<h2><a name="20130329" href="201303c.html#20130329">2013-03-29 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="201303291" title="201303291" href="201303c.html#201303291">■</a> 
+デフォルトのブラウザがなぜか未設定になってしまう</h3>
+<p>
+最近はChromeを使うことが多いのでデフォルトのブラウザもChromeにしてるんだけど、<br>
+再起動するたびに未設定に戻されてしまう。なんで？
+</p>
+<!-- section end -->
+</div>
+<!-- 2013/03/29 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/03/30 start -->
+<h2><a name="20130330" href="201303c.html#20130330">2013-03-30 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="201303301" title="201303301" href="201303c.html#201303301">■</a> 
+春の番組改編</h3>
+<p>
+なぜか「世界最強の勇者たち」という番組が録画されてて変だなと思ったが、<br>
+毎週フラグが立っていてようやくわかった。「世界一受けたい授業」と間違えたわけだ。<br>
+たまたま野球開幕で休止して見つかないもんだからそっちにヒットしちゃったと。<br>
+「世界」しか合ってないが。
+</p>
+<p>
+で、俺修羅が終わったので予約から消そうと思ったらなぜか見つからない。<br>
+よく見たら俺妹が予約に入っていた。第2期か。って「俺の」しか合ってないだろ。
+</p>
+<p>
+NEWS WEB24も24が取れてもちゃんとそのままいけてるし、<br>
+リスアニ!TVに至っては曜日も変わったがいけてる。<br>
+いや、00:00から23:30に変わったわけで曜日は同じだった。<br>
+でも目がテンはさすがに土曜夕方から日曜朝になるので追従は無理だったようで。
+</p>
+<p>
+なんか見慣れないと思ったら、今頃日テレのロゴが変わったことに気づいた。
+</p>
+<!-- section end -->
+</div>
+<!-- 2013/03/30 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/03/31 start -->
+<h2><a name="20130331" href="201303c.html#20130331">2013-03-31 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="201303311" title="201303311" href="201303c.html#201303311">■</a> 
+livedoorメールとGmail</h3>
+<p>
+livedoorメールが終わるというのでどうだったっけとアクセスしてみたら、<br>
+ああそうだ中身はGmailなんだと思い出した。<br>
+中身はlivedoorからのお知らせしかなかったので、一回開いてそのままだったのだな。<br>
+それはそれとして、なぜかその後Gmailを開いてもlivedoorメールへ飛んでしまいあせる。<br>
+いや正確にはlivedoorメールを使っていたつもりがGmailへ飛んでいたのであった。<br>
+アカウントはlivedoorメールのほうで。<br>
+あれ、以前もこんな仕様だったかな。まあ、ちゃんとログアウトしておくように。
+</p>
+<!-- section end -->
+</div>
+<!-- 2013/03/31 end -->
+
+<hr>
+<div>
+<a href="201303b.html">&lt;Older(,)</a> | 
+<a href="201304a.html">Newer(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

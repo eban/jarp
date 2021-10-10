@@ -1,0 +1,324 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2013-2-b</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="201302a.html">
+<link rel="next" href="201302c.html">
+
+<link rel="stylesheet" type="text/css" href="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.css">
+<script type="text/javascript" src="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.js"></script>
+<script type="text/javascript">
+<!--       
+$(document).ready(function() {
+  prettyPrint();
+});
+-->
+</script>
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2013年2月中旬〜</p>
+<hr>
+<div>
+<a href="201302a.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="201302c.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2013/02/11 start -->
+<h2><a name="20130211" href="201302b.html#20130211">2013-02-11 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="201302111" title="201302111" href="201302b.html#201302111">■</a> 
+bitcasa</h3>
+<p>
+正式リリース以降まったくクライアントが立ち上がらなかってけど、やっと最近安定してきたようで。<br>
+それにしてもaccount settingでTotal Usageが24.6 GB of 10.0 GBと表示されるんだけど、どういうことだろう？<br>
+ベータテスト時代もそんなに使ってないんだけど。とりあえず全部消してみるか。
+</p>
+<!-- section end -->
+</div>
+<!-- 2013/02/11 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/02/12 start -->
+<h2><a name="20130212" href="201302b.html#20130212">2013-02-12 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="201302121" title="201302121" href="201302b.html#201302121">■</a> 
+Thunderbirdで宛先に複数のメールアドレスをコピペ</h3>
+<p>
+サーバーのメンテ告知等でユーザーにメールを送るときに、<br>
+ここ数ヶ月使用した人だけにしようとかフィルタリングするが、<br>
+その結果をThunderbirdにコピペするとちょっと困ったことになる。<br>
+そういうときはたいてい結果が1行1メールアドレスという形式になるが、<br>
+これをそのままCcとかBccへコピペすると改行がなくなって全部くっついてしまう。<br>
+しょうがないので拡張を探してみたけど、いまいち気に入らない。<br>
+昔なら&quot;,&quot;で区切ればよかったよなあと試しにやってみたらやはり赤いまま。<br>
+ふとenter押してみたらなんと展開された。これでいいのか。<br>
+で、ひょっとして最初の形式もいけるのかとやってみたらいけた。<br>
+区切りは改行でも&quot;,&quot;でもいいらしい。
+</p>
+<!-- section end -->
+</div>
+<!-- 2013/02/12 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/02/13 start -->
+<h2><a name="20130213" href="201302b.html#20130213">2013-02-13 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="201302131" title="201302131" href="201302b.html#201302131">■</a> 
+Onigurama</h3>
+<p>
+<a href="http://cygwin.com/ml/cygwin-announce/2013-02/msg00001.html">Onigurama</a>ってなんだよと思ったら、
+<a href="http://cygwin.com/ml/cygwin-announce/2010-09/msg00018.html">最初</a>からこの人はそう思い込んでるようで。<br>
+まあでもoniguramaでぐぐるといっぱい出てくるので、そう思い込んでる人は多いようだ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2013/02/13 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/02/14 start -->
+<h2><a name="20130214" href="201302b.html#20130214">2013-02-14 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="201302141" title="201302141" href="201302b.html#201302141">■</a> 
+pasteでCSVに変換</h3>
+<p>
+<a href="201302b.html#201302121">一昨日の件</a>はtr '\n' ,でいいんだけど、最後の改行も置換されるが不満。<br>
+つまり
+</p>
+<pre>
+% seq 3 | tr '\n' , | od -c
+0000000   1   ,   2   ,   3   ,
+0000006
+</pre>
+<p>
+じゃなくて
+</p>
+<pre>
+% seq 3 | ruby -e 'puts ARGF.map(&amp;:chomp).join(&quot;,&quot;)' | od -c
+0000000   1   ,   2   ,   3  \n
+0000006
+</pre>
+<p>
+となって欲しい。で、いろいろ調べたらpasteでできた。
+</p>
+<pre>
+% seq 3 | paste -sd, | od -c                                
+0000000   1   ,   2   ,   3  \n
+0000006
+</pre>
+<!-- section end -->
+</div>
+<!-- 2013/02/14 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/02/15 start -->
+<h2><a name="20130215" href="201302b.html#20130215">2013-02-15 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="201302151" title="201302151" href="201302b.html#201302151">■</a> 
+<a href="http://golf.shinh.org/p.rb?A005836">A005836</a></h3>
+<p>
+問題を素直に解いてると途中でそういうことだったのかとちょっと感動する。<br>
+それにしてもこのタイトルはよくわからんねえ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2013/02/15 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/02/16 start -->
+<h2><a name="20130216" href="201302b.html#20130216">2013-02-16 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="201302161" title="201302161" href="201302b.html#201302161">■</a> 
+Google Chromeでニコ動が見られない</h3>
+<p>
+flashは読み込めてるらしいが、プレーヤーを途中まで表示して止まってしまう。<br>
+なにかが読めないのかメッセージも出ないのでわからない。<br>
+ぐぐってみるとやはり1週間前ぐらいからそんな状況のようで。<br>
+MMD杯があるんだから困るわけだよ。<br>
+右上の[メニュー]-[アカウント設定]-[niconicoバージョンの変更]で原宿に戻した。<br>
+こっちは問題ない。
+</p>
+<!-- section end -->
+</div>
+<!-- 2013/02/16 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/02/17 start -->
+<h2><a name="20130217" href="201302b.html#20130217">2013-02-17 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="201302171" title="201302171" href="201302b.html#201302171">■</a> 
+メガネレンズ交換</h3>
+<p>
+1週間で交換完了。なんか全体的に度が弱くなってる感じだが、まあそんなもんなんだろう。<br>
+ブルーライトの対応は正直何にも感じない。<br>
+むしろ疲れてるくらい。<br>
+度が弱くなったせいかブルーライト対応のせいなのか。<br>
+JINS試してみるかな。
+</p>
+<!-- section end -->
+</div>
+<!-- 2013/02/17 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/02/18 start -->
+<h2><a name="20130218" href="201302b.html#20130218">2013-02-18 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="201302181" title="201302181" href="201302b.html#201302181">■</a> 
+Twitter archive</h3>
+<p>
+うちのtwitterにもやっとtwitter archiveが来た。<br>
+早速ダウンロードしたが、未だにtweets.csvの日本語部分は???のままだった。残念。<br>
+</p>
+<pre>
+% wc -l tweets.csv
+20006 tweets.csv
+</pre>
+<p>
+実際はまだ20000には届いてない。つまり削除したtweetも残ってるってことか。
+</p>
+<p>
+data/js/tweets/*.jsからCSVなりLTSVへ変換するのはありかもしれない。<br>
+まあでもブラウザから検索もできるし、そこまでしなくても。
+</p>
+<!-- section end -->
+</div>
+<!-- 2013/02/18 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/02/19 start -->
+<h2><a name="20130219" href="201302b.html#20130219">2013-02-19 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="201302191" title="201302191" href="201302b.html#201302191">■</a> 
+<a href="http://golf.shinh.org/p.rb?Repeated+Number">Repeated Number</a></h3>
+<p>
+この問題はなかなか楽しかった。1じゃなくて2個並びから始まってるとこが面白い。<br>
+それにしても
+<a href="http://golf.shinh.org/reveal.rb?Repeated+Number/clock_1360986357&amp;rb">この解</a>はすごいな。文字列じゃなくて計算で求めちゃってんだから。
+</p>
+<p>
+これをzshに移植するとこうなる。
+</p>
+<pre>
+n=9;repeat 63 echo $[n+=n/(x=n%10)+x/9]
+</pre>
+<p>
+39B。くやしいので
+<a href="http://golf.shinh.org/reveal.rb?Repeated+Number/eban_1361337141&amp;zsh">違うの</a>を上げてみた。
+</p>
+<pre>
+repeat 7 a+=\&amp;&amp;&amp;seq 9|sed s/./\&amp;$a/
+</pre>
+<p>
+すごくわかりやすいと思うよ。seq 9 | sed 's/./&amp;&amp;/'の&amp;を1つずつ増やしてるだけ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2013/02/19 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/02/20 start -->
+<h2><a name="20130220" href="201302b.html#20130220">2013-02-20 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="201302201" title="201302201" href="201302b.html#201302201">■</a> 
+fitbit ultraの表示が変わった</h3>
+<p>
+fitbit ultraにはボタンが1つだけついているが、これは1回押すごとに次々と情報が変わる。<br>
+時計、歩数、距離、消費カロリー、上がった階数の順番で。5秒ほどで自動的にオフする。<br>
+で、今日1回押したらまずSTEPと表示されて、<br>
+ちょっと経ってから歩数が表示されるようになってしまった。<br>
+どんな操作したらこうなったのかわからないまま、なんかいやだなと思いこの日記を書いていて、<br>
+確認してみたらなんと元の挙動に戻ってる！何だったんだ？これどうするとそうなるの？<br>
+ホームページ見てみるか。
+</p>
+<!-- section end -->
+</div>
+<!-- 2013/02/20 end -->
+
+<hr>
+<div>
+<a href="201302a.html">&lt;Prev(,)</a> | 
+<a href="201302c.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

@@ -1,0 +1,1234 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2001-1-c</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="200101b.html">
+<link rel="next" href="200102a.html">
+
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2001年1月下旬〜</p>
+<hr>
+<div>
+<a href="200101b.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="200102a.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2001/01/21 start -->
+<h2><a name="20010121" href="200101c.html#20010121">2001-01-21 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="200101211" title="200101211" href="200101c.html#200101211">■</a> 
+<a href="http://homepage1.nifty.com/markey/ruby/rubywin/index.html">RubyWin</a></h3>
+<a href="http://homepage1.nifty.com/markey/memo/diary.html">雑感</a>(
+<a href="http://homepage1.nifty.com/markey/memo/200101.html">2001年2月以降</a>)によると、RubyWinがbmingwでコンパイルできないというので試してみよう。<br>
+その前にちょっと突っ込みたいんだけど、
+RubyWinの名前のつけかたが非常に興味深い。
+<pre>
+% ls rubywin*
+rubywin-src-0.0.2.3.zip  rubywin_src-0017.zip  rubywin_src-0020.zip
+rubywin-src-0008.zip     rubywin_src-0018.zip
+rubywin_src-0.0.2.1.zip  rubywin_src-0019.zip
+</pre>
+とまるで一貫性がない。
+
+<h4><a name="200101211S1" href="200101c.html#200101211S1">_</a> <strong>unzip</strong>: </h4>
+<div class="sub">
+gcc 2.95.2ではまだDOS line endingsなソースファイルを正しく扱うことができない
+<a href="#20010121F1"><sup><small>*1</small></sup></a>。だから
+<pre>
+% unzip -a rubywin-src-0.0.2.3.zip
+</pre>
+する。
+
+</div>
+<h4><a name="200101211S2" href="200101c.html#200101211S2">_</a> <strong>new.h</strong>: </h4>
+<div class="sub">
+<pre>
+% cd rubywin
+% mkdir mingw
+% cd mingw
+% ruby -rfake_i386-mingw32_1.6.2.rb ../config.rb
+% make
+&lt;途中略&gt;
+/usr/local/cygwin/lib/gcc-lib/i686-pc-cygwin/2.95.2-6/../../../../\
+include/g++-3/stl_algobase.h:52: new.h: No such file or directory
+</pre>
+なるほど。new.hか。これは
+</p><blockquote><p>
+/usr/local/cygwin/lib/gcc-lib/i686-pc-cygwin/2.95.2-6/include/new.h
+</p></blockquote><p>
+にある。specsの*cpp:に
+</p><blockquote><p>
+-iwithprefixbefore include \
+</p></blockquote><p>
+が抜けてるのが原因だ。-nostdinc \の後に入れるのがよさそう。
+
+</div>
+<h4><a name="200101211S3" href="200101c.html#200101211S3">_</a> <strong>stdc++</strong>: </h4>
+<div class="sub">
+makeしてみるとCygwin用のlibstdc++.aがリンクされてしまいエラー。
+specs.msvcrtだとそうなってしまうよね。
+やっぱ、これもPREFIX/mingw/libに移動しよう。あ、libgcc.aも。
+
+</div>
+<h4><a name="200101211S4" href="200101c.html#200101211S4">_</a> <strong>bmingw, specs.msvcrt</strong>: </h4>
+<div class="sub">
+というわけで
+<a href="../ruby/binaries/mingw/bmingw/bmingw-20010121.tar.gz">bmingw-20010121.tar.gz</a>だ。libstdc++.a, libgcc.aの場所が変更になっているので、展開する前に
+<pre>
+% rm -rf PREFIX/lib/gcc-lib/mingw PREFIX/mingw
+</pre>
+したほうがいい。PREFIXはnativeなら/usr、crossなら/usr/local/cygwin。
+<a href="../files/specs.msvcrt">specs.msvcrt</a>も更新しとこう。
+
+</div>
+<hr align="left" width="40%">
+<div>
+<a name="20010121F1" href="200101c.html#20010121F1"><small>*1</small></a>:
+gcc 2.95.3ではできるようになるはず。
+</div>
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200101212" title="200101212" href="200101c.html#200101212">■</a> 
+WWWOFFLE</h3>
+違った。「次」は0x3c 0x21だからだ。
+試しにcacheを書き換えてみる。やはりそうだ。
+うーむ。WWWOFFLEは日本語対応してるわけでもないしねえ。
+Prev, Next, Recentにでもするか。
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200101213" title="200101213" href="200101c.html#200101213">■</a> 
+<a href="http://homepage2.nifty.com/zn/nnikki/200101.html#20_t0_2">make</a></h3>
+GNU makeがmakeという名前でインストールされてるなら全く問題ないです。
+つまりFreeBSDのようにシステムではGNU makeが使われてなくても、
+packagesとかにはGNU makeがgmakeという名前であるよねという話で。
+<!-- section end -->
+</div>
+<!-- 2001/01/21 end -->
+
+
+
+<hr class="hide">
+<!-- 2001/01/22 start -->
+<h2><a name="20010122" href="200101c.html#20010122">2001-01-22 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="200101221" title="200101221" href="200101c.html#200101221">■</a> 
+<a href="../ruby/fake_TARGET.rb">fake_TARGET.rb</a></h3>
+名前間違ってfake-TARGET.rbでrsyncしてしまった。
+fake_i386-cygwin.rbだと_と-が混ざっていてあれだなと思って、
+fake-TARGET.rbにしたけど、
+バージョンも埋め込みたくなって簡単に識別できるように、
+fake_i386-cygwin_1.6.2.rbに戻したのだった。
+で名前を変えるのを忘れてた。とりあえず名前を変えてsymlinkしとこ。
+てゆうか
+<a href="http://homepage2.nifty.com/zn/nnikki/200101.html#21_t0_1">指摘</a>され済みっす。どうせならどっちにも対応できるようにしとこう。
+ついでに
+<pre>
+% ruby -rfake_TARGET -s extconf.rb -target=i386-mingw32 -version=1.6.2
+</pre>
+とできるようにしてみた。
+ファイル名で情報を渡していたのにも元々ちょっと無理があったが、
+グローバル変数使ったので寿命が縮んだことになる。
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200101222" title="200101222" href="200101c.html#200101222">■</a> 
+<a href="http://homepage2.nifty.com/zn/nnikki/200101.html#21_t0_3">Cygwin DLL</a></h3>
+そういえば年越しmakeをしたから1.1.7-1よりは新しい。
+大きな違いはないと思ったけどgetrlimitが増えてるとは。
+まだ
+<a href="../ruby/binaries/">Ruby Binaries</a>は広まってないのが幸いしてると言える。
+じゃ
+<a href="../ruby/binaries/cygwin/cygwin1-20010113.dll.bz2">これ</a>を使ってください。
+<a href="200101b.html#200101152S5">SIGCONTの件</a>があるだけに1.1.7-1にはもう戻したくないし。
+あ、1.1.8が出るまでac_cv_func_getrlimit=noしとけばいいのか。
+20010122はそうした。
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200101223" title="200101223" href="200101c.html#200101223">■</a> 
+1.7.0</h3>
+そういえばfakeなrubyは1.7.0を使っていたもんだからrbconfig.rbの中のとこ
+ろどころに1.7の残骸が。これじゃまずいのでruby 1.6.2リリースも作り直しだ。
+てことは全部置き換えか。
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200101224" title="200101224" href="200101c.html#200101224">■</a> 
+xdelta</h3>
+<pre>
+% xdelta --help
+xdelta: usage: xdelta COMMAND [OPTIONS] [ARG1 ARG2 ...]
+xdelta: COMMAND is one of:
+xdelta:   delta     Produce a delta from ARG1 to ARG2 producing ARG3
+xdelta:   info      List details about delta ARG1
+xdelta:   patch     Patch file ARG2 with ARG1 producing ARG3
+xdelta: OPTIONS are:
+xdelta:   -v, --version
+xdelta:   -V, --verbose
+xdelta:   -h, --help
+xdelta:   -n, --noverify
+xdelta:   -p, --pristine
+xdelta:   -m, --maxmem=SIZE  Set the buffer size limit, e.g. 640K, 16M
+xdelta:   -[0-9]    Compression level: 0=none, 1=fast, 6=default, 9=best
+</pre>
+ちゃんと-9も指定できるのであった。
+delta時だけでなくpatch時にも有効。
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200101225" title="200101225" href="200101c.html#200101225">■</a> 
+Makefile.cross</h3>
+xdeltaを作る際、現在はシェルスクリプトではなく
+<a href="../files/Makefile.cross">Makefile.cross</a>を用意して
+<pre>
+% make -f ../Makefile.cross xdelta
+</pre>
+としている。
+今現在のディレクトリ構造はこんな感じ。
+<pre>
+Makefile.cross install-cross, tar+gz作成, xdelta作成用Makefile
+ruby16/ cvs co してある場所
+cygwin/ target i386-cygwin の作業場
+djgpp/  target i386-msdosdjgpp の作業場
+mingw/  target i386-mingw32 の作業場
+</pre>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200101226" title="200101226" href="200101c.html#200101226">■</a> 
+101 Misconceptions ...</h3>
+なんか非常に盛り上がってるようだけど、すでに読む気なし。
+さらにとどめを刺すように一通一通が長くなっている。
+<!-- section end -->
+</div>
+<!-- 2001/01/22 end -->
+
+
+
+<hr class="hide">
+<!-- 2001/01/23 start -->
+<h2><a name="20010123" href="200101c.html#20010123">2001-01-23 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="200101231" title="200101231" href="200101c.html#200101231">■</a> 
+UPX</h3>
+今までに何度かupxって単語を使っていたけど、
+<a href="http://wildsau.idv.uni-linz.ac.at/mfx/upx.html">これ</a>を見ると
+</p><blockquote><p>
+the Ultimate Packer for eXecutables
+</p></blockquote><p>
+の略らしい。ふーん、そうだったのか。
+
+<h4><a name="200101231S1" href="200101c.html#200101231S1">_</a> <strong>lzexe, diet</strong>: </h4>
+<div class="sub">
+要するに実行可能ファイルを実行できる形のまま圧縮してしまう優れものだ。
+10年ぐらい前にパソコン通信してた人なら覚えているかもしれないが、
+lzexeとかdietとかそういう類のやつ。
+
+</div>
+<h4><a name="200101231S2" href="200101c.html#200101231S2">_</a> <strong>DLLも圧縮</strong>: </h4>
+<div class="sub">
+これのすごいとこは自分が知ってる実行形式なら圧縮できる点。
+つまりLinux上でWindowsの実行ファイルも圧縮できる。
+さらにWindowsのDLLも圧縮できる。この圧縮率がまた驚異的。
+<pre>
+% ls -l cygwin-ruby16.dll*
+-rwxr-xr-x   1 watanabe ruby       567808 Jan 23 01:29 cygwin-ruby16.dll
+-rw-r--r--   1 watanabe ruby       228625 Jan 23 01:30 cygwin-ruby16.dll.bz2
+-rw-r--r--   1 watanabe ruby       243903 Jan 23 01:29 cygwin-ruby16.dll.gz-9
+-rwxr-xr-x   1 watanabe ruby       221696 Jan 23 01:29 cygwin-ruby16.dll.upx
+</pre>
+なんとbzip2に勝ってる。しかもこのままDLLとして使えるのだ
+<a href="#20010123F1"><sup><small>*1</small></sup></a>。
+
+</div>
+<h4><a name="200101231S3" href="200101c.html#200101231S3">_</a> <strong>upx+gzip</strong>: </h4>
+<div class="sub">
+試しにupxしてからgzip -9すると
+<pre>
+% ls -l cygwin-ruby16.dll.upx.gz-9 
+-rw-r--r--   1 watanabe ruby       209079 Jan 23 01:45 cygwin-ruby16.dll.upx.gz-9
+</pre>
+<strong>さらに小さくなる。</strong>つまりパッケージ化するときもupxしたほうが小さくなる。
+ただしXdeltaを考えなければ。
+
+</div>
+<hr align="left" width="40%">
+<div>
+<a name="20010123F1" href="200101c.html#20010123F1"><small>*1</small></a>:
+もちろんmv cygwin-ruby16.dll{.upx,}は必要だけど。
+</div>
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200101232" title="200101232" href="200101c.html#200101232">■</a> 
+.htaccess</h3>
+~eban/public_html/ruby/.htaccessは現在こんな感じ。
+<pre>
+#IndexOptions DescriptionWidth=*
+IndexOptions NameWidth=*
+HeaderName HEAD.html
+ReadmeName README.html
+IndexIgnore README.html HEAD.html .htaccess *~ *.bak i386-*
+AddDescription &quot;&lt;a href=http://www.xcf.berkeley.edu/~jmacd/xdelta.html&gt;xdelta&lt;/a&gt;&quot; xdelta.exe
+AddDescription &quot;&lt;a href=http://www.ruby-lang.org/en/raa-list.rhtml?name=eruby&gt;eruby&lt;/a&gt;&quot; eruby-*-i386-*.tar.gz
+AddDescription &quot;Binary Delta&quot; *.xdelta
+AddDescription &quot;&lt;a href=http://www.ruby-lang.org/~knu/cgi-bin/cvsweb.cgi/ruby/&gt;CVS Snapshot&lt;/a&gt;&quot; ruby-[^-]*-*-i386-*.tar.gz
+AddDescription &quot;&lt;a href=http://www.ruby-lang.org/en/download.html&gt;Current Release&lt;/a&gt;&quot; ruby-[^-]*-i386-*.tar.gz
+AddDescription &quot;bmingw package&quot; bmingw-*.tar.gz
+AddDescription &quot;&lt;a href=http://cygwin.com/snapshots/&gt;Cygwin DLL&lt;/a&gt;&quot; cygwin1*.dll
+AddDescription &quot;&lt;a href=http://cygwin.com/&gt;Cygwin Home&lt;/a&gt;&quot; cygwin
+AddDescription &quot;&lt;a href=http://www.mingw.org/&gt;MinGW Home&lt;/a&gt;&quot; mingw
+AddDescription &quot;&lt;a href=http://delorie.com/djgpp/&gt;DJGPP Home&lt;/a&gt;&quot; djgpp
+AddDescription &quot;Ruby Binaries&quot; binaries
+</pre>
+IndexOptions DescriptionWidth=*はApache 1.3.10以降じゃないと使えない。
+i386-*は
+<pre>
+% ln -s cygwin i386-cygwin
+% ln -s mingw i386-mingw32
+% ln -s djgpp i386-msdosdjgpp
+</pre>
+のsymlinkを隠すため。このsymlinkは
+<a href="../files/Makefile.cross">Makefile.cross</a>とrsyncの-aオプションを考えると、こうするのが一番簡単だと思うので。
+<!-- section end -->
+</div>
+<!-- 2001/01/23 end -->
+
+
+
+<hr class="hide">
+<!-- 2001/01/24 start -->
+<h2><a name="20010124" href="200101c.html#20010124">2001-01-24 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="200101241" title="200101241" href="200101c.html#200101241">■</a> 
+RubyWin</h3>
+makeできるようになってすっかり安心しきっていたが、
+インストールしてないことに今になって気づく。
+おそらくこうなることを予期していたのであろう。
+
+<h4><a name="200101241S1" href="200101c.html#200101241S1">_</a> <strong>make install</strong>: </h4>
+<div class="sub">
+<pre>
+% cd rubywin/mingw
+% make install
+ruby ./install.rb
+ruby: No such file to load -- ./install.rb (LoadError)
+make: *** [install] Error 1
+</pre>
+あれ？これって入ってなかったんだっけ？
+とりあえずmkdir mingw cygwin対策
+<a href="../files/rubywin-0.0.2.3.diff">パッチ</a>。crossのときは
+<pre>
+% make install
+ruby ../install.rb
+</pre>
+と実行されてしまいnative linuxのPREFIXである/usr/localへインストールされる。
+それではまずいのでRUBYOPT1, RUBYOPT2を追加したわけだけど、
+これは美しくなさすぎ。もっとうまい方法を考えたい。
+<pre>
+% make install \
+  RUBYOPT1='-rfake_TARGET -s' \
+  RUBYOPT2='-target=i386-mingw32'
+ruby -rfake_TARGET -s ../install.rb -target=i386-mingw32
+../SciLexer.dll -&gt; /home/watanabe/dist/i386-mingw32/usr/local/bin/SciLexer.dll
+chmod 0755 /home/watanabe/dist/i386-mingw32/usr/local/bin/SciLexer.dll
+rubywin.exe -&gt; /home/watanabe/dist/i386-mingw32/usr/local/bin/rubywin.exe
+chmod 0755 /home/watanabe/dist/i386-mingw32/usr/local/bin/rubywin.exe
+../rwlib/rwirb.rb -&gt; /home/watanabe/dist/i386-mingw32/usr/local/bin/rwlib/rwirb.rb
+chmod 0644 /home/watanabe/dist/i386-mingw32/usr/local/bin/rwlib/rwirb.rb
+../rwlib/rwinit.rb -&gt; /home/watanabe/dist/i386-mingw32/usr/local/bin/rwlib/rwinit.rb
+chmod 0644 /home/watanabe/dist/i386-mingw32/usr/local/bin/rwlib/rwinit.rb
+</pre>
+うーむ。ここにインストールしちゃうとばらばらにするの大変だなあ。
+と思って20世紀はてんこもりになっちゃったんだけど。
+どうせFile.install経由になるから、すげかえて記録すればいいか。
+
+</div>
+<h4><a name="200101241S2" href="200101c.html#200101241S2">_</a> <strong>Makefile.cross</strong>: </h4>
+<div class="sub">
+じっとMakefile.crossを見ると
+</p><blockquote><p>
+usr/local/bin/ruby*.exe
+</p></blockquote><p>
+だけが問題のような気がする。ここは
+</p><blockquote><p>
+usr/local/bin/ruby.exe<br>
+usr/local/bin/rubyw.exe
+</p></blockquote><p>
+にすべきか？
+rubyw.exeはDJGPPにはないからDLLと同じと考えればいいか。
+というわけでDLLの存在で判断することにした(
+<a href="../files/Makefile.cross">Makefile.cross</a>)。例によってばりばりGNU make依存。
+
+</div>
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200101242" title="200101242" href="200101c.html#200101242">■</a> 
+雪</h3>
+明日から三日降り続くかもと言われてもねえ。
+<!-- section end -->
+</div>
+<!-- 2001/01/24 end -->
+
+
+
+<hr class="hide">
+<!-- 2001/01/25 start -->
+<h2><a name="20010125" href="200101c.html#20010125">2001-01-25 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="200101251" title="200101251" href="200101c.html#200101251">■</a> 
+Win32OLE</h3>
+次は
+<a href="http://homepage1.nifty.com/markey/ruby/win32ole/index.html">Win32OLE</a>をmakeしよう。
+
+<h4><a name="200101251S1" href="200101c.html#200101251S1">_</a> <strong>make</strong>: </h4>
+<div class="sub">
+<pre>
+% unzip -a win32ole-0.1.9.zip
+% cd win32ole
+% mkdir cygwin mingw
+% cd cygwin
+% ruby -rfake_TARGET.rb -s ../extconf.rb -target=i386-cygwin
+% make
+% make site-install
+</pre>
+ですんなりwin32ole.soがインストールされる。MinGWも同様。
+<pre>
+% cd mingw
+% ruby -rfake_TARGET.rb -s ../extconf.rb -target=i386-mingw32
+% make
+% make site-install
+</pre>
+makeのターゲットでsite-installを指定すると
+</p><blockquote><p>
+PREFIX/lib/ruby/site_ruby/VERSION/TARGET
+</p></blockquote><p>
+へインストールされる。
+</div>
+<!-- section end -->
+</div>
+<!-- 2001/01/25 end -->
+
+
+
+<hr class="hide">
+<!-- 2001/01/26 start -->
+<h2><a name="20010126" href="200101c.html#20010126">2001-01-26 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="200101261" title="200101261" href="200101c.html#200101261">■</a> 
+RubyWin</h3>
+Cygwin版RubyWinを立ち上げて、IRBを起動しこれをexitしないで、
+すぐにRubyWinを終了させるとSEGVるようだ。
+<pre>
+% rubywin
+(eval): warning: already initialized constant STDOUT
+(eval): warning: already initialized constant STDERR
+(eval): warning: already initialized constant STDIN
+C:\CYGWIN\USR\LOCAL\BIN\rwlib\rwirb.rb:7: [BUG] Segmentation fault
+ruby 1.6.2 (2001-01-23) [i386-cygwin]
+      0 [sig] rubywin 199481 stackdump: Dumping stack trace to RUBYWIN.EXE.stackdump
+zsh: abort (core dumped)  rubywin
+</pre>
+warningは
+<strike>remove_constant</strike>Module#remove_const
+<a href="#20010126F1"><sup><small>*1</small></sup></a>すれば消えるけど、
+この場合は$stdout, $stderr, $stdinを使ったほうがいいかな。
+<hr align="left" width="40%">
+<div>
+<a name="20010126F1" href="200101c.html#20010126F1"><small>*1</small></a>:
+2001-01-30修正
+</div>
+<!-- section end -->
+</div>
+<!-- 2001/01/26 end -->
+
+
+
+<hr class="hide">
+<!-- 2001/01/27 start -->
+<h2><a name="20010127" href="200101c.html#20010127">2001-01-27 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="200101271" title="200101271" href="200101c.html#200101271">■</a> 
+<a href="http://www.winehq.com/">Wine</a></h3>
+Wineを先週取ってきたことを今頃になって思い出す。
+<h4><a name="200101271S1" href="200101c.html#200101271S1">_</a> <strong>configure と make</strong>: </h4>
+<div class="sub">
+<pre>
+% CFLAGS=-Os ./configure  --enable-dll
+% make depend &amp;&amp; make
+</pre>
+configureすると最後に
+</p><blockquote><p>
+Configure finished.  Do 'make depend &amp;&amp; make' to compile Wine.
+</p></blockquote><p>
+と出るのでそれに従う。
+面倒なら./tools/wineinstallを使うほうがいい。
+
+</div>
+<h4><a name="200101271S2" href="200101c.html#200101271S2">_</a> <strong>遅い</strong>: </h4>
+<div class="sub">
+2時間経ってもまだ終わらない。P5 133MHzじゃねえ。その間「秘密」を見る。
+と書いたら終わった。
+
+</div>
+<h4><a name="200101271S3" href="200101c.html#200101271S3">_</a> <strong>遅い遅い</strong>: </h4>
+<div class="sub">
+<pre>
+% time wine -- ./ruby -v
+Building font metrics. This may take some time...
+&lt;フォントのエラーメッセージが延々続く&gt;
+err:ntdll:RtlpWaitForCriticalSection Critical section 0x400fe370 wait timed out, retrying (60 sec) fs=020f
+fixme:keyboard:X11DRV_KEYBOARD_DetectLayout Your keyboard layout was not found!
+Instead of using closest match (United States keyboard layout (phantom key version)) for scancode mapping.
+Please define your layout in windows/x11drv/keyboard.c and submit them
+to us for inclusion into future Wine releases.
+See documentation/keyboard for more information.
+fixme:winsock:_get_sock_fd handle 65535 is not a socket (GLE 6)
+fixme:winsock:_get_sock_fd handle 65535 is not a socket (GLE 6)
+fixme:console:SetConsoleCtrlHandler (0x7800f585,1) - no error checking or testing yet
+ruby 1.6.2 (2001-01-23) [i386-mingw32]
+wine -- ./ruby -v  8.13s user 2.24s system 2% cpu 6:22.22 total
+</pre>
+まいったなあ。6分もかかるのか。
+フォント関係は2回目からは出ないからもうちょっと改善されるけど。
+<pre>
+% time wine -- ./ruby -v
+err:ntdll:RtlpWaitForCriticalSection Critical section 0x400fe370 wait timed out, retrying (60 sec) fs=020f
+fixme:keyboard:X11DRV_KEYBOARD_DetectLayout Your keyboard layout was not found!
+Instead of using closest match (United States keyboard layout (phantom key version)) for scancode mapping.
+Please define your layout in windows/x11drv/keyboard.c and submit them
+to us for inclusion into future Wine releases.
+See documentation/keyboard for more information.
+fixme:winsock:_get_sock_fd handle 65535 is not a socket (GLE 6)
+fixme:winsock:_get_sock_fd handle 65535 is not a socket (GLE 6)
+fixme:console:SetConsoleCtrlHandler (0x7800f585,1) - no error checking or testing yet
+ruby 1.6.2 (2001-01-23) [i386-mingw32]
+wine -- ./ruby -v  7.96s user 1.74s system 15% cpu 1:02.03 total
+</pre>
+それでも1分だ。
+あ、なんか60 sec待ってるってメッセージに出てるね。
+ソースを見るとWaitFroSingleObjectで5秒待ってタイムアウトしたら60秒待ち、
+さらにタイムアウトしたら5分待つという感じになってる。
+てことはこのメッセージは5秒後に出てるわけか。
+試しにhello worldをCで書いて実行してみると40秒ぐらいかかる。
+fixmeは--debugmsg fixme-allすれば表示されなくなるけど、
+errは無視したからって速くなるわけでもないしねえ。
+
+</div>
+<h4><a name="200101271S4" href="200101c.html#200101271S4">_</a> <strong>ntdll</strong>: </h4>
+<div class="sub">
+ntdllはnativeを使えばいいという気もする。
+<pre>
+% ldd /usr/local/bin/wine             
+        libntdll.so =&gt; /usr/local/lib/libntdll.so (0x4001a000)
+        libwine.so =&gt; /usr/local/lib/libwine.so (0x40117000)
+        libwine_unicode.so =&gt; /usr/local/lib/libwine_unicode.so (0x4012d000)
+        libncurses.so.5 =&gt; /usr/local/lib/libncurses.so.5 (0x401f5000)
+        libutil.so.1 =&gt; /lib/libutil.so.1 (0x40235000)
+        libdl.so.2 =&gt; /lib/libdl.so.2 (0x40238000)
+        libc.so.6 =&gt; /lib/libc.so.6 (0x4023b000)
+        /lib/ld-linux.so.2 =&gt; /lib/ld-linux.so.2 (0x40000000)
+</pre>
+だめだ。リンクされてる。
+
+</div>
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200101272" title="200101272" href="200101c.html#200101272">■</a> 
+<a href="http://homepage2.nifty.com/zn/nnikki/200101.html#25_t5_1">.htaccess</a></h3>
+.htaccessはIndexIgnoreに登録しなくても最初から.??*が登録されてるので、
+たしかに書いても意味はないと言えばないんだけど。
+Forbiddenになっちゃうからここで公開したというか。
+あ、こうしとけばいいのか。
+<pre>
+&lt;Files .htaccess&gt;
+    Order allow,deny
+    allow from all
+&lt;/Files&gt;
+</pre>
+でもどうすればIndexIgnoreから外せる？
+とりあえず
+<a href="../ruby/.htaccess">ここ</a>から見えるようにしとこう。
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200101273" title="200101273" href="200101c.html#200101273">■</a> 
+雪</h3>
+三日間降らなかった代わりにまとめて降ってるんだろうか。
+それにしても休みの日を狙って降らなくても。
+買いそびれた極道編は月曜だな。amazonに注文しとけばよかった。
+<!-- section end -->
+</div>
+<div align="right">〜DO AS INFINITY/DESIREを聴きながら〜</div>
+<!-- 2001/01/27 end -->
+
+
+
+<hr class="hide">
+<!-- 2001/01/28 start -->
+<h2><a name="20010128" href="200101c.html#20010128">2001-01-28 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="200101281" title="200101281" href="200101c.html#200101281">■</a> 
+command.comとcmd.exe</h3>
+WinMeにもcmd.exeは付属してないそうだけど、実は
+<a href="ftp://ftp.microsoft.com/developr/platformsdk/oct2000/psdk-x86.49.cab">psdk-x86.49.cab</a>の中にあるWin95Cmd_Exe.95CE7C64_A68D_11D2_A852_00C04FC2A854が使える。
+これをwin95cmd.exeとかcmd.exeに名前を変えればいい。
+psdk-x86.49.cabは10MBぐらいあるので気合いを入れるように。
+Win95Cmd_Exe.後略は300KBぐらいなので、
+これだけが目的だとすると割に合わないかもしれない。
+
+<pre>
+ruby:~ % ssh wjarh
+Fanfare!!!
+You are successfully logged in to this server!!!
+JARH:~ % PROMPT='$p$g' win95cmd
+Microsoft Windows 2000 [Version 4.10.0000]
+(C) Copyright 1985-1999 Microsoft Corp.
+
+C:\cygwin\home\watanabe&gt;
+</pre>
+command.comだとほとんどハング状態だったけど、
+win95cmd.exeだとほとんど問題ない。
+コマンドラインのエコーバックが返ってくるのは気にしないことにしよう。<br>
+メッセージにはWindows 2000と出てるから2000用なのか。
+
+<h4><a name="200101281S1" href="200101c.html#200101281S1">_</a> <strong>cd windows</strong>: </h4>
+<div class="sub">
+でもなんか挙動が変だ。
+<pre>
+C:\&gt;dir w*.
+dir w*.
+ Volume in drive C has no label.
+ Volume Serial Number is XXXX-XXXX
+
+ Directory of C:\
+
+98/06/29  15:10         &lt;DIR&gt;          WINDOWS
+               0 File(s)              0 bytes
+               1 Dir(s)      64,290,816 bytes free
+
+C:\&gt;cd windows
+cd windows
+アクセスは拒否されました。
+
+C:\&gt;cd \windows
+cd \windows
+
+C:\WINDOWS&gt;
+</pre>
+なぜに拒否される？しかも拒否するまでちょっと時間がかかる。
+
+</div>
+<h4><a name="200101281S2" href="200101c.html#200101281S2">_</a> <strong>2&gt; out</strong>: </h4>
+<div class="sub">
+だいたいNTのcmd.exeと同じなので2&gt;も使える。
+<pre>
+C:\&gt;ruby -e '$stderr.print &quot;stderr\n&quot;' &gt;nul
+ruby -e '$stderr.print &quot;stderr\n&quot;' &gt;nul
+stderr
+
+C:\&gt;ruby -e '$stderr.print &quot;stderr\n&quot;' 2&gt;nul
+ruby -e '$stderr.print &quot;stderr\n&quot;' 2&gt;nul
+
+C:\&gt;
+</pre>
+
+</div>
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200101282" title="200101282" href="200101c.html#200101282">■</a> 
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-talk/9986">[ruby-talk:9986]</a></h3>
+これって単に
+<pre>
+C:\&gt;command.com /c c:/usr/local/bin/ruby -v
+command.com /c c:/usr/local/bin/ruby -v
+
+C:\&gt;win95cmd /c c:/usr/local/bin/ruby -v
+win95cmd /c c:/usr/local/bin/ruby -v
+ruby 1.6.2 (2001-01-23) [i386-mingw32]
+
+C:\&gt;c:/usr/local/bin/ruby -v
+c:/usr/local/bin/ruby -v
+ruby 1.6.2 (2001-01-23) [i386-mingw32]
+
+</pre>
+の違いじゃないのかな。cmd.exeは不思議なことに/も受け付ける。
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200101283" title="200101283" href="200101c.html#200101283">■</a> 
+ML</h3>
+ruby-talk MLも10000通を越えた。
+気づいてなかったがruby-dev MLも半年前に越えている。
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200101284" title="200101284" href="200101c.html#200101284">■</a> 
+RubyUnit 0.3.3a</h3>
+<pre>
+% ruby -rfake_TARGET -s install.rb -target=i386-cygwin
+% ruby -rfake_TARGET -s install.rb -target=i386-mingw32
+% ruby -rfake_TARGET -s install.rb -target=i386-msdosdjgpp
+</pre>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200101285" title="200101285" href="200101c.html#200101285">■</a> 
+Makefile.pack</h3>
+packingのための
+<a href="../files/Makefile.pack">Makefile.pack</a>を作った。
+たとえば
+<pre>
+DOC=ChangeLog README ToDo doc_* makehtml.rb sample test*
+CONTENTS=usr/local/lib/ruby/site_ruby/$(RUBYVER)/runit \
+usr/local/bin/runtest.rb \
+usr/local/bin/c2t.rb
+</pre>
+のような../rubywin.contentsを用意しといて
+<pre>
+% make -f ../Makefile.pack PACKAGE=rubyunit VERSION=0.3.3a TARGET=i386-cygwin
+% make -f ../Makefile.pack PACKAGE=rubyunit VERSION=0.3.3a TARGET=i386-mingw32
+% make -f ../Makefile.pack PACKAGE=rubyunit VERSION=0.3.3a TARGET=i386-msdosdjgpp
+</pre>
+という感じで一気にtar+gzipまで作る。<br>
+これで基本的にはfoo.contentsを作ればいいわけだ。ほんとか？
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200101286" title="200101286" href="200101c.html#200101286">■</a> 
+雪</h3>
+昨日の雪は夕方には雨へと変わったのでかなり溶けた。
+が、また週末に降るという噂も。
+<!-- section end -->
+</div>
+<div align="right">〜move/Gamble Rumbleを聴きながら〜</div>
+<!-- 2001/01/28 end -->
+
+
+
+<hr class="hide">
+<!-- 2001/01/29 start -->
+<h2><a name="20010129" href="200101c.html#20010129">2001-01-29 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="200101291" title="200101291" href="200101c.html#200101291">■</a> 
+strscan 0.6.1</h3>
+<h4><a name="200101291S1" href="200101c.html#200101291S1">_</a> <strong>i386-cygwin</strong>: </h4>
+<div class="sub">
+<pre>
+% ruby -rfake_TARGET -s setup.rb -target=i386-cygwin config
+% cd ext/cscan
+% ruby -rfake_TARGET -s extconf.rb -target=i386-cygwin
+% cd ../..
+% ruby -rfake_TARGET -s setup.rb -target=i386-cygwin setup
+% upx ext/cscan/cscan.so
+% ruby -rfake_TARGET -s setup.rb -target=i386-cygwin install
+</pre>
+青木さんのsetup.rbはfake_TARGET.rbだと騙されないのか、
+ext/以下を処理してくれないので手でextconf.rbを実行する。
+
+</div>
+<h4><a name="200101291S2" href="200101c.html#200101291S2">_</a> <strong>strscan.contents</strong>: </h4>
+<div class="sub">
+<pre>
+DOC=LGPL README.en README.ja doc.en doc.ja
+</pre>
+これだけでokなはず.
+<pre>
+% make -f ../Makefile.pack PACKAGE=strscan VERSION=0.6.1 TARGET=i386-cygwin
+...
+tar: Cannot add file usr/local/lib/ruby/site_ruby/1.6/i386-cygwin/strscan.so: \
+  No such file or directory
+...
+</pre>
+うーむ。まいったね。strscan.soじゃなくてcscan.soなんだなあ。
+というわけでstrscan.contentsは
+<pre>
+DOC=LGPL README.en README.ja doc.en doc.ja
+CONTENTS=usr/local/lib/ruby/site_ruby/$(RUBYVER)/$(TARGET)/cscan.so
+</pre>
+に変更。今度はokだ。
+
+</div>
+<h4><a name="200101291S3" href="200101c.html#200101291S3">_</a> <strong>i386-mingw32</strong>: </h4>
+<div class="sub">
+続いてi386-mingw32の前にclean.
+<pre>
+% ruby -rfake_TARGET -s setup.rb -target=i386-cygwin clean
+% rm config.save
+</pre>
+config.saveが残ってると前回にsetupしたものが使われてしまうので注意。
+<pre>
+% ruby -rfake_TARGET -s setup.rb -target=i386-mingw32 config
+% cd ext/cscan
+% ruby -rfake_TARGET -s extconf.rb -target=i386-mingw32
+% cd ../..
+% ruby -rfake_TARGET -s setup.rb -target=i386-mingw32 setup
+% upx ext/cscan/cscan.so
+% ruby -rfake_TARGET -s setup.rb -target=i386-mingw32 install
+</pre>
+とここのメッセージを見てて、
+scanner.rb, strscan.rb, rscan.rbの存在を忘れていたことに気づく。
+またstrscan.contentsの修正。
+<pre>
+DOC=LGPL README.en README.ja doc.en doc.ja
+CONTENTS=usr/local/lib/ruby/site_ruby/$(RUBYVER)/$(TARGET)/cscan.so \
+usr/local/lib/ruby/site_ruby/$(RUBYVER)/scanner.rb \
+usr/local/lib/ruby/site_ruby/$(RUBYVER)/strscan.rb \
+usr/local/lib/ruby/site_ruby/$(RUBYVER)/rscan.rb
+</pre>
+ああ、cygwin版作り直しじゃん。てゆうかsetup.rbは
+<pre>
+% mkdir cygwin mingw
+% cd cygwin
+% ruby -rfake_TARGET -s ../setup.rb -target=i386-cygwin setup
+</pre>
+てなことを許してくれないからいちいちcleanしなきゃいけないんだよね。<br>
+それはそれとしてパッケージを完成させとく。
+<pre>
+% make -f ../Makefile.pack PACKAGE=strscan VERSION=0.6.1 TARGET=i386-mingw32
+</pre>
+
+</div>
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200101292" title="200101292" href="200101c.html#200101292">■</a> 
+racc 1.3.6</h3>
+<h4><a name="200101292S1" href="200101c.html#200101292S1">_</a> <strong>i386-cygwin</strong>: </h4>
+<div class="sub">
+<pre>
+% ruby -rfake_TARGET -s setup.rb -target=i386-cygwin config
+% cd ext/cparse
+% ruby -rfake_TARGET -s extconf.rb -target=i386-cygwin
+% cd ../strscanso
+% ruby -rfake_TARGET -s extconf.rb -target=i386-cygwin
+% cd ../..
+% ruby -rfake_TARGET -s setup.rb -target=i386-cygwin setup
+% vi bin/racc/racc
+% rm bin/racc/racc.bak
+% upx ext/*/*.so
+% ruby -rfake_TARGET -s setup.rb -target=i386-cygwin install
+</pre>
+あ、strscan 0.6.1は入れなくてもいいのか。<br>
+setup時に
+</p><blockquote><p>
+setting #! line to &quot;#!/home/watanabe/dist/i386-cygwin/usr/local/bin/ruby&quot;
+</p></blockquote><p>
+となるのでbin/racc/raccを書き換えてからinstall。
+
+</div>
+<h4><a name="200101292S2" href="200101c.html#200101292S2">_</a> <strong>racc.contents</strong>: </h4>
+<div class="sub">
+<pre>
+DOC=BUGS.* FILES LGPL README.* doc.* misc sample
+CONTENTS=\
+usr/local/bin/racc \
+usr/local/lib/ruby/site_ruby/$(RUBYVER)/scanner.rb \
+usr/local/lib/ruby/site_ruby/$(RUBYVER)/strscan.rb \
+usr/local/lib/ruby/site_ruby/$(RUBYVER)/amstd \
+usr/local/lib/ruby/site_ruby/$(RUBYVER)/racc \
+usr/local/lib/ruby/site_ruby/$(RUBYVER)/$(TARGET)/racc \
+usr/local/lib/ruby/site_ruby/$(RUBYVER)/$(TARGET)/strscan.so
+</pre>
+こんどは一発だ。
+<pre>
+% make -f ../Makefile.pack PACKAGE=racc VERSION=1.3.6 TARGET=i386-cygwin
+</pre>
+
+</div>
+<h4><a name="200101292S3" href="200101c.html#200101292S3">_</a> <strong>i386-mingw32</strong>: </h4>
+<div class="sub">
+例によってcleanしてrmしてから。
+<pre>
+% ruby -rfake_TARGET -s setup.rb -target=i386-mingw32 config
+% cd ext/cparse 
+% ruby -rfake_TARGET -s extconf.rb -target=i386-mingw32
+% cd ../strscanso 
+% ruby -rfake_TARGET -s extconf.rb -target=i386-mingw32
+% cd ../..
+% ruby -rfake_TARGET -s setup.rb -target=i386-mingw32 setup
+% vi bin/racc/racc
+% rm bin/racc/racc.bak
+% upx ext/*/*.so
+% ruby -rfake_TARGET -s setup.rb -target=i386-mingw32 install
+% make -f ../Makefile.pack PACKAGE=racc VERSION=1.3.6 TARGET=i386-mingw32
+</pre>
+
+</div>
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200101293" title="200101293" href="200101c.html#200101293">■</a> 
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-talk/10058">REQUEST TO REMOVE SEQUENCE # IN SUBJECT</a></h3>
+そんなこと要求する前にReferenceなりIn-Reply-Toなりつけてよ、お願いだから。
+<!-- section end -->
+</div>
+<div align="right">〜矢井田瞳/I'm here saying nothingを聴きながら〜</div>
+<!-- 2001/01/29 end -->
+
+
+
+<hr class="hide">
+<!-- 2001/01/30 start -->
+<h2><a name="20010130" href="200101c.html#20010130">2001-01-30 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="200101301" title="200101301" href="200101c.html#200101301">■</a> 
+ML</h3>
+また、遅れてる。
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-list/27349">[ruby-list:27349]</a>は
+</p><blockquote><p>
+Date: Mon, 29 Jan 2001 00:28:30 +0900
+</p></blockquote><p>
+なのにrimnetに届いたのが
+</p><blockquote><p>
+Mon, 29 Jan 2001 01:24:26 +0900 (JST)
+</p></blockquote><p>
+だ。1時間かかってる。
+結局このメールを見たのは会社に着いてからでおかげで録画予約できず。残念。
+って昨日の話だね。
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200101302" title="200101302" href="200101c.html#200101302">■</a> 
+ML(2)</h3>
+ruby-dev MLに出したメールがなかなか返ってこないのでheliumでmailqしてみた。
+<pre>
+Tue Jan 30 14:58:20  ruby-talk-admin@netlab.co.jp
+Tue Jan 30 15:14:38  ruby-talk-admin@netlab.co.jp
+Tue Jan 30 14:58:23  ruby-list-admin@netlab.co.jp
+Tue Jan 30 14:58:22  ruby-talk-admin@netlab.co.jp
+Tue Jan 30 15:00:03  ruby-dev-admin@netlab.co.jp
+Tue Jan 30 15:10:02  ruby-talk-admin@netlab.co.jp
+Tue Jan 30 15:14:52  ruby-talk-admin@netlab.co.jp
+Tue Jan 30 15:09:53  ruby-talk-admin@netlab.co.jp
+Tue Jan 30 14:58:26  ruby-list-admin@netlab.co.jp
+Tue Jan 30 14:58:28  ruby-talk-admin@netlab.co.jp
+Tue Jan 30 14:58:25  ruby-talk-admin@netlab.co.jp
+</pre>
+14:58:2Xになぜか集中している。
+15:00:03のおいらのメールはこれで待ちに入ったのか13分もかかった。
+Postfixってこういうのは捌き切れないのかな？
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200101303" title="200101303" href="200101c.html#200101303">■</a> 
+極道編</h3>
+結局amazonにした。なぜか今月も送料無料じゃん。
+ついでにBRAIN VALLEY(瀬名秀明)の下巻も。
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200101304" title="200101304" href="200101c.html#200101304">■</a> 
+OptionParser</h3>
+いつの間にかインストーラがついてる。とりあえずいつものようにやってみよう。
+
+<h4><a name="200101304S1" href="200101c.html#200101304S1">_</a> <strong>i386-cygwin</strong>: </h4>
+<div class="sub">
+<pre>
+% ruby -rfake_TARGET -s install.rb -target=i386-cygwin
+optparse.rb -&gt; /home/watanabe/dist/i386-cygwin/usr/local/lib/ruby/site_ruby/optparse.rb
+chmod 0644 /home/watanabe/dist/i386-cygwin/usr/local/lib/ruby/site_ruby/optparse.rb
+</pre>
+Makerules, GNUmakefileを見ると他にもインストールされるようだが、
+全部まとめてDOCに入れてごまかすことにする。
+
+</div>
+<h4><a name="200101304S2" href="200101c.html#200101304S2">_</a> <strong>optparse.contents</strong>: </h4>
+<div class="sub">
+<pre>
+DOC=ChangeLog GNUmakefile MANIFEST Makerules README.* cmd-ls.rb cmd.rb \
+getopts.test getopts.test.en install.rb \
+optparse optparse.*.rd optparse.rlog opttest.rb
+CONTENTS=usr/local/lib/ruby/site_ruby/optparse.rb
+</pre>
+これだとoptparse.rbを除いて全部がDOCになるけど、いいのかそれで？
+
+</div>
+<h4><a name="200101304S3" href="200101c.html#200101304S3">_</a> <strong>pack</strong>: </h4>
+<div class="sub">
+<pre>
+% make -f ../Makefile.pack PACKAGE=optparse VERSION=0.7.9 TARGET=i386-cygwin
+</pre>
+
+</div>
+<h4><a name="200101304S4" href="200101c.html#200101304S4">_</a> <strong>依存してない</strong>: </h4>
+<div class="sub">
+ここでOptionParserはTARGETに依存してないことに気づく。
+じゃMinGWとDJGPPはsymlinkで十分か。
+<pre>
+% cd ~/helium/public_html/ruby/binaries/mingw
+% ln -s ../cygwin/optparse-0.7.9-i386-cygwin.tar.gz optparse-0.7.9-i386-mingw32.tar.gz
+% cd ../djgpp
+% ln -s ../cygwin/optparse-0.7.9-i386-cygwin.tar.gz optparse-0.7.9-i386-msdosdjgpp.tar.gz
+</pre>
+
+</div>
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200101305" title="200101305" href="200101c.html#200101305">■</a> 
+Wine</h3>
+--disable-debug --disable-traceすれば少しは速くなるのだろうか？
+2時間待ってみよう。
+<pre>
+% make clean
+% time make
+...
+make  4516.65s user 314.24s system 95% cpu 1:24:00.23 total
+</pre>
+おお、早く終わった。
+<pre>
+% time wine -- ruby -v
+err:ntdll:RtlpWaitForCriticalSection Critical section 0x400e3550 \
+  wait timed out, retrying (60 sec) fs=020f
+ruby 1.6.2 (2001-01-23) [i386-mingw32]
+wine -- ruby -v  6.99s user 1.54s system 14% cpu 58.256 total
+</pre>
+心持ち速くなった。--debugmsg fixme-allしなくてすむだけか。
+<!-- section end -->
+</div>
+<!-- 2001/01/30 end -->
+
+
+
+<hr class="hide">
+<!-- 2001/01/31 start -->
+<h2><a name="20010131" href="200101c.html#20010131">2001-01-31 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="200101311" title="200101311" href="200101c.html#200101311">■</a> 
+rdtool 0.6.6</h3>
+準備は整ったのでrdtoolだ。
+<h4><a name="200101311S1" href="200101c.html#200101311S1">_</a> <strong>i386-cygwin</strong>: </h4>
+<div class="sub">
+<pre>
+% ruby -rfake_TARGET -s rdtoolconf.rb -target=i386-cygwin
+% make
+% make install
+% cat ../rdtool.contents
+DOC=HISTORY README.html README.rd README.rd.ja doc rmi2html.rb utils
+CONTENTS=usr/local/bin/rd2 \
+usr/local/lib/ruby/site_ruby/1.6/rd/*
+% make -f ../Makefile.pack PACKAGE=rdtool VERSION=0.6.6 TARGET=i386-cygwin
+</pre>
+
+</div>
+<h4><a name="200101311S2" href="200101c.html#200101311S2">_</a> <strong>i386-mingw32, i386-msdosdjgpp</strong>: </h4>
+<div class="sub">
+これも依存しないのでsymlink。
+<pre>
+% cd ~/helium/public_html/ruby/binaries/mingw
+% ln -s ../cygwin/rdtool-0.6.6-i386-cygwin.tar.gz rdtool-0.6.6-i386-mingw32.tar.gz
+% cd ../djgpp
+% ln -s ../cygwin/rdtool-0.6.6-i386-cygwin.tar.gz rdtool-0.6.6-i386-msdosdjgpp.tar.gz
+</pre>
+
+</div>
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200101312" title="200101312" href="200101c.html#200101312">■</a> 
+rdtool 0.6.7</h3>
+なぜかタイミングよくリリースされる。
+<h4><a name="200101312S1" href="200101c.html#200101312S1">_</a> <strong>i386-cygwin</strong>: </h4>
+<div class="sub">
+<pre>
+% ruby -rfake_TARGET -s rdtoolconf.rb -target=i386-cygwin
+% make
+% make install
+% make -f ../Makefile.pack PACKAGE=rdtool VERSION=0.6.6 TARGET=i386-cygwin
+</pre>
+あとはsymlinkを張っておしまい。0.6.6は削除。
+
+</div>
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200101313" title="200101313" href="200101c.html#200101313">■</a> 
+raccふたたび</h3>
+このままだとDJGPPにraccが入ってないのでエラーになる。
+<pre>
+% ruby -rfake_TARGET -s setup.rb -target=i386-msdosdjgpp config \
+  --without=ext/cparse,ext/strscanso --ruby-path=/usr/local/bin/ruby
+</pre>
+そうか。--ruby-pathで指定すればいいんだね。
+<pre>
+% ruby -rfake_TARGET -s setup.rb -target=i386-msdosdjgpp setup
+entering setup phase...
+setting #! line to &quot;#!/usr/local/bin/ruby&quot;
+setup.rb: skip ext/cparse(raccrt) by user option
+setup.rb: skip ext/strscanso(strscan) by user option
+setup done.
+% ruby -rfake_TARGET -s setup.rb -target=i386-msdosdjgpp install
+%  make -f ../Makefile.pack PACKAGE=racc VERSION=1.3.6 TARGET=i386-msdosdjgpp
+...
+tar: Cannot add file \
+  usr/local/lib/ruby/site_ruby/1.6/i386-msdosdjgpp/racc: \
+  No such file or directory
+tar: Cannot add file \
+  usr/local/lib/ruby/site_ruby/1.6/i386-msdosdjgpp/strscan.so: \
+  No such file or directory
+...
+</pre>
+DJGPPは*.soが作られないからtarが文句を言うけど、気にしない。
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200101314" title="200101314" href="200101c.html#200101314">■</a> 
+Cygwin 1.1.8</h3>
+問題多過ぎ。Win95/98/Meで一度も試さないでリリースしてるとしか思えない。
+
+<h4><a name="200101314S1" href="200101c.html#200101314S1">_</a> <strong>windres</strong>: </h4>
+<div class="sub">
+結局
+<a href="200101b.html#200101111S3">-mwin32</a>が使えるかどうかを調べざるを得ない状況に。
+windresが内部的にgcc -Eで呼び出しているから、
+ここには-mwin32がどうしても必要。
+というわけでconfigure.in, cygwin/GNUmakefileで対応した。
+
+</div>
+<h4><a name="200101314S2" href="200101c.html#200101314S2">_</a> <strong>-mno-cygwin</strong>: </h4>
+<div class="sub">
+-mno-cygwinはmsvcrtが対象となった。
+libgcc.aからimpure_ptrがなくなった。
+それはよろこばしいことだがspecsに-D__MSVCRT__がない。
+emacs 21.0.96はこれでこける。
+emacsの場合はそれ以前にやることも多々あるんだけど。
+
+</div>
+<h4><a name="200101314S3" href="200101c.html#200101314S3">_</a> <strong>opendir</strong>: </h4>
+<div class="sub">
+どうも、libmingw32.aのopendirが変だ。
+<pre>
+../ruby16/win32/resource.rb:16:in `open': Not a directory - \
+  &quot;C:/cygwin/home/watanabe/ruby/mingw16&quot; (Errno::ENOTDIR)
+        from ../ruby16/win32/resource.rb:16:in `find'
+        from ../ruby16/win32/resource.rb:28
+        from ../ruby16/win32/resource.rb:28:in `each'
+        from ../ruby16/win32/resource.rb:28
+make: *** [mingw32-ruby16.dll.rc] Error 1
+</pre>
+しかたないので-lbmingwに登場してもらう。
+ってことはbmingw packageはまだ必要だな。
+</div>
+<!-- section end -->
+</div>
+<!-- 2001/01/31 end -->
+
+<hr>
+<div>
+<a href="200101b.html">&lt;Prev(,)</a> | 
+<a href="200102a.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

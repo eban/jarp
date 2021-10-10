@@ -1,0 +1,398 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2007-9-b</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="200709a.html">
+<link rel="next" href="200709c.html">
+
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2007年9月中旬〜</p>
+<hr>
+<div>
+<a href="200709a.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="200709c.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2007/09/11 start -->
+<h2><a name="20070911" href="200709b.html#20070911">2007-09-11 (Tue)</a></h2>
+<!-- 2007-09-12 01:35:17 -->
+
+<div class="entry1">
+<h3><a name="200709111" title="200709111" href="200709b.html#200709111">■</a> 
+[Web] 1日で見るWebのページ数</h3>
+<p>
+昨日が164、今日が177。結構見てるんだなと思った。<br>
+Gmailだのfastladder等は含まれないから実際はもっと多いけど。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200709112" title="200709112" href="200709b.html#200709112">■</a> 
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-talk/268578">[Ruby] is there a one liner to initialize a variable to 1, or increment by 1?</a></h3>
+<p>
+実際問題ローカル変数fooってのはありえないよね。
+</p>
+
+<pre>
+foo = (foo == nil ? 1 : foo + 1)
+</pre>
+<p>
+というのが気に入らないらしいが、<br>
+これはあらかじめfoo = nilとしないと初出のfooの参照でNameErrorになるはず。<br>
+と思ったら先にfoo =があるから初出にならないのか。おもしろい。
+</p>
+
+<p>
+いやいややっぱ変だな。インクリメントするのはループの中とか、<br>
+メソッドが呼ばれるたびにとかそういう使い方になるはずで、<br>
+ループだったら先にfoo = 1しとけばいいし、<br>
+メソッドだったらそもそも
+それならinitializeで= 1しとけばいいわけで、<br>
+やっぱどういうとこで使われるのかよくわからないな。<br>
+initializeが面倒ってのはあるかもしれないが。
+</p>
+
+<p>
+どうでもいい話ではあるが
+</p>
+
+<pre>
+foo = foo + 1 rescue 1
+</pre>
+<p>
+なんてのを思いついた。rescueは値を持つというのは意外と知られていない。
+</p>
+<!-- section end -->
+</div>
+<!-- 2007/09/11 end -->
+
+
+
+<hr class="hide">
+<!-- 2007/09/12 start -->
+<h2><a name="20070912" href="200709b.html#20070912">2007-09-12 (Wed)</a></h2>
+<!-- 2007-09-13 01:08:34 -->
+
+<div class="entry1">
+<h3><a name="200709121" title="200709121" href="200709b.html#200709121">■</a> 
+<a href="http://www.meebo.com/">[IM] meebo</a></h3>
+<p>
+なひさんにそそのかされてmeeboを使ってみる。<br>
+会社からはぶちぶち接続が切れてsignupもままならず、<br>
+家に帰ってやっと使えるようになった。<br>
+ここまで作り込むかー。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200709122" title="200709122" href="200709b.html#200709122">■</a> 
+<a href="http://golf.shinh.org/p.rb?100">[Golf] 100</a></h3>
+<p>
+自分で出題しておいてなんだが、やっと250Bを切ったくらい。<br>
+あと1週間あるしのんびり縮めていこう。
+</p>
+<!-- section end -->
+</div>
+<!-- 2007/09/12 end -->
+
+
+
+<hr class="hide">
+<!-- 2007/09/13 start -->
+<h2><a name="20070913" href="200709b.html#20070913">2007-09-13 (Thu)</a></h2>
+<!-- 2007-09-14 01:07:15 -->
+
+<div class="entry1">
+<h3><a name="200709131" title="200709131" href="200709b.html#200709131">■</a> 
+<a href="http://www.rememberthemilk.com/">[RTM] remember the milk</a></h3>
+<p>
+牛乳を買うの忘れて思い出したので登録。<br>
+なかなか面白いUIだなあ。<br>
+とりあえずヘルプを読むタスクを追加した。
+</p>
+<!-- section end -->
+</div>
+<!-- 2007/09/13 end -->
+
+
+
+<hr class="hide">
+<!-- 2007/09/14 start -->
+<h2><a name="20070914" href="200709b.html#20070914">2007-09-14 (Fri)</a></h2>
+<!-- 2007-09-15 02:22:27 -->
+
+<div class="entry1">
+<h3><a name="200709141" title="200709141" href="200709b.html#200709141">■</a> 
+<a href="http://golf.shinh.org/p.rb?99+shinichiroes+of+hamaji">[Golf] 99(ry</a></h3>
+<p>
+1バイト追い付けないなあとずっと思っていたが、改行がこんなとこに。
+</p>
+<!-- section end -->
+</div>
+<!-- 2007/09/14 end -->
+
+
+
+<hr class="hide">
+<!-- 2007/09/15 start -->
+<h2><a name="20070915" href="200709b.html#20070915">2007-09-15 (Sat)</a></h2>
+<!-- 2007-09-16 01:16:45 -->
+
+<div class="entry1">
+<h3><a name="200709151" title="200709151" href="200709b.html#200709151">■</a> 
+<a href="http://golf.shinh.org/p.rb?100">[Golf] 100</a></h3>
+<p>
+231Bまで来たがもう縮みそうもないので、別解を考えたらすぐに縮んだ。<br>
+世の中こんなもんか。
+</p>
+<!-- section end -->
+</div>
+<!-- 2007/09/15 end -->
+
+
+
+<hr class="hide">
+<!-- 2007/09/16 start -->
+<h2><a name="20070916" href="200709b.html#20070916">2007-09-16 (Sun)</a></h2>
+<!-- 2007-09-17 02:42:06 -->
+
+<div class="entry1">
+<h3><a name="200709161" title="200709161" href="200709b.html#200709161">■</a> 
+[NICO NICO] アンインストール</h3>
+<p>
+サビは本物よりもいいと思った。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200709162" title="200709162" href="200709b.html#200709162">■</a> 
+<a href="http://golf.shinh.org/p.rb?100">[Golf] 100</a></h3>
+<p>
+考えれば縮まるもんだな。200Bを切るには時間がもうないか。
+</p>
+<!-- section end -->
+</div>
+<!-- 2007/09/16 end -->
+
+
+
+<hr class="hide">
+<!-- 2007/09/17 start -->
+<h2><a name="20070917" href="200709b.html#20070917">2007-09-17 (Mon)</a></h2>
+<!-- 2007-09-18 01:42:26 -->
+
+<div class="entry1">
+<h3><a name="200709171" title="200709171" href="200709b.html#200709171">■</a> 
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-talk/269462">[Ruby] Re: group array elements in groups of two</a></h3>
+<p>
+1.8でもそりゃ動くよねってはいいとして、golfなら
+</p>
+
+<pre>
+new = arr.enum_slice(2).to_a
+</pre>
+<p>
+でもまだまだで
+</p>
+
+<pre>
+new = *arr.enum_slice(2)
+</pre>
+<p>
+のように*を使う。
+</p>
+
+<pre>
+% irb
+&gt;&gt; require 'enumerator'
+=&gt; true
+&gt;&gt; arr = [1, 2, 3, 4, 5, 6, 7, 8]
+=&gt; [1, 2, 3, 4, 5, 6, 7, 8]
+&gt;&gt; new = *arr.enum_slice(2)
+=&gt; [[1, 2], [3, 4], [5, 6], [7, 8]]
+</pre>
+<p>
+つまりa.to_aよりもa.mapやa.zipなんだが、さらに[*a]のほうが短い。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200709172" title="200709172" href="200709b.html#200709172">■</a> 
+<a href="http://golf.shinh.org/p.rb?100">[Golf] 100</a></h3>
+<p>
+毎日飽きもせず縮めてるわけだが、今日はmapじゃだめだということがわかった。<br>
+いや、
+<a href="200709b.html#200709171">さっき</a>書いたのとは別の話ではあるんだが。
+</p>
+<!-- section end -->
+</div>
+<!-- 2007/09/17 end -->
+
+
+
+<hr class="hide">
+<!-- 2007/09/18 start -->
+<h2><a name="20070918" href="200709b.html#20070918">2007-09-18 (Tue)</a></h2>
+<!-- 2007-09-19 02:12:37 -->
+
+<div class="entry1">
+<h3><a name="200709181" title="200709181" href="200709b.html#200709181">■</a> 
+<a href="http://www.rubyinside.com/autumn-leaves-a-ruby-irc-bot-framework-604.html">[Ruby] Autumn Leaves: A Ruby IRC Bot Framework</a></h3>
+<p>
+秋葉?
+</p>
+<!-- section end -->
+</div>
+<!-- 2007/09/18 end -->
+
+
+
+<hr class="hide">
+<!-- 2007/09/19 start -->
+<h2><a name="20070919" href="200709b.html#20070919">2007-09-19 (Wed)</a></h2>
+<!-- 2007-09-20 02:46:00 -->
+
+<div class="entry1">
+<h3><a name="200709191" title="200709191" href="200709b.html#200709191">■</a> 
+<a href="http://golf.shinh.org/p.rb?100">[Golf] 100</a></h3>
+<p>
+なんとなくputsとmapだろうと思ったらやっぱりそんな解が上位に。
+</p>
+
+<p>
+そうだよなあ。nilをはさめばいいんだよな。<br>
+あと思い込むと単純なことに気づかないもんだなと。
+</p>
+
+<p>
+今回の収穫はmapよりも*でjoinのほうが短い。
+</p>
+<!-- section end -->
+</div>
+<!-- 2007/09/19 end -->
+
+
+
+<hr class="hide">
+<!-- 2007/09/20 start -->
+<h2><a name="20070920" href="200709b.html#20070920">2007-09-20 (Thu)</a></h2>
+<!-- 2007-09-21 02:25:49 -->
+
+<div class="entry1">
+<h3><a name="200709201" title="200709201" href="200709b.html#200709201">■</a> 
+<a href="http://www.garbagecollect.jp/~usa/d/200709b.html#id20070919_P1">[Golf] number(6)</a></h3>
+<p>
+Fedora 7ならyum install bsd-gamesで。numberは数を英語で教えてくれる。<br>
+ちょっと余計なもんが多いんだけど、
+</p>
+
+<pre>
+% number 0 1 99 100
+zero.
+...
+one.
+...
+ninety-nine.
+...
+one hundred.
+</pre>
+<p>
+という表示結果になる。
+</p>
+
+<p>
+いろいろうささんとやりとりしてるうちに
+</p>
+
+<pre>
+% number {0..100}|sed -n 'y/-/ /;/^[a-z]/s/\.//gp'
+% number -l {0..100}|sed -n 'y/-/ /;/^[a-z]/p'
+% number -l {0..100}|sed -n 'y/-/ /;/^\./!p'
+% number -l {0..100}|sed 'y/-/ /;/^\./d'
+% number -l {0..100}|sed 'y/-/ /;/\./d'
+</pre>
+<p>
+こんな感じで短くなっていった。<br>
+最終解はさらに2B短い35Bだが、<br>
+微妙に
+<a href="http://golf.shinh.org/p.rb?odd+lines">odd lines</a>の解なので自重。
+</p>
+
+<p>
+実はゴルフ場にnumberがなくて泣いた。<br>
+あればCommon LISPに余裕で勝てたのにー。
+</p>
+<!-- section end -->
+</div>
+<!-- 2007/09/20 end -->
+
+<hr>
+<div>
+<a href="200709a.html">&lt;Prev(,)</a> | 
+<a href="200709c.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

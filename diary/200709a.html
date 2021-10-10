@@ -1,0 +1,325 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2007-9-a</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="200708c.html">
+<link rel="next" href="200709b.html">
+
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2007年9月上旬〜</p>
+<hr>
+<div>
+<a href="200708c.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="200709b.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2007/09/01 start -->
+<h2><a name="20070901" href="200709a.html#20070901">2007-09-01 (Sat)</a></h2>
+<!-- 2007-09-02 02:09:45 -->
+
+<div class="entry1">
+<h3><a name="200709011" title="200709011" href="200709a.html#200709011">■</a> 
+8月のspam</h3>
+<p>
+227通。Gmail側3700スレッドほど。
+</p>
+
+<p>
+最近なぞのキーワードが含まれるspamが多い。<br>
+SREA, ERMX, VPSN, SZSN, PRTH, VGPMとしばらく経つと変化する。<br>
+Gmailで
+</p>
+
+<pre>
+in:spam {VGPM SREA ERMX VPSN SZSN PRTH VGPM}
+</pre>
+<p>
+をキーに検索すると27通あった。<br>
+ちなみに{}でORを意味するので覚えておくと便利。
+</p>
+<!-- section end -->
+</div>
+<!-- 2007/09/01 end -->
+
+
+
+<hr class="hide">
+<!-- 2007/09/02 start -->
+<h2><a name="20070902" href="200709a.html#20070902">2007-09-02 (Sun)</a></h2>
+<!-- 2007-09-03 02:19:31 -->
+
+<div class="entry1">
+<h3><a name="200709021" title="200709021" href="200709a.html#200709021">■</a> 
+<a href="http://golf.shinh.org/p.rb?Ring+world">[Golf] Ring world</a></h3>
+<p>
+あまりいい方法が思い浮かばない。<br>
+こういう問題っていつも全部文字列か配列か悩む。
+</p>
+<!-- section end -->
+</div>
+<!-- 2007/09/02 end -->
+
+
+
+<hr class="hide">
+<!-- 2007/09/03 start -->
+<h2><a name="20070903" href="200709a.html#20070903">2007-09-03 (Mon)</a></h2>
+<!-- 2007-09-04 02:10:49 -->
+
+<div class="entry1">
+<h3><a name="200709031" title="200709031" href="200709a.html#200709031">■</a> 
+<a href="http://www.kt.rim.or.jp/%7ekbk/zakkicho/07/zakkicho0709a.html#D20070902-1">[Ruby] 1.8と1.9のmapの違い</a></h3>
+<p>
+引数を省略したmapは1.8だとto_aと同じだけど、<br>
+1.9だとEnumerable::Enumeratorになるので、<br>
+そういう挙動になります。まだ読んでないことに。
+</p>
+
+<pre>
+% seq 3 |ruby -e 'p $&lt;.map' 
+[&quot;1\n&quot;, &quot;2\n&quot;, &quot;3\n&quot;]
+% seq 3 |ruby-trunk -e 'p $&lt;.map' 
+#&lt;Enumerable::Enumerator:0xb7dcc334&gt;
+</pre>
+<p>
+そのままmapを使ったけど、素直にどっちもto_aにすればよかったんだよねえ。<br>
+ゴルファなもんだから。
+</p>
+
+<pre>
+% seq 3 |ruby-trunk -e 'p $&lt;.to_a'    
+[&quot;1\n&quot;, &quot;2\n&quot;, &quot;3\n&quot;]
+</pre>
+
+<p>
+1.9のENDの件は単純にバグだと思います。
+</p>
+<!-- section end -->
+</div>
+<!-- 2007/09/03 end -->
+
+
+
+<hr class="hide">
+<!-- 2007/09/04 start -->
+<h2><a name="20070904" href="200709a.html#20070904">2007-09-04 (Tue)</a></h2>
+<!-- 2007-09-05 23:41:21 -->
+
+<div class="entry1">
+<h3><a name="200709041" title="200709041" href="200709a.html#200709041">■</a> 
+<a href="http://golf.shinh.org/reveal.rb?testing/eban/1188837277">[Mind] ばけばけ</a></h3>
+<p>
+日本語はバイナリとみなされちゃうし、しかたないか。
+</p>
+
+<pre>
+メインは &quot;pong&quot; 表示
+</pre>
+<p>
+とEUC-JPで書いてあるんだけどね。
+</p>
+<!-- section end -->
+</div>
+<!-- 2007/09/04 end -->
+
+
+
+<hr class="hide">
+<!-- 2007/09/05 start -->
+<h2><a name="20070905" href="200709a.html#20070905">2007-09-05 (Wed)</a></h2>
+<!-- 2007-09-06 02:27:13 -->
+
+<div class="entry1">
+<h3><a name="200709051" title="200709051" href="200709a.html#200709051">■</a> 
+<a href="http://golf.shinh.org/p.rb?100">[Golf] 0から100までを英語で</a></h3>
+<p>
+速くなった記念に久し振りに出題。<br>
+しかし処理時間という点では全然関係ないのであった。まあいいや。
+</p>
+
+<p>
+0..99とか1..100が多かったので0..100にしてみた。
+</p>
+<!-- section end -->
+</div>
+<!-- 2007/09/05 end -->
+
+
+
+<hr class="hide">
+<!-- 2007/09/06 start -->
+<h2><a name="20070906" href="200709a.html#20070906">2007-09-06 (Thu)</a></h2>
+<!-- 2007-09-07 01:39:31 -->
+
+<div class="entry1">
+<h3><a name="200709061" title="200709061" href="200709a.html#200709061">■</a> 
+<a href="http://beta.bloglines.com/">[RSS] βloglines</a></h3>
+<p>
+なかなかかっこいい。実際にフォーカスをあてないと既読にならないんだな。
+</p>
+<!-- section end -->
+</div>
+<!-- 2007/09/06 end -->
+
+
+
+<hr class="hide">
+<!-- 2007/09/07 start -->
+<h2><a name="20070907" href="200709a.html#20070907">2007-09-07 (Fri)</a></h2>
+<!-- 2007-09-08 03:15:12 -->
+
+<div class="entry1">
+<h3><a name="200709071" title="200709071" href="200709a.html#200709071">■</a> 
+[Mail] Quechup</h3>
+<p>
+なんかQuechupとかいうSNSの招待を装うspamが流行り出してるらしい。<br>
+
+<a href="http://www.boingboing.net/2007/09/04/quechup-is-rotten-do.html">Quechup is rotten: don't accept invites</a>
+を参照。<br>
+ruby-talk MLにも来たのでSender:を見て、<br>
+quechup.comからのメールをrejectするようにした。<br>
+HTML部分は削ってるから
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-talk/267931">本文は空</a>になったのかな。
+</p>
+<!-- section end -->
+</div>
+<!-- 2007/09/07 end -->
+
+
+
+<hr class="hide">
+<!-- 2007/09/08 start -->
+<h2><a name="20070908" href="200709a.html#20070908">2007-09-08 (Sat)</a></h2>
+<!-- 2007-09-09 03:11:13 -->
+
+<div class="entry1">
+<h3><a name="200709081" title="200709081" href="200709a.html#200709081">■</a> 
+<a href="http://jp.techcrunch.com/archives/something-going-on-at-twitter/">[Twitter] Twitterで何が起きている？</a></h3>
+<p>
+事前にメンテするよとWebで通知はしていたが、<br>
+Webでアクセスしてる人はあまりいないからこういうこと書かれちゃうんだろうな。<br>
+Jaikuみたいにアナウンス用を用意すればいいのに。
+</p>
+<!-- section end -->
+</div>
+<!-- 2007/09/08 end -->
+
+
+
+<hr class="hide">
+<!-- 2007/09/09 start -->
+<h2><a name="20070909" href="200709a.html#20070909">2007-09-09 (Sun)</a></h2>
+<!-- 2007-09-10 02:14:31 -->
+
+<div class="entry1">
+<h3><a name="200709091" title="200709091" href="200709a.html#200709091">■</a> 
+[RSS] RSSでの広告</h3>
+<p>
+AD:をタイトルにつける派が多いが、夕刊フジBLOGだけはPR:だ。<br>
+結構古くからやってるから今さら変えるのも面倒だろうしねえ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200709092" title="200709092" href="200709a.html#200709092">■</a> 
+<a href="http://golf.shinh.org/p.rb?Twin+primes">[Golf] Twin primes</a></h3>
+<p>
+ゴルフ場が速くなったのでmathn.rbを使ったのをsubmit。<br>
+これが以前はタイムアウトして通らなかった。
+</p>
+<!-- section end -->
+</div>
+<!-- 2007/09/09 end -->
+
+
+
+<hr class="hide">
+<!-- 2007/09/10 start -->
+<h2><a name="20070910" href="200709a.html#20070910">2007-09-10 (Mon)</a></h2>
+<!-- 2007-09-11 22:13:11 -->
+
+<div class="entry1">
+<h3><a name="200709101" title="200709101" href="200709a.html#200709101">■</a> 
+<a href="http://www.splitbrain.org/projects/gbrain">[Firefox] gBrain</a></h3>
+<p>
+閲覧したページを全部Google bookmarkにブックマークする拡張。
+</p><blockquote><p>
+gBrain is a Firefox extension to automagically bookmark all pages you
+visit at the Google bookmark service. This effectively moves your
+browser history from your browser instance to a central place on the
+net (Google) where it is easily searchable from every computer.
+</p></blockquote><p>
+最近会社で見たページを家で見たいと思っても、<br>
+なぜかそういうときに限ってブックマークしてなくて、<br>
+残念な思いをすることが多いので入れてみた。<br>
+y2007,m09,d10のようなタグをつけてくれるんだが、<br>
+これはどうなんだろうという気がする。
+</p>
+<!-- section end -->
+</div>
+<!-- 2007/09/10 end -->
+
+<hr>
+<div>
+<a href="200708c.html">&lt;Prev(,)</a> | 
+<a href="200709b.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

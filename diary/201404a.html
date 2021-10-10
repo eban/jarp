@@ -1,0 +1,489 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2014-4-a</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="201403c.html">
+<link rel="next" href="201404b.html">
+
+<link rel="stylesheet" type="text/css" href="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.css">
+<script async type="text/javascript" src="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.js"></script>
+<script type="text/javascript">
+<!--       
+$(document).ready(function() {
+  prettyPrint();
+});
+-->
+</script>
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2014年4月上旬〜</p>
+<hr>
+<div>
+<a href="201403c.html" accesskey=",">&lt;Older(,)</a> | 
+<a href="201404b.html" accesskey=".">Newer(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2014/04/01 start -->
+<h2><a name="20140401" href="201404a.html#20140401">2014-04-01 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="201404011" title="201404011" href="201404a.html#201404011">■</a> 
+3月のspam</h3>
+<p>
+150通。なんか激減してるな。
+
+</p>
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="201404012" title="201404012" href="201404a.html#201404012">■</a> 
+zshで引数に変数を使ったときの罠</h3>
+<p>
+sh系では普通
+</p>
+<pre>
+% dash -c 'foo=&quot;a b c&quot;; set $foo; echo $1'
+a
+% bash -c 'foo=&quot;a b c&quot;; set $foo; echo $1'
+a
+</pre>
+<p>
+のように分割されるが、zshではその処理が入らないため
+</p>
+<pre>
+% zsh -c 'foo=&quot;a b c&quot;; set $foo; echo $1'
+a b c
+</pre>
+<p>
+となってしまう。
+<a href="http://zsh.sourceforge.net/FAQ/zshfaq03.html">FAQ</a>にもなっている。<br>
+でも結構コマンドラインで悩むことがある。<br>
+仕様なのでsetopt sh_word_splitしておくぐらいしかない。
+</p>
+<p>
+IFSを使った分割も同じことが言える。
+</p>
+<pre>
+% zsh -c 'PACKAGE_VERSION=0.7.2; IFS=.; set $PACKAGE_VERSION; echo $1'
+0.7.2
+% zsh -c 'PACKAGE_VERSION=0.7.2; setopt sh_word_split; IFS=.; set $PACKAGE_VERSION; echo $1'
+0
+</pre>
+<p>
+まあ、configureをzshで動かす人はあまりいないだろう。
+</p>
+<!-- section end -->
+</div>
+<!-- 2014/04/01 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/04/02 start -->
+<h2><a name="20140402" href="201404a.html#20140402">2014-04-02 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="201404021" title="201404021" href="201404a.html#201404021">■</a> 
+rtorrent</h3>
+<p>
+ちょっとrtorrentを使ってみたが、設定ファイルの書き方が変態すぎる。<br>
+それとmanに書いてある情報が古すぎてすでに使えないとか開発も滞ってるんじゃないかな。
+</p>
+<!-- section end -->
+</div>
+<!-- 2014/04/02 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/04/03 start -->
+<h2><a name="20140403" href="201404a.html#20140403">2014-04-03 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="201404031" title="201404031" href="201404a.html#201404031">■</a> 
+Smart J:COM BOXのソフトウェアが更新された</h3>
+<p>
+これで停止した位置から再生できるようになった。<br>
+あとノイズとか変換待ちとかも解消されてるらしいが確認してない。<br>
+そういえば停止してから録画リストが出るまで20秒ぐらいかかっていたが、4秒とかなり速くなった。<br>
+とはいえまだ遅いが。
+</p>
+<!-- section end -->
+</div>
+<!-- 2014/04/03 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/04/04 start -->
+<h2><a name="20140404" href="201404a.html#20140404">2014-04-04 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="201404041" title="201404041" href="201404a.html#201404041">■</a> 
+<a href="http://www.jcom.co.jp/notice/_52867.html">Smart J:COM Boxでのアプリケーションダウンロード不具合について</a></h3>
+<p>
+そうそう、これかなりたちが悪くて電源ボタンでOFF/ONしても消えない。<br>
+電源ボタンといいつつもスタンバイにしかならないので、そんなもんかという気もするが、<br>
+リセットボタンを押すのはちょっと躊躇する。<br>
+で、Xvieリモートから操作したら簡単に消えた。<br>
+それにしてもBIOS画面を出すみたいなタイミングだったのかい。
+</p>
+<!-- section end -->
+</div>
+<!-- 2014/04/04 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/04/05 start -->
+<h2><a name="20140405" href="201404a.html#20140405">2014-04-05 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="201404051" title="201404051" href="201404a.html#201404051">■</a> 
+<a href="http://blog.ueda.asia/?p=2627">【問題集】第10回シェル芸勉強会 を解いてみる</a></h3>
+<p>
+Q1 num-utilsのnumsumを使うと簡単。
+</p>
+<pre>
+% echo 2 5 9 8 1 3 7 4 | numsum -r
+39
+</pre>
+<p>
+Q2 これもnumsumで。
+</p>
+<pre>
+% cat nums | numsum -c | numsum -r
+45
+</pre>
+<p>
+Q3 普通はwc -mだろうけど、改行を考えるとのgrep -o .がまさにぴったり。
+</p>
+<pre>
+% grep -o . genkou | wc -l    
+61
+</pre>
+<p>
+Q4 grep -o .大活躍。
+</p>
+<pre>
+% cat hoge | grep -o . | sort | uniq -c | grep -Po ' +3 \K.' 
+a
+d
+</pre>
+<p>
+Q5 zshならこうするよね。
+</p>
+<pre>
+% mv **/*(.) .
+</pre>
+<p>
+Q6 ひねりなし。
+</p>
+<pre>
+% mv `grep -l hoge file?` a; mv *(.) b
+</pre>
+<p>
+Q7 {}を使うと簡単だがファイルを使ってないからこれはだめだな。
+</p>
+<pre>
+% printf '%s\n' file{1..8}\ file{2..9} | awk '$1 &lt; $2'
+file1 file2
+file1 file3
+file1 file4
+file1 file5
+file1 file6
+file1 file7
+file1 file8
+file1 file9
+file2 file3
+file2 file4
+file2 file5
+file2 file6
+file2 file7
+file2 file8
+file2 file9
+file3 file4
+file3 file5
+file3 file6
+file3 file7
+file3 file8
+file3 file9
+file4 file5
+file4 file6
+file4 file7
+file4 file8
+file4 file9
+file5 file6
+file5 file7
+file5 file8
+file5 file9
+file6 file7
+file6 file8
+file6 file9
+file7 file8
+file7 file9
+file8 file9
+</pre>
+<p>
+Rubyでやるのはちょっとあれだが。
+</p>
+<pre>
+% ruby -e 'ARGV.combination(2){|x|puts x*&quot; &quot;}' file?
+file1 file2
+file1 file3
+file1 file4
+file1 file5
+file1 file6
+file1 file7
+file1 file8
+file1 file9
+file2 file3
+file2 file4
+file2 file5
+file2 file6
+file2 file7
+file2 file8
+file2 file9
+file3 file4
+file3 file5
+file3 file6
+file3 file7
+file3 file8
+file3 file9
+file4 file5
+file4 file6
+file4 file7
+file4 file8
+file4 file9
+file5 file6
+file5 file7
+file5 file8
+file5 file9
+file6 file7
+file6 file8
+file6 file9
+file7 file8
+file7 file9
+file8 file9
+</pre>
+<p>
+Q8 まあ、これもRubyで。
+</p>
+<pre>
+% ruby -e 'loop{p rand(1e6)}'
+</pre>
+<p>
+あまり一様じゃないが、zshの簡易バージョン。
+</p>
+<pre>
+% while echo $[$RANDOM*$RANDOM%1e6];do :; done
+</pre>
+<p>
+bashだと大きすぎて扱えない。
+</p>
+<pre>
+bash: 23744*18693%1e6: 基底の値が大きすぎます (エラーのあるトークンは &quot;1e6&quot;)
+</pre>
+<!-- section end -->
+</div>
+<!-- 2014/04/05 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/04/06 start -->
+<h2><a name="20140406" href="201404a.html#20140406">2014-04-06 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="201404061" title="201404061" href="201404a.html#201404061">■</a> 
+GMANEのRSSが更新されなくなったので、Yahoo Pipesでなんとかした</h3>
+<p>
+最初は
+<a href="http://news.gmane.org/gmane.comp.lang.ruby.cvs">using frames and threads</a>を利用して作ってみたが、<br>
+これはかなり
+<a href="http://pipes.yahoo.com/pipes/pipe.info?_id=8d691d60a2de2bda9649aeae0f3a06ca">短めにsubjectが切られてしまう</a>ので、<br>
+<a href="http://blog.gmane.org/gmane.comp.lang.ruby.cvs">blog形式</a>を使うことにした。<br>
+<a href="http://pipes.yahoo.com/pipes/pipe.info?_id=4e45e80081e872601547fffb8b88d6ac">Pipes: gmane-ruby-cvs blog</a><br>
+一応URLをパラメータ化したので他のMLでも使えると思う。<br>
+かなり慣れてきたな。
+</p>
+<!-- section end -->
+</div>
+<!-- 2014/04/06 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/04/07 start -->
+<h2><a name="20140407" href="201404a.html#20140407">2014-04-07 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="201404071" title="201404071" href="201404a.html#201404071">■</a> 
+ホスト名を変えたら再起動すべき</h3>
+<p>
+当たり前ではあるが。japrからfull domainへ名前を変えてそのまま放置していたら
+</p>
+<pre>
+% vim.nox -c q
+% vim.gtk -c q
+_IceTransSocketUNIXConnect: Cannot connect to non-local host jarp
+_IceTransSocketUNIXConnect: Cannot connect to non-local host jarp
+</pre>
+<p>
+とXを使うvimが文句言うようになった。文句言うだけで特に支障はないが。<br>
+それにしても変更して1週間も経ってからってのはどんな理由なのか。
+</p>
+<!-- section end -->
+</div>
+<!-- 2014/04/07 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/04/08 start -->
+<h2><a name="20140408" href="201404a.html#20140408">2014-04-08 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="201404081" title="201404081" href="201404a.html#201404081">■</a> 
+トンネルを掘る</h3>
+<p>
+J:COMの無線LANルータの設定がわからず、port forwardingができない頃の話。<br>
+外から家のPCへsshで入るようにするためにVPSを中継することにした。<br>
+実行自体は簡単で家のPCからVPSへsshしておけばいい。
+</p>
+<pre>
+% ssh -TNR 2222:localhost:22 -o ControlPath=none vps
+</pre>
+<p>
+これでVPSからssh localhost -p 2222で家のPCへlogin可能になる。<br>
+VPS側の/etc/ssh/sshd_configでGatewayPorts yesとすれば外部からもアクセス可能になる。
+</p>
+<!-- section end -->
+</div>
+<!-- 2014/04/08 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/04/09 start -->
+<h2><a name="20140409" href="201404a.html#20140409">2014-04-09 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="201404091" title="201404091" href="201404a.html#201404091">■</a> 
+crontab -eで文句言われる</h3>
+<p>
+VimのIndent Guidesを入れたらcrontab -eで
+</p>
+<pre>
+function &lt;SNR&gt;68_IndentGuidesEnable..indent_guides#enable..indent_guides#init_script_vars..indent_guides#capture_highlig
+ht の処理中にエラーが検出されました:
+行    2:
+E411: ハイライトグループが見つかりません: Normal
+</pre>
+<p>
+というエラーが出るようになった。colorschemeを設定しないといけないらしい。<br>
+どうせならとよさげなテーマを探してmolokaiにした。
+</p>
+<pre>
+NeoBundle 'tomasr/molokai'
+colorscheme molokai
+</pre>
+<p>
+Indent Guidesの設定はこんな感じで。
+</p>
+<pre>
+NeoBundle 'nathanaelkane/vim-indent-guides'
+let g:indent_guides_enable_on_vim_startup=1
+let g:indent_guides_auto_colors = 0
+autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd   ctermbg=8
+autocmd VimEnter,Colorscheme * :hi IndentGuidesEven  ctermbg=235
+let g:indent_guides_guide_size = 1
+let g:indent_guides_start_level = 2
+</pre>
+<p>
+<img src="../images/vim-indent-guides.png" alt="">
+</p>
+<!-- section end -->
+</div>
+<!-- 2014/04/09 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/04/10 start -->
+<h2><a name="20140410" href="201404a.html#20140410">2014-04-10 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="201404101" title="201404101" href="201404a.html#201404101">■</a> 
+1回押すだけでダブルクリック</h3>
+<p>
+一度で二度おいしいてなことにはならず、かなりうっとうしい。<br>
+どういうわけかこの現象が会社と家と別のマウスで起きているんだけど、何かの罰か。<br>
+いくらバッテリーが保ってもなあ。買い替えよう。
+</p>
+<!-- section end -->
+</div>
+<!-- 2014/04/10 end -->
+
+<hr>
+<div>
+<a href="201403c.html">&lt;Older(,)</a> | 
+<a href="201404b.html">Newer(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

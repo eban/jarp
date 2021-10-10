@@ -1,0 +1,429 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2016-2-c</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="201602b.html">
+<link rel="next" href="201603a.html">
+
+<link rel="stylesheet" type="text/css" href="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.css">
+<script async type="text/javascript" src="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.js"></script>
+<script type="text/javascript">
+<!--       
+$(document).ready(function() {
+  prettyPrint();
+});
+-->
+</script>
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2016年2月下旬〜</p>
+<hr>
+<div>
+<a href="201602b.html" accesskey=",">&lt;Older(,)</a> | 
+<a href="201603a.html" accesskey=".">Newer(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2016/02/21 start -->
+<h2><a name="20160221" href="201602c.html#20160221">2016-02-21 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="201602211" title="201602211" href="201602c.html#201602211">■</a> 
+<a href="https://projecteuler.net/problem=34">Project Euler Problem 34 #シェル芸</a></h3>
+<p>
+Digit factorials. 桁の階乗。
+まずは最大を。9!*7=2540160なので7桁を超えることはない。<br>
+1から9の階乗は連想配列に入れておく。
+</p>
+<pre>
+% seq 10 2540160|awk 'BEGIN{f[0]=1;for(i=1;i&lt;=9;i++)f[i]=i*f[i-1]}{s=0;for(j=1;j&lt;=NF;j++)s+=f[$j];if(s==$0)t+=$0}END{print t}' FS= 
+40730
+</pre>
+<p>
+ひねりなし。gawkで5秒程度。実は145と40585の2つしかない。
+</p>
+<!-- section end -->
+</div>
+<!-- 2016/02/21 end -->
+
+
+
+<hr class="hide">
+<!-- 2016/02/22 start -->
+<h2><a name="20160222" href="201602c.html#20160222">2016-02-22 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="201602221" title="201602221" href="201602c.html#201602221">■</a> 
+<a href="https://projecteuler.net/problem=35">Project Euler Problem 35 #シェル芸</a></h3>
+<p>
+Circular primes. 巡回素数。たとえば197を巡回させると197,971,719と全部素数になる。<br>
+100万未満の巡回素数は何個あるか。単純な力技だとすごく時間がかかりそうだ。<br>
+というわけでまずは候補をしぼる。<br>
+まずは偶数や5が含まれていると1の位に来たときに素数ではなくなるので除外できる。<br>
+(ただし、2と5も除外されちゃうので最後に2を足す必要あり。)
+</p>
+<pre>
+% TIMEFMT='%U user %S system %P cpu %*E total'
+% time (seq 1 999999|grep -v '[024568]'|wc -l)
+5460
+0.06s user 0.00s system 124% cpu 0.048 total
+</pre>
+<p>
+かなり減った。時間も速い。そもそも最初から奇数だけ扱えばいいのでseqで奇数指定する。
+</p>
+<pre>
+% time (seq 1 2 999999|grep -v '[024568]'|wc -l)
+5460
+0.31s user 0.00s system 111% cpu 0.280 total
+</pre>
+<p>
+なぜか遅くなった。佐藤さんの調査によるとGNU coreutils seqは
+<a href="https://twitter.com/satoh_fumiyasu/status/701787960396505088">+1だけ最適化してるという話で</a>、なかなか興味深い。<br>
+それはそれとしてfactorとawkで素数を抜き出す。
+</p>
+<pre>
+% seq 1 999999|grep -v '[024568]'|factor|awk 'NF==2'|wc -l
+1111
+</pre>
+<p>
+候補は1111個とかなり扱いやすい個数になった。<br>
+あとはawkで巡回させて素数かどうか判断するという話になるが、<br>
+実は判断しなくてもわかる。<br>
+たとえば197だったら巡回させた3個とも1111個の中に含まれているので、<br>
+お互いそれぞれ巡回させれば3個ずつ出てくる。<br>
+uniq -cすれば3個つまり桁数分だけ見つかる。<br>
+19だと91は素数ではないので1111個の中にはなく、<br>
+unic -cしても1個つまり桁数とは違う数になる。<br>
+これを利用して巡回素数を見つける。
+</p>
+<pre>
+% time (seq 999999|grep -v '[024568]'|factor|\
+  awk 'NF==2{for(i=1;i&lt;=length($2);i++){print substr($2,i+1)substr($2,1,i)}}'|\
+  sort -n|uniq -c|awk '$1==length($2)'|wc -l)
+53
+0.05s user 0.03s system 151% cpu 0.053 total
+</pre>
+<p>
++2で55個。結構速い。
+</p>
+<!-- section end -->
+</div>
+<!-- 2016/02/22 end -->
+
+
+
+<hr class="hide">
+<!-- 2016/02/23 start -->
+<h2><a name="20160223" href="201602c.html#20160223">2016-02-23 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="201602231" title="201602231" href="201602c.html#201602231">■</a> 
+月の最初と最後 #シェル芸</h3>
+<p>
+2016/01/01&lt;タブ&gt;2016/01/31という形式で1年分出力するというシェル芸tweetが先週ぐらいにあって、<br>
+いろいろ考えてみた。
+</p>
+<p>
+月末は今月の1日の1ヶ月後の前日という表現にすればdateがいい具合に受け付けてくれる。<br>
+つまり2016-02-01 month -1dayというような感じ。<br>
+あとはコピーして日付を01にしたものを用意すればいいのでsedで変換。
+</p>
+<pre>
+% seq -f '2016-%02g-01 month -1day' 12|date -f- +%Y/%m/%d|sed 'h;s/..$/01/;G;s/\n/\t/'
+</pre>
+<p>
+awkでも同じようなもん。
+</p>
+<pre>
+% seq -f '2016-%02g-01 month -1day' 12|date -f- +%Y/%m/%d|awk -F/ '$0=$1&quot;/&quot;$2&quot;/01\t&quot;$0'
+</pre>
+<p>
+別の考え方として最初から1日と月末を用意してしまう方法。<br>
+2行に分かれてしまうのでpasteで1行に。pasteはうまい具合にタブ区切りになる。
+</p>
+<pre>
+% seq -f '2016-%02g-01' 12|sed 'h;G;s/$/ month -1day/'|date -f- +%Y/%m/%d|paste - -
+</pre>
+<p>
+ここまでは先週思い付いた解で、ふと今日別解が降りてきた。<br>
+1日は固定なんだからdateのフォーマットでもう1個作っちゃえばいいんだった。
+</p>
+<pre>
+% seq -f '2016-%02g-01 month -1day' 12|date -f- +'%Y/%m/01%t%Y/%m/%d'                 
+2016/01/01	2016/01/31
+2016/02/01	2016/02/29
+2016/03/01	2016/03/31
+2016/04/01	2016/04/30
+2016/05/01	2016/05/31
+2016/06/01	2016/06/30
+2016/07/01	2016/07/31
+2016/08/01	2016/08/31
+2016/09/01	2016/09/30
+2016/10/01	2016/10/31
+2016/11/01	2016/11/30
+2016/12/01	2016/12/31
+</pre>
+<p>
+%tでタブってのは気づいてなかった。
+</p>
+<!-- section end -->
+</div>
+<!-- 2016/02/23 end -->
+
+
+
+<hr class="hide">
+<!-- 2016/02/24 start -->
+<h2><a name="20160224" href="201602c.html#20160224">2016-02-24 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="201602241" title="201602241" href="201602c.html#201602241">■</a> 
+<a href="https://projecteuler.net/problem=36">Project Euler Problem 36 #シェル芸</a></h3>
+<p>
+Double-base palindromes. 二種類の基数による回文数。<br>
+回文はpasteとrevを使うと比較的簡単にチェックできる。
+</p>
+<pre>
+% paste &lt;(seq 12320 12330) &lt;(seq 12320 12330|rev)|awk '$1==$2'
+12321	12321
+</pre>
+<p>
+10進の回文を抜き出しbcで2進に変換。<br>
+同じようにpasteとrevで回文を抜き出しbcで10進に戻し総和を求める。
+</p>
+<pre>
+% TIMEFMT='%U user %S system %P cpu %*E total'
+% time (paste &lt;(seq 999999) &lt;(seq 999999|rev) | awk '$1==$2{print &quot;obase=2;&quot;,$1}' | bc &gt; tmp.txt)
+0.90s user 0.26s system 193% cpu 0.597 total
+% time (paste tmp.txt &lt;(rev tmp.txt) | awk '$1==$2{print &quot;ibase=2;&quot;,$1}'|bc|jq -s add)            
+872187
+0.01s user 0.00s system 131% cpu 0.009 total
+</pre>
+<p>
+結構速いが一時ファイルを作らないといけないのが難点。
+</p>
+<!-- section end -->
+</div>
+<!-- 2016/02/24 end -->
+
+
+
+<hr class="hide">
+<!-- 2016/02/25 start -->
+<h2><a name="20160225" href="201602c.html#20160225">2016-02-25 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="201602251" title="201602251" href="201602c.html#201602251">■</a> 
+volume container以外のcontainerを消す</h3>
+<p>
+volume containerなんて使ってなかった頃は問答無用でdocker ps -aでよかったが、<br>
+区別して消さないといけなくなった。<br>
+STATUSを見ればCreatedになるのでawkで抜き出せばよさげだが、<br>
+docker psの-fオプションでフィルターできるのであった。
+</p>
+<pre>
+% docker ps -qa -f status=exited | xargs -r docker rm
+</pre>
+<p>
+終了してるのだけ消したければこれでいい。
+</p>
+<!-- section end -->
+</div>
+<!-- 2016/02/25 end -->
+
+
+
+<hr class="hide">
+<!-- 2016/02/26 start -->
+<h2><a name="20160226" href="201602c.html#20160226">2016-02-26 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="201602261" title="201602261" href="201602c.html#201602261">■</a> 
+libuim: [fatal] cannot execute /path/of/filter-programを出さなくする</h3>
+<p>
+<a href="201308c.html#201308221">この件</a>が解決した。単にuim-skkの設定で注釈のカスタムフィルタを適当にTCPサーバにすればいいだけだった。<br>
+そんなサーバは動いてないがメッセージは出なくなった。<br>
+というよりここでパイプにしてたのがいけなかったようで、<br>
+たぶん触ってるうちに手違いがあったんだろう。
+</p>
+<!-- section end -->
+</div>
+<!-- 2016/02/26 end -->
+
+
+
+<hr class="hide">
+<!-- 2016/02/27 start -->
+<h2><a name="20160227" href="201602c.html#20160227">2016-02-27 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="201602271" title="201602271" href="201602c.html#201602271">■</a> 
+dockerで不要なimageを消す</h3>
+<p>
+-aで出てくる&lt;none&gt;:&lt;none&gt;消しちゃいけないimageもあるので安易に消せないが、<br>
+-f dangling=trueしたものはどこに関連してないimageなので消しても問題ない。
+</p>
+<pre>
+% docker images -qf dangling=true | xargs -r docker rmi
+</pre>
+<p>
+でok。xargs -rはそんなimageが1つもないときにはdocker rmiを実行しないという意味。
+</p>
+<!-- section end -->
+</div>
+<!-- 2016/02/27 end -->
+
+
+
+<hr class="hide">
+<!-- 2016/02/28 start -->
+<h2><a name="20160228" href="201602c.html#20160228">2016-02-28 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="201602281" title="201602281" href="201602c.html#201602281">■</a> 
+DockerfileのCMDの罠</h3>
+<p>
+CMDには配列と文字列(shell form)の2つの表記が存在するが、<br>
+shell formにするとsh -c経由で起動されるためdocker stopで嵌る。<br>
+たとえばDockerfileのCMD指定で
+</p>
+<pre>
+CMD /script.sh
+</pre>
+<p>
+のように書いてbuildしたイメージをdocker runすると、<br>
+実際はsh -c /script.shと実行される。これがPID 1になる。<br>
+一方docker stopはPID 1にSIGTERMを送るのでこのshが受け取る。<br>
+つまりその子プロセスであるシェルスクリプトにはSIGTERMが届かない。<br>
+しばらくしてdocker stopからSIGKILLが送られてきてそれで死ぬことになる。<br>
+これでは後始末できない。<br>
+回避するには
+</p>
+<pre>
+CMD [&quot;/script.sh&quot;]
+</pre>
+<p>
+と書けばいい。これならsh -cを経由しないのでシェルスクリプトの実行がPID 1になる。<br>
+sh -c /script.shではなくsh /script.shと実行される。
+</p>
+<p>
+ENTRYPOINTも同様。
+</p>
+<!-- section end -->
+</div>
+<!-- 2016/02/28 end -->
+
+
+
+<hr class="hide">
+<!-- 2016/02/29 start -->
+<h2><a name="20160229" href="201602c.html#20160229">2016-02-29 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="201602291" title="201602291" href="201602c.html#201602291">■</a> 
+閏年の判断をcalとgrepで</h3>
+<p>
+2/29ということで。先日
+<a href="201512b.html#201512141">閏年の判断をdateで</a>やってみたが、calでもできなくはない。<br>
+</p>
+<pre>
+% cal 2 2016
+   February 2016      
+Su Mo Tu We Th Fr Sa  
+    1  2  3  4  5  6  
+ 7  8  9 10 11 12 13  
+14 15 16 17 18 19 20  
+21 22 23 24 25 26 27  
+28 29                 
+                      
+</pre>
+<p>
+grep '29$'でいけそうだが、実はcalコマンドって目に見えない余計な空白が周りにあったりする。
+</p>
+<pre>
+% cal 2 2016 | tr ' ' -
+---February-2016------
+Su-Mo-Tu-We-Th-Fr-Sa--
+----1--2--3--4--5--6--
+-7--8--9-10-11-12-13--
+14-15-16-17-18-19-20--
+21-22-23-24-25-26-27--
+28-29-----------------
+----------------------
+</pre>
+<p>
+つまりgrep ' 29 'としないといけない。<br>
+grep 29でもいいと思うかもしれないが、2029年になると困る。<br>
+あ、' 29 'でも西暦29年で困るな。
+</p>
+<pre>
+% cal 2 2016 | tr -d '\n ' | grep '29$'
+February2016SuMoTuWeThFrSa1234567891011121314151617181920212223242526272829
+</pre>
+<p>
+というわけで改行と空白を全部消してみるのがいいかもしれない。
+</p>
+<!-- section end -->
+</div>
+<!-- 2016/02/29 end -->
+
+<hr>
+<div>
+<a href="201602b.html">&lt;Older(,)</a> | 
+<a href="201603a.html">Newer(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

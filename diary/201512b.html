@@ -1,0 +1,352 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2015-12-b</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="201512a.html">
+<link rel="next" href="201512c.html">
+
+<link rel="stylesheet" type="text/css" href="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.css">
+<script async type="text/javascript" src="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.js"></script>
+<script type="text/javascript">
+<!--       
+$(document).ready(function() {
+  prettyPrint();
+});
+-->
+</script>
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2015年12月中旬〜</p>
+<hr>
+<div>
+<a href="201512a.html" accesskey=",">&lt;Older(,)</a> | 
+<a href="201512c.html" accesskey=".">Newer(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2015/12/11 start -->
+<h2><a name="20151211" href="201512b.html#20151211">2015-12-11 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="201512111" title="201512111" href="201512b.html#201512111">■</a> 
+<a href="http://rubykaigi.org/2015">RubyKaigi 2015 1日目</a></h3>
+<p>
+天気が不安定で上野東京ラインの直通運転も中止と聞き早めに出たのに、<br>
+非常停止ボタンを押されてたりホームのモニターが曇ったりとトラブル続きで、<br>
+Matzのキーノートに間に合わず。しかもHall Aは満席でHall Bで中継を見た。<br>
+内容はすでにRebuildとかでも話していたので目新しいものはなく2.0の3倍ということで。
+</p>
+<p>
+隠居コミッタの老眼化が進む。そうMatzもNobuもすでに50代なのだ。<br>
+それはそれとしてコミッタに若い人がいい感じで入ってきているのは幸い。
+</p>
+<p>
+TRICKは難読化している作品は評価が低くなった。もはや驚かないから。<br>
+とか言うべきじゃなかったよなあ。反省。<br>
+円周率おぼえ歌は242/77=22/7が出てくる点がもう怖いくらい。そこまでやるか。
+</p>
+<p>
+ああ、せっかく本を買ったのにサインしてもらうの忘れた。
+</p>
+<!-- section end -->
+</div>
+<!-- 2015/12/11 end -->
+
+
+
+<hr class="hide">
+<!-- 2015/12/12 start -->
+<h2><a name="20151212" href="201512b.html#20151212">2015-12-12 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="201512121" title="201512121" href="201512b.html#201512121">■</a> 
+Squiggly heredoc</h3>
+<p>
+Ruby 2.3では&lt;&lt;~でインデントを消してくれるheredocが追加される。
+</p>
+<pre>
+% cat tilde.rb
+  puts &lt;&lt;~EOM
+    hoge
+      foo
+    bar
+  EOM
+% ruby tilde.rb
+hoge
+  foo
+bar
+</pre>
+<p>
+&lt;&lt;-と同じようにEOMがインデントされていてもいい。<br>
+最初の行ではなく一番短いインデントの行の深さが使われる。
+</p>
+<pre>
+% cat tilde.rb
+  puts &lt;&lt;~EOM
+      hoge
+    foo
+      bar
+  EOM
+% ruby tilde.rb
+  hoge
+foo
+  bar
+</pre>
+<!-- section end -->
+</div>
+<!-- 2015/12/12 end -->
+
+
+
+<hr class="hide">
+<!-- 2015/12/13 start -->
+<h2><a name="20151213" href="201512b.html#20151213">2015-12-13 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="201512131" title="201512131" href="201512b.html#201512131">■</a> 
+RubyKaigi 2015 3日目</h3>
+<p>
+コミッタはコンテンツなのでvs the Worldに出席。<br>
+librubyのバージョンチェック方法が面白かった。<br>
+そういえば昔はABIが変わらなければ拡張ライブラリも使えてたから、<br>
+rvmはそのままコピーしてるのかもしれないと思った。<br>
+Threadがらみの話が2つあったが、なかなか興味深かった。<br>
+最後のKeynoteは見れず帰宅。
+</p>
+<!-- section end -->
+</div>
+<!-- 2015/12/13 end -->
+
+
+
+<hr class="hide">
+<!-- 2015/12/14 start -->
+<h2><a name="20151214" href="201512b.html#20151214">2015-12-14 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="201512141" title="201512141" href="201512b.html#201512141">■</a> 
+dateコマンドで閏年の判断 #シェル芸</h3>
+<p>
+dateにやらせてしまう方法がある。
+</p>
+<pre>
+% date -d 2012-02-29 +%Y
+2012
+% date -d 2013-02-29 +%Y
+date: `2013-02-29' は無効な日付です
+</pre>
+<p>
+無効な場合は標準エラー出力に吐く。<br>
+さらに-f-とすれば標準入力から複数の日付を受け付けてくれる。<br>
+というわけでこうすれば閏年だけ抜き出せる。
+</p>
+<pre>
+% seq 1900 2400 | sed 's/$/-02-29/' | date -f- +%Y 2&gt; /dev/null
+</pre>
+<!-- section end -->
+</div>
+<!-- 2015/12/14 end -->
+
+
+
+<hr class="hide">
+<!-- 2015/12/15 start -->
+<h2><a name="20151215" href="201512b.html#20151215">2015-12-15 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="201512151" title="201512151" href="201512b.html#201512151">■</a> 
+torneが赤くなる</h3>
+<p>
+HDDの残り容量が少なくなると赤くなる。<br>
+何%で赤くなるのか謎だったが、<br>
+%じゃなくて単に今予約してる分が録画できるかどうかで決まるようだ。<br>
+繰り返しは考えずに。
+</p>
+<!-- section end -->
+</div>
+<!-- 2015/12/15 end -->
+
+
+
+<hr class="hide">
+<!-- 2015/12/16 start -->
+<h2><a name="20151216" href="201512b.html#20151216">2015-12-16 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="201512161" title="201512161" href="201512b.html#201512161">■</a> 
+docker inspectの結果からIPアドレスを抜き出す</h3>
+<p>
+jsonなのでjqを使えば簡単。<br>
+ホスト名としてnameを使って/etc/hostsに使える形式に変換するならこんな感じ。
+</p>
+<pre>
+% docker ps -q | xargs docker inspect &gt; ubuntu-inspect.json
+% jq -r '.[]|&quot;\(.Name|ltrimstr(&quot;/&quot;)) \(.NetworkSettings.Networks.bridge.IPAddress)&quot;' ubuntu-inspect.json
+suspicious_bardeen 172.17.0.3
+reverent_kowalevski 172.17.0.2
+</pre>
+<!-- section end -->
+</div>
+<!-- 2015/12/16 end -->
+
+
+
+<hr class="hide">
+<!-- 2015/12/17 start -->
+<h2><a name="20151217" href="201512b.html#20151217">2015-12-17 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="201512171" title="201512171" href="201512b.html#201512171">■</a> 
+<a href="https://codeiq.jp/q/2549">マヨイドーロ問題 #シェル芸</a></h3>
+<p>
+入力が2015だとbignumが必要なのでbcとかが必須になる。<br>
+というわけでシェル芸というよりは実はbc芸だ。
+</p>
+<pre>
+% cat mayoi.bc
+n = (read() + 1) / 2
+a = 1
+b = 1
+while (n--)
+  a += b += a
+a - 1
+% echo 2015 | BC_LINE_LENGTH=0 bc mayoi.bc                                                       
+24410294683171395267259945469996127000411199333760853190535535281681195871429510314079442068798555059453792431772087225245168879580469159794544170936403149540819320510882801573596907938222922817134288725100817648047405608500267748766714030468003650259685406411646787207097050545802045736020993909154298598218721111963426993884619351338577630868510716463423585020972878819198991971234596733617320373133963970742975210614208
+</pre>
+<p>
+ginjiroさんの
+<a href="https://twitter.com/gin_135/status/677308123275661314">解</a>をぎゅっと縮めた(aとbを入れ替えている)。one-linerならこんな感じ。
+</p>
+<pre>
+% echo 2015 | BC_LINE_LENGTH=0 bc &lt;(echo 'n=(read()+1)/2;a=b=1;while(n--)a+=b+=a;a-1')
+</pre>
+<p>
+かなり無理矢理感があるが。
+</p>
+<!-- section end -->
+</div>
+<!-- 2015/12/17 end -->
+
+
+
+<hr class="hide">
+<!-- 2015/12/18 start -->
+<h2><a name="20151218" href="201512b.html#20151218">2015-12-18 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="201512181" title="201512181" href="201512b.html#201512181">■</a> 
+gawkでbignum</h3>
+<p>
+gawk 4.1.0からはMPFR拡張が標準で入った。使えるかどうかはversionを確認する。
+</p>
+<pre>
+% gawk --help | grep bignum
+	-M			--bignum
+% gawk -V | head -1
+GNU Awk 4.1.1, API: 1.1 (GNU MPFR 3.1.3, GNU MP 6.0.0)
+</pre>
+<p>
+()のような記述があれば利用可能。<br>
+つまりマヨイドーロ問題も解ける。
+</p>
+<pre>
+% cat mayoi.awk
+{
+    n = int(($0 + 1) / 2)
+    a = 1
+    b = 1
+    while (n--)
+      a += b += a
+    print a - 1
+}
+% echo 2015 | gawk -f mayoi.awk        
+inf
+% echo 2015 | gawk -M -f mayoi.awk
+24410294683171395267259945469996127000411199333760853190535535281681195871429510314079442068798555059453792431772087225245168879580469159794544170936403149540819320510882801573596907938222922817134288725100817648047405608500267748766714030468003650259685406411646787207097050545802045736020993909154298598218721111963426993884619351338577630868510716463423585020972878819198991971234596733617320373133963970742975210614208
+% echo 2015 | gawk -M '{n=int(++$0/2);a=b=1;while(n--)a+=b+=a;print a-1}'
+</pre>
+<p>
+-Mオプションを指定すればオーバーフローしない。実は昨日のbc版とほとんど同じ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2015/12/18 end -->
+
+
+
+<hr class="hide">
+<!-- 2015/12/19 start -->
+<h2><a name="20151219" href="201512b.html#20151219">2015-12-19 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="201512191" title="201512191" href="201512b.html#201512191">■</a> 
+「Firefoxでの使用が検証できないため無効化されています」をなんとかする</h3>
+<p>
+<a href="https://dev.mozilla.jp/2015/09/addons_extension_signing/">アドオン/拡張機能への署名</a>によると、43ならabout:configで<br>
+xpinstall.signatures.requiredをfalseにすれば無理矢理使えるようにはできる。<br>
+44からはこれも使えなくなるけど、それまでには署名されるかな。
+</p>
+<!-- section end -->
+</div>
+<!-- 2015/12/19 end -->
+
+<hr>
+<div>
+<a href="201512a.html">&lt;Older(,)</a> | 
+<a href="201512c.html">Newer(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

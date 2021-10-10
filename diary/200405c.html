@@ -1,0 +1,536 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2004-5-c</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="200405b.html">
+<link rel="next" href="200406a.html">
+
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2004年5月下旬〜</p>
+<hr>
+<div>
+<a href="200405b.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="200406a.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2004/05/21 start -->
+<h2><a name="20040521" href="200405c.html#20040521">2004-05-21 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="200405211" title="200405211" href="200405c.html#200405211">■</a> 
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-dev/23559">[Ruby] -Wl,-E</a></h3>
+<p>
+これってなんでそうしたんだっけかなあ。
+LDSHAREDがld -bだから-Wl,-Eが渡されたら絶対まずい気がする。
+調べてからメール出そう。今日はもう眠い。
+</p>
+<!-- section end -->
+</div>
+<!-- 2004/05/21 end -->
+
+
+
+<hr class="hide">
+<!-- 2004/05/22 start -->
+<h2><a name="20040522" href="200405c.html#20040522">2004-05-22 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="200405221" title="200405221" href="200405c.html#200405221">■</a> 
+[Ruby] try_run</h3>
+<p>
+ext/tcltklib/extconf.rbにtry_runが入っていることに、今日気づいた。
+これを使うとクロスの環境ではmakeできなくなってしまう。
+そうか。
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-list/39498">threadが有効かどうか</a>を調べるのにこの方法を取ったのか。
+最近ちょっとさぼりすぎた。もうちょっとまめにクロスでmakeしないと。
+</p>
+
+<p>
+さて、autoconfのAC_TRY_RUNなら環境変数で教えてあげれば回避可能なんだけど、
+mkmf.rbのtry_runはそんなオプションはない。
+どうすべきか。
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-dev/23566">一応投げとこ。</a></p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200405222" title="200405222" href="200405c.html#200405222">■</a> 
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-dev/23564">[Ruby] XLDFLAGS</a></h3>
+<p>
+minirubyを作る際にXLDFLAGSを使うという提案をした。
+でも、configure.inを見ると、AIXの
+</p>
+<pre>
+XLDFLAGS=&quot;$XLDFLAGS -Wl,-bE:ruby.imp&quot;
+</pre>
+<p>
+が気になる。なんかAIXとHP-UXは常に問題ありだな。
+自由に使えるマシンがあればなんとかなるんだけど。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200405223" title="200405223" href="200405c.html#200405223">■</a> 
+<a href="http://www.taiyo.co.jp/~gotoh/diary/?200405c&amp;to=200405225#200405225">[Diary] 未来の日記</a></h3>
+<p>
+2009年末まで用意してあります。
+確認してみるとちゃんと存在しているので、
+browserかproxyのcacheにアクセスしてしまってるんじゃないでしょうか？
+FirefoxのRSS Reader Panelだとなんかそんな感じになりやすいようです(経験済み)。
+reloadすると出てきたり。
+</p>
+<!-- section end -->
+</div>
+<!-- 2004/05/22 end -->
+
+
+
+<hr class="hide">
+<!-- 2004/05/23 start -->
+<h2><a name="20040523" href="200405c.html#20040523">2004-05-23 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="200405231" title="200405231" href="200405c.html#200405231">■</a> 
+<a href="http://www.mikihoshi.com/lily/">[Blog] lily 0.1.5</a></h3>
+<p>
+なぜか標準セットのほうにはlily.cgiが同梱されてないようだ。
+lily本体からlily.cgiを取ってくる。
+またそのまま採用された模様。どうもです。
+考えてみるとstorysじゃなくてstoriesか。
+</p>
+
+<p>
+さて、dist_*をさらに思い切り書き換えてしまったし、どうしたもんかな。
+pluginに追い出すか。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200405232" title="200405232" href="200405c.html#200405232">■</a> 
+[Ruby] mkmf.rbのenable_config()</h3>
+<p>
+enable_configはtrue, false, nilを返す。
+つまり
+</p>
+
+</p><ol>
+<li>--enable-foo (true)
+
+<li>--disable-foo (false)
+
+<li>なにも指定しない (nil)
+
+</ol><p>
+<p>
+という3つ状態がわかるようになっている。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200405233" title="200405233" href="200405c.html#200405233">■</a> 
+[Ruby] mkmf.rbのtry_run()</h3>
+<p>
+クロスコンパイルを考えるとtry_run()は無条件に使えないんだから、try_run()の中にenable_config()があるべきなのかもしれない。
+でも、enable_config()の引数を固定にしても意味ないし、
+try_run()の引数を増やすのもなんだし、うーむ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2004/05/23 end -->
+
+
+
+<hr class="hide">
+<!-- 2004/05/24 start -->
+<h2><a name="20040524" href="200405c.html#20040524">2004-05-24 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="200405241" title="200405241" href="200405c.html#200405241">■</a> 
+<a href="http://www6.big.or.jp/~beyond/akutoku/news/2004/0522-10.html">『国民年金未納です　口座に振り込んで』新手の詐欺注意を　（東京新聞）</a></h3>
+<p>
+国民年金未納詐欺ときたか。ほんといろいろ考えるな。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200405242" title="200405242" href="200405c.html#200405242">■</a> 
+<a href="http://itpro.nikkeibp.co.jp/free/NT/NEWS/20040524/4/">Googleがデスクトップ用の検索ツールをまもなく提供へ</a></h3>
+<p>
+Windowsだけかな？Linuxも作ってよ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200405243" title="200405243" href="200405c.html#200405243">■</a> 
+[Ruby] RAAのURL</h3>
+<p>
+いつのまにかRAAの各プロジェクトのURLが/project/foo/になっていることに気づいた。
+この間のversion upのときらしい。
+</p><blockquote class="cite"><p>
+* /project/prjname shows project summary page for users whereas
+list.rhtml?name=prjname shows project page for owner.
+</p></blockquote><p>
+<!-- section end -->
+</div>
+<!-- 2004/05/24 end -->
+
+
+
+<hr class="hide">
+<!-- 2004/05/25 start -->
+<h2><a name="20040525" href="200405c.html#20040525">2004-05-25 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="200405251" title="200405251" href="200405c.html#200405251">■</a> 
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-talk/101329">[Ruby] separating ruby-talk from comp.lang.ruby?</a></h3>
+<p>
+ruby-talk MLのnews gatewayをとめようという案が出てる。
+どうも黒daveさんの記事がcomp.lang.rubyへ出て行かない、
+なんか一方通行気味だということからそんな提案になったようだ。
+MLの管理の面ではとめてくれたほうがありがたいというのはこの際置いといて、
+まずはgatewayをなんとかしろというか。どこかにソースが公開されてるんだっけ？
+まあ、双方向うまく届いたとしても、
+あの量からいってどうせ全記事を読むわけじゃないんだし、
+一方通行でもいいじゃん。
+</p>
+
+<p>
+そういえば最近の
+</p><blockquote class="cite"><p>
+Subject: What so special about PostgreSQL and other RDBMS?
+</p></blockquote><p>
+のようなあまりRubyに関係ない、しかも長い話が延々クロスポストされてるのを見ると、
+gatewayなんかなくてもいいと思わないでもない。
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200405252" title="200405252" href="200405c.html#200405252">■</a> 
+[Ruby] ruby-talk MLへのアクセス方法</h3>
+<p>
+ruby-talk MLへのアクセス方法:
+</p>
+
+</p><ol>
+<li>ruby-talk ML
+
+<li>comp.lang.ruby
+
+<li>
+<a href="http://www.gmane.org/">GMANE</a>
+
+<li>
+<a href="http://blade.nagaokaut.ac.jp/ruby/ruby-talk/index.shtml">blade</a>
+
+</ol><p>
+<p>
+GMANEならNNTPでもアクセスできる。投稿もできるのかな？
+bladeはもちろん読むだけ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200405253" title="200405253" href="200405c.html#200405253">■</a> 
+<a href="http://cygwin.com/ml/cygwin-announce/2004-05/msg00010.html">[Cygwin] Updated: cygwin-1.5.10-1</a></h3>
+<p>
+ええと、速くなったってことかな。
+</p><blockquote class="cite"><p>
+One special note is called for in this release -- Corinna Vinschen and
+Pierre Humblet have spent a lot of time on performance in this release
+and it shows.  In running the test suites prior to releasing this, I was
+really struck by how much snappier cygwin 1.5.10 felt when compared to
+1.5.9.  So, hats off to Corinna and Pierre.
+</p></blockquote><p>
+インストールは明日。
+<!-- section end -->
+</div>
+<!-- 2004/05/25 end -->
+
+
+
+<hr class="hide">
+<!-- 2004/05/26 start -->
+<h2><a name="20040526" href="200405c.html#20040526">2004-05-26 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="200405261" title="200405261" href="200405c.html#200405261">■</a> 
+<a href="http://cygwin.com/ml/cygwin-announce/2004-05/msg00011.html">[Cygwin] [DO NOT USE!] Re: Updated: cygwin-1.5.10-1</a></h3>
+<p>
+毎度お馴染のドタバタがあったようだ。
+</p><blockquote class="cite"><p>
+I somehow managed not to test the version of cygwin that I uploaded to
+sourceware.org and screwed up some things which made cygwin applications
+fail to start at all.  That's the bad news.
+</p></blockquote><p>
+<a href="http://cygwin.com/ml/cygwin-announce/2004-05/msg00012.html">早速1.5.10-2が出た</a>ようだけど、まだミラーされてなかった。
+1.5.9で困ってるわけでもないし、しばらく様子を見よう。
+<!-- section end -->
+</div>
+<!-- 2004/05/26 end -->
+
+
+
+<hr class="hide">
+<!-- 2004/05/27 start -->
+<h2><a name="20040527" href="200405c.html#20040527">2004-05-27 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="200405271" title="200405271" href="200405c.html#200405271">■</a> 
+<a href="http://kitchon.ddo.jp:8080/ashiya/samidare_plus">[Ruby] samidare_plus</a></h3>
+<p>
+
+<a href="http://cvs.m17n.org/cgi-bin/viewcvs/samidare/?cvsroot=ruby">samidare</a> の機能拡張版。
+なかなか面白そう。公開されるのが楽しみ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200405272" title="200405272" href="200405c.html#200405272">■</a> 
+[Cygwin] cygwin-1.5.10-3</h3>
+<p>
+
+<a href="http://cygwin.com/ml/cygwin/2004-05/msg00845.html">なんだかんだで</a> 、すでに-3になってる。
+</p>
+<!-- section end -->
+</div>
+<!-- 2004/05/27 end -->
+
+
+
+<hr class="hide">
+<!-- 2004/05/28 start -->
+<h2><a name="20040528" href="200405c.html#20040528">2004-05-28 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="200405281" title="200405281" href="200405c.html#200405281">■</a> 
+[Ruby] news gatewayトラブル？</h3>
+<p>
+夜になってc.l.rからどっと流れて来た。
+この議論白熱の最中に落ちてたんだろうか？
+それともへそを曲げてとめてたとか。
+</p>
+<!-- section end -->
+</div>
+<!-- 2004/05/28 end -->
+
+
+
+<hr class="hide">
+<!-- 2004/05/29 start -->
+<h2><a name="20040529" href="200405c.html#20040529">2004-05-29 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="200405291" title="200405291" href="200405c.html#200405291">■</a> 
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-list/39696">[Ruby] helium.ruby-lang.orgがクラックされました</a></h3>
+<p>
+まずは
+<a href="http://ftp.ruby-lang.org/pub/ruby/binaries">Ruby Banaries</a>のcygwin,mingw32,djgppを安全性を確認。
+と言っても単にいつもrsyncを実行するだけなんだけど。
+</p>
+
+<p>
+Rubyのソースのtarballを確認するためにRHGのCD-ROMを探したが見つからず。
+どうせruby-lang.orgに行けばいつもあるしと思うとCD-ROMも存外に扱ってしまいがち。
+</p>
+
+<p>
+見つかった。tarballは全部確認した。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200405292" title="200405292" href="200405c.html#200405292">■</a> 
+[Ruby] プラグインの実現方法</h3>
+<p>
+プラグインを実現する方法としてはreadしてeval系を使用するというのが多い。
+requireやloadってあまり聞かないなあ。トップレベルとかの問題だろうか？
+</p>
+
+<p>
+<a href="http://shugo.net/jit/20040528.html#p01">$SAFE == 1のときに</a>なるべくuntaintしないで済むを方法はないかなと考えてみた。
+</p>
+<pre>
+module PluginFoo
+  def bar
+  end
+end
+</pre>
+<p>
+という感じでfoo.rbというプラグインを作り、
+</p>
+<pre>
+class Foo
+  def initialize
+    Dir['plugin/**/*.rb'].each do |plugin|
+      begin
+        require File.expand_path(plugin).untaint
+      rescue Exception
+        例外の処理
+      end
+      ObjectSpace.each_object(Module) do |mod|
+        if mod.class == Module and /^Plugin/ =~ mod.to_s
+          extend mod
+        end
+      end
+    end
+  end
+end
+</pre>
+<p>
+のように、extendするのはどうだろう？
+</p>
+
+<p>
+<a href="http://shugo.net/tmp/lilyset-mod_ruby.diff">差分</a>は途中からreversed patchになっているので注意。
+1個1個別々にdiffを取ったようだ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2004/05/29 end -->
+
+
+
+<hr class="hide">
+<!-- 2004/05/30 start -->
+<h2><a name="20040530" href="200405c.html#20040530">2004-05-30 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="200405301" title="200405301" href="200405c.html#200405301">■</a> 
+<a href="http://www.gnu.org/software/tar/">[GNU] tar 1.14</a></h3>
+<p>
+実に久し振りのリリースだ。
+</p>
+
+<p>
+Changes:
+</p><blockquote class="cite"><p>
+Support for POSIX.1-2001 and ustar archive formats was  added. A
+new --format option selects the output archive  format. The default output
+format can be selected at  configuration time by presetting the
+environment variable  DEFAULT_ARCHIVE_FORMAT (allowed values are GNU, V7, 
+OLDGNU, USTAR, and POSIX). A new --strip-path option  cuts off a given
+number of path elements from the name of the  files being extracted. 
+</p></blockquote><p>
+--strip-pathは結構便利だな。
+<pre>
+% tar xfv cygwin-1.5.10-3.tar.bz2 --bz --strip-path 2 usr/bin/cygwin1.dll
+usr/bin/cygwin1.dll
+% ls cygwin1.dll 
+cygwin1.dll
+</pre>
+<p>
+のように、取り出せるわけだ。
+bzip2のオプションは-jらしいけど、
+<a href="200102a.html#200102012">もう覚えるのが面倒なので、</a>--bz(ip2)を使ってる。
+</p>
+<!-- section end -->
+</div>
+<!-- 2004/05/30 end -->
+
+
+
+<hr class="hide">
+<!-- 2004/05/31 start -->
+<h2><a name="20040531" href="200405c.html#20040531">2004-05-31 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="200405311" title="200405311" href="200405c.html#200405311">■</a> 
+<a href="http://ftp.info-zip.org/pub/infozip/UnZip.html">[Soft] UnZip 5.51</a></h3>
+<p>
+Changes:
+</p><blockquote class="cite"><p>
+This is primarily a security-fix
+release, correcting a textmode
+data-corruption bug in 16-bit ports and
+several directory-traversal flaws
+(involving invalid filename characters,
+quoted characters, symlink traversal,
+and local/central-directory filename
+mismatches). It also adds support for
+restoring directory timestamps under
+Windows.
+</p></blockquote><p>
+<!-- section end -->
+</div>
+<!-- 2004/05/31 end -->
+
+<hr>
+<div>
+<a href="200405b.html">&lt;Prev(,)</a> | 
+<a href="200406a.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

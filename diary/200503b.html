@@ -1,0 +1,612 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2005-3-b</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="200503a.html">
+<link rel="next" href="200503c.html">
+
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2005年3月中旬〜</p>
+<hr>
+<div>
+<a href="200503a.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="200503c.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2005/03/11 start -->
+<h2><a name="20050311" href="200503b.html#20050311">2005-03-11 (Fri)</a></h2>
+<!-- 2005-03-12 02:27:00 -->
+
+<div class="entry1">
+<h3><a name="200503111" title="200503111" href="200503b.html#200503111">■</a> 
+<a href="http://forecastfox.mozdev.org/">[Firefox] ForecastFox 0.7</a></h3>
+<p>
+0.6はどうなったんだろう？
+それはそれとして、新機能の
+</p>
+<pre>
+Added: Options for today's forecast.
+</pre>
+<p>
+がうれしい。
+現在と3日間という指定だと、現在、今日、明日、明後日となってしまい、
+いまいち今日の予報は邪魔に感じていた。これを削除できるようになった。
+</p>
+<!-- section end -->
+</div>
+<!-- 2005/03/11 end -->
+
+
+
+<hr class="hide">
+<!-- 2005/03/12 start -->
+<h2><a name="20050312" href="200503b.html#20050312">2005-03-12 (Sat)</a></h2>
+<!-- 2005-03-13 00:44:11 -->
+
+<div class="entry1">
+<h3><a name="200503121" title="200503121" href="200503b.html#200503121">■</a> 
+<a href="http://sdelta.berlios.de/">[Soft] sdelta</a></h3>
+<p>
+About:
+</p><blockquote><p>
+sdelta is a dictionary compressor that analyzes the differences
+between two files and outputs a very small delta that is highly
+compressible. It is optimized to produce deltas of source
+tarballs. The patches it produces are larger than xdelta patches, but
+are often between 30% and 60% smaller after bzip2 compression.
+</p></blockquote><p>
+bzip2で圧縮するとxdeltaよりも小さくなるらしい。READMEを見ると
+</p>
+<pre>
+bytes           file name
+197888000       linux-2.6.7.tar         &lt;- dictionary file
+200847360       linux-2.6.8.1.tar       &lt;- message    file
+
+2060961         linux-2.6.7-linux-2.6.8.1.tar.sdelta.bz2
+3190401         linux-2.6.7-linux-2.6.8.1.tar.xdelta.bz2
+&lt;中略&gt;
+13M  sdelta bzip2 compressed becomes 2M
+6.9M xdelta bzip2 compressed becomes 3M
+</pre>
+<p>
+ということで、確かに圧縮しやすいデータ構造になってるようだ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2005/03/12 end -->
+
+
+
+<hr class="hide">
+<!-- 2005/03/13 start -->
+<h2><a name="20050313" href="200503b.html#20050313">2005-03-13 (Sun)</a></h2>
+<!-- 2005-03-14 02:20:36 -->
+
+<div class="entry1">
+<h3><a name="200503131" title="200503131" href="200503b.html#200503131">■</a> 
+<a href="http://pr.zhekov.net/">[Ruby] An open-source web-based slideshow application</a></h3>
+<p>
+これはなかなかすごいね。Wikiでプレゼンが作れるわけだ。
+
+<a href="http://www.krickelkrackel.de/autohide/autohide.htm">Autohide</a>
+と組み合わせれば、Firefoxでも完全なフルスクリーンが可能になる。
+スペースバー、リターンキー、カーソルキーなども使えるあたりが気が利いてる。
+まだ試してないんだけど、だれもaccountを作ってないからちょっと躊躇してしまう。
+RDocで記述できるらしい。Railsである必要がどこにあるのかがよくわからん。
+まずは
+<a href="http://www.meyerweb.com/eric/tools/s5/">S5</a>を調べてみよう。
+</p>
+
+<p>
+Link: 
+<a href="http://www.fdiary.net/ml/rails/msg/80">s5presents RDoc power up!</a>
+</p>
+<!-- section end -->
+</div>
+<!-- 2005/03/13 end -->
+
+
+
+<hr class="hide">
+<!-- 2005/03/14 start -->
+<h2><a name="20050314" href="200503b.html#20050314">2005-03-14 (Mon)</a></h2>
+<!-- 2005-03-15 01:05:22 -->
+
+
+<div class="entry1">
+<h3><a name="200503141" title="200503141" href="200503b.html#200503141">■</a> 
+<a href="http://rubyurl.com/">[Web] RubyURL</a></h3>
+<p>
+ruby-talk MLで最近
+<a href="http://tinyurl.com/">TinyURL</a>が話題になっていたけど、
+<a href="http://www.robbyonrails.com/articles/read/7">1時間ぐらいでできちゃったよ</a>ってこと？
+それはすごい。しかし、最近は何でもRoRだなあ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2005/03/14 end -->
+
+
+
+<hr class="hide">
+<!-- 2005/03/15 start -->
+<h2><a name="20050315" href="200503b.html#20050315">2005-03-15 (Tue)</a></h2>
+<!-- 2005-03-16 02:20:09 -->
+
+<div class="entry1">
+<h3><a name="200503151" title="200503151" href="200503b.html#200503151">■</a> 
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-talk/133607">[Ruby] news gateway復活</a></h3>
+<p>
+ruby-talk MLからcomp.lang.rubyへの一方通行だったnews gatewayが復活したようだ。
+突然記事が増えた。
+</p>
+
+<p>
+でも3日以上経ってる記事はrejectしてるんだよねえ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200503152" title="200503152" href="200503b.html#200503152">■</a> 
+[Gmail] From any label, 'y' means Remove the label</h3>
+<p>
+Gmailでラベル付けしたメールを見て終了時についyを押してしまう。
+ここではラベルを消すという意味らしい。ヘルプを見てやっと理解。
+どこに消えたのかと思えば。
+しかし、過去に消しちゃったのはもう見つけらんないよなあ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2005/03/15 end -->
+
+
+
+<hr class="hide">
+<!-- 2005/03/16 start -->
+<h2><a name="20050316" href="200503b.html#20050316">2005-03-16 (Wed)</a></h2>
+<!-- 2005-03-17 01:42:13 -->
+
+<div class="entry1">
+<h3><a name="200503161" title="200503161" href="200503b.html#200503161">■</a> 
+[Firefox] Keyconfigでless key binding</h3>
+<p>
+やっぱgで先頭に移動したくなったので、
+<a href="http://extensionroom.mozdev.org/more-info/keyconfig/">Keyconfig</a>を試してみた。
+というか、完璧に
+<a href="http://www.calmar.ws/firefox/index.php#keyconfig">Firefox Keybindings (vi/vim-like in my case)</a>
+を参考にしただけなんだけど、
+</p>
+<pre>
+user_pref(&quot;keyconfig.main.xxx_key_ScrollBottom&quot;,
+  &quot;shift][G][][goDoCommand('cmd_scrollBottom');&quot;);
+user_pref(&quot;keyconfig.main.xxx_key_ScrollTop&quot;,
+  &quot;][G][][goDoCommand('cmd_scrollTop');&quot;);
+</pre>
+<p>
+ってのをprefs.jsに追加。快適。
+</p>
+<pre>
+user_pref(&quot;keyconfig.main.xxx_key_PageDown&quot;,
+  &quot;][F][][goDoCommand('cmd_scrollPageDown');&quot;);
+user_pref(&quot;keyconfig.main.xxx_key_PageUp&quot;,
+  &quot;][B][][goDoCommand('cmd_scrollPageUp');&quot;);
+</pre>
+<p>
+とか追加していったら、もう
+
+<a href="200502a.html#200502072">userHTMLBindings.xmlで設定</a>する必要ないな。
+</p>
+<!-- section end -->
+</div>
+<!-- 2005/03/16 end -->
+
+
+
+<hr class="hide">
+<!-- 2005/03/17 start -->
+<h2><a name="20050317" href="200503b.html#20050317">2005-03-17 (Thu)</a></h2>
+<!-- 2005-03-18 01:50:49 -->
+
+<div class="entry1">
+<h3><a name="200503171" title="200503171" href="200503b.html#200503171">■</a> 
+<a href="http://webgen.rubyforge.org/">[Ruby] Ruby Webgen 0.3.2</a></h3>
+<p>
+0.3.1が出たなと思ったらすでに0.3.2が出てる。
+3つの
+<a href="http://webgen.rubyforge.org/documentation/index.html">Philosophy</a>がなかなかいい。
+<ul>
+<li>Webgen runs till the end and does not stop on errors!
+<li>Useful default values for everything!
+<li>Every important thing gets logged!
+</ul>
+インストールはgemで
+</p>
+<pre>
+% gem install webgen
+</pre>
+<p>
+でok。とはいうものの、サンプルがないのでソースを取ってきたほうがいいかな。
+testsite/でwebgenを起動すればいいはずだけど、なんか盛大のエラーが出る。
+でも、眠いから寝る。
+</p>
+<!-- section end -->
+</div>
+<!-- 2005/03/17 end -->
+
+
+
+<hr class="hide">
+<!-- 2005/03/18 start -->
+<h2><a name="20050318" href="200503b.html#20050318">2005-03-18 (Fri)</a></h2>
+<!-- 2005-03-19 02:23:45 -->
+
+<div class="entry1">
+<h3><a name="200503181" title="200503181" href="200503b.html#200503181">■</a> 
+<a href="http://www.adobe.com/products/acrobat/readstep2.html">[Linux] Adobe Reader 7.0</a></h3>
+<p>
+Linux版のAdobe Reader 7.0を入れてみた。
+</p><blockquote><p>
+This version has been completely redone in GTK. PDF 1.6 is now supported. 
+</p></blockquote><p>
+ということらしい。日本語も問題なく表示される。
+しかし、相変わらずスペースバーでページ送りはできない。
+Windows版では6からできるようになったのにねえ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2005/03/18 end -->
+
+
+
+<hr class="hide">
+<!-- 2005/03/19 start -->
+<h2><a name="20050319" href="200503b.html#20050319">2005-03-19 (Sat)</a></h2>
+<!-- 2005-03-23 01:36:42 -->
+
+<div class="entry1">
+<h3><a name="200503191" title="200503191" href="200503b.html#200503191">■</a> 
+[CSS] 角</h3>
+<p>
+そういえばGmailも角が丸いな。
+でもソースを見てもどこにCSSがあるんだかわからない。
+さすがGmailだ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200503192" title="200503192" href="200503b.html#200503192">■</a> 
+[RoR] Ruby on Railsのインストール</h3>
+<p>
+今日は勉強会をやってるということだけど、花粉がいやで家でおとなしくRuby on Railsをインストールしてみたりする。
+
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/raa">RubyGems</a>を使えば適当にリターンキーを押すだけでインストールできる。
+</p>
+<pre>
+% gem install rails
+Config file /home/eban/.gemrc does not exist
+Attempting local installation of 'rails'
+Local gem file not found: rails*.gem
+Attempting remote installation of 'rails'
+Install required dependency activesupport? [Yn]
+Install required dependency activerecord? [Yn]
+Install required dependency actionpack? [Yn]
+Install required dependency actionmailer? [Yn]
+Install required dependency actionwebservice? [Yn]
+Successfully installed rails, version 0.10.1
+Installing RDoc documentation for rails-0.10.1...
+Installing RDoc documentation for activesupport-1.0.1...
+Installing RDoc documentation for activerecord-1.8.0...
+Installing RDoc documentation for actionpack-1.5.1...
+Installing RDoc documentation for actionmailer-0.7.1...
+Installing RDoc documentation for actionwebservice-0.6.0...
+</pre>
+<p>
+ここで、はたと気づく。railsって結局なんだっけ？
+るびまも読んでないしなあ。
+</p>
+
+<p>
+とりあえずrails -hしてみるとExampleが出てきた。
+</p>
+<pre>
+Description:
+    The 'rails' command creates a new Rails application with a default
+    directory structure and configuration at the path you specify.
+
+Example:
+    rails ~/Code/Ruby/weblog
+
+    This generates a skeletal Rails installation in ~/Code/Ruby/weblog.
+    See the README in the newly created application to get going.
+</pre>
+<p>
+ふむふむ。じゃ、適当にディレクトリを指定してみるか。
+</p>
+<pre>
+% rails ~/rails
+      create  
+      create  app/apis
+      create  app/controllers
+      create  app/helpers
+      create  app/models
+      create  app/views/layouts
+      create  config/environments
+&lt;中略&gt;
+      create  public/404.html
+      create  public/500.html
+      create  public/index.html
+      create  public/favicon.ico
+      create  doc/README_FOR_APP
+      create  log/server.log
+      create  log/production.log
+      create  log/development.log
+      create  log/test.log
+</pre>
+<p>
+なんかすげー。で、~/rails/READMEを読む。ruby script/serverで動くらしい。
+URLはhttp://localhost:3000/か。Congratulationsが出た。
+なるほど。インストールはできたようだ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200503193" title="200503193" href="200503b.html#200503193">■</a> 
+<a href="http://wiki.rubyonrails.com/rails/show/Tutorial">[RoR] チュートリアル</a></h3>
+<p>
+続いて
+<a href="http://wiki.rubyonrails.com/rails/show/Tutorial">チュートリアル</a>を実行してみる。
+
+<a href="http://wiki.rubyonrails.com/rails/show/TutorialStepOne">Step One</a>
+を見るとMySQL, PostgreSQL, SQLiteが使えるようだ。
+例ではMySQLが使われているが、ここでは迷わず横道にそれて
+
+<a href="http://wiki.rubyonrails.com/rails/show/TutorialStepOneSqlite">SQLite</a>
+を選ぶ。そのままsqlファイルを保存して~/rails/dbで
+</p>
+<pre>
+% sqlite rails_production.db &lt;rails_production.sql
+</pre>
+<p>
+と実行。これでデータベースが作られた。
+</p>
+
+<p>
+次に
+<a href="http://wiki.rubyonrails.com/rails/show/TutorialStepTwo">Step Two</a>。
+config/database.ymlを編集してSQLiteを指定。
+注意する点はSQLiteの場合、ファイル名はdatabaseではなくdbfileで指定する。
+sqlite-rubyはインストールしてあったけど、ついでにgemでインストールしとこう。
+</p>
+<pre>
+% gem install sqlite-ruby
+</pre>
+<p>
+なんかいっぱい候補が出てくるが、1の最新を選べば無事にインストールできた。
+</p>
+
+<p>
+
+<a href="http://wiki.rubyonrails.com/rails/show/TutorialStepThree">Step Three</a>,
+
+<a href="http://wiki.rubyonrails.com/rails/show/TutorialStepFour">Step Four</a>
+を実行。
+</p>
+<pre>
+% ./script/generate controller Friends list display new edit
+      exists  app/controllers/
+      exists  app/helpers/
+      create  app/views/friends
+      exists  test/functional/
+      create  app/controllers/friends_controller.rb
+      create  test/functional/friends_controller_test.rb
+      create  app/helpers/friends_helper.rb
+      create  app/views/friends/list.rhtml
+      create  app/views/friends/display.rhtml
+      create  app/views/friends/new.rhtml
+      create  app/views/friends/edit.rhtml
+% ./script/generate model Person
+      exists  app/models/
+      exists  test/unit/
+      exists  test/fixtures/
+      create  app/models/person.rb
+      create  test/unit/person_test.rb
+      create  test/fixtures/people.yml
+</pre>
+<p>
+
+<a href="http://wiki.rubyonrails.com/rails/show/TutorialStepFive">Step Five</a>
+のrakeの実行は必要ないらしい。
+</p>
+
+<p>
+
+<a href="http://wiki.rubyonrails.com/rails/show/TutorialStepSix">Step Six</a>
+に従い
+app/views/friends/display.rhtml, app/controllers/friends_controller.rb
+を編集。
+あとは http://localhost:3000/friends/display にアクセスすればいいわけだが、なぜかエラーになるな。
+</p>
+<pre>
+NoMethodError in Friends#display
+
+Showing /friends/display.rhtml where line #6 raised undefined method `name' for nil:NilClass
+
+3: &lt;h1&gt;Friends#display&lt;/h1&gt;
+4: &lt;p&gt;This page will display one friend&lt;/p&gt;
+5: &lt;p&gt;
+6: &lt;%= @person.name %&gt;&lt;br /&gt;
+7: &lt;%= @person.street1 %&gt;&lt;br /&gt;
+8: &lt;%= @person.street2 %&gt;&lt;br /&gt;
+9: &lt;%= @person.city %&gt;&lt;br /&gt;
+&lt;後略&gt;
+</pre>
+<p>
+なんかエラーの表示もすばらしい。さて、原因はなんだ？
+あ、sqlがpeopleになってんじゃん。personに書き換えてもう一度やりなおし。
+だめだな。同じエラーだ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2005/03/19 end -->
+
+
+
+<hr class="hide">
+<!-- 2005/03/20 start -->
+<h2><a name="20050320" href="200503b.html#20050320">2005-03-20 (Sun)</a></h2>
+<!-- 2005-03-21 01:26:31 -->
+
+<div class="entry1">
+<h3><a name="200503201" title="200503201" href="200503b.html#200503201">■</a> 
+[Last.FM] Last.fm Radio is offline, but will return in time for Sunday Lunch.</h3>
+<p>
+昨日の夜中から突然切れたままだけど、Sunday Lunchってどこ時間だ？
+とりあえずKAELAを聞きまくる。
+</p>
+
+<p>
+夜に復活したが、なんか切れ切れで安定しない。
+結局バッファを大きくしても何の解決にもなってないようだ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200503202" title="200503202" href="200503b.html#200503202">■</a> 
+<a href="http://www.gihyo.co.jp/news.php/webdb-sp.html">[Mook] 『WEB+DB PRESS特別総集編』発売のお知らせ</a></h3>
+<p>
+これは買うしか。
+</p><blockquote><p>
+本誌は『WEB+DB PRESS』の創刊号からVol.24（2004年12月）までの4年分の記
+事（5,384ページ）を、PDF形式で1枚のCD-ROMにまとめた特別総集編です。
+</p></blockquote>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200503203" title="200503203" href="200503b.html#200503203">■</a> 
+[Network] routerが不安定</h3>
+<p>
+突然routerがつながらなくなる。電源のoff/onで復活する。というのが日に3度ほど。
+買ってから1年ちょっとしか経ってないのになあ。
+</p>
+
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200503204" title="200503204" href="200503b.html#200503204">■</a> 
+<a href="http://manuals.rubyonrails.com/read/book/7">[RoR] Howto make a TODO List Application</a></h3>
+<p>
+この
+<a href="http://manuals.rubyonrails.com/read/book/7">tutorial</a>を試してみたら、うまくいった。
+ってことはSQLiteが別に悪いわけでもないわけで、どこかtypoがあるんだろうなあ。
+</p>
+
+<p>
+sqlはこんな感じ。
+</p>
+<pre>
+CREATE TABLE todos (
+  id INTEGER PRIMARY KEY,
+  description TEXT,
+  done INTEGER
+);
+</pre>
+<p>
+この複数形のあたりに秘密があるんだろうか？
+昨日もpersonsにしてみたりしたんだけど、全然変わらなかったんだよなあ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200503205" title="200503205" href="200503b.html#200503205">■</a> 
+[Ruby] callの省略</h3>
+<p>
+Ruby 1.9ではcallを省略してProcオブジェクトが呼べるようになっていることに、ruby-talk MLをぼーっと眺めていて気づいた。
+</p>
+<pre>
+% ruby -ve 'foo = proc{|x| p x}; foo(&quot;hoge&quot;)'
+ruby 1.9.0 (2005-03-20) [i386-linux]
+&quot;hoge&quot;
+</pre>
+<p>
+提案だけじゃなくてすでに実装されてたとは。
+</p>
+<!-- section end -->
+</div>
+<!-- 2005/03/20 end -->
+
+<hr>
+<div>
+<a href="200503a.html">&lt;Prev(,)</a> | 
+<a href="200503c.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

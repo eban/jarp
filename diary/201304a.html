@@ -1,0 +1,307 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2013-4-a</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="201303c.html">
+<link rel="next" href="201304b.html">
+
+<link rel="stylesheet" type="text/css" href="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.css">
+<script type="text/javascript" src="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.js"></script>
+<script type="text/javascript">
+<!--       
+$(document).ready(function() {
+  prettyPrint();
+});
+-->
+</script>
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2013年4月上旬〜</p>
+<hr>
+<div>
+<a href="201303c.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="201304b.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2013/04/01 start -->
+<h2><a name="20130401" href="201304a.html#20130401">2013-04-01 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="201304011" title="201304011" href="201304a.html#201304011">■</a> 
+Taberarelooがインストールできない</h3>
+<p>
+Taberarelooでreblogできなくなったので新しいのが出てるかと確認してみたら、
+</p>
+<pre>
+このアプリケーションはこのパソコンではサポートされていません。インストールは無効になりました。
+</pre>
+<p>
+とつれないメッセージが。どういうこと？Linuxじゃだめなの？<br>
+OneTabもインストールできないしなんか壊れてるのかな。<br>
+今度まっさらなChromeを用意してやってみよう。
+</p>
+<!-- section end -->
+</div>
+<!-- 2013/04/01 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/04/02 start -->
+<h2><a name="20130402" href="201304a.html#20130402">2013-04-02 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="201304021" title="201304021" href="201304a.html#201304021">■</a> 
+パスワードにコンマを含めると面倒なことに</h3>
+<p>
+CSVは元より区切りにコンマを使ってるのはよくある話で、mountの-oもそう。<br>
+mount.cifsでパスワードを指定するときは
+</p>
+<pre>
+-o username=ユーザネーム,password=パスワード
+</pre>
+<p>
+という形式なのでパスワードにコンマが含まれていると非常に面倒なことになる。<br>
+man mount.cifsしてみると
+</p>
+<pre>
+Note that a password which contains the delimiter character (i.e. a comma ´,´) will fail to be parsed
+correctly on the command line. However, the same password defined in the PASSWD environment variable or
+via a credentials file (see below) or entered at the password prompt will be read correctly.
+</pre>
+<p>
+ということでなんと環境変数PASSWDを使えということらしい。<br>
+コマンドラインからならそれでもいいが、/etc/fstabに書きたいときは困る。<br>
+credentials=filenameでできるらしいがそれもなあ。
+</p>
+<p>
+というわけで、もう面倒なのでコンマは使わない方向で。
+</p>
+<!-- section end -->
+</div>
+<!-- 2013/04/02 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/04/03 start -->
+<h2><a name="20130403" href="201304a.html#20130403">2013-04-03 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="201304031" title="201304031" href="201304a.html#201304031">■</a> 
+Fitbit</h3>
+<p>
+どこかに落とした模様。すでに2回落としていたが、親切な人がすぐに教えてくれたので事なきを得た。<br>
+3回目はなかったようで。またUltra買おうと思ったがFitbit Oneのほうが安かったのでこっちにした。
+</p>
+<!-- section end -->
+</div>
+<!-- 2013/04/03 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/04/04 start -->
+<h2><a name="20130404" href="201304a.html#20130404">2013-04-04 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="201304041" title="201304041" href="201304a.html#201304041">■</a> 
+Logicoolのマウス</h3>
+<p>
+15ヶ月保つという謳い文句のLogicoolのマウスにeneloopを入れて今日でほんとに15ヶ月目。<br>
+まだまだ全然余裕っぽい。LEDが赤くなったりもしてないし、すげーな。
+</p>
+<p>
+参照:
+<a href="201201a.html#201201041">ワイヤレスマウスの電池が切れた(Logicool M505)</a></p>
+<!-- section end -->
+</div>
+<!-- 2013/04/04 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/04/05 start -->
+<h2><a name="20130405" href="201304a.html#20130405">2013-04-05 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="201304051" title="201304051" href="201304a.html#201304051">■</a> 
+Fitbit One</h3>
+<p>
+Bluetoothになったらしい。最初ハードキーの存在を知らずにあせった。<br>
+Ultraとの最大の違いはSilent Alarmsか。<br>
+土曜と日曜はOFFみたいに曜日毎にON/OFFできる。すばらしい。<br>
+月曜日ちゃんと起きられるか？
+</p>
+<!-- section end -->
+</div>
+<!-- 2013/04/05 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/04/06 start -->
+<h2><a name="20130406" href="201304a.html#20130406">2013-04-06 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="201304061" title="201304061" href="201304a.html#201304061">■</a> 
+AAA..ZZZ</h3>
+<p>
+bashだと{A..Z}はできるが、{AAA..ZZZ}は無理なようで。でも{A..Z}{A..Z}{A..Z}でいいんだな。<br>
+問題はzshで、なぜか{A..Z}ができない。結構不思議。
+</p>
+<!-- section end -->
+</div>
+<!-- 2013/04/06 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/04/07 start -->
+<h2><a name="20130407" href="201304a.html#20130407">2013-04-07 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="201304071" title="201304071" href="201304a.html#201304071">■</a> 
+厳格なlighttpd</h3>
+<p>
+ssh tunnelなんかのテストでよくhttpサーバで試したりするが、lighttpdはかなり厳格で、<br>
+CR+LF+CR+LFじゃないと受け付けてくれない。
+</p>
+<pre>
+% echo -n $'HEAD / HTTP/1.0\n\n' | nc host 80
+% echo -n $'HEAD / HTTP/1.0\r\n\r\n'|nc host 80
+HTTP/1.0 200 OK
+Content-Type: text/html; charset=utf-8
+Content-Length: 2482
+Connection: close
+Date: Mon, 08 Apr 2013 12:32:34 GMT
+Server: lighttpd/1.4.28
+
+</pre>
+たいていのhttp serverはLF+LFで許してくれるんだけどねえ。<br>
+WEBrickなんかLFだけでもいけちゃう。それはそれでどうかと思うが。
+<pre>
+% echo -n $'HEAD / HTTP/1.0\n' | nc localhost 8000   
+HTTP/1.1 200 OK 
+Content-Type: text/html
+Server: WEBrick/1.3.1 (Ruby/2.1.0/2013-04-02)
+Date: Mon, 08 Apr 2013 12:36:22 GMT
+Content-Length: 3552
+Connection: close
+
+</pre>
+<!-- section end -->
+</div>
+<!-- 2013/04/07 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/04/08 start -->
+<h2><a name="20130408" href="201304a.html#20130408">2013-04-08 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="201304081" title="201304081" href="201304a.html#201304081">■</a> 
+Fitbit Oneのsilent alarm</h3>
+どんなふうに起こしてくれるのか楽しみにして、リストバンドにつけて昨日寝た。<br>
+まあ、当然のことながら振動で起こしてくれるわけだけど、これは一発で目が覚めるねえ。<br>
+静かだしいいかも。
+<!-- section end -->
+</div>
+<!-- 2013/04/08 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/04/09 start -->
+<h2><a name="20130409" href="201304a.html#20130409">2013-04-09 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="201304091" title="201304091" href="201304a.html#201304091">■</a> 
+Fitbit OneとAndroid</h3>
+<p>
+全然気づいてなかったが、サポートされてるAndroidデバイスもあるようで。<br>
+Nexus 7も対応してくれるとありがたい。
+</p>
+<!-- section end -->
+</div>
+<!-- 2013/04/09 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/04/10 start -->
+<h2><a name="20130410" href="201304a.html#20130410">2013-04-10 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="201304101" title="201304101" href="201304a.html#201304101">■</a> 
+<a href="http://golf.shinh.org/p.rb?parity+of+numbers">parity of numbers</a></h3>
+<p>
+0から255まで計算してみると規則性が見えるんだけど面白いねえ。<br>
+その規則性を使うとsedでも比較的簡単に解ける。
+</p>
+<!-- section end -->
+</div>
+<!-- 2013/04/10 end -->
+
+<hr>
+<div>
+<a href="201303c.html">&lt;Prev(,)</a> | 
+<a href="201304b.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

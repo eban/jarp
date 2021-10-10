@@ -1,0 +1,338 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2015-11-a</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="201510c.html">
+<link rel="next" href="201511b.html">
+
+<link rel="stylesheet" type="text/css" href="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.css">
+<script async type="text/javascript" src="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.js"></script>
+<script type="text/javascript">
+<!--       
+$(document).ready(function() {
+  prettyPrint();
+});
+-->
+</script>
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2015年11月上旬〜</p>
+<hr>
+<div>
+<a href="201510c.html" accesskey=",">&lt;Older(,)</a> | 
+<a href="201511b.html" accesskey=".">Newer(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2015/11/01 start -->
+<h2><a name="20151101" href="201511a.html#20151101">2015-11-01 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="201511011" title="201511011" href="201511a.html#201511011">■</a> 
+プリキュア数</h3>
+<p>
+rubicureでは2,3,2,5,6だったので、
+<a href="https://ja.wikipedia.org/wiki/%E3%83%97%E3%83%AA%E3%82%AD%E3%83%A5%E3%82%A2%E3%82%B7%E3%83%AA%E3%83%BC%E3%82%BA">wikipedia</a>で確認してみたら、<br>
+やはり2,3,4,5,6にはならなかった。
+</p>
+<pre>
+% curl -Ls bitly.com/1OlsSxS | grep -A4 ':left.*プ' |awk '{gsub(/&lt;[^&gt;]*&gt;|\n/,&quot;@&quot;);print $(NF-2),$3}' FS='@' RS='--\n'
+2人 ふたりはプリキュア
+3人 ふたりはプリキュア Max Heart
+2人 ふたりはプリキュア Splash Star
+5人 Yes!プリキュア5
+6人 Yes!プリキュア5GoGo!
+4人 フレッシュプリキュア!
+4人 ハートキャッチプリキュア!
+4人 スイートプリキュア♪
+5人 スマイルプリキュア!
+5人 ドキドキ!プリキュア
+4人 ハピネスチャージプリキュア!
+- Go!プリンセスプリキュア
+</pre>
+<!-- section end -->
+</div>
+<!-- 2015/11/01 end -->
+
+
+
+<hr class="hide">
+<!-- 2015/11/02 start -->
+<h2><a name="20151102" href="201511a.html#20151102">2015-11-02 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="201511021" title="201511021" href="201511a.html#201511021">■</a> 
+ヒーローズ</h3>
+<p>
+日テレで再放送してるが知ったときにはすでに4話だったので、ぽすれんで借りた。<br>
+はまっている。<br>
+今ちょうど旧作80円キャンペーン中なのでがんがん借りることにしよう。<br>
+それにしてもこのキャンペーンはキャンペーンじゃない期間のほうが短いので、<br>
+旧作ばかり借りてる人はスポットレンタルに切り替えるべき。
+</p>
+<!-- section end -->
+</div>
+<!-- 2015/11/02 end -->
+
+
+
+<hr class="hide">
+<!-- 2015/11/03 start -->
+<h2><a name="20151103" href="201511a.html#20151103">2015-11-03 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="201511031" title="201511031" href="201511a.html#201511031">■</a> 
+convertで画像を分割</h3>
+<p>
+出力がpngとかなら問題ないが、pbmだとなぜか半分だけになってしまう。
+</p>
+<pre>
+% convert foo.png -crop 50%x100% -verbose bar.pbm 
+foo.png=&gt;bar.pbm[0] PNG 1164x1553=&gt;582x1553 1164x1553+0+0 1-bit sRGB 227KB 2.580u 0:02.539
+</pre>
+<p>
+そんな時はgifアニメにしたくないときに使った+adjoinがこの場合にも使える。
+</p>
+<pre>
+% convert foo.png -crop 50%x100% +adjoin -verbose bar.pbm
+foo.png=&gt;bar-0.pbm[0] PNG 1164x1553=&gt;582x1553 1164x1553+0+0 1-bit sRGB 113KB 1.430u 0:01.410
+foo.png=&gt;bar-1.pbm[1] PNG 1164x1553=&gt;582x1553 1164x1553+582+0 1-bit sRGB 113KB 2.790u 0:02.750
+</pre>
+<!-- section end -->
+</div>
+<!-- 2015/11/03 end -->
+
+
+
+<hr class="hide">
+<!-- 2015/11/04 start -->
+<h2><a name="20151104" href="201511a.html#20151104">2015-11-04 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="201511041" title="201511041" href="201511a.html#201511041">■</a> 
+PDF.jsの小ネタ</h3>
+<p>
+最近のFirefoxでPDFを見るとAdobe ReaderじゃなくてPDF.jsビューアが立ち上がるが、<br>
+何気なくjとかkとか押すと期待通りに動く。しかも↓や↑と違ってちゃんとPDFのページ単位で。<br>
+すげー便利だがなんでPgDnやPgUpにもそれを割り当てなかったのか。
+</p>
+<!-- section end -->
+</div>
+<!-- 2015/11/04 end -->
+
+
+
+<hr class="hide">
+<!-- 2015/11/05 start -->
+<h2><a name="20151105" href="201511a.html#20151105">2015-11-05 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="201511051" title="201511051" href="201511a.html#201511051">■</a> 
+有効マイナンバー生成 #シェル芸</h3>
+<p>
+ランダムな11桁の数値を用意してawkでチェックデジットを計算する。
+</p>
+<pre>
+% pwgen -C|tr -cd 0-9|cut -c-11|awk '{for(i=s=0;i&lt;NF;i++)s+=$(NF-i)*(i%6+2);s%=11;print $0 (11-s)*(s&gt;1)}' FS=
+193002576816
+</pre>
+<p>
+pwgenじゃなくてcat /dev/urandomでもいいが長い。<br>
+pwgenはstdoutがttyじゃないと1個しか生成してくれない。<br>
+man pwgenにはスクリプトに便利的なことが書かれているが、<br>
+互換性のため今さら直せないようだ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2015/11/05 end -->
+
+
+
+<hr class="hide">
+<!-- 2015/11/06 start -->
+<h2><a name="20151106" href="201511a.html#20151106">2015-11-06 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="201511061" title="201511061" href="201511a.html#201511061">■</a> 
+zshでパス名の長い順に並べる</h3>
+<p>
+<a href="http://takuya-1st.hatenablog.jp/entry/2015/11/05/180527">awkとかsortとかいろいろ使っている</a>けど、zshだけでいける。肝はPATHじゃなくて配列のpathを使う。
+</p>
+<pre>
+% zsh -c 'a=();for i in $path $path;do a+=${#i},$i;done;path=(${${(Onu)a}#*,});print -l $path'
+/home/eban/local/gocobe/bin
+/home/eban/local/go/bin
+/home/eban/local/bin
+/home/eban/jarp/bin
+/usr/local/bin
+/home/eban/bin
+/usr/games
+/usr/sbin
+/usr/bin
+/sbin
+/bin
+</pre>
+for loopを使わずに${^path}(N-/^W)的なノリでできるといいんだけど。
+<!-- section end -->
+</div>
+<!-- 2015/11/06 end -->
+
+
+
+<hr class="hide">
+<!-- 2015/11/07 start -->
+<h2><a name="20151107" href="201511a.html#20151107">2015-11-07 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="201511071" title="201511071" href="201511a.html#201511071">■</a> 
+AWS DynamoDBのqueryで困ること</h3>
+<p>
+keyを指定するのはいいとして、betweenはありだけど下のような条件だと例外になってしまう。
+</p>
+<pre>
+:from &lt;= #time AND #time &lt; :to
+ValidationException: KeyConditionExpressions must only contain one condition per key
+</pre>
+<p>
+betweenだと
+</p>
+<pre>
+:from &lt;= #time AND #time &lt;= :to
+</pre>
+<p>
+という表現しかできないのである期間を区切って連続的に検索するときに困る。<br>
+しょうがないので:toを-1秒してるけど、厳密には違うんだよなあ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2015/11/07 end -->
+
+
+
+<hr class="hide">
+<!-- 2015/11/08 start -->
+<h2><a name="20151108" href="201511a.html#20151108">2015-11-08 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="201511081" title="201511081" href="201511a.html#201511081">■</a> 
+マイナンバーの疑問</h3>
+<p>
+法人番号のほうは13桁でチェックデジットは左端にくる。<br>
+その値は1-9なので0になることはない。<br>
+マイナンバーは12桁ということになっているが、<br>
+0から始まることはあるのか？<br>
+</p>
+<p>
+それにしても法人の数はそんなに多くないと思うが、<br>
+なんでそっちのほうが13桁なんだろうか。
+</p>
+<!-- section end -->
+</div>
+<!-- 2015/11/08 end -->
+
+
+
+<hr class="hide">
+<!-- 2015/11/09 start -->
+<h2><a name="20151109" href="201511a.html#20151109">2015-11-09 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="201511091" title="201511091" href="201511a.html#201511091">■</a> 
+Rubyでマイナンバー</h3>
+<p>
+awk版をそのままRubyへ移植。*(s&gt;1)は無理なので%11%10で代用。
+</p>
+<pre>
+while l = gets
+  s = 11.times.reduce(0){|r,e|
+    r + l[10 - e].to_i * (e % 6 + 2)
+  } % 11
+  p ((11 - s) % 11 % 10) == l[11].to_i
+end
+</pre>
+<p>
+最初はchompしてsplit(&quot;&quot;)して配列にしてたが不要だった。
+</p>
+<!-- section end -->
+</div>
+<!-- 2015/11/09 end -->
+
+
+
+<hr class="hide">
+<!-- 2015/11/10 start -->
+<h2><a name="20151110" href="201511a.html#20151110">2015-11-10 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="201511101" title="201511101" href="201511a.html#201511101">■</a> 
+AWS LambdaにPythonが加わったけど、AWS CLIは入らなかった</h3>
+<p>
+AWS CLIはPythonで書かれているので、ついでにAWS CLIも入ったかなと、<br>
+aws --versionを実行して確認してみたら、エラーになった。残念。<br>
+pipもeasy_installもなかったのでちょっと厳しい。<br>
+いやでも、curlはあるからなんとかなるか。
+</p>
+<!-- section end -->
+</div>
+<!-- 2015/11/10 end -->
+
+<hr>
+<div>
+<a href="201510c.html">&lt;Older(,)</a> | 
+<a href="201511b.html">Newer(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

@@ -1,0 +1,463 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2007-4-b</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="200704a.html">
+<link rel="next" href="200704c.html">
+
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2007年4月中旬〜</p>
+<hr>
+<div>
+<a href="200704a.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="200704c.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2007/04/11 start -->
+<h2><a name="20070411" href="200704b.html#20070411">2007-04-11 (Wed)</a></h2>
+<!-- 2007-04-12 02:23:38 -->
+
+<div class="entry1">
+<h3><a name="200704111" title="200704111" href="200704b.html#200704111">■</a> 
+[Linux] Fedora Core 6をネットワークインストール</h3>
+<p>
+ラックマウントのマシンが使えることになったので、<br>
+Fedora Core 6をインストールしようと思い立つ。
+</p>
+
+<p>
+手元には例の日経Linuxの付録DVD-ROMがあるのでこれでブートと思ったら、<br>
+なぜかインストール済みのWindowsが立ち上がってしまう。<br>
+BIOSの設定を見ても順番はちゃんとFDD,CD-ROM,HDDになってるのになあ、<br>
+って本当にCD-ROMのみドライブか。
+</p>
+
+<p>
+しかたないのでネットワークインストールの方法を調べた。<br>
+boot diskかrescue diskを焼いて起動すればいいらしい。<br>
+CD-Rのメディア自体は引き出しの奥に1枚眠ってたので準備ok。<br>
+growisofsがなぜかyumでインストールできないのでcdrecordを使う。<br>
+自分の日記を検索すると
+</p>
+<pre>
+% cdrecord dev=ATAPI: -scanbus
+</pre>
+<p>
+して
+</p>
+<pre>
+% cdrecord -v -dao driveropts=burnfree dev=ATAPI:0,1,0 foo.iso
+</pre>
+<p>
+だな。
+</p>
+
+<p>
+調べたついでにboot promptでvncを指定すれば、<br>
+リモートインストールができるらしい。<br>
+マシン自体は自分の机から離れた場所にあるので都合がいい。<br>
+</p>
+<pre>
+boot: linux vnc vncpassword=password ip=x.x.x.x netmask=255.255.255.0
+</pre>
+<p>
+てな感じでIPアドレスとネットマスクもあらかじめboot promptで指定。<br>
+これで適当に進めるとvncserverが立ち上がる。
+</p>
+<pre>
+The VNC server is running.
+Please connect to x.x.x.x:1 to begin the install...
+</pre>
+<p>
+しかし、なぜかつながらない。考えてみるとゲートウェイの指定もしてないし、<br>
+サブネットが違ったら無理だよなと気づく。ここでなんか間違った方向へ進んで行く。
+</p>
+
+<p>
+つづく。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200704112" title="200704112" href="200704b.html#200704112">■</a> 
+[Linux] growisofsの怪</h3>
+<p>
+家のPCでyum search growisofsしてもNo Matches foundになるんだけど、<br>
+どうやってインストールしたんだっけ？
+</p>
+<pre>
+% rpm -qf =growisofs
+dvd+rw-tools-7.0-0.fc6.4
+</pre>
+<p>
+おお、そういうことか。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200704113" title="200704113" href="200704b.html#200704113">■</a> 
+[Linux] boot prompt</h3>
+<p>
+調べてみるとhostip=x.x.x.x/24 gateway=x.x.x.yでよかったみたい。
+</p>
+<!-- section end -->
+</div>
+<!-- 2007/04/11 end -->
+
+
+
+<hr class="hide">
+<!-- 2007/04/12 start -->
+<h2><a name="20070412" href="200704b.html#20070412">2007-04-12 (Thu)</a></h2>
+<!-- 2007-04-13 01:25:36 -->
+
+<div class="entry1">
+<h3><a name="200704121" title="200704121" href="200704b.html#200704121">■</a> 
+[Linux] Fedora Core 6をネットワークインストール</h3>
+<p>
+昨日のつづき。
+</p>
+
+<p>
+隣のサーバ機でvncserverを起動してそれを机に飛ばせばいけるよなと思いつく。<br>
+つまりvncの中でさらにvncというわけだ。<br>
+これでめでたくリモートインストール作業ができるようにはなった。
+</p>
+
+<p>
+しかし、さらなる問題が勃発。インストール途中repomd.xmlが読めないとかなんとか。<br>
+最初はミラーサイトの場所でもtypoしてたかと思ったが、何度やっても同じ。<br>
+そこではたと気づいた。http proxyの設定してないよ。<br>
+というかどこにも設定するとこがない。調べてみると対応してないっぽい。<br>
+がーん。
+</p>
+
+<p>
+しかたないので例の付録DVD-ROMをマウントしてlighttpdで公開してみた。<br>
+これでなんとかいけた。
+</p>
+
+<p>
+今考えてみるとftpだったらユーザ名とパスワードの組み合わせで、<br>
+proxyを設定できたからこっちで試せばよかった。<br>
+あとlinux text telnetでtelnetを使ってインストールもできるらしい。
+</p>
+<!-- section end -->
+</div>
+<!-- 2007/04/12 end -->
+
+
+
+<hr class="hide">
+<!-- 2007/04/13 start -->
+<h2><a name="20070413" href="200704b.html#20070413">2007-04-13 (Fri)</a></h2>
+<!-- 2007-04-14 02:02:26 -->
+
+<div class="entry1">
+<h3><a name="200704131" title="200704131" href="200704b.html#200704131">■</a> 
+<a href="http://del.icio.us/help/firefox/extensionnew">[Firefox] *new* firefox bookmarks extension</a></h3>
+<p>
+話題の拡張なんだけど、ブックマーク数が8000件もあると、<br>
+同期に時間が掛かりしかもその間反応がなくなるくらい重くなるので、<br>
+全くもって使い物にならない。アンインストールした。
+</p>
+<!-- section end -->
+</div>
+<!-- 2007/04/13 end -->
+
+
+
+<hr class="hide">
+<!-- 2007/04/14 start -->
+<h2><a name="20070414" href="200704b.html#20070414">2007-04-14 (Sat)</a></h2>
+<!-- 2007-04-15 02:07:17 -->
+
+<div class="entry1">
+<h3><a name="200704141" title="200704141" href="200704b.html#200704141">■</a> 
+<a href="http://golf.shinh.org/p.rb?inverse+matrix">[穴] inverse matrix</a></h3>
+<p>
+4秒以上かかるのでもうさらしちゃおう。だれかがんばってくれ。
+</p>
+<pre>
+#!ruby -anrmatrix
+require'mathn'
+$*&lt;&lt;$F.map{|x|x.to_i}
+END{Matrix[*$*].inv.row_vectors.map{|r|puts [*r]*' '}}
+</pre>
+<p>
+初めてmatrix.rbをまともに使ってみたが、<br>
+ブロックも受け付けないrow_verctorsなんて作るんなら<br>
+attr_reader :rowsで十分だと思った。
+</p>
+<!-- section end -->
+</div>
+<!-- 2007/04/14 end -->
+
+
+
+<hr class="hide">
+<!-- 2007/04/15 start -->
+<h2><a name="20070415" href="200704b.html#20070415">2007-04-15 (Sun)</a></h2>
+<!-- 2007-04-16 00:50:23 -->
+
+<div class="entry1">
+<h3><a name="200704151" title="200704151" href="200704b.html#200704151">■</a> 
+[Comic] ケロロ軍曹</h3>
+<p>
+1,2巻を読んでみた。カエルじゃなかったんだな。ちょっと予想外な内容だった。
+</p>
+<!-- section end -->
+</div>
+<!-- 2007/04/15 end -->
+
+
+
+<hr class="hide">
+<!-- 2007/04/16 start -->
+<h2><a name="20070416" href="200704b.html#20070416">2007-04-16 (Mon)</a></h2>
+<!-- 2007-04-17 02:48:00 -->
+
+<div class="entry1">
+<h3><a name="200704161" title="200704161" href="200704b.html#200704161">■</a> 
+[Comic] 三国志</h3>
+<p>
+やっと20巻まで。次はいよいよ孔明か。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200704162" title="200704162" href="200704b.html#200704162">■</a> 
+<a href="http://irssi.org/">[Soft] irssi</a></h3>
+<p>
+irciiではもう二進も三進もどうにもいかなくなってきたので、<br>
+yumでirssiをインストールしてみた。pluginがperlで書けるらしいので
+</p>
+<pre>
+/script load hoge.pl
+</pre>
+<p>
+と実行してみたら
+</p>
+<pre>
+Irssi: Unknown command: script
+</pre>
+<p>
+と言われて面喰らう。
+</p>
+<pre>
+% irssi --version
+irssi 0.8.10 (20051211 1015)
+</pre>
+<p>
+古すぎる？じゃないや、/load perlが必要なのか。<br>
+ってことは/load rubyもやろうと思えばできそうだ。<br>
+ひょっとしたらと思い試してみる。
+</p>
+<pre>
+02:40 -!- Irssi: Error loading module ruby/core: 
+          /usr/lib/irssi/modules/libruby_core.so: 
+          共有オブジェクトファイルを開けません: 
+          そのようなファイルやディレクトリはありません
+</pre>
+<p>
+なるほど。libruby_core.soを用意すればいいわけだな。
+</p>
+<!-- section end -->
+</div>
+<!-- 2007/04/16 end -->
+
+
+
+<hr class="hide">
+<!-- 2007/04/17 start -->
+<h2><a name="20070417" href="200704b.html#20070417">2007-04-17 (Tue)</a></h2>
+<!-- 2007-04-18 01:26:10 -->
+
+<div class="entry1">
+<h3><a name="200704171" title="200704171" href="200704b.html#200704171">■</a> 
+<a href="http://irssi.org/">[Soft] irssi</a></h3>
+<p>
+とりあえず日本語。マニュアルを読むと/set translation jisでいけそうではあるが、
+</p>
+<pre>
+-!- Irssi: Error opening translation table file jis: No such file or directory
+</pre>
+<p>
+と機能しない。というか、irciiのヘルプそのものだった。<br>
+</p>
+<pre>
+TODO - Does this still work even?
+</pre>
+<p>
+と書いてあるところを見ると昔の名残りかもしれない。
+</p>
+
+<p>
+とりあえず巷で出回ってるPerlのスクリプトを入れればなんとか表示はできた。<br>
+でもline editのecho backがなにも表示されない。<br>
+プラグインでなんとかなるんだろうか？
+</p>
+<!-- section end -->
+</div>
+<!-- 2007/04/17 end -->
+
+
+
+<hr class="hide">
+<!-- 2007/04/18 start -->
+<h2><a name="20070418" href="200704b.html#20070418">2007-04-18 (Wed)</a></h2>
+<!-- 2007-04-19 01:50:36 -->
+
+<div class="entry1">
+<h3><a name="200704181" title="200704181" href="200704b.html#200704181">■</a> 
+<a href="http://vimperator.mozdev.org/">[Firefox] Vimperator</a></h3>
+<p>
+どんか感じなのか
+
+<a href="http://vimperator.mozdev.org/screenshots.html">Screenshots</a>
+を見てインストールするのを思い止まった。<br>
+これは試すならprofileを別に用意したほうがよさげだな。
+</p>
+<!-- section end -->
+</div>
+<!-- 2007/04/18 end -->
+
+
+
+<hr class="hide">
+<!-- 2007/04/19 start -->
+<h2><a name="20070419" href="200704b.html#20070419">2007-04-19 (Thu)</a></h2>
+<!-- 2007-04-20 01:59:26 -->
+
+<div class="entry1">
+<h3><a name="200704191" title="200704191" href="200704b.html#200704191">■</a> 
+[Unix] ssh -t host screen</h3>
+<p>
+いつもssh hostしてからexec screen -D -RRするので、<br>
+それならまとめてしまおうと実行してみるも
+</p>
+<pre>
+% ssh host screen -D -RR
+Must be connected to a terminal.
+</pre>
+<p>
+とつれないメッセージが。まじめに調べるか。man sshしたら
+</p>
+<pre>
+-t      Force pseudo-tty allocation. This can be used to execute arbitrary
+        screen-based programs on a remote machine, which can be very useful,
+        e.g., when implementing menu services. Multiple -t options force tty
+        allocation, even if ssh has no local tty.
+</pre>
+<p>
+とあった。これか。
+</p>
+<pre>
+% ssh -t host screen -D -RR
+</pre>
+<p>
+でいけた。
+</p>
+<!-- section end -->
+</div>
+<!-- 2007/04/19 end -->
+
+
+
+<hr class="hide">
+<!-- 2007/04/20 start -->
+<h2><a name="20070420" href="200704b.html#20070420">2007-04-20 (Fri)</a></h2>
+<!-- 2007-04-21 20:49:47 -->
+
+<div class="entry1">
+<h3><a name="200704201" title="200704201" href="200704b.html#200704201">■</a> 
+<a href="http://rubyforge.org/forum/forum.php?forum_id=13801">[Ruby] Rake 0.7.3 Release</a></h3>
+<blockquote><p>
+Added the +init+ and +top_level+ methods to make the creation of
+custom Rake applications a bit easier. E.g.
+</p></blockquote>
+<pre>
+gem 'rake', &quot;&gt;= 0.7.3&quot;
+require 'rake'
+
+Rake.application.init('myrake')
+
+task :default do
+  something_interesting
+end
+
+Rake.application.top_level
+</pre>
+
+<!-- section end -->
+</div>
+<!-- 2007/04/20 end -->
+
+<hr>
+<div>
+<a href="200704a.html">&lt;Prev(,)</a> | 
+<a href="200704c.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

@@ -1,0 +1,523 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2003-12-a</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="200311c.html">
+<link rel="next" href="200312b.html">
+
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2003年12月上旬〜</p>
+<hr>
+<div>
+<a href="200311c.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="200312b.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2003/12/01 start -->
+<h2><a name="20031201" href="200312a.html#20031201">2003-12-01 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="200312011" title="200312011" href="200312a.html#200312011">■</a> 
+[Ruby] one-liner</h3>
+<p>
+ruby-talkでone-linerのためにPerlスタイル変数を残すべきという意見があったけど、
+実際Rubyでone-linerを書いてみると、そんなに使うわけでもない。
+method chainを使えばそもそも変数は要らないし、暗黙の$_を考える必要もない。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200312012" title="200312012" href="200312a.html#200312012">■</a> 
+[Ruby] RDoc</h3>
+<p>
+なんだかんだで入った。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200312013" title="200312013" href="200312a.html#200312013">■</a> 
+[Ruby] class Foo end</h3>
+<p>
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-talk/86901">[ruby-talk:86901]</a>を見て、あれと思った。
+class Foo endはエラーになるから、moduleも同じだと思っていたからだ。
+</p>
+<pre>
+% ruby -e 'module Foo FOO = 1 end; p Foo::FOO'
+1
+</pre>
+<p>
+そうか。moduleだといけるのか。
+classはスーパクラスの指定とかあるからなあ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2003/12/01 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/12/02 start -->
+<h2><a name="20031202" href="200312a.html#20031202">2003-12-02 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="200312021" title="200312021" href="200312a.html#200312021">■</a> 
+11月のspam</h3>
+<p>
+2311通。軽く2000を越えた。12月は3000か？
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200312022" title="200312022" href="200312a.html#200312022">■</a> 
+[Soft] GNU gettext 0.13</h3>
+<p>
+いろいろ対応言語が増えている。
+</p>
+<pre>
+Changes: This release has support for shell scripts, Perl scripts,
+Qt programs, and Glade version 2 descriptions. Support for PHP and
+Objective C programs has been improved. Format string recognition
+and portability have been improved. There are more examples.
+</pre>
+<p>
+gawkで試してみた。
+</p>
+<pre>
+% cd gettext-tools/examples/hello-gawk
+% ./autogen.sh
+% ./configure --prefix=/tmp
+% make
+% make install
+% cat /tmp/bin/hello
+#!/usr/local/bin/gawk -f
+# Example for use of GNU gettext.
+# Copyright (C) 2003 Free Software Foundation, Inc.
+# This file is in the public domain.
+#
+# Source code of the GNU awk program.
+
+BEGIN {
+  TEXTDOMAIN = &quot;hello-gawk&quot;
+  bindtextdomain (&quot;/tmp/share/locale&quot;)
+
+  print _&quot;Hello, world!&quot;
+  printf _&quot;This program is running as process number %d.&quot;, PROCINFO[&quot;pid&quot;]
+  print
+}
+% /tmp/bin/hello 
+Hello, world!
+This program is running as process number 21999.
+% LC_MESSAGES=ja /tmp/bin/hello
+世界よ, こんにちは!
+このプログラムはプロセス番号 22000 で動いています.
+</pre>
+
+<!-- section end -->
+</div>
+<!-- 2003/12/02 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/12/03 start -->
+<h2><a name="20031203" href="200312a.html#20031203">2003-12-03 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="200312031" title="200312031" href="200312a.html#200312031">■</a> 
+<a href="http://bogofilter.sf.net/">[Soft] Bogofilter 0.15.9</a></h3>
+<p>
+更新。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200312032" title="200312032" href="200312a.html#200312032">■</a> 
+<a href="http://www.pleyades.net/~raulnac/">[Soft] My Own Building System (MOBS) 1.0</a></h3>
+<pre>
+About: MOBS is a building system a la autoconf, but a lot easier for
+both developers and users. It doesn't have detection (yet), but it's
+very easy to use and tune, even for small projects. If you want your
+project to be configurable and accept most './configure' options but
+without the hassle and burden autoconf and friends impose, this is
+for you. It has good documentation and a low steep learning curve,
+and even has a bit of application framework in order to ease
+development.
+</pre>
+<p>
+となんか期待させることがfreshmeatに書いてあった。
+見てみるとGNU makeばりばり依存のMakefile.in相当が垣間見えたりで、
+ちょっとがっかり。なんだかんだでautoconfってのはすごいんだよなあ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200312033" title="200312033" href="200312a.html#200312033">■</a> 
+[Ruby] JARH</h3>
+<pre>
+print :&quot;Just another Ruby hacker,&quot;
+</pre>
+
+<!-- section end -->
+</div>
+<!-- 2003/12/03 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/12/04 start -->
+<h2><a name="20031204" href="200312a.html#20031204">2003-12-04 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="200312041" title="200312041" href="200312a.html#200312041">■</a> 
+<a href="http://rsync.samba.org/">[Soft] rsync 2.5.7</a></h3>
+<pre>
+・ rsync version 2.5.6 and earlier contains a heap overflow
+   vulnerability that can be used to remotely run arbitrary code.
+・ While this heap overflow vulnerability could not be used by itself
+   to obtain root access on a rsync server, it could be used in
+   combination with the recently announced brk vulnerability in the
+   Linux kernel to produce a full remote compromise.
+</pre>
+<p>
+実際の
+<a href="http://samba.org/ftp/rsync/rsync-2.5.6-2.5.7.diff.gz">変更点</a>を見てみるとmallocの代わりにnew_arrayを使っていて
+</p>
+<pre>
++#define new_array(type, num) ((type *)_new_array(sizeof(type), (num)))
+</pre>
+<p>
+_new_arraryはどうなっているかというと、サイズを制限してる。
+</p>
+<pre>
++#define MALLOC_MAX 0x40000000
++
++void *_new_array(unsigned int size, unsigned long num)
++{
++       if (num &gt;= MALLOC_MAX/size)
++               return NULL;
++       return malloc(size * num);
++}
+</pre>
+<p>
+これで直るとしたらrsyncだけの問題じゃない気がするんだけどどうだろう？
+</p>
+<!-- section end -->
+</div>
+<!-- 2003/12/04 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/12/05 start -->
+<h2><a name="20031205" href="200312a.html#20031205">2003-12-05 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="200312051" title="200312051" href="200312a.html#200312051">■</a> 
+[Worm] Swen</h3>
+<p>
+11月のSwenはというとほぼ毎日。それにしても全然収まる気配なし。全部で179通。
+</p>
+<pre>
+% scan +swen |awk '/2003-11/{print $2}' |sort |uniq -c
+      3 2003-11-01
+     10 2003-11-02
+      7 2003-11-03
+      7 2003-11-04
+      5 2003-11-05
+      4 2003-11-06
+      2 2003-11-07
+      4 2003-11-08
+      6 2003-11-09
+      5 2003-11-11
+      2 2003-11-12
+      2 2003-11-13
+      3 2003-11-14
+      4 2003-11-15
+      3 2003-11-17
+     14 2003-11-19
+     19 2003-11-20
+      7 2003-11-21
+     17 2003-11-22
+      9 2003-11-23
+      8 2003-11-24
+      7 2003-11-25
+      6 2003-11-26
+      7 2003-11-27
+      6 2003-11-28
+      8 2003-11-29
+      4 2003-11-30
+</pre>
+
+<!-- section end -->
+</div>
+<!-- 2003/12/05 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/12/06 start -->
+<h2><a name="20031206" href="200312a.html#20031206">2003-12-06 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="200312061" title="200312061" href="200312a.html#200312061">■</a> 
+[Ruby] Ruby 1.8.1 preview3</h3>
+<p>
+なんか知らないうちに出ていたようで。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200312062" title="200312062" href="200312a.html#200312062">■</a> 
+[Mail] fmlでtext/htmlをstrip</h3>
+<p>
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-talk/87279">[ruby-talk:87279]</a>や
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-talk/87336">[ruby-talk:87336]</a>のようなmultipartなtext/htmlはなぜかstripされないようだ。
+それに以前に前者はvirusなんだから別の対策が必要だよね。
+なんで通ってしまったかというと、
+肝心の中身は空だったからヒットしないのと、
+32KB以下になってしまったからか？
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200312063" title="200312063" href="200312a.html#200312063">■</a> 
+[Ruby] flush before seek</h3>
+<pre>
+open(&quot;0&quot;, &quot;wb+&quot;) do |f|
+  f.print &quot;a&quot;
+  f.rewind
+  p [&quot;a&quot;, f.read(1)]
+  p [&quot;&quot;, f.read]
+  p [nil, f.read(0)]
+end
+</pre>
+<p>
+の最後が[nil, nil]になればtest/ruby/test_file.rbは通るが、
+Linux以外は[nil, &quot;&quot;]になってしまう。
+rewindの前にflushを入れるとちゃんとnilになる。
+というわけで、NEED_IO_FLUSH_BEFORE_SEEKが必要みたいだ。
+今のところLinuxしかというかたぶんglibcしか通らないようなので、
+NEED_IO_FLUSH_BEFORE_SEEKを全プラットフォームで有効にした。
+</p>
+<!-- section end -->
+</div>
+<!-- 2003/12/06 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/12/07 start -->
+<h2><a name="20031207" href="200312a.html#20031207">2003-12-07 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="200312071" title="200312071" href="200312a.html#200312071">■</a> 
+[Soft] groff 1.18.1</h3>
+<p>
+man rubyと実行するとFEATURESの項目のインデントがどんどん深くなることに気づいた。
+OpenBSDでも同じだ。IRCで聞いてみると他ではそんなことは起きないという。
+確かにCygwinでは起きない。
+今使ってるPlamo Linux 3.0はgroff 1.10の日本語パッチ版で、
+OpenBSD 3.3はgroff 1.15だった。
+ちゃんと動いてるCygwinのほうは1.18.1だった。なるほどバージョンが古いせいか。
+というわけで、groff 1.18.1に上げて、ついでに
+<a href="http://www3.big.or.jp/~sian/linux/dist/">ここ</a>にある日本語パッチをあてることにしよう。
+</p>
+
+<p>
+groff 1.18.1はGNUのミラーサイトを見るとまだMISSING-FILESだが、
+まあ、2002年にダウンロードしたものだし大丈夫でしょう。
+というか、なぜまだMISSING-FILESのままなんだ？
+</p>
+<!-- section end -->
+</div>
+<!-- 2003/12/07 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/12/08 start -->
+<h2><a name="20031208" href="200312a.html#20031208">2003-12-08 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="200312081" title="200312081" href="200312a.html#200312081">■</a> 
+<a href="200312a.html#200312041">[Soft] Rsync heap overflow</a></h3>
+<p>
+つまりかなり極端な例を示すと
+</p>
+<pre>
+% cat x.c
+#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+main()
+{
+    int *p;
+
+    p = malloc(sizeof(int) * 0x40000001);
+    printf(&quot;%p\n&quot;, p);
+    printf(&quot;%d\n&quot;, sizeof(int) * 0x40000001);
+}
+% gcc x.c
+% ./a.out
+0x80495c8
+4
+</pre>
+<p>
+ということか。
+p+1以降に何か書けばバッファオーバーフローってわけだ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200312082" title="200312082" href="200312a.html#200312082">■</a> 
+[Music] 12月のLove song</h3>
+<p>
+Gacktはこの曲をむりやり「クリスマス・イヴ」にしたいんだろうか？
+</p>
+<!-- section end -->
+</div>
+<!-- 2003/12/08 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/12/09 start -->
+<h2><a name="20031209" href="200312a.html#20031209">2003-12-09 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="200312091" title="200312091" href="200312a.html#200312091">■</a> 
+<a href="http://www.zlib.org/">[Soft] zlib 1.2.1</a></h3>
+<pre>
+・ inflate is about 20% faster and minimizes memory allocation
+・ crc32 is about 50% faster
+</pre>
+<p>
+という謡い文句はいいとして、
+<a href="http://www.gzip.org/zlib/DLL_FAQ.txt">DLL FAQ</a>というのがなんか曲者だ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200312092" title="200312092" href="200312a.html#200312092">■</a> 
+<a href="http://www.openbsd.org/">[OpenBSD] OpenBSD 3.4</a></h3>
+<p>
+なんとなくインストール。Xだのgameだのは要らないので10分ぐらいで終了。
+慣れてきたようだ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2003/12/09 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/12/10 start -->
+<h2><a name="20031210" href="200312a.html#20031210">2003-12-10 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="200312101" title="200312101" href="200312a.html#200312101">■</a> 
+[Mail] spam</h3>
+<p>
+10日で1000通。やはり今月は3000通ペースか。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200312102" title="200312102" href="200312a.html#200312102">■</a> 
+<a href="http://www.spamassassin.org/">[Mail] SpamAssassin 2.61</a></h3>
+<pre>
+Changes: This release adds dramatically reduced memory usage of the
+Bayes expiry, avoidance of false positives on Outlook 2003 messages,
+messages from Mac, Palm, and localized versions of Eudora, several
+AOL MUAs, and newer versions of The Bat!, a new set of French
+translations, an update to reflect a new Dynablock DNSBL location, a
+fix for a possible hole that was giving AWL bonuses to spammer
+forgeries on some networks, and miscellaneous bugfixes.
+</pre>
+
+<!-- section end -->
+</div>
+<!-- 2003/12/10 end -->
+
+<hr>
+<div>
+<a href="200311c.html">&lt;Prev(,)</a> | 
+<a href="200312b.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

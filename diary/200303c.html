@@ -1,0 +1,560 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2003-3-c</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="200303b.html">
+<link rel="next" href="200304a.html">
+
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2003年3月下旬〜</p>
+<hr>
+<div>
+<a href="200303b.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="200304a.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2003/03/21 start -->
+<h2><a name="20030321" href="200303c.html#20030321">2003-03-21 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="200303211" title="200303211" href="200303c.html#200303211">■</a> 
+[Linux] GNU C Library (glibc) 2.3.2</h3>
+<p>
+いつものように
+</p>
+<pre>
+% tar xfv glibc-2.3.2.tar.bz2 --bzip2
+% cd glibc-2.3.2
+% tar xfv ../glibc-linuxthreads-2.3.2.tar.bz2 --bzip2
+% mkdir linux; cd linux
+% CC='gcc -pipe' CFLAGS=-Os ../configure \
+  --prefix=/usr --enable-add-ons i586-pc-linux-gnu
+% make
+% make install localedata/install-locales \
+  install_root=$HOME/glibc-2.3.2
+% cd ~/glibc-2.3.2
+% ln -s ../usr/share/zoneinfo/Japan etc/localtime
+% tar cfv ~/glibc-2.3.2-bin.tar.bz2 --bzip2 *
+</pre>
+<p>
+でtarballを作り、メインマシンへ持ってきて
+</p>
+<pre>
+% sudo tar xfv glibc-2.3.2-bin.tar.bz2 --bzip2 -C /
+</pre>
+<p>
+してみると、なんとzshがbus errorになり強制的にlogoutしてしまった。
+再度loginしてみるとzle関係が全滅。
+ldconfigが中途半端のような感じなのでこれだけやり直してみたら復活。
+無事Xも立ち上がった。ちょっとあせった。
+</p>
+
+<p>
+w3mは
+</p>
+<pre>
+w3m-m17n: relocation error: /lib/libpthread.so.0: \
+  symbol __libc_sigaction, version GLIBC_2.2 not defined \
+  in file libc.so.6 with link time reference
+</pre>
+<p>
+とまただめだ。cvsupは大丈夫。
+</p>
+
+<p>
+Rubyはというと
+</p>
+<pre>
+libruby-static.a(file.o): In function `lchmod_internal':
+file.o(.text+0x14fd): warning: lchmod is not implemented and will always fail
+</pre>
+<p>
+と宣言されてしまった。
+</p>
+
+<p>
+あ、--owner=root --group=rootを忘れてるなあ。これはかなりまずい。
+そうか、これがまずくてlibpthreadもちゃんとインストールされてなかったのか。
+libpthreadだけインストールし直したらw3mもちゃんと動いた。
+</p>
+<!-- section end -->
+</div>
+<!-- 2003/03/21 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/03/22 start -->
+<h2><a name="20030322" href="200303c.html#20030322">2003-03-22 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="200303221" title="200303221" href="200303c.html#200303221">■</a> 
+<a href="http://www.ruby-lang.org/ja/install.cgi?cmd=view;name=Cygwin+%28%A5%D0%A5%A4%A5%CA%A5%EA%29">[Ruby] インストールガイド - Cygwin (バイナリ)</a></h3>
+<p>
+更新してみたが、
+後半部分に関しては自分で書いた覚えが全くないのはどういうわけだろう？
+たぶん他の誰かが書き加えたんだろうなあ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2003/03/22 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/03/23 start -->
+<h2><a name="20030323" href="200303c.html#20030323">2003-03-23 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="200303231" title="200303231" href="200303c.html#200303231">■</a> 
+<a href="200303b.html#200303172">[Ruby] version.h</a></h3>
+<p>
+やばいかもしれないが、これってどうすべきかなあ？
+みんなそれぞれ書き換え用のスクリプトを持ってるはずで、
+自分だけが変更しても解決はしない。
+とは言うもののversion.hを更新するのは90%ぐらいはおいらなので、
+ほとんど解決してしまうのかもしれない。
+というわけで
+<a href="../files/syncver.rb">syncver.rb</a>を更新。
+</p>
+
+<p>
+man dateすると
+</p>
+<pre>
+同じ日を、1 桁の日付の前に 0 を置かないように表示するには、標準には 
+ない`-' 修正子を用いて 0 埋めを行わないようにすればよい。
+
+  date -d 1-may '+%B %-d'
+</pre>
+<p>
+とあった。glibcならいけるんだけどなあ。
+</p>
+<pre>
+% ruby -e 'p Time.now.strftime(&quot;%m&quot;)' 
+&quot;03&quot;
+% ruby -e 'p Time.now.strftime(&quot;%-m&quot;)'
+&quot;3&quot;
+</pre>
+<p>
+Time#strftimeではそういう仕様にするのもありだと思うけど、
+Rubyで0を取り除く程度ならそれほど手間じゃないしね。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200303232" title="200303232" href="200303c.html#200303232">■</a> 
+[FF X-2] 手詰り</h3>
+<p>
+どう考えてもラストな雰囲気だが、
+一度飛空艇に戻ったら二度とそこへ行けなくなってしまった。
+もう一度最初から始めてみる。
+</p>
+<!-- section end -->
+</div>
+<!-- 2003/03/23 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/03/24 start -->
+<h2><a name="20030324" href="200303c.html#20030324">2003-03-24 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="200303241" title="200303241" href="200303c.html#200303241">■</a> 
+<a href="200303b.html#200303142">[Linux] 10/100M</a></h3>
+<p>
+早速dhcpd eth0 eth1してみたが、なぜかeth1側がアクセスできない。
+古いNICが悪いのかと思い、別のNICを使うとok。
+総務に話を聞くと100Mしか使えないという。なんとそんなことになっていようとは。10年前のNICじゃだめなわけだよ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200303242" title="200303242" href="200303c.html#200303242">■</a> 
+[FF X-2] キューソネコカミ</h3>
+<p>
+ちょこまかと動き回るトーブリも運んでやったら「キューソネコカミ」というとんでもないものをもらった。こいつぁすげーぜ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2003/03/24 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/03/25 start -->
+<h2><a name="20030325" href="200303c.html#20030325">2003-03-25 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="200303251" title="200303251" href="200303c.html#200303251">■</a> 
+[Diary] jarp.jin.gr.jp</h3>
+<p>
+というわけで、この日記は
+<a href="http://jarp.jin.gr.jp/diary/">http://jarp.jin.gr.jp/diary/</a>へ移動しました。古いほうからはredirectされます。
+</p>
+<!-- section end -->
+</div>
+<!-- 2003/03/25 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/03/26 start -->
+<h2><a name="20030326" href="200303c.html#20030326">2003-03-26 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="200303261" title="200303261" href="200303c.html#200303261">■</a> 
+[Linux] Emacs 21.3</h3>
+<p>
+やっと更新。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200303262" title="200303262" href="200303c.html#200303262">■</a> 
+[Linux] 3c59x</h3>
+<p>
+どうも引っ越してからVNCの描画がいまいち遅い。dmesgしてみると
+</p>
+<pre>
+Probably a duplex mismatch.  See Documentation/networking/vortex.txt
+</pre>
+<p>
+が気になる。早速読んでみるとネゴシエーションがうまくいってないということか？
+</p>
+<pre>
+options 3c59x full_duplex=1
+</pre>
+<p>
+を/etc/modules.confに追加したらよさげだ。
+</p>
+<pre>
+In fact, please don't use this at all! You're better off getting
+autonegotiation working properly.
+</pre>
+<p>
+と脅しがあるが気にしないことにする。
+</p>
+<!-- section end -->
+</div>
+<!-- 2003/03/26 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/03/27 start -->
+<h2><a name="20030327" href="200303c.html#20030327">2003-03-27 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="200303271" title="200303271" href="200303c.html#200303271">■</a> 
+<a href="http://raa.ruby-lang.org/project/ruby-zlib/">[Ruby] ruby-zlib 0.6.0</a></h3>
+<p>
+更新。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200303272" title="200303272" href="200303c.html#200303272">■</a> 
+<a href="ftp://ftp.astron.com/pub/file/">[UNIX] file 4.01</a></h3>
+<p>
+file(1)とlibmagic(3)に分割されたから、拡張ライブラリが作りやすくなった。
+</p>
+<pre>
+Changes: This release has has been divided into the main file(1) program
+and libmagic(3), a library that other programs can use directly to get
+file information without needing to fork and exec file(1).
+</pre>
+
+<!-- section end -->
+</div>
+<!-- 2003/03/27 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/03/28 start -->
+<h2><a name="20030328" href="200303c.html#20030328">2003-03-28 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="200303281" title="200303281" href="200303c.html#200303281">■</a> 
+[VIM] When editing a file, always jump to the last cursor position</h3>
+<p>
+Red Hat Linuxのvimはファイルを開くとなぜか最後に保存した時のカーソルの位置へ飛ぶんだけど、これってどうやってるんだろう？
+たぶんどこかのvimrcを読んでるはずで、:verしてみると
+</p>
+<pre>
+system vimrc file: &quot;/usr/share/vim/vim61/macros/vimrc&quot;
+</pre>
+<p>
+が怪しい。見てみるとコメントに書いてあった。
+</p>
+<pre>
+&quot; When editing a file, always jump to the last cursor position
+autocmd BufReadPost *
+\ if line(&quot;'\&quot;&quot;) &gt; 0 &amp;&amp; line (&quot;'\&quot;&quot;) &lt;= line(&quot;$&quot;) |
+\   exe &quot;normal g'\&quot;&quot; |
+\ endif
+</pre>
+<p>
+なるほど。line(&quot;'&quot;&quot;)で最後に保存したときの行番号がわかるわけだ。
+一応他のエディタで変更されることを考慮して範囲を見てるわけだ。
+実際のジャンプは'&quot;じゃなくて`&quot;すればカラムも元に戻る。
+</p>
+<!-- section end -->
+</div>
+<!-- 2003/03/28 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/03/29 start -->
+<h2><a name="20030329" href="200303c.html#20030329">2003-03-29 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="200303291" title="200303291" href="200303c.html#200303291">■</a> 
+[Ruby] linux-gnu問題</h3>
+<p>
+とりあえずconfigure時に環境変数で
+</p>
+<pre>
+ac_cv_build=i386-pc-linux
+ac_cv_host=i386-pc-linux
+ac_cv_target=i386-pc-linux
+</pre>
+<p>
+としてみたが、うっとうしい話だよね、やっぱ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200303292" title="200303292" href="200303c.html#200303292">■</a> 
+[FF X-2] 終了</h3>
+<p>
+レンの声が倖田來未というのは違和感ありありだ。
+</p>
+
+<p>
+余計なことをしないと11時間程度で終了。
+そういえば何も買ってないことに気づいた。
+</p>
+
+<p>
+次は「強くてニューゲーム」だ。「キューソネコカミ」も2個目をゲット。
+</p>
+<!-- section end -->
+</div>
+<!-- 2003/03/29 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/03/30 start -->
+<h2><a name="20030330" href="200303c.html#20030330">2003-03-30 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="200303301" title="200303301" href="200303c.html#200303301">■</a> 
+<a href="http://www.gnu.org/software/gawk/">[GNU] gawk 3.1.2</a></h3>
+<p>
+いつの間にか出ていたようだ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200303302" title="200303302" href="200303c.html#200303302">■</a> 
+<a href="http://raa.ruby-lang.org/project/nonstdio/">[Ruby] nonstdio</a></h3>
+<p>
+mingw32で試してみるとFcntl::GETFLがないと言われる。
+そうか。ないのか。
+@readableと@writableが常にtrueでもとりあえずはよさそうなので、
+nonstdio.rbのcase whenを
+</p>
+<pre>
+if defined? Fcntl::GETFL
+  ...
+end
+</pre>
+<p>
+で囲んでみると動いた。更にmodule File::Constantsを
+</p>
+<pre>
+class File
+  module Constants
+</pre>
+<p>
+にすれば1.6でも動く。
+</p>
+
+<p>
+といってもテストは
+</p>
+<pre>
+% ruby -rnonstdio-replace -pe '' file &gt;/dev/null
+</pre>
+<p>
+ぐらいしかしてないんだけど。
+</p>
+
+<p>
+djgppで試したら
+</p>
+<pre>
+./nonstdio.rb:37:in `fcntl': The fcntl() function is unimplemented \
+  on this machine (NotImplementedError)
+</pre>
+<p>
+を喰らう。え？そうなんだっけとio.cを見るとMSDOSとhuman68kはだめということになってる。
+確かにdjgppのソースを見てもGETFLは0を返すだけだ。面倒なのでcase whenを
+</p>
+<pre>
+begin
+  ...
+rescue NameError, NotImplementedError
+end
+</pre>
+<p>
+で囲んでみる。動いた。
+</p>
+
+<p>
+Ruby側でIO#fcntl(Fcntl::F_GETFL)しなくてもreadable/writableがわかればいいんだけど。
+</p>
+<!-- section end -->
+</div>
+<!-- 2003/03/30 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/03/31 start -->
+<h2><a name="20030331" href="200303c.html#20030331">2003-03-31 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="200303311" title="200303311" href="200303c.html#200303311">■</a> 
+[Ruby] fcntl</h3>
+<p>
+たぶん移植した当時はdjgppにfcntlはなかったんだろうなあ。
+一部使えるようなのでfcntlを活かすべきか。
+でもGETFLが必ず0というのも使えないな。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200303312" title="200303312" href="200303c.html#200303312">■</a> 
+[Ruby] rakeでrubyをmake</h3>
+<p>
+bootstrapはどうするのかという疑問はとりあえず置いといて、
+rubyをmakeするRakefileを用意するのは面白いかもしれない。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200303313" title="200303313" href="200303c.html#200303313">■</a> 
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-talk/66906">[Ruby] syck 0.08</a></h3>
+<p>
+<a href="http://raa.ruby-lang.org/project/yaml.rb/">YAML.rb</a>のparserをCで書き換えたライブラリだが、
+一応mingw32でもcygwinでも問題なくmakeできる。
+<a href="http://raa.ruby-lang.org/">RAA</a>にはまだ登録されていない。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200303314" title="200303314" href="200303c.html#200303314">■</a> 
+[Ruby] irbとreadline</h3>
+<p>
+PragProgRubyでreadlineが使えないって話をruby-talkで延々してるのはなぜだ？
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200303315" title="200303315" href="200303c.html#200303315">■</a> 
+[FF X-2] アルベド語辞書</h3>
+<p>
+全部発掘した。40回ほど掘りまくり。
+</p>
+<!-- section end -->
+</div>
+<!-- 2003/03/31 end -->
+
+<hr>
+<div>
+<a href="200303b.html">&lt;Prev(,)</a> | 
+<a href="200304a.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

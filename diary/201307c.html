@@ -1,0 +1,473 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2013-7-c</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="201307b.html">
+<link rel="next" href="201308a.html">
+
+<link rel="stylesheet" type="text/css" href="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.css">
+<script async type="text/javascript" src="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.js"></script>
+<script type="text/javascript">
+<!--       
+$(document).ready(function() {
+  prettyPrint();
+});
+-->
+</script>
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2013年7月下旬〜</p>
+<hr>
+<div>
+<a href="201307b.html" accesskey=",">&lt;Older(,)</a> | 
+<a href="201308a.html" accesskey=".">Newer(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2013/07/21 start -->
+<h2><a name="20130721" href="201307c.html#20130721">2013-07-21 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="201307211" title="201307211" href="201307c.html#201307211">■</a> 
+dynにcurlでログイン</h3>
+<p>
+どうもmultiformというのが必須のようで、2回アクセスが必要になる。
+</p>
+<pre>
+&lt;input type='hidden' name='multiform' value='3B62678802F857FEF11CC3D43FA4752359'/&gt;
+</pre>
+<p>
+この値が必要。例によってgrep -Poを使う
+</p>
+<pre>
+grep -Po &quot;multiform' value='\K[^']*&quot;
+</pre>
+<p>
+awkのほうがいいか。
+</p>
+<pre>
+awk -F\' '/multiform/{print $6}'
+</pre>
+<p>
+まとめるとこんな感じ。
+</p>
+<pre>
+% MULTIFORM=`curl -s -c cookie.txt https://account.dyn.com/ | awk -F\' '/multiform/{print $6}'`
+% curl -kL --data &quot;username=ユーザ名&amp;password=パスワード&amp;multiform=$MULTIFORM&quot; -o dyn.html -b cookie.txt https://account.dyn.com/
+</pre>
+<p>
+dyn.htmlにユーザ名が含まれていればログイン成功と見ていいだろう。
+</p>
+<!-- section end -->
+</div>
+<!-- 2013/07/21 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/07/22 start -->
+<h2><a name="20130722" href="201307c.html#20130722">2013-07-22 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="201307221" title="201307221" href="201307c.html#201307221">■</a> 
+VAIO Zで中クリックできない</h3>
+<p>
+左右ボタン両方を軽く触れ、どちらか一方をクリックすればいけるとの情報を得たが、<br>
+どちらのボタンをクリックしても右クリックと認識されてしまう。<br>
+そもそもタスクバーのアイコンが左右ボタンのインジケータしかないので、<br>
+最初からできない雰囲気ではある。
+</p>
+<p>
+なぜ1ヵ月以上経った今頃こんなこと言ってるかというと、<br>
+普段はsynergy使ってるのでタッチパッドの挙動に気がつかなかったというか、なんというか。<br>
+タップゾーンに中クリックを割り当てられるらしいが、<br>
+四隅じゃなんか違うと思うのでやめておく。<br>
+</p>
+<p>
+正直なくてもFirefoxだけの話なので右クリックでなんとかなるね。
+
+</p>
+<!-- section end -->
+</div>
+<!-- 2013/07/22 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/07/23 start -->
+<h2><a name="20130723" href="201307c.html#20130723">2013-07-23 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="201307231" title="201307231" href="201307c.html#201307231">■</a> 
+<a href="http://cygwin.com/ml/cygwin-announce/2013-07/msg00030.html">Corinna Vinschen - Updated: Cygwin 1.7.22 (First offical 64 bit release)</a></h3>
+<p>
+Cygwinの64bit版がリリースされたようだ。setup.exeもそれぞれ名前が変わる。<br>
+setup.iniの形式が変わるので古いsetup.exeは使えなくなるらしい。
+</p>
+<!-- section end -->
+</div>
+<!-- 2013/07/23 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/07/24 start -->
+<h2><a name="20130724" href="201307c.html#20130724">2013-07-24 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="201307241" title="201307241" href="201307c.html#201307241">■</a> 
+夜は涼しい</h3>
+<p>
+竹シーツの出番がほとんどないくらい。<br>
+ちょっと気象庁で調べてみると熱帯夜になってない。<br>
+あと気温が低くなる時間帯も早いような気もする。
+</p>
+<!-- section end -->
+</div>
+<!-- 2013/07/24 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/07/25 start -->
+<h2><a name="20130725" href="201307c.html#20130725">2013-07-25 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="201307251" title="201307251" href="201307c.html#201307251">■</a> 
+Cygwin64とzsh</h3>
+<p>
+早速インストールしてみたらデフォルトはC:\Cygwin64に入るようになっていて、<br>
+32ビット版とは完全に分離さていた。<br>
+ホームディレクトリはどうしようかなと思ったが、<br>
+そんなことよりzshのパッケージがまだ存在してなかった。<br>
+これは痛い。もうちょっと待つか。
+</p>
+<!-- section end -->
+</div>
+<!-- 2013/07/25 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/07/26 start -->
+<h2><a name="20130726" href="201307c.html#20130726">2013-07-26 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="201307261" title="201307261" href="201307c.html#201307261">■</a> 
+<a href="http://www.noip.com/">no-ip</a></h3>
+<p>
+FreeのDynamic DNS。一応これも確保しておく。<br>
+linuxのクライアントもある。<br>
+ubuntuのパッケージがありそうな記述があったが、すでに存在せず。<br>
+tarballからmakeでok。
+</p>
+<!-- section end -->
+</div>
+<!-- 2013/07/26 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/07/27 start -->
+<h2><a name="20130727" href="201307c.html#20130727">2013-07-27 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="201307271" title="201307271" href="201307c.html#201307271">■</a> 
+現在の世界人口</h3>
+<p>
+<a href="http://www.commandlinefu.com/commands/view/12542/fetch-the-current-human-population-of-earth">Fetch the current human population of Earth</a>によるとjsonで取ってこられるらしい。<br>
+実際に
+<a href="http://www.census.gov/popclock/data/population/world">ここ</a>にアクセスすると推定の人口が得られる。<br>
+過去1年分ぐらいの月始めのデータもある。<br>
+grepで\Kを使ってもその月ごとのデータにもヒットしてしまう。
+</p>
+<pre>
+% curl -s http://www.census.gov/popclock/data/population/world &gt; world.json
+% grep -Po '&quot;population&quot;:\K\d+' world.json
+7101036371
+7095217980
+7101942735
+7108667490
+7115175318
+7121900073
+7128407901
+7135132656
+7141857411
+7147931384
+7154656139
+7161163967
+7172800105
+</pre>
+<p>
+後ろに&quot;population_rate&quot;があるので
+</p>
+<pre>
+% grep -Po '&quot;population&quot;:\K\d+,&quot;p' world.json
+7101036371,&quot;p
+</pre>
+<p>
+とすれば1つにしぼれる。先読みを指定すれば数だけになる。
+</p>
+<pre>
+% grep -Po '&quot;population&quot;:\K\d+(?=,&quot;p)' world.json
+7101036371
+</pre>
+<p>
+最小はこんな感じか。
+</p>
+<pre>
+% grep -Po '&quot;:\K\d+(?=,&quot;p)' world.json
+7101036371
+</pre>
+<p>
+最近話題のjqを使えば
+</p>
+<pre>
+% jq .world.population world.json
+7101036371
+</pre>
+<p>
+でいいんだけどね。
+</p>
+<!-- section end -->
+</div>
+<!-- 2013/07/27 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/07/28 start -->
+<h2><a name="20130728" href="201307c.html#20130728">2013-07-28 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="201307281" title="201307281" href="201307c.html#201307281">■</a> 
+Google Chromeでbookmarkのkeywordを設定する</h3>
+<p>
+と書いておきながら、実際はbookmarkじゃなかったりするんだけど。<br>
+address barで右クリックして検索エンジンの編集を選び、<br>
+最後までスクロールして、<br>
+「新しい検索エンジンを追加」「キーワード」「検索キーワードの代わりに%sを含むURL」<br>
+をそれぞれ埋める。これでaddress barでキーワードが使えるようになる。<br>
+過去にいろんなページで検索していると自動的に登録されてたりするので、<br>
+よく使うページは短いキーワードを設定しておくと便利。
+</p>
+<!-- section end -->
+</div>
+<!-- 2013/07/28 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/07/29 start -->
+<h2><a name="20130729" href="201307c.html#20130729">2013-07-29 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="201307291" title="201307291" href="201307c.html#201307291">■</a> 
+Cygwin64でrubyをconfigure</h3>
+<p>
+configureした結果を32と比較してみた。
+</p>
+<pre>
+--- trunk-cygwin/configure.log	2013-07-29 11:45:45.579627200 +0900
++++ trunk-cygwin64/configure.log	2013-07-29 12:10:01.124625800 +0900
+@@ -1,4 +1,4 @@
+-checking build system type... i686-pc-cygwin
+-checking host system type... i686-pc-cygwin
+-checking target system type... i686-pc-cygwin
++checking build system type... x86_64-unknown-cygwin
++checking host system type... x86_64-unknown-cygwin
++checking target system type... x86_64-unknown-cygwin
+ checking for gcc... gcc
+@@ -23,3 +23,2 @@
+ checking whether gcc -E accepts -o... yes
+-checking for __sync_val_compare_and_swap... yes
+ checking for ranlib... ranlib
+@@ -195,11 +194,11 @@
+ checking size of short... 2
+-checking size of long... 4
++checking size of long... 8
+ checking size of long long... 8
+ checking size of __int64... 0
+-checking size of __int128... 0
++checking size of __int128... 16
+ checking size of off_t... 8
+-checking size of void*... 4
++checking size of void*... 8
+ checking size of float... 4
+ checking size of double... 8
+-checking size of time_t... 4
++checking size of time_t... 8
+ checking for printf prefix for long long... ll
+@@ -220,3 +219,3 @@
+ checking for off_t... (cached) yes
+-checking for convertible type of off_t... LL
++checking for convertible type of off_t... LONG
+ checking for prototypes... yes
+@@ -241,4 +240,4 @@
+ checking for size_t... yes
+-checking size of size_t... 4
+-checking size of ptrdiff_t... 4
++checking size of size_t... 8
++checking size of ptrdiff_t... 8
+ checking for printf prefix for size_t... z
+@@ -248,4 +247,4 @@
+ checking for struct stat.st_rdev... yes
+-checking size of struct stat.st_size... SIZEOF_LONG_LONG
+-checking size of struct stat.st_blocks... SIZEOF_LONG_LONG
++checking size of struct stat.st_size... SIZEOF_LONG
++checking size of struct stat.st_blocks... SIZEOF_LONG
+ checking for struct stat.st_atim... yes
+@@ -281,10 +280,10 @@
+ checking size of uint64_t... 8
+-checking for int128_t... no
+-checking for uint128_t... no
++checking for int128_t... __int128
++checking for uint128_t... unsigned __int128
+ checking for intptr_t... yes
+-checking size of intptr_t... 4
++checking size of intptr_t... 8
+ checking for uintptr_t... yes
+-checking size of uintptr_t... 4
++checking size of uintptr_t... 8
+ checking for ssize_t... yes
+-checking size of ssize_t... 4
++checking size of ssize_t... 8
+ checking for stack end address... no
+@@ -432,3 +431,4 @@
+ checking for external altzone... no
+-checking for timezone... no
++checking for timezone... yes
++checking whether timezone requires zero arguments... yes
+ checking for negative time_t for gmtime(3)... yes
+@@ -438,5 +438,5 @@
+ checking read buffer ptr field in FILE structures... _p
+-checking size of struct stat.st_ino... SIZEOF_LONG_LONG
++checking size of struct stat.st_ino... SIZEOF_LONG
+ checking whether _SC_CLK_TCK is supported... yes
+-checking stack growing direction on i386... -1
++checking stack growing direction on x86_64... -1
+ checking for pthread_kill in -lthr... no
+@@ -468,3 +468,3 @@
+ checking whether -Wl,--no-undefined is accepted as LDFLAGS... yes
+-checking for prefix of external symbols... _
++checking for prefix of external symbols... NONE
+ checking pthread.h usability... yes
+@@ -475,3 +475,3 @@
+ checking for nroff... /usr/bin/nroff
+-.ext/include/i386-cygwin/ruby/config.h unchanged
++.ext/include/x86_64-cygwin/ruby/config.h unchanged
+ ruby library version = 2.1.0
+@@ -482,4 +482,4 @@
+ 
+-real	3m50.504s
+-user	0m41.058s
+-sys	1m52.276s
++real	3m35.935s
++user	0m32.877s
++sys	1m46.179s
+</pre>
+<p>
+まあ、だいたい予想通りではあるが、timezoneとかsymbolに_がつかないとか違いがあるんだな。<br>
+realを見るとやはりcygwin64のほうが速いようだ。<br>
+で、makeするとfile.cでエラーになるが、GetLastErrorの宣言はもう不要だな。
+</p>
+<!-- section end -->
+</div>
+<!-- 2013/07/29 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/07/30 start -->
+<h2><a name="20130730" href="201307c.html#20130730">2013-07-30 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="201307301" title="201307301" href="201307c.html#201307301">■</a> 
+cygwin32</h3>
+<p>
+昔はgnu-win32とかcygwin32とか名乗ってたが、cygwinになった。<br>
+でもここにきてcygwin64とか出てくるとそれと、<br>
+区別するためにcygwin32という名称が復活するような気がするがどうだろう。
+</p>
+<!-- section end -->
+</div>
+<!-- 2013/07/30 end -->
+
+
+
+<hr class="hide">
+<!-- 2013/07/31 start -->
+<h2><a name="20130731" href="201307c.html#20130731">2013-07-31 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="201307311" title="201307311" href="201307c.html#201307311">■</a> 
+マウス不調？</h3>
+<p>
+最近なぜか同じページがブラウザのタブに並んでることが多いなと思ったら、<br>
+どうもマウスの1回のクリックでダブルクリックになるときがあるようだ。<br>
+分解して掃除するか。
+</p>
+<!-- section end -->
+</div>
+<!-- 2013/07/31 end -->
+
+<hr>
+<div>
+<a href="201307b.html">&lt;Older(,)</a> | 
+<a href="201308a.html">Newer(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

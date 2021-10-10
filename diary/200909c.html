@@ -1,0 +1,537 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2009-9-c</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="200909b.html">
+<link rel="next" href="200910a.html">
+
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2009年9月下旬〜</p>
+<hr>
+<div>
+<a href="200909b.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="200910a.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2009/09/21 start -->
+<h2><a name="20090921" href="200909c.html#20090921">2009-09-21 (Mon)</a></h2>
+<!-- 2009-09-22 15:28:18 -->
+
+<div class="entry1">
+<h3><a name="200909211" title="200909211" href="200909c.html#200909211">■</a> 
+[Net] jarpにつながらない理由</h3>
+<p>
+最初はDNSが調子悪かったけどそれが復活してからこんどはjarpにつながらない。
+</p>
+
+<p>
+うは、これか。見逃してた。<br>
+
+<a href="http://friendfeed.com/gotoyuzo/60a42b92/ip-unreachable">gotoyuzo: 連休に引っ越しをするのでその間IP unreachableになります。</a>
+</p>
+<!-- section end -->
+</div>
+<!-- 2009/09/21 end -->
+
+
+
+<hr class="hide">
+<!-- 2009/09/22 start -->
+<h2><a name="20090922" href="200909c.html#20090922">2009-09-22 (Tue)</a></h2>
+<!-- 2009-09-23 02:50:30 -->
+
+<div class="entry1">
+<h3><a name="200909221" title="200909221" href="200909c.html#200909221">■</a> 
+[Git] 入門Git</h3>
+<p>
+昨日発送予定日が10/13以降になりますとメールが来たんで、<br>
+キャンセルして買いに行くか迷っていたら、<br>
+ご注文の発送メールが来たよ。<br>
+どういうことだよ。うれしいじゃねーか。
+</p>
+<!-- section end -->
+</div>
+<!-- 2009/09/22 end -->
+
+
+
+<hr class="hide">
+<!-- 2009/09/23 start -->
+<h2><a name="20090923" href="200909c.html#20090923">2009-09-23 (Wed)</a></h2>
+<!-- 2009-09-24 02:16:42 -->
+
+<div class="entry1">
+<h3><a name="200909231" title="200909231" href="200909c.html#200909231">■</a> 
+[Google] 例のJOBS=0123問題</h3>
+<p>
+どういうわけか暗号表が
+</p>
+
+<pre>
+0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ
+456789ABCDE2FGHIJKL0MNOP1QRS3TUVWXYZ
+</pre>
+<p>
+と並べられているものばかりだが、この場合はJOBS=0123を目立たせるために
+</p>
+
+<pre>
+JOBS0123456789ACDEFGHIKLMNPQRTUVWXYZ
+0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ
+</pre>
+<p>
+と並べるべき。あとT以降は同じだから、
+</p>
+
+<pre>
+JOBS0123456789ACDEFGHIKLMNPQR
+0123456789ABCDEFGHIJKLMNOPQRS
+</pre>
+<p>
+でok。要するにtrだったら
+</p>
+
+<pre>
+tr JOBS0-9AC-IK-NP-R 0-9A-S
+</pre>
+<p>
+ってことで。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2009/09/23 end -->
+
+
+
+<hr class="hide">
+<!-- 2009/09/24 start -->
+<h2><a name="20090924" href="200909c.html#20090924">2009-09-24 (Thu)</a></h2>
+<!-- 2009-09-25 02:58:10 -->
+
+<div class="entry1">
+<h3><a name="200909241" title="200909241" href="200909c.html#200909241">■</a> 
+<a href="http://www.commandlinefu.com/commands/view/3602/get-the-total-length-of-all-videos-in-the-current-dir-in-hms">[Tips] Get the total length of all videos in the current dir in H:m:s</a></h3>
+<p>
+最終的にawk使うなら全部awkでいいよね。
+</p>
+
+<pre>
+awk -F= '/ID_LENGTH/{s+=$2}END{printf &quot;%dh:%dm:%ds\n&quot;, s/3600,s/60%60,s%60}'
+</pre>
+<p>
+gawkならstrftimeがあるのでちょっと簡単に。
+</p>
+
+<pre>
+gawk -F= '/ID_LENGTH/{s+=$2}END{print strftime(&quot;%Hh:%Mm:%Ss&quot;, s, 1)}
+</pre>
+<!-- section end -->
+</div>
+<!-- 2009/09/24 end -->
+
+
+
+<hr class="hide">
+<!-- 2009/09/25 start -->
+<h2><a name="20090925" href="200909c.html#20090925">2009-09-25 (Fri)</a></h2>
+<!-- 2009-09-26 00:58:31 -->
+
+<div class="entry1">
+<h3><a name="200909251" title="200909251" href="200909c.html#200909251">■</a> 
+[Net] jarp復活</h3>
+<p>
+引越し完了したようでjarpも復活。<br>
+おつかれさまー。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200909252" title="200909252" href="200909c.html#200909252">■</a> 
+[Diary] この日記のRSSのdescriptionを微妙に調整</h3>
+<p>
+1行目じゃなくて最大78文字ぐらいに。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200909253" title="200909253" href="200909c.html#200909253">■</a> 
+<a href="http://freshmeat.net/projects/nwcc">[Soft] NWCC 0.8</a></h3>
+<blockquote><dl>
+<dt>
+About:
+<dd>
+nwcc is a C compiler for Unix systems. It targets Linux, Mac OS X, BSD,
+and Solaris on 80x86 (with nasm and gas), Linux, Mac OS X, and FreeBSD
+on AMD64 (with yasm and
+gas), Solaris and Linux on SPARC (64-bit), AIX and Linux on PowerPC (32-
+and 64-bit), and IRIX on MIPS (64-bit).
+Cross-compilation is also supported. It doesn't feature any software
+development support beyond plain compilation.
+</dl></blockquote>
+<!-- section end -->
+</div>
+<!-- 2009/09/25 end -->
+
+
+
+<hr class="hide">
+<!-- 2009/09/26 start -->
+<h2><a name="20090926" href="200909c.html#20090926">2009-09-26 (Sat)</a></h2>
+<!-- 2009-09-27 02:50:51 -->
+
+<div class="entry1">
+<h3><a name="200909261" title="200909261" href="200909c.html#200909261">■</a> 
+[DVD] ハゲタカ</h3>
+<p>
+大森南朋って誰だよと思ったら麿赤兒の息子か!<br>
+そういえばなんとなく面影がある、の、か？
+</p>
+<!-- section end -->
+</div>
+<!-- 2009/09/26 end -->
+
+
+
+<hr class="hide">
+<!-- 2009/09/27 start -->
+<h2><a name="20090927" href="200909c.html#20090927">2009-09-27 (Sun)</a></h2>
+<!-- 2009-09-28 02:26:30 -->
+
+<div class="entry1">
+<h3><a name="200909271" title="200909271" href="200909c.html#200909271">■</a> 
+[Tips] rsyncでmp3ファイルだけディレクトリ構造ごとコピー</h3>
+<p>
+
+<a href="200909b.html#200909111">不要なファイルを除いて</a>とか書いたけど、<br>
+ほんとはmp3だけ指定したかったわけで。<br>
+でもman rsyncしてもよくわからなかった。<br>
+今回ちょっと気合入れて読んでみた。
+</p>
+
+<p>
+最初に思いつくのは
+</p>
+
+<pre>
+-f '+ *.mp3' -f '- *'
+</pre>
+<p>
+なんだけど、これはだめ。正解は
+</p>
+
+<pre>
+-f '+ */' -f '+ *.mp3' -f '- *'
+</pre>
+<p>
+となる。'+ */'でディレクトリを含めておかないと'- *'に全部持ってかれてしまう。<br>
+あと結果的に空となるディレクトリもコピーの対象になるので、<br>
+--prune-empty-dirs(-m)も指定したほうがいい。
+</p>
+
+<pre>
+% ls foo/{a,b}
+foo/a:
+a.flac  a.mp3  b.flac  b.mp3  c.flac  c.mp3
+
+foo/b:
+a.txt  b.txt  c.txt
+% rsync -auv -f '+ */' -f '+ *.mp3' -f '- *' -m foo /tmp
+building file list ... done
+foo/
+foo/a/
+foo/a/a.mp3
+foo/a/b.mp3
+foo/a/c.mp3
+
+sent 228 bytes  received 75 bytes  606.00 bytes/sec
+total size is 0  speedup is 0.00
+</pre>
+<p>
+実際は--dry-run(-n)で確認してからコピーしよう。
+</p>
+
+<p>
+もう一個よくあるパターンとしてfoo/b/にもmp3ファイルがあるんだけど、<br>
+foo/a/だけコピーしたい場合。
+</p>
+
+<pre>
+% rsync -auv -f '+ foo/' -f '+ foo/a/' -f '+ *.mp3' -f '- *' -m -n foo /tmp
+building file list ... done
+foo/
+foo/a/
+foo/a/a.mp3
+foo/a/b.mp3
+foo/a/c.mp3
+
+sent 109 bytes  received 27 bytes  272.00 bytes/sec
+total size is 0  speedup is 0.00 (DRY RUN)
+</pre>
+<p>
+となるんだけど、だったら最初から--files-fromを使ったほうがいいか。
+</p>
+
+<pre>
+% ls foo/a/*.mp3 |rsync -av --files-from=- . /tmp   
+building file list ... done
+foo/
+foo/a/
+foo/a/a.mp3
+foo/a/b.mp3
+foo/a/c.mp3
+
+sent 223 bytes  received 75 bytes  596.00 bytes/sec
+total size is 0  speedup is 0.00
+% ls /tmp/foo/a                                  
+a.mp3  b.mp3  c.mp3
+</pre>
+<p>
+こっちのほうが全然わかりやすい。
+</p>
+<!-- section end -->
+</div>
+<!-- 2009/09/27 end -->
+
+
+
+<hr class="hide">
+<!-- 2009/09/28 start -->
+<h2><a name="20090928" href="200909c.html#20090928">2009-09-28 (Mon)</a></h2>
+<!-- 2009-09-29 02:53:09 -->
+
+<div class="entry1">
+<h3><a name="200909281" title="200909281" href="200909c.html#200909281">■</a> 
+[SMTP] eximのメールをgmailのsmtp経由で送る</h3>
+<p>
+
+<a href="http://elliotli.blogspot.com/2007/03/use-exim-with-gmail-smtp-on-fedora.html">Yan Li's Words: Use Exim with Gmail SMTP on Fedora</a>
+を参考にやってみたが、<br>
+エラーになってeximが立ち上がらない。
+</p>
+
+<pre>
+exim を起動中: 2009-09-29 01:38:36 Exim configuration error in line 961 of /etc/exim/exim.conf:
+  authenticator send_via_gmail: cannot find authenticator driver &quot;manualroute&quot;
+                                                           [失敗]
+</pre>
+<p>
+どうしたもんかな。
+</p>
+
+<pre>
+% exim -bV|grep -o manualroute
+manualroute
+</pre>
+<p>
+ちゃんとあるしねえ。
+</p>
+
+<p>
+ああ、そういうことか。begin routersとか飾りじゃなくてセクションに分かれていて、<br>
+後ろにまとめて追加じゃなくてちゃんと別々に置かないとだめなんだな。
+</p>
+
+<p>
+あとはFrom:をgmail.comにしないと受け付けてくれないので、<br>
+その設定を調べる。
+</p>
+<!-- section end -->
+</div>
+<!-- 2009/09/28 end -->
+
+
+
+<hr class="hide">
+<!-- 2009/09/29 start -->
+<h2><a name="20090929" href="200909c.html#20090929">2009-09-29 (Tue)</a></h2>
+<!-- 2009-09-30 01:55:33 -->
+
+<div class="entry1">
+<h3><a name="200909291" title="200909291" href="200909c.html#200909291">■</a> 
+[SMTP] eximのメールをgmailのsmtp経由で送れた</h3>
+<p>
+結局昨日の設定ではeximは無事立ち上がるものの、<br>
+実際にメールを送ってみるとキューにたまるだけで出ていかないのであった。<br>
+Fromをgmail.comにしないといけないのかと思ってたが、それは関係なかった。
+</p>
+
+<p>
+で、よくよく/etc/exim/exim.confを見てみると気になる記述を発見。
+</p>
+
+<pre>
+dnslookup:
+  driver = dnslookup
+  domains = ! +local_domains
+  transport = remote_smtp
+  ignore_target_hosts = 0.0.0.0 : 127.0.0.0/8
+  no_more
+
+# Alternatively, comment out the above router and uncomment this one to
+# route all mail to a smarthost instead of sending it directly to the
+# intended recipients. If your smarthost requires authentication, change
+# 'remote_smtp' to 'remote_msa' and set up the 'client_auth' authenticator
+# later in this file. You might need to change the port number in the
+# remote_msa transport.
+#
+#smarthost:
+#  driver = manualroute
+#  domains = ! +local_domains
+#  transport = remote_smtp
+#  route_data = smarthost.myisp.net
+#  no_more
+</pre>
+<p>
+今回はsmarthostを使うわけで、まさにこれに該当する。<br>
+実際dnslookup:からno_moreまでをコメントアウトすることで、<br>
+ちゃんとgmail経由でメールが送れるようになった。
+</p>
+
+<p>
+以上まとめるとFedora 11の場合は/etc/exim/exim.confを編集して、<br>
+begin routersのセクションに
+</p>
+
+<pre>
+# routers section
+send_via_gmail:
+  driver = manualroute
+  domains = ! +local_domains
+  transport = gmail_smtp
+  route_list = * gmail-smtp.l.google.com
+</pre>
+
+<p>
+を追加し、dnslookup:の部分はコメントアウト。<br>
+begin transportsのセクションに
+</p>
+
+<pre>
+# transports section
+gmail_smtp:
+  driver = smtp
+  port = 587
+  hosts_require_auth = gmail-smtp.l.google.com
+  hosts_require_tls = gmail-smtp.l.google.com
+</pre>
+<p>
+を追加。<br>
+begin authenticatorsのセクションに
+</p>
+
+<pre>
+# authenticators section
+gmail_login:
+  driver = plaintext
+  public_name = LOGIN
+  hide client_send = : youraccount@gmail.com : yourpassword
+</pre>
+<p>
+を追加する。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200909292" title="200909292" href="200909c.html#200909292">■</a> 
+[Mail] GmailのSMTP経由でのFrom:の置き換え</h3>
+<p>
+どんなFrom:で送っても結局Gmailの設定のFrom:で書き換えられる。<br>
+まあ、Gmailから送ってるのと同じなのである意味当然か。
+</p>
+<!-- section end -->
+</div>
+<!-- 2009/09/29 end -->
+
+
+
+<hr class="hide">
+<!-- 2009/09/30 start -->
+<h2><a name="20090930" href="200909c.html#20090930">2009-09-30 (Wed)</a></h2>
+<!-- 2009-10-01 00:51:43 -->
+
+<div class="entry1">
+<h3><a name="200909301" title="200909301" href="200909c.html#200909301">■</a> 
+[Mail] GmailのSubjectとスレッド</h3>
+<p>
+GmailはIn-Reply-To:もReferenses:も無視するのかと思ったら、そうではないようで。<br>
+なんかルールがよくわからない。<br>
+でもSubjectが違えば別スレッドになるのは間違いないようだ。<br>
+で、[Hoge]のようなタグの有無は関係なく同一視されるが、<br>
+そのときはIn-Reply-To:かRefereneses:を見てるようだ。<br>
+どちらも存在しないと別スレッドになる。<br>
+こんな感じかな。
+</p>
+<!-- section end -->
+</div>
+<!-- 2009/09/30 end -->
+
+<hr>
+<div>
+<a href="200909b.html">&lt;Prev(,)</a> | 
+<a href="200910a.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

@@ -1,0 +1,380 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2015-2-b</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="201502a.html">
+<link rel="next" href="201502c.html">
+
+<link rel="stylesheet" type="text/css" href="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.css">
+<script type="text/javascript" src="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.js"></script>
+<script type="text/javascript">
+<!--       
+$(document).ready(function() {
+  prettyPrint();
+});
+-->
+</script>
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2015年2月中旬〜</p>
+<hr>
+<div>
+<a href="201502a.html" accesskey=",">&lt;Older(,)</a> | 
+<a href="201502c.html" accesskey=".">Newer(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2015/02/11 start -->
+<h2><a name="20150211" href="201502b.html#20150211">2015-02-11 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="201502111" title="201502111" href="201502b.html#201502111">■</a> 
+ハンチョウ</h3>
+<p>
+安積班シリーズをあらかた読んだので、録りためたハンチョウを見始めた。<br>
+原作を単に適当につまみ食いしてる的な感じで、キャラ設定もだいぶ違う。<br>
+やっぱ原作通りにはいかないか。
+</p>
+<!-- section end -->
+</div>
+<!-- 2015/02/11 end -->
+
+
+
+<hr class="hide">
+<!-- 2015/02/12 start -->
+<h2><a name="20150212" href="201502b.html#20150212">2015-02-12 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="201502121" title="201502121" href="201502b.html#201502121">■</a> 
+pipeを介したsort</h3>
+<p>
+3000万行、2.8GBのテキストファイルをsortする。
+</p>
+<pre>
+% ls -oh bigfile.txt      
+-rw-rw-r-- 2 eban 2.8G Feb 12 17:26 bigfile.txt
+% wc -l bigfile.txt
+30750762 bigfile.txt
+% time sort bigfile.txt &gt; /dev/null
+sort bigfile.txt &gt; /dev/null  15.35s user 18.82s system 191% cpu 17.886 total
+</pre>
+<p>
+次にcatしてpipeで。
+</p>
+<pre>
+% time cat bigfile.txt | sort &gt; /dev/null                                                                               
+cat bigfile.txt  0.00s user 2.16s system 20% cpu 10.766 total
+sort &gt; /dev/null  13.82s user 13.24s system 53% cpu 50.711 total
+</pre>
+<p>
+なぜか遅くなる。これは元のファイルのサイズがわからなくなるから。<br>
+このくらいのサイズになると最初からmerge sortになるが、一時ファイルは/tmpに作られる。<br>
+サイズがわかれば適切なサイズで分割できるが、<br>
+pipeだとわからないので小さめの一時ファイルをたくさん作ることになる。<br>
+その非効率がこの速度の違いになる。<br>
+実際に/tmpを観察してみると数GBと数MBとなっていた。
+</p>
+<!-- section end -->
+</div>
+<!-- 2015/02/12 end -->
+
+
+
+<hr class="hide">
+<!-- 2015/02/13 start -->
+<h2><a name="20150213" href="201502b.html#20150213">2015-02-13 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="201502131" title="201502131" href="201502b.html#201502131">■</a> 
+pipeを介したsortでの対処</h3>
+<p>
+オプションを調べてみると目につくのは-S, --buffer-size=SIZEで、<br>
+use SIZE for main memory bufferと書いてあるので、<br>
+ファイルのサイズには関係ないかと思ったらこれでいいようだ。
+</p>
+<pre>
+$ time cat bigfile.txt | sort -S 1G &gt; /dev/null
+
+real    0m16.754s
+user    0m14.206s
+sys     0m12.613s
+
+% time cat bigfile.txt | sort -S 10G &gt; /dev/null
+
+real    0m12.594s
+user    0m14.043s
+sys     0m15.625s
+
+</pre>
+<!-- section end -->
+</div>
+<!-- 2015/02/13 end -->
+
+
+
+<hr class="hide">
+<!-- 2015/02/14 start -->
+<h2><a name="20150214" href="201502b.html#20150214">2015-02-14 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="201502141" title="201502141" href="201502b.html#201502141">■</a> 
+psでコマンドがいつ起動されたか調べる</h3>
+<p>
+ふつうにuを指定すればわかるんだけど、1日以上経つと
+</p>
+<pre>
+% ps u 1804      
+USER       PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
+eban      1804  0.0  0.0  54088  2744 pts/23   Ss   Feb07   0:00 zsh
+</pre>
+<p>
+のように時刻までは表示されなくなる。<br>
+etimeを使えば起動してからの経過時間はわかるが引き算が面倒。
+</p>
+<pre>
+% ps o etime 1804
+    ELAPSED
+ 7-01:50:26
+</pre>
+<p>
+7日と1:50:26らしい。いろいろぐぐったりしてみたらlstartでいけるそうだ。
+</p>
+<pre>
+% ps o lstart 1804
+                 STARTED
+Sat Feb  7 23:49:48 2015
+</pre>
+<p>
+man psしてもこんなざっくりとした説明しかないが。
+</p>
+<pre>
+lstart      STARTED   time the command started.  See also bsdstart, start, start_time, and stime.
+</pre>
+<!-- section end -->
+</div>
+<!-- 2015/02/14 end -->
+
+
+
+<hr class="hide">
+<!-- 2015/02/15 start -->
+<h2><a name="20150215" href="201502b.html#20150215">2015-02-15 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="201502151" title="201502151" href="201502b.html#201502151">■</a> 
+joinをcommの代わりに使う</h3>
+<p>
+joinで-t ''とすれば行全体を1つのフィールドとして扱うようになるので、commの代わりに使える。<br>
+commの問題点は-23で1つ目のファイルにしかないもの表示するんだけど、これが逆なのでわかりにくい。<br>
+その点joinなら-v1と1が表に出てくるのでわかりやすい。
+</p>
+<pre>
+% seq 10 | paste -d' ' - -                            
+1 2
+3 4
+5 6
+7 8
+9 10
+% seq 9 | paste -d' ' - - 
+1 2
+3 4
+5 6
+7 8
+9 
+% comm -23 &lt;(seq 10 | paste -d' ' - -) &lt;(seq 9 | paste -d' ' - -)
+9 10
+% join -v1 &lt;(seq 10 | paste -d' ' - -) &lt;(seq 9 | paste -d' ' - -)
+% join -v1 -t '' &lt;(seq 10 | paste -d' ' - -) &lt;(seq 9 | paste -d' ' - -)
+9 10
+</pre>
+<p>
+-t ''がないと-j1と同じでフィールド1しか見ないので全部共通と見做されてしまう。
+</p>
+<!-- section end -->
+</div>
+<!-- 2015/02/15 end -->
+
+
+
+<hr class="hide">
+<!-- 2015/02/16 start -->
+<h2><a name="20150216" href="201502b.html#20150216">2015-02-16 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="201502161" title="201502161" href="201502b.html#201502161">■</a> 
+むだなgrepが意外に遅かった</h3>
+<p>
+TSVの先頭にヘッダーがついているので、軽い気持ちでgrep -vでいいかと
+</p>
+<pre>
+% find . -type f -name '*.tsv' | xargs env LANG=C grep -vh '^F1' &gt; all.tsv
+</pre>
+<p>
+のような処理をしていたら、ちょっと気になった。<br>
+1行目だけ消せばいいわけでなんかむだにgrepを使っているような？<br>
+というわけで、grepとawkで試してみた。
+</p>
+<pre>
+% time LANG=C grep -vh '^F1' bigfile.tsv &gt; /dev/null
+LANG=C grep -vh '^F1' bigfile.tsv &gt; /dev/null  5.70s user 0.42s system 99% cpu 6.128 total
+% time LANG=C awk 'FNR&gt;1' bigfile.tsv &gt; /dev/null
+LANG=C awk 'FNR&gt;1' bigfile.tsv &gt; /dev/null  7.34s user 0.63s system 99% cpu 7.981 total
+</pre>
+<p>
+あれ。awk負けてる。そういえばawkはgawkだな。mawkで試してみる。
+</p>
+<pre>
+% time mawk 'FNR&gt;1' bigfile.tsv &gt; /dev/null
+mawk 'FNR&gt;1' bigfile.tsv &gt; /dev/null  3.82s user 0.56s system 99% cpu 4.379 total
+</pre>
+<p>
+おお、やっぱmawkは速い。<br>
+fgrepだとどうかというとなんか遅い。
+</p>
+<pre>
+% time LANG=C fgrep -vh 'F1' bigfile.tsv &gt; /dev/null 
+LANG=C fgrep -vh 'F1' bigfile.tsv &gt; /dev/null  7.64s user 0.38s system 99% cpu 8.023 total
+</pre>
+<p>
+^のようなアンカーが使えないからか。\tをつけてやればgrepと同等になる。
+</p>
+<pre>
+% time LANG=C fgrep -vh $'F1\t' bigfile.tsv &gt; /dev/null
+LANG=C fgrep -vh $'F1\t' bigfile.tsv &gt; /dev/null  5.46s user 0.50s system 99% cpu 5.977 total
+</pre>
+<!-- section end -->
+</div>
+<!-- 2015/02/16 end -->
+
+
+
+<hr class="hide">
+<!-- 2015/02/17 start -->
+<h2><a name="20150217" href="201502b.html#20150217">2015-02-17 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="201502171" title="201502171" href="201502b.html#201502171">■</a> 
+bcの小技</h3>
+<p>
+ちょっとした計算をbcにさせるときにscaleを指定するのが面倒。<br>
+そんなときは-lオプションを使うといい。
+</p>
+<pre>
+% echo 10/3 | bc
+3
+% echo 10/3 | bc -l
+3.33333333333333333333
+</pre>
+<p>
+scaleは20に設定される。
+</p>
+<pre>
+MATH LIBRARY
+    If  bc  is  invoked  with the -l option, a math library is preloaded and the default scale is set to 20.   The
+    math functions will calculate their results to the scale set at the time of  their  call.   The  math  library
+    defines the following functions:
+
+    s (x)  The sine of x, x is in radians.
+
+    c (x)  The cosine of x, x is in radians.
+
+    a (x)  The arctangent of x, arctangent returns radians.
+
+    l (x)  The natural logarithm of x.
+
+    e (x)  The exponential function of raising e to the value x.
+
+    j (n,x)
+           The Bessel function of integer order n of x.
+
+</pre>
+<!-- section end -->
+</div>
+<!-- 2015/02/17 end -->
+
+
+
+<hr class="hide">
+<!-- 2015/02/18 start -->
+<h2><a name="20150218" href="201502b.html#20150218">2015-02-18 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="201502181" title="201502181" href="201502b.html#201502181">■</a> 
+gzexe</h3>
+<p>
+gzipにはgzexeというコマンドが含まれている。<br>
+実行ファイルを圧縮して先頭に伸長実行するようなスクリプトを埋め込む。<br>
+gzexe自体は単なるbash scriptなのでそのまま読めばいいんだけど、<br>
+ちょっとtailとsedの使い方が気になる。<br>
+先頭のスクリプト部分をスキップしてgzip -dcへ渡すわけだけど、<br>
+そのスキップにtailが使われている。<br>
+わざわざ-nが+数値を受け取るかどうかをチェックしている。<br>
+tail -n +44と書けば44行以降を表示すると意味になるわけだけど、<br>
+なんでsed 1,43dとしないのか?
+sedならわざわざチェックしなくてもいいのに。
+</p>
+<!-- section end -->
+</div>
+<!-- 2015/02/18 end -->
+
+<hr>
+<div>
+<a href="201502a.html">&lt;Older(,)</a> | 
+<a href="201502c.html">Newer(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

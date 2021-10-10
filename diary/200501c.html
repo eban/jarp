@@ -1,0 +1,866 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2005-1-c</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="200501b.html">
+<link rel="next" href="200502a.html">
+
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2005年1月下旬〜</p>
+<hr>
+<div>
+<a href="200501b.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="200502a.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2005/01/21 start -->
+<h2><a name="20050121" href="200501c.html#20050121">2005-01-21 (Fri)</a></h2>
+<!-- 2005-01-22 01:34:01 -->
+
+<div class="entry1">
+<h3><a name="200501211" title="200501211" href="200501c.html#200501211">■</a> 
+[PC] ディスクの空き容量(/var)</h3>
+<p>
+先週の土曜日にwww.ruby-lang.orgのディスクが溢れた。原因はログらしい。
+で、1GBぐらい食ってたrubyのマニュアルのrwikiのログを圧縮してどかんと空けた。
+しばらくはだいじょうぶかと思うものの、とりあえず1日でどのくらい食うのか記録してみる。
+と思ったのが一昨日なので三日分。00:00にcronでdfを実行してmailって感じ。
+</p>
+<pre>
+Filesystem           1k-blocks      Used Available Use% Mounted on
+/dev/vg_main/lv_var    7031152   5501592   1172392  83% /var 2005-01-20 00:00:02
+/dev/vg_main/lv_var    7031152   5626944   1047040  85% /var 2005-01-21 00:00:01
+/dev/vg_main/lv_var    7031152   6100328    573656  92% /var 2005-01-22 00:00:03
+</pre>
+<p>
+むむ。今日突然増えたよ。この勢いだと明日やばいぞー。乞うご期待。
+って、何がそんなに増えたんだよ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200501212" title="200501212" href="200501c.html#200501212">■</a> 
+<a href="http://www.tadalist.com/">[ToDo] Ta-da Lists</a></h3>
+<p>
+Ruby on Railsということらしいが、それよりもこのUIのほうが気になる。
+submitボタンがなくリターンキーで登録できちゃうという感じで、なかなか心地好い。
+でもitemの日本語は化けるんだよねえ。
+登録時は問題ないんだけどMy Listsで見ると「日本語」が「%u65E5%u672C%u8A9E」となってしまう。
+でも、それをEditし直すとちゃんと表示される。なかなか不思議なバグだ。
+</p>
+
+<p>
+Link: 
+<a href="http://weblog.rubyonrails.com/archives/2005/01/20/ta-da-goes-international-with-utf-8/">Ta-da goes international with UTF-8</a>
+</p>
+<!-- section end -->
+</div>
+<!-- 2005/01/21 end -->
+
+
+
+<hr class="hide">
+<!-- 2005/01/22 start -->
+<h2><a name="20050122" href="200501c.html#20050122">2005-01-22 (Sat)</a></h2>
+<!-- 2005-01-23 01:28:39 -->
+
+<div class="entry1">
+<h3><a name="200501221" title="200501221" href="200501c.html#200501221">■</a> 
+<a href="http://www.rubyist.net/~tamura/d/?date=20050122#p01">[Ruby] 行末のCR+LFをLFへ変換</a></h3>
+<p>
+dos2unix相当の処理なら-p, -lを使うともうちょっと簡単に書けます。
+</p>
+<pre>
+% ruby -i~ -ple0 evalc.patch
+</pre>
+<p>
+この場合は-iを使わなくてもpipeでpatchへ送ってもいいですね。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200501222" title="200501222" href="200501c.html#200501222">■</a> 
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-talk/127499">[Ruby] ruby-talk MLのアーカイブ</a></h3>
+<p>
+もうローカルに取ってきて見る時代じゃないよなあ。
+まさか全部欲しいわけじゃないだろうし。検索ならgoogleを使えばいいし。
+</p>
+
+<p>
+
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-talk/127561">[ruby-talk:127561]</a>によると
+
+<a href="http://marc.theaimsgroup.com/?l=ruby-talk">MARC(Mailing list ARChives)</a>
+にもあるらしい。
+</p>
+
+<p>
+authorで検索してみてちょっとびっくり
+ruby-talk MLへ104通も投稿していることがわかった。
+いつのまにそんなに。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200501223" title="200501223" href="200501c.html#200501223">■</a> 
+[PC] /varのその後</h3>
+<p>
+dfを取る前にでかいものを他のパーティションに移しちゃったので、どこのディレクトリが食っているのかを調査。
+df -s /var/*の結果をcronでメールで送ることにした。
+</p>
+<!-- section end -->
+</div>
+<!-- 2005/01/22 end -->
+
+
+
+<hr class="hide">
+<!-- 2005/01/23 start -->
+<h2><a name="20050123" href="200501c.html#20050123">2005-01-23 (Sun)</a></h2>
+<!-- 2005-01-24 03:03:28 -->
+
+<div class="entry1">
+<h3><a name="200501231" title="200501231" href="200501c.html#200501231">■</a> 
+<a href="http://www.iosart.com/foxytunes/firefox/">[Firefox] FoxyTunes 1.1</a></h3>
+<p>
+いつのまにかFoxyTunes 1.1が出てた。
+</p><blockquote><ul>
+<li>Unicode support
+<li>Seek Slider - see the current track position, drag to adjust
+<li>Alarm Clock
+<li>Sleep Timer
+<li>Disable/Enable all or specific keyboard shortcuts
+<li>The shortcuts names are now more intuitive
+<li>Get shortcuts by sensing user key presses
+<li>Option to right align the track title
+<li>Hide FoxyTunes when the window status text is too long to fit on the status
+bar. When hovering on links with long URLs, hold the &quot;Shift&quot; key to hide
+FoxyTunes and see the full URL.
+</ul></blockquote><p>
+Character EncodingはDefaultのままで問題なく日本語も化けずに表示してる。
+FC3にしたついでにplaylistをutf-8にしたせいか、1.1のUnicode supportのおかげか
+、よくわからないけどめでたい。
+</p>
+
+<p>
+ああ、track titleの下の赤いインジケータがSeek Sliderか。
+なるほど。狭い空間をうまく利用してるなあ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200501232" title="200501232" href="200501c.html#200501232">■</a> 
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-talk/127712">[Ruby] Doxygen</a></h3>
+<p>
+Ruby 1.8.2のソースで
+<a href="http://www.doxygen.org/">Doxygen</a>を走らせたそうな。
+それにしてもRDocのドキュメントが全部消えてしまうのはもったいないな。
+</p>
+
+<p>
+Link: 
+<a href="http://www.ruby-doc.org/doxygen/1.8.2/">http://www.ruby-doc.org/doxygen/1.8.2/</a>
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200501233" title="200501233" href="200501c.html#200501233">■</a> 
+[Music] Last.FMとAudioscrobbler</h3>
+<p>
+流行ってるらしい。
+早速Audioscrobblerのプラグインを入れるかーと思ったが、playerの選択に迷う。
+最近は
+<a href="http://musicpd.org/">MPD(Music Player Daemon)</a>ばかりだけどプラグインは見当たらないし。
+ここはひとつwineでWINAMPが使えるかどうかを試しつつ、プラグインを入れてみる。
+WINAMPはfree版のfullを使い、
+</p>
+<pre>
+% wine winamp508c_full_emusic-7plus.exe
+</pre>
+<p>
+でインストール。もろもろ設定すると、ちゃんと再生できた。
+でもskinがちょっと変かな。まあいいや。
+続いてAudioscrobblerからWINAMPのプラグインをダウンロードしてインストール。
+</p>
+<pre>
+% wine audioscrobbler.wa.1.1.8.build.613.exe
+</pre>
+<p>
+念のためwinebootしてWINAMPを立ち上げるとユーザ名やパスワードを聞かれるのでそれを入力。
+いろいろ再生すると勝手にAudioscrobblerの自分のページにちゃんと反映される。
+なるほど。これは面白い。Last.FMのほうも連携してるので同じ情報が表示される。
+</p>
+
+<p>
+Last.FMのほうはなんかよくわかんないなあ。
+</p>
+
+<p>
+Link: 
+<a href="http://www.last.fm/">Last.FM</a><br>
+Link: 
+<a href="http://www.audioscrobbler.com/">Audioscrobbler</a>
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200501234" title="200501234" href="200501c.html#200501234">■</a> 
+[Music] MPDのAudioscrobbler client</h3>
+<p>
+やっぱMPDを使いたいので、ぐぐってみた。
+
+<a href="http://shii.org/mpdscrobbler">pythonのclient</a>
+が見つかった。mpdといっしょにこれを起動しとけばいいか。
+</p>
+
+<p>
+あれ？なんかエラーになってるなあ。
+</p><blockquote><p>
+Your plugin reported a submission error: Spam protection triggered
+this submission dated earlier than previous submission
+(this:2005-01-22 19:28:13, last: 2005-01-23 06:44:18)
+</p></blockquote><p>
+情報は反映されてるんだけど。うーむ。Recent Tracksがずーっと
+</p>
+<pre>
+Plugin ID: wa2, Version: 1.1.8
+</pre>
+<p>
+というのが気になる。WINAMPを使い続けなきゃいけない？
+mpdscrobblerをいじってPlugin IDを詐称するか。
+</p>
+
+<p>
+そのうちConnection timed outでつながらなくなってしまった。
+WINAMPでも
+</p>
+<pre>
+ERROR - ReqID 8, Last response from the server was unreadable ()
+</pre>
+<p>
+とエラーに。
+そういえばぐぐってみると最近サーバが調子悪いという記事もちらほら。
+でも他の人のprofileを見ると更新されてるなあ。rejectされちゃったか？
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200501235" title="200501235" href="200501c.html#200501235">■</a> 
+<a href="http://nais.to/~yto/clog/2005-01-18-3.html">[Diary] 自分マイニング！ - Blogでよく使うフレーズは？</a></h3>
+<p>
+やってみたよー。
+</p>
+<pre>
+% sang -t 100 -n 12 diary.euc |sort -rn
+270 インストール
+166 というわけで
+105 ンストールし
+104 になってしま
+</pre>
+<p>
+というわけでインストールしたりしてになってしまったり。
+微妙にたつをさんと似てる。8文字だと100個もないや。
+</p>
+<pre>
+% sang -t 30 -n 16 diary.euc |sort -rn
+44 インストールして
+44 それはそれとして
+43 になってしまう。
+41 インストールした
+40 をインストールし
+39 るようになった。
+32 ことに気づいた。
+31 インストールする
+</pre>
+<p>
+とにかく年中インストールしていないと気が済まないらしい。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200501236" title="200501236" href="200501c.html#200501236">■</a> 
+<a href="http://yowaken.dip.jp/tdiary/20050123.html#p01">[Ruby] nkfの挙動</a></h3>
+<p>
+まあ、これに関してはnkfコマンドがそうなんだから、RubyのNKF拡張ライブラリがそうなっていても、なんの不思議もないと思います。
+</p>
+<pre>
+% echo 'foo' |nkf
+foo
+</pre>
+<p>
+そのまま移植すればわざわざ初期値を変えない限りは同じ挙動になるでしょう。
+変えれば変えたでまた混乱を生じるし。いや、nkfの挙動については文句は言ってないか。
+</p>
+
+<p>
+Kconvって以前のKconv拡張ライブラリの互換として残っているだけで、NKF拡張ライブラリが普及すれば消されるもんだと思っていたのは単なる思い込みのようだ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2005/01/23 end -->
+
+
+
+<hr class="hide">
+<!-- 2005/01/24 start -->
+<h2><a name="20050124" href="200501c.html#20050124">2005-01-24 (Mon)</a></h2>
+<!-- 2005-01-25 02:28:13 -->
+
+<div class="entry1">
+<h3><a name="200501241" title="200501241" href="200501c.html#200501241">■</a> 
+<a href="http://raa.ruby-lang.org/project/mpd-rb/">[Ruby] mpd-rb</a></h3>
+<p>
+いつのまにかRAAにRuby用のMPDインタフェースが登録されていた。
+strftimeのようなstrfメソッドがあって便利。
+</p>
+<pre>
+% ruby -rmpd -rnkf -e 'puts NKF.nkf(&quot;-e&quot;, MPD.new.strf(&quot;%a - %t/%A&quot;))'
+SOULHEAD - YOU CAN DO THAT/BRAIDED
+</pre>
+<p>
+これでAudioscrobblerクライアントが作れそうだ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200501242" title="200501242" href="200501c.html#200501242">■</a> 
+[Music] Audioscrobbler Protocol</h3>
+<p>
+Pythonで書かれてるmpdscrobblerだとエラーが起こると終了しちゃうのが困る。
+Pythonはよくわからないしなあ。
+</p>
+<pre>
+% while :; do mpdscrobbler; sleep 60; done
+</pre>
+<p>
+でもいいんだけど、mpd-rbでなんとかしてみるか。
+</p>
+
+<p>
+まずは
+
+<a href="http://www.audioscrobbler.com/development/protocol.php">Audioscrobbler Protocol version 1.2 RFC</a>
+を読む。それにしてもここはいつも重い。
+</p><blockquote><ul>
+<li>Everything must be valid UTF-8. Anything else is likely to be deleted.
+</ul></blockquote><p>
+なるほど。だから日本語もokなんだ。
+</p><blockquote><ul>
+<li>clientid is a 3-character client ID. To be assigned a 3-character
+clientID for your plugin you should email russ at audioscrobbler.com.
+<li>clientversion is the version of the plugin (eg '1.0.7'). You need
+to ask Russ to increment the 'current version' setting on the server
+when distributing a new version, so that people are notified they need
+to upgrade.
+</ul></blockquote><p>
+勝手にクライアントを作って勝手にデータを送っちゃだめらしい。急に面倒になった。
+これを書いてるうちにmpdscrobblerのエラーもなくなったし。
+作るなという啓示か？
+</p>
+
+<p>
+
+<a href="http://raa.ruby-lang.org/project/lasfm/">Last.FMのWeb Serviceインタフェース</a>も最近登録されたようだ。
+やはり流行ってるなあ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200501243" title="200501243" href="200501c.html#200501243">■</a> 
+<a href="http://hemiolapei.free.fr/divers/tabmix/tabmix.html.en">[Firefox] Tab Mix</a></h3>
+<p>
+インストールして好みの設定した後で全体を見直してみるとTab Xとtabbarのclose buttonを消す機能しかチェックしてなかった。
+なんかもったいない使い方だ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200501244" title="200501244" href="200501c.html#200501244">■</a> 
+<a href="http://www.extensionsmirror.nl/index.php?showtopic=116">[Firefox] An enhanced version of Tab X 0.5</a></h3>
+<p>
+改めてTab X 0.5のページを見るとenhanced版だとボタンを隠す機能がついてる。
+</p>
+<pre>
+- Hide or show the Tab Bar's close button (updates immediately)
+</pre>
+<p>
+これだけあれば十分だな。
+</p>
+<!-- section end -->
+</div>
+<!-- 2005/01/24 end -->
+
+
+
+<hr class="hide">
+<!-- 2005/01/25 start -->
+<h2><a name="20050125" href="200501c.html#20050125">2005-01-25 (Tue)</a></h2>
+<!-- 2005-01-26 02:51:02 -->
+
+<div class="entry1">
+<h3><a name="200501251" title="200501251" href="200501c.html#200501251">■</a> 
+[Mail] linux-users ML</h3>
+<p>
+今日久し振りにlinux-user MLが流れてきて、いつ以来だと調べたら去年の11/22が最後だった。
+届かなかったのはなんかML側の設定らしいが、
+2ヶ月も気づかないくらいなのでunsubscribeすることにしよう。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200501252" title="200501252" href="200501c.html#200501252">■</a> 
+[Mail] 遅延</h3>
+<p>
+どうも昨日の
+<a href="http://www.rim.or.jp/support/announce/050124.html">機材故障</a>からまたメールが遅延気味。
+一時的ならいいんだけど、交換ってまさか元に戻したとか？
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200501253" title="200501253" href="200501c.html#200501253">■</a> 
+<a href="http://www.thekelleys.org.uk/dnsmasq/doc.html">[Soft] Dnsmasq 2.20</a></h3>
+<p>
+そういえば、vmware-config.plを実行したときにVMwareのDHCPサーバを使うと答えてしまっているような気がする。なんか無駄に動いてるな。
+</p><blockquote><dl>
+<dt>
+Changes:
+<dd>
+This release fixes some fairly obscure bugs. It also fixes compilation
+on Mac OS X. There are a few additional, fairly minority-interest,
+features and configuration options, notably support for the SRV DNS
+record type.
+</dl></blockquote>
+<!-- section end -->
+</div>
+<!-- 2005/01/25 end -->
+
+
+
+<hr class="hide">
+<!-- 2005/01/26 start -->
+<h2><a name="20050126" href="200501c.html#20050126">2005-01-26 (Wed)</a></h2>
+<!-- 2005-01-27 01:43:11 -->
+
+<div class="entry1">
+<h3><a name="200501261" title="200501261" href="200501c.html#200501261">■</a> 
+[Mail] SpamAssassin</h3>
+<p>
+学習しても切りがない山下香穂対応。
+</p>
+<pre>
+blacklist_from *@lily-adolescence.com
+</pre>
+<p>
+もうここから来るメールはreject。
+それにしてもあまり賢くならない。育て方を間違えたか。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200501262" title="200501262" href="200501c.html#200501262">■</a> 
+<a href="200406b.html#200406201">[zsh] diffの補完</a></h3>
+<p>
+ふと-uと-Uのことを思い出した。
+考えてみると-u1のように指定してるときにだめなのであった。
+</p>
+<pre>
+% diff -u1 foo~ foo
+diff: `-1' option is obsolete; use `-U 1'
+diff: Try `diff --help' for more information.
+</pre>
+<p>
+って怒られることからもわかるように、zshも-1なんて対応してないわけだ。
+ちゃんと-U1と指定すれば補完も使える。でも指が勝手に-u1と打ってしまうんだよな。
+切ない。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200501263" title="200501263" href="200501c.html#200501263">■</a> 
+[Mail] 空のメール</h3>
+<p>
+SubjectもBodyも空のメールが1日に何通か来る。
+さすがに学習させても無駄のようで、数通すりぬけてくるのが結構うっとうしい。
+~/.rdeliverで対応するか。
+</p>
+<pre>
+/\A\s*\Z/ =~ header.subject.to_s &amp;&amp; /\A\s*\Z/ =~ body.to_s
+</pre>
+<p>
+で判断しよう。
+</p>
+<!-- section end -->
+</div>
+<!-- 2005/01/26 end -->
+
+
+
+<hr class="hide">
+<!-- 2005/01/27 start -->
+<h2><a name="20050127" href="200501c.html#20050127">2005-01-27 (Thu)</a></h2>
+<!-- 2005-01-28 02:16:36 -->
+
+<div class="entry1">
+<h3><a name="200501271" title="200501271" href="200501c.html#200501271">■</a> 
+<a href="http://www.last.fm/">[Music] Last.FMでpersonal radio</a></h3>
+<p>
+300曲たまったのでpersonal radioが聞けるようになった。
+音は悪い。RealPlayerも混雑とか表示して頻繁に途切れてしまうし、
+短波ラジオを聞いてるようななつかしい気分。
+その昔はBCLなんて流行っていて、AMラジオでグアムの放送局を聞くなんてやってたなあ。
+</p>
+
+<p>
+profile radioはおとなりさんが計算できないとか言われて聞けない。
+しまった。満遍なくアルバムを聞いてるからそりゃそうかもしれない。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200501272" title="200501272" href="200501c.html#200501272">■</a> 
+<a href="[Soft]">p7zip 4.14.01</a></h3>
+<p>
+Changes:
+</p><blockquote><p>
+A major speed up was made for multi-CPU machines. Problems with
+links were fixed. 
+</p></blockquote>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200501273" title="200501273" href="200501c.html#200501273">■</a> 
+[Mail] ruby-talk ML</h3>
+<p>
+流量多すぎ。というかいちいちspamに反応するなよ。
+その行為がspam以上にうっとうしいことに気づかないかな。
+GmailでReport Spamが面倒なことになるし。
+</p>
+<!-- section end -->
+</div>
+<!-- 2005/01/27 end -->
+
+
+
+<hr class="hide">
+<!-- 2005/01/28 start -->
+<h2><a name="20050128" href="200501c.html#20050128">2005-01-28 (Fri)</a></h2>
+<!-- 2005-01-29 02:12:29 -->
+
+<div class="entry1">
+<h3><a name="200501281" title="200501281" href="200501c.html#200501281">■</a> 
+<a href="http://www.gnu.org/software/sed/">[Soft] sed 4.1.4</a></h3>
+<p>
+Changes:
+</p><blockquote><p>
+In this version, \B correctly means &quot;not on a word boundary&quot; rather
+than &quot;inside a word&quot;, matching sed 3.x and Perl. Regular expression
+addresses no longer use leftmost-longest matching: e.g. /.\+/ only
+looks for a single character, and does not try to find as many of them
+as possible like it used to do. Documentation about the new
+interpretation of `s|abc\|def||' in NEWS, and about localization
+issues, was added. A --disable-nls build problems on Solaris was
+fixed, as was `make check' in non-English locales. Speedups (up to
+30-40%) to regular expression matching were made.
+</p></blockquote>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200501282" title="200501282" href="200501c.html#200501282">■</a> 
+<a href="http://hem.bredband.net/kaw/ncmpc/">[Soft] ncmpc 0.11.1</a></h3>
+<p>
+Changes:
+</p><blockquote><p>
+This release includes new translations to
+Spanish, Russian, and French. Some other
+small features were added and bugs fixed.
+</p></blockquote>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200501283" title="200501283" href="200501c.html#200501283">■</a> 
+[Firefox] 選択して右クリックしてHTMLソースを表示</h3>
+<p>
+HTMLのソースを見てても実際どこに対応してるのかわからないことはよくあるけど、
+Firefoxだとまず知りたいその部分を選択してから右クリックすれば、
+選択部分だけのHTMLソースを表示できることに今日気づいた。
+なかなか芸が細かい。
+</p>
+<!-- section end -->
+</div>
+<!-- 2005/01/28 end -->
+
+
+
+<hr class="hide">
+<!-- 2005/01/29 start -->
+<h2><a name="20050129" href="200501c.html#20050129">2005-01-29 (Sat)</a></h2>
+<!-- 2005-01-30 01:44:38 -->
+
+<div class="entry1">
+<h3><a name="200501291" title="200501291" href="200501c.html#200501291">■</a> 
+[Mail] GmailのPOP機能を使ってみる</h3>
+<p>
+GmailでPOPを使う人はあまりいないと思うが、POPで取ってくるとspamもいっしょについてくるのか気になったのでThunderbirdで試してみた。
+結果spamはちゃんと除いてhamだけ取ってこれた。
+spoolとして使う手もあるわけか。結構いいね。
+SSLの設定とfirewallの中からだとちょっと面倒だという難点はあるけど。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200501292" title="200501292" href="200501c.html#200501292">■</a> 
+<a href="http://msmtp.sourceforge.net/">[Soft] msmtp 1.3.5</a></h3>
+<p>
+Changes:
+</p><blockquote><p>
+New features include support for an optional system wide
+configuration file, automatic generation of envelope from addresses, and
+syslog logging. 
+</p></blockquote><p>
+そうそう。syslogのlogging機能が欲しかったんだよね。~/.msmtprcに
+</p>
+<pre>
+syslog LOG_MAIL
+</pre>
+<p>
+を追加。
+</p>
+<!-- section end -->
+</div>
+<!-- 2005/01/29 end -->
+
+
+
+<hr class="hide">
+<!-- 2005/01/30 start -->
+<h2><a name="20050130" href="200501c.html#20050130">2005-01-30 (Sun)</a></h2>
+<!-- 2005-01-31 01:42:48 -->
+
+<div class="entry1">
+<h3><a name="200501301" title="200501301" href="200501c.html#200501301">■</a> 
+[Firefox] ブックマークのキーワードとブックマークレット</h3>
+<p>
+先日のブックマークのキーワードの場合、外に変換するための仕組みを用意したが、考えてみるとブックマークレットと組み合わせれば、ブラウザだけで解決できるんじゃないかと思い至る。
+</p>
+
+<p>
+早速試す。
+<a href="200501b.html#200501112">先日の設定</a>を削除し
+</p><blockquote><dl>
+<dt>
+Name:
+<dd>
+Ruby MLs
+<dt>
+Location:
+<dd>
+javascript:location.href=&quot;http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/&quot;+&quot;%s&quot;.replace(/:/,&quot;/&quot;);
+<dt>
+Keyword:
+<dd>
+r
+</dl></blockquote><p>
+を登録。単純明解。ruby-talk:XXXXXXだったらruby-talk/XXXXXXへ変換してるだけ。
+r ruby-talk:123456と入力するとちゃんと飛べた。面白い。
+</p>
+
+<p>
+あとはこれを簡単に登録する方法があればなあ。
+それもJavaScriptで書けるのかな。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200501302" title="200501302" href="200501c.html#200501302">■</a> 
+<a href="http://qdbm.sf.net/">[Soft] QDBM 1.8.21</a></h3>
+<p>
+Changes:
+</p><blockquote><p>
+Functions to import or export endian independent data were added.
+</p></blockquote>
+<!-- section end -->
+</div>
+<!-- 2005/01/30 end -->
+
+
+
+<hr class="hide">
+<!-- 2005/01/31 start -->
+<h2><a name="20050131" href="200501c.html#20050131">2005-01-31 (Mon)</a></h2>
+<!-- 2005-02-01 01:42:53 -->
+
+<div class="entry1">
+<h3><a name="200501311" title="200501311" href="200501c.html#200501311">■</a> 
+[zsh] killコマンドでpidやコマンド名の補完</h3>
+<p>
+killの場合はpidを補完してくれるんだね。こりゃ便利だ。
+</p>
+<pre>
+% kill 20&lt;TAB&gt;
+20170 pts/2    00:00:00 ncmpc
+20839 ?        00:00:00 kterm
+20841 pts/10   00:00:00 zsh
+</pre>
+<p>
+という感じで表示される。
+</p>
+<pre>
+zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#)*=0=01;31'
+</pre>
+<p>
+で色をつけることもできる。
+</p>
+
+<p>
+と思ったら、killしたいコマンド名でも補完できるなあ。
+</p>
+<pre>
+% kill zsh&lt;TAB&gt;
+</pre>
+<p>
+で
+</p>
+<pre>
+% kill 7375
+ 7375 pts/2    00:00:00 zsh
+ 7451 pts/3    00:00:00 zsh
+ 8187 pts/4    00:00:00 zsh
+ 8249 pts/5    00:00:00 zsh
+</pre>
+<p>
+と候補が出て、しかも同時にpidに変換される。
+psを実行する必要なし。
+</p>
+<pre>
+zstyle ':completion:*:default' menu select=1
+</pre>
+<p>
+と組み合わせればさらに使いやすくなる。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200501312" title="200501312" href="200501c.html#200501312">■</a> 
+[Mail] ruby-talk ML</h3>
+<p>
+多いと思ったら、1月は記録更新。
+
+<a href="http://blog.gmane.org/gmane.comp.lang.ruby.general">gmane.comp.lang.ruby.general</a>
+を見るとよくわかる。
+</p>
+
+<p>
+ここはRSSも配信してるようだけど、ruby-talkをRSSで追いかけるのはどうなんだろう？
+かなりつらいような。
+</p>
+<!-- section end -->
+</div>
+<!-- 2005/01/31 end -->
+
+<hr>
+<div>
+<a href="200501b.html">&lt;Prev(,)</a> | 
+<a href="200502a.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

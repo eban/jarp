@@ -1,0 +1,466 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2009-10-a</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="200909c.html">
+<link rel="next" href="200910b.html">
+
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2009年10月上旬〜</p>
+<hr>
+<div>
+<a href="200909c.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="200910b.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2009/10/01 start -->
+<h2><a name="20091001" href="200910a.html#20091001">2009-10-01 (Thu)</a></h2>
+<!-- 2009-10-02 02:56:57 -->
+
+<div class="entry1">
+<h3><a name="200910011" title="200910011" href="200910a.html#200910011">■</a> 
+[シェルスクリプト] メタ文字</h3>
+<p>
+問題。
+</p>
+
+<pre>
+a='/tmp/[ruby]/'
+b='/tmp/[ruby]/foo/bar'
+</pre>
+
+<p>
+$bから$aを除いた部分(foo/bar)を取り出せ(configure内で使われる)。<br>
+今まではexprを使ってたので
+</p>
+
+<pre>
+expr &quot;$b&quot; : &quot;$a&quot;'\(.*\)'
+</pre>
+<p>
+こんな感じだった。[]が正規表現では意味を持つのでこれじゃだめ、と。
+</p>
+
+<p>
+bashなら
+</p>
+
+<pre>
+expr &quot;$b&quot; : &quot;${a//?/.}&quot;'\(.*\)'
+</pre>
+<p>
+でいいわけで、これをtrで実装したのを提案してみたけどどうもいまいち。
+</p>
+
+<p>
+configureで使うのであまりマイナーなコマンドは使えないし、<br>
+GNU特有とかもだめで古くからある機能を使って汎用性重視しないといけない。<br>
+このあたりが悩ましい。
+</p>
+<!-- section end -->
+</div>
+<!-- 2009/10/01 end -->
+
+
+
+<hr class="hide">
+<!-- 2009/10/02 start -->
+<h2><a name="20091002" href="200910a.html#20091002">2009-10-02 (Fri)</a></h2>
+<!-- 2009-10-03 02:11:35 -->
+
+<div class="entry1">
+<h3><a name="200910021" title="200910021" href="200910a.html#200910021">■</a> 
+[zsh] zshでメタ文字のクォート</h3>
+<p>
+あるかなと思ってman zshexpnしたらやはりあった。<br>
+変数展開フラグのqでメタ文字をクォートできる。
+</p>
+
+<pre>
+q      Quote  the  resulting  words  with  backslashes;  unprintable or
+       invalid characters are quoted using the $’\NNN’ form, with sepa-
+       rate  quotes  for  each octet.  If this flag is given twice, the
+       resulting words are quoted in single quotes and if it  is  given
+       three  times,  the  words  are quoted in double quotes; in these
+       forms no special handling of unprintable or  invalid  characters
+       is  attempted.   If  the flag is given four times, the words are
+       quoted in single quotes preceded by a $.
+</pre>
+<p>
+実際に昨日の例だとこんな感じ。
+</p>
+
+<pre>
+% a='/tmp/[ruby]/'
+% b='/tmp/[ruby]/foo/bar'
+% echo ${(q)a}
+/tmp/\[ruby\]/
+% expr &quot;$b&quot; : &quot;${(q)a}&quot;'\(.*\)'
+foo/bar
+</pre>
+<p>
+正確にはzshのメタ文字なのでexprの正規表現のメタ文字とは違うが、<br>
+ほぼ代用可能だ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200910022" title="200910022" href="200910a.html#200910022">■</a> 
+9月のspam</h3>
+<p>
+3400通ほど。安定してる。
+</p>
+<!-- section end -->
+</div>
+<!-- 2009/10/02 end -->
+
+
+
+<hr class="hide">
+<!-- 2009/10/03 start -->
+<h2><a name="20091003" href="200910a.html#20091003">2009-10-03 (Sat)</a></h2>
+<!-- 2009-10-04 02:36:36 -->
+
+<div class="entry1">
+<h3><a name="200910031" title="200910031" href="200910a.html#200910031">■</a> 
+<a href="http://www.commandlinefu.com/commands/view/3687/change-newline-to-space-in-a-file-just-using-echo">[Tips] Change newline to space in a file just using echo</a></h3>
+<p>
+改行を空白に変換する。<br>
+&lt;/tmp/fooだけでcatの代わりになるというとこがちょっとトリッキー。<br>
+でも単独ではcatの代わりにはならない。zshはなんでもあり。
+</p>
+
+<pre>
+% echo foo &gt; foo
+% bash -c '&lt;foo'
+% zsh -c '&lt;foo'
+foo
+</pre>
+
+<p>
+あとこんなこともできたり。
+</p>
+
+<pre>
+% echo foo &gt;a &gt;b &gt;c
+% &lt;a &lt;b &lt;c
+foo
+foo
+foo
+</pre>
+
+
+<!-- section end -->
+</div>
+<!-- 2009/10/03 end -->
+
+
+
+<hr class="hide">
+<!-- 2009/10/04 start -->
+<h2><a name="20091004" href="200910a.html#20091004">2009-10-04 (Sun)</a></h2>
+<!-- 2009-10-05 01:29:40 -->
+
+<div class="entry1">
+<h3><a name="200910041" title="200910041" href="200910a.html#200910041">■</a> 
+<a href="http://golf.shinh.org/p.rb?Count+diamonds+level+1">[Golf] Count diamonds level 1</a></h3>
+<p>
+Bashじゃ面倒かと思ったけど意外に簡単に数える方法があった。<br>
+それをRubyでもやってみるとなぜかすげー面倒臭い。<br>
+不思議なもんだ。なぜかどっちも39Bだし。
+</p>
+<!-- section end -->
+</div>
+<!-- 2009/10/04 end -->
+
+
+
+<hr class="hide">
+<!-- 2009/10/05 start -->
+<h2><a name="20091005" href="200910a.html#20091005">2009-10-05 (Mon)</a></h2>
+<!-- 2009-10-06 02:05:25 -->
+
+<div class="entry1">
+<h3><a name="200910051" title="200910051" href="200910a.html#200910051">■</a> 
+[Firefox] TMPやめてUndo Closed Tabs ButtomとTabberwockyを入れた</h3>
+<p>
+TMPの機能をあまり使ってないのでもうちょっと軽そうな
+
+<a href="https://addons.mozilla.org/en-US/firefox/addon/3082">Undo Closed Tabs Button</a>
+と
+
+<a href="https://addons.mozilla.org/en-US/firefox/addon/14439/">Tabberwocky</a>
+を入れた。<br>
+やっぱ閉じたタブのリストは欲しいし、プロテクトも欲しいのでこんな感じで。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200910052" title="200910052" href="200910a.html#200910052">■</a> 
+[awk] awkのRSとFSで正規表現</h3>
+<p>
+なぜか使えないもんだとずーっと思い込んでいた。<br>
+ちょっとはゴルフが縮むか？
+</p>
+<!-- section end -->
+</div>
+<!-- 2009/10/05 end -->
+
+
+
+<hr class="hide">
+<!-- 2009/10/06 start -->
+<h2><a name="20091006" href="200910a.html#20091006">2009-10-06 (Tue)</a></h2>
+<!-- 2009-10-07 01:59:19 -->
+
+<div class="entry1">
+<h3><a name="200910061" title="200910061" href="200910a.html#200910061">■</a> 
+<a href="http://d.hatena.ne.jp/murky-satyr/20090112/1231675820">[Firefox] コンパクトメニューもどき - ’ellaneous</a></h3>
+<p>
+これ入れたらすっきりした。拡張も1個(Compact Menu 2)減らせるしいい感じ。<br>
+元あった場所にマウスカーソルを持って行くとメニューが表示される。<br>
+かなり反応する範囲はせまいので、下からじゃなくて上からゆっくりと動かす感じで。
+</p>
+<!-- section end -->
+</div>
+<!-- 2009/10/06 end -->
+
+
+
+<hr class="hide">
+<!-- 2009/10/07 start -->
+<h2><a name="20091007" href="200910a.html#20091007">2009-10-07 (Wed)</a></h2>
+<!-- 2009-10-08 01:57:13 -->
+
+<div class="entry1">
+<h3><a name="200910071" title="200910071" href="200910a.html#200910071">■</a> 
+[Web] Evernoteを使い始める</h3>
+<p>
+なんかやたらと最近目につくので
+<a href="http://www.evernote.com/">Evernote</a>
+を使い始めた。<br>
+ごっそりページごとクリッピングできたりする。<br>
+CSSまではさすがにコピーしないようで、元のレイアウトは再現されない。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200910072" title="200910072" href="200910a.html#200910072">■</a> 
+[awk] RSについて</h3>
+<p>
+たしかにsolarisで試したら全然正規表現が使えなかった。<br>
+mawkで確認しても意味ないよなあ。
+</p>
+
+<p>
+これをヒントにというわけでもないが
+
+<a href="http://golf.shinh.org/p.rb?Count+diamonds+level+1#AWK">Count diamonds level 1</a>
+のトップに追い付いた。<br>
+別解をsubmitしたのでStatisticsが微妙に違う。<br>
+最終的には正規表現が必要なくなってるとこが興味深い。<br>
+しかし、これは一目見ただけじゃ動きが想像つかないな。
+</p>
+<!-- section end -->
+</div>
+<!-- 2009/10/07 end -->
+
+
+
+<hr class="hide">
+<!-- 2009/10/08 start -->
+<h2><a name="20091008" href="200910a.html#20091008">2009-10-08 (Thu)</a></h2>
+<!-- 2009-10-09 01:56:22 -->
+
+<div class="entry1">
+<h3><a name="200910081" title="200910081" href="200910a.html#200910081">■</a> 
+[Fedora] yumのメッセージの日本語</h3>
+<p>
+なんか日本語になっててびっくりした。10/1での更新か。
+</p>
+
+<pre>
+% sudo yum -y install roxterm  
+読み込んだプラグイン:dellsysidplugin2, fastestmirror, presto, refresh-packagekit
+Loading mirror speeds from cached hostfile
+ * fedora: ftp.iij.ad.jp
+ * rpmfusion-free: mirrors.tummy.com
+ * rpmfusion-free-updates: mirrors.tummy.com
+ * rpmfusion-nonfree: mirrors.tummy.com
+ * rpmfusion-nonfree-updates: mirrors.tummy.com
+ * updates: ftp.iij.ad.jp
+adobe-linux-i386                                         |  951 B     00:00     
+rpmfusion-free-updates                                   | 3.8 kB     00:00     
+rpmfusion-nonfree-updates                                | 3.8 kB     00:00     
+updates                                                  | 4.4 kB     00:00     
+インストール処理の設定をしています
+依存性の解決をしています
+--&gt; トランザクションの確認を実行しています
+---&gt; パッケージ roxterm.i586 0:1.15.2-1.fc11 を更新に設定しました
+--&gt; 依存性解決を終了しました
+
+依存性を解決しました
+
+================================================================================
+ Package          Arch          Version                  Repository        Size
+================================================================================
+インストールしています:
+ roxterm          i586          1.15.2-1.fc11            updates          169 k
+
+Transaction Summary
+================================================================================
+Install       1 Package(s)
+Upgrade       0 Package(s)
+
+総ダウンロード容量: 169 k
+パッケージをダウンロードしています:
+Setting up and reading Presto delta metadata
+Processing delta metadata
+Package(s) data still to download: 169 k
+roxterm-1.15.2-1.fc11.i586.rpm                           | 169 kB     00:00     
+rpm_check_debug を実行しています
+トランザクションのテストを実行しています
+トランザクションのテストを終了しました
+トランザクションのテストを成功しました
+トランザクションを実行しています
+  インストールし : roxterm-1.15.2-1.fc11.i586                               1/1 
+
+インストールしました:
+  roxterm.i586 0:1.15.2-1.fc11                                                  
+
+完了しました!
+</pre>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200910082" title="200910082" href="200910a.html#200910082">■</a> 
+[Fedora] roxterm</h3>
+<p>
+で、肝心のroxtermはヘルプのF1が殺せないのが惜しいな。<br>
+もうちょっと調べる。
+</p>
+<!-- section end -->
+</div>
+<!-- 2009/10/08 end -->
+
+
+
+<hr class="hide">
+<!-- 2009/10/09 start -->
+<h2><a name="20091009" href="200910a.html#20091009">2009-10-09 (Fri)</a></h2>
+<!-- 2009-10-10 01:59:37 -->
+
+<div class="entry1">
+<h3><a name="200910091" title="200910091" href="200910a.html#200910091">■</a> 
+[Ubuntu] コアラのUbuntu beta</h3>
+<p>
+SCIMからiBusになるわけだよね。F12もそうかな。<br>
+gnome-terminalはなぜかcjk_width問題が再発。<br>
+VTE_CJK_WIDTH=1した。<br>
+gnome-terminalは右クリックでコンテキストメニュー出して、<br>
+SCIMが選べるようなのでとりあえずはこれでしのぐ。<br>
+次バージョンはそうはいかないんだろうなあ。<br>
+skkないと厳しいな。
+</p>
+<!-- section end -->
+</div>
+<!-- 2009/10/09 end -->
+
+
+
+<hr class="hide">
+<!-- 2009/10/10 start -->
+<h2><a name="20091010" href="200910a.html#20091010">2009-10-10 (Sat)</a></h2>
+<!-- 2009-10-11 02:54:22 -->
+
+<div class="entry1">
+<h3><a name="200910101" title="200910101" href="200910a.html#200910101">■</a> 
+[Fedora] roxterm</h3>
+<p>
+まだショートカットはプロパティでいじれないようで、<br>
+直接ファイルを編集するとF1でヘルプ機能は殺せる。
+</p>
+
+<pre>
+% mkdir ~/.config/roxterm.sourceforge.net/Shortcuts
+% sed 's/^Help/#&amp;/' /usr/share/roxterm/Config/Shortcuts/Default &gt;
+  ~/.config/roxterm.sourceforge.net/Shortcuts/eban
+</pre>
+<p>
+あとはPreferences - Configuration Manager - Keyboard accelartorsで<br>
+ebanを選べばok。
+</p>
+<!-- section end -->
+</div>
+<!-- 2009/10/10 end -->
+
+<hr>
+<div>
+<a href="200909c.html">&lt;Prev(,)</a> | 
+<a href="200910b.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

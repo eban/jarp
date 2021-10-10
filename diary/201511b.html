@@ -1,0 +1,336 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2015-11-b</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="201511a.html">
+<link rel="next" href="201511c.html">
+
+<link rel="stylesheet" type="text/css" href="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.css">
+<script async type="text/javascript" src="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.js"></script>
+<script type="text/javascript">
+<!--       
+$(document).ready(function() {
+  prettyPrint();
+});
+-->
+</script>
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2015年11月中旬〜</p>
+<hr>
+<div>
+<a href="201511a.html" accesskey=",">&lt;Older(,)</a> | 
+<a href="201511c.html" accesskey=".">Newer(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2015/11/11 start -->
+<h2><a name="20151111" href="201511b.html#20151111">2015-11-11 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="201511111" title="201511111" href="201511b.html#201511111">■</a> 
+add-apt-repositoryとproxy</h3>
+<p>
+aptって名前ついてるから/etc/apt/apt.conf.d/に置いた99proxyが効くかと思ったら、<br>
+全然無視されて結局環境変数https_proxyしか見てくれないことが判明した。<br>
+調べてみるとpycurlを使っているらしく全然別系統らしい。<br>
+やっぱsudoersでenv_keepしとくか。
+</p>
+<!-- section end -->
+</div>
+<!-- 2015/11/11 end -->
+
+
+
+<hr class="hide">
+<!-- 2015/11/12 start -->
+<h2><a name="20151112" href="201511b.html#20151112">2015-11-12 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="201511121" title="201511121" href="201511b.html#201511121">■</a> 
+circle.ymlでheredoc</h3>
+<p>
+-で配列にしちゃうと各々別のbashが起動されてしまうので1つの文字列にする必要あり。
+</p>
+<pre>
+test:
+  post:
+    - &quot;cat &lt;&lt;EOM\nfoo\nbar\nEOM\n&quot;
+</pre>
+<p>
+&quot;&quot;で囲んで\nとか書くのは面倒なら、いわゆるブロックスタイルにしちゃえばいい。
+</p>
+<pre>
+test:
+  post:
+    - |
+      cat &lt;&lt;EOM
+      foo
+      bar
+      EOM
+</pre>
+<p>
+|がないと改行が保存されず空白類はまとめて1つの空白に変換される。
+</p>
+<!-- section end -->
+</div>
+<!-- 2015/11/12 end -->
+
+
+
+<hr class="hide">
+<!-- 2015/11/13 start -->
+<h2><a name="20151113" href="201511b.html#20151113">2015-11-13 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="201511131" title="201511131" href="201511b.html#201511131">■</a> 
+Github Desktopでproxy設定</h3>
+<p>
+GUIからは設定できないので内部で起動しているgitで設定する。<br>
+<a href="https://help.github.com/desktop/faq/articles/can-i-log-in-behind-a-proxy-server/">Can I log in behind a proxy server?</a><br>
+Windowsの場合はなにかリポジトリを作ってからOpen Git Shellしてその中のgitで設定する。<br>
+ふつうにコマンドプロンプトを起動してもたぶんPATHが通ってない。
+</p>
+<!-- section end -->
+</div>
+<!-- 2015/11/13 end -->
+
+
+
+<hr class="hide">
+<!-- 2015/11/14 start -->
+<h2><a name="20151114" href="201511b.html#20151114">2015-11-14 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="201511141" title="201511141" href="201511b.html#201511141">■</a> 
+<a href="http://emoken.net/blog2/?itemid=7868">bashの内部コマンドだけでコピー #シェル芸</a></h3>
+<p>
+while readは-rしなきゃいけないとかもろもろ罠があるので別解を。
+</p>
+<pre>
+$ printf &quot;%s\n&quot; &quot;$(&lt;.bashrc)&quot; &gt; .bashrc.bak
+$ cmp .bashrc .bashrc.bak
+</pre>
+<p>
+ひょっとしたら古いbashだとだめだったかもしれない。
+</p>
+<!-- section end -->
+</div>
+<!-- 2015/11/14 end -->
+
+
+
+<hr class="hide">
+<!-- 2015/11/15 start -->
+<h2><a name="20151115" href="201511b.html#20151115">2015-11-15 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="201511151" title="201511151" href="201511b.html#201511151">■</a> 
+IFTTT(Date&amp;Timer)+Github+CircleCIで定期実行</h3>
+<p>
+CircleCIにはNightly Buildという仕組みがある。<br>
+これは外からBuildを実行するAPIが提供されてるだけだが、<br>
+意外にもTravisとかWerckerにはない機能。<br>
+つまりGithubにコード置いといてIFTTTのDate&amp;Timeで定期的にCircleCIのAPIを叩けば、<br>
+botが作れるわけだ。テストの代わりにbotを実行する。
+</p>
+<p>
+もしくはAWS Lambdaもスケジュール実行ができるからそれでもいい。<br>
+月に320万回とか、1ヶ月ちょっとの実行時間なんて実質フリーみたいなもんだし。<br>
+5分間という実行時間の制限はあまり影響はないだろう。
+</p>
+<!-- section end -->
+</div>
+<!-- 2015/11/15 end -->
+
+
+
+<hr class="hide">
+<!-- 2015/11/16 start -->
+<h2><a name="20151116" href="201511b.html#20151116">2015-11-16 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="201511161" title="201511161" href="201511b.html#201511161">■</a> 
+IFTTT(Date&amp;Time+Maker)+Bitbucket+werckerで定期実行</h3>
+<p>
+情報が古かった。werckerも6月にtriggerBuild APIが追加されていた。<br>
+werckerはBitbucketも対応してるので非公開リポジトリもありになる。<br>
+<a href="http://devcenter.wercker.com/api/getting-started/authentication.html">Authenticating with the wercker API</a><br>
+IFTTTのMakerではAuthorizationヘッダーを追加することはできないので、queryに含める。<br>
+jsonの場合は&quot;token&quot;:&quot;&lt;TOKEN&gt;&quot;てな感じで入れればいい。
+</p>
+<pre>
+% curl  -H 'Content-Type: application/json' -X POST \
+ -d '{&quot;applicationId&quot;: &quot;&lt;AppID&gt;&quot;, &quot;branch&quot;:&quot;master&quot;, &quot;message&quot;:&quot;&lt;MESSAGE&gt;&quot;, &quot;token&quot;:&quot;&lt;TOKEN&gt;&quot;}' \
+ https://app.wercker.com/api/v3/builds
+</pre>
+<p>
+AppIDはアプリケーションURLの末尾24桁の16進。
+</p>
+<p>
+なぜか
+</p>
+<pre>
+Failed step: setup environment - context canceled
+</pre>
+<p>
+というエラーが頻発しているのが気になる。<br>
+それはそれとして、CIなのでログが詳細に残るのは思いの外便利だ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2015/11/16 end -->
+
+
+
+<hr class="hide">
+<!-- 2015/11/17 start -->
+<h2><a name="20151117" href="201511b.html#20151117">2015-11-17 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="201511171" title="201511171" href="201511b.html#201511171">■</a> 
+Dockerでproxy設定</h3>
+<p>
+/etc/default/dockerとか環境変数とかぐぐるといろんな情報に満ち溢れているが、<br>
+本家にsystemd用の設定方法があった。<br>
+<a href="http://docs.docker.com/engine/articles/systemd/#http-proxy">Control and configure Docker with systemd</a><br>
+/etc/systemd/system/docker.service.d/http-proxy.confに
+</p>
+<pre>
+[Service]
+Environment=&quot;HTTP_PROXY=http://proxy.example.com:80/&quot;
+</pre>
+<p>
+と書いて反映させて確認し、再起動。
+</p>
+<pre>
+$ sudo systemctl daemon-reload
+$ sudo systemctl show docker --property Environment
+Environment=HTTP_PROXY=http://proxy.example.com:80/
+$ $ sudo systemctl restart docker
+</pre>
+<p>
+dockerコマンドに環境変数を渡しても時すでに遅し。<br>
+serviceのほうをなんとかしないといけない。
+</p>
+<!-- section end -->
+</div>
+<!-- 2015/11/17 end -->
+
+
+
+<hr class="hide">
+<!-- 2015/11/18 start -->
+<h2><a name="20151118" href="201511b.html#20151118">2015-11-18 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="201511181" title="201511181" href="201511b.html#201511181">■</a> 
+IFTTT Maker+wercker順調</h3>
+<p>
+初期設定時はこれ使い物になるんかな的なエラー率だったが、<br>
+いざ動き出してみると全然エラーが出なくなった。<br>
+それにしてもbotをCIサービスで動かすってのは思いの外便利だと改めて実感。<br>
+エラーが起きればメールが飛んでくるし、その時のログも残っているわけで。<br>
+まじでおすすめ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2015/11/18 end -->
+
+
+
+<hr class="hide">
+<!-- 2015/11/19 start -->
+<h2><a name="20151119" href="201511b.html#20151119">2015-11-19 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="201511191" title="201511191" href="201511b.html#201511191">■</a> 
+一般ユーザーでdockerコマンドを実行可能にする</h3>
+<p>
+dockerグループを作ってそこに自分を加えればok。<br>
+大抵の場合はすでにdockerグループはあるので追加するだけでいける。
+</p>
+<pre>
+% sudo gpasswd -a eban docker
+</pre>
+<!-- section end -->
+</div>
+<!-- 2015/11/19 end -->
+
+
+
+<hr class="hide">
+<!-- 2015/11/20 start -->
+<h2><a name="20151120" href="201511b.html#20151120">2015-11-20 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="201511201" title="201511201" href="201511b.html#201511201">■</a> 
+/etc/default/dockerはsystemdとは関係ないファイル</h3>
+<p>
+<a href="https://github.com/docker/docker/issues/9889#issuecomment-109778351">ここ</a>に書いてあるが、upstartとSysVInit用であって、systemdとは関係ない。<br>
+いや、なんかおかしいとは思ったが、じゃなんでこんなファイルが用意されているのか？
+</p>
+<!-- section end -->
+</div>
+<!-- 2015/11/20 end -->
+
+<hr>
+<div>
+<a href="201511a.html">&lt;Older(,)</a> | 
+<a href="201511c.html">Newer(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

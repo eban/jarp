@@ -1,0 +1,370 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2009-9-b</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="200909a.html">
+<link rel="next" href="200909c.html">
+
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2009年9月中旬〜</p>
+<hr>
+<div>
+<a href="200909a.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="200909c.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2009/09/11 start -->
+<h2><a name="20090911" href="200909b.html#20090911">2009-09-11 (Fri)</a></h2>
+<!-- 2009-09-28 01:45:35 -->
+
+<div class="entry1">
+<h3><a name="200909111" title="200909111" href="200909b.html#200909111">■</a> 
+[Tips] rsyncで不要なファイルを除いてディレクトリ構造ごとコピー</h3>
+<p>
+
+<a href="200904b.html#200904161">以前mp3のコピーでtarとかcpioを使う話を書いた</a>
+が、そのつづき。<br>
+rsyncといえばネットワーク越しでバックアップを取るような用途が主だが、<br>
+実は普通にローカルでもコピーに使える。<br>
+しかも--excludeというオプションがあるのでcpioよりはわかりやすいかな。
+</p>
+
+<pre>
+% mkdir -p foo/bar
+% touch foo/bar/{a,b,c}.{flac,mp3}
+% ls foo/bar
+a.flac  a.mp3  b.flac  b.mp3  c.flac  c.mp3
+% rsync -auv --exclude='*.flac' foo /tmp
+sending incremental file list
+foo/
+foo/bar/
+foo/bar/a.mp3
+foo/bar/b.mp3
+foo/bar/c.mp3
+
+sent 228 bytes  received 77 bytes  610.00 bytes/sec
+total size is 0  speedup is 0.00
+% ls /tmp/foo/bar
+a.mp3  b.mp3  c.mp3
+</pre>
+<!-- section end -->
+</div>
+<!-- 2009/09/11 end -->
+
+
+
+<hr class="hide">
+<!-- 2009/09/12 start -->
+<h2><a name="20090912" href="200909b.html#20090912">2009-09-12 (Sat)</a></h2>
+<!-- 2009-09-13 01:39:33 -->
+
+<div class="entry1">
+<h3><a name="200909121" title="200909121" href="200909b.html#200909121">■</a> 
+[Mail] Gmailのうっとうしいとこ</h3>
+<p>
+In-Reply-ToやReferencesを見ないので、<br>
+Subjectがちょっと変更されると別スレッドと見倣されてしまう。<br>
+このおかげでRedmineで状態が変わり(Asigned)とかになると別スレッドになり、<br>
+更に話が続くと今度は(Asigned)がなくなるので元のスレッドになって、<br>
+話がつながらなくなる。
+</p>
+
+<p>
+ってことに最近気づいた。なんで話が途切れるんだとずーっと疑問だったんだが。<br>
+で、どうもGmailは[hoge]は特別扱いするので、<br>
+[Asigned]になると同じスレッド扱いになるのではないかと想像する。
+</p>
+<!-- section end -->
+</div>
+<!-- 2009/09/12 end -->
+
+
+
+<hr class="hide">
+<!-- 2009/09/13 start -->
+<h2><a name="20090913" href="200909b.html#20090913">2009-09-13 (Sun)</a></h2>
+<!-- 2009-09-14 02:06:20 -->
+
+<div class="entry1">
+<h3><a name="200909131" title="200909131" href="200909b.html#200909131">■</a> 
+<a href="http://golf.shinh.org/p.rb?find+anagrams">[Golf] find anagrams</a></h3>
+<p>
+やっぱcheatな方針は合っていたが、まだまだ修業が足りないようだ。<br>
+なぜか1行目を読み捨てる方法しか思い浮かばなかった。<br>
+というわけで、bashは縮んだ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2009/09/13 end -->
+
+
+
+<hr class="hide">
+<!-- 2009/09/14 start -->
+<h2><a name="20090914" href="200909b.html#20090914">2009-09-14 (Mon)</a></h2>
+<!-- 2009-09-15 01:41:55 -->
+
+<div class="entry1">
+<h3><a name="200909141" title="200909141" href="200909b.html#200909141">■</a> 
+[Golf] るびまゴルフ</h3>
+<p>
+今のところ23Bが最短。
+</p><blockquote><p>
+入力の一行にはアルファベットや数値しか含まれないと仮定して良いことにします。
+</p></blockquote><p>
+この仮定が重要だったりする。
+</p>
+
+<p>
+bashだとこんな感じで、これをRubyではもっと最適化する。
+</p>
+
+<pre>
+read a
+b=.
+while grep -o $b$&lt;&lt;&lt;$a;do b+=.;done
+</pre>
+
+<!-- section end -->
+</div>
+<!-- 2009/09/14 end -->
+
+
+
+<hr class="hide">
+<!-- 2009/09/15 start -->
+<h2><a name="20090915" href="200909b.html#20090915">2009-09-15 (Tue)</a></h2>
+<!-- 2009-09-16 00:38:55 -->
+
+<div class="entry1">
+<h3><a name="200909151" title="200909151" href="200909b.html#200909151">■</a> 
+[Ubuntu] イースター・エッグ</h3>
+<pre>
+% aptitude -h | tail -1                        
+                  この aptitude にはスーパー牛さんパワーなどはありません。
+% aptitude moo
+このプログラムにはイースターエッグ (隠し機能) はありません。
+% aptitude -v moo
+このプログラムには本当にイースター・エッグはありませんよ。
+% aptitude -vv moo
+このプログラムにイースターエッグはないって言わなかったかい?
+% aptitude -vvv moo
+やめてくれ!
+% aptitude -vvvv moo
+わかった、わかった。あんたにイースターエッグをあげればどっか行ってくれるかい?
+% aptitude -vvvvv moo
+わかったよ。あんたの勝ちだ。
+
+                               /----\
+                       -------/      \
+                      /               \
+                     /                |
+   -----------------/                  --------\
+   ----------------------------------------------
+% aptitude -vvvvvv moo
+これが何なのか? もちろんウワバミに食べられた象だよ。
+% apt-get moo
+         (__) 
+         (oo) 
+   /------\/ 
+  / |    ||   
+ *  /\---/\ 
+    ~~   ~~   
+....&quot;Have you mooed today?&quot;...
+</pre>
+
+<!-- section end -->
+</div>
+<!-- 2009/09/15 end -->
+
+
+
+<hr class="hide">
+<!-- 2009/09/16 start -->
+<h2><a name="20090916" href="200909b.html#20090916">2009-09-16 (Wed)</a></h2>
+<!-- 2009-09-17 01:02:29 -->
+
+<div class="entry1">
+<h3><a name="200909161" title="200909161" href="200909b.html#200909161">■</a> 
+[Ruby] いつのまにかpreludeでrequireできるようになっていた</h3>
+<p>
+というわけで、gorubyもあらかじめautoload/requireしとこうと思うんだけど、<br>
+どれにするか迷う。date, time, scanfぐらいかな。
+</p>
+<!-- section end -->
+</div>
+<!-- 2009/09/16 end -->
+
+
+
+<hr class="hide">
+<!-- 2009/09/17 start -->
+<h2><a name="20090917" href="200909b.html#20090917">2009-09-17 (Thu)</a></h2>
+<!-- 2009-09-18 22:28:11 -->
+
+<div class="entry1">
+<h3><a name="200909171" title="200909171" href="200909b.html#200909171">■</a> 
+[Net] does.notwork.org不調</h3>
+<p>
+不調というか今回は完全に遮断されてるような。<br>
+23:30頃から急につながらなくなった。<br>
+前回のセッションもさすがに切れた。
+</p>
+
+<p>
+と思ったら0時すぎに復活。
+</p>
+<!-- section end -->
+</div>
+<!-- 2009/09/17 end -->
+
+
+
+<hr class="hide">
+<!-- 2009/09/18 start -->
+<h2><a name="20090918" href="200909b.html#20090918">2009-09-18 (Fri)</a></h2>
+<!-- 2009-09-20 02:05:37 -->
+
+<div class="entry1">
+<h3><a name="200909181" title="200909181" href="200909b.html#200909181">■</a> 
+[Git] 入門Git</h3>
+<p>
+先月「入門git」を買ったような気するが、「入門Git」が明日発売と聞きさっそくamazonで予約した。
+</p>
+
+<!-- section end -->
+</div>
+<!-- 2009/09/18 end -->
+
+
+
+<hr class="hide">
+<!-- 2009/09/19 start -->
+<h2><a name="20090919" href="200909b.html#20090919">2009-09-19 (Sat)</a></h2>
+<!-- 2009-09-20 02:05:45 -->
+
+<div class="entry1">
+<h3><a name="200909191" title="200909191" href="200909b.html#200909191">■</a> 
+[Fedora] yum update</h3>
+<p>
+yum updateしたら久し振りにエラーになったので、<br>
+面倒だからどうせ使ってないgnome-bluetoothを削除。
+</p>
+
+<pre>
+--&gt; Running transaction check
+---&gt; Package gnome-bluetooth.i586 0:2.27.8-2.fc11 set to be updated
+--&gt; Processing Dependency: libgnome-bluetooth.so.2 for package: gnome-phone-manager-0.65-1.fc11.i586
+---&gt; Package gnome-bluetooth-libs.i586 0:2.27.8-2.fc11 set to be updated
+--&gt; Finished Dependency Resolution
+gnome-phone-manager-0.65-1.fc11.i586 from installed has depsolving problems
+  --&gt; Missing Dependency: libgnome-bluetooth.so.2 is needed by package gnome-phone-manager-0.65-1.fc11.i586 (installed)
+Error: Missing Dependency: libgnome-bluetooth.so.2 is needed by package gnome-phone-manager-0.65-1.fc11.i586 (installed)
+</pre>
+
+<p>
+使ってないというかこのマシンには存在しないよな、たぶん。
+</p>
+<!-- section end -->
+</div>
+<!-- 2009/09/19 end -->
+
+
+
+<hr class="hide">
+<!-- 2009/09/20 start -->
+<h2><a name="20090920" href="200909b.html#20090920">2009-09-20 (Sun)</a></h2>
+<!-- 2009-09-21 00:00:43 -->
+
+<div class="entry1">
+<h3><a name="200909201" title="200909201" href="200909b.html#200909201">■</a> 
+[PC] 外付けHDDがピンチ</h3>
+<p>
+急に
+</p>
+
+<pre>
+Message from syslogd@cow at Sep 20 18:01:58 ...
+ kernel:journal commit I/O error
+</pre>
+<p>
+とか出てmount外れてびっくりしたが、電源切ってつなぎ直したら生き返った。<br>
+fsckも問題なくてよかった。1TBのうち半分ぐらい使ってるしなあ。
+</p>
+
+<p>
+あれやっぱ調子悪いぞ。やばいな。
+</p>
+
+<pre>
+% ls /media/hdcn
+ls: reading directory /media/hdcn: 入力/出力エラーです
+</pre>
+
+
+<!-- section end -->
+</div>
+<!-- 2009/09/20 end -->
+
+<hr>
+<div>
+<a href="200909a.html">&lt;Prev(,)</a> | 
+<a href="200909c.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

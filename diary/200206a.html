@@ -1,0 +1,701 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2002-6-a</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="200205c.html">
+<link rel="next" href="200206b.html">
+
+<link rel="stylesheet" type="text/css" href="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.css">
+<script type="text/javascript" src="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.js"></script>
+<script type="text/javascript">
+<!--       
+$(document).ready(function() {
+  prettyPrint();
+});
+-->
+</script>
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2002年6月上旬〜</p>
+<hr>
+<div>
+<a href="200205c.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="200206b.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2002/06/01 start -->
+<h2><a name="20020601" href="200206a.html#20020601">2002-06-01 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="200206011" title="200206011" href="200206a.html#200206011">■</a> 
+<a href="http://www.gnu.org/software/libiconv/">[Cygwin] libiconv 1.8</a></h3>
+<p>
+Cygwinで--enable-sharedだとエラーになるのは直ってないので
+</p>
+<pre>
+--disable-shared --enable-static
+</pre>
+<p>
+しないとだめ。 
+</p>
+<pre>
+% CFLAGS=-Os DLLTOOL=i686-pc-cygwin-dlltool \
+  RANLIB=i686-pc-cygwin-ranlib ../configure \
+  --prefix=/usr/local/cygwin-local --target=i686-pc-cygwin \
+  --host=i686-pc-cygwin --build=i586-pc-linux-gnu \
+  --disable-shared --enable-static
+</pre>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200206012" title="200206012" href="200206a.html#200206012">■</a> 
+<a href="http://www.ruby-lang.org/en/raa-list.rhtml?name=Ruby%2FGTK">[Ruby] Ruby/GTK 0.28</a></h3>
+<p>
+更新。$LDFLAGSの件はruby-gnome-users-ja MLにも書いたけど、順番がまずい。
+</p>
+<pre>
+--- extconf.rb.orig	2002-06-01 13:35:50.000000000 
++++ extconf.rb	2002-06-01 21:12:12.000000000 
+@@ -15,3 +15,3 @@
+     if not version.chomp.empty?
+-      $LDFLAGS += ' ' + `#{config_cmd} --libs`.chomp
++      $libs += ' ' + `#{config_cmd} --libs`.chomp
+       $CFLAGS += ' ' + `#{config_cmd} --cflags`.chomp
+</pre>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200206013" title="200206013" href="200206a.html#200206013">■</a> 
+CDTV GOLD</h3>
+<p>
+筋肉番付は打ち切りになったようだ。  
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200206014" title="200206014" href="200206a.html#200206014">■</a> 
+5月のspam</h3>
+<p>
+219通。韓国から74通。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/06/01 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/06/02 start -->
+<h2><a name="20020602" href="200206a.html#20020602">2002-06-02 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="200206021" title="200206021" href="200206a.html#200206021">■</a> 
+[Ruby] win32ole [1]</h3>
+<p>
+1.7に入った。早速makeしてみるとエラーに。
+</p>
+<pre>
+ext/win32ole/win32ole.c:676: structure has no member named `bool'
+</pre>
+<p>
+w32apiが古いのか？今使ってるのはw32api-1.2-1だから、
+最新のw32api-1.4-2にしてみよう。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200206022" title="200206022" href="200206a.html#200206022">■</a> 
+[Cygwin] w32api 1.4-2, mingw 1.3-2</h3>
+<p>
+そういえばw32apiだけを更新ってしたことがなかったかな。
+</p>
+<pre>
+% CFLAGS=-Os ./configure \
+  --target=i686-pc-cygwin \
+  --host=i686-pc-cygwin \
+  --build=i586-pc-linux-gnu \
+  --prefix=/usr/local/cygwin
+% make
+% make tooldir=/usr/local/cygwin install
+</pre>
+<p>
+ついでにmingwも1.3-2に上げる。手順は全く同じ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200206023" title="200206023" href="200206a.html#200206023">■</a> 
+[Ruby] win32ole [2]</h3>
+<p>
+だめだなあ。うーむ。nativeだとちゃんとうまくいってる。何が違う？
+あ、わかった。PLATFORMは駆逐したからfake.rbで置換するのをやめたからだ。
+だからcase whenでcygwinにならない。-DNONAMELESSUNIONがつかないのが原因だ。
+まだPLATFORMを使ってるライブラリがあったのか。
+というよりPLATFORMを使うべきじゃないってあまり知られてないのかな。
+version.cにも書いてあるんだけど。
+</p>
+<pre>
+/* obsolete constants */
+rb_define_global_const(&quot;VERSION&quot;, v);
+rb_define_global_const(&quot;RELEASE_DATE&quot;, d);
+rb_define_global_const(&quot;PLATFORM&quot;, p);
+</pre>
+<p>
+いつなくなっても不思議ではない。RUBY_がついてるものを使おうよ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200206024" title="200206024" href="200206a.html#200206024">■</a> 
+wget 1.8.2</h3>
+<p>
+更新。
+</p>
+<pre>
+Wget 1.8.2 is a bugfix release with no user-visible changes.
+</pre>
+<p>
+ということで何が変わったんだかわからない。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/06/02 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/06/03 start -->
+<h2><a name="20020603" href="200206a.html#20020603">2002-06-03 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="200206031" title="200206031" href="200206a.html#200206031">■</a> 
+<a href="http://znz.s1.xrea.com/t/?date=20020603#p02">[ruby] %w[...]</a></h3>
+<p>
+1.4の頃は確かにできなかったけど、今なら\が使えます。
+</p>
+<pre>
+% ruby-1.4.6 -e 'p %w[a\ b]'
+[&quot;a\\&quot;, &quot;b&quot;]
+% ruby -e 'p %w[a\ b]'
+[&quot;a b&quot;]
+</pre>
+<p>
+と思ったら、空白じゃなくて空文字列だ。無理っぽい。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200206032" title="200206032" href="200206a.html#200206032">■</a> 
+<a href="http://znz.s1.xrea.com/t/?date=20020603#p03">[ruby] .cvsignore</a></h3>
+<p>
+え？それって1.6にない拡張ライブラリですよね？かなり無理な注文です。
+configure.linenoは初めて見るけどautoconfの残骸だろうか。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200206033" title="200206033" href="200206a.html#200206033">■</a> 
+[Cygwin] libiconv 1.8</h3>
+<p>
+gcc, dlltoolの3回廻しだとWinMain@16がundefinedになるので、
+gcc -shareしてみた。
+<a href="../files/libiconv-1.8-cygwin.diff">ここ</a>
+に差分を置いとこう。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/06/03 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/06/04 start -->
+<h2><a name="20020604" href="200206a.html#20020604">2002-06-04 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="200206041" title="200206041" href="200206a.html#200206041">■</a> 
+Linux 2.5.20</h3>
+<p>
+
+<a href="http://www.kernel.org/pub/linux/kernel/v2.5/ChangeLog-2.5.20">ChangeLog</a>
+を見ると、
+<a href="200205c.html#200205291">フロッピーの件</a> は直ったようだ。
+</p>
+<pre>
+&lt;trini@kernel.crashing.org&gt;
+  [PATCH] Fix RAMDISK config problem
+
+  The following fixes compilation with CONFIG_BLK_DEV_RAM=y I assume that
+  Rusty intended to use a test for CONFIG_BLK_DEV_RAM and not
+  BLOCK_DEV_RAM.
+</pre>
+<p>
+suspendはまだだめみたい。というわけで待ちだ。
+</p>
+<pre>
+&lt;axboe@suse.de&gt;
+  [PATCH] documentation and tq_disk removals
+
+  This should be the last of tq_disk, at least the trivial ones. md still
+  has some queue_task references, I'll let Ingo/Neil clean those up.
+  suspend is still broken, it was broken before too though. I guess Pavel
+  will want to fix that.
+</pre>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/06/04 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/06/05 start -->
+<h2><a name="20020605" href="200206a.html#20020605">2002-06-05 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="200206051" title="200206051" href="200206a.html#200206051">■</a> 
+Linux 2.5.20-dj3</h3>
+<p>
+惜しい。
+</p>
+<pre>
+arch/i386/kernel/kernel.o: In function `do_suspend_lowlevel':
+arch/i386/kernel/kernel.o(.text+0x7c20): undefined reference to `acpi_save_register_state'
+arch/i386/kernel/kernel.o(.text+0x7c27): undefined reference to `acpi_enter_sleep_state'
+</pre>
+<p>
+arch/i386/kernel/suspend.cで呼んでるってことは、
+ソフトウェアサスペンドを使いたければCONFIG_ACPIはyじゃなきゃだめってことか？
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200206052" title="200206052" href="200206a.html#200206052">■</a> 
+<a href="http://cygwin.com/ml/cygwin/2002-06/msg00194.html">[Cygwin] More 1.3.11 road show</a></h3>
+<p>
+defaultがbinmodeになる。
+</p>
+<pre>
+As promised, I have been making binmode the default in cygwin.  You can
+still use the mount command (or setup.exe for that matter) to default to
+text mode but I am slowly removing all text mode assumptions from the
+code, specifically for accesses of remote shares (as was previously
+requested in this mailing list).
+</pre>
+<p>
+ということなので、ますますtext modeは使われなくなりそう。
+ま、開発者もtext modeを使ってないんだから遅過ぎる選択とも言える。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200206053" title="200206053" href="200206a.html#200206053">■</a> 
+[Ruby] 1.6.8</h3>
+<p>
+そういえばそろそろリリースの季節だろうか？
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/06/05 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/06/06 start -->
+<h2><a name="20020606" href="200206a.html#20020606">2002-06-06 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="200206061" title="200206061" href="200206a.html#200206061">■</a> 
+perl-current</h3>
+<p>
+5.8.0 RC1が出たので試す。
+と思ったがperl-currentをrsyncしてたことを忘れてた。
+こっちを試そう。
+</p>
+
+<p>
+make all testすると
+<a href="200203a.html#200203061">2時間近くかかる</a>
+だけに簡単に試せないんだが、その間perldeltaを読む。
+openがかなり拡張されてる。
+</p>
+<pre>
+PerlIO is Now The Default
+
+IO is now by default done via PerlIO rather than system's &quot;stdio&quot;.
+PerlIO allows &quot;layers&quot; to be &quot;pushed&quot; onto a file handle to alter the
+handle's behaviour.  Layers can be specified at open time via 3-arg
+form of open:
+
+   open($fh,'&gt;:crlf :utf8', $path) || ...
+
+or on already opened handles via extended C&lt;binmode&gt;:
+
+   binmode($fh,':encoding(iso-8859-7)');
+</pre>
+<p>
+という感じでPerlはstdioを捨てたようだ。あ、defaultってことは選べるのか。
+</p>
+<pre>
+File handles can be opened to &quot;in memory&quot; files held in Perl scalars via:
+
+   open($fh,'&gt;', \$variable) || ...
+</pre>
+<p>
+ふむ。なるほど。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/06/06 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/06/07 start -->
+<h2><a name="20020607" href="200206a.html#20020607">2002-06-07 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="200206071" title="200206071" href="200206a.html#200206071">■</a> 
+Perl 5.8.0 RC1</h3>
+<p>
+早速sjisなリテラルを試す。
+</p>
+<pre>
+% echo 'print &quot;表示\n&quot;;' |iconv -t sjis |\
+  perl -Mencoding=sjis,Filter,1 |iconv -f utf-8
+表示
+</pre>
+<p>
+というわけでFilterはうまくいってるようだ。 
+次にスクリプトはutf-8でSTDOUTはeucにしてみる。
+</p>
+<pre>
+% echo 'print &quot;表示\n&quot;;' |iconv -t utf-8 |\
+  perl -Mencoding=utf-8,STDOUT,euc-jp        
+表示
+</pre>
+<p>
+okだ。じゃsjisなスクリプトでSTDOUTはeucだとどう？
+</p>
+<pre>
+% echo 'print &quot;表示\n&quot;;' |iconv -t sjis |\
+  perl -Mencoding=sjis,Filter,1,STDOUT,euc-jp |iconv -f utf-8
+表示
+</pre>
+<p>
+だめだな。utf-8のままだ。じゃeucでeucだと？
+</p>
+<pre>
+% echo 'print &quot;表示\n&quot;;' |\
+  perl -Mencoding=euc-jp,Filter,1,STDOUT,euc-jp |iconv -f utf-8 
+表示
+</pre>
+<p>
+やっぱりutf-8のままか。
+/usr/local/lib/perl5/5.8.0/i586-linux/encoding.pm
+を見るとFilter処理のときはSTDOUTの設定はしてないな。
+</p>
+<pre>
+binmode(STDIN);
+binmode(STDOUT);
+</pre>
+<p>
+となってる。じゃ自分でbinmodeすればいいのか。こんな感じで。
+</p>
+<pre>
+binmode(STDOUT, &quot;:encoding(euc-jp&quot;));
+</pre>
+<p>
+ってなんでbinmodeにこんな機能をつけ加えたんだろう？
+openも引数が3つになってるし、Perlは新しい関数を増やすのが嫌いらしい。
+それはそれとして結局use utf8;も必要でこうするとうまくいく。
+</p>
+<pre>
+% echo 'binmode(STDOUT,&quot;:encoding(euc-jp)&quot;);print &quot;表示\n&quot;;' |\
+  iconv -t sjis|perl -Mencoding=sjis,Filter,1 -Mutf8
+表示
+</pre>
+<p>
+これをスクリプトにするとこうなる。
+</p>
+<pre>
+% iconv -f sjis sjis2euc-jp.pl
+#! /usr/local/bin/perl
+use encoding &quot;sjis&quot;, Filter=&gt;1;
+use utf8;
+
+binmode(STDOUT, &quot;:encoding(euc-jp)&quot;);
+print &quot;表示\n&quot;;
+</pre>
+<p>
+いろんなもんをuseするし、さらにsjis-&gt;utf8-&gt;euc-jpと変換されるわけで、
+実行すると非常に遅い。
+</p>
+<pre>
+% time perl sjis2euc-jp.pl
+表示
+perl sjis2euc-jp.pl  1.06s user 0.11s system 99% cpu 1.171 total
+</pre>
+<p>
+encodingが大半を占めている。
+</p>
+<pre>
+% time perl -Mencoding=euc-jp -e0
+perl -Mencoding=euc-jp -e0  0.79s user 0.09s system 101% cpu 0.868 total
+% time perl -Mutf8 -e0                   
+perl -Mutf8 -e0  0.13s user 0.02s system 101% cpu 0.148 total
+</pre>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/06/07 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/06/08 start -->
+<h2><a name="20020608" href="200206a.html#20020608">2002-06-08 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="200206081" title="200206081" href="200206a.html#200206081">■</a> 
+<a href="http://www.ruby-lang.org/en/raa-list.rhtml?name=date2">[Ruby] date2 3.3</a></h3>
+<p>
+更新。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200206082" title="200206082" href="200206a.html#200206082">■</a> 
+<a href="http://upx.sourceforge.net/">UPX 1.21</a></h3>
+<p>
+GCC 3.1でも大丈夫みたい。ただ-lstdc++が足りないのは変わってない。
+gccじゃなくてg++を使えばいいんだけど。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/06/08 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/06/09 start -->
+<h2><a name="20020609" href="200206a.html#20020609">2002-06-09 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="200206091" title="200206091" href="200206a.html#200206091">■</a> 
+GTK+ and GIMP for Windows</h3>
+<p>
+2000-12-26バージョンも手に入りにくくなってるので、そろそろ新しくしよう。
+使う時必要なのは
+</p>
+<pre>
+glib-2.0.3-20020525.zip
+gtk+-1.3.0-20020313.zip
+libiconv-1.7.zip
+libintl-0.10.40-20020310.zip
+</pre>
+<p>
+のDLLで、make時に必要なのは-devがついてる
+</p>
+<pre>
+glib-dev-2.0.3-20020525.zip
+gtk+-dev-1.3.0-20020313.zip
+libiconv-dev-1.7.zip
+</pre>
+<p>
+だ(include/とlib/)。libintlはなぜか分かれてない。
+pkg-configも入れてもいいが、Cygwinにもパッケージがあるのでそっちを使った。
+</p>
+
+<p>
+適当なディレクトリで全部展開する(/usr/local/gtkとする)。
+Ruby/GTKで試してみよう。ruby-gtk-0.28は
+
+<a href="200206a.html#200206012">例の問題</a> があるのでCVS版を使う。
+最新のGTK+ for Windowsはpkg-configに対応してるので楽だ。
+</p>
+<pre>
+% cd gtk
+% PKG_CONFIG_PATH=/usr/local/gtk/lib/pkgconfig \
+  ruby extconf.rb \
+  --with-gtk-config='pkg-config gtk+-1.3-win32-production --define-variable=prefix=/usr/local/gtk'
+</pre>
+<p>
+prefixは/targetになってるので/targetを作ってそこに置けばprefixを置き換える必要はない。
+</p>
+<pre>
+% PKG_CONFIG_PATH=/target/lib/pkgconfig \
+  ruby extconf.rb \
+  --with-gtk-config='pkg-config gtk+-1.3-win32-production'
+</pre>
+<p>
+という感じ。これでok。
+</p>
+<p>
+P.S. リンク切れてるとの指摘があったので一応最新の場所を(2012-09-10記)
+</p>
+<p>
+<a href="http://www.gtk.org/download/win32.php">GTK+ Download: Windows (32-bit)</a>
+</p>
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200206092" title="200206092" href="200206a.html#200206092">■</a> 
+interdiff</h3>
+<p>
+
+<a href="http://cyberelk.net/tim/patchutils/">patchutils</a> のinterdiffを使うと
+incremental patchが作れる。たとえば-dj patchだと
+</p>
+<pre>
+% interdiff -z patch-2.5.20-dj{3,4}.diff.bz2 | \
+  bzip2 &gt;patch-2.5.20-dj3-dj4.diff.bz2
+</pre>
+<p>
+という感じ。
+</p>
+
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200206093" title="200206093" href="200206a.html#200206093">■</a> 
+[Ruby] Linux 2.5.21</h3>
+<p>
+こう来たか。
+</p>
+<pre>
+suspend.c:306: warning: #warning This might be broken. \
+  We need to somehow wait for data to reach the disk
+</pre>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/06/09 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/06/10 start -->
+<h2><a name="20020610" href="200206a.html#20020610">2002-06-10 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="200206101" title="200206101" href="200206a.html#200206101">■</a> 
+Ruby/GTK for MinGW</h3>
+<p>
+新しいGTK+ for Windowsにしたらgdkwin32.hの場所が変更になったようでエラーになる。
+もう面倒だから
+</p>
+<pre>
+#define HWND_DESKTOP 0
+#define GDK_ROOT_WINDOW() ((guint32) HWND_DESKTOP)
+</pre>
+<p>
+としちゃおうか？
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/06/10 end -->
+
+<hr>
+<div>
+<a href="200205c.html">&lt;Prev(,)</a> | 
+<a href="200206b.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

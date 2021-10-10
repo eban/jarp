@@ -1,0 +1,312 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2008-3-a</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="200802c.html">
+<link rel="next" href="200803b.html">
+
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2008年3月上旬〜</p>
+<hr>
+<div>
+<a href="200802c.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="200803b.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2008/03/01 start -->
+<h2><a name="20080301" href="200803a.html#20080301">2008-03-01 (Sat)</a></h2>
+<!-- 2008-03-02 02:39:02 -->
+
+<div class="entry1">
+<h3><a name="200803011" title="200803011" href="200803a.html#200803011">■</a> 
+2月のspam</h3>
+<p>
+5400通ほど。元に戻ったな。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200803012" title="200803012" href="200803a.html#200803012">■</a> 
+[Vim] changelog.vim</h3>
+<p>
+\oすると盛大にエラーになってしまう。<br>
+/usr/share/vim/vim71/ftplugin/changelog.vimを見るとすぐに原因がわかった。
+</p>
+
+<pre>
+&quot; Regular expression used to find a given date entry.
+if !exists('g:changelog_date_entry_search')
+  let g:changelog_date_entry_search = '^\s*%d\_s*%u'
+endif
+
+&quot; Regular expression used to find the end of a date entry
+if !exists('g:changelog_date_end_entry_search')
+  let g:changelog_date_entry_search = '^\s*$'
+endif
+</pre>
+<p>
+こりゃコピペして修正ミスったな。<br>
+
+<a href="200208c.html#200208312">自前</a>を使ってるからどうでもいいんだけど、
+</p>
+
+<pre>
+  let g:changelog_date_end_entry_search = '^\s*$'
+</pre>
+<p>
+に修正しておこう。
+</p>
+<!-- section end -->
+</div>
+<!-- 2008/03/01 end -->
+
+
+
+<hr class="hide">
+<!-- 2008/03/02 start -->
+<h2><a name="20080302" href="200803a.html#20080302">2008-03-02 (Sun)</a></h2>
+<!-- 2008-03-03 01:53:14 -->
+
+<div class="entry1">
+<h3><a name="200803021" title="200803021" href="200803a.html#200803021">■</a> 
+[zsh] ***</h3>
+<p>
+zshの**は有名だけど、***だとsymlinkも追うようだ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200803022" title="200803022" href="200803a.html#200803022">■</a> 
+[SVN] version.hの自動更新</h3>
+<p>
+そろそろなんとかしようと思うんだけど、なかなかまとまった時間が取れない。<br>
+花粉の季節は頭が働かないってのが大きいんだけど。
+</p>
+<!-- section end -->
+</div>
+<!-- 2008/03/02 end -->
+
+
+
+<hr class="hide">
+<!-- 2008/03/03 start -->
+<h2><a name="20080303" href="200803a.html#20080303">2008-03-03 (Mon)</a></h2>
+<!-- 2008-03-04 01:56:02 -->
+
+<div class="entry1">
+<h3><a name="200803031" title="200803031" href="200803a.html#200803031">■</a> 
+<a href="http://projecteuler.net/">[Code] Project Euler</a></h3>
+<p>
+なんか流行ってるので10問ほど解いた。<br>
+200万までの素数の和なんて拷問だよ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2008/03/03 end -->
+
+
+
+<hr class="hide">
+<!-- 2008/03/04 start -->
+<h2><a name="20080304" href="200803a.html#20080304">2008-03-04 (Tue)</a></h2>
+<!-- 2008-03-05 03:18:06 -->
+
+<div class="entry1">
+<h3><a name="200803041" title="200803041" href="200803a.html#200803041">■</a> 
+<a href="http://zsync.moria.org.uk/">[Soft] zsync</a></h3>
+<blockquote><p>
+zsync is a file transfer program. It allows you to download a file
+from a remote server, where you have a copy of an older version of the
+file on your computer already. zsync downloads only the new parts of
+the file. It uses the same algorithm as rsync. 
+</p></blockquote>
+<!-- section end -->
+</div>
+<!-- 2008/03/04 end -->
+
+
+
+<hr class="hide">
+<!-- 2008/03/05 start -->
+<h2><a name="20080305" href="200803a.html#20080305">2008-03-05 (Wed)</a></h2>
+<!-- 2008-03-06 01:28:09 -->
+
+<div class="entry1">
+<h3><a name="200803051" title="200803051" href="200803a.html#200803051">■</a> 
+[Git] git-svn</h3>
+<p>
+いつのまにかgit-svnに-sオプションができていたことに気づいた。<br>
+それにしてもgit checkout trunkとかgit checkout ruby_1_8というコマンドは<br>
+いつまで経っても慣れないな。違和感ありまくり。
+</p>
+<!-- section end -->
+</div>
+<!-- 2008/03/05 end -->
+
+
+
+<hr class="hide">
+<!-- 2008/03/06 start -->
+<h2><a name="20080306" href="200803a.html#20080306">2008-03-06 (Thu)</a></h2>
+<!-- 2008-03-07 02:44:07 -->
+
+<div class="entry1">
+<h3><a name="200803061" title="200803061" href="200803a.html#200803061">■</a> 
+忙しい</h3>
+<p>
+日記書いてる暇なし。
+</p>
+<!-- section end -->
+</div>
+<!-- 2008/03/06 end -->
+
+
+
+<hr class="hide">
+<!-- 2008/03/07 start -->
+<h2><a name="20080307" href="200803a.html#20080307">2008-03-07 (Fri)</a></h2>
+<!-- 2008-03-07 23:31:26 -->
+
+<div class="entry1">
+<h3><a name="200803071" title="200803071" href="200803a.html#200803071">■</a> 
+眠い</h3>
+<p>
+寝る。
+</p>
+<!-- section end -->
+</div>
+<!-- 2008/03/07 end -->
+
+
+
+<hr class="hide">
+<!-- 2008/03/08 start -->
+<h2><a name="20080308" href="200803a.html#20080308">2008-03-08 (Sat)</a></h2>
+<!-- 2008-03-09 02:33:05 -->
+
+<div class="entry1">
+<h3><a name="200803081" title="200803081" href="200803a.html#200803081">■</a> 
+[Video] POPPING</h3>
+<p>
+ニコニコ動画のYouTubeのあれを見てPOPPINGを見まくる。<br>
+少年チャンプルがなつかしい。
+</p>
+<!-- section end -->
+</div>
+<!-- 2008/03/08 end -->
+
+
+
+<hr class="hide">
+<!-- 2008/03/09 start -->
+<h2><a name="20080309" href="200803a.html#20080309">2008-03-09 (Sun)</a></h2>
+<!-- 2008-03-10 02:23:28 -->
+
+<div class="entry1">
+<h3><a name="200803091" title="200803091" href="200803a.html#200803091">■</a> 
+[Firefox] Minefieldを入れてみた</h3>
+<p>
+Firefoxを立ち上げるたびにTMPがいちいち
+<a href="http://hourly-archive.localgho.st/linux.html">Minefield</a>をすすめるので入れてみた。<br>
+とりあえずはb4preの最後と思われる
+</p>
+
+<pre>
+20080303_1232_firefox-3.0b4pre.en-US.linux-i686.tar.bz2
+</pre>
+<p>
+で。
+<a href="http://userscripts.org/scripts/show/22702">LDR Full Feed</a>
+が固まるのは相変わらずだが、<br>
+
+<a href="http://d.hatena.ne.jp/kotas/20070925/playlist">niconicoplaylist</a>
+が動くようになったのがうれしい。<br>
+なんかバグってたんだろうか。
+</p>
+<!-- section end -->
+</div>
+<!-- 2008/03/09 end -->
+
+
+
+<hr class="hide">
+<!-- 2008/03/10 start -->
+<h2><a name="20080310" href="200803a.html#20080310">2008-03-10 (Mon)</a></h2>
+<!-- 2008-03-11 01:57:35 -->
+
+<div class="entry1">
+<h3><a name="200803101" title="200803101" href="200803a.html#200803101">■</a> 
+[Firefox] Minefield</h3>
+<p>
+なんかbeta4はbeta3に比べると軽くなったような？
+</p>
+<!-- section end -->
+</div>
+<!-- 2008/03/10 end -->
+
+<hr>
+<div>
+<a href="200802c.html">&lt;Prev(,)</a> | 
+<a href="200803b.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

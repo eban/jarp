@@ -1,0 +1,384 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2006-11-b</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="200611a.html">
+<link rel="next" href="200611c.html">
+
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2006年11月中旬〜</p>
+<hr>
+<div>
+<a href="200611a.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="200611c.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2006/11/11 start -->
+<h2><a name="20061111" href="200611b.html#20061111">2006-11-11 (Sat)</a></h2>
+<!-- 2006-11-12 03:26:53 -->
+
+<div class="entry1">
+<h3><a name="200611111" title="200611111" href="200611b.html#200611111">■</a> 
+[FC6] --hash-style=both</h3>
+<p>
+日経LinuxにFC6では--hash-style=bothをつけてリンクされてて速くなってると書いてあったので、Rubyで試した。
+time make testだと時間が短かすぎるのか差が全く出ない。
+test-allは1.9だと今動かないしなあ。
+</p>
+<pre>
+optparse.rb:666:in `OptionParser::CompletingHash#match': failed to splat (TypeError)
+</pre>
+<p>
+あれ、*&quot;string&quot;はだめになったんだっけ？
+</p>
+<pre>
+% ruby-1.9 -ve 'p(*&quot;string&quot;)'
+ruby 1.9.0 (2006-11-07) [i386-linux]
+-e:1: failed to splat (TypeError)
+</pre>
+
+<!-- section end -->
+</div>
+<!-- 2006/11/11 end -->
+
+
+
+<hr class="hide">
+<!-- 2006/11/12 start -->
+<h2><a name="20061112" href="200611b.html#20061112">2006-11-12 (Sun)</a></h2>
+<!-- 2006-11-13 02:42:14 -->
+
+<div class="entry1">
+<h3><a name="200611121" title="200611121" href="200611b.html#200611121">■</a> 
+<a href="http://www.gnu.org/software/tar">[Soft] GNU tar 1.16 (Release)</a></h3>
+<blockquote><dl>
+<dt>
+Changes:
+<dd>
+This release contains many improvements, including changes to the
+handling of shell-style globbing characters when extracting from or listing
+an archive.
+</dl></blockquote>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200611122" title="200611122" href="200611b.html#200611122">■</a> 
+[FC6] NO NAME</h3>
+<p>
+FC5のときはUSBストレージをマウントすると/media/diskだっったのに、<br>
+FC6では&quot;/meida/NO NAME&quot;へマウントするようになってしまってうっとうしい。<br>
+Propertiesを見るとmount pointを設定する項目があったので/media/diskにして解決。<br>
+ついでにmount automaticallyにもチェック。<br>
+これでUSBストレージをつなぐだけでマウントされる。<br>
+そういえばFC5のときも一時期までは勝手にマウントされていたような覚えが。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200611123" title="200611123" href="200611b.html#200611123">■</a> 
+<a href="http://0xcc.net/binhacks/quiz.html">[Binary Hacks] バイナリアン度チェック</a></h3>
+<p>
+点数は罠だ。そんなものに騙されてはいけない。<br>
+やっぱquestions.txtをデコードまでしてこそバイナリアンだ。
+</p>
+<pre>
+require 'nkf'
+class String
+  def self.fromCharCode(*codes)
+    puts NKF.nkf(&quot;-We&quot;, codes.pack(&quot;U*&quot;))
+  end
+end
+load &quot;questions.txt&quot;
+</pre>
+<p>
+1行目に笑った。さすがだ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2006/11/12 end -->
+
+
+
+<hr class="hide">
+<!-- 2006/11/13 start -->
+<h2><a name="20061113" href="200611b.html#20061113">2006-11-13 (Mon)</a></h2>
+<!-- 2006-11-14 01:30:43 -->
+
+<div class="entry1">
+<h3><a name="200611131" title="200611131" href="200611b.html#200611131">■</a> 
+[Mail] Gmailのフィルタが勝手に並び換える</h3>
+<p>
+現在Gmailのフィルタでvirus通知メールを捨ててから転送という設定をしてる。<br>
+最近どういうわけかGmailはフィルタの設定を勝手に並び換える。<br>
+1週間に1回ぐらい。一体なにをやっているのか？<br>
+順番を入れ換えられると通知メールまで転送されてうっとうしい。<br>
+そのたびに設定を更新するのは面倒なので、単なる転送のほうを使ってみることにした。<br>
+いままでなんでこっちを使ってなかったのか不思議ではあるが。<br>
+どのタイミングで転送するのか？<br>
+</p>
+
+<p>
+フィルタ転送の設定は絶対マッチしないFrom, Toを設定して残した。<br>
+コメントアウトの代用。
+</p>
+<!-- section end -->
+</div>
+<!-- 2006/11/13 end -->
+
+
+
+<hr class="hide">
+<!-- 2006/11/14 start -->
+<h2><a name="20061114" href="200611b.html#20061114">2006-11-14 (Tue)</a></h2>
+<!-- 2006-11-15 02:28:39 -->
+
+<div class="entry1">
+<h3><a name="200611141" title="200611141" href="200611b.html#200611141">■</a> 
+[Screen] Screenでステータス行に現在実行しているコマンドを表示</h3>
+<p>
+hardstatusで%wを指定したときのTips。<br>
+なんか難しい方法があるみたいだけどman screenしてみたら簡単な方法が載っていた。
+</p><blockquote><p>
+The default name for all shell windows can be set with the &quot;shelltitle&quot;
+command in the .screenrc file, while all other windows are created with
+a &quot;screen&quot; command and thus can have their name set with the -t option.
+Interactively,    there    is    the    title-string    escape-sequence
+(&lt;esc&gt;kname&lt;esc&gt;\)  and the &quot;title&quot; command (C-a A).  The former can be
+output from an application to control the window's name under  software
+control,  and  the  latter  will prompt for a name when typed.  You can
+also bind pre-defined names to keys with the  &quot;title&quot;  command  to  set
+things quickly without prompting.<br><br>
+Finally,  screen has a shell-specific heuristic that is enabled by set-
+ting the window's name to &quot;search|name&quot; and arranging to  have  a  null
+title escape-sequence output as a part of your prompt.  The search por-
+tion specifies an end-of-prompt search string, while the  name  portion
+specifies the default shell name for the window.  If the name ends in a
+':' screen will add what it believes to be the current command  running
+in  the window to the end of the window's shell name (e.g. &quot;name:cmd&quot;).
+Otherwise the current command name supersedes the shell name  while  it
+is running.
+</p></blockquote><p>
+つまりプロンプトの最後が&quot;% &quot;だったら
+</p>
+<pre>
+shelltitle &quot;% |$SHELL&quot;
+</pre>
+<p>
+として、zshのプロンプトを
+</p>
+<pre>
+if [ &quot;$TERM&quot; = &quot;screen&quot; ]; then
+  PROMPT=$'%m:%2~ %{\ek\e\\%}%% '
+fi
+</pre>
+<p>
+てな感じにするだけ。これで今実行してるコマンドが表示されるようになる。いや、
+</p>
+<pre>
+if [ &quot;$TERM&quot; = &quot;screen&quot; ]; then
+  precmd(){print '\ek\e\\'}
+fi
+</pre>
+<p>
+のほうがいいか。プロンプトの設定も既存のものがそのまま使えるし。<br>
+bashだったらPROMPT_COMMANDで同じことができる。
+</p>
+<!-- section end -->
+</div>
+<!-- 2006/11/14 end -->
+
+
+
+<hr class="hide">
+<!-- 2006/11/15 start -->
+<h2><a name="20061115" href="200611b.html#20061115">2006-11-15 (Wed)</a></h2>
+<!-- 2006-11-16 00:59:44 -->
+
+<div class="entry1">
+<h3><a name="200611151" title="200611151" href="200611b.html#200611151">■</a> 
+[Screen] Screenでステータス行に現在実行しているコマンドを表示(2)</h3>
+<p>
+なんか無駄に改行が入るようになったなって、printか。-nが必要だった。
+</p>
+<pre>
+if [ &quot;$TERM&quot; = &quot;screen&quot; ]; then
+  precmd(){print -n '\ek\e\\'}
+fi
+</pre>
+
+<!-- section end -->
+</div>
+<!-- 2006/11/15 end -->
+
+
+
+<hr class="hide">
+<!-- 2006/11/16 start -->
+<h2><a name="20061116" href="200611b.html#20061116">2006-11-16 (Thu)</a></h2>
+<!-- 2006-11-17 01:55:08 -->
+
+<div class="entry1">
+<h3><a name="200611161" title="200611161" href="200611b.html#200611161">■</a> 
+[zsh] zshでsplit, sort, uniq, join,...</h3>
+<p>
+man zshexpnを見てたらzshでもsplit, sort, uniq, join等ができることがわかった。
+</p>
+<pre>
+% foo=&quot;cxaxdxbxaxb&quot;
+% echo ${(s/x/)foo}           
+c a d b a b
+% echo ${(s/x/o)foo}
+a a b b c d
+% echo ${(s/x/ou)foo}
+a b c d
+% echo ${(j/,/)${(s/x/ou)foo}}
+a,b,c,d
+</pre>
+<p>
+joinだけ別になってるが、
+</p>
+<pre>
+${(s/x/ouj/,/)foo}}
+</pre>
+<p>
+とやってもだめだった。惜しい。マニュアルではできるような気がするんだけどなあ。<br>
+チェインできるとうれしい。
+</p>
+<!-- section end -->
+</div>
+<!-- 2006/11/16 end -->
+
+
+
+<hr class="hide">
+<!-- 2006/11/17 start -->
+<h2><a name="20061117" href="200611b.html#20061117">2006-11-17 (Fri)</a></h2>
+<!-- 2006-11-18 18:21:14 -->
+
+<div class="entry1">
+<h3><a name="200611171" title="200611171" href="200611b.html#200611171">■</a> 
+[FC6] yum自動更新</h3>
+<p>
+結局cronに戻した。常駐させとくほどのもんでもないし。
+</p>
+<!-- section end -->
+</div>
+<!-- 2006/11/17 end -->
+
+
+
+<hr class="hide">
+<!-- 2006/11/18 start -->
+<h2><a name="20061118" href="200611b.html#20061118">2006-11-18 (Sat)</a></h2>
+<!-- 2006-11-19 01:38:10 -->
+
+<div class="entry1">
+<h3><a name="200611181" title="200611181" href="200611b.html#200611181">■</a> 
+かぜ</h3>
+<p>
+ダウン。
+</p>
+<!-- section end -->
+</div>
+<!-- 2006/11/18 end -->
+
+
+
+<hr class="hide">
+<!-- 2006/11/19 start -->
+<h2><a name="20061119" href="200611b.html#20061119">2006-11-19 (Sun)</a></h2>
+<!-- 2006-11-20 00:45:33 -->
+
+<div class="entry1">
+<h3><a name="200611191" title="200611191" href="200611b.html#200611191">■</a> 
+かぜ</h3>
+<p>
+喉が痛い。
+</p>
+<!-- section end -->
+</div>
+<!-- 2006/11/19 end -->
+
+
+
+<hr class="hide">
+<!-- 2006/11/20 start -->
+<h2><a name="20061120" href="200611b.html#20061120">2006-11-20 (Mon)</a></h2>
+<!-- 2006-11-20 21:25:07 -->
+
+<div class="entry1">
+<h3><a name="200611201" title="200611201" href="200611b.html#200611201">■</a> 
+かぜ</h3>
+<p>
+会社休む。目を開けてるのがつらい。
+</p>
+<!-- section end -->
+</div>
+<!-- 2006/11/20 end -->
+
+<hr>
+<div>
+<a href="200611a.html">&lt;Prev(,)</a> | 
+<a href="200611c.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

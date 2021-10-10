@@ -1,0 +1,573 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2004-11-b</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="200411a.html">
+<link rel="next" href="200411c.html">
+
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2004年11月中旬〜</p>
+<hr>
+<div>
+<a href="200411a.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="200411c.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2004/11/11 start -->
+<h2><a name="20041111" href="200411b.html#20041111">2004-11-11 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="200411111" title="200411111" href="200411b.html#200411111">■</a> 
+<a href="http://www.rim.or.jp/support/announce/mainte_sv.shtml">[Mail] rimnetのメンテナンス</a></h3>
+<p>
+夜中にあったらしいが、全然メールの遅延は解消されず。
+もう一回やる予定の22日に期待。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200411112" title="200411112" href="200411b.html#200411112">■</a> 
+<a href="http://cygwin.com/ml/cygwin-announce/2004-11/msg00014.html">[Cygwin] Updated: cygwin-1.5.12-1</a></h3>
+<p>
+出たらしい。明日にでも早速更新しよう。
+</p>
+
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200411113" title="200411113" href="200411b.html#200411113">■</a> 
+<a href="http://cygwin.com/ml/cygwin-xfree/2004-11/msg00035.html">[MinGW] mingw only xserver</a></h3>
+<p>
+むむむ。これは期待。
+</p>
+<!-- section end -->
+</div>
+<!-- 2004/11/11 end -->
+
+
+
+<hr class="hide">
+<!-- 2004/11/12 start -->
+<h2><a name="20041112" href="200411b.html#20041112">2004-11-12 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="200411121" title="200411121" href="200411b.html#200411121">■</a> 
+<a href="http://bogofilter.sf.net/">[Soft] Bogofilter 0.93.1</a></h3>
+<p>
+Changes:
+</p><blockquote><p>
+The Berkeley DB mode now uses transactions for robustness with
+automatic crash detection and recovery, has extended documentation
+(README.db), and supports Berkeley DB 4.3. QDBM mode now uses B+trees for
+speed. A converter is included. The default mode is now ternary
+(Ham/Spam/Unsure) rather than the previous binary mode (Yes/No). The
+release documentation was consolidated into the NEWS and RELEASE.NOTES
+documents. Bogotune's -D mode was repaired and a MIME parser bug was
+fixed.
+</p></blockquote><p>
+データベースの形式をHashからB+Treeへ変換する必要あり。
+RELEASE.NOTESによると
+</p>
+<pre>
+% bogoQDBMupgrade wordlist.{qdbm,tmp,qdbm.old}
+</pre>
+<p>
+これでいいかな。
+</p>
+<pre>
+% du wordlist.qdbm{.old,} 
+5408    wordlist.qdbm.old
+3260    wordlist.qdbm
+</pre>
+<p>
+おお。小さくなった。
+</p>
+<pre>
+X-Bogosity: Unsure, spamicity=0.499813, version=0.93.1
+</pre>
+<p>
+あれ？Unsureなの？RELEASE.NOTESをよく読むと
+</p><blockquote><p>
+Bogofilter's defaults have been changed.  It now operates in tri-state
+mode and will classify messages as Spam, Ham, or Unsure.
+</p></blockquote><blockquote><p>
+If you're checking messages for &quot;X-Bogosity: Yes&quot; or &quot;X-Bogosity: No&quot;,
+you _need_ to change your checks.  Use &quot;X-Bogosity: Spam&quot; and
+&quot;X-Bogosity: Ham&quot; instead of the old forms.  Also, checking for
+&quot;X-Bogosity: Unsure&quot; and putting those messages in a separate folder (or
+mailbox) will give you an excellent set of messages for training, as
+&quot;Unsure&quot; messages are messages that bogofilter has too little
+information to classify (with certainty) as spam or ham.
+</p></blockquote><p>
+とある。そうか。Yes, NoからSpam, Ham, Unsureになったんだ。
+まあ、うちはrdeliverでbogofilterの終了ステータスを見てるから、
+特に書き換える必要もないんだけど。
+</p>
+<!-- section end -->
+</div>
+<!-- 2004/11/12 end -->
+
+
+
+<hr class="hide">
+<!-- 2004/11/13 start -->
+<h2><a name="20041113" href="200411b.html#20041113">2004-11-13 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="200411131" title="200411131" href="200411b.html#200411131">■</a> 
+[Mail] SpamAssassin</h3>
+<p>
+最近sa-learn --syncすると時間がかかると思ったら、よく見ると古いエントリを消してるようだ。
+</p>
+<pre>
+synced Bayes databases from journal in 1 seconds: 791 unique entries (791 total entries)
+expired old Bayes database entries in 84 seconds
+144155 entries kept, 6320 deleted
+token frequency: 1-occurence tokens: 59.21%
+token frequency: less than 8 occurrences: 24.22%
+</pre>
+<p>
+たしかにspamにも流行みたいなもんがあるから、古い情報は取っといても無駄なんだろうな。
+それだけディスクも食うし。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200411132" title="200411132" href="200411b.html#200411132">■</a> 
+[Mail] bogofilterの終了ステータス</h3>
+<p>
+Unsureが追加されて1個状態が増えたわけだが、そういえば終了ステータスはどうなってんだっけと調べてみた。
+RELEASE.NOTESを見ると
+</p>
+<pre>
+Spam   = 0 -- unchanged
+Ham    = 1 -- unchanged
+Unsure = 2 -- *NEW*
+Error  = 3 -- *CHANGED*
+</pre>
+<p>
+となっていた。今は0しか見てないからなあ。って、これは0.14での変更だ。
+つまり内部的にはUnsureというのはずっと前から使われていて、
+今回目に見えるようになったという感じか。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200411133" title="200411133" href="200411b.html#200411133">■</a> 
+<a href="http://forecastfox.mozdev.org/">[Firefox] ForecastFox 0.5.1</a></h3>
+<p>
+さてFireFox 1.0にWeatherFoxを入れるかと思ったら名前が変わって
+<a href="http://forecastfox.mozdev.org/">ForecastFox</a>になっていた。
+</p>
+<!-- section end -->
+</div>
+<!-- 2004/11/13 end -->
+
+
+
+<hr class="hide">
+<!-- 2004/11/14 start -->
+<h2><a name="20041114" href="200411b.html#20041114">2004-11-14 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="200411141" title="200411141" href="200411b.html#200411141">■</a> 
+<a href="http://qdbm.sf.net/">[Soft] QDBM 1.8.18</a></h3>
+<p>
+Changes:
+</p><blockquote><p>
+The utility API, the extended advanced API, and the inverted API
+were enhanced. 
+</p></blockquote>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200411142" title="200411142" href="200411b.html#200411142">■</a> 
+[Soft] zshのurl-quote-magic</h3>
+<p>
+zshのfunctionを探策してたら、/usr/share/zsh/4.2.1/functions/url-quote-magicという面白いものを発見。
+</p>
+<pre>
+# Functions to make it easier to type URLs as command line arguments.  As
+# you type, the input character is analyzed and, if it may need quoting,
+# the current word is checked for a URI scheme.  If one is found and the
+# current word is not already in quotes, a backslash is inserted before
+# the input character.
+
+# Setup:
+#       autoload -U url-quote-magic
+#       zle -N self-insert url-quote-magic
+</pre>
+<p>
+つまりURLをcopy&amp;pasteすると勝手にやばい文字がquoteされるわけだ。
+すばらしい。これは便利だ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200411143" title="200411143" href="200411b.html#200411143">■</a> 
+[Game] ドラゴンクエスト VIII</h3>
+<p>
+ソフマップで予約。ドラクエって他のゲームに比べるとちょっと高いね。
+</p>
+<!-- section end -->
+</div>
+<!-- 2004/11/14 end -->
+
+
+
+<hr class="hide">
+<!-- 2004/11/15 start -->
+<h2><a name="20041115" href="200411b.html#20041115">2004-11-15 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="200411151" title="200411151" href="200411b.html#200411151">■</a> 
+[Firefox] userContent.css, userChrome.css</h3>
+<p>
+プロファイルを新しく作ったはいいが、ユーザCSSをコピーするのを忘れていた。
+ブックマークもコピーしてないことに今気づいた。
+まあ、ブックマークはなくてもいいか。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200411152" title="200411152" href="200411b.html#200411152">■</a> 
+[zsh] completion</h3>
+<p>
+zsh使ってていると最初からfindとかのcompletionというかヘルプが表示されて便利だ。
+</p>
+<pre>
+% find . -type &lt;TAB&gt;
+b  -- block special file
+c  -- character special file
+d  -- directory
+f  -- normal file
+l  -- symbolic link
+p  -- named pipe
+s  -- socket
+</pre>
+<p>
+てな感じで。でも
+</p>
+<pre>
+% ls *(&lt;TAB&gt;
+</pre>
+<p>
+では何も出ない。ここでヘルプみたいに出てくれるとありがたいんだけどなあ。
+この()の中身が覚えられないし。
+</p>
+<!-- section end -->
+</div>
+<!-- 2004/11/15 end -->
+
+
+
+<hr class="hide">
+<!-- 2004/11/16 start -->
+<h2><a name="20041116" href="200411b.html#20041116">2004-11-16 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="200411161" title="200411161" href="200411b.html#200411161">■</a> 
+<a href="http://www.thekelleys.org.uk/dnsmasq/doc.html">[Soft] Dnsmasq 2.17</a></h3>
+<p>
+Changes:
+</p><blockquote><p>
+This release fixes a crash bug in 2.16, so it's worth upgrading
+from that version (though the crash only happened in fairly unusual
+circumstances). It also fixes widespread build problems with the previous
+version, which stemmed from a clash between a symbol in dnsmasq and one in
+the C library. There are some new DHCP configuration options. There is a
+new mailing list.
+</p></blockquote>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200411162" title="200411162" href="200411b.html#200411162">■</a> 
+<a href="http://confiserie.berlios.de/">[Soft] confiserie 0.0.1</a></h3>
+<p>
+About:
+</p><blockquote><p>
+confiserie is a project similar to autoconf/automake. The goal of
+the project is to create a build configuration system that is faster and
+easier to use and extend. 
+</p></blockquote><p>
+autoconfの亜種。
+ちょっと説明を読んでみたけど、まあ、なんだかんだ言ってもautoconfの移植性はすごいと思うわけで。
+</p>
+<!-- section end -->
+</div>
+<!-- 2004/11/16 end -->
+
+
+
+<hr class="hide">
+<!-- 2004/11/17 start -->
+<h2><a name="20041117" href="200411b.html#20041117">2004-11-17 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="200411171" title="200411171" href="200411b.html#200411171">■</a> 
+[MinGW] VC7との互換性</h3>
+<p>
+MinGWはmsvcrt.dllに対してリンクされるため、VC7との相性が悪いらしい。
+VC7でコンパイルリンクするとmsvcr71.dllに対してリンクされるが、
+このDLLの違いがRubyの拡張ライブラリのクラッシュ等の要因と考えられている。
+このあたりは
+<a href="http://sourceforge.net/mailarchive/forum.php?forum_id=5123">mingw-dvlpr ML</a>
+でも
+<a href="http://sourceforge.net/mailarchive/message.php?msg_id=7374474">話題</a>
+になってるようで、将来オプションが新設されることをまずは期待しよう。
+</p>
+
+<p>
+さて、MinGWにはすでにlibmsvcr71.aというインポートライブラリが用意されてるため、
+-lmsvcr71をつければうまくいきそうではあるが、実は
+</p>
+<pre>
+% echo 'main(){}' &gt; main.c
+% i686-pc-cygwin-gcc -mno-cygwin main.c -lmsvcr71
+% objdump -p a.exe |grep 'DLL Name'
+        DLL Name: KERNEL32.dll
+        DLL Name: msvcr71.dll
+        DLL Name: msvcrt.dll
+</pre>
+<p>
+のようにdefaultでmsvcrt.dllもリンクされてしまうのでたぶんうまくいかない。
+根本的にはspecsの
+</p>
+<pre>
+*libgcc:
+%{mno-cygwin: %{mthreads:-lmingwthrd} -lmingw32} -lgcc  \
+  %{mno-cygwin:-lmoldname -lmingwex -lmsvcrt}
+</pre>
+<p>
+この-lmsvcrtを-lmsvcr71に置き換えないとだめかな。
+</p>
+<pre>
+% i686-pc-cygwin-gcc -mno-cygwin -dumpspecs |\
+  grep -A1 '^\*libgcc:' |\
+  sed 's/msvcrt/msvcr71/g' &gt;specs.msvcr71
+% i686-pc-cygwin-gcc -mno-cygwin -specs=specs.msvcr71 main.c
+% objdump -p a.exe |grep 'DLL Name'
+        DLL Name: KERNEL32.dll
+        DLL Name: msvcr71.dll
+</pre>
+<p>
+と、単純にDLLをすり替えるだけで済む問題なら話は簡単なんだけど。
+</p>
+<!-- section end -->
+</div>
+<!-- 2004/11/17 end -->
+
+
+
+<hr class="hide">
+<!-- 2004/11/18 start -->
+<h2><a name="20041118" href="200411b.html#20041118">2004-11-18 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="200411181" title="200411181" href="200411b.html#200411181">■</a> 
+<a href="http://www.gnu.org/software/m4/">[GNU] m4 1.4.2</a></h3>
+<p>
+
+<a href="http://cygwin.com/ml/cygwin-announce/2004-11/msg00022.html">cygwin-announce ML</a>で知る。
+NEWSを見るとsecurity fixらしい。ってそれは1.4.1の話だった。
+</p><blockquote><p>
+maketemp now creates an empty file with the given name, instead of merely
+returning the name of a nonexistent file.  This closes a security hole.
+</p></blockquote><p>
+今年の6月に1.4.1は出てるけど、あまり話題になってなかったような。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200411182" title="200411182" href="200411b.html#200411182">■</a> 
+<a href="http://sage.mozdev.org/">[Firefox] Sage 1.3</a></h3>
+<p>
+&lt;content:encoded&gt;対応が入ったのはいいとして、なぜか&lt;pre&gt;の中の改行が削除されてしまう。残念。とても見づらい。
+</p>
+
+<p>
+Live Bookmarks Integrationというのはいいかもしれない。
+なにしろLive Bookmarkは思ったほど便利じゃないというか、いまいち使い途に困るというか。
+</p><blockquote><p>
+Sage now interprets Live Bookmarks just as it does regular bookmarks,
+allowing the user to subscribe to feeds using the auto-discovery
+mechanism in Firefox. Live Bookmarks may be added to your Sage Feeds
+folder using Firefox's orange feed indicator icon, making them
+available for reading in the Sage sidebar. This gives users a quick
+and easy subscription method, while Sage's built-in 'Discover Feeds'
+function provides a more thorough scan.
+</p></blockquote>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200411183" title="200411183" href="200411b.html#200411183">■</a> 
+<a href="http://www.rubyist.net/~tamura/d/?date=20041118#p02">[Win32] VC7とMinGW</a></h3>
+<p>
+いや実を言うとそういう話が進行しているとは気づいていませんでした。
+
+<a href="200411a.html#200411071">昨日の話</a>はruby-talk MLでそういう話があって、
+たまたま思い出して書いたという感じで。タイミングよすぎ。
+</p>
+
+<p>
+知らないうちに解決したようでなにより。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200411184" title="200411184" href="200411b.html#200411184">■</a> 
+<a href="http://www.sqlite.org/">[Soft] Sqlite 2.8.15</a></h3>
+<p>
+とりあえず2系列を最新にしとく。
+</p>
+<!-- section end -->
+</div>
+<!-- 2004/11/18 end -->
+
+
+
+<hr class="hide">
+<!-- 2004/11/19 start -->
+<h2><a name="20041119" href="200411b.html#20041119">2004-11-19 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="200411191" title="200411191" href="200411b.html#200411191">■</a> 
+[Mail] rimnet</h3>
+<p>
+前より遅延が激しくなって平気で10時間以上遅れるようになってしまった。ほんとに解消できるのか？
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200411192" title="200411192" href="200411b.html#200411192">■</a> 
+[Ruby] HEADでmake test-allでsoapとwsdlがエラーになる件</h3>
+<p>
+require &quot;webrick/https&quot;が原因。なんかいろいろ置き換えてるというのが怪しいらしい。
+とりあえずtest/xmlrpc/test_webrick_server.rbの中のrequireを遅らせることで対応。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200411193" title="200411193" href="200411b.html#200411193">■</a> 
+<a href="http://blog.gree.jp/2004/11/_.html">田中良和氏</a></h3>
+<p>
+jperl等のserowさんと同一人物？
+</p>
+<!-- section end -->
+</div>
+<!-- 2004/11/19 end -->
+
+
+
+<hr class="hide">
+<!-- 2004/11/20 start -->
+<h2><a name="20041120" href="200411b.html#20041120">2004-11-20 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="200411201" title="200411201" href="200411b.html#200411201">■</a> 
+<a href="http://yowaken.dip.jp/tdiary/20041116.html#p01">[Ruby] Cygwin版RubyでWIN32OLE</a></h3>
+<p>
+もちろんネイティブwin32版rubyは必要ないです。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200411202" title="200411202" href="200411b.html#200411202">■</a> 
+<a href="http://moonrock.jp/~don/d/200411.html#d20_t1">田中良知氏</a></h3>
+<p>
+よく見ると一字違いますねえ。単なる勘違いでした。いやー面目ない。
+</p>
+<!-- section end -->
+</div>
+<!-- 2004/11/20 end -->
+
+<hr>
+<div>
+<a href="200411a.html">&lt;Prev(,)</a> | 
+<a href="200411c.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

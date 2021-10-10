@@ -1,0 +1,644 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2006-3-a</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="200602c.html">
+<link rel="next" href="200603b.html">
+
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2006年3月上旬〜</p>
+<hr>
+<div>
+<a href="200602c.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="200603b.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2006/03/01 start -->
+<h2><a name="20060301" href="200603a.html#20060301">2006-03-01 (Wed)</a></h2>
+<!-- 2006-03-02 02:43:24 -->
+
+<div class="entry1">
+<h3><a name="200603011" title="200603011" href="200603a.html#200603011">■</a> 
+2月のspam</h3>
+<p>
+302通。Gmail側約6300スレッド。
+先月とあまり変わらない。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200603012" title="200603012" href="200603a.html#200603012">■</a> 
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-talk/182007">[Ruby] Indexing system - ruby newbie</a></h3>
+<p>
+お題としては
+</p>
+<pre>
+0  =&gt; -
+1  =&gt; A
+10 =&gt; J
+27 =&gt; AA
+</pre>
+<p>
+のように変換したいらしい。26種類だからto_s(26)を使えばいけそう。
+injectや再帰よりは速いはず。
+その後のスレッドで0のときは-から_になってるようだけど、まあ、それはどっちでもいい。
+</p>
+<pre>
+def letter(n)
+  n == 0 ? '_' : n.to_s(26).tr('1-9a-p', 'A-Y')
+end
+</pre>
+<p>
+でどうかと思ったが、26の倍数のときがまずい。
+これでは26はZではなくA0になってしまう。
+というかtrの引数にZがないんだから全然だめだめ。
+</p>
+
+<p>
+あ、1引いてから処理してsuccすればいいのか。
+</p>
+<pre>
+def letter(n)
+  n == 0 ? '_' : (n - 1).to_s(26).tr('0-9a-p', '@A-Y').succ
+end
+</pre>
+<p>
+いや、'A@'.succがだめだ。'AA'じゃなくて'B@'になってしまう。
+</p>
+<pre>
+def letter(n)
+  n == 0 ? '_' : (n - 1).to_s(26).tr('1-9a-p', 'A-Y').succ.tr('1', 'A')
+end
+</pre>
+<p>
+一応これでいけたが、ちょっと苦しいな。
+</p>
+<!-- section end -->
+</div>
+<!-- 2006/03/01 end -->
+
+
+
+<hr class="hide">
+<!-- 2006/03/02 start -->
+<h2><a name="20060302" href="200603a.html#20060302">2006-03-02 (Thu)</a></h2>
+<!-- 2006-03-03 22:38:02 -->
+
+<div class="entry1">
+<h3><a name="200603021" title="200603021" href="200603a.html#200603021">■</a> 
+[C] do while(0)とif(1) else (void)0</h3>
+<p>
+glibのgmacros.hを見てたら
+</p>
+<pre>
+#    if (defined (sun) || defined (__sun__))
+#      define G_STMT_START      if (1)
+#      define G_STMT_END        else (void)0
+#    else
+#      define G_STMT_START      do
+#      define G_STMT_END        while (0)
+#    endif
+</pre>
+<p>
+という記述を発見した。なんでだろう？ぐぐってみると
+
+<a href="http://mail.gnome.org/archives/gtk-devel-list/2005-November/msg00066.html">G_STMT_START / G_STMT_END on Sun</a>
+
+という記事が見つかった。どうもsun4だと警告だかエラーになるからこうなってるらしい。
+Perlが起源とか。たしかにperl.hにあるね。
+Rubyでもdo while(0)は使ってるけど、sun4でそんな警告になった記憶がないよなあ。
+</p>
+
+<p>
+先日リリースされたglib 2.10.0を見てみたら
+</p>
+<pre>
+#  if defined (HAVE_DOWHILE_MACROS)
+#   define G_STMT_START do
+#   define G_STMT_END while (0)
+#  else /* !HAVE_DOWHILE_MACROS */
+#   define G_STMT_START if (1)
+#   define G_STMT_END else (void) 0
+#  endif /* !HAVE_DOWHILE_MACROS */
+</pre>
+<p>
+となってた。configureで判断するようにしたらしい。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200603022" title="200603022" href="200603a.html#200603022">■</a> 
+鼻セレブ</h3>
+<p>
+駅前でもらったポケットティシュでは鼻が痛くてしょうがないので、
+奮発していいやつを買ってきた。
+<a href="http://www2.nepia.co.jp/topics/celebrity/index.html">鼻セレブ</a>
+
+。ええと、そのネーミングにはとりあえず触れないとして、鼻ざわりはたしかにいい。
+これに慣れてしまうともうポケットティシュが紙ヤスリのように感じる。
+風邪は治りかけてるけどそろそろ花粉がやばいしねえ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2006/03/02 end -->
+
+
+
+<hr class="hide">
+<!-- 2006/03/03 start -->
+<h2><a name="20060303" href="200603a.html#20060303">2006-03-03 (Fri)</a></h2>
+<!-- 2006-03-04 01:42:47 -->
+
+<div class="entry1">
+<h3><a name="200603031" title="200603031" href="200603a.html#200603031">■</a> 
+<a href="http://qdbm.sf.net/">[Soft] QDBM: Quick DataBase Manager 1.8.46</a></h3>
+<blockquote><dl>
+<dt>
+Changes:
+<dd>
+A function to check availability of allocation of the virtual
+memory was added. A function to convert character encodings was improved. 
+</dl></blockquote>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200603032" title="200603032" href="200603a.html#200603032">■</a> 
+<a href="http://re2c.org/">[Soft] re2c 0.10.1</a></h3>
+<blockquote><dl>
+<dt>
+Changes:
+<dd>
+This is the newest version of re2c that comes with no known bugs.
+After the addition of Unicode support in 0.10.0, this version comes with
+support for Solaris and native Sun compilers. This version also fixes a
+minor issue with YYCTXMARKER. 
+</dl></blockquote>
+<!-- section end -->
+</div>
+<!-- 2006/03/03 end -->
+
+
+
+<hr class="hide">
+<!-- 2006/03/04 start -->
+<h2><a name="20060304" href="200603a.html#20060304">2006-03-04 (Sat)</a></h2>
+<!-- 2006-03-05 01:27:17 -->
+
+<div class="entry1">
+<h3><a name="200603041" title="200603041" href="200603a.html#200603041">■</a> 
+<a href="http://www.zsh.org/">[Soft] Zsh 4.3.2 (Development)</a></h3>
+<blockquote><dl>
+<dt>
+Changes:
+<dd>
+Contains initial support for multi-byte characters in the line
+editor (in particular, but not only, UTF-8). Note that this is not turned
+on by default on all systems where it can be used. There are also a few
+enhancements to shell syntax and supplied functions, as well as numerous
+bugfixes. A few minor incompatibilities are listed in the README. This is
+the first publicly announced version of the 4.3.x series; changes since
+4.3.1 are limited to compilation fixes.
+</dl></blockquote><p>
+試してみたらeuc-jpでもok。すばらしい。
+configure時に--enable-multibyteが必要。
+</p>
+<!-- section end -->
+</div>
+<!-- 2006/03/04 end -->
+
+
+
+<hr class="hide">
+<!-- 2006/03/05 start -->
+<h2><a name="20060305" href="200603a.html#20060305">2006-03-05 (Sun)</a></h2>
+<!-- 2006-03-06 02:42:30 -->
+
+<div class="entry1">
+<h3><a name="200603051" title="200603051" href="200603a.html#200603051">■</a> 
+[FC4] 今日のyum update</h3>
+<pre>
+Installing:
+ kernel                  i686       2.6.15-1.1833_FC4  updates-released   15 M
+ kernel-smp              i686       2.6.15-1.1833_FC4  updates-released   15 M
+ kernel-smp-devel        i686       2.6.15-1.1833_FC4  updates-released  4.3 M
+Updating:
+ blas                    i386       3.0-37.fc4       extras            321 k
+ c-ares                  i386       1.3.0-2.fc4      extras             30 k
+ centericq               i386       4.21.0-5.fc4     extras            1.5 M
+ lapack                  i386       3.0-37.fc4       extras            3.4 M
+ wine                    i386       0.9.9-1.fc4      extras            9.4 M
+ xmms                    i386       1:1.2.10-21.fc4  extras            1.8 M
+ xterm                   i386       208-2.FC4        updates-released  190 k
+
+Transaction Summary
+=============================================================================
+Install      3 Package(s)         
+Update       7 Package(s)         
+Remove       0 Package(s)         
+Total download size: 50 M
+</pre>
+<p>
+kernelが上がったからまたntfsを入れ直さないと。cntericqはremoveしよう。
+blasとlapackはバージョンがまったく同じだから関連してるのか？
+</p>
+<pre>
+blas
+BLAS (Basic Linear Algebra Subprograms) ライブラリ
+BLAS (Basic Linear Algebra Subprograms) は数値代数用の多くの
+基本アルゴリズムを提供する標準ライブラリです。blas 
+のマニュアルページは blas-man パッケージに含まれています。
+</pre>
+<p>
+これも要らないな。消すと何かが依存してそうではある。
+</p>
+<pre>
+Removing:
+ blas                    i386       3.0-37.fc4       installed         687 k
+ lapack                  i386       3.0-37.fc4       installed         5.3 M
+Removing for dependencies:
+ octave                  i386       6:2.9.3-3.fc5    installed          23 M
+ umfpack                 i386       4.4-2            installed         709 k
+</pre>
+<p>
+octaveも要らないな。umfpackってのもなんだかわからんから要らない。消そう。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200603052" title="200603052" href="200603a.html#200603052">■</a> 
+[Net] ネットワーク不調</h3>
+<p>
+最近ネットワークが不調でやたらとタイムアウトする。
+非常にうっとうしい。
+Gmailからpopで取ってきてるんだけどなぜか同じメールが2通あったり、
+ftpの終了処理に時間がかかったり、
+何が原因、ybbよ？
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200603053" title="200603053" href="200603a.html#200603053">■</a> 
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-talk/182652">[Ruby] ruby pass like statement</a></h3>
+<p>
+ああ、なるほど。endがないからPythonにはpassが必要なんだ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2006/03/05 end -->
+
+
+
+<hr class="hide">
+<!-- 2006/03/06 start -->
+<h2><a name="20060306" href="200603a.html#20060306">2006-03-06 (Mon)</a></h2>
+<!-- 2006-03-07 21:47:37 -->
+
+<div class="entry1">
+<h3><a name="200603061" title="200603061" href="200603a.html#200603061">■</a> 
+[RoR] KirbyBaseでRuby on Rails</h3>
+<p>
+AWDwRも6章まできたので
+<a href="http://netpromi.com/kirbybase_ruby.html">KirbyBase</a>を試してみる。
+KirbyBaseはpure RubyでフラットファイルなDBMS。
+ackbarがActiveRecordのアダプタとなる。
+</p>
+<pre>
+% gem update -y rails ackbar
+</pre>
+<p>
+gemは以前そのパッケージをインストールしていなくてもいきなりupdateでok。
+つまりgem updateだけ覚えとけばいい。
+</p>
+
+<p>
+そのまま
+<a href="http://houseonfire.wordpress.com/2006/02/19/chapter-6/">このblog</a>
+の通りに進める。
+</p>
+<pre>
+depot % cd db
+depot/db % mkdir development test production
+depot/db % cat &gt;create_db.rb
+require 'rubygems'
+require 'kirbybase' 
+db = KirbyBase.new 
+db.drop_table(:products) if db.table_exists?(:products)
+db.create_table(:products, :title, :String,
+ :description, :String, :image_url, :String,
+ :price, :Float)
+</pre>
+<p>
+gemでインストールしたのでrubygemsをrequireしとく。
+</p>
+<pre>
+depot/db % for i in development test production; do cd $i; ruby ../create_db.rb; cd ..; done
+</pre>
+<p>
+これで各ディレクトリにproducts.tblができる。
+</p>
+<pre>
+depot/db % cd ..
+depot % cat &gt; config/database.yml
+development:
+  adapter: kirbybase
+  database: db/development
+
+test:
+  adapter: kirbybase
+  database: db/test
+
+production:
+  adapter: kirbybase
+  database: db/production
+</pre>
+<p>
+面倒だから上書き。
+</p>
+<pre>
+depot % vi config/environment.rb
+</pre>
+<p>
+require 'kirbybase_adapter'を先頭に追加。
+</p>
+<pre>
+depot % ruby script/generate scaffold Product Admin
+</pre>
+<p>
+kirbybase_adapter.rbに不具合があるらしいので修正。
+gemsにあるほうはとりあえず放っといてlib/へコピーしてから修正しよう。
+</p>
+<pre>
+depot % cp /usr/local/lib/ruby/gems/1.8/gems/ackbar-0.1.0/kirbybase_adapter.rb lib/
+depot % vi lib/kirbybase_adpter.rb
+</pre>
+<p>
+or args == [nil, nil]を追加。
+</p>
+<pre>
+--- lib/kirbybase_adapter.rb~	2006-03-06 22:50:51.000000000 +0900
++++ lib/kirbybase_adapter.rb	2006-03-06 22:51:16.000000000 +0900
+@@ -655,3 +655,3 @@
+     def self.count(*args)
+-      if args.empty?
++      if args.empty? or args == [nil, nil]
+         if block_given?
+</pre>
+<p>
+サーバを立ち上げる。
+</p>
+<pre>
+depot % ruby script/server
+</pre>
+<p>
+firefoxでhttp://localhost:3000/adminにアクセス。
+成功。New Productをクリック。適当にフォームを埋めてCreateをクリック。
+成功。うまくいった。
+</p>
+
+<p>
+ちなみにデータベースはこんな感じになる。
+</p>
+<pre>
+depot % cat db/development/products.tbl
+000001|000000|Struct|recno:Integer|title:String|description:String|image_url:String|price:Float
+1|hoge|hogehoge|/image/foo.png|0.0
+</pre>
+<p>
+かなり簡単な構造だな。
+</p>
+<!-- section end -->
+</div>
+<!-- 2006/03/06 end -->
+
+
+
+<hr class="hide">
+<!-- 2006/03/07 start -->
+<h2><a name="20060307" href="200603a.html#20060307">2006-03-07 (Tue)</a></h2>
+<!-- 2006-03-08 01:30:32 -->
+
+<div class="entry1">
+<h3><a name="200603071" title="200603071" href="200603a.html#200603071">■</a> 
+<a href="http://gcc.gnu.org/gcc-4.1/">[GCC] GCC 4.1.0</a></h3>
+<p>
+例によって例の通りに。
+</p>
+<pre>
+% CFLAGS=-Os CXXFLAGS=-Os CC=/usr/bin/gcc ../configure \
+  --enable-languages=c++ --with-system-zlib \
+  --enable-sjlj-exceptions --enable-threads \
+  --disable-version-specific-runtime-libs --disable-nls \
+  --without-included-gettext --without-catgets
+% make CFLAGS=-Os LIBCFLAGS=-Os LIBCXXFLAGS=-Os \
+  STAGE1_CFLAGS=-Os BOOT_CFLAGS=-Os bootstrap
+</pre>
+<p>
+Rubyもok。いや警告が減った。
+</p>
+<pre>
+% cat foo.c
+unsigned char *p = &quot;hoge&quot;;
+% gcc-4.0.2 -c foo.c
+foo.c:1: warning: pointer targets in initialization differ in signedness
+% gcc-4.1.0 -c foo.c
+% 
+</pre>
+<p>
+
+<a href="http://gcc.gnu.org/onlinedocs/gcc-4.0.2/gcc/Warning-Options.html#index-Wno_002dpointer_002dsign-292">4.0.2の-Wno-pointer-signオプション</a>
+
+と
+<a href="http://gcc.gnu.org/onlinedocs/gcc-4.1.0/gcc/Warning-Options.html#index-Wpointer_002dsign-312">4.1.0の-Wpointer-signオプション</a>
+
+を見比べるとデフォルトで警告するか否かが単に変わっただけのようだ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2006/03/07 end -->
+
+
+
+<hr class="hide">
+<!-- 2006/03/08 start -->
+<h2><a name="20060308" href="200603a.html#20060308">2006-03-08 (Wed)</a></h2>
+<!-- 2006-03-09 01:53:44 -->
+
+<div class="entry1">
+<h3><a name="200603081" title="200603081" href="200603a.html#200603081">■</a> 
+<a href="http://advweb.seesaa.net/article/14400508.html">[Vim] :e &lt;C-x&gt; (編集中のファイルと同じディレクトリにあるファイルを開く。)</a></h3>
+<p>
+なんか便利そうだと思ったらKaoriya版の機能とあった。
+ならば自前で。
+</p>
+<pre>
+cnoremap &lt;C-X&gt; &lt;C-R&gt;=expand('%:h')&lt;CR&gt;/
+</pre>
+<p>
+とりあえずこれでいいや。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200603082" title="200603082" href="200603a.html#200603082">■</a> 
+<a href="http://blog.zenspider.com/archives/2006/03/coming_soon_mul.html">[Ruby] Coming Soon: multiruby</a></h3>
+<p>
+複数のバージョンのrubyを順次動かすのかな？なかなか興味深い。
+</p>
+<!-- section end -->
+</div>
+<!-- 2006/03/08 end -->
+
+
+
+<hr class="hide">
+<!-- 2006/03/09 start -->
+<h2><a name="20060309" href="200603a.html#20060309">2006-03-09 (Thu)</a></h2>
+<!-- 2006-03-10 01:58:14 -->
+
+<div class="entry1">
+<h3><a name="200603091" title="200603091" href="200603a.html#200603091">■</a> 
+[Gmail] Gmailは4月までに3GBまで増えるのか？</h3>
+<p>
+現在2702MBでこのままペースでは4月までに3GBになるとは思えない。
+1年で1GBはやめるのか、
+それとも単にカウントアップのバグで4月にどーんと一気に3GBまで増えるとか？
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200603092" title="200603092" href="200603a.html#200603092">■</a> 
+[Vim] set wildmenu</h3>
+<p>
+これ便利だな。
+</p>
+<pre>
+When 'wildmenu' is on, command-line completion operates in an enhanced
+mode.  On pressing 'wildchar' (usually &lt;Tab&gt;) to invoke completion,
+the possible matches are shown just above the command line, with the
+first match highlighted (overwriting the status line, if there is
+one).  Keys that show the previous/next match, such as &lt;Tab&gt; or
+CTRL-P/CTRL-N, cause the highlight to move to the appropriate match.
+When 'wildmode' is used, &quot;wildmenu&quot; mode is used where &quot;full&quot; is
+specified.  &quot;longest&quot; and &quot;list&quot; do not start &quot;wildmenu&quot; mode.
+If there are more matches than can fit in the line, a &quot;&gt;&quot; is shown on
+the right and/or a &quot;&lt;&quot; is shown on the left.  The status line scrolls
+as needed.
+</pre>
+<p>
+ステータスラインに一時的に表示できるのも便利だし、
+C-p/C-n(もしくは&lt;LEFT&gt;&lt;RIGHT&gt;)でいったりきたりできるというのがありがたい。
+なんか補完で調子にのってタブを連打がしがちなだけに戻る機能が欲しかった。
+</p>
+
+<p>
+zshにもこういうのがあるといいな。
+</p>
+<!-- section end -->
+</div>
+<!-- 2006/03/09 end -->
+
+
+
+<hr class="hide">
+<!-- 2006/03/10 start -->
+<h2><a name="20060310" href="200603a.html#20060310">2006-03-10 (Fri)</a></h2>
+<!-- 2006-03-11 02:10:47 -->
+
+<div class="entry1">
+<h3><a name="200603101" title="200603101" href="200603a.html#200603101">■</a> 
+[zsh] C-p/C-n</h3>
+<p>
+そういえば
+<a href="200603a.html#200603092">昨日の件</a>でzshでなんかできないなと思った原因は
+</p>
+<pre>
+autoload -U up-line-or-beginning-search
+autoload -U down-line-or-beginning-search
+zle -N up-line-or-beginning-search
+zle -N down-line-or-beginning-search
+bindkey &quot;^P&quot; up-line-or-beginning-search
+bindkey &quot;^N&quot; down-line-or-beginning-search
+</pre>
+<p>
+だった。やっぱこっちのほうが便利だしこっちを優先させよう。
+</p>
+<!-- section end -->
+</div>
+<!-- 2006/03/10 end -->
+
+<hr>
+<div>
+<a href="200602c.html">&lt;Prev(,)</a> | 
+<a href="200603b.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

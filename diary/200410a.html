@@ -1,0 +1,750 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2004-10-a</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="200409c.html">
+<link rel="next" href="200410b.html">
+
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2004年10月上旬〜</p>
+<hr>
+<div>
+<a href="200409c.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="200410b.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2004/10/01 start -->
+<h2><a name="20041001" href="200410a.html#20041001">2004-10-01 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="200410011" title="200410011" href="200410a.html#200410011">■</a> 
+8月のspam</h3>
+<p>
+4786通。うーむ。5000間近。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200410012" title="200410012" href="200410a.html#200410012">■</a> 
+<a href="http://www.grayproductions.net/ruby_quiz/quiz2.html">[QUIZ] Secret Santas (#2)</a></h3>
+<p>
+プレゼント交換。当人や家族には行かないようにしろってことか。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200410013" title="200410013" href="200410a.html#200410013">■</a> 
+<a href="http://texturizer.net/mozilla/jp/firefox/tips.html#app_tab">[Firefox] アクティブなタブを強調する</a></h3>
+<p>
+拡張にするまでもなくcssでいけるようだ。ChromEditでuserChrome.cssに追加。
+</p>
+<pre>
+/* Change color of active tab */ 
+tab{
+   -moz-appearance: none !important; 
+} 
+tab[selected=&quot;true&quot;] { 
+   background-color: rgb(222,218,210) !important; 
+   color: black !important; 
+} 
+ 
+/* Change color of normal tabs */ 
+tab:not([selected=&quot;true&quot;]) { 
+   background-color: rgb(200,196,188) !important; 
+   color: gray !important; 
+}
+</pre>
+<p>
+なかなかいい感じ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200410014" title="200410014" href="200410a.html#200410014">■</a> 
+<a href="http://texturizer.net/mozilla/jp/firefox/tips.html#app_tabclose">[Firefox] タブバーから閉じるボタンを削除する</a></h3>
+<p>
+
+<a href="200409c.html#200409301">昨日の</a>よりはこっちのほうがよさげ。
+</p>
+<pre>
+/* Remove the close button on the tab bar */ 
+.tabs-closebutton { 
+   display: none !important; 
+}
+</pre>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200410015" title="200410015" href="200410a.html#200410015">■</a> 
+<a href="http://extensionroom.mozdev.org/clav/#goup">[Firefox] Go up</a></h3>
+<p>
+うささんが欲しがっていたひとつ上の階層へ上がるボタンなんだけど、
+最近どっかで見たよなあと
+
+<a href="http://extensionroom.mozdev.org/clav/#tabx">Tab X</a>
+の近辺を見たら
+
+<a href="http://extensionroom.mozdev.org/clav/#goup">そこ</a>
+にあった。
+なにげに便利だ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2004/10/01 end -->
+
+
+
+<hr class="hide">
+<!-- 2004/10/02 start -->
+<h2><a name="20041002" href="200410a.html#20041002">2004-10-02 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="200410021" title="200410021" href="200410a.html#200410021">■</a> 
+<a href="http://xmlsoft.org/">[Soft] libxml2 2.6.14</a></h3>
+<p>
+Changes:
+</p><blockquote class="cite"><p>
+This release included a variety of bugfixes,  improvements to the
+W3C XML Schemas support, and  VMS port updates. 
+</p></blockquote><p>
+Subversionを入れるついでにバージョンアップ。
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200410022" title="200410022" href="200410a.html#200410022">■</a> 
+<a href="http://xmlsoft.org/XSLT/">[Soft] The XSLT C library for GNOME 1.1.11</a></h3>
+<p>
+ついでにlibxsltも。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200410023" title="200410023" href="200410a.html#200410023">■</a> 
+<a href="http://www.webdav.org/neon/">[Soft] neon 0.24.7</a></h3>
+<p>
+configure時に--with-sslと--enable-sharedを追加。
+</p>
+<pre>
+% CFLAGS=-Os CXXFLAGS=-Os ./configure \
+  --disable-dependency-tracking \
+  --with-ssl --enable-shared
+</pre>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200410024" title="200410024" href="200410a.html#200410024">■</a> 
+<a href="http://www.gzip.org/zlib/">[Soft] zlib 1.2.1</a></h3>
+<p>
+まだ上げてなかったことに気づく。
+</p>
+<pre>
+% ./configure
+% make
+% sudo make install
+</pre>
+<p>
+これだけだと共有ライブラリがインストールされない。
+</p>
+<pre>
+% ./configure -s
+% make
+% sudo make install
+</pre>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200410025" title="200410025" href="200410a.html#200410025">■</a> 
+<a href="http://subversion.tigris.org/">[Soft] Subversion 1.1.0</a></h3>
+<p>
+bdbが必須ではなくなったのが目玉らしい。
+</p>
+
+<p>
+Changes:
+</p><blockquote class="cite"><p>
+A new non-database backend was included along with a variety of
+client side fixes and enhancements.
+</p></blockquote><p>
+make checkに20分ぐらいかかる。
+Rubyのmake test-allで2,3分なんてかわいいもんか。
+
+<p>
+erubyをcoしてみる。
+</p>
+<pre>
+% svn co http://svn.modruby.net/repos/eruby/trunk eruby
+A  eruby/Makefile.in
+A  eruby/GPL
+&lt;...&gt;
+A  eruby/examples/foo.rhtml
+A  eruby/examples/e2r.rb
+Checked out revision 45.
+</pre>
+<p>
+問題ないようだ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200410026" title="200410026" href="200410a.html#200410026">■</a> 
+[Mail] rdeliver</h3>
+<p>
+うーむ。こんなエラーが出てる。
+</p>
+<pre>
+#&lt;NameError: uninitialized constant Deliver::Etc&gt;
+</pre>
+<p>
+該当する行は
+</p>
+<pre>
+agent.save(File.join(&quot;/var/mail&quot;, Etc.getpwuid(Process.uid).name).untaint)
+</pre>
+<p>
+で、これはspoolへ保存する処理を~/.rdeliverに自分で書いたわけだが、
+理由がわからん。しかも初めて起きた。
+requireは先頭にあるが、これ自体プラグインみたいなもんだからなあ。
+
+<a href="200409c.html#200409271">前回</a>と同じか？
+</p>
+
+<p>
+とりあえずrdeliver自身にrequire 'etc'を入れておこう。
+ついでに::Etcにしとくか。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200410027" title="200410027" href="200410a.html#200410027">■</a> 
+<a href="http://www.mozilla-japan.org/press/foundation-2004-10-01-02.html">Firefox の重要なセキュリティアップデートを公開</a></h3>
+<p>
+アップデートアイコンが出ないなあ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2004/10/02 end -->
+
+
+
+<hr class="hide">
+<!-- 2004/10/03 start -->
+<h2><a name="20041003" href="200410a.html#20041003">2004-10-03 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="200410031" title="200410031" href="200410a.html#200410031">■</a> 
+[Blog] JUGEMのRSS</h3>
+<p>
+BloglinesでいつものようにBlogを読んでいると、なぜかまったく異質な内容になってしまっているサイトがあった。
+突然ジャニーズJr.のファンサイトになった。
+というかByで出てくる名前も違う。
+どうやらJUGEMのRSS生成に問題があるようだ。他人のRSSが混ざってる感じ。
+</p>
+
+<p>
+クリックしてみると今日はJUGEM自体メンテ中になってるし。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200410032" title="200410032" href="200410a.html#200410032">■</a> 
+<a href="http://www.gnu.org/software/gnu-arch/index.jp.html">[Soft] GNU arch 1.2.1</a></h3>
+<p>
+Cygwinで試してみた。
+</p>
+<pre>
+% tar xfvz tla-1.2.1.tar.gz
+</pre>
+<p>
+この段階で=だの@だのやたら記号が使われていて不安になる。
+とりあえず展開は成功。NTFSで使えない文字は使われてないようだ。
+</p>
+<pre>
+% mkdir tla-1.2.1/src/build; cd tla-1.2.1/src/build
+% ../configure --prefix=/usr/local
+% make CFLAGS=-Os
+&lt;中略&gt;
+./,es &gt; exit-status.h
+rm ,es ,es.c
+rm: cannot unlink `,es': No such file or directory
+</pre>
+<p>
+hackerlab/os/Makefileをいじって,es.exeに変更。
+これでmakeは通った。make testはunit-file-namesで止まった。
+どうもashだとだめみたいだ。
+Makefile-config.mkを見るとcfg__posix_shellが怪しいので
+</p>
+<pre>
+% make cfg__posix_shell=/bin/bash test
+</pre>
+<p>
+とするとちょっと進んだ。
+</p>
+<pre>
+time: not found
+</pre>
+<p>
+今度はなぜかtimeがないと言われる。というかこのメッセージはashだよな。
+SHELLも追加してみよう。
+</p>
+<pre>
+% make cfg__posix_shell=/bin/bash SHELL=/bin/bash test
+</pre>
+<p>
+またちょっと進んだ。
+</p>
+<pre>
+================ unit-unidata test ================
+pruning unidata.txt
+printing hackerlab db
+comparing results
+,tmp ,tmp2 differ: char 20, line 1
+</pre>
+<p>
+うーむ。
+</p>
+<pre>
+% diff -ub ./hackerlab/tests/unidata-tests/,tmp{,2}
+%
+</pre>
+<p>
+CR+LFか。だれがtext modeにしてるんだ？まあ、いいや。tr -d '\r'をはさんどこ。
+つづいて簡単なimportのテストが
+</p>
+<pre>
+Error calling `vu_file_is_directory_following' (File name too long)
+</pre>
+<p>
+で止まった。実際は255バイトだった。なんでこんな長いパスが必要なんだ？
+これはWindowsの制限なのでどうしようもない。
+</p>
+
+<p>
+ま、いいやとmake installすると延々となにかやった挙句、
+tla.exeだけ/usr/local/binにインストールされた。ちょっとがくっとくる。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200410033" title="200410033" href="200410a.html#200410033">■</a> 
+[Cygwin] Cygwinでtlaを実際に使ってみる</h3>
+<p>
+実際にどこまで使えるか試してみる。
+</p>
+<pre>
+% tla my-id 'test &lt;test@example.com&gt;'            
+% mkdir ~/{archives}
+% tla make-archive test@example.com--hogehoge--2004 ~/{archives}/2004
+% tla my-default-archive test@example.com--hogehoge--2004
+% tla archive-setup hoge--dev--0.1
+* creating category test@example.com--hogehoge--2004/hoge
+* creating branch test@example.com--hogehoge--2004/hoge--dev
+* creating version test@example.com--hogehoge--2004/hoge--dev--0.1
+% mkdir hoge; cd hoge 
+% echo 'puts &quot;hoge&quot;' &gt;hoge.rb 
+% tla init-tree hoge--dev--0.1 
+% ls
+hoge.rb  {arch}
+% tla add hoge.rb             
+% tla import --setup          
+* imported test@example.com--hogehoge--2004/hoge--dev--0.1
+</pre>
+<p>
+importまではうまくいった。編集してcommitしてみよう。
+</p>
+<pre>
+% echo 'puts &quot;hoge&quot;' &gt;&gt;hoge.rb
+% tla commit -L '2 times'
+M  hoge.rb
+unable to create directory &quot;/home/watanabe/0410/hoge/hoge/\
+,,commit.hoge--dev--0.1--patch-1--test@example.com--hogehoge--\
+2004.1096812306.812.1/hoge--dev--0.1--patch-1.patches/\
+new-files-archive/./{arch}/hoge/hoge--dev/hoge--dev--0.1/\
+test@example.com--hogehoge--2004/patch-log&quot; (Invalid argument)
+PANIC: I/O error
+</pre>
+<p>
+やっぱ、だめだね。長すぎ。この冗長なパスは一体何のため？
+</p>
+
+<p>
+結論: 今のGNU archはWindowsでは使えない
+</p>
+<!-- section end -->
+</div>
+<!-- 2004/10/03 end -->
+
+
+
+<hr class="hide">
+<!-- 2004/10/04 start -->
+<h2><a name="20041004" href="200410a.html#20041004">2004-10-04 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="200410041" title="200410041" href="200410a.html#200410041">■</a> 
+<a href="http://www.rubyist.net/~tamura/d/?date=20041004#p01">[Mail] sf.netのアーカイブ</a></h3>
+<p>
+見てみると読めないんだよねえ。とりあえずファイルに保存して
+</p>
+<pre>
+% ruby -rcgi -pe 'gsub(/\e\$B.+?\e\(B/){CGI::unescapeHTML($&amp;)}' foo.html
+</pre>
+<p>
+のようなフィルタでなんとか読めた。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200410042" title="200410042" href="200410a.html#200410042">■</a> 
+[Ruby] sf.netのばけばけなアーカイブをちょっとましに見えるようにするproxy</h3>
+<p>
+というわけでWEBrickで
+<a href="../files/sf.net.rb">proxy</a>だ。
+</p>
+<pre>
+% ruby sf.net.rb
+</pre>
+<p>
+と実行しといてproxyとしてlocalhost:8080を指定する。
+utf-8の部分は勘弁してくれ。というか、w3mだと読めるから不思議だ。
+1行ごとに判断してるのか？
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200410043" title="200410043" href="200410a.html#200410043">■</a> 
+<a href="http://jgillick.nettripper.com/#switchproxy">[Firefox] SwitchProxy</a></h3>
+<p>
+proxyの切り替えが面倒なのでインストールしてみた。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200410044" title="200410044" href="200410a.html#200410044">■</a> 
+<a href="http://livehttpheaders.mozdev.org/">[Firefox] LiveHTTPHeaders</a></h3>
+<p>
+上の実験でContent-Encoding: gzipにはまった。
+ヘッダが見たくなったのでインストール。
+</p>
+<!-- section end -->
+</div>
+<!-- 2004/10/04 end -->
+
+
+
+<hr class="hide">
+<!-- 2004/10/05 start -->
+<h2><a name="20041005" href="200410a.html#20041005">2004-10-05 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="200410051" title="200410051" href="200410a.html#200410051">■</a> 
+[Admin] SpamAssasinの訓練</h3>
+<p>
+www-admin@やadmin@へのspamがすり抜けることが多くなってきたのでsa-learnを手動で実行。
+SpamAssassin 3.0は--no-rebuild, --rebuildが、--no-sync, --syncになった模様。
+</p>
+<pre>
+% sa-learn --no-sync --spam spam-files
+Learned from 20 message(s) (27 message(s) examined).
+% sa-learn --sync
+</pre>
+<p>
+てな感じ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200410052" title="200410052" href="200410a.html#200410052">■</a> 
+<a href="http://www.mozilla-japan.org/products/thunderbird/">[Mail] Thunderbird 0.8</a></h3>
+<p>
+日本語版が出たので0.6から0.8へバージョンアップ。
+おお賢くなってる。今日は全部spamをブロック。すばらしい。
+</p>
+<!-- section end -->
+</div>
+<!-- 2004/10/05 end -->
+
+
+
+<hr class="hide">
+<!-- 2004/10/06 start -->
+<h2><a name="20041006" href="200410a.html#20041006">2004-10-06 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="200410061" title="200410061" href="200410a.html#200410061">■</a> 
+[Firefox] BloglinesをuserContent.cssで見やすく</h3>
+<p>
+Bloglinesでたまに困ることがある。
+&lt;pre&gt;に長い行があるとそれにひきずられて、
+他の部分もはみでちゃって非常に見づらくなることがある。
+そこだけスクロールするぐらいならいいんだけど、
+全体がそんな感じになると非常に面倒だ。
+たぶんユーザスタイルシートでなんとかなりそうな予感がして、
+bloglines,pre,ユーザスタイルシートでぐぐってみると1件だけ見つかった。
+
+<a href="http://hail2u.net/blog/rss/brand-new_bloglines.html">そのものずばりだった</a>。
+それを参考に
+</p>
+<pre>
+div.content-main .item td.article pre {
+  border-style: solid;
+  border-width: 1px;
+  white-space: pre;
+  padding: 0.5em;
+  width:auto !important;
+  overflow:auto !important;
+}
+</pre>
+<p>
+としてみた。
+</p>
+<!-- section end -->
+</div>
+<!-- 2004/10/06 end -->
+
+
+
+<hr class="hide">
+<!-- 2004/10/07 start -->
+<h2><a name="20041007" href="200410a.html#20041007">2004-10-07 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="200410071" title="200410071" href="200410a.html#200410071">■</a> 
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-talk/115381">[Japanese] 「つ」と「りょ」</a></h3>
+<p>
+英語を話す人にとっては日本語の「つ」と「りょ」の発音が難しいらしい。
+なかなか興味深い。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200410072" title="200410072" href="200410a.html#200410072">■</a> 
+<a href="http://weatherfox.mozdev.org/">[Firefox] weatherfox</a></h3>
+<p>
+楽しい。さいたまがないと思ったらOmiyaを発見。
+でも本当に大宮かどうか確認できない。まあいいや。
+風速はやっぱkm/hで表現したほうがピンとくるね。
+</p>
+
+<p>
+てゆか三連休雨マークだよ。台風も来てるし。
+</p>
+<!-- section end -->
+</div>
+<!-- 2004/10/07 end -->
+
+
+
+<hr class="hide">
+<!-- 2004/10/08 start -->
+<h2><a name="20041008" href="200410a.html#20041008">2004-10-08 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="200410081" title="200410081" href="200410a.html#200410081">■</a> 
+[Firefox] Bloglinesがまだはみでる</h3>
+<p>
+調べてみると&lt;li&gt;の中身が長いとそれにつられて全体がはみでちゃうみたい。
+</p>
+<pre>
+div.content-main .item td.article li {
+  width:auto !important;
+  overflow:auto !important;
+}
+</pre>
+<p>
+とするとあちこちがスクロールバーだらけになって使いもんならないし、どうしたもんかな。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200410082" title="200410082" href="200410a.html#200410082">■</a> 
+<a href="http://www.tv-asahi.co.jp/torisetsu/">[TV] トリセツ</a></h3>
+<p>
+総集編を見てたら樹齢1000年の
+
+<a href="http://www.tv-asahi.co.jp/torisetsu/contents/100/057/index.html">盆栽</a>
+が出てきた。
+うーむ。盆栽ってそんな昔からあるものなのか。
+</p>
+<!-- section end -->
+</div>
+<!-- 2004/10/08 end -->
+
+
+
+<hr class="hide">
+<!-- 2004/10/09 start -->
+<h2><a name="20041009" href="200410a.html#20041009">2004-10-09 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="200410091" title="200410091" href="200410a.html#200410091">■</a> 
+[生活] 台風22号</h3>
+<p>
+あっという間に行ってしまった。でも来る前に大量に降った雨のおかげで井戸が濁って水が飲めない。
+いや浄水器があったんだった。
+ふだんはスルーして浄水器の機能を使ってないから、
+蛇口についてるのに存在すら忘れていた。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200410092" title="200410092" href="200410a.html#200410092">■</a> 
+[RSS] RSS Readerに求められるもの</h3>
+<p>
+最近コメントspamとか大流行で、RSS Readerにもフィルタが欲しいと思ってみたり。
+やはりBloglinesをバックエンドにしてWeb Servicesを利用するのがいいんだろうか。
+コメント自体あまり興味がないので、なくてもいいんだよなあ。
+</p>
+
+<p>
+あ、ユーザスタイルシートでコメントのアイテムごと表示しない設定にすればいいのか。
+って、できるかどうか知らないけど。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200410093" title="200410093" href="200410a.html#200410093">■</a> 
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-core/03482">[Ruby] 1.8.2 release?</a></h3>
+<p>
+いやびっくりしたよ。Subjectだけ読んでdaveがリリースしちゃったのかと思った。
+</p>
+<!-- section end -->
+</div>
+<!-- 2004/10/09 end -->
+
+
+
+<hr class="hide">
+<!-- 2004/10/10 start -->
+<h2><a name="20041010" href="200410a.html#20041010">2004-10-10 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="200410101" title="200410101" href="200410a.html#200410101">■</a> 
+<a href="http://openlab.ring.gr.jp/k16/htmllint/htmllint.html">[HTML] Another HTML-lint gateway</a></h3>
+<p>
+久し振りに思い出して、この日記をチェックしてみたら-139点をくらった。
+せめてプラスに持ってく努力をしてみる。
+というか、HTML 3.2をHTML 4.01にするだけで85点になった。
+そこがそもそもの間違いだよ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200410102" title="200410102" href="200410a.html#200410102">■</a> 
+[TV] ギター侍</h3>
+<p>
+なんとなく録画しておいた「エンタの神様」にギター侍が出ていた。
+これが本物か。
+</p>
+
+<p>
+波田陽区という芸名は当初波田ニューヨークだったが、
+今さらニューでもないなとニューを取ったらしい。
+</p>
+<!-- section end -->
+</div>
+<!-- 2004/10/10 end -->
+
+<hr>
+<div>
+<a href="200409c.html">&lt;Prev(,)</a> | 
+<a href="200410b.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

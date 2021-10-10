@@ -1,0 +1,306 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2007-11-b</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="200711a.html">
+<link rel="next" href="200711c.html">
+
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2007年11月中旬〜</p>
+<hr>
+<div>
+<a href="200711a.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="200711c.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2007/11/11 start -->
+<h2><a name="20071111" href="200711b.html#20071111">2007-11-11 (Sun)</a></h2>
+<!-- 2007-11-12 01:28:05 -->
+
+<div class="entry1">
+<h3><a name="200711111" title="200711111" href="200711b.html#200711111">■</a> 
+[Fedora 8] sshがすぐ切れる</h3>
+<p>
+放っておくとすぐsshが切れるようになった。<br>
+
+<a href="200402c.html#200402261">過去</a>を調べて~/.ssh/configに
+</p>
+
+<pre>
+ServerAliveInterval 60
+</pre>
+<p>
+を追加。
+</p>
+<!-- section end -->
+</div>
+<!-- 2007/11/11 end -->
+
+
+
+<hr class="hide">
+<!-- 2007/11/12 start -->
+<h2><a name="20071112" href="200711b.html#20071112">2007-11-12 (Mon)</a></h2>
+<!-- 2007-11-13 02:21:54 -->
+
+<div class="entry1">
+<h3><a name="200711121" title="200711121" href="200711b.html#200711121">■</a> 
+<a href="http://blog.fkoji.com/2007/11101546.html">[Greasemonkey] 「g」で本文を取得するlivedoor Reader用Greasemonkeyスクリプト</a></h3>
+<p>
+これはすばらしい。<br>
+fastladder.comもhttp://fastladder.com/reader/*を追加したら動いた。
+</p>
+
+<p>
+朝日新聞なら
+</p>
+
+<pre>
+&quot;http://www.asahi.com&quot;: {
+  &quot;c&quot;: true,
+  &quot;s&quot;: '&lt;div class=&quot;kiji&quot;&gt;',
+  &quot;e&quot;: '&lt;/div&gt;'
+}
+</pre>
+<p>
+でいけた。画像は出てこないけど。
+</p>
+<!-- section end -->
+</div>
+<!-- 2007/11/12 end -->
+
+
+
+<hr class="hide">
+<!-- 2007/11/13 start -->
+<h2><a name="20071113" href="200711b.html#20071113">2007-11-13 (Tue)</a></h2>
+<!-- 2007-11-14 02:01:52 -->
+
+<div class="entry1">
+<h3><a name="200711131" title="200711131" href="200711b.html#200711131">■</a> 
+<a href="http://golf.shinh.org/p.rb?Print+numbers++_Revised_">[Golf] Print numbers  _Revised_</a></h3>
+<p>
+あれ？いつのまにかRevisedになってた。<br>
+Bash版は10000足すだけというか、この数列が解けない。
+</p>
+<!-- section end -->
+</div>
+<!-- 2007/11/13 end -->
+
+
+
+<hr class="hide">
+<!-- 2007/11/14 start -->
+<h2><a name="20071114" href="200711b.html#20071114">2007-11-14 (Wed)</a></h2>
+<!-- 2007-11-15 22:00:00 -->
+
+<div class="entry1">
+<h3><a name="200711141" title="200711141" href="200711b.html#200711141">■</a> 
+<a href="http://golf.shinh.org/p.rb?Print+numbers++_Revised_">[Golf] Print numbers  _Revised_</a></h3>
+<p>
+うささんに意味を教えてもらった。<br>
+意味というかコードを見るまでわからんちんではあったが。
+</p>
+<!-- section end -->
+</div>
+<!-- 2007/11/14 end -->
+
+
+
+<hr class="hide">
+<!-- 2007/11/15 start -->
+<h2><a name="20071115" href="200711b.html#20071115">2007-11-15 (Thu)</a></h2>
+<!-- 2007-11-16 01:16:07 -->
+
+<div class="entry1">
+<h3><a name="200711151" title="200711151" href="200711b.html#200711151">■</a> 
+<a href="http://ja.doukaku.org/77/">[Golf] 変形Fizz-Buzz問題</a></h3>
+<p>
+seq --helpしたら-fなどというオプションが見つかったので、<br>
+GNU sedと
+<a href="http://ja.doukaku.org/comment/4066/">組み合わせてみた</a>。
+</p>
+
+<pre>
+$ seq -f%2g: 20|sed '3~3s/$/Fizz/;5~5s/$/Buzz/;s/:$/:hoge/'
+ 1:hoge
+ 2:hoge
+ 3:Fizz
+ 4:hoge
+ 5:Buzz
+ 6:Fizz
+ 7:hoge
+ 8:hoge
+ 9:Fizz
+10:Buzz
+11:hoge
+12:Fizz
+13:hoge
+14:hoge
+15:FizzBuzz
+16:hoge
+17:hoge
+18:Fizz
+19:hoge
+20:Buzz
+</pre>
+
+<!-- section end -->
+</div>
+<!-- 2007/11/15 end -->
+
+
+
+<hr class="hide">
+<!-- 2007/11/16 start -->
+<h2><a name="20071116" href="200711b.html#20071116">2007-11-16 (Fri)</a></h2>
+<!-- 2007-11-17 02:33:55 -->
+
+<div class="entry1">
+<h3><a name="200711161" title="200711161" href="200711b.html#200711161">■</a> 
+<a href="http://golf.shinh.org/p.rb?Factorial">[Golf] Factorial</a></h3>
+<p>
+全然気づかずに夜中に始めた。eval &quot;&quot;はnilになるんだな。
+</p>
+<!-- section end -->
+</div>
+<!-- 2007/11/16 end -->
+
+
+
+<hr class="hide">
+<!-- 2007/11/17 start -->
+<h2><a name="20071117" href="200711b.html#20071117">2007-11-17 (Sat)</a></h2>
+<!-- 2007-11-18 03:06:19 -->
+
+<div class="entry1">
+<h3><a name="200711171" title="200711171" href="200711b.html#200711171">■</a> 
+ウサビッチ</h3>
+<p>
+20話まで見た。やばい。腹が痛い。
+</p>
+<!-- section end -->
+</div>
+<!-- 2007/11/17 end -->
+
+
+
+<hr class="hide">
+<!-- 2007/11/18 start -->
+<h2><a name="20071118" href="200711b.html#20071118">2007-11-18 (Sun)</a></h2>
+<!-- 2007-11-19 02:17:31 -->
+
+<div class="entry1">
+<h3><a name="200711181" title="200711181" href="200711b.html#200711181">■</a> 
+[Thunderbird] お気に入りフォルダ</h3>
+<p>
+今頃になってThunderbirdにお気に入りフォルダという機能があることに気づいた。<br>
+Gmailのラベルがちょっとうざいと思っていたので、<br>
+さっそく受信トレイだけにしてみてすっきり。
+</p>
+<!-- section end -->
+</div>
+<!-- 2007/11/18 end -->
+
+
+
+<hr class="hide">
+<!-- 2007/11/19 start -->
+<h2><a name="20071119" href="200711b.html#20071119">2007-11-19 (Mon)</a></h2>
+<!-- 2007-11-20 01:10:50 -->
+
+<div class="entry1">
+<h3><a name="200711191" title="200711191" href="200711b.html#200711191">■</a> 
+<a href="http://wiki.mozilla.org/Prism">[Firefox] Prism</a></h3>
+<p>
+
+<a href="http://wiki.mozilla.org/Prism#Bookmarklet">このbookmarklet</a>が便利。まずは
+<a href="http://www.seeqpod.com/music/">SeeqPod</a>で作ってみた。<br>
+結構Firefoxが死ぬんだよねえ。<br>
+あ、でもFedora 8になってからはあまり死んでないか。
+</p>
+<!-- section end -->
+</div>
+<!-- 2007/11/19 end -->
+
+
+
+<hr class="hide">
+<!-- 2007/11/20 start -->
+<h2><a name="20071120" href="200711b.html#20071120">2007-11-20 (Tue)</a></h2>
+<!-- 2007-11-21 01:58:56 -->
+
+<div class="entry1">
+<h3><a name="200711201" title="200711201" href="200711b.html#200711201">■</a> 
+<a href="http://golf.shinh.org/p.rb?packed+UTF+9">[Golf] packed UTF 9</a></h3>
+<p>
+Rubyはちゃんとビット演算しようと思ってたけど、<br>
+他の問題にかまけてる間にすっかり解くの忘れてた。<br>
+Perlはやっぱりみんな同じアルゴリズムか。
+</p>
+<!-- section end -->
+</div>
+<!-- 2007/11/20 end -->
+
+<hr>
+<div>
+<a href="200711a.html">&lt;Prev(,)</a> | 
+<a href="200711c.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

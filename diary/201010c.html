@@ -1,0 +1,417 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2010-10-c</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="201010b.html">
+<link rel="next" href="201011a.html">
+
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2010年10月下旬〜</p>
+<hr>
+<div>
+<a href="201010b.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="201011a.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2010/10/21 start -->
+<h2><a name="20101021" href="201010c.html#20101021">2010-10-21 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="201010211" title="201010211" href="201010c.html#201010211">■</a> 
+[Redmine] Redmineからのメールがたまに化ける件</h3>
+<p>
+体調不良のため寝ていたが、redmineからメールが化ける件をちょっと調べた。<br>
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-dev/42435">[ruby-dev:42435]</a>がThunderbirdでも化けていてやはり元が悪いんだろうと推察。
+</p>
+<p>
+化けるのはbodyを生のiso-2022-jpで送ってるのにQuoted-printable指定してるのが原因。<br>
+これでは=が含まれる文字があるとそこから化けてしまう。<br>
+</p>
+<p>
+具体的にはよく使われる「書」がそれに当たる。
+</p>
+<pre>
+% echo 書 | nkf -Wj | od -tx1z
+0000000 1b 24 42 3d 71 1b 28 42 0a                       &gt;.$B=q.(B.&lt;
+0000011
+</pre>
+<p>
+そういえばSubjectも生のiso-2022-jpだな。今となっては珍しい。
+</p>
+<!-- section end -->
+</div>
+<!-- 2010/10/21 end -->
+
+
+
+<hr class="hide">
+<!-- 2010/10/22 start -->
+<h2><a name="20101022" href="201010c.html#20101022">2010-10-22 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="201010221" title="201010221" href="201010c.html#201010221">■</a> 
+[ドラマ] 相棒</h3>
+<p>
+やっとシーズン6まで見終わった。シーズン7からはテレビで見てるので追いついたことになる。<br>
+DVDと再放送と今やってるシーズン9と同時に見てるが、全然混乱しないとことがなんかすごい。
+</p>
+<!-- section end -->
+</div>
+<!-- 2010/10/22 end -->
+
+
+
+<hr class="hide">
+<!-- 2010/10/23 start -->
+<h2><a name="20101023" href="201010c.html#20101023">2010-10-23 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="201010231" title="201010231" href="201010c.html#201010231">■</a> 
+<a href="http://golf.shinh.org/p.rb?perfect+square+free">[Golf] perfect square free</a></h3>
+<p>
+<a href="http://golf.shinh.org/reveal.rb?perfect+square+free/leonid_1287196468&amp;rb">$:.fill</a>か。これはおれも気づいてたんだけど環境依存なんだよね。ゴルフ場だと$:の要素は
+</p>
+<pre>
+/usr/local/lib/site_ruby/1.8
+/usr/local/lib/site_ruby/1.8/i486-linux
+/usr/local/lib/site_ruby/1.8/i386-linux
+/usr/local/lib/site_ruby
+/usr/lib/ruby/vendor_ruby/1.8
+/usr/lib/ruby/vendor_ruby/1.8/i486-linux
+/usr/lib/ruby/vendor_ruby
+/usr/lib/ruby/1.8
+/usr/lib/ruby/1.8/i486-linux
+/usr/lib/ruby/1.8/i386-linux
+.
+</pre>
+<p>
+と11個あるのでうまくいく。0,1,4,...,100とまさにぴったりはまる。<br>
+でもUbuntu 10.10のruby 1.8.7だと
+</p>
+<pre>
+/usr/local/lib/site_ruby/1.8
+/usr/local/lib/site_ruby/1.8/x86_64-linux
+/usr/local/lib/site_ruby
+/usr/lib/ruby/vendor_ruby/1.8
+/usr/lib/ruby/vendor_ruby/1.8/x86_64-linux
+/usr/lib/ruby/vendor_ruby
+/usr/lib/ruby/1.8
+/usr/lib/ruby/1.8/x86_64-linux
+.
+</pre>
+<p>
+のように9個なので0,1,4,...,64と81,100が除外されずに失敗する。<br>
+?dを99にすれば100には対処できるが81はどうやっても無理。<br>
+ゴルフ場の個数までは確認しなかったのが敗因だな。
+</p>
+<p>
+この問題の絶妙なところは3以上ってとこ。これが2以上だと
+</p>
+<pre>
+a=*2..99
+p a-a.map{|x|x*x}
+</pre>
+<p>
+とあまり面白みがない。
+</p>
+<!-- section end -->
+</div>
+<!-- 2010/10/23 end -->
+
+
+
+<hr class="hide">
+<!-- 2010/10/24 start -->
+<h2><a name="20101024" href="201010c.html#20101024">2010-10-24 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="201010241" title="201010241" href="201010c.html#201010241">■</a> 
+<a href="http://www.commandlinefu.com/commands/view/6819/show-the-changed-files-in-your-git-repo">Show the changed files in your GIT repo</a></h3>
+<p>
+なんというまだろっこしさ。
+</p>
+<pre>
+% git status | awk '/modified/{print $3}'
+</pre>
+<p>
+で十分だよね。
+</p>
+<!-- section end -->
+</div>
+<!-- 2010/10/24 end -->
+
+
+
+<hr class="hide">
+<!-- 2010/10/25 start -->
+<h2><a name="20101025" href="201010c.html#20101025">2010-10-25 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="201010251" title="201010251" href="201010c.html#201010251">■</a> 
+[Tips] crontabで隔週実行</h3>
+<p>
+crontabで隔週金曜日に実行する方法について調べてたら結構面倒なことのようで。<br>
+一見fri/2でよさげだが、これは第1,3,5金曜日を意味するので、<br>
+5週目があると翌週が1週目になり連続してしまう。<br>
+つまりあくまでも月の中だけで閉じた話になっている。<br>
+</p>
+<p>
+じゃあ、date +%Wを使うのはどうだろうと
+</p>
+<pre>
+0 0 * * fri test $(expr $(date +\%W) \% 2) = 1 &amp;&amp; command
+</pre>
+<p>
+としてみたが、定義を見てつらつら考えてみると
+</p>
+<pre>
+  %W  年の週数, 月曜が週の初め (00..53)
+</pre>
+<p>
+月単位が年単位になっただけで、年によっては年末年始で破綻しそう。<br>
+つまりどこかからの起点で考える必要がある。dateだと+%sしかない。
+</p>
+<pre>
+  %s    1970-01-01からの秒数 00:00:00 UTC
+</pre>
+<p>
+なんか日本語訳が変だが、1970-01-01 00:00:00 UTCからの秒数だな。<br>
+これを60*60*24*7=604800で割ればよさげだ。<br>
+ただし、1970-01-01は木曜日なのでここを起点にするのは得策ではない。<br>
+週の始まりを日曜日とするなら1970-01-04を起点にしたほうがいいだろう。<br>
+JSTも考慮すると結局オフセットは
+</p>
+<pre>
+% date -d 1970-01-04 +%s
+226800
+</pre>
+<p>
+となる。以上をまとめると以下のようなcrontabになる。
+</p>
+<pre>
+0 0 * * fri test $(expr \( $(date +\%s) - 226800 \) / 604800 \% 2) = 1 &amp;&amp; command
+</pre>
+<p>
+と、長々とdateを使う方法を書いてきたが、実はflagファイルを使えばもっと簡単にできる。
+</p>
+<pre>
+0 0 * * fri if [ -f flag ];then rm flag; else touch flag; command; fi
+</pre>
+<p>
+flagファイルを作ったり消したりを繰り返せばいい。
+</p>
+<pre>
+0 0 * * fri mkdir flag 2&gt; /dev/null &amp;&amp; command || rmdir flag
+</pre>
+<p>
+ってのもありかな。
+</p>
+<!-- section end -->
+</div>
+<!-- 2010/10/25 end -->
+
+
+
+<hr class="hide">
+<!-- 2010/10/26 start -->
+<h2><a name="20101026" href="201010c.html#20101026">2010-10-26 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="201010261" title="201010261" href="201010c.html#201010261">■</a> 
+<a href="http://www.kt.rim.or.jp/%7ekbk/zakkicho/10/zakkicho1010c.html#D20101025-2">[Ruby] list comprehension</a></h3>
+<p>
+あれ？each_with_indexでいいような。
+</p>
+<pre>
+% irb
+&gt;&gt; x = [*&quot;A&quot;..&quot;Z&quot;].shuffle
+=&gt; [&quot;H&quot;, &quot;K&quot;, &quot;T&quot;, &quot;N&quot;, &quot;O&quot;, &quot;I&quot;, &quot;J&quot;, &quot;Z&quot;, &quot;Y&quot;, &quot;U&quot;, &quot;P&quot;, &quot;B&quot;, &quot;R&quot;, &quot;E&quot;, &quot;Q&quot;, &quot;S&quot;, &quot;X&quot;, &quot;L&quot;, &quot;A&quot;, &quot;F&quot;, &quot;C&quot;, &quot;M&quot;, &quot;W&quot;, &quot;V&quot;, &quot;G&quot;, &quot;D&quot;]
+&gt;&gt; x.each_with_index.max[1]
+=&gt; 7
+&gt;&gt; RUBY_DESCRIPTION
+=&gt; &quot;ruby 1.8.7 (2010-06-23 patchlevel 299) [x86_64-linux]&quot;
+</pre>
+
+<!-- section end -->
+</div>
+<!-- 2010/10/26 end -->
+
+
+
+<hr class="hide">
+<!-- 2010/10/27 start -->
+<h2><a name="20101027" href="201010c.html#20101027">2010-10-27 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="201010271" title="201010271" href="201010c.html#201010271">■</a> 
+後でまとめて読む</h3>
+<p>
+いっぱいたまった後で読むをひたすら読みまくっていたら、すでに読めない記事もあった。<br>
+livedoorニュースだ。まあでもさすがに10日ぐらい経ってる記事はもう読まなくてもいいようだ。<br>
+Read It Laterはbookmarkletより拡張をインストールしたほうが便利だ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2010/10/27 end -->
+
+
+
+<hr class="hide">
+<!-- 2010/10/28 start -->
+<h2><a name="20101028" href="201010c.html#20101028">2010-10-28 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="201010281" title="201010281" href="201010c.html#201010281">■</a> 
+[zsh] 今日のzsh</h3>
+<p>
+manualのhistoryのとこを読んでたが、普通に変数でも使えるとわかった。
+<pre>
+% a=ls
+% echo $a:u
+LS
+% echo ${(U)a}
+LS
+% pwd
+/home/eban
+% echo $a:a
+/home/eban/ls
+% echo $a:c
+/bin/ls
+</pre>
+</p>
+<p>
+:aで絶対パスにしてくれる。これは地味に便利かも。<br>
+:cでPATHを探して最初に見つかったコマンド。
+
+</p>
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="201010282" title="201010282" href="201010c.html#201010282">■</a> 
+[Ruby] warning: iconv will be deprecated in the future, use String#encode instead.</h3>
+<p>
+そろそろiconv一掃するか。まずはこの日記のRSS出力の部分を。<br>
+openの引数を&quot;r:iso-2022-jp:utf-8&quot;にすればよさそうだ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2010/10/28 end -->
+
+
+
+<hr class="hide">
+<!-- 2010/10/29 start -->
+<h2><a name="20101029" href="201010c.html#20101029">2010-10-29 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="201010291" title="201010291" href="201010c.html#201010291">■</a> 
+ちくわしか持ってねえ</h3>
+<p>
+あまりに懐しくてWhat's Michaelの6巻を読んで確認した。<br>
+ちゃんと持ってた。初版だった。もう20年以上前なんだな。
+</p>
+<!-- section end -->
+</div>
+<!-- 2010/10/29 end -->
+
+
+
+<hr class="hide">
+<!-- 2010/10/30 start -->
+<h2><a name="20101030" href="201010c.html#20101030">2010-10-30 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="201010301" title="201010301" href="201010c.html#201010301">■</a> 
+jarpディスククラッシュ</h3>
+<p>
+というわけで、しばらくお休み。と書いても意味ないんだが。
+</p>
+<!-- section end -->
+</div>
+<!-- 2010/10/30 end -->
+
+
+
+<hr class="hide">
+<!-- 2010/10/31 start -->
+<h2><a name="20101031" href="201010c.html#20101031">2010-10-31 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="201010311" title="201010311" href="201010c.html#201010311">■</a> 
+[dlvr.it] dlvr.it Service Alert</h3>
+<p>
+サーバが死んでるのでdlvr.itから警告がやってきた。
+</p><blockquote><p>
+We have not been able to successfully retrieve the following feed continuously
+over a period of more than 24 hours. We will no longer attempt to retrieve it
+until you reactivate in your dlvr.it account. 
+</p></blockquote><p>
+ちゃんと機能してるねえ。dlvr.itは安定してるし結構いいよね。
+</p>
+<!-- section end -->
+</div>
+<!-- 2010/10/31 end -->
+
+<hr>
+<div>
+<a href="201010b.html">&lt;Prev(,)</a> | 
+<a href="201011a.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

@@ -1,0 +1,695 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2003-10-c</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="200310b.html">
+<link rel="next" href="200311a.html">
+
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2003年10月下旬〜</p>
+<hr>
+<div>
+<a href="200310b.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="200311a.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2003/10/21 start -->
+<h2><a name="20031021" href="200310c.html#20031021">2003-10-21 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="200310211" title="200310211" href="200310c.html#200310211">■</a> 
+[Mail] ruby-bugs, ruby-bugs-ja</h3>
+<p>
+たまにSpamAssassinをすり抜けて来るspamがあるので、
+ruby-talkで学習したデータベースをruby-bugs, ruby-bugs-jaで流用することにした。
+さすがに共有は無理だよなあ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2003/10/21 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/10/22 start -->
+<h2><a name="20031022" href="200310c.html#20031022">2003-10-22 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="200310221" title="200310221" href="200310c.html#200310221">■</a> 
+<a href="http://procps.sf.net/">[Soft] Procps 3.1.14</a></h3>
+<pre>
+Changes: Thread support is now fully working in ps. The H, -L, m, -m,
+and -T options all work now, with and without sorting. This feature
+requires an NPTL-capable glibc and a 2.6.0-test7 kernel; kernels as
+old as 2.2.xx still work without thread display. The &quot;top&quot; program
+display now works on a few more genuine serial terminals.
+</pre>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200310222" title="200310222" href="200310c.html#200310222">■</a> 
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-talk/84351">[Linux][Ruby] Rubyx</a></h3>
+<p>
+早く公開してくれないかなあ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2003/10/22 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/10/23 start -->
+<h2><a name="20031023" href="200310c.html#20031023">2003-10-23 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="200310231" title="200310231" href="200310c.html#200310231">■</a> 
+マンハッタンラブストーリー</h3>
+<p>
+たまに遅く帰ってきたら、全然録れてないよ。
+1時間も余裕見込んどいたのに、野球中継1時間50分延長だとぉ？
+近々再放送が入ること祈ろう。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200310232" title="200310232" href="200310c.html#200310232">■</a> 
+<a href="http://lunar-linux.org/">[Linux] Lunar Linux</a></h3>
+<p>
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-talk/84392">[ruby-talk:84392]</a></p>
+<pre>
+The current app management system is in bash, but there
+is talk of porting it to Ruby. Needless to say, I'm very
+much in favor of that. Some porting work has already been
+done by me and a couple of other developers.
+</pre>
+
+<!-- section end -->
+</div>
+<!-- 2003/10/23 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/10/24 start -->
+<h2><a name="20031024" href="200310c.html#20031024">2003-10-24 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="200310241" title="200310241" href="200310c.html#200310241">■</a> 
+<a href="http://www.catb.org/~esr/fetchmail/">[Soft] fetchmail 6.2.5</a></h3>
+<p>
+configureすると
+</p>
+<pre>
+You can ignore any makedepend error messages:
+&quot;/usr/include/assert.h&quot;:104:  defined __cplusplus ? __GNUC_PREREQ (2, 6) : __GNUC_PREREQ (2, 4)
+                                                                  ^--- expecting :
+</pre>
+<p>
+と怒られるが、メッセージ通り無視してmake。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200310242" title="200310242" href="200310c.html#200310242">■</a> 
+<a href="http://bogofilter.sf.net/">[Soft] Bogofilter 0.15.7</a></h3>
+<pre>
+Changes: This release supports mailboxes in ANT format and MH maildirs,
+can use QDBM as a database backend, and will use GSL (the GNU Scientific
+Library) if it is available. A port to RISC-OS has been added, and many
+bugfixes and updates have been made.
+</pre>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200310243" title="200310243" href="200310c.html#200310243">■</a> 
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-talk/84422">[Linux][Ruby] Rubyx</a></h3>
+<p>
+うーむ。Bitkeeperねえ。
+</p>
+<pre>
+% bk clone bk://ftp.rubyx.org/rubyx
+BitKeeper/etc/SCCS/s.config
+BitKeeper/etc/SCCS/s.ignore
+BitKeeper/etc/SCCS/x.cmark
+SCCS/s.ChangeSet
+SCCS/s.init
+SCCS/s.rubyx
+SCCS/s.strfile.rb
+260395 bytes uncompressed to 296151, 1.14X expansion
+Looking for, and removing, any uncommitted deltas...
+Removing any directories left empty ...
+Set parent to bk://ftp.rubyx.org/rubyx
+Running consistency check ...
+Clone completed successfully.
+% cd rubyx
+% bk co
+init 1.5: 1320 lines
+rubyx 1.125: 6467 lines
+strfile.rb 1.1: 192 lines
+% ls -l
+total 292
+drwxrwxr-x    6 watanabe ruby         4096 Oct 25 01:34 BitKeeper
+drwxrwxr-x    2 watanabe ruby         4096 Oct 25 01:34 SCCS
+-r-xr-xr--    1 watanabe ruby        41285 Oct 25 01:34 init
+-r-xr-xr-x    1 watanabe ruby       229829 Oct 25 01:34 rubyx
+-r--r--r--    1 watanabe ruby         7072 Oct 25 01:34 strfile.rb
+% wc rubyx
+   6467   15314  229829 rubyx
+</pre>
+<p>
+このrubyxを見てて最初に気になったのは
+</p>
+<pre>
+#!/bin/ruby -w
+</pre>
+<p>
+だ。そこに置くのか。
+</p>
+
+<p>
+なんかすごく見辛いインデントだと思ったら、ts=2だった。
+</p>
+
+<p>
+このrubyx一つで全部やってしまうようで、たとえばapacheのはこんな感じだ。
+</p>
+<pre>
+class Pkg_Apache &lt; Package
+  def initialize()
+    super('Apache HTTP server','2.0.47')
+    @versions={
+      '2.0.47'=&gt;[['http','www.oss.redundant.com',
+        '/pub/apache/httpd','httpd-2.0.47.tar.gz']]
+    }
+    needs('expat')
+  end
+  ...
+</pre>
+<p>
+そういうデータは分離してよ。切に。
+</p>
+
+<pre>
+% ruby rubyx --help
+You must run rubyx as root
+</pre>
+<p>
+helpにroot権限は要らないでしょ。
+</p>
+
+<p>
+どうもおいらとの相性はあまりよくないようだ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2003/10/24 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/10/25 start -->
+<h2><a name="20031025" href="200310c.html#20031025">2003-10-25 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="200310251" title="200310251" href="200310c.html#200310251">■</a> 
+[Video] MATRIX RELOADED</h3>
+<p>
+難しい。MATRIXにストーリーなぞ望んでないのに。
+明日もう一度見よう。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200310252" title="200310252" href="200310c.html#200310252">■</a> 
+<a href="http://www.alive-movie.com/">[Video] ALIVE</a></h3>
+<p>
+途中、対決/VERSUSというタイトルを見て、
+ひょっとしてと思ったらやっぱり出てきたよ、新庄君(いや名前は全然違う)。
+北村龍平はこの二人を余程気に入っているようで、使わないと気がすまないらしい。
+「
+<a href="http://www.azumi-movie.jp/index.html">あずみ</a>」にも出てるようだ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200310253" title="200310253" href="200310c.html#200310253">■</a> 
+[TV] ビートたけしのこんなはずでは!!</h3>
+<p>
+10年振りぐらいに浮田君を見る。ゴングショーが懐しい。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200310254" title="200310254" href="200310c.html#200310254">■</a> 
+[Ruby] 1.8.1</h3>
+<p>
+version.hが1.8.1になった。
+</p>
+<!-- section end -->
+</div>
+<!-- 2003/10/25 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/10/26 start -->
+<h2><a name="20031026" href="200310c.html#20031026">2003-10-26 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="200310261" title="200310261" href="200310c.html#200310261">■</a> 
+最近気になるもの</h3>
+<p>
+<a href="http://www.cmake.org">CMake</a><br>
+<a href="http://search.cpan.org/author/SIMON/Mail-Audit-2.1/">Mail::Audit</a></p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200310262" title="200310262" href="200310c.html#200310262">■</a> 
+<a href="http://ftp.ruby-lang.org/pub/ruby/binaries/">[Ruby] Ruby Binaries</a></h3>
+<p>
+1.6は1.6/へ移動させた。
+それにともないsetup.iniも1.8を指すようになったので混乱を生じるかもしれない。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200310263" title="200310263" href="200310c.html#200310263">■</a> 
+[DJGPP][Linux] Linux上にDJGPPのクロスコンパイラを作る(GCC 3.3.2)</h3>
+<p>
+用意するもの:
+</p>
+<pre>
+djcrx203.zip, gcc332s2.zip, gcc-3.3.2.tar.bz2, binutils-2.14.tar.bz2
+</pre>
+<p>
+djgppのファイルはたとえば
+<a href="ftp://ftp.iij.ad.jp/pub/djgpp/current/v2/">v2</a>や
+<a href="ftp://ftp.iij.ad.jp/pub/djgpp/current/v2gnu/">v2gnu</a>にある。
+手順はdjcrx203.zipに付属するcross/howto.32を参考に。
+</p>
+<pre>
+% mkdir -p packages/cross
+% cd packages
+</pre>
+<p>
+ここに上記の*.zipと*.tar.bz2を置く。
+</p>
+<pre>
+% cd cross
+% unzip -a ../djcrx203.zip
+% unzip -a ../gcc32s2.zip
+% chmod +x unpack-gcc.sh
+% ./unpack-gcc.sh ../gcc-3.3.2.tar.gz
+</pre>
+<p>
+これでgccのパッチあては終了。
+</p>
+<pre>
+% cd gnu
+% tar xfv ../../binutils-2.14.tar.bz2 --bz
+</pre>
+<p>
+binutilsはそのままオリジナルが使える。
+あとは普通にconfigureしてmakeすればいい。でも今日は時間切れ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2003/10/26 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/10/27 start -->
+<h2><a name="20031027" href="200310c.html#20031027">2003-10-27 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="200310271" title="200310271" href="200310c.html#200310271">■</a> 
+[DJGPP][Linux] Linux上にDJGPPのクロスコンパイラを作る(GCC 3.3.2)</h3>
+<pre>
+% mkdir -p /usr/local/djgpp/i586-pc-msdosdjgpp
+% cd cross
+% cp -av include lib /usr/local/djgpp/i586-pc-msdosdjgpp
+% gcc -Os -s -o /usr/local/djgpp/bin/stubify src/stub/stubify.c
+% cd gnu/binutils-2.14
+% CFLAGS=-Os CXXFLAGS=-Os ./configure \
+  --target=i586-pc-msdosdjgpp --disable-nls \
+  --without-included-gettext --without-catgets \
+  --disable-dependency-tracking --prefix=/usr/local/djgpp
+% make all install
+% cd ../gcc-3.32
+% CFLAGS=-Os CXXFLAGS=-Os ./configure \
+  --target=i586-pc-msdosdjgpp --enable-languages=c++ \
+  --disable-nls --without-included-gettext --without-catgets \
+  --prefix=/usr/local/djgpp
+% make
+&lt;途中略&gt;
+getpwd.c: In function `getpwd':
+getpwd.c:86: error: `PATH_MAX' undeclared (first use in this function)
+getpwd.c:86: error: (Each undeclared identifier is reported only once
+getpwd.c:86: error: for each function it appears in.)
+</pre>
+<p>
+うーむ。PATH_MAXは&lt;limits.h&gt;にあるんだけどな。
+よくわからんが、-DPATH_MAX=512を追加してみる。
+さらにlibstdc++-v3/testsuiteで_U, _L, _N等がないとエラーになる。
+testsuiteはどうせ要らないから
+i586-pc-msdosdjgpp/libstdc++-v3/Makefileを直接いじって、
+SUBDIRSからtestsuiteを外す。
+あとはmake installで終了。
+</p>
+<!-- section end -->
+</div>
+<!-- 2003/10/27 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/10/28 start -->
+<h2><a name="20031028" href="200310c.html#20031028">2003-10-28 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="200310281" title="200310281" href="200310c.html#200310281">■</a> 
+[DJGPP][Linux] GCC 3.3.2</h3>
+<p>
+2.95.2, 2.95.3のときもlimits.hをいじってた。
+</p>
+<pre>
+% diff -u1 limits.h{.bak,}
+--- limits.h.bak        2000-01-28 01:15:24.000000000 +0900
++++ limits.h    2000-01-28 01:54:09.000000000 +0900
+@@ -7,2 +7,9 @@
+ 
++#define LINK_MAX                1
++#define MAX_CANON               126
++#define MAX_INPUT               126
++#define NAME_MAX                12      /* 8.3 */
++#define PATH_MAX                512     /* for future expansion */
++#define PIPE_BUF                512     /* but there aren't any pipes */
++
+ /* Number of bits in a `char'.  */
+</pre>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200310282" title="200310282" href="200310c.html#200310282">■</a> 
+[Ruby] ruby-talk</h3>
+<p>
+昨日の話ではあるが、
+<a href="http://www.fml.org/software/fml/Japanese/filter/5.html#C5S1">フィルタルールの事例</a>を参考にして、cfに
+</p>
+<pre>
+&amp;ADD_CONTENT_HANDLER('multipart/.*', 'text/plain', 'allow');
+&amp;ADD_CONTENT_HANDLER('multipart/.*', 'text/html', 'strip+notice');
+</pre>
+<p>
+を追加した。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200310283" title="200310283" href="200310c.html#200310283">■</a> 
+<a href="http://www.apache.org/dist/httpd/Announcement2.txt">[Soft] Apache 2.0.48</a></h3>
+<p>
+更新。
+</p>
+<!-- section end -->
+</div>
+<!-- 2003/10/28 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/10/29 start -->
+<h2><a name="20031029" href="200310c.html#20031029">2003-10-29 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="200310291" title="200310291" href="200310c.html#200310291">■</a> 
+[Book] Google Hacks</h3>
+<p>
+日本語訳。1/3ぐらい読んだが、いまいち物足りない。
+英語でしか使えないような技だらけだからか？
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200310292" title="200310292" href="200310c.html#200310292">■</a> 
+[Ruby] ruby-talk</h3>
+<p>
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-talk/84547">これ</a>を見るとmultipartのPGPなメールもstripしてしまってるような気がする。
+ちとまずいか？
+</p>
+<!-- section end -->
+</div>
+<!-- 2003/10/29 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/10/30 start -->
+<h2><a name="20031030" href="200310c.html#20031030">2003-10-30 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="200310301" title="200310301" href="200310c.html#200310301">■</a> 
+[Ruby] Ruby 1.8.1 preview1</h3>
+<p>
+出たけど、ext/syck/yamlbyte.hが入ってないのでmakeは失敗する。
+やはりMANIFESTは自動で作らないとだめだな。
+ま、それならMANIFEST自体必要ないわけだけど。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200310302" title="200310302" href="200310c.html#200310302">■</a> 
+<a href="200310b.html#200310162">マンハッタンラブストーリー</a></h3>
+<p>
+Hはハルコか。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200310303" title="200310303" href="200310c.html#200310303">■</a> 
+[Ruby] ruby-bugs-ja</h3>
+<p>
+<a href="200310c.html#200310211">ruby-talkで学習したデータベースを流用した</a>せいで日本語メールがspamと判断されてしまった。
+日本語hamを食わせねば。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200310304" title="200310304" href="200310c.html#200310304">■</a> 
+<a href="http://homepage1.nifty.com/~tetsu/ruby/diary/0310.html#30">version.hからバージョンを取り出す</a></h3>
+<pre>
+VAR=`grep RUBY_VERSION version.h | head -1 | awk '{print $3}' | tr -d '&quot;'`
+</pre>
+<p>
+RUBY_VERSION_CODEがあるから、head -1してるみたいだけど、
+</p>
+<pre>
+VAR=`grep 'RUBY_VERSION ' version.h | awk '{print $3}' | tr -d '&quot;'`
+</pre>
+<p>
+とすればheadを減らせる。RUBY_VERSIONももっと短くてもいい。
+さらにそれをawkにやらせれば
+</p>
+<pre>
+VAR=`awk '/VERSION /{print $3}' version.h | tr -d '&quot;'`
+</pre>
+<p>
+のようにgrepも要らない。最終的には
+</p>
+<pre>
+VAR=`awk '/VERSION /{print substr($3,2,length($3)-2)}' version.h`
+</pre>
+<p>
+とすればawkだけでできるが、って長くなってるじゃん。
+</p>
+
+<p>
+sedならこんな感じ。
+</p>
+<pre>
+VAR=`sed -n '/VERSION /s/.*&quot;\(.*\)&quot;/\1/p' version.h`
+</pre>
+
+<p>
+GNU grep 2.5の-Pと-oを使えば
+</p>
+<pre>
+VAR=`grep -P -o '\d+\.\d+\.\d+' version.h`
+</pre>
+<p>
+でいいが、それはまた別の話。
+</p>
+<!-- section end -->
+</div>
+<!-- 2003/10/30 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/10/31 start -->
+<h2><a name="20031031" href="200310c.html#20031031">2003-10-31 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="200310311" title="200310311" href="200310c.html#200310311">■</a> 
+<a href="200310c.html#200310304">version.hからバージョンを取り出す</a></h3>
+<p>
+フィールドセパレータを指定すればもっと簡単になることに気づいた。
+</p>
+<pre>
+awk -F\&quot; '/VERSION /{print $2}' version.h
+</pre>
+<p>
+<a href="http://znz.s1.xrea.com/t/?date=20031031#p01">exprを使う</a>なら
+</p>
+<pre>
+expr &quot;`head -1 version.h`&quot; : '.*&quot;\(.*\)&quot;'
+</pre>
+<p>
+かなって、おお、awkと同じ長さだ。
+</p>
+
+<p>
+awkをそのままPerlで書くと
+</p>
+<pre>
+perl -F\&quot; -lane 'print $F[1] if /VERSION /' version.h
+</pre>
+<p>
+となり、Rubyだと
+</p>
+<pre>
+ruby -F\&quot; -lane 'print $F[1] if /VERSION /' version.h
+</pre>
+<p>
+となる。全く同じ。
+</p>
+
+<p>
+素直にPerlで書くなら
+</p>
+<pre>
+perl -lne 'print $1 if /VERSION &quot;(.+)&quot;/' version.h
+</pre>
+<p>
+かな。って、これもRubyでも同じだよ。
+</p>
+<pre>
+ruby -lne 'print $1 if /VERSION &quot;(.+)&quot;/' version.h
+</pre>
+<p>
+あとはputsを使うぐらいか。
+</p>
+<pre>
+ruby -ne 'puts $1 if /VERSION &quot;(.+)&quot;/' version.h
+</pre>
+<p>
+VAR=``の中で使うなら-lはなくてもいい。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200310312" title="200310312" href="200310c.html#200310312">■</a> 
+<a href="http://cygwin.com/ml/cygwin-announce/2003-10/msg00026.html">[Cygwin] Updated: gcc-3.3.1-3</a></h3>
+<p>
+Ada, C, C++, Fortran, Java, ObjC, Pascalとフル装備になった。
+</p>
+<!-- section end -->
+</div>
+<!-- 2003/10/31 end -->
+
+<hr>
+<div>
+<a href="200310b.html">&lt;Prev(,)</a> | 
+<a href="200311a.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

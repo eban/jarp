@@ -1,0 +1,637 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2002-7-c</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="200207b.html">
+<link rel="next" href="200208a.html">
+
+<link rel="stylesheet" type="text/css" href="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.css">
+<script async type="text/javascript" src="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.js"></script>
+<script type="text/javascript">
+<!--       
+$(document).ready(function() {
+  prettyPrint();
+});
+-->
+</script>
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2002年7月下旬〜</p>
+<hr>
+<div>
+<a href="200207b.html" accesskey=",">&lt;Older(,)</a> | 
+<a href="200208a.html" accesskey=".">Newer(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2002/07/21 start -->
+<h2><a name="20020721" href="200207c.html#20020721">2002-07-21 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="200207211" title="200207211" href="200207c.html#200207211">■</a> 
+Perl 5.8.0</h3>
+<p>
+patchlevel.hは予想通りだったが、make testは結局変わらず。
+logを見比べてみると、ひとつ見落としがあった。うーむ。
+</p>
+<pre>
+ext/B/t/o............................# Failed at ../ext/B/t/o.t line 45
+#      got '(foo) &lt;bar&gt;'
+# expected '[Compiling!'
+FAILED at test 7
+</pre>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200207212" title="200207212" href="200207c.html#200207212">■</a> 
+<a href="http://znz.s1.xrea.com/t/?date=20020720#p03">host,target,build</a></h3>
+<p>
+例えばgccを例に挙げると
+</p>
+<pre>
+--target=i686-pc-cygwin --host=i686-pc-cygwin --build=i686-pc-linux
+</pre>
+<p>
+ならCygwin用のgccをCygwin上で動くようにLinux上で作るという意味になります。
+実際Cygwinのパッケージはこのオプションで作られてます。
+</p>
+<pre>
+--target=i686-pc-cygwin --host=i686-pc-linux --build=i686-pc-linux
+</pre>
+<p>
+ならCygwin用のクロスのgccをLinux上で動くようにLinux上で作るという意味。
+この場合はhostとbuildが共通なので省略可能。
+</p>
+<pre>
+--target=sh-elf --host=i686-pc-cygwin --build=i686-pc-linux
+</pre>
+<p>
+ならsh-elf用のクロスのgccをCygwin上で動くようにLinux上で作るという意味。
+</p>
+
+<p>
+hostとbuildが違うときは、
+--hostで指定したプラットフォーム用のクロスコンパイラが必要。
+そのままコマンドのprefixになります。
+</p>
+
+<p>
+で、Ruby Binariesの場合は
+</p>
+<pre>
+--target=i386-cygwin --host=i686-pc-cygwin --build=i586-pc-linux-gnu
+--target=i386-mingw32 --host=i686-pc-cygwin --build=i586-pc-linux-gnu
+--target=i386-msddosdjgpp --host=i586-msdosdjgpp --build=i586-pc-linux-gnu
+</pre>
+<p>
+となってます。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/07/21 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/07/22 start -->
+<h2><a name="20020722" href="200207c.html#20020722">2002-07-22 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="200207221" title="200207221" href="200207c.html#200207221">■</a> 
+<a href="http://cygwin.com/ml/cygwin-announce/2002-07/msg00028.html">[Cygwin] New package: dpkg-1.10.4-1</a></h3>
+<p>
+そうきたか。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200207222" title="200207222" href="200207c.html#200207222">■</a> 
+Ogg Vorbis 1.0</h3>
+<p>
+記念にインストール。
+</p>
+<pre>
+Rate:         0.3625
+</pre>
+<p>
+と相変わらず遅いが、一年前に試したときより小さくなってる。
+-qのdefaultが違うのかもしれないけど。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200207223" title="200207223" href="200207c.html#200207223">■</a> 
+濱マイク</h3>
+<p>
+今日は青だった。これで青黄黄青か？
+</p>
+
+<p>
+<!-- そういえば第2回目の予告で次回は「サクラサクヒ」とYOUが言ってた気がするんだけど、順番が入れ替わった？ -->
+</p>
+<!-- section end -->
+</div>
+<!-- 2002/07/22 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/07/23 start -->
+<h2><a name="20020723" href="200207c.html#20020723">2002-07-23 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="200207231" title="200207231" href="200207c.html#200207231">■</a> 
+<a href="http://homepage1.nifty.com/markey/memo/200207.html#072202">[Cygwin] gcj</a></h3>
+<pre>
+% cat HelloWorld.java
+public class HelloWorld {
+  public static void main(String[] args) {
+    System.out.println(&quot;Hello World&quot;);
+  }
+}
+% gcj --main=HelloWorld -Os -o hello HelloWorld.java
+% ./hello
+Hello World
+</pre>
+<p>
+--main=が必要らしい。サイズは
+</p>
+<pre>
+% ls -l hello.exe
+-rwxr-xr-x    1 watanabe ruby      2145601 Jul 23 13:47 hello.exe
+</pre>
+<p>
+と、とんでもなくでかい。stripすると1.3MBぐらいになる。
+最適化しないと余計な.stabsが残ってasが文句を言う。
+</p>
+<pre>
+% gcj --main=HelloWorld -o hello HelloWorld.java 
+/tmp/ccGZQxBb.s: Assembler messages:
+/tmp/ccGZQxBb.s:26: Warning: .stabs: description field '40002' too big, try a different debug format
+/tmp/ccGZQxBb.s:76: Warning: .stabs: description field '10001' too big, try a different debug format
+</pre>
+<p>
+Warningだから気にしなければいいのかもしれないけど。
+</p>
+<!-- section end -->
+</div>
+<!-- 2002/07/23 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/07/24 start -->
+<h2><a name="20020724" href="200207c.html#20020724">2002-07-24 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="200207241" title="200207241" href="200207c.html#200207241">■</a> 
+<a href="http://www.ruby-lang.org/en/raa-list.rhtml?name=scope-in-state">[Ruby] scope-in-state</a></h3>
+<p>
+
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-list/35618">そういうもの</a> だったのか。じゃ、jcode.rbも
+</p>
+<pre>
+module Jcode
+  module String
+    ...
+  end
+end
+</pre>
+<p>
+という構成にすればいいわけだ。早速実験。
+</p>
+<pre>
+% cat foo.rb
+#!/usr/local/bin/ruby -Ke
+
+require 'scope-in-state'
+
+module Jcode
+  module String
+    def chop
+      &quot;chop&quot;
+    end
+  end
+end
+
+ScopeJcode = ScopeInState.new(Jcode)
+
+p 'あい'.chop
+ScopeJcode.scope_in do
+  p 'あい'.chop
+end
+p 'あい'.chop
+% ruby foo.rb
+&quot;あ\244&quot;
+&quot;chop&quot;
+&quot;あ\244&quot;
+</pre>
+<p>
+なるほど。original_succ!とかのaliasをやめればいけそうだ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200207242" title="200207242" href="200207c.html#200207242">■</a> 
+[Cygwin] mount</h3>
+<p>
+いつの間にかdefaultが-sになってる。なぜ？
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/07/24 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/07/25 start -->
+<h2><a name="20020725" href="200207c.html#20020725">2002-07-25 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="200207251" title="200207251" href="200207c.html#200207251">■</a> 
+<a href="http://homepage1.nifty.com/markey/memo/200207.html#072501">[Cygwin] gcj</a></h3>
+<p>
+staticにlinkするとさらに1MBほど増えます。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200207252" title="200207252" href="200207c.html#200207252">■</a> 
+bash 2.05b</h3>
+<p>
+--enable-static-link --enable-minimal-configで作ってみる。
+COND_COMMAND, DPAREN_ARITHMETIC, ARITH_FOR_COMMANDを見ないとまずいね。
+
+<a href="../files/bash-2.05b-enable-minimal-config.patch">#if definedしとこう</a> 。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/07/25 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/07/26 start -->
+<h2><a name="20020726" href="200207c.html#20020726">2002-07-26 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="200207261" title="200207261" href="200207c.html#200207261">■</a> 
+<a href="http://freshmeat.net/projects/acrobatreader/">Acrobat Reader 5.06</a></h3>
+<pre>
+Changes: A security patch was applied to solve the famous
+/tmp/AdobeFnt06.lst.VUID security problem reported in
+http://online.securityfocus.com/archive/1/278984. 
+</pre>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/07/26 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/07/27 start -->
+<h2><a name="20020727" href="200207c.html#20020727">2002-07-27 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="200207271" title="200207271" href="200207c.html#200207271">■</a> 
+[Ruby] 1.7.2 (2002-07-26)</h3>
+<p>
+今回問題になっているのは、Regexp.quoteのバグと、
+RegexpとStringが使える場所でStringを使ったときにquoteするという仕様変更。
+困ったことにChangeLogには書かれてない。
+バグのほうはruby自身を直せばいいだけだが、
+仕様変更のほうはスクリプトを直さないといけない。
+</p>
+<pre>
+% ruby-1.7.2 -e 'p Regexp.quote(&quot;1.7&quot;)'      
+&quot;\\.7&quot;
+% ruby-1.7.2 -e 'p &quot;a&quot; =~ &quot;^a&quot;'
+nil
+% ruby-1.7.2 -e 'p &quot;^&quot; =~ &quot;^&quot;'      
+0
+% ruby-1.7.2 -e 'p &quot;a&quot; =~ /^a/'
+0
+% ruby-1.7.2 -e 'p &quot;a&quot;.sub(&quot;^&quot;, &quot;#&quot;)'
+-e:1: warning: string pattern instead of regexp; \
+  metacharacters no longer effective
+&quot;a&quot;
+% ruby-1.7.2 -e 'p &quot;^&quot;.sub(&quot;^&quot;, &quot;#&quot;)'
+-e:1: warning: string pattern instead of regexp;  \
+  metacharacters no longer effective
+&quot;#&quot;
+% ruby-1.7.2 -e 'p &quot;a&quot;.sub(/^/, &quot;#&quot;)'
+&quot;#a&quot;
+</pre>
+<p>
+で、あちこちにあるわけだ。
+気づいた2つはcommitされた直後に直したんだけど、
+報告されてるようにまだ残ってる。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200207272" title="200207272" href="200207c.html#200207272">■</a> 
+<a href="http://homepage1.nifty.com/markey/memo/200207.html#072701">RubyUnit</a></h3>
+<p>
+うーむ。それはもともと
+</p>
+<pre>
+str.split('\n')
+</pre>
+<p>
+がバグっていて、
+</p>
+<pre>
+str.split(&quot;\n&quot;)
+</pre>
+<p>
+が正解だったのでは？奇しくも直ってしまったってことで。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200207273" title="200207273" href="200207c.html#200207273">■</a> 
+<a href="http://gcc.gnu.org/">GCC 3.1.1</a></h3>
+<pre>
+% mkdir linux; cd linux
+% CFLAGS=-Os CXXFLAGS=-Os ../configure --enable-languages=c,c++ \
+  --with-system-zlib --enable-sjlj-exceptions --enable-threads
+% time bootstrap
+make bootstrap  21117.96s user 877.51s system 98% cpu 6:11:03.86 total
+</pre>
+
+<p>
+<!-- 2.95.3 -->
+<!-- make  705.22s user 41.43s system 99% cpu 12:29.07 total -->
+<!-- 3.0.4 -->
+<!-- make  933.52s user 51.91s system 99% cpu 16:30.51 total -->
+<!-- 3.1 -->
+<!-- make  1117.84s user 51.92s system 99% cpu 19:34.70 total -->
+<!-- 3.1.1 -->
+<!-- make  1111.07s user 52.14s system 99% cpu 19:27.25 total -->
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/07/27 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/07/28 start -->
+<h2><a name="20020728" href="200207c.html#20020728">2002-07-28 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="200207281" title="200207281" href="200207c.html#200207281">■</a> 
+diet bash</h3>
+<p>
+--enable-static-link --enable-minimal-configだとstripしても
+</p>
+<pre>
+% ls -l bash
+-rwxr-xr-x    1 watanabe ruby       611816 Jul 28 19:09 bash
+</pre>
+<p>
+と、ちっともminimalじゃない。staticならやっぱdietlibcだよね。
+dietlibcにはlocaleはないので
+</p>
+<pre>
+% mkdir diet
+% ac_cv_func_setlocale=no ac_cv_header_locale_h=no \
+  ac_cv_header_strings_h=no CFLAGS=-Os CC='diet gcc -nostdinc' \
+  ../configure --enable-static-link --enable-minimal-config \
+  --prefix=/usr --bindir=/bin
+</pre>
+<p>
+としてみた。&lt;strings.h&gt;は
+</p>
+<pre>
+#warning &quot;your code included obsolescent &lt;strings.h&gt;.  \
+  Please change that to &lt;string.h&gt;!&quot;
+#include &lt;string.h&gt;
+</pre>
+<p>
+となっててうるさいのでないものとして扱うことにする。
+なぜかlocale.cは一部無条件でsetlocaleしてる場所があったので、
+
+<a href="../files/bash-2.05b-locale.c.patch">quick hack</a> 。
+結果はstripしてこのくらい。
+</p>
+<pre>
+% ls -l bash
+-rwxr-xr-x    1 watanabe ruby       218688 Jul 28 19:20 bash
+</pre>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200207282" title="200207282" href="200207c.html#200207282">■</a> 
+<a href="http://www.ruby-lang.org/en/raa-list.rhtml?name=RubyUnit">RubyUnit 0.5.4-03</a></h3>
+<p>
+更新。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/07/28 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/07/29 start -->
+<h2><a name="20020729" href="200207c.html#20020729">2002-07-29 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="200207291" title="200207291" href="200207c.html#200207291">■</a> 
+[Ruby] ext/extmk.rb.in</h3>
+<p>
+ext/configsub.rbを使えばいい気がしてきた。
+特にmswin32専用ってわけでもないし。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200207292" title="200207292" href="200207c.html#200207292">■</a> 
+<a href="http://www.ruby-lang.org/en/raa-list.rhtml?name=RubyWin">RubyWin 0.0.4.1</a></h3>
+<p>
+更新。
+</p>
+
+
+
+
+<!-- section end -->
+</div>
+<!-- 2002/07/29 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/07/30 start -->
+<h2><a name="20020730" href="200207c.html#20020730">2002-07-30 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="200207301" title="200207301" href="200207c.html#200207301">■</a> 
+[Ruby] win32_getenv(rb_w32_getenv)</h3>
+<p>
+mingw32版でRUBY_TCL_DLLとRUBY_TK_DLLを設定するとエラーになると報告が来た。
+</p>
+<pre>
+When trying to use tcltklib (require 'tcltklib') I get the following error:
+ F:/MINGW/USR/LOCAL/lib/ruby/1.6/tk.rb:7:in `require': tcltklib: \
+ tcltk_stubs init error (-2) (LoadError)
+</pre>
+<p>
+確かにこうなるね。
+-2というのはGetProcAddress(&quot;Tcl_CreateInterp&quot;)してるところで(ext/tcltklib/stubs.c)、
+つまりこのシンボルは存在しないという意味だ。
+LoadLibraryの結果を見るとなぜかtcl83.dllもtk83.dllも同じになってる。
+ということはLoadLibraryに同じ文字列を渡していることを意味する。
+で、思い出した。win32_getenvは毎回allocateしないようになったのだった。
+</p>
+<pre>
+ruby_tcl_dll = getenv(&quot;RUBY_TCL_DLL&quot;);
+ruby_tk_dll = getenv(&quot;RUBY_TK_DLL&quot;);
+</pre>
+<p>
+だと、後から呼んだgetenvで上書きされてしまう。盲点だな。
+strdupして解決。
+stubs的にはDLLへPATHだけ通しておけばokなので、
+とりあえずそれで我慢してねと返信。
+</p>
+
+<p>
+PATHだけのほうが簡単なのでお勧めなのだが、
+なぜかRUBY_TCL_DLLとRUBY_TK_DLLを使いたがる人が多い。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/07/30 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/07/31 start -->
+<h2><a name="20020731" href="200207c.html#20020731">2002-07-31 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="200207311" title="200207311" href="200207c.html#200207311">■</a> 
+<a href="http://www.openssl.org/">OpenSSL 0.9.6e</a></h3>
+<p>
+configではgcc --versionじゃなくてgcc -dumpversionを使うようになった。
+なるほど。これでGCC 3.1.1でも大丈夫だ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200207312" title="200207312" href="200207c.html#200207312">■</a> 
+<a href="http://znz.s1.xrea.com/t/?date=20020731#p01">[cvs] CVS_PASSWORD</a></h3>
+<p>
+src/ChangeLog-9395を見ると
+</p>
+<pre>
+Tue Dec 19 17:45:11 1995  Karl Fogel  &lt;kfogel@floss.cyclic.com&gt;
+</pre>
+<p>
+らしい。裏を取ってみると確かにlogin.cの1.21で
+
+<a href="http://cvs.savannah.gnu.org/viewvc/cvs/ccvs/src/login.c?r1=1.20&amp;r2=1.21">追加されてる</a>
+。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/07/31 end -->
+
+<hr>
+<div>
+<a href="200207b.html">&lt;Older(,)</a> | 
+<a href="200208a.html">Newer(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

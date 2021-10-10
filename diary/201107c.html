@@ -1,0 +1,313 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2011-7-c</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="201107b.html">
+<link rel="next" href="201108a.html">
+
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2011年7月下旬〜</p>
+<hr>
+<div>
+<a href="201107b.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="201108a.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2011/07/21 start -->
+<h2><a name="20110721" href="201107c.html#20110721">2011-07-21 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="201107211" title="201107211" href="201107c.html#201107211">■</a> 
+<a href="http://www.enjoyfreeware.org/superstart">Super Start</a></h3>
+<p>
+Super Startを更新したらちゃんとフォーカスがロケーションバーへ行くようになってた。
+</p>
+<pre>
+  v1.2.0 (2011/06/25)
+    Fix bug that in some case, the snapshot can't be displayed !!!
+    When open a new tab, the focus is on the address bar
+    Add some icons for the todo items
+    Add language for zh-TW and Polish (thanks to waldi)
+    Version 1.1.0 is skipped
+</pre>
+<p>
+日記を読み返してみると前回インストール後すぐに対応してたんだな。
+</p>
+<!-- section end -->
+</div>
+<!-- 2011/07/21 end -->
+
+
+
+<hr class="hide">
+<!-- 2011/07/22 start -->
+<h2><a name="20110722" href="201107c.html#20110722">2011-07-22 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="201107221" title="201107221" href="201107c.html#201107221">■</a> 
+vimeoの動画をPS3で再生できるmp4へ変換</h3>
+<p>
+vimeoからダウンロードしたファイルをfileコマンドで見ても形式はよくわからなかったけど、<br>
+ffmpegで箱だけmp4へ変換したらPS3でも再生できるようになった。
+</p>
+<pre>
+% ffmpeg -i foo.dat -vcodec copy -acodec copy -f mp4 foo.mp4
+</pre>
+<p>
+foo.datがダウンロードしたファイルでfoo.mp4へ変換している。<br>
+コーデックはcopyを指定してるので変換は数秒で終わる。
+</p>
+<p>
+やはりテレビで見たほうが見やすいな。しかも1.5倍速でも見ることができる。
+</p>
+<p>
+調子に乗っていっぱいvimeoからダウンロードしてたら今日はもうおしまいと言われてしまった。<br>
+16GBぐらいでリミットになるようだ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2011/07/22 end -->
+
+
+
+<hr class="hide">
+<!-- 2011/07/23 start -->
+<h2><a name="20110723" href="201107c.html#20110723">2011-07-23 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="201107231" title="201107231" href="201107c.html#201107231">■</a> 
+風邪でダウン</h3>
+<p>
+RubyKaigi疲れと急に涼しくなったせいか夏風邪。<br>
+なんか節々が痛いので熱も出そうな気配。<br>
+早く寝る。
+</p>
+<!-- section end -->
+</div>
+<!-- 2011/07/23 end -->
+
+
+
+<hr class="hide">
+<!-- 2011/07/24 start -->
+<h2><a name="20110724" href="201107c.html#20110724">2011-07-24 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="201107241" title="201107241" href="201107c.html#201107241">■</a> 
+発熱</h3>
+<p>
+38度ぐらいまで上がったのでおとなしく一日寝ていた。<br>
+明日は休もう。
+</p>
+<!-- section end -->
+</div>
+<!-- 2011/07/24 end -->
+
+
+
+<hr class="hide">
+<!-- 2011/07/25 start -->
+<h2><a name="20110725" href="201107c.html#20110725">2011-07-25 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="201107251" title="201107251" href="201107c.html#201107251">■</a> 
+腰痛</h3>
+<p>
+今日は休んだおかげでだいぶ熱も下がったが、腰痛が酷い。歩き始めが特に。<br>
+明日も様子見。
+</p>
+<!-- section end -->
+</div>
+<!-- 2011/07/25 end -->
+
+
+
+<hr class="hide">
+<!-- 2011/07/26 start -->
+<h2><a name="20110726" href="201107c.html#20110726">2011-07-26 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="201107261" title="201107261" href="201107c.html#201107261">■</a> 
+アナログ放送は終了しました。</h3>
+<p>
+J:COMのデジアナ変換でなんとか生き残ったRD-H1ではあるが、<br>
+番組ナビで得られる情報というかタイトルがすべて<br>
+「アナログ放送は終了しました。」になっているため、<br>
+なかなかシュールな光景になってる。<br>
+一応番組枠が存在してるのでわざわざタイトルだけ置換してるんだな。<br>
+気が効いてるんだかいないんだか。<br>
+いや、このままだと録画のタイトルが全部「アナログ放送は終了しました。」になっちゃうから困る。<br>
+手で書き換えても録画するころには番組ナビの情報で上書きされてしまうし。<br>
+ああ、そうか。もう意味ないから受信しなけりゃいいのか。<br>
+予約はontvjapanのメール予約がまだ使えるし。
+</p>
+<!-- section end -->
+</div>
+<!-- 2011/07/26 end -->
+
+
+
+<hr class="hide">
+<!-- 2011/07/27 start -->
+<h2><a name="20110727" href="201107c.html#20110727">2011-07-27 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="201107271" title="201107271" href="201107c.html#201107271">■</a> 
+youtube-dlでwebmじゃなくてmp4をダウンロード</h3>
+<p>
+最近youtube側でwebmが用意されたようで、<br>
+youtube-dlが早速webmをダウンロードしたがって困る。<br>
+すでにmplayerでもwebmは再生できるからPCだけならそれでもいいが、<br>
+主にPS3で見てるからmp4とかflvじゃないと変換に時間がかかってしょうがない。<br>
+というわけで最初からmp4でダウンロードすることにしよう。<br>
+-f FORMATでいけそうだけど-f mp4はERROR: requested format not availableだし、<br>
+なにを指定すればいいのか、--helpしても出てこない。<br>
+--all-formatsでダウンロードしてみたら-18とかファイル名についた。<br>
+そういえば、&amp;fmt=18とかあったよなと思い出した。<br>
+というわけで-f 18でmp4形式でダウンロードできた。
+</p>
+<pre>
+RubyKaigi2007 / Dave Thomas
+% youtube-dl -l -f 18 'http://www.youtube.com/watch?v='{iizyS9r0e68,JIidUXYn-Ug,DLgJGpIWz1Y,fNKNH8WjAoA}
+</pre>
+<!-- section end -->
+</div>
+<!-- 2011/07/27 end -->
+
+
+
+<hr class="hide">
+<!-- 2011/07/28 start -->
+<h2><a name="20110728" href="201107c.html#20110728">2011-07-28 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="201107281" title="201107281" href="201107c.html#201107281">■</a> 
+ThunderbirdでMessage-Id検索</h3>
+<p>
+たまにThunderbirdでMessage-Idを検索したくなることがあるわけなんだけど、<br>
+<a href="https://addons.mozilla.org/ja/thunderbird/addon/messageid-finder/">MessageID-Finder</a>という拡張は全然更新されてないしでちょっと調べてみた。<br>
+まあ特に調べるまでもなく「編集」「検索」「メッセージを検索」を実行して「件名」のところを押せば<br>
+「カスタムヘッダ...」というのあるのでMessage-Idを追加してやればok。<br>
+これでプルダウンメニューにMessage-Idが出てくるようになる。
+</p>
+<!-- section end -->
+</div>
+<!-- 2011/07/28 end -->
+
+
+
+<hr class="hide">
+<!-- 2011/07/29 start -->
+<h2><a name="20110729" href="201107c.html#20110729">2011-07-29 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="201107291" title="201107291" href="201107c.html#201107291">■</a> 
+CDケース?のカレンダー</h3>
+<p>
+会社で使っている百均で買ったCDケースのカレンダーが割れたので、<br>
+これまた百均へ行ってDVD-RWのケースを代わりに使おうと思ったら、<br>
+なんと大きさが違う。カレンダーのほうがちょっとでかい。<br>
+まさかこんなところに違いがあるとは。
+</p>
+<!-- section end -->
+</div>
+<!-- 2011/07/29 end -->
+
+
+
+<hr class="hide">
+<!-- 2011/07/30 start -->
+<h2><a name="20110730" href="201107c.html#20110730">2011-07-30 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="201107301" title="201107301" href="201107c.html#201107301">■</a> 
+torneの番組表の並び</h3>
+<p>
+いまだにtorneの番組表の並びがアナログのままなんだけど、これはいつ変わるのか？<br>
+次の更新のタイミングか？<br>
+とは言うものの新聞の番組欄はもう変わってしまったが、全然慣れない。<br>
+なにしろ何十年とこの並びだったわけで。<br>
+一番慣れないのはEテレとかいうのが2chなことだが、どうせあまり見ないのでどうでもいいか。
+</p>
+<!-- section end -->
+</div>
+<!-- 2011/07/30 end -->
+
+
+
+<hr class="hide">
+<!-- 2011/07/31 start -->
+<h2><a name="20110731" href="201107c.html#20110731">2011-07-31 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="201107311" title="201107311" href="201107c.html#201107311">■</a> 
+セミは鳴いているのか</h3>
+<p>
+なんか2chでは毎年のようにセミが鳴かないと言ってるらしいよ。<br>
+<a href="http://hogehogesokuhou.ldblog.jp/archives/51760642.html">【異変】 全国的にセミが鳴かないらしい　一体ドコへいったのか - hogehoge速報</a></p>
+<!-- section end -->
+</div>
+<!-- 2011/07/31 end -->
+
+<hr>
+<div>
+<a href="201107b.html">&lt;Prev(,)</a> | 
+<a href="201108a.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

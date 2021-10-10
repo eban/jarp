@@ -1,0 +1,607 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2005-4-c</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="200504b.html">
+<link rel="next" href="200505a.html">
+
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2005年4月下旬〜</p>
+<hr>
+<div>
+<a href="200504b.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="200505a.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2005/04/21 start -->
+<h2><a name="20050421" href="200504c.html#20050421">2005-04-21 (Thu)</a></h2>
+<!-- 2005-04-22 02:31:21 -->
+
+<div class="entry1">
+<h3><a name="200504211" title="200504211" href="200504c.html#200504211">■</a> 
+[GCC] g++ 3.3.xの-sharedと-fprofile-arcs -ftest-coverage</h3>
+<p>
+どうもg++ 3.3.xのgcovオプションは-sharedと相性が悪い。
+</p>
+<pre>
+% cat main.c
+#include &lt;stdio.h&gt;
+#include &lt;dlfcn.h&gt;
+main()
+{
+    void *handle = dlopen(&quot;./foo.so&quot;, RTLD_LAZY|RTLD_GLOBAL);
+    if (!handle) {
+        printf(&quot;%s\n&quot;, dlerror());
+        exit(1);
+    }
+    ((void (*)())dlsym(handle, &quot;foo&quot;))();
+}
+% cat foo.cc
+#include &lt;stdio.h&gt;
+extern &quot;C&quot; void foo()
+{
+    printf(&quot;foo\n&quot;);
+}
+% gcc33 main.c -ldl
+% g++33 -fprofile-arcs -ftest-coverage -shared -o foo.so foo.cc
+% ./a.out
+./foo.so: undefined symbol: __bb_init_func
+% g++33 -fprofile-arcs -ftest-coverage -shared -o foo.so foo.cc -lgcc
+% ./a.out
+foo
+</pre>
+<p>
+つまりg++ -sharedだと-lgccがリンクされないんだな。
+gcc -sharedのときはちゃんとlinkされる。
+</p>
+
+<p>
+3.4.xの場合は-sharedの有無にかかわらず-lgcovがリンクされるので問題ない。
+g++ 3.3.xのバグと言える。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200504212" title="200504212" href="200504c.html#200504212">■</a> 
+[Ruby] ruby-talkの流量</h3>
+<p>
+ごめん。[EVALUATION]系を除けば増えてないような気がする。
+しかし
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-talk/129451">この人</a>
+は延々と2ヶ月以上もこんなことを続けているわけだけど、
+いったい何が楽しいんだろう？
+</p>
+<!-- section end -->
+</div>
+<!-- 2005/04/21 end -->
+
+
+
+<hr class="hide">
+<!-- 2005/04/22 start -->
+<h2><a name="20050422" href="200504c.html#20050422">2005-04-22 (Fri)</a></h2>
+<!-- 2005-04-23 02:03:11 -->
+
+<div class="entry1">
+<h3><a name="200504221" title="200504221" href="200504c.html#200504221">■</a> 
+<a href="http://gcc.gnu.org/gcc-4.0/">[GNU] GCC 4.0.0</a></h3>
+<p>
+例によって取ってくるのはgcc-coreとgcc-g++だけ。
+最初からprogram suffixを指定することにした。
+</p>
+<pre>
+% tar xfv gcc-core-4.0.0.tar.bz2 --bz
+% tar xfv gcc-g++-4.0.0.tar.bz2 --bz
+% mkdir gcc-4.0.0/linux; cd gcc-4.0.0/linux
+% CFLAGS=-Os CXXFLAGS=-Os CC=/usr/bin/gcc ../configure \
+  --enable-languages=c++ --with-system-zlib \
+  --enable-sjlj-exceptions --enable-threads \
+  --disable-version-specific-runtime-libs --disable-nls \
+  --without-included-gettext --without-catgets \
+  --program-suffix=-4.0.0
+% make CFLAGS=-Os LIBCFLAGS=-Os LIBCXXFLAGS=-Os \
+  STAGE1_CFLAGS=-Os BOOT_CFLAGS=-Os bootstrap
+</pre>
+<p>
+試しにRuby 1.9をmakeしてみると警告が結構出る。
+多くが以下のタイプ。
+</p>
+<pre>
+% cat signedness.c
+void foo(char *s)
+{
+}
+main()
+{
+    unsigned char *p = 0;
+    foo(p);
+}
+% gcc-3.4.3 -c signedness.c
+% gcc-4.0.0 -c signedness.c
+sign.c: In function 'main':
+sign.c:8: warning: pointer targets in passing argument 1 of 'foo' differ in signedness
+</pre>
+<p>
+のようにちょっと厳しくなってる。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200504222" title="200504222" href="200504c.html#200504222">■</a> 
+[花粉症] ヒノキ？</h3>
+<p>
+報道ステーションを見てたら今の花粉はほとんどがヒノキだと言ってた。
+ということはおいらの場合はスギよりもヒノキのほうなのか？
+</p>
+<!-- section end -->
+</div>
+<!-- 2005/04/22 end -->
+
+
+
+<hr class="hide">
+<!-- 2005/04/23 start -->
+<h2><a name="20050423" href="200504c.html#20050423">2005-04-23 (Sat)</a></h2>
+<!-- 2005-04-24 02:47:52 -->
+
+<div class="entry1">
+<h3><a name="200504231" title="200504231" href="200504c.html#200504231">■</a> 
+[Soft] git</h3>
+<p>
+例のgitは
+<a href="http://kernel.org/pub/software/scm/cogito/">kernel.org</a>に移行したようだ。
+高速だけが売りらしい。
+しかし、いまいちremoteとのやりとりというか使い方がわからない。
+rsync serverを立てなくても、
+RSYNC_FLAGに'-e ssh'を設定すればssh経由でいけそうではあるけど。
+</p>
+
+<p>
+git helpの結果:
+</p>
+<pre>
+The GIT scripted toolkit  git-pasky-0.6.3 ()
+
+Usage: git COMMAND [ARG]...
+
+Available commands:
+	add		FILE...
+	addremote	RNAME RSYNC_URL
+	apply				&lt; patch on stdin
+	cancel
+	ci, commit	[FILE]...	&lt; log message on stdin
+	diff		[-p] [-r FROM_ID[:TO_ID]] [FILE]...
+	export		DESTDIR [TREE_ID]
+	fork		BNAME BRANCH_DIR [COMMIT_ID]
+	help
+	init		RSYNC_URL
+	log		[COMMIT_ID | COMMIT_ID:COMMIT_ID]
+	ls		[TREE_ID]
+	lsobj		[OBJTYPE]
+	lsremote
+	merge		[-c] [-b BASE_ID] FROM_ID
+	patch		[COMMIT_ID | COMMIT_ID:COMMIT_ID]
+	pull		[RNAME]
+	rm		FILE...
+	seek		[COMMIT_ID]
+	status
+	tag		TNAME [COMMIT_ID]
+	track		[RNAME]
+	version
+
+Note that these expressions can be used interchangably as &quot;ID&quot;s:
+	empty string (current HEAD)
+	remote name (as registered with git addremote)
+	tag name (as registered with git tag)
+	shortcut hash (shorted unambiguous hash lead)
+	commit object hash (as returned by commit-id)
+	tree object hash (accepted only by some commands)
+</pre>
+
+<p>
+ぐぐってみたら
+
+<a href="http://www.netfort.gr.jp/~dancer/column/200504-git.html.ja">git: Linux Kernelのためのバージョン管理システム(VCS)</a>
+
+を発見。後で読もう。
+</p>
+<!-- section end -->
+</div>
+<!-- 2005/04/23 end -->
+
+
+
+<hr class="hide">
+<!-- 2005/04/24 start -->
+<h2><a name="20050424" href="200504c.html#20050424">2005-04-24 (Sun)</a></h2>
+<!-- 2005-04-25 02:04:04 -->
+
+<div class="entry1">
+<h3><a name="200504241" title="200504241" href="200504c.html#200504241">■</a> 
+[Firefox] SessionSaverとLast.FMのポップアッププレーヤ</h3>
+<p>
+Last.FMのポップアッププレーヤを表示したままFirefoxを終了するととても困ったことになる。
+SessionSaverが前回の終了時の状態にしてしまうから。
+プレーヤだけになるとツールバーやらなになら何もないもんだから、
+にっちもさっちもどうにもならない。
+F1押したらヘルプがでてきて、リリースノートのリンク発見。
+やっと脱出できた。
+</p>
+
+<p>
+Last.FMもなあ、ポップアッププレーヤだけにしなくてもいいじゃん。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200504242" title="200504242" href="200504c.html#200504242">■</a> 
+<a href="http://portal.nifty.com/special05/04/12/">[ネタ] 高橋メソッド</a></h3>
+<p>
+かなり一般に浸透してるんだな。
+</p><blockquote><p>
+志おり<br>
+いや、単にパンフの表紙にこの一言だけあり、潔いなと思ったということだ。
+苗字は高橋さんでは？という趣もある。
+</p></blockquote>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200504243" title="200504243" href="200504c.html#200504243">■</a> 
+[TV] A</h3>
+<p>
+ウッチャンがやってたなんだからわからん番組のほうがまだマシだったような。
+いや、そっちもまともに見たことはないんだけど。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200504244" title="200504244" href="200504c.html#200504244">■</a> 
+<a href="http://www.tbs.co.jp/aikuru/">[TV] あいくるしい</a></h3>
+<p>
+どう考えても主人公は市原隼人ではなく神木隆之介だと思う「あいくるしい」に出てくる小栗旬の役名が矢口淳一なのは皮肉だ。
+それともわざと？
+</p>
+<!-- section end -->
+</div>
+<!-- 2005/04/24 end -->
+
+
+
+<hr class="hide">
+<!-- 2005/04/25 start -->
+<h2><a name="20050425" href="200504c.html#20050425">2005-04-25 (Mon)</a></h2>
+<!-- 2005-04-26 01:02:25 -->
+
+<div class="entry1">
+<h3><a name="200504251" title="200504251" href="200504c.html#200504251">■</a> 
+[Linux] FC3でUSBフラッシュメモリを使う</h3>
+<p>
+256MBのUSBフラッシュメモリを買ったはいいが、これってLinuxで使えるんだっけ？
+調べてから買えというか、
+今時のLinuxならそのくらい問題ないだろうという目論みはあったわけだが、
+実際のところ
+</p>
+<pre>
+% mount /media/usbdisk
+</pre>
+<p>
+もしくは
+</p>
+<pre>
+% mount /dev/sda1
+</pre>
+<p>
+で使える。/etc/fstabに勝手に追加されるらしい。やるな、FC3。
+</p>
+
+<p>
+mountするのが面倒な場合はmtoolsの設定をする。
+</p>
+<pre>
+% cat ~/.mtoolsrc
+drive m: file=&quot;/dev/sda1&quot;
+</pre>
+<p>
+適当にmドライブとして割り当ててみた。
+</p>
+<pre>
+% sudo mdir m:
+ Volume in drive M has no label
+ Volume Serial Number is 3287-3882
+Directory for M:/
+
+DATA         &lt;DIR&gt;     2005-04-25  22:27  data
+        1 file                    0 bytes
+                        261 578 752 bytes free
+</pre>
+<p>
+グループdiskに自分自身を追加しておけばsudoの必要もない。
+</p>
+<pre>
+% mcopy -s /boot/vmlinuz-2.6.11-1.14_FC3 m:
+% mdir m:
+ Volume in drive M has no label
+ Volume Serial Number is 3287-3882
+Directory for M:/
+
+DATA         &lt;DIR&gt;     2005-04-25  22:27  data
+VMLINU~1 14_   1658853 2005-04-26   1:00  vmlinuz-2.6.11-1.14_FC3
+        2 files           1 658 853 bytes
+                        259 919 872 bytes free
+
+% mdel m:vmlinuz-2.6.11-1.14_FC3 
+</pre>
+<p>
+おお、zshってmdelでも補完が効くのか。やるな、zsh。
+</p>
+<!-- section end -->
+</div>
+<!-- 2005/04/25 end -->
+
+
+
+<hr class="hide">
+<!-- 2005/04/26 start -->
+<h2><a name="20050426" href="200504c.html#20050426">2005-04-26 (Tue)</a></h2>
+<!-- 2005-04-27 02:22:05 -->
+
+<div class="entry1">
+<h3><a name="200504261" title="200504261" href="200504c.html#200504261">■</a> 
+<a href="http://www.letitblog.com/greasemonkey-compiler/">[Firefox] Greasemonkey compiler</a></h3>
+<p>
+GreasemonkeyのユーザスクリプトをFirefoxの拡張に変換。
+この
+<a href="http://www.letitblog.com/code/python/greasemonkey.py.txt">スクリプト</a>
+
+のほうが興味深い。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200504262" title="200504262" href="200504c.html#200504262">■</a> 
+[Video] RD-H1</h3>
+<p>
+感想。リモコンでかっ。ボタン多すぎ。
+追っかけ再生中に録画予約できないとか、なんか変な制約があるのがいやだな。
+あとすでに始まった録画予約を中止するには本体の停止ボタンを2回押す必要があることになかなか気づかなかった。
+これは変な仕様だ。2回押すならリモコンでできてもいいよねえ。
+</p>
+
+<p>
+まあ、それはそれとしてやっぱPCから操作できるのは楽だ。
+メールで録画予約するんだったら、専用のアドレスを用意したほうがよさそうだな。
+</p>
+<!-- section end -->
+</div>
+<!-- 2005/04/26 end -->
+
+
+
+<hr class="hide">
+<!-- 2005/04/27 start -->
+<h2><a name="20050427" href="200504c.html#20050427">2005-04-27 (Wed)</a></h2>
+<!-- 2005-04-28 02:39:15 -->
+
+<div class="entry1">
+<h3><a name="200504271" title="200504271" href="200504c.html#200504271">■</a> 
+[RD-H1] iEPG</h3>
+<p>
+単にhttp://rd-h1/@@@@@@をprefixさせれば、各iEPGサイトで予約ができる。
+ということはbookmarkletかgreasemonkeyでリンクを書き換えてしまう手が使えそうだ。
+取説通りだとやっぱ遅いしなあ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2005/04/27 end -->
+
+
+
+<hr class="hide">
+<!-- 2005/04/28 start -->
+<h2><a name="20050428" href="200504c.html#20050428">2005-04-28 (Thu)</a></h2>
+<!-- 2005-04-29 03:41:46 -->
+
+<div class="entry1">
+<h3><a name="200504281" title="200504281" href="200504c.html#200504281">■</a> 
+[RD-H1] ON TV JAPANでメール予約</h3>
+<p>
+チャンネルコード設定が肝。
+これはネットdeナビの「本体設定」「チャンネル名設定」で設定する。
+よく見るとONTV CHコードと書いてある。
+しかしこのページのインタフェースは使いにくいな。
+</p>
+
+<p>
+ONTV形式だと
+</p>
+<pre>
+open keyword tv SC0041 0600 0625 0429
+イタリア語会話
+</pre>
+<p>
+のように次の行に予約名も入れられるようだ。
+RD-Styleの形式でもいけるのかと試してみたらいけた。
+よくよく調べてみると、取説を見たら書いてあった。
+</p><blockquote><p>
+お知らせ
+<ul>
+<li>
+改行して2行目に予約名が入れられます。
+</ul></blockquote><p>
+ちゃんと読まないとだめだな。機能が多いし。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200504282" title="200504282" href="200504c.html#200504282">■</a> 
+[Web] テレビ番組表サイト</h3>
+<p>
+Webで提供してる各テレビ番組表サイトは野球が延長になったら、それ以降の番組はちゃんとずれるんだろうか。
+今日は予定通りに終わったらしくわからなかった。明日確認してみる。
+</p>
+<!-- section end -->
+</div>
+<!-- 2005/04/28 end -->
+
+
+
+<hr class="hide">
+<!-- 2005/04/29 start -->
+<h2><a name="20050429" href="200504c.html#20050429">2005-04-29 (Fri)</a></h2>
+<!-- 2005-04-30 02:05:34 -->
+
+<div class="entry1">
+<h3><a name="200504291" title="200504291" href="200504c.html#200504291">■</a> 
+[Web] 野球中継延長</h3>
+<p>
+清原が500号を打ったらしいが、今の彼を見るとどうしちゃったんだその頭はとツッコミを入れたくなる。
+こわいよ。
+ってのはどうでもよくて、野球中継が延長してもWebの番組表は特に更新されることはなくそのままだった。
+</p>
+
+<p>
+
+<a href="http://www.so-net.ne.jp/tv/">テレビ王国</a>
+のiEPGはExtend: 30というフィールドがあった。
+でもRDのほうが対応してなくて、予約してみても番組説明のほうに含まれてしまった。
+惜しい。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200504292" title="200504292" href="200504c.html#200504292">■</a> 
+[RD-H1] iEPG2</h3>
+<p>
+ネットdeナビの番組情報サイトの登録で
+</p>
+<pre>
+tv.infoseek.co.jp/
+</pre>
+<p>
+としてしまうと、なんか表示が変になる。
+</p>
+<pre>
+tv.infoseek.co.jp/?
+</pre>
+<p>
+のようになにか存在しないとだめみたいだ。
+どうもドメインだけだとそうなる感じ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2005/04/29 end -->
+
+
+
+<hr class="hide">
+<!-- 2005/04/30 start -->
+<h2><a name="20050430" href="200504c.html#20050430">2005-04-30 (Sat)</a></h2>
+<!-- 2005-05-01 02:19:57 -->
+
+<div class="entry1">
+<h3><a name="200504301" title="200504301" href="200504c.html#200504301">■</a> 
+<a href="http://www.roy.hi-ho.ne.jp/masao/rd/vrd.htm">[RD-H1] WineでVirtualRD</a></h3>
+<p>
+sudoして設定(受信方法)の137/udpをbindする(Windows9x系)をチェックすると、とりあえずダビングできた。
+そのbindのためにsudoが必要になる。
+</p>
+
+<p>
+でも、二度目がうまくいかなかったりで、うーむ。
+あ、$xml$status.xmlや$netdubbing$dubbinginfo.xmlが必要なのか。
+二度目はvrd.exeを別の場所に移動していたんだけど、xmlファイルを移動するのを忘れてた。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200504302" title="200504302" href="200504c.html#200504302">■</a> 
+<a href="http://rubyforge.org/projects/korundum/">[Ruby] Korundrum</a></h3>
+<p>
+展開してみるとconfigre.in.inやMakefile.am.inしかないってあたりがなんかすげーというか、ここからどうするのか忘れちまってるので試せない。
+っていうか、configure.in.inってなんだ？
+まずはKDEの作法を学ばないとだめか。
+</p>
+<!-- section end -->
+</div>
+<!-- 2005/04/30 end -->
+
+<hr>
+<div>
+<a href="200504b.html">&lt;Prev(,)</a> | 
+<a href="200505a.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

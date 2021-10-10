@@ -1,0 +1,384 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2015-7-a</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="201506c.html">
+<link rel="next" href="201507b.html">
+
+<link rel="stylesheet" type="text/css" href="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.css">
+<script async type="text/javascript" src="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.js"></script>
+<script type="text/javascript">
+<!--       
+$(document).ready(function() {
+  prettyPrint();
+});
+-->
+</script>
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2015年7月上旬〜</p>
+<hr>
+<div>
+<a href="201506c.html" accesskey=",">&lt;Older(,)</a> | 
+<a href="201507b.html" accesskey=".">Newer(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2015/07/01 start -->
+<h2><a name="20150701" href="201507a.html#20150701">2015-07-01 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="201507011" title="201507011" href="201507a.html#201507011">■</a> 
+著者名がない</h3>
+<p>
+そういうケースもあるよな。<br>
+なんで名無しのコレクションができるのかと思ったら当たり前だ。<br>
+その時はファイル名に著者名も入れとけば、<br>
+いちいち設定しなくてもいいじゃんと思っていたわけで。<br>
+こういうときはディレクトリ名なら問題ないわけか。<br>
+著者名がない場合はディレクトリ名とすればいいわけだが、<br>
+そんな処理をsqlで書くのが面倒だ。
+</p>
+<pre>
+% sqlite3 books.db 'select ifnull(author,substr(file_path,instr(file_path,&quot;/&quot;)+1,length(file_path)-length(file_name)-instr(file_path,&quot;/&quot;)-1)) from books'
+</pre>
+<p>
+やっぱ著者名をつけ直したほうがよさげだ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2015/07/01 end -->
+
+
+
+<hr class="hide">
+<!-- 2015/07/02 start -->
+<h2><a name="20150702" href="201507a.html#20150702">2015-07-02 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="201507021" title="201507021" href="201507a.html#201507021">■</a> 
+sqlite3のtrigger</h3>
+<p>
+今日もSony Reader。triggerはお手軽だけど設定した後に追加された文書しか有効ではない。<br>
+すでに登録されてるものはどうすればいいのか？<br>
+一度PCに退避してDBも消せば初期化されるので、<br>
+その状態でtriggerを設定して戻せばいけそうだ。<br>
+しかし数百MBもあるしなんか頭悪い。<br>
+books.dbだけいじればいいわけで、booksテーブルを初期化しちゃうのがいいかもしれない。
+</p>
+<pre>
+% sqlite3 books.db 'delete from books'
+</pre>
+<p>
+でうまくいった。ちゃんと再構築してくれるのでそのついでにtriggerが発火する。<br>
+ああ、だったらtriggerじゃなくてsqlite3で直接実行するのもありか。<br>
+ふりがなとかもつけられるし。いやふりがなはあってもあまり意味ない。
+</p>
+<!-- section end -->
+</div>
+<!-- 2015/07/02 end -->
+
+
+
+<hr class="hide">
+<!-- 2015/07/03 start -->
+<h2><a name="20150703" href="201507a.html#20150703">2015-07-03 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="201507031" title="201507031" href="201507a.html#201507031">■</a> 
+<a href="http://support.myjcom.jp/tv/stb/pioneer/bd-v302jsmartjcombox.html">Smart J:COM Boxソフトウェアバージョン ver.3.35</a></h3>
+<p>
+長いタイトルが横スクロールするようになり気づいた。<br>
+変更点。
+<ul>
+<li>番組表からVOD作品を簡単に検索・視聴できる機能を追加しました。(2015/7/1)　詳しくは
+<a href="http://notices.jcom.co.jp/notice/54869.html">こちら</a>をご覧ください。
+<li>DRモード・および変換待ちの録画物をタブレットで再生できる機能を追加しました。(2015/7/1)
+<li>iPhoneでも現在放送中番組・録画物を視聴できる機能を追加しました。(2015/7/1)
+<li>録画リストで録画物を並べ替えた際に並べ替え条件（日付順、タイトル順など）を保持する機能を追加しました。(2015/7/1)
+<li>録画リストでフォルダを作成した際、フォルダの位置を「先頭」「末尾」「並べ替え順に従う」から選択できる機能を追加しました。(2015/7/1)
+<li>ホーム画面TOPにバージョン情報を表示する機能を追加しました。(2015/7/1)
+<li>SD画質のコンテンツを2～7倍で録画した場合に音声が二重で聞こえる不具合を修正しました。（タブレットも同様）(2015/7/1)
+<li>特定の郵便番号を入力すると、検索が失敗する不具合を修正しました。(2015/7/1)
+</ul>
+<p>
+フォルダの位置を末尾にしたかったのでこの変更はうれしいが、<br>
+メニューが増えて一括操作への動線が遠くなったが難点。<br>
+もっと動きが速ければ気にならないんだろうけど。
+</p>
+<!-- section end -->
+</div>
+<!-- 2015/07/03 end -->
+
+
+
+<hr class="hide">
+<!-- 2015/07/04 start -->
+<h2><a name="20150704" href="201507a.html#20150704">2015-07-04 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="201507041" title="201507041" href="201507a.html#201507041">■</a> 
+InstapaperでePub</h3>
+<p>
+久し振りにInstapaperでePubに変換しようとしたら、<br>
+かなり様変わりしていて方法が見つからない。<br>
+昔は右にサイドバーがあってKindleとかePubのボタンがあったよね。<br>
+いろいろ探しまくって試行錯誤してやっと発見。<br>
+右上の自分のメールアドレスをクリックして、<br>
+Download...を選べば出てきた。<br>
+で、相変わらず日本語が化けるePubができあがってげんなりしている。
+</p>
+<!-- section end -->
+</div>
+<!-- 2015/07/04 end -->
+
+
+
+<hr class="hide">
+<!-- 2015/07/05 start -->
+<h2><a name="20150705" href="201507a.html#20150705">2015-07-05 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="201507051" title="201507051" href="201507a.html#201507051">■</a> 
+zshのブレース展開</h3>
+<p>
+いつのまにかbashと同じように{a..c}がa b cに展開されるようになっていた。
+</p>
+<pre>
+% echo $ZSH_VERSION {a..c}
+5.0.2 {a..c}
+</pre>
+<p>
+5.0.2では展開されない。
+</p>
+<pre>
+% echo $ZSH_VERSION {a..c} 
+5.0.7 a b c
+</pre>
+<p>
+5.0.7ではされる。
+<a href="http://zsh.sourceforge.net/releases.html">ZSHのRelease Notes</a>には書かれてないような。
+</p>
+<!-- section end -->
+</div>
+<!-- 2015/07/05 end -->
+
+
+
+<hr class="hide">
+<!-- 2015/07/06 start -->
+<h2><a name="20150706" href="201507a.html#20150706">2015-07-06 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="201507061" title="201507061" href="201507a.html#201507061">■</a> 
+zshでdate</h3>
+<p>
+昨日のzshの
+<a href="http://zsh.sourceforge.net/releases.html">release note</a>を見てたら5.0.6で気になる記述が。
+</p>
+<blockquote><p>
+Another new prompt feature is the %. escape within time strings, for example %D{%H:%M:%S.%.}.
+It provides zero-padded decimal fractions of second;
+by default milliseconds are shown,
+but the number of digits may be indicated from 1 to 6, e.g. &quot;%6.&quot;.
+(Note this is part of the extensions to strftime() formats rather than basic prompt escapes.)
+</p></blockquote>
+<p>
+%Nじゃなくて%.なんだな。
+</p>
+<pre>
+% date +%T.%3N;date +%T.%3N             
+01:04:52.435
+01:04:52.437
+% date +%T.%3N;echo ${(%)${:-%D{%T.%.}}}
+01:04:54.867
+01:04:54.868
+</pre>
+<p>
+なんかすごくそれっぽい。ビルトインなだけに速いわけだ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2015/07/06 end -->
+
+
+
+<hr class="hide">
+<!-- 2015/07/07 start -->
+<h2><a name="20150707" href="201507a.html#20150707">2015-07-07 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="201507071" title="201507071" href="201507a.html#201507071">■</a> 
+zshでdateをちょっと修正</h3>
+<p>
+適当に試行錯誤した結果なので余計な${}が入っていた。
+</p>
+<pre>
+${(%)${:-%D{%T.%.}}}
+</pre>
+<p>
+この内側の${}が不要。
+</p>
+<pre>
+% echo ${(%):-%D{%T.%.}}
+01:34:57.657
+</pre>
+<p>
+ちょっと説明しておくと(%)がprompt sequenceの展開。
+</p>
+<pre>
+%
+    Expand  all  %  escapes  in  the resulting words in the same way as in prompts
+    (see EXPANSION OF PROMPT SEQUENCES in zshmisc(1)). If this flag is given twice,
+    full prompt expansion is done on  the  resulting words, depending on the
+    setting of the PROMPT_PERCENT, PROMPT_SUBST and PROMPT_BANG options.
+</pre>
+<p>
+それと:-での変数展開時には変数名を省略することもできる。
+</p>
+<pre>
+${name-word}
+${name:-word}
+    If name is set, or in the second form is non-null, then  substitute  its
+    value;  otherwise  substitute word.  In the second form name may be omitted, in
+    which case word is always substituted.
+</pre>
+<p>
+実はprint -Pでprompt sequenceの展開ができるのでもっと簡単に書ける。
+</p>
+<pre>
+% print -P %D{%T.%.} 
+01:39:27.587
+</pre>
+<!-- section end -->
+</div>
+<!-- 2015/07/07 end -->
+
+
+
+<hr class="hide">
+<!-- 2015/07/08 start -->
+<h2><a name="20150708" href="201507a.html#20150708">2015-07-08 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="201507081" title="201507081" href="201507a.html#201507081">■</a> 
+Windows7のデスクトップに突然「最近表示した場所」が表示されるようになった</h3>
+<p>
+確かにどこかのフォルダをいじってるときにふとボタンを押したが、<br>
+なんでデスクトップに居座るのか？<br>
+これが右クリックを押しても消せる気配すらない。<br>
+しかしぐぐるとなぜかいっぱいヒットするわけで、<br>
+しかも解決方法も同じだ。なぜか表示されることもあるらしい。<br>
+いやいやこれバグだろ。というわけであとは<br>
+<a href="http://pasofaq.jp/windows/desktop/desktoprecent.htm">デスクトップに「最近表示した場所」が表示される</a>を参照。
+</p>
+<!-- section end -->
+</div>
+<!-- 2015/07/08 end -->
+
+
+
+<hr class="hide">
+<!-- 2015/07/09 start -->
+<h2><a name="20150709" href="201507a.html#20150709">2015-07-09 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="201507091" title="201507091" href="201507a.html#201507091">■</a> 
+DynamoDBのbatchWriteItem</h3>
+<p>
+<a href="http://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB.html#batchWriteItem-property">ドキュメント</a>を読むとDeleteRequestとPutRequestが仲良く並んでいるので、<br>
+当然混在できると思い機会を伺っていたが、<br>
+結局のところだめらしい。
+</p>
+<pre>
+ValidationException: Supplied AttributeValue has more than one datatypes set, must contain exactly one of the supported datatypes
+</pre>
+<p>
+言われてしまう。まあ、英語をよく読めばちゃんと書いてあるのであった。
+</p><blockquote><ol>
+<li>You try to perform multiple operations on the same item in the same BatchWriteItem request. For example, you cannot put and delete the same item in the same BatchWriteItem request.
+</ol></blockquote>
+<!-- section end -->
+</div>
+<!-- 2015/07/09 end -->
+
+
+
+<hr class="hide">
+<!-- 2015/07/10 start -->
+<h2><a name="20150710" href="201507a.html#20150710">2015-07-10 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="201507101" title="201507101" href="201507a.html#201507101">■</a> 
+Inoreader APIがエラーになる</h3>
+<p>
+なんかいつの間にかアプリを登録してAppIdを取得しないといけない仕様になっていた。<br>
+取得は簡単で設定のアプリ開発で新しいアプリを作るをクリックして適当に名前をつければいいだけ。<br>
+あとはHeaderにAppId:とAppKey:を設定すればok。<br>
+10分ごとに起動したとして2APIを使っても1日288回なので1万回とかいう制限は全然問題ないな。<br>
+実際は1時間だし。
+</p>
+<!-- section end -->
+</div>
+<!-- 2015/07/10 end -->
+
+<hr>
+<div>
+<a href="201506c.html">&lt;Older(,)</a> | 
+<a href="201507b.html">Newer(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

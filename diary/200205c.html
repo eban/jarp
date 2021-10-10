@@ -1,0 +1,896 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2002-5-c</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="200205b.html">
+<link rel="next" href="200206a.html">
+
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2002年5月下旬〜</p>
+<hr>
+<div>
+<a href="200205b.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="200206a.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2002/05/21 start -->
+<h2><a name="20020521" href="200205c.html#20020521">2002-05-21 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="200205211" title="200205211" href="200205c.html#200205211">■</a> 
+<a href="200205a.html#200205103">[Ruby] vsnprintf.o</a></h3>
+<p>
+MISSINGからvsnprintf.oをfilter-outするだけだと、
+OBJSからは消えてないのでvsnprintf.oを作ってしまう。
+じゃ、OBJSからfilter-outすればいいかというと、
+すでに明示的な規則に登録されてしまうためだめ。
+GNUmakefileの中でMakefileをincludeしてるから後の祭りになる。
+つまり、Makefileを作るところでなんとかする必要があるわけだ。
+というわけでAC_CONFIG_COMMANDS_POSTを使ってみよう。
+config.statusを作った後で実行したい処理を定義できる。
+</p>
+<pre>
+AC_CONFIG_COMMANDS_POST([
+case &quot;$target_os&quot; in
+mingw*)
+  sed 's/ vsnprintf\.o//' config.status &gt;config.tmp &amp;&amp; mv config.tmp config.status;;
+esac
+])
+</pre>
+<p>
+を入れてみた。いまいち気に入らないがこれでいける。
+</p>
+
+<p>
+あ、よく考えてみたら、
+</p>
+<pre>
+ac_cv_func_vsnprintf=yes
+</pre>
+<p>
+だけでいいんじゃない？ぐはぁ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200205212" title="200205212" href="200205c.html#200205212">■</a> 
+configure.ac</h3>
+<p>
+info autoconfしてみたら
+</p>
+<pre>
+The file `configure.ac' (or `configure.in') is used to create
+`configure' by a program called `autoconf'.
+</pre>
+<p>
+とあった。なんか今後はconfigure.acが主流になりそうだな。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200205213" title="200205213" href="200205c.html#200205213">■</a> 
+<a href="http://homepage1.nifty.com/markey/memo/200205.html#052101">BCC32 と Win32OLE</a></h3>
+<p>
+変ですね。2行に分けても問題ないです。というか最初から2行に分けてます。
+dependに関してはmkmf.rbのほうに
+
+<a href="200201b.html#200201187">暗黙のルールがあるから必要ないです</a>
+。
+</p>
+
+<p>
+あ、もうCVSのほうへ入れちゃいましたか。
+そうするとsrcdirとは別のディレクトリでbuildできなくなります。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200205214" title="200205214" href="200205c.html#200205214">■</a> 
+skk ML</h3>
+<p>
+まいったなあ。Klezだらけだよ。それでなくてもSPAMだらけだというのに。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/05/21 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/05/22 start -->
+<h2><a name="20020522" href="200205c.html#20020522">2002-05-22 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="200205221" title="200205221" href="200205c.html#200205221">■</a> 
+[Opera] blade</h3>
+<p>
+Operaでbladeを見るとなぜか&lt;pre&gt;を無視したように表示される。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200205222" title="200205222" href="200205c.html#200205222">■</a> 
+<a href="http://www.ruby-lang.org/en/raa-list.rhtml?name=REXML">[Ruby] REXML 2.3.3</a></h3>
+<p>
+更新。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200205223" title="200205223" href="200205c.html#200205223">■</a> 
+<a href="http://www.ruby-lang.org/en/raa-list.rhtml?name=RDoc">[Ruby] RDoc beta 1</a></h3>
+<p>
+更新。すっかり忘れてた。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200205224" title="200205224" href="200205c.html#200205224">■</a> 
+<a href="http://freshmeat.net/projects/gzip_x86/">gzip_x86</a></h3>
+<p>
+確かに速い。zlibで使えるようにすればよさげ。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/05/22 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/05/23 start -->
+<h2><a name="20020523" href="200205c.html#20020523">2002-05-23 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="200205231" title="200205231" href="200205c.html#200205231">■</a> 
+<a href="http://www.digitalmars.com/">Digital Mars C and C++ Compilers</a></h3>
+<p>
+コンパイル速度が速い。
+手始めにarray.cをコンパイルしてみたが、ちと手強い。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200205232" title="200205232" href="200205c.html#200205232">■</a> 
+Jarh,</h3>
+<p>
+というSubjectで
+</p>
+<pre>
+Hi,
+
+&quot;Itrs\037`mnsgdq\037Qtax\037g`bjdq+&quot;.split(//).each {|i| i.succ!}.join
+
+Regards
+  Peter
+</pre>
+<p>
+という内容のメールが届いた。
+
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-talk/40839">ruby-dev summary 17048-17127</a> の影響だろうか。
+いや、俺にこれだけ送ってこられても困るというか、
+人の作ったものを集めてるわけじゃないんで、
+そこんとこよろしく。
+</p>
+
+<p>
+ちょっと言わせてもらうと、これはcaesar暗号であり
+</p>
+<pre>
+print 'Whfg nabgure Ehol unpxre,'.tr('A-Za-z', 'N-ZA-Mn-za-m')
+</pre>
+<p>
+と同じタイプのものだ。というかprintをつけるように(-1点)。
+</p>
+<!-- section end -->
+</div>
+<!-- 2002/05/23 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/05/24 start -->
+<h2><a name="20020524" href="200205c.html#20020524">2002-05-24 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="200205241" title="200205241" href="200205c.html#200205241">■</a> 
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-talk/41061">Ruby filetype plugin for the Vim editor (with matchit support)</a></h3>
+<p>
+おぉ、ifとかclassで%が使えるよー。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/05/24 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/05/25 start -->
+<h2><a name="20020525" href="200205c.html#20020525">2002-05-25 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="200205251" title="200205251" href="200205c.html#200205251">■</a> 
+GDB 5.2</h3>
+<p>
+最近GDBを使おうとすると
+</p>
+<pre>
+Dwarf Error: Cannot handle DW_FORM_strp in DWARF reader.
+</pre>
+<p>
+と文句言われることに気づいた。
+やっぱGCC 3.1が原因だよね。
+というわけでGDBを5.2に上げた。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200205252" title="200205252" href="200205c.html#200205252">■</a> 
+gzip_x86 SEGV</h3>
+<p>
+なぜかgdb-5.2.tar.gzを展開したらgzipがSEGVになってしまう。
+あ、家のPCだと問題ないな。
+違いといえば会社のがglibc 2.2.2で家のが2.2.5とバージョンの違いぐらいなんだけど、
+debugしようとしても、そのGDBが動かないというジレンマが。
+というわけでgzipは元に戻した。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200205253" title="200205253" href="200205c.html#200205253">■</a> 
+<a href="http://www.ruby-lang.org/en/raa-list.rhtml?name=http-access2">[Ruby] http-access2 F</a></h3>
+<p>
+更新。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200205254" title="200205254" href="200205c.html#200205254">■</a> 
+<a href="http://www.ruby-lang.org/en/raa-list.rhtml?name=date2">[Ruby] date2 3.2.1</a></h3>
+<p>
+更新。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200205255" title="200205255" href="200205c.html#200205255">■</a> 
+<a href="http://www.ruby-lang.org/en/raa-list.rhtml?name=SOAP4R">[Ruby] SOAP4R 1.4.5</a></h3>
+<p>
+更新。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200205256" title="200205256" href="200205c.html#200205256">■</a> 
+<a href="http://www.ruby-lang.org/en/raa-list.rhtml?name=Benchmark">[Ruby] benchmark 020425</a></h3>
+<p>
+versionが一ヶ月ずれてますね。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200205257" title="200205257" href="200205c.html#200205257">■</a> 
+<a href="http://www.ruby-lang.org/en/raa-list.rhtml?name=Ruby%2FGoogle">[Ruby] Ruby/Google 0.4.1</a></h3>
+<p>
+更新。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/05/25 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/05/26 start -->
+<h2><a name="20020526" href="200205c.html#20020526">2002-05-26 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="200205261" title="200205261" href="200205c.html#200205261">■</a> 
+<a href="200204c.html#200204256">[Ruby] benchmarkのバージョン</a></h3>
+<p>
+ごとけんさんからメールが来た。1.7のlib/benchmark.rbが
+</p>
+<pre>
+% lcvs st lib/benchmark.rb
+===================================================================
+File: benchmark.rb      Status: Up-to-date
+
+   Working revision:    1.2     Thu Apr 25 12:33:49 2002
+   Repository revision: 1.2     /src/ruby/lib/benchmark.rb,v
+   Sticky Tag:          (none)
+   Sticky Date:         (none)
+   Sticky Options:      (none)
+</pre>
+<p>
+なのであれでいいんだそうです。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200205262" title="200205262" href="200205c.html#200205262">■</a> 
+<a href="http://www.openssl.org/">OpenSSL 0.9.6d</a></h3>
+<p>
+早速./config sharedしてみると
+</p>
+<pre>
+Operating system: i586-whatever-linux2
+[: (GCC): unknown operand
+[: (GCC): unknown operand
+</pre>
+<p>
+となんか変。GCC 3.1は--versionが豪華になってるね。
+</p>
+<pre>
+% gcc --version
+gcc (GCC) 3.1
+Copyright (C) 2002 Free Software Foundation, Inc.
+This is free software; see the source for copying conditions.  There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+% gcc-3.0.4 --version
+3.0.4
+</pre>
+<p>
+こうしてみた。
+</p>
+<pre>
+--- config.orig	2002-03-16 01:47:23.000000000 
++++ config	2002-05-26 19:00:57.000000000 
+@@ -385,7 +385,7 @@
+ if [ &quot;$GCCVER&quot; != &quot;&quot; ]; then
+   CC=gcc
+   # then strip off whatever prefix Cygnus prepends the number with...
+-  GCCVER=`echo $GCCVER | sed 's/^[a-z]*\-//'`
++  GCCVER=`echo $GCCVER | sed 's/^[-a-z() ]*//i;1q'`
+   # peak single digit before and after first dot, e.g. 2.95.1 gives 29
+   GCCVER=`echo $GCCVER | sed 's/\([0-9]\)\.\([0-9]\).*/\1\2/'`
+ else
+</pre>
+<p>
+要するに3.0.4なら30に、3.1なら31になればいい。
+sed 1qは1行目で終わりという意味で、結局head -1と同じ。
+ついでにConfigureのlinux-elfの-m486を-march=i586に変更。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200205263" title="200205263" href="200205c.html#200205263">■</a> 
+<a href="http://www.openssh.org/">OpenSSH 3.2.3p1</a></h3>
+<p>
+更新。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/05/26 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/05/27 start -->
+<h2><a name="20020527" href="200205c.html#20020527">2002-05-27 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="200205271" title="200205271" href="200205c.html#200205271">■</a> 
+<a href="http://lftp.yar.ru/">lftp 2.5.2</a></h3>
+<p>
+更新。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200205272" title="200205272" href="200205c.html#200205272">■</a> 
+今日のskk ML</h3>
+<p>
+Klezが3通、そのVirus Alertが×3で9通、spamが1通。
+unsubscribeすべきか？
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/05/27 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/05/28 start -->
+<h2><a name="20020528" href="200205c.html#20020528">2002-05-28 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="200205281" title="200205281" href="200205c.html#200205281">■</a> 
+perl -D</h3>
+<p>
+突然perl -Dしたくなった。が、-DDEBUGGINGつきでmakeしてないのでできない。
+GCCも3.1になったしこれで試そう。
+</p>
+<pre>
+% ./Configure -des -Dcc=gcc
+</pre>
+<p>
+途中所々に出る
+</p>
+<pre>
+cc1: warning: changing search order for system directory &quot;/usr/local/include&quot;
+cc1: warning:   as it has already been specified as a non-system directory
+</pre>
+<p>
+と
+</p>
+<pre>
+cpp0: warning: changing search order for system directory &quot;/usr/local/include&quot;
+cpp0: warning:   as it has already been specified as a non-system directory
+</pre>
+<p>
+が気になる。
+</p>
+
+<p>
+どうもGCC 3.1はdefaultのinclude directoryを-Iで指定するとこんな警告を出すようだ。
+</p>
+<pre>
+% touch foo.c
+% gcc -I/usr/local/include -c foo.c
+cc1: warning: changing search order for system directory &quot;/usr/local/include&quot;
+cc1: warning:   as it has already been specified as a non-system directory
+</pre>
+<p>
+Rubyは絶妙なタイミングで-I/usr/local/includeを外したと言える。
+</p>
+
+<pre>
+% make
+make: *** No rule to make target `&lt;built-in&gt;', needed by `miniperlmain.o'.  Stop.
+</pre>
+<p>
+む？なんだろう？どうも-Eで余計なものが増えたようだ。
+</p>
+<pre>
+% gcc -E - &lt;/dev/null
+# 1 &quot;&lt;stdin&gt;&quot;
+# 1 &quot;&lt;built-in&gt;&quot;
+# 1 &quot;&lt;command line&gt;&quot;
+# 1 &quot;&lt;stdin&gt;&quot;
+</pre>
+<p>
+makedepend.SHに&lt;stdin&gt;と同じように&lt;built-in&gt;と&lt;command line&gt;も追加。
+*.SHをいじったら
+</p>
+<pre>
+% ./Configure -S
+</pre>
+<p>
+を実行する。config.shができてれば最初から実行する必要はない。
+makedepend.SHなので
+</p>
+<pre>
+% make depend
+</pre>
+<p>
+も実行してmakefileも更新した。
+Perlの場合Makefileとmakefileを扱うのでちょっと面倒。
+</p>
+
+<p>
+makeしてみるとpp_sys.cで
+</p>
+<pre>
+pp_sys.c: In function `Perl_pp_sysread':
+pp_sys.c:1499: incompatible type for argument 5 of `recvfrom'
+...
+</pre>
+<p>
+というエラーになる。struct sockaddrのcastが尽くエラーになってる。
+/usr/include/sys/socket.hを見ると__SOCKADDR_ARGがまずそう。
+本来なら
+</p>
+<pre>
+#if defined __cplusplus || !__GNUC_PREREQ (2, 7) || !defined __USE_GNU
+# define __SOCKADDR_ARG         struct sockaddr *__restrict
+# define __CONST_SOCKADDR_ARG   __const struct sockaddr *
+#else
+</pre>
+<p>
+このelseのほうになるはずなんだけどなあ。あ、__attribute__か？
+config.hを確認してみるとHASATTRIBUTEがdefineされてない。
+これが原因のようだ。Configureでは
+</p>
+<pre>
+if $cc $ccflags -c attrib.c &gt;attrib.out 2&gt;&amp;1 ; then
+  if $contains 'warning' attrib.out &gt;/dev/null 2&gt;&amp;1; then
+    echo &quot;Your C compiler doesn't fully support __attribute__.&quot;
+    val=&quot;$undef&quot;
+  else
+    echo &quot;Your C compiler supports __attribute__.&quot;
+    val=&quot;$define&quot;
+  fi
+else
+</pre>
+<p>
+という感じでcheckしているので、つまりwarningがあったらだめってことだ。
+ぐはぁ。やはりあの警告を何とかしないといけない。
+</p>
+
+<p>
+思考錯誤して
+</p>
+<pre>
+% ./Configure -des -Dcc=gcc -Dlocincpth=
+</pre>
+<p>
+でいいかと思ったけど効果なし。locincpthをクリアするタイミングが難しそう。
+今回はPolicy.shを使うことにした。-DDEBUGGINGもつけてこんな感じだ。
+</p>
+<pre>
+cc='gcc'
+optimize='-Os'
+ccflags='-DDEBUGGING'
+locincpth=''
+</pre>
+<p>
+これでmake testもAll tests successfulになった。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200205282" title="200205282" href="200205c.html#200205282">■</a> 
+<a href="http://www.ruby-lang.org/en/raa-list.rhtml?name=REXML">[Ruby] REXML 2.3.4</a></h3>
+<p>
+更新。2.3.xは[test]にして2.2.xを[curr]にしたほうがいいかなあ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200205283" title="200205283" href="200205c.html#200205283">■</a> 
+[Cygwin] zsh 4.0.4-1, ccache 1.9-1</h3>
+<p>
+
+<a href="http://cygwin.com/ml/cygwin/2002-05/msg01617.html">zsh</a>
+と
+
+<a href="http://cygwin.com/ml/cygwin/2002-05/msg01654.html">ccache</a>
+が追加されたのはいいが、最近
+
+<a href="http://cygwin.com/ml/cygwin-announce/">cygwin-announce ML</a>
+のほうにアナウンスされないのがちょっと不便。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/05/28 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/05/29 start -->
+<h2><a name="20020529" href="200205c.html#20020529">2002-05-29 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="200205291" title="200205291" href="200205c.html#200205291">■</a> 
+Linux 2.5.18</h3>
+<p>
+2.5系列はなぜかがんがんteenyが上がる。
+いつの間にか2.4に追いついた。
+というわけで試してみる。SWSUSPが使いたいというのもあるが。
+dj1もあてとこう。
+</p>
+
+<p>
+いきなりmake menuconfigで
+</p>
+<pre>
+Generating include/linux/version.h
+expr: syntax error
+</pre>
+<p>
+と止まってしまう。なんか待ってるようだ。C-dで先に進んだ。でも
+</p>
+<pre>
+mv: missing file argument
+Try `mv --help' for more information.
+make: *** [include/linux/version.h] Error 1
+</pre>
+<p>
+なのでぜんぜんだめだ。
+</p>
+
+<p>
+Makefileを見るとこの.が怪しい。
+</p>
+<pre>
+@. scripts/mkversion_h $@ $(KERNELRELEASE) $(VERSION) $(PATCHLEVEL) $(SUBLEVEL)
+</pre>
+<p>
+やっぱashかなあ。
+</p>
+<pre>
+% make SHELL=/bin/sh menuconfig
+</pre>
+<p>
+だと
+</p>
+<pre>
+Generating include/linux/version.h
+expr: syntax error
+</pre>
+<p>
+で、
+</p>
+<pre>
+% make SHELL=/bin/zsh menuconfig
+zsh: no matches found: s/arm.*/arm/
+Makefile:170: arch//Makefile: No such file or directory
+make: *** No rule to make target `arch//Makefile'.  Stop.
+</pre>
+<p>
+なので、ashが原因らしい。ぐはぁ。
+Makefileの中でなぜ.を使う必要があるのかわからん。
+CONFIG_SHELLは一体何のためにあるんだ？
+</p>
+
+<p>
+make bzImageしてみるとvmlinuxを作るところで
+</p>
+<pre>
+init/init.o: In function `rd_load_image':
+init/init.o(.text.init+0xfe7): undefined reference to `change_floppy'
+init/init.o: In function `rd_load_disk':
+init/init.o(.text.init+0x111b): undefined reference to `change_floppy'
+</pre>
+<p>
+というエラーに。
+change_floppyが定義されてるinit/do_mounts.cを見ると
+</p>
+<pre>
+#if defined(BLOCK_DEV_RAM) || defined(CONFIG_BLK_DEV_FD)
+static void __init change_floppy(char *fmt, ...)
+</pre>
+<p>
+となってるが、ここは
+</p>
+<pre>
+#if defined(CONFIG_BLK_DEV_RAM) || defined(CONFIG_BLK_DEV_FD)
+static void __init change_floppy(char *fmt, ...)
+</pre>
+<p>
+が正解。ってこんな単純なミスがあろうとは。
+フロッピーをモジュールにする人はあまりいないのだろう。
+</p>
+
+<p>
+続いて
+</p>
+<pre>
+aic7xxx_linux.c:2829: unknown field `abort' specified in initializer
+aic7xxx_linux.c:2829: unknown field `reset' specified in initializer
+aic7xxx_linux.c:2829: duplicate initializer
+aic7xxx_linux.c:2829: (near initialization for `driver_template.slave_attach')
+aic7xxx_linux.c:2829: duplicate initializer
+aic7xxx_linux.c:2829: (near initialization for `driver_template.bios_param')
+</pre>
+<p>
+というエラー。
+drivers/scsi/aic7xxx/aic7xxx_linux_host.hのAIC7XXXからabortとresetを削除してみる。
+いけてるようだ。ま、いけてなくてもモジュールだから後でなんとでもなるだろう。
+</p>
+
+<p>
+bootしてみると各種daemonを起動するとこでfreezeしてしまう。うーむ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200205292" title="200205292" href="200205c.html#200205292">■</a> 
+<a href="http://znz.s1.xrea.com/t/?date=20020529#p02">gcc -Wall</a></h3>
+<p>
+つまりこういうことです。
+</p>
+<pre>
+% echo 'static char foo[] = &quot;&quot;;' &gt;foo.c
+% gcc -Wall -c foo.c
+foo.c:1: warning: `foo' defined but not used
+% echo 'const static char foo[] = &quot;&quot;;' &gt;foo.c
+% gcc -Wall -c foo.c                         
+%
+</pre>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/05/29 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/05/30 start -->
+<h2><a name="20020530" href="200205c.html#20020530">2002-05-30 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="200205301" title="200205301" href="200205c.html#200205301">■</a> 
+skk ML</h3>
+<p>
+100KB以上またはVirus Alertというsubjectのメールははじくようになった。
+virusが来なくなった分、逆にspamが目立つ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200205302" title="200205302" href="200205c.html#200205302">■</a> 
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-talk/41325">spam</a></h3>
+<p>
+128KBにぎりぎり届かないか。こういうのはなんか悔しい。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200205303" title="200205303" href="200205c.html#200205303">■</a> 
+Linux 2.5.19</h3>
+<p>
+出たようだが、全然直ってない。逆にエラーが増えてる。
+</p>
+<pre>
+suspend.c:303: `tq_disk' undeclared (first use in this function)
+suspend.c:303: (Each undeclared identifier is reported only once
+suspend.c:303: for each function it appears in.)
+</pre>
+<p>
+もうちょっと待つか。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/05/30 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/05/31 start -->
+<h2><a name="20020531" href="200205c.html#20020531">2002-05-31 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="200205311" title="200205311" href="200205c.html#200205311">■</a> 
+spam</h3>
+<p>
+おいおい。今日1日で24通来たぞ。どうなってんだ？
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200205312" title="200205312" href="200205c.html#200205312">■</a> 
+XSLT処理系</h3>
+<p>
+XMLを吐くソフトがあるんだけど全く改行をつけてくれない。とても見辛い。
+というわけでXSLTだ。って処理系は何がいいんだろう？
+簡単に試せるのはCygwinのパッケージになってるlibxsltのxsltprocだ。
+で、
+<a href="../files/indent.xsl">こんなの</a> を作った。
+</p>
+<pre>
+% tr -d '\n' &lt;indent.xsl |sed 's/&gt; *&lt;/&gt;&lt;/g' | \
+  xsltproc indent.xsl - |cmp indent.xsl -
+%
+</pre>
+<p>
+というわけでいいみたい。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/05/31 end -->
+
+<hr>
+<div>
+<a href="200205b.html">&lt;Prev(,)</a> | 
+<a href="200206a.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

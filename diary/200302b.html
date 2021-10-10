@@ -1,0 +1,579 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2003-2-b</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="200302a.html">
+<link rel="next" href="200302c.html">
+
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2003年2月中旬〜</p>
+<hr>
+<div>
+<a href="200302a.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="200302c.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2003/02/11 start -->
+<h2><a name="20030211" href="200302b.html#20030211">2003-02-11 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="200302111" title="200302111" href="200302b.html#200302111">■</a> 
+[Ruby] --prefix=''</h3>
+<p>
+mswin32とmingw32のrbconfig.rbを見比べるとprefix関係に違いはない。
+win32/Makefile.subをよく見ると
+</p>
+<pre>
+!if !defined(prefix)
+prefix = /usr
+!endif
+!if !defined(DESTDIR)
+DESTDIR = $(prefix)
+!endif
+</pre>
+<p>
+となっていた。これっていいのかなあ。
+なんか/usr/usrになりそうな気がしないでもないんだけど。
+</p>
+
+<p>
+それはそれとしてmingw32も
+</p>
+<pre>
+% make prefix=c:/mingw
+</pre>
+<p>
+とでもしとけばいいわけだ。でも
+</p>
+<pre>
+curses.o(.text+0x7a4):curses.c: undefined reference to `resizeterm'
+curses.o(.text+0x1a5a):curses.c: undefined reference to `wresize'
+</pre>
+<p>
+となってしまう。ext/curses/mkmf.logを見るとしっかり-L/libが残ってた。
+checkはCygwinのほうを見てしまったわけか。
+mswin32のほうも確認してみると-libpath:/libがあった。
+つまりtry_fooもprefix対応が必要だ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200302112" title="200302112" href="200302b.html#200302112">■</a> 
+[Ruby] prefix対応</h3>
+<p>
+instruby.rbとext/extmk.rbに--prefixオプションを追加すればよさそう。
+あとはCONFIG['prefix']を書き換えて、lib/mkmf.rbのxsystem, xpopenでやってる
+</p>
+<pre>
+Config.expand(command)
+</pre>
+<p>
+を
+</p>
+<pre>
+command = Config.expand(command.dup, CONFIG.dup)
+</pre>
+<p>
+とすればいい感じではある。
+これでいちいちconfigureし直さなくてもmakeの引数でprefixを変更できる(たぶん)。
+が、dupだらけになってきたので、そろそろ引数を書き換えないConfig.expandが欲しいね。
+たぶんlib/mkmf.rbの中だけだからここで定義しようかな。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200302113" title="200302113" href="200302b.html#200302113">■</a> 
+<a href="http://freshmeat.net/projects/util-linux/">[Linux] util-linux-2.11z</a></h3>
+<p>
+更新。
+</p>
+<!-- section end -->
+</div>
+<!-- 2003/02/11 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/02/12 start -->
+<h2><a name="20030212" href="200302b.html#20030212">2003-02-12 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="200302121" title="200302121" href="200302b.html#200302121">■</a> 
+<a href="http://raa.ruby-lang.org/project/testunit/">[Ruby] Test::Unit 0.1.8</a></h3>
+<p>
+更新。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200302122" title="200302122" href="200302b.html#200302122">■</a> 
+[Ruby] Config.expand</h3>
+<p>
+dupでいいかと思ったら根が深い。
+<a href="200302b.html#200302112">あのまま</a>だとCONFIG['libdir']が書き換わってしまう。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200302123" title="200302123" href="200302b.html#200302123">■</a> 
+<a href="http://raa.ruby-lang.org/project/openssl/">[Ruby] OpenSSL 0.1.3</a></h3>
+<p>
+御要望にお応えして、Cygwinだけパッケージ化してみる。
+</p>
+<!-- section end -->
+</div>
+<!-- 2003/02/12 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/02/13 start -->
+<h2><a name="20030213" href="200302b.html#20030213">2003-02-13 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="200302131" title="200302131" href="200302b.html#200302131">■</a> 
+<a href="http://raa.ruby-lang.org/project/openssl/">[Ruby] OpenSSL 0.1.3</a></h3>
+<p>
+OpenSSL 0.9.6hのMinGW版バイナリを探すのが面倒で、
+ソースから作る。Configureを見るとMingw32という文字列が見えるので、
+</p>
+<pre>
+% ./Configure Mingw32
+</pre>
+<p>
+と実行するとMakefile.sslができた。CCを書き換えて、
+include pathの足りないとこを足せば一応ライブラリはできる。
+apps, test, toolsは要らないので作らなくてもいい。
+</p>
+
+<p>
+あとは
+</p>
+<pre>
+% make install INSTALL_PREFIX=$HOME/openssl-0.9.6h
+</pre>
+<p>
+としてlibとincludeを内容を/usr/local/mingwへコピーすれば使える。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200302132" title="200302132" href="200302b.html#200302132">■</a> 
+<a href="http://www.arc.ritsumei.ac.jp/kachina/mikio/qdbm/">QDBM 1.1.0</a></h3>
+<p>
+NDBM互換インタフェースが追加されたので、Rubyでも簡単に試せそうだ。
+でもこの互換APIでは、データサイズが8KBに制限されるとこが惜しい。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200302133" title="200302133" href="200302b.html#200302133">■</a> 
+[Ruby] indent</h3>
+<p>
+vim6で=を使うといけるけど、いけないのもある。
+たとえば =G とすれば一気にshiftwidthでindentされる。
+が、たいていはうまくいかないのでVでクラスとか選んでちまちま変換したりする。
+</p>
+<!-- section end -->
+</div>
+<!-- 2003/02/13 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/02/14 start -->
+<h2><a name="20030214" href="200302b.html#20030214">2003-02-14 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="200302141" title="200302141" href="200302b.html#200302141">■</a> 
+[Ruby] rbconfig.rb; Config.expand</h3>
+<p>
+CONFIG['libdir']が書き換わってしまうのは、
+Config.expandは再帰的に自分を呼び出しているけどそのときはdupしてないからだった。
+やはり書き換えないversionが必要になることがわかった。
+しかもlib/mkmf.rbの中では結局のところ全部書き換えたらまずいものばかりだ。
+というわけで作る。
+</p>
+
+<p>
+ところでrbconfig.rbにはCONFIGとMAKEFILE_CONFIGがある。
+CONFIGはすべて展開された形で、
+MAKEFILE_CONFIGはその名のとおりmakeが認識できる変数を参照するような形のままになっている。
+Makefileが展開された形で作られたら、prefix=と指定しても意味がないからだ。
+rbconfig.rbの見た目ではCONFIGとMAKEFILE_CONFIGは逆のような感じだが、
+歴史的事情により現在のような構成になっている。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200302142" title="200302142" href="200302b.html#200302142">■</a> 
+[Ruby] lib/mkmf.rb; expand</h3>
+<p>
+こうすれば引数の中身を書き換えることはない。
+</p>
+<pre>
+def expand(val, config = CONFIG)
+  config = config.dup
+  val.gsub(/\$\$|\$\(([^()]+)\)|\$\{([^{}]+)\}/) do |var|
+    if !(v = $1 || $2)
+      '$'
+    elsif key = config[v]
+      config[v] = false
+      config[v] = expand(key, config)
+    else
+      var
+    end
+  end
+end
+</pre>
+<p>
+でも&quot;$(srcdir)&quot;ってのがあったのだ。
+ほんと奥が深い。ここはせっかくだからFile.dirname($0)を使おう。
+</p>
+<!-- section end -->
+</div>
+<!-- 2003/02/14 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/02/15 start -->
+<h2><a name="20030215" href="200302b.html#20030215">2003-02-15 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="200302151" title="200302151" href="200302b.html#200302151">■</a> 
+起床</h3>
+<p>
+起きたら15:00だった。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200302152" title="200302152" href="200302b.html#200302152">■</a> 
+<a href="http://www.uclibc.org/">[Linux] uClibc 0.9.18</a></h3>
+<p>
+更新。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200302153" title="200302153" href="200302b.html#200302153">■</a> 
+<a href="http://raa.ruby-lang.org/project/ruby-serialport/">[Ruby] Ruby/SerialPort 0.6</a></h3>
+<p>
+更新。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200302154" title="200302154" href="200302b.html#200302154">■</a> 
+<a href="http://www.arc.ritsumei.ac.jp/kachina/mikio/qdbm/">QDBM 1.1.1</a></h3>
+<p>
+NDBM互換APIにデータサイズの制限がなくなり、Cygwin対応も入った。
+でも、DLL対応はしてないので、必ず静的にリンクされる。
+</p>
+<!-- section end -->
+</div>
+<!-- 2003/02/15 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/02/16 start -->
+<h2><a name="20030216" href="200302b.html#20030216">2003-02-16 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="200302161" title="200302161" href="200302b.html#200302161">■</a> 
+[Cygwin] mount</h3>
+<p>
+ふだんはbinary mountしか使わないけど、
+text mountのテストをしたいときはどこかのディレクトリだけをtext mountするといい。
+</p>
+<pre>
+% mkdir ~/text
+% mount -u -t $(cygpath -w ~/text) ~/text
+% cd ~/text
+% echo foo &gt; foo
+% od -c foo
+0000000   f   o   o  \r  \n
+0000005
+</pre>
+<p>
+Rubyは今日から常にbinmodeになったのでこうなる。
+</p>
+<pre>
+% ruby -e 'open(&quot;foo&quot;, &quot;w&quot;).print &quot;foo\n&quot;'
+% od -c foo
+0000000   f   o   o  \n
+0000004
+</pre>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200302162" title="200302162" href="200302b.html#200302162">■</a> 
+[Ruby][Cygwin] binmode</h3>
+<p>
+_fmodeの件はextern int _fmode;という宣言からして、
+DLLの中では無意味だということに気づくべきであった。
+最初は_fmodeにこだわって
+</p>
+<pre>
+#include &lt;windows.h&gt;
+#include &lt;sys/cygwin.h&gt;
+...
+extern __declspec(dllimport) struct per_process __cygwin_user_data;
+#define user_data (&amp;__cygwin_user_data)
+#define __fmode (*(user_data-&gt;fmode_ptr))
+...
+__fmode &amp;= ~O_TEXT;
+__fmode |= O_BINARY;
+</pre>
+<p>
+などと考えていたが、
+これはstruct per_processの構造が変わるとバイナリ互換の問題があるから使いたくない。
+</p>
+<!-- section end -->
+</div>
+<!-- 2003/02/16 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/02/17 start -->
+<h2><a name="20030217" href="200302b.html#20030217">2003-02-17 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="200302171" title="200302171" href="200302b.html#200302171">■</a> 
+<a href="http://ccache.samba.org/">ccache 2.2</a></h3>
+<pre>
+better integration with distcc
+</pre>
+<p>
+ということらしいが、その
+<a href="http://distcc.samba.org/">distcc</a>も面白そうだ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2003/02/17 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/02/18 start -->
+<h2><a name="20030218" href="200302b.html#20030218">2003-02-18 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="200302181" title="200302181" href="200302b.html#200302181">■</a> 
+[Ruby] prefix対応</h3>
+<p>
+とりあえずprefix対応は今週中にまとめよう。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200302182" title="200302182" href="200302b.html#200302182">■</a> 
+[Ruby] lib/mkmf.rb</h3>
+<p>
+例のCPPの定義は互換性を考えて残すべきかなあ。
+%sがわかりにくいからやめてしまったわけだけど。
+どうせなら1.6もいじってしまいたい気もしないでもない。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200302183" title="200302183" href="200302b.html#200302183">■</a> 
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-talk/65088">[Ruby] Porting from unix to mingw</a></h3>
+<p>
+PragProgRubyがインストールされてる状態でMinGWのコンパイラを使い拡張ライブラリを作りたいというわけ？
+mkmf.rbはRUBY_PLATFORMとrbconfig.rbに従っていろいろ場合分けされるので、
+これらを書き換えてやる必要がある。たとえばRUBY_PLATFORMは
+</p>
+<pre>
+class Object
+  remove_const :RUBY_PLATFORM
+  RUBY_PLATFORM = 'i386-mingw32'
+end
+</pre>
+<p>
+とすればmkmf.rbは騙せる。
+$LOAD_LIBRARYを書き換えればmingw32用のrbconfig.rbをロードできるし
+</p>
+<pre>
+  $LOAD_LIBRARY.gsub!(/mswin32/, &quot;mingw32&quot;)
+</pre>
+<p>
+以上のようなことをするfake.rbをsite_rubyにでもおいて、
+c:/Ruby/lib/1.6/i386-mingw32/rbconfig.rbを用意すれば
+</p>
+<pre>
+% ruby -rfake extconf.rb
+</pre>
+<p>
+と実行できるはずだ。
+</p>
+
+<p>
+あ、そういうパッケージを作ればいいわけか。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200302184" title="200302184" href="200302b.html#200302184">■</a> 
+<a href="http://www.arc.ritsumei.ac.jp/kachina/mikio/qdbm/">QDBM 1.1.2</a></h3>
+<p>
+CygwinでもちゃんとDLLとインポートライブラリを作るようになった。
+ってどう考えてもこの日記を読んでいるとしか思えない。
+ちゃんとメールで報告しとくべきだったか。
+</p>
+<!-- section end -->
+</div>
+<!-- 2003/02/18 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/02/19 start -->
+<h2><a name="20030219" href="200302b.html#20030219">2003-02-19 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="200302191" title="200302191" href="200302b.html#200302191">■</a> 
+<a href="http://raa.ruby-lang.org/project/eruby/">[Ruby] eruby 1.0.3</a></h3>
+<p>
+更新。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200302192" title="200302192" href="200302b.html#200302192">■</a> 
+<a href="200302b.html#200302183">[Ruby] Porting from unix to mingw</a></h3>
+<p>
+なんか嘘ばかり書いてるなあ。そもそも$LOAD_LIBRARYじゃないし。
+配列だから
+</p>
+<pre>
+$LOAD_PATH.each do |x|
+  x.gsub!(/mswin32/, &quot;mingw32&quot;)
+end
+</pre>
+<p>
+という感じだ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2003/02/19 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/02/20 start -->
+<h2><a name="20030220" href="200302b.html#20030220">2003-02-20 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="200302201" title="200302201" href="200302b.html#200302201">■</a> 
+[Ruby] PragProgRuby用の拡張ライブラリをMinGWで作る</h3>
+<p>
+残りはrbconfig.rbだけど、
+そのままi386-mingw32のをコピーするのも芸がないので、
+</p>
+<pre>
+require 'i586-mswin32/rbconfig'
+</pre>
+<p>
+として差分だけ書き換えるのはどうだろう？
+これなら1.6/1.8のどちらにも対応できそうだ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2003/02/20 end -->
+
+<hr>
+<div>
+<a href="200302a.html">&lt;Prev(,)</a> | 
+<a href="200302c.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

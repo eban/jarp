@@ -1,0 +1,528 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2002-8-b</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="200208a.html">
+<link rel="next" href="200208c.html">
+
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2002年8月中旬〜</p>
+<hr>
+<div>
+<a href="200208a.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="200208c.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2002/08/11 start -->
+<h2><a name="20020811" href="200208b.html#20020811">2002-08-11 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="200208111" title="200208111" href="200208b.html#200208111">■</a> 
+<a href="http://www.dm4lab.to/~usa/ruby/d/200208b.html#id20020811_P1">mswin32</a></h3>
+<p>
+mingw32で作る。Wineでcl.exeを動かす(動くのか？)。VMwareを買う。
+ってこれはクロスとは言えない。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200208112" title="200208112" href="200208b.html#200208112">■</a> 
+<a href="http://www.openssl.org/">OpenSSL 0.9.6g</a></h3>
+<p>
+更新。ちょっと落ち着かないね。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200208113" title="200208113" href="200208b.html#200208113">■</a> 
+<a href="http://w3m.sf.net/">w3m 0.3.1</a></h3>
+<p>
+screen上でTERM=kterm w3mってのも面倒になってきたので、
+
+<a href="../files/w3m-terms.c.screen.patch">quick hack</a>
+。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200208114" title="200208114" href="200208b.html#200208114">■</a> 
+9000バイトのNUL</h3>
+<p>
+ま、人それぞれだけど、ddじゃなければ
+</p>
+<pre>
+% ruby -e 'print &quot;\0&quot; * 9000' &gt;zero.out
+% perl -e 'print &quot;\0&quot; x 9000' &gt;zero.out
+</pre>
+<p>
+とするかな。
+</p>
+<!-- section end -->
+</div>
+<!-- 2002/08/11 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/08/12 start -->
+<h2><a name="20020812" href="200208b.html#20020812">2002-08-12 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="200208121" title="200208121" href="200208b.html#200208121">■</a> 
+[zsh] rm_star_silent</h3>
+<p>
+zshならsetopt rm_star_silentしてなければdefaultで
+<pre>
+% rm * ~ 
+zsh: sure you want to delete all the files in /tmp [yn]?
+</pre>
+となるから、それほど困らないと思うんですけど？
+</p>
+
+<p>
+tcshを使っていた頃はmkdirするたびに
+</p>
+<pre>
+% touch !
+% chmod 0 !
+</pre>
+<p>
+としていた。なぜ!なのかはman asciiするとわかる。これはfjで知った。
+</p>
+<pre>
+% rm *
+rm: remove write-protected file `!'? 
+</pre>
+<p>
+GNU fileutilsのrmなら-iがどこにあってもいいので
+</p>
+<pre>
+% touch ./-i
+</pre>
+<p>
+という手もある。
+</p>
+
+<p>
+そうそう、今はtcshにもrmstarがある。bashにはなさそうだ。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/08/12 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/08/13 start -->
+<h2><a name="20020813" href="200208b.html#20020813">2002-08-13 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="200208131" title="200208131" href="200208b.html#200208131">■</a> 
+<a href="http://www.microsoft.com/japan/windows2000/downloads/servicepacks/sp3/download.sp3">Windows 2000 Professional SP3</a></h3>
+<p>
+でかいよねえ。ついでにIE6も入れてみる。が、どうせ使わない。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200208132" title="200208132" href="200208b.html#200208132">■</a> 
+<a href="http://www.ruby-lang.org/en/raa-list.rhtml?name=Win32OLE">[Ruby] Win32OLE 0.5.0</a></h3>
+<p>
+更新。
+</p>
+<!-- section end -->
+</div>
+<!-- 2002/08/13 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/08/14 start -->
+<h2><a name="20020814" href="200208b.html#20020814">2002-08-14 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="200208141" title="200208141" href="200208b.html#200208141">■</a> 
+<a href="http://www.uclibc.org/">[Linux] uClibc 0.9.14</a></h3>
+<p>
+DO_C99_MATH, HAS_SHADOW, INCLUDE_IPV6をtrueに。
+あれ？今までとコマンド名が違うなあ。i386-uclibc-がprefixされてる。
+/usr/i386-linux-uclibc/bin/には両方が混在してしまった。古いほうは消そう。
+</p>
+<pre>
+% sudo rm /usr/i386-linux-uclibc/bin/*(mh+1)
+</pre>
+<p>
+今インストールしたわけで、
+1時間以上前のファイルは以前にインストールしたものだから消していい。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/08/14 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/08/15 start -->
+<h2><a name="20020815" href="200208b.html#20020815">2002-08-15 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="200208151" title="200208151" href="200208b.html#200208151">■</a> 
+高校野球</h3>
+<p>
+Clip-Onの時計が5秒ほど遅れてる。
+教育テレビの正午の時報で毎日補正されるはずなのに。
+で、番組表を見たら11:45から高校野球の中継になってるじゃん。
+もう一週間もそんな状態だからこれだけ遅れたのか。
+嫌いな理由がまた一つ増えた。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200208152" title="200208152" href="200208b.html#200208152">■</a> 
+<a href="http://zsh.sunsite.dk/News/">Zsh 4.0.6</a></h3>
+<pre>
+20020814 : Release 4.0.6
+    This is a maintenance release of the stable 4.0 series. The majority of
+    changes are bug fixes or minor enhancements to the function based
+    completion system.
+</pre>
+<p>
+結局4.0.5は欠番にしたのかな。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200208153" title="200208153" href="200208b.html#200208153">■</a> 
+<a href="http://cygwin.com/ml/cygwin/2002-08/msg00939.html">[Cygwin] [ANNOUNCEMENT] GNU emacs 21.2-4 released</a></h3>
+<p>
+結局
+<a href="http://cygwin.com/ml/cygwin/2002-08/msg00929.html">GNU cpioでtarballを作っていた</a>
+のが原因でsetup.exeでインストールできなかったらしい。
+何か微妙に違うのか？
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/08/15 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/08/16 start -->
+<h2><a name="20020816" href="200208b.html#20020816">2002-08-16 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="200208161" title="200208161" href="200208b.html#200208161">■</a> 
+<a href="http://www.ruby-lang.org/en/raa-list.rhtml?name=bdb">[Ruby] bdb 0.3.3</a></h3>
+<p>
+更新。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200208162" title="200208162" href="200208b.html#200208162">■</a> 
+<a href="http://www.ruby-lang.org/en/raa-list.rhtml?name=Ruby-SQLite">[Ruby] Ruby-SQLite</a></h3>
+<p>
+mingw32版Ruby-SQLiteのリクエストが来た。
+まずは
+<a href="http://www.hwaci.com/sw/sqlite/">SQLite</a> をmakeしてみるか。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200208163" title="200208163" href="200208b.html#200208163">■</a> 
+<a href="http://gcc.gnu.org/gcc-3.2/changes.html">GCC 3.2</a></h3>
+<p>
+C++のほうはバイナリ互換がなくなるとあるが、
+どのくらい影響するのかよくわからん。
+</p>
+<pre>
+% mkdir linux; cd linux
+% CFLAGS=-Os CXXFLAGS=-Os ../configure --enable-languages=c,c++ \
+  --with-system-zlib --enable-sjlj-exceptions --enable-threads \
+  --disable-version-specific-runtime-libs --disable-nls \
+  --without-included-gettext --without-catgets
+% make BOOT_CFLAGS=-Os STAGE1_CFLAGS=-Os CFLAGS=-Os \
+  DEBUG_FLAGS= CONFIG_CXXFLAGS='-ffunction-sections -fdata-sections' \
+  bootstrap
+</pre>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200208164" title="200208164" href="200208b.html#200208164">■</a> 
+GCC 3.1でmakeしたkernel</h3>
+<p>
+会社のLinux boxが最近なぜかレジスタダンプが多い。
+時期的にはhdparmのためにDMAを使えるようにreconfigしたkernelからのような気がする。
+GCC 3.1でkernelをmakeしたせいなんだろうか？
+もう一度同じkernelでmakeするのも何だし、
+ついでだから2.4.19-pre3-lkpc-2から2.4.19へ上げて様子を見ることにした。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/08/16 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/08/17 start -->
+<h2><a name="20020817" href="200208b.html#20020817">2002-08-17 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="200208171" title="200208171" href="200208b.html#200208171">■</a> 
+SQLite for MinGw</h3>
+<p>
+TCLとreadlineがすごく邪魔。
+Makefile.inを見ても必須というわけじゃなさそうだし、
+面倒だからconfigure.acから削除してautoconfしなおす。
+Makefile.inからも削除。
+</p>
+<pre>
+% config_TARGET_EXEEXT=.exe \
+  config_TARGET_CC='i686-pc-cygwin-gcc -mno-cygwin' \
+  config_TARGET_CFLAGS=-Os \
+  config_BUILD_CC=gcc \
+  config_BUILD_CFLAGS=-Os \
+  ../configure \
+  --prefix=/usr/local/mingw \
+  --target=i386-mingw32 \
+  --host=i686-pc-cygwin \
+  --build=i586-pc-linux-gnu
+</pre>
+<p>
+なかなかすごいことになったな。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200208172" title="200208172" href="200208b.html#200208172">■</a> 
+<a href="http://www.ruby-lang.org/en/raa-list.rhtml?name=Ruby-SQLite">[Ruby] Ruby-SQLite</a></h3>
+<p>
+うーむ。どうしてソースを
+
+<a href="http://domingo.dad-it.com/ruby-sqlite-code.whtm">こんな形</a>
+で公開するんだろう。
+
+<a href="../files/sqlite.c">ここ</a> に置いとこう。extconf.rbも兼ねているので
+</p>
+<pre>
+% ruby sqlite.c
+</pre>
+<p>
+も可能なようにしてみた。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/08/17 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/08/18 start -->
+<h2><a name="20020818" href="200208b.html#20020818">2002-08-18 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="200208181" title="200208181" href="200208b.html#200208181">■</a> 
+patchutils 0.2.16</h3>
+<p>
+interdiffも-p1と指定しないといけないらしいってことに気づく。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200208182" title="200208182" href="200208b.html#200208182">■</a> 
+[Linux] xinetd 2.3.7</h3>
+<p>
+2.3.7が出てたのでinetdをやめることにした。
+</p>
+<pre>
+checking linux/time.h usability... no
+checking linux/time.h presence... yes
+configure: WARNING: linux/time.h: present but cannot be compiled
+configure: WARNING: linux/time.h: check for missing prerequisite headers?
+configure: WARNING: linux/time.h: proceeding with the preprocessor's result
+</pre>
+<p>
+となるが、
+</p>
+<pre>
+#ifndef FD_SET
+#ifdef HAVE_LINUX_TIME_H
+#include &lt;linux/time.h&gt;
+#endif
+#endif
+</pre>
+<p>
+なので問題ないようだ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200208183" title="200208183" href="200208b.html#200208183">■</a> 
+<a href="http://homepage1.nifty.com/markey/memo/200208.html#081801">Scintilla と gcc -mno-cygwin</a></h3>
+<p>
+未確認ですが、それはたぶんdllwrapに--target=mingw32のような指定が足りないからだと思います。
+これを指定しないとリンクされるライブラリが別のものというかcygwinのライブラリになります。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/08/18 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/08/19 start -->
+<h2><a name="20020819" href="200208b.html#20020819">2002-08-19 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="200208191" title="200208191" href="200208b.html#200208191">■</a> 
+<a href="http://homepage1.nifty.com/markey/memo/200208.html#081901">dllwrap --target (Cygwin)</a></h3>
+<p>
+それだと今度は-mno-cygwinが足りません。
+</p>
+<pre>
+% dllwrap -mno-cygwin --target i386-mingw32 dlltest.o -o dlltest.dll
+dllwrap: no export definition file provided.
+Creating one, but that may not be what you want
+</pre>
+<p>
+2つ必要なのはかなり変ですよね。
+</p>
+
+<p>
+Ruby DLLや拡張ライブラリを作るときのMakefileも参考にしてください。
+configure.inで
+</p>
+<pre>
+--driver-name=&quot;${CC}&quot;
+</pre>
+<p>
+ではなく
+</p>
+<pre>
+--driver-name=${CC}
+</pre>
+<p>
+となっているのはそのため。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/08/19 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/08/20 start -->
+<h2><a name="20020820" href="200208b.html#20020820">2002-08-20 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="200208201" title="200208201" href="200208b.html#200208201">■</a> 
+<a href="http://www.ruby-lang.org/en/raa-list.rhtml?name=REXML-stable">[Ruby] REXML 2.4.1</a></h3>
+<p>
+更新。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/08/20 end -->
+
+<hr>
+<div>
+<a href="200208a.html">&lt;Prev(,)</a> | 
+<a href="200208c.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

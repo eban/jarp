@@ -1,0 +1,742 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2006-3-c</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="200603b.html">
+<link rel="next" href="200604a.html">
+
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2006年3月下旬〜</p>
+<hr>
+<div>
+<a href="200603b.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="200604a.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2006/03/21 start -->
+<h2><a name="20060321" href="200603c.html#20060321">2006-03-21 (Tue)</a></h2>
+<!-- 2006-03-22 02:00:53 -->
+
+<div class="entry1">
+<h3><a name="200603211" title="200603211" href="200603c.html#200603211">■</a> 
+<a href="http://blog.del.icio.us/blog/2006/03/private_saving_.html">[del.icio.us] del.icio.usのprivate saving</a></h3>
+<blockquote><p>
+Because many of you have asked for it, we have just rolled-out a beta
+of our private saving feature. To try it out, go to “settings” and
+click on “private saving” to activate; you’ll then see the new
+option whenever you save a page. 
+</p></blockquote><p>
+つまり恥ずかしくて表に出せないブックマークは秘密にしたいけど、
+わざわざ分けたくないと。そういう要求はたしかにありそうだ。
+</p>
+
+<p>
+でもそういうのに限って操作ミスで晒しちゃったりするんだよねえ。
+
+<a href="http://del.icio.us/">del.icio.us</a>も単に[do not shared]をチェックするだけだし。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200603212" title="200603212" href="200603c.html#200603212">■</a> 
+[FC5] yumでFC4からFC5へのアップグレード</h3>
+<p>
+さてFC5が出たということなのでFC4に上げたときと同様にyumでアップグレードしたいところだが、
+前回参考にした
+
+<a href="http://www.brandonhutchinson.com/Upgrading_Red_Hat_Linux_with_yum.html">Upgrading Red Hat Linux/Fedora Core with yum</a>
+
+にはまだFC4からFC5については何も書かれてなかった。とりあえず保留。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200603213" title="200603213" href="200603c.html#200603213">■</a> 
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-dev/28446">[Ruby] named capture</a></h3>
+<p>
+Ruby 1.9に正規表現で$1のように番号ではなく名前やシンボルで参照できる機能が追加された。
+</p>
+<pre>
+% irb
+&gt;&gt; [RUBY_VERSION, RUBY_RELEASE_DATE]
+=&gt; [&quot;1.9.0&quot;, &quot;2006-03-21&quot;]
+&gt;&gt; /(?&lt;foo&gt;b.d)/ =~ &quot;abcdef&quot;
+=&gt; 1
+&gt;&gt; Regexp.last_match[&quot;foo&quot;]
+=&gt; &quot;bcd&quot;
+&gt;&gt; $~[:foo]
+=&gt; &quot;bcd&quot;
+</pre>
+<p>
+のように/(?&lt;name&gt;...)/という形式になる。
+</p>
+<!-- section end -->
+</div>
+<!-- 2006/03/21 end -->
+
+
+
+<hr class="hide">
+<!-- 2006/03/22 start -->
+<h2><a name="20060322" href="200603c.html#20060322">2006-03-22 (Wed)</a></h2>
+<!-- 2006-03-23 01:57:44 -->
+
+<div class="entry1">
+<h3><a name="200603221" title="200603221" href="200603c.html#200603221">■</a> 
+[inetd] sshで入れない</h3>
+<p>
+なぜか急にsshで入れなくなってしまった。
+</p>
+<pre>
+ssh_exchange_identification: Connection closed by remote host
+</pre>
+<p>
+ぐぐると原因は/etc/hosts.allowらしい。/etc/hosts.allowを見ると
+</p>
+<pre>
+sshd:   .jp                                     : allow
+sshd:   ALL                                     : deny
+</pre>
+<p>
+となっている。ybb!は.bbtec.netだし、ruby-langは.orgだし困ったよこれ。
+でも、タイムスタンプを見ると去年の9月だな。
+なんで今日になって急に入れなくなったんだか。
+</p>
+<!-- section end -->
+</div>
+<!-- 2006/03/22 end -->
+
+
+
+<hr class="hide">
+<!-- 2006/03/23 start -->
+<h2><a name="20060323" href="200603c.html#20060323">2006-03-23 (Thu)</a></h2>
+<!-- 2006-03-24 02:51:30 -->
+
+<div class="entry1">
+<h3><a name="200603231" title="200603231" href="200603c.html#200603231">■</a> 
+[Firefox] 久し振りのGreasemonkeyでトラブル</h3>
+<p>
+Firefox 1.5へ上げて以来使ってなかった
+
+<a href="http://greasemonkey.mozdev.org/">Greasemonkey</a>
+を久し振りにインストールしたらuser scriptがエラーになりまくり。
+</p><blockquote><dl>
+<dt>
+Error installing user script:
+<dd>
+[Exception... &quot;Component returned failure code:
+0x80520012(NS_ERROR_FILE_NOT_FOUND)[nslChannel.open]&quot; nsresult:
+&quot;0x80520012 (NS_ERROR_FILE_NOT_FOUND)&quot; location: &quot;JS frame ::
+chrome://greasemonkey/content/utils.js :: getContents :: line 167&quot;
+data: no]
+</dl></blockquote><p>
+と警告が出る。
+&quot;Component returned failure code: 0x80520012&quot;でぐぐってみると
+
+<a href="http://greaseblog.blogspot.com/2005/11/greasemonkey-064_30.html">まさにGreasemonkey 0.6.4のアナウンス</a>
+
+にヒット。よく読んでみると
+<a href="http://greaseblog.blogspot.com/2005/09/firefox-15-compatible-greasemonkey.html">0.6.2</a>
+
+に対処法が書かれているらしい。
+</p><blockquote><dl>
+<dt>
+Update: If you install Greasemonkey 0.6.2 without any prior version installed, installing scripts will not work. You'll see a &quot;file not found error. We'll be updating soon to fix this and are sorry for the bug. Meanwhile, the following will fix you up:
+<dd>
+</p><ol>
+<li>cd &lt;your profile directory&gt;
+<li>mkdir gm_scripts
+<li>Unix: touch gm_scripts/config.xml
+<li>Windows: echo &quot;&quot; &gt; gm_scriptsconfig.xml
+</ol><p>
+</dl></blockquote><p>
+これで解決。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200603232" title="200603232" href="200603c.html#200603232">■</a> 
+<a href="http://persistent.info/archives/2005/12/23/greasemonkey#c001269">[Gmail] Gmail Macros</a></h3>
+<p>
+Greasemonkeyをインストールしたのは
+<a href="http://persistent.info/archives/2005/12/23/greasemonkey#c001269">Gmail Macros</a>
+
+を使ってみようと思ったから。
+
+<a href="http://www.lifehacker.com/software/gmail/hack-attack-become-a-gmail-master-161399.php">Hack Attack: Become a Gmail master</a>
+
+も参照。[m][a]で[All]をSelect可能。
+[o]が使えないのでリターンキーで。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200603233" title="200603233" href="200603c.html#200603233">■</a> 
+[inetd] hosts.allow問題解決</h3>
+<p>
+謎のsshdの設定がなくなった。
+タイムスタンプが2004年1月ということはリストアしたのか？
+</p>
+<!-- section end -->
+</div>
+<!-- 2006/03/23 end -->
+
+
+
+<hr class="hide">
+<!-- 2006/03/24 start -->
+<h2><a name="20060324" href="200603c.html#20060324">2006-03-24 (Fri)</a></h2>
+<!-- 2006-03-26 17:19:53 -->
+
+<div class="entry1">
+<h3><a name="200603241" title="200603241" href="200603c.html#200603241">■</a> 
+[FC5] yumでFC4からFC5へアップグレード</h3>
+<p>
+
+<a href="http://www.brandonhutchinson.com/Upgrading_Red_Hat_Linux_with_yum.html">例のページ</a>
+
+が更新されたのでyumでFC4からFC5へアップグレードの挑戦。
+</p>
+
+<p>
+まずは古いカーネルをpackage-cleanup --oldkernelsで削除。
+yum upgradeしてみるとコンフリクトだらけでエラーで終わる。
+package-cleanupだけだとkernel-smp関連が削除されないようだ。
+そんなことよりエラーになるパッケージが73個もあって、これを全部消すと依存関係でyumまで消すぞと言ってくる。
+</p>
+
+<p>
+ちょっと作戦変更し保険のため
+
+<a href="http://torrent.fedoraproject.org/">DVD iso</a>
+をazureusでダウンロード。4時間ぐらいかかるとか言ってるので寝る。
+</p>
+<!-- section end -->
+</div>
+<!-- 2006/03/24 end -->
+
+
+
+<hr class="hide">
+<!-- 2006/03/25 start -->
+<h2><a name="20060325" href="200603c.html#20060325">2006-03-25 (Sat)</a></h2>
+<!-- 2006-03-26 03:00:40 -->
+
+<div class="entry1">
+<h3><a name="200603251" title="200603251" href="200603c.html#200603251">■</a> 
+[FC5] yumでFC4からFC5へアップグレード</h3>
+<p>
+起きたらダウンロードが終わってたのでDVD-RWに焼いて昨日の続き。
+X自身も削除の対象になってるのでrunlevelを3にしてrebootして続行。
+エラーになるパッケージのリストを作ってやばそうなの以外はどんどん消していく。
+sudo yum update kernelしてみてエラーにならなくなるまでそれを続ける。
+</p>
+
+<p>
+成功したのでrebootするかと思ったらsudoできない。
+pamがglibcの未定義シンボルを参照している。
+pamが失敗するってことはloginもできないわけでかなり困ったことになった。
+</p>
+
+<p>
+とりあえずCTRL+ALT+DELでrebootしてみるが、loginが失敗することに変わりなし。
+しょうがないのでgrubのメニューでeを押してsingleを追加しsingleモードで起動。
+ここでDVD-RWをマウントしglibcとgdbをrpmでupdate。
+これでpamはokとなった。あせったぜ。
+</p>
+
+<p>
+あとは/etc/init.d/network startしてそのままsingleモードで作業を続行し、
+ようやくyum -y upgrade完了。
+</p>
+
+<p>
+その後rebootも成功したが、GUI関係がぼろぼろでrunlevel 5が動かない。
+XとKDEを
+</p>
+<pre>
+% sudo yum -y groupinstall 'X Window System' 'KDE (K Desktop Environment)'
+</pre>
+<p>
+してインストール。これでとりあえずGUIで立ち上がる環境が整った。
+あとはfirefoxだの思いつく消しちゃったパッケージを再インストール。
+他のは必要になったら入れればいいや。ちょっとはすっきりしたかな。
+</p>
+
+<p>
+yum update kernelするなら先にglibcを上げとけってことか。
+いやちゃんと書いてある通りに実行せよってことだな。
+</p>
+
+<p>
+後から考えてみるとDVDがなくてもsingleモードでyum update glibcでよかったんじゃないかという気がしないでもない。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200603252" title="200603252" href="200603c.html#200603252">■</a> 
+[FC5] openssl 0.9.8</h3>
+<p>
+なぜかrdeliverがエラーになる。ログを見ると
+</p>
+<pre>
+Exception:
+    #&lt;LoadError: libcrypto.so.5: cannot open shared object file: No such file or
+ directory - /usr/local/lib/ruby/1.8/i386-linux/digest/md5.so&gt;
+</pre>
+<p>
+てな感じで、たしかにlibcrypto.so.5は存在しない。
+そうか今まではopenssl 0.9.7だったもんな。FC5でやっと0.9.8になったか。
+というわけでrubyもmakeしなおし。
+</p>
+
+<p>
+まあ/usr/bin/rubyのほうを使えばいい話ではあるんだが。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200603253" title="200603253" href="200603c.html#200603253">■</a> 
+<a href="http://qdbm.sf.net/">[Soft] QDBM: Quick DataBase Manager 1.8.47</a></h3>
+<blockquote><dl>
+<dt>
+Changes:
+<dd>
+The utility API was enhanced, and utility functions for UTF-8
+strings were added. A bug in Makefile for libtools was fixed.
+</dl></blockquote>
+<!-- section end -->
+</div>
+<!-- 2006/03/25 end -->
+
+
+
+<hr class="hide">
+<!-- 2006/03/26 start -->
+<h2><a name="20060326" href="200603c.html#20060326">2006-03-26 (Sun)</a></h2>
+<!-- 2006-03-27 02:20:29 -->
+
+<div class="entry1">
+<h3><a name="200603261" title="200603261" href="200603c.html#200603261">■</a> 
+[FC5] yum update</h3>
+<p>
+そういえば昨日yum upgradeして数時間後にyum updateするとなぜかいっぱい更新された。
+upgradeで最新になるわけでもないようだ。
+それともたまたまそういうタイミングだったんだろうか？
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200603262" title="200603262" href="200603c.html#200603262">■</a> 
+[VMware] FC5でvmware-config.pl</h3>
+<p>
+いろいろ失敗するが、例の
+<a href="http://ftp.cvut.cz/vmware/?M=D">VMware patches</a>
+からvmware-any-any-update99.tar.gzを取ってきて
+</p>
+<pre>
+% sudo ./runme.pl
+</pre>
+<p>
+で解決。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200603263" title="200603263" href="200603c.html#200603263">■</a> 
+[Firefox] ForecastFoxのにゅっと出るやつ</h3>
+<p>
+ForecastFoxの右下からにゅっと出るやつがFC5に上げたら出るようになった。
+Windows版だけの機能かと思ってた。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200603264" title="200603264" href="200603c.html#200603264">■</a> 
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-talk/186016">[Ruby] Can Ruby run without rails?</a></h3>
+<p>
+とうとうこういう質問が出るようになったか。
+でもそういう風に見せてるRailsがすごいのかもしれない。
+</p>
+<!-- section end -->
+</div>
+<!-- 2006/03/26 end -->
+
+
+
+<hr class="hide">
+<!-- 2006/03/27 start -->
+<h2><a name="20060327" href="200603c.html#20060327">2006-03-27 (Mon)</a></h2>
+<!-- 2006-03-28 02:11:29 -->
+
+<div class="entry1">
+<h3><a name="200603271" title="200603271" href="200603c.html#200603271">■</a> 
+<a href="http://www3.toshiba.co.jp/hdd-dvd/products/other/ex.html">[RD] ドラマ延長機能、スポーツ延長</a></h3>
+<p>
+RD-H1には関係ない話なのが悔しいがこの機能は欲しい。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200603272" title="200603272" href="200603c.html#200603272">■</a> 
+<a href="http://pam-ssh.sourceforge.net/">[FC5] pam_sshでgdm認証</a></h3>
+<p>
+gdmでパスワード入力して、keychainでパスフレーズ入力してというのが無駄に思えて、
+<a href="http://pam-ssh.sourceforge.net/">pam_ssh</a>を導入してみた。
+pam_ssh.soのインストール自体はyumでいけるので簡単。
+</p>
+<pre>
+% sudo yum install pam_ssh
+</pre>
+<p>
+設定は/etc/pam.d/gdmをいじればいいんだがいまいちよくわからない。
+2個所に入れないといけないようだ。
+たぶんpam_unix.soの直前ってことだと思うけど、gdmにはpam_unix.soがない。
+</p>
+<pre>
+#%PAM-1.0
+auth       required     pam_env.so
+auth       sufficient   pam_ssh.so
+auth       include      system-auth
+account    required     pam_nologin.so
+account    include      system-auth
+password   include      system-auth
+session    sufficient   pam_ssh.so
+session    include      system-auth
+session    required     pam_loginuid.so
+session    optional     pam_console.so
+</pre>
+<p>
+とりあえずこうしてみた。
+</p>
+
+<p>
+これでユーザ名のあとでパスフレーズを聞かれるようになった。
+ssh-agentも立ち上がってる。いいようだ。ssh remoteしてみる。
+ちゃんと入れる。これでkeychainは必要なし。
+</p>
+
+<p>
+実は
+</p>
+<pre>
+session    sufficient   pam_ssh.so
+</pre>
+<p>
+を
+</p>
+<pre>
+auth       sufficient   pam_ssh.so
+</pre>
+<p>
+とそのまま1個目のをコピペして書き換えるの忘れてて、
+ssh-addされない状態になってて悩んだりもした。
+というわけで2個目はssh-addに関するものらしい。
+</p>
+
+<p>
+よく見るとinclude system-authがあるってことは、
+/etc/pam.d/system-authのほうに入れればいいのか？
+system-authを見ると、あ、pam_unix.soもある。
+そうかいじるファイルを間違えていたか。
+</p>
+
+<p>
+しかしそうしてしまうと普通のlogin認証も全部SSHパスフレーズになってしまうわけで、それはそれで面倒だよな。
+やっぱgdmだけにしとこう。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200603273" title="200603273" href="200603c.html#200603273">■</a> 
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-talk/186191">[Ruby] YAMLっぽい</a></h3>
+<p>
+惜しいな。
+</p>
+<pre>
+node: { title: &quot;15597629&quot; label: &quot;up[0,18 p:-2270.125]&quot; }
+</pre>
+<p>
+が
+</p>
+<pre>
+node: { title: &quot;15597629&quot;, label: &quot;up[0,18 p:-2270.125]&quot; }
+</pre>
+<p>
+だったらそのままYAMLなのに。
+</p>
+<pre>
+% echo 'node: { title: &quot;15597629&quot;, label: &quot;up[0,18 p:-2270.125]&quot; }' |\
+  ruby -ryaml -e 'p YAML.load(ARGF)'
+{&quot;node&quot;=&gt;{&quot;title&quot;=&gt;&quot;15597629&quot;, &quot;label&quot;=&gt;&quot;up[0,18 p:-2270.125]&quot;}}
+</pre>
+
+<!-- section end -->
+</div>
+<!-- 2006/03/27 end -->
+
+
+
+<hr class="hide">
+<!-- 2006/03/28 start -->
+<h2><a name="20060328" href="200603c.html#20060328">2006-03-28 (Tue)</a></h2>
+<!-- 2006-03-29 01:46:11 -->
+
+<div class="entry1">
+<h3><a name="200603281" title="200603281" href="200603c.html#200603281">■</a> 
+[FC5] 音が出ない</h3>
+<p>
+また突然音が出なくなった。原因がさっぱりわからない。
+例によって再起動してWindowsを立ち上げるとちゃと音は出るので、
+壊れてるわけでもない。
+</p>
+
+<p>
+Knoppixでも試してみるか。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200603282" title="200603282" href="200603c.html#200603282">■</a> 
+<a href="http://www.scrachlist.com/">[Bookmark] ScratchList</a></h3>
+<p>
+登録は要らない。その代わりにuniqueなbookmarkletを作ってくれる。
+デフォルトでは30日でリンクは消される。面白い。
+quickaddは何も聞いてこないし、後で読んで捨てる系をここに置いてみよう。
+</p>
+<!-- section end -->
+</div>
+<!-- 2006/03/28 end -->
+
+
+
+<hr class="hide">
+<!-- 2006/03/29 start -->
+<h2><a name="20060329" href="200603c.html#20060329">2006-03-29 (Wed)</a></h2>
+<!-- 2006-03-30 01:30:08 -->
+
+<div class="entry1">
+<h3><a name="200603291" title="200603291" href="200603c.html#200603291">■</a> 
+[Bookmark] ScratchList</h3>
+<p>
+お昼ぐらいまでは生きてたんだけど、いきなりエラーになるようになった。
+</p>
+<pre>
+Application error
+Rails application failed to start properly&quot;
+</pre>
+<p>
+Railsが調子悪いらしい。って、やっぱRailsか。
+急にユーザが増えたのかな？
+30個ぐらいだから被害はそれほどでもない。
+</p>
+
+<p>
+ルールを自分で設定してタグを自動的につけるというのはいいアイディアだ。
+</p><blockquote><dl>
+<dt>
+Tag Rules
+<dd>
+Tag rules let you automatically tag links that contain a search string
+you provide. All you need to do is provide the search text and a list
+of one or more tags to apply to matching links. For example, you can
+enter search text &quot;ebay.com&quot; and tag &quot;eBay&quot; to automatically tag links
+to ebay.com auctions.<br><br>
+When you click the bookmarklet to add a link, the &quot;Tags&quot; text field
+will be pre-filled tags from matching rules. If you use the QuickAdd
+bookmarklet, the link will be added with these tags without asking for
+confirmation.
+</dl></blockquote>
+
+<p>
+考えてみるとScratchListはユーザ間でデータを共有しないわけで、
+だったらそういう目的で使うなら自分でCGIを用意すればいいだけの話か。
+自分でしか使わないなら軽いし。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200603292" title="200603292" href="200603c.html#200603292">■</a> 
+[PC] 音が出ない</h3>
+<p>
+Linux WORLDの5月号に
+
+<a href="http://www.alpha.co.jp/ac-knoppix/">Accelerated-KNOPPIX</a>
+がついてたので試した。
+やっぱり音は出ない。今度はLinuxじゃないLiveCDを試そう。
+</p>
+
+<p>
+それはそれとして、Acc(ryすげー。CDなのに立ち上がるのが速い。
+FC5より速いんじゃないかってくらい。
+</p>
+<!-- section end -->
+</div>
+<!-- 2006/03/29 end -->
+
+
+
+<hr class="hide">
+<!-- 2006/03/30 start -->
+<h2><a name="20060330" href="200603c.html#20060330">2006-03-30 (Thu)</a></h2>
+<!-- 2006-03-31 01:51:29 -->
+
+<div class="entry1">
+<h3><a name="200603301" title="200603301" href="200603c.html#200603301">■</a> 
+[FC5] yum groupinstall Base</h3>
+<p>
+ちょっと気になってBaseをインストールしてみた。
+</p>
+<pre>
+Installing:
+ dump                    i386       0.4b41-1.2       core              1.0 M
+ iptstate                i386       1.4-1.1.2.1      core               28 k
+ logwatch                noarch     7.1-8            core              238 k
+ rp-pppoe                i386       3.5-31           core              103 k
+ sendmail                i386       8.13.6-0.FC5.1   updates           629 k
+ smartmontools           i386       1:5.33-4.2       core              275 k
+ tree                    i386       1.5.0-3.2.1      core               26 k
+Updating:
+ mtr                     i386       2:0.71-0.FC5.1   updates            51 k
+Installing for dependencies:
+ ppp                     i386       2.4.3-6.2.1      core              381 k
+ rmt                     i386       0.4b41-1.2       core              222 k
+</pre>
+<p>
+そういえばFC4に上げたときにremoveしたパッケージだらけだ。
+やっぱ要らないようでそのままnで中止。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200603302" title="200603302" href="200603c.html#200603302">■</a> 
+[Bookmark] ScratchList</h3>
+<p>
+復活。データもそのまま残ってた。
+</p>
+<!-- section end -->
+</div>
+<!-- 2006/03/30 end -->
+
+
+
+<hr class="hide">
+<!-- 2006/03/31 start -->
+<h2><a name="20060331" href="200603c.html#20060331">2006-03-31 (Fri)</a></h2>
+<!-- 2006-04-01 02:42:38 -->
+
+<div class="entry1">
+<h3><a name="200603311" title="200603311" href="200603c.html#200603311">■</a> 
+[Gmail] Gmailで簡単にHTML Mailを作る方法</h3>
+<p>
+今日なにげなくテーブルをコピーしてGmailのCompose Mailでペーストしてみたら、
+なんとちゃんと再現してる。テーブルがというかHTMLそのものが。
+ちょっとびっくりした。文字だけじゃなくてそんな情報もコピーできるのか。
+あ、もちろんRich formattingのモードで。
+</p>
+
+<p>
+つまりリンク集なんかも簡単にコピーできるわけだ。
+というわけで
+<a href="http://www.scratchlist.com/">ScratchList</a>のMy Listをこの方法でバックアップしてみた。
+ScratchListはhrefがリダイレクトなのがあれだけど、titleに元のURLがついてるので一応よしとしよう。
+</p>
+
+<p>
+結構便利だな。
+</p>
+<!-- section end -->
+</div>
+<!-- 2006/03/31 end -->
+
+<hr>
+<div>
+<a href="200603b.html">&lt;Prev(,)</a> | 
+<a href="200604a.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

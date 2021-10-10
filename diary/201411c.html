@@ -1,0 +1,447 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2014-11-c</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="201411b.html">
+<link rel="next" href="201412a.html">
+
+<link rel="stylesheet" type="text/css" href="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.css">
+<script async type="text/javascript" src="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.js"></script>
+<script type="text/javascript">
+<!--       
+$(document).ready(function() {
+  prettyPrint();
+});
+-->
+</script>
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2014年11月下旬〜</p>
+<hr>
+<div>
+<a href="201411b.html" accesskey=",">&lt;Older(,)</a> | 
+<a href="201412a.html" accesskey=".">Newer(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2014/11/21 start -->
+<h2><a name="20141121" href="201411c.html#20141121">2014-11-21 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="201411211" title="201411211" href="201411c.html#201411211">■</a> 
+短縮URLの展開2</h3>
+<p>
+<a href="201110a.html#201110022">以前のバージョン</a>ではcurlとgrepとtailを使っていたが、
+</p>
+<pre>
+% curl -sLI t.co/mRJEGu6T | grep Location: | tail -1
+Location: http://support.microsoft.com/kb/2564553
+</pre>
+<p>
+curlだけでいけるとわかった。
+</p>
+<pre>
+% curl -sLI t.co/mRJEGu6T -w '%{url_effective}\n' -o /dev/null
+http://support.microsoft.com/kb/2564553
+</pre>
+<p>
+こっちのほうが長いが。
+</p>
+<!-- section end -->
+</div>
+<!-- 2014/11/21 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/11/22 start -->
+<h2><a name="20141122" href="201411c.html#20141122">2014-11-22 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="201411221" title="201411221" href="201411c.html#201411221">■</a> 
+jqゴルフには-sが必須</h3>
+<p>
+いろいろjqゴルフに挑戦したけど、入力がある場合は-sがないと無理っぽい。<br>
+</p>
+<pre>
+% seq 10|jq -R -r -c 'split(&quot;\n&quot;)'
+[&quot;1&quot;]
+[&quot;2&quot;]
+[&quot;3&quot;]
+[&quot;4&quot;]
+[&quot;5&quot;]
+[&quot;6&quot;]
+[&quot;7&quot;]
+[&quot;8&quot;]
+[&quot;9&quot;]
+[&quot;10&quot;]
+% seq 10|jq -R -r -s -c 'split(&quot;\n&quot;)'
+[&quot;1&quot;,&quot;2&quot;,&quot;3&quot;,&quot;4&quot;,&quot;5&quot;,&quot;6&quot;,&quot;7&quot;,&quot;8&quot;,&quot;9&quot;,&quot;10&quot;]
+</pre>
+<p>
+この違い。というわけで-sもつけてください。
+</p>
+<p>
+<a href="http://shinh.skr.jp/m/?date=20141120#p02">http://shinh.skr.jp/m/?date=20141120#p02</a></p>
+<!-- section end -->
+</div>
+<!-- 2014/11/22 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/11/23 start -->
+<h2><a name="20141123" href="201411c.html#20141123">2014-11-23 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="201411231" title="201411231" href="201411c.html#201411231">■</a> 
+jqで日ごとの最低気温</h3>
+<p>
+jqでできるのかとやってみるとできた。
+</p>
+<pre>
+% jq -s -R -r 'split(&quot;\n&quot;)|map(split(&quot; &quot;))|group_by(.[0])|.[]|min_by(.[2]|tonumber)|join(&quot; &quot;)' saitamashi-201411.log
+2014-11-01 21:10 14.5
+2014-11-02 06:40 13.1
+2014-11-03 23:50 10.0
+2014-11-04 06:20 8.2
+2014-11-05 04:10 8.6
+2014-11-06 07:10 13.1
+2014-11-07 21:10 13.2
+2014-11-08 04:30 9.0
+2014-11-09 10:20 12.2
+2014-11-10 23:40 10.2
+2014-11-11 01:50 10.1
+2014-11-12 22:40 9.6
+2014-11-13 23:10 6.6
+2014-11-14 04:40 2.7
+2014-11-15 06:00 2.4
+2014-11-16 05:50 5.5
+2014-11-17 06:40 3.8
+2014-11-18 01:30 5.6
+2014-11-19 24:00 4.3
+2014-11-20 03:20 2.4
+% sort -k1,1 -k3,3n saitamashi-201411.log | awk '!a[$1]++'
+2014-11-01 21:10 14.5
+2014-11-02 06:40 13.1
+2014-11-03 23:50 10.0
+2014-11-04 06:20 8.2
+2014-11-05 04:10 8.6
+2014-11-06 07:10 13.1
+2014-11-07 21:10 13.2
+2014-11-08 04:30 9.0
+2014-11-09 10:20 12.2
+2014-11-10 23:40 10.2
+2014-11-11 01:50 10.1
+2014-11-12 22:40 9.6
+2014-11-13 23:10 6.6
+2014-11-14 04:40 2.7
+2014-11-15 06:00 2.4
+2014-11-16 05:50 5.5
+2014-11-17 06:40 3.8
+2014-11-18 01:30 5.6
+2014-11-19 24:00 4.3
+2014-11-20 03:20 2.4
+</pre>
+<p>
+ちゃんと同じになった。
+</p>
+<p>
+jqでやってることをrubyで表現するとこんな感じだ。
+<pre>
+% ruby -e 'puts $&lt;.map(&amp;:split).group_by{|x|x[0]}.map{|x|x[1].min_by{|y|y[2].to_f}*&quot; &quot;}' saitamashi-201411.log  
+2014-11-01 21:10 14.5
+2014-11-02 06:40 13.1
+2014-11-03 23:50 10.0
+2014-11-04 06:20 8.2
+2014-11-05 04:10 8.6
+2014-11-06 07:10 13.1
+2014-11-07 21:10 13.2
+2014-11-08 04:30 9.0
+2014-11-09 10:20 12.2
+2014-11-10 23:40 10.2
+2014-11-11 01:50 10.1
+2014-11-12 22:40 9.6
+2014-11-13 23:10 6.6
+2014-11-14 04:40 2.7
+2014-11-15 06:00 2.4
+2014-11-16 05:50 5.5
+2014-11-17 06:40 3.8
+2014-11-18 01:30 5.6
+2014-11-19 24:00 4.3
+2014-11-20 03:20 2.4
+</pre>
+</p>
+<!-- section end -->
+</div>
+<!-- 2014/11/23 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/11/24 start -->
+<h2><a name="20141124" href="201411c.html#20141124">2014-11-24 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="201411241" title="201411241" href="201411c.html#201411241">■</a> 
+シートまな板に穴があく</h3>
+<p>
+100円ショップで買ったものなんで期待してなかったが、<br>
+カッターナイフで雑誌を分割してたら妙な感触がしてすぱっと切れていた。<br>
+よく見てみるといろんなところが穴だらけだった。<br>
+やっぱシートまな板じゃちょっと強度的にまずいようで。<br>
+A4の工作マットは結構強いがA4の雑誌を分割するときはもう少し大きくないとなあ。<br>
+まな板が丁度いい大きさだったんだが。今度は厚めのを買うか。
+</p>
+<!-- section end -->
+</div>
+<!-- 2014/11/24 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/11/25 start -->
+<h2><a name="20141125" href="201411c.html#20141125">2014-11-25 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="201411251" title="201411251" href="201411c.html#201411251">■</a> 
+LDRのフィルター</h3>
+<p>
+APIを使って外部から操作するのがいいんじゃないかとLDR APIについて調べていたら、<br>
+公式のドキュメントが存在しないことが判明。<br>
+ソースを見て有志の方がまとめているようで。
+</p>
+<p>
+それはそれとして個々の記事を既読にする方法がなかった。<br>
+そういえばLDRはWebのUIもフィードごとに既読だもんなあ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2014/11/25 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/11/26 start -->
+<h2><a name="20141126" href="201411c.html#20141126">2014-11-26 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="201411261" title="201411261" href="201411c.html#201411261">■</a> 
+Inoreaderのfeed date</h3>
+<p>
+いつのまにかリストビューでfeed dateが表示されなくなった。<br>
+設定をいじくりまくったら、カラムビューのときだけ表示されることがわかった。<br>
+これだと縦に分割されるからせせこましいんだよなあ。feed dateの設定は見つからない。
+</p>
+<!-- section end -->
+</div>
+<!-- 2014/11/26 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/11/27 start -->
+<h2><a name="20141127" href="201411c.html#20141127">2014-11-27 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="201411271" title="201411271" href="201411c.html#201411271">■</a> 
+uim-skkでヴを入力したい</h3>
+<p>
+なぜかVu&lt;SPC&gt;だと「ウ゛」になってしまう。<br>
+年に1度ぐらいしか困らないが、入力したいときはいちいちvuでぐぐってコピペしてたり。<br>
+直接~/.skk-uim-jisyoに書けばいいのか。<br>
+~/.uimは効いてるんだか効いてないんだかよくわからない。
+</p>
+<!-- section end -->
+</div>
+<!-- 2014/11/27 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/11/28 start -->
+<h2><a name="20141128" href="201411c.html#20141128">2014-11-28 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="201411281" title="201411281" href="201411c.html#201411281">■</a> 
+jqのslurpモード</h3>
+<p>
+jqにはslurpモードというのがある。
+</p>
+<pre>
+--slurp/-s:
+
+Instead of running the filter for each JSON object in the input, read the
+entire input stream into a large array and run the filter just once.
+</pre>
+<p>
+これが結構強力で、たとえばこんなよくある合計をもとめる計算も簡単にできてしまう。
+</p>
+<pre>
+% seq 10 | awk '{sum+=$0}END{print sum}'
+55
+% seq 10 | jq -c .   
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+% seq 10 | jq -s -c .
+[1,2,3,4,5,6,7,8,9,10]
+% seq 10 | jq -s add
+55
+</pre>
+<p>
+--raw-input(-R)と組み合わせると、全入力を1つの文字列として扱う。<br>
+あとはもうなんでもありなのでどんな入力でも扱えることになる。<br>
+つまりcodegolf用の言語としても結構優秀なのである。
+</p>
+<pre>
+% seq -f 'foo %g' 10
+foo 1
+foo 2
+foo 3
+foo 4
+foo 5
+foo 6
+foo 7
+foo 8
+foo 9
+foo 10
+% seq -f 'foo %g' 10 | jq -s -R -c .
+&quot;foo 1\nfoo 2\nfoo 3\nfoo 4\nfoo 5\nfoo 6\nfoo 7\nfoo 8\nfoo 9\nfoo 10\n&quot;
+</pre>
+<!-- section end -->
+</div>
+<!-- 2014/11/28 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/11/29 start -->
+<h2><a name="20141129" href="201411c.html#20141129">2014-11-29 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="201411291" title="201411291" href="201411c.html#201411291">■</a> 
+有限と微小のパン</h3>
+<p>
+講談社ノベルズ版のP84の件を確かめてみる。<br>
+A,E,H,R,T。この文字でできるすべての文字列は？
+</p>
+<pre>
+% goruby -e 'puts &quot;AEHRT&quot;.pe.len'         
+120
+</pre>
+<p>
+地球は何番目？
+</p>
+<pre>
+% goruby -e 'puts &quot;AEHRT&quot;.pe.ind(&quot;EARTH&quot;)+1'
+28
+</pre>
+<p>
+55番目は？
+</p>
+<pre>
+% goruby -e 'puts &quot;AEHRT&quot;.pe[55-1]'
+HEART
+</pre>
+<!-- section end -->
+</div>
+<!-- 2014/11/29 end -->
+
+
+
+<hr class="hide">
+<!-- 2014/11/30 start -->
+<h2><a name="20141130" href="201411c.html#20141130">2014-11-30 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="201411301" title="201411301" href="201411c.html#201411301">■</a> 
+jqで慣れないこと</h3>
+<p>
+基本的にstartは含まれるが、endは含まれない。<br>
+だからrange(0:10)と書いたら0から9までを意味する。<br>
+.[0:10]も同じ。
+</p>
+<pre>
+The .[10:15] syntax can be used to return a subarray of an array or substring
+of a string. The array returned by .[10:15] will be of length 5, containing the
+elements from index 10 (inclusive) to index 15 (exclusive). Either index may be
+negative (in which case it counts backwards from the end of the array), or
+omitted (in which case it refers to the start or end of the array).
+</pre>
+<p>
+つまり[1,2,3,4][0:-1]と書くと-1は含まれないので[1,2,3]になる。<br>
+じゃあ4まで含めたいときはどうするかというと[1,2,3,4][0:]のよう省略する。<br>
+そこに負の値で変数を使って連続的に扱うときにすごく困る。
+</p>
+<!-- section end -->
+</div>
+<!-- 2014/11/30 end -->
+
+<hr>
+<div>
+<a href="201411b.html">&lt;Older(,)</a> | 
+<a href="201412a.html">Newer(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

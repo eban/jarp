@@ -1,0 +1,408 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2016-3-a</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="201602c.html">
+<link rel="next" href="201603b.html">
+
+<link rel="stylesheet" type="text/css" href="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.css">
+<script async type="text/javascript" src="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.js"></script>
+<script type="text/javascript">
+<!--       
+$(document).ready(function() {
+  prettyPrint();
+});
+-->
+</script>
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2016年3月上旬〜</p>
+<hr>
+<div>
+<a href="201602c.html" accesskey=",">&lt;Older(,)</a> | 
+<a href="201603b.html" accesskey=".">Newer(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2016/03/01 start -->
+<h2><a name="20160301" href="201603a.html#20160301">2016-03-01 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="201603011" title="201603011" href="201603a.html#201603011">■</a> 
+当初の予定通りIFTTT+Werckerでbotを作成</h3>
+<p>
+curlで取ってきてawkで抜き出して、twitterへポストするだけなので適当に用意。<br>
+後はIFTTTのDate&amp;Timeで1時間毎にWerckerのWebhookを叩けばいいだけ。<br>
+最初は順調だったが、なぜかDate&amp;Timeが不調で数時間置きになったり。<br>
+まあでもログがしっかり残るので原因は特定しやすいし、<br>
+エラーになればメールも飛んでくるし、リトライもできるしで、<br>
+bot環境としてはかなりいいと思う。
+</p>
+<!-- section end -->
+</div>
+<!-- 2016/03/01 end -->
+
+
+
+<hr class="hide">
+<!-- 2016/03/02 start -->
+<h2><a name="20160302" href="201603a.html#20160302">2016-03-02 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="201603021" title="201603021" href="201603a.html#201603021">■</a> 
+CloudWatch Logs AWSCLI Plugin</h3>
+<p>
+いやーこんなものがあろうとは。<br>
+<a href="https://blogs.aws.amazon.com/application-management/post/Tx2TS68UQ3HUVAH/Monitor-Website-Latency-using-CloudWatch-Logs-CLI-Plugin">Monitor Website Latency using CloudWatch Logs CLI Plugin - AWS DevOps Blog - Amazon Web Services</a><br>
+これを入れるとaws logs pushとaws logs pullが使えるようになる。<br>
+エージェントのコマンドライン版というかエージェントは内部でこれを使ってるんだと思うが、<br>
+パイプで渡せるので非常に重宝する。
+</p>
+<pre>
+% seq 1000 | aws logs push --log-group-name group --log-stream-name seq
+</pre>
+<p>
+とするだけでCloudWatch Logsに送れる。また、
+</p>
+<pre>
+% aws logs pull --follow --log-group-name group --log-stream-name seq
+</pre>
+<p>
+でtail -f的な使い方が可能になる。
+</p>
+<!-- section end -->
+</div>
+<!-- 2016/03/02 end -->
+
+
+
+<hr class="hide">
+<!-- 2016/03/03 start -->
+<h2><a name="20160303" href="201603a.html#20160303">2016-03-03 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="201603031" title="201603031" href="201603a.html#201603031">■</a> 
+小ネタ wコマンド</h3>
+<p>
+wは端末のサイズを見て折り返さないようにtruncateしてるので、
+</p>
+<pre>
+% w | cat
+</pre>
+<p>
+とすれば全部出てくる。
+</p>
+<!-- section end -->
+</div>
+<!-- 2016/03/03 end -->
+
+
+
+<hr class="hide">
+<!-- 2016/03/04 start -->
+<h2><a name="20160304" href="201603a.html#20160304">2016-03-04 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="201603041" title="201603041" href="201603a.html#201603041">■</a> 
+SSL接続エラー</h3>
+<p>
+Google ChromeがなぜかSSL接続エラーでログインできない。<br>
+Chromeを上げるかと思ったが、そういえばUbuntuにはChromeがなくて<br>
+本家から取ってきていたことに気づいた。ああ、だから古いのか。<br>
+というわけでまた本家からdebを取ってきた。<br>
+でもPPAを追加したはずなんだけどな。
+</p>
+<!-- section end -->
+</div>
+<!-- 2016/03/04 end -->
+
+
+
+<hr class="hide">
+<!-- 2016/03/05 start -->
+<h2><a name="20160305" href="201603a.html#20160305">2016-03-05 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="201603051" title="201603051" href="201603a.html#201603051">■</a> 
+botの状況</h3>
+<p>
+たまに抜ける原因が2つあることがわかった。<br>
+IFTTTのDate&amp;Timeは毎時15分という設定してるが、これがたまに発火しないときがある。<br>
+それとtenki.jp側が15分だとまだ更新してないときがある。<br>
+後者はちょっと時間を置いてretryすればいけそうだが、たまに発火しないのはこまるなあ。<br>
+なんか別にそんなサービスがあるといいんだが。
+</p>
+<!-- section end -->
+</div>
+<!-- 2016/03/05 end -->
+
+
+
+<hr class="hide">
+<!-- 2016/03/06 start -->
+<h2><a name="20160306" href="201603a.html#20160306">2016-03-06 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="201603061" title="201603061" href="201603a.html#201603061">■</a> 
+curlの--libcurlオプション</h3>
+<p>
+man curlしてたら面白いオプションを見つけた。
+</p>
+<pre>
+--libcurl &lt;file&gt;
+       Append this option to any ordinary curl command line, and you will get
+       a libcurl-using  C  source  code written to the file that does the
+       equivalent of what your command-line operation does!
+
+       If this option is used several times, the last given file name will be used. (Added in 7.16.1)
+</pre>
+<p>
+Cのソースコードを吐くらしい。
+</p>
+<pre>
+% curl -s google.com                       
+&lt;HTML&gt;&lt;HEAD&gt;&lt;meta http-equiv=&quot;content-type&quot; content=&quot;text/html;charset=utf-8&quot;&gt;
+&lt;TITLE&gt;302 Moved&lt;/TITLE&gt;&lt;/HEAD&gt;&lt;BODY&gt;
+&lt;H1&gt;302 Moved&lt;/H1&gt;
+The document has moved
+&lt;A HREF=&quot;http://www.google.co.jp/?gfe_rd=cr&amp;amp;ei=xlvcVtH2E-X98wfoqb74DQ&quot;&gt;here&lt;/A&gt;.
+&lt;/BODY&gt;&lt;/HTML&gt;
+% curl -s -o /dev/null --libcurl - google.com | tee google.c
+/********* Sample code generated by the curl command line tool **********
+ * All curl_easy_setopt() options are documented at:
+ * http://curl.haxx.se/libcurl/c/curl_easy_setopt.html
+ ************************************************************************/
+#include &lt;curl/curl.h&gt;
+
+int main(int argc, char *argv[])
+{
+  CURLcode ret;
+  CURL *hnd;
+
+  hnd = curl_easy_init();
+  curl_easy_setopt(hnd, CURLOPT_URL, &quot;google.com&quot;);
+  curl_easy_setopt(hnd, CURLOPT_NOPROGRESS, 1L);
+  curl_easy_setopt(hnd, CURLOPT_USERAGENT, &quot;curl/7.43.0&quot;);
+  curl_easy_setopt(hnd, CURLOPT_MAXREDIRS, 50L);
+  curl_easy_setopt(hnd, CURLOPT_TCP_KEEPALIVE, 1L);
+
+  /* Here is a list of options the curl code used that cannot get generated
+     as source easily. You may select to either not use them or implement
+     them yourself.
+
+  CURLOPT_WRITEDATA set to a objectpointer
+  CURLOPT_WRITEFUNCTION set to a functionpointer
+  CURLOPT_READDATA set to a objectpointer
+  CURLOPT_READFUNCTION set to a functionpointer
+  CURLOPT_SEEKDATA set to a objectpointer
+  CURLOPT_SEEKFUNCTION set to a functionpointer
+  CURLOPT_ERRORBUFFER set to a objectpointer
+  CURLOPT_STDERR set to a objectpointer
+  CURLOPT_HEADERFUNCTION set to a functionpointer
+  CURLOPT_HEADERDATA set to a objectpointer
+
+  */
+
+  ret = curl_easy_perform(hnd);
+
+  curl_easy_cleanup(hnd);
+  hnd = NULL;
+
+  return (int)ret;
+}
+/**** End of sample code ****/
+% gcc google.c -lcurl
+% ./a.out
+&lt;HTML&gt;&lt;HEAD&gt;&lt;meta http-equiv=&quot;content-type&quot; content=&quot;text/html;charset=utf-8&quot;&gt;
+&lt;TITLE&gt;302 Moved&lt;/TITLE&gt;&lt;/HEAD&gt;&lt;BODY&gt;
+&lt;H1&gt;302 Moved&lt;/H1&gt;
+The document has moved
+&lt;A HREF=&quot;http://www.google.co.jp/?gfe_rd=cr&amp;amp;ei=5VvcVqqVCOH98weM0L6AAQ&quot;&gt;here&lt;/A&gt;.
+&lt;/BODY&gt;&lt;/HTML&gt;
+</pre>
+<p>
+これはなかなか楽しい。<br>
+-Lオプションをつけたらちゃんとそれに相当するコードも追加される。
+</p>
+<pre>
+% diff -U1 google{,1}.c
+--- google.c	2016-03-07 01:33:22.179676872 +0900
++++ google1.c	2016-03-07 01:38:05.817188787 +0900
+@@ -14,2 +14,3 @@
+   curl_easy_setopt(hnd, CURLOPT_NOPROGRESS, 1L);
++  curl_easy_setopt(hnd, CURLOPT_FOLLOWLOCATION, 1L);
+   curl_easy_setopt(hnd, CURLOPT_USERAGENT, &quot;curl/7.43.0&quot;);
+</pre>
+<p>
+これを静的にリンクすれば持ち運び便利かもと思ったが、<br>
+依存するライブラリの数が多すぎてなんかでかくなりそう。
+</p>
+<pre>
+% ldd a.out | wc -l
+39
+</pre>
+<!-- section end -->
+</div>
+<!-- 2016/03/06 end -->
+
+
+
+<hr class="hide">
+<!-- 2016/03/07 start -->
+<h2><a name="20160307" href="201603a.html#20160307">2016-03-07 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="201603071" title="201603071" href="201603a.html#201603071">■</a> 
+IFTTTのDate&amp;Time</h3>
+<p>
+もうすっかり:15固定と思い込んでいたからretryするしかないなと修正始めたが、<br>
+ふとIFTTTのレシピを見直したら15分置きに設定できると書いてあった。<br>
+まあ、そうだよなあ。:15なんて半端な時刻だけってのも変だし。
+</p>
+<!-- section end -->
+</div>
+<!-- 2016/03/07 end -->
+
+
+
+<hr class="hide">
+<!-- 2016/03/08 start -->
+<h2><a name="20160308" href="201603a.html#20160308">2016-03-08 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="201603081" title="201603081" href="201603a.html#201603081">■</a> 
+WindowsのFirefoxを64bit版に</h3>
+<p>
+32bit版はProgram Files (x86)にインストールされていたが、<br>
+64bit版はProgram Filesにインストールされるので共存可能。<br>
+まあ、すぐ32版は消しちゃったので本当に共存可能だったのかどうかわかんけど。<br>
+<a href="http://enjoypclife.net/2015/12/16/firefox-64-bit-release-check-32/">出た当初</a>は64bit版もなぜか(x86)にインストールされてたようで。でもこれはバグっぽい。<br>
+設定や拡張やら全部元のprofileを使うようで全然問題ない。<br>
+about:supportでユーザエージェントを確認する。
+</p>
+<pre>
+Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:45.0) Gecko/20100101 Firefox/45.0
+</pre>
+<p>
+Win64; x64となっていればok。
+</p>
+<p>
+ふとThunderbirdはどうだっけと確認してみるとすでに64bitだった。<br>
+こっちはいつからだったか思い出せない。
+</p>
+<!-- section end -->
+</div>
+<!-- 2016/03/08 end -->
+
+
+
+<hr class="hide">
+<!-- 2016/03/09 start -->
+<h2><a name="20160309" href="201603a.html#20160309">2016-03-09 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="201603091" title="201603091" href="201603a.html#201603091">■</a> 
+stdbufでunbuffer</h3>
+<p>
+stdoutがttyじゃないとbufferingするコマンドは多いがして欲しくないときがある。<br>
+たとえばログにNULが入っているのでそれを取り除きながらCloudWatch Logsに送りたいなんてときは、
+</p>
+<pre>
+% tail -f foo.log | tr -d '\0' | aws logs push ...
+</pre>
+<p>
+とすればよさげだが、これではtrがbufferingしてしまっていつまで経ってもpushされない。<br>
+ある程度のサイズがたまれば吐き出されるんだろうけど、すぐに見たい場合に困る。<br>
+そこでstdbufだ。これでstdoutをline bufferモードにしてあげれば1行単位で反映される。<br>
+使い方も簡単で
+</p>
+<pre>
+% tail -f foo.log | stdbuf -oL tr -d '\0' | aws logs push ...
+</pre>
+<p>
+とするだけでいい。-o0にすれば完全にunbuffer modeになるがそこまですると効率が悪そう。
+</p>
+<!-- section end -->
+</div>
+<!-- 2016/03/09 end -->
+
+
+
+<hr class="hide">
+<!-- 2016/03/10 start -->
+<h2><a name="20160310" href="201603a.html#20160310">2016-03-10 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="201603101" title="201603101" href="201603a.html#201603101">■</a> 
+Google Chromeのsmooth scrollを無効にする</h3>
+<p>
+Chromeが上がったはいいがなぜかsmooth scrollになってしまっていやな感じ。<br>
+Firefoxもそうだけどなんでそっちをdefaultにするのか。<br>
+設定見ても出てこないし、じゃあ後はchrome://flagsぐらいかと確認したらあった。<br>
+というわけで
+<a href="chrome://flags/#smooth-scrolling">滑らかなスクロール</a>を無効にして再起動すればok。
+</p>
+<!-- section end -->
+</div>
+<!-- 2016/03/10 end -->
+
+<hr>
+<div>
+<a href="201602c.html">&lt;Older(,)</a> | 
+<a href="201603b.html">Newer(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

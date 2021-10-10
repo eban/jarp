@@ -1,0 +1,418 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2016-6-c</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="201606b.html">
+<link rel="next" href="201607a.html">
+
+<link rel="stylesheet" type="text/css" href="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.css">
+<script async type="text/javascript" src="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.js"></script>
+<script type="text/javascript">
+<!--       
+$(document).ready(function() {
+  prettyPrint();
+});
+-->
+</script>
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2016年6月下旬〜</p>
+<hr>
+<div>
+<a href="201606b.html" accesskey=",">&lt;Older(,)</a> | 
+<a href="201607a.html" accesskey=".">Newer(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2016/06/21 start -->
+<h2><a name="20160621" href="201606c.html#20160621">2016-06-21 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="201606211" title="201606211" href="201606c.html#201606211">■</a> 
+Q5別解</h3>
+<p>
+awkだけでもいけそうだと思いついたのがこれ。
+</p>
+<pre>
+% gawk '12==a[$0=substr($1,1,4)]+=!$2' monthly_typhoon 
+1984
+1986
+2000
+2008
+</pre>
+<p>
+ただしmawkだと$0=substr($1,1,4)のほうが先に評価されて$2が常に空になるのでだめ。<br>
+というわけでこうしてみた。
+</p>
+<pre>
+% mawk '!$2&amp;&amp;12==++a[$0=substr($1,1,4)]' monthly_typhoon
+1984
+1986
+2000
+2008
+</pre>
+<p>
+ああ、だったらsubでYYYYMM 0のMM 0を空文字で置き換えて、<br>
+subの戻り値で置換したかどうかを判断すればよさげ。
+</p>
+<pre>
+% mawk 'sub(/.. 0/,&quot;&quot;)&amp;&amp;++a[$0]==12' monthly_typhoon
+1984
+1986
+2000
+2008
+% gawk 'sub(/.. 0/,&quot;&quot;)&amp;&amp;++a[$0]==12' monthly_typhoon
+1984
+1986
+2000
+2008
+</pre>
+<p>
+これでgawk/mawkのどちらでも動き、しかも元の方法よりも短いしわかりやすくなった。
+</p>
+<!-- section end -->
+</div>
+<!-- 2016/06/21 end -->
+
+
+
+<hr class="hide">
+<!-- 2016/06/22 start -->
+<h2><a name="20160622" href="201606c.html#20160622">2016-06-22 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="201606221" title="201606221" href="201606c.html#201606221">■</a> 
+VirtualBoxの仮想マシンイメージがみつからない</h3>
+<p>
+といって立ち上がらなくなった。<br>
+原因はWindowsが勝手にシステム更新して強制的に再起動していたからなんだけど、<br>
+もうほんとやめて欲しい。ちょっと目を離した隙に要らんことをする。<br>
+それはそれとして、VMが置いてあるフォルダをみるとSolydx.vbox-tmpみたいな名前があるので、<br>
+これをSolydx.vboxと名前を変更してからVirtualBoxを立ち上げればok。
+</p>
+<!-- section end -->
+</div>
+<!-- 2016/06/22 end -->
+
+
+
+<hr class="hide">
+<!-- 2016/06/23 start -->
+<h2><a name="20160623" href="201606c.html#20160623">2016-06-23 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="201606231" title="201606231" href="201606c.html#201606231">■</a> 
+J:COMの挙動が元に戻る</h3>
+<p>
+録画終了しても録画中のまま。<br>
+こうなると追い掛け再生してたときにいちいちメニューに戻ってから、<br>
+録画リストを選ばないといけないので面倒臭い。
+</p>
+<!-- section end -->
+</div>
+<!-- 2016/06/23 end -->
+
+
+
+<hr class="hide">
+<!-- 2016/06/24 start -->
+<h2><a name="20160624" href="201606c.html#20160624">2016-06-24 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="201606241" title="201606241" href="201606c.html#201606241">■</a> 
+awkで1個目と2個目のファイルで処理を変える</h3>
+<p>
+方法はいくつかある。
+</p>
+<h4><a name="201606241S1" href="201606c.html#201606241S1">_</a> <strong>NRとFNRの違いを利用</strong>: </h4>
+<div class="sub">
+<p>
+NRは通しでFNRは各ファイルでの行番号になるので1個目だけは同一になる。<br>
+そこで
+</p>
+<pre>
+'
+  NR==FNR{file1の処理; next}
+  {file2の処理}
+' file1 file2
+</pre>
+<p>
+のようにnextで強制的に次の行の処理へ飛ばしてしまえばいい。
+</p>
+</div>
+<h4><a name="201606241S2" href="201606c.html#201606241S2">_</a> <strong>フラグを使う</strong>: </h4>
+<div class="sub">
+<p>
+file1とfile2の間に変数の代入を入れることで、フラグとして使う。
+</p>
+<pre>
+'
+  !f{file1の処理}
+  f{file2の処理}
+' file1 f=1 file2
+</pre>
+<p>
+file1の処理が終わった後でf=1になる。
+</p>
+</div>
+<!-- section end -->
+</div>
+<!-- 2016/06/24 end -->
+
+
+
+<hr class="hide">
+<!-- 2016/06/25 start -->
+<h2><a name="20160625" href="201606c.html#20160625">2016-06-25 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="201606251" title="201606251" href="201606c.html#201606251">■</a> 
+Q2をawkだけで解く</h3>
+<p>
+昨日の件を踏まえるとこうなる。
+</p>
+<pre>
+% awk '
+  NR==FNR{year[substr($1,1,4)]+=$2; next}
+  {FS=&quot;,&quot;}FNR&gt;1{if(year[$1]!=+$NF)print $1,&quot;not match&quot;}
+' monthly_typhoon landing.csv
+</pre>
+<p>
+monthly_typhoonの年ごとの上陸回数をyearに入れて、<br>
+landing.csvとつきあわせる。<br>
++$NFとすることで空文字でも0にできる。
+</p>
+<!-- section end -->
+</div>
+<!-- 2016/06/25 end -->
+
+
+
+<hr class="hide">
+<!-- 2016/06/26 start -->
+<h2><a name="20160626" href="201606c.html#20160626">2016-06-26 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="201606261" title="201606261" href="201606c.html#201606261">■</a> 
+シーザー暗号 #シェル芸</h3>
+<p>
+<a href="http://orebibou.com/2016/06/linux%E3%82%B3%E3%83%B3%E3%82%BD%E3%83%BC%E3%83%AB%E4%B8%8A%E3%81%A7%E3%82%A2%E3%83%AB%E3%83%95%E3%82%A1%E3%83%99%E3%83%83%E3%83%88%E9%A0%86%E3%81%ABn%E6%96%87%E5%AD%97%E3%81%9A%E3%82%89%E3%81%97/">Linuxコンソール上でアルファベット順にn文字ずらした文字列を得る(シーザー暗号) | 俺的備忘録 〜なんかいろいろ〜</a><br>
+tacの意味がよくわからない。あとtrで空白を&quot;.&quot;に変換しているのも不要のような。<br>
+</p>
+<pre>
+% echo abcdefg | tr &quot;$(printf %1sA-z)&quot; A-zA-z
+bcdefgh
+% echo aBCdEfg | tr &quot;$(printf %9sA-z)&quot; A-zA-z
+jKLmNop
+</pre>
+<p>
+でいいのではないかな。大文字が含まれていてもいける。
+</p>
+<pre>
+% echo bcdefgh | tr A-z &quot;$(printf %1sA-z)&quot;
+abcdefg
+% echo jKLmNop | tr A-z &quot;$(printf %9sA-z)&quot;
+aBCdEfg
+</pre>
+<!-- section end -->
+</div>
+<!-- 2016/06/26 end -->
+
+
+
+<hr class="hide">
+<!-- 2016/06/27 start -->
+<h2><a name="20160627" href="201606c.html#20160627">2016-06-27 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="201606271" title="201606271" href="201606c.html#201606271">■</a> 
+シーザー暗号改 #シェル芸</h3>
+<p>
+<a href="201606c.html#201606261">昨日の</a>はzがAになったりといろいろとダメダメだったの出直し。<br>
+1つずらす場合は
+</p>
+<pre>
+tr a-zA-Z b-zaB-ZA
+</pre>
+<p>
+となればいいわけだが、1からこの文字列を作るのは難しい。そこで
+</p>
+<pre>
+abcdefghijklmnopqrstuvwxyz
+</pre>
+<p>
+を
+</p>
+<pre>
+bcdefghijklmnopqrstuvwxyza
+</pre>
+<p>
+に変換することにする。これはsedなら簡単だ。
+</p>
+<pre>
+% printf %s {a..z} | sed -E 's/^(.{1})(.*)/\2\1/;s/.*/&amp;\U&amp;/'
+bcdefghijklmnopqrstuvwxyzaBCDEFGHIJKLMNOPQRSTUVWXYZA
+</pre>
+<p>
+というわけで大文字も含んだ形で完成。
+</p>
+<pre>
+solydx:w/1606 [0] % echo aBCdEfgXyZ | tr a-zA-Z &quot;$(printf %s {a..z} | sed -E 's/^(.{9})(.*)/\2\1/;s/.*/&amp;\U&amp;/')&quot;
+jKLmNopGhI
+solydx:w/1606 [0] % echo jKLmNopGhI | tr &quot;$(printf %s {a..z} | sed -E 's/^(.{9})(.*)/\2\1/;s/.*/&amp;\U&amp;/')&quot; a-zA-Z
+aBCdEfgXyZ
+</pre>
+<p>
+でも、ちょっとださい。
+</p>
+<!-- section end -->
+</div>
+<!-- 2016/06/27 end -->
+
+
+
+<hr class="hide">
+<!-- 2016/06/28 start -->
+<h2><a name="20160628" href="201606c.html#20160628">2016-06-28 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="201606281" title="201606281" href="201606c.html#201606281">■</a> 
+rm -rf dirよりもrsync -a --deleteのほうが速いらしい</h3>
+<p>
+<a href="http://www.commandlinefu.com/commands/view/17371/optimal-way-of-deleting-huge-numbers-of-files">Optimal way of deleting huge numbers of files</a><br>
+なんとも不思議な話ではある。ベンチマーク結果はなぜかすでに存在しなようで、<br>
+web.archive.org経由で。<br>
+<a href="https://web.archive.org/web/20130929001850/http://linuxnote.net/jianingy/en/linux/a-fast-way-to-remove-huge-number-of-files.html">A faster way to delete millions of files in a directory</a><br>
+圧倒的だ。というわけでちょっと試してみた。<br>
+同じように100万ファイルで。
+</p>
+<pre>
+% time rm -r a
+rm -r a  1.36s user 19.62s system 7% cpu 4:29.74 total
+% time rsync -a --delete empty/ b  
+rsync -a --delete empty/ b  1.47s user 10.96s system 11% cpu 1:49.94 total
+</pre>
+<p>
+なるほど結構違う。
+</p>
+<!-- section end -->
+</div>
+<!-- 2016/06/28 end -->
+
+
+
+<hr class="hide">
+<!-- 2016/06/29 start -->
+<h2><a name="20160629" href="201606c.html#20160629">2016-06-29 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="201606291" title="201606291" href="201606c.html#201606291">■</a> 
+文字列の繰り返し</h3>
+<p>
+なんだかんだでjqを使うのが一番簡単な気がしてきた。
+</p>
+<pre>
+% jq -nr '&quot;a&quot;*10'       
+aaaaaaaaaa
+% echo a | jq -Rr '.*10'
+aaaaaaaaaa
+</pre>
+<p>
+こんな感じで短く書ける。<br>
+それかjot。
+</p>
+<pre>
+% jot -s &quot;&quot; -b a 10
+aaaaaaaaaa
+</pre>
+<p>
+あとはshuf。
+</p>
+<pre>
+% shuf -rn10 -e a | paste -sd &quot;&quot;
+aaaaaaaaaa
+</pre>
+<!-- section end -->
+</div>
+<!-- 2016/06/29 end -->
+
+
+
+<hr class="hide">
+<!-- 2016/06/30 start -->
+<h2><a name="20160630" href="201606c.html#20160630">2016-06-30 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="201606301" title="201606301" href="201606c.html#201606301">■</a> 
+Slack通知がうっとうしい</h3>
+<p>
+監視系からの通知がくるとポップアップされてとてもうっとうしい。<br>
+というわけでMuteしてたんだけど、まあこれはこれでグレーアウトされちゃって、<br>
+まったく気づかないという欠点が。<br>
+というわけで最近はDesktop notificationsのMemntions of my name or highlight wordsを使ってる。<br>
+ポップアップされないのでまあ満足。
+</p>
+<!-- section end -->
+</div>
+<!-- 2016/06/30 end -->
+
+<hr>
+<div>
+<a href="201606b.html">&lt;Older(,)</a> | 
+<a href="201607a.html">Newer(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

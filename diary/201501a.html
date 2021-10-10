@@ -1,0 +1,444 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2015-1-a</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="201412c.html">
+<link rel="next" href="201501b.html">
+
+<link rel="stylesheet" type="text/css" href="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.css">
+<script async type="text/javascript" src="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.js"></script>
+<script type="text/javascript">
+<!--       
+$(document).ready(function() {
+  prettyPrint();
+});
+-->
+</script>
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2015年1月上旬〜</p>
+<hr>
+<div>
+<a href="201412c.html" accesskey=",">&lt;Older(,)</a> | 
+<a href="201501b.html" accesskey=".">Newer(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2015/01/01 start -->
+<h2><a name="20150101" href="201501a.html#20150101">2015-01-01 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="201501011" title="201501011" href="201501a.html#201501011">■</a> 
+大晦日元日素数 #シェル芸</h3>
+<p>
+実は20141231も20150101も素数ではない。
+</p>
+<pre>
+% factor 20141231 20150101                 
+20141231: 11 1831021
+20150101: 43 97 4831
+</pre>
+<p>
+一目ではわからないあたりが巧妙な釣りだ。しかしどっちかは素数かと思ったよ。
+</p>
+<p>
+じゃあ本当の大晦日元日素数はいつか、ごりごりと今世紀を全部探してみる。
+</p>
+<pre>
+% for i in {2001..2100};do echo ${i}1231 $[i+1]0101 | factor | xargs | awk 'NF==4{print $2, $4}'; done
+20201231 20210101
+20291231 20300101
+</pre>
+<p>
+意外に少ない。2020年になったら思い出そう。
+</p>
+<!-- section end -->
+</div>
+<!-- 2015/01/01 end -->
+
+
+
+<hr class="hide">
+<!-- 2015/01/02 start -->
+<h2><a name="20150102" href="201501a.html#20150102">2015-01-02 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="201501021" title="201501021" href="201501a.html#201501021">■</a> 
+文字の長さ順に並べる</h3>
+<p>
+例のQ6は
+</p>
+<pre>
+% printf &quot;%s\n&quot; {a,}{b,}{c,}{d,}{e,}
+abcde
+abcd
+abce
+abc
+abde
+abd
+abe
+ab
+acde
+acd
+ace
+ac
+ade
+ad
+ae
+a
+bcde
+bcd
+bce
+bc
+bde
+bd
+be
+b
+cde
+cd
+ce
+c
+de
+d
+e
+
+</pre>
+<p>
+でよかったわけだねえ。この順番はsortしてもこうなるけど、
+</p>
+<pre>
+
+a
+b
+c
+d
+e
+ab
+...
+</pre>
+<p>
+のように並んで欲しい。つまり文字の長さ順だ。<br>
+これはどうするかというと一時的に長さを追加することで可能になる。
+</p>
+<pre>
+% printf &quot;%s\n&quot; {a,}{b,}{c,}{d,}{e,} | awk '{print length,$0}'| sort -n | awk '{print $2}'
+
+a
+b
+c
+d
+e
+ab
+ac
+ad
+ae
+bc
+bd
+be
+cd
+ce
+de
+abc
+abd
+abe
+acd
+ace
+ade
+bcd
+bce
+bde
+cde
+abcd
+abce
+abde
+acde
+bcde
+abcde
+</pre>
+<p>
+Rubyだともっと簡単だ。
+</p>
+<pre>
+% printf &quot;%s\n&quot; {a,}{b,}{c,}{d,}{e,} | ruby -e 'puts $&lt;.sort_by(&amp;:size)'                  
+</pre>
+<!-- section end -->
+</div>
+<!-- 2015/01/02 end -->
+
+
+
+<hr class="hide">
+<!-- 2015/01/03 start -->
+<h2><a name="20150103" href="201501a.html#20150103">2015-01-03 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="201501031" title="201501031" href="201501a.html#201501031">■</a> 
+facebookのアカウントを削除</h3>
+<p>
+一度退会したはずのもう一つのアカウントがしぶとく残っていたので、<br>
+ぐぐりながら完全削除の儀式。<br>
+なぜ一度ヘルプ画面を介さないといけないのか謎だ。
+</p>
+<p>
+CF:
+<a href="http://nanapi.jp/25829">これでアカウント完全削除！「Facebook(フェイスブック)」の退会方法 | nanapi [ナナピ]</a></p>
+<!-- section end -->
+</div>
+<!-- 2015/01/03 end -->
+
+
+
+<hr class="hide">
+<!-- 2015/01/04 start -->
+<h2><a name="20150104" href="201501a.html#20150104">2015-01-04 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="201501041" title="201501041" href="201501a.html#201501041">■</a> 
+Live Dwango Reader</h3>
+<p>
+アドレスバーでrと打つだけで、reader.aol.comと補完されるようになるぐらい使ったが、<br>
+やっぱLDRの速さは全然違うなあ。これでAPIがまともなら言うことないんだが。
+</p>
+<!-- section end -->
+</div>
+<!-- 2015/01/04 end -->
+
+
+
+<hr class="hide">
+<!-- 2015/01/05 start -->
+<h2><a name="20150105" href="201501a.html#20150105">2015-01-05 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="201501051" title="201501051" href="201501a.html#201501051">■</a> 
+最初の木曜日を含む週が、その年の第1週</h3>
+<p>
+twitterの障害で気になったんだけど、
+<a href="http://ja.wikipedia.org/wiki/ISO_8601#.E5.B9.B4.E3.81.A8.E9.80.B1.E3.81.A8.E6.9B.9C.E6.97.A5">ISO 8601</a>によると、<br>
+「最初の木曜日を含む週が、その年の第1週」と決まっているらしい。なんで木曜日なのか？<br>
+「月曜日が 1、日曜日は 7 である」ってことは週は月曜日から始まる。<br>
+つまり1月1日が木曜だと4日が日曜なので新年側が4日分ある。旧年は3日分。<br>
+これはやっぱ多いほうが勝ちってことかな。
+</p>
+<!-- section end -->
+</div>
+<!-- 2015/01/05 end -->
+
+
+
+<hr class="hide">
+<!-- 2015/01/06 start -->
+<h2><a name="20150106" href="201501a.html#20150106">2015-01-06 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="201501061" title="201501061" href="201501a.html#201501061">■</a> 
+urlencodeな話</h3>
+<p>
+curlには--data-urlencodeというオプションがあるがこれは当然POSTになる。<br>
+GETでも使いたいよなあと思っていたら--getなんて素敵なオプションが！
+</p>
+<pre>
+-G, --get
+    When  used, this option will make all data specified with -d, --data,
+    --data-binary or --data-urlencode to be used in an HTTP GET request instead of
+    the POST request that otherwise would be  used.  The  data will be appended to
+    the URL with a '?' separator.
+</pre>
+<p>
+先日の羽田空港の緯度経度のときも面倒なのでurlencodeしなかったけど、<br>
+中にはやっぱしないと受け付けてくれないとこもあるしなあ。<br>
+ということで
+</p>
+<pre>
+% curl -s 'http://maps.google.com/maps/api/geocode/json?address=羽田空港'
+</pre>
+<p>
+は
+</p>
+<pre>
+% curl -s 'http://maps.google.com/maps/api/geocode/json' --get --data-urlencode 'address=羽田空港'
+</pre>
+<p>
+とすればいいわけだ。例によって-w '%{url_effective}\n'をつければどんなURLが渡されるのか確認できる。
+</p>
+<pre>
+% curl -s 'http://maps.google.com/maps/api/geocode/json' --get --data-urlencode 'address=羽田空港' \
+  -w '%{url_effective}\n' -o /dev/null
+http://maps.google.com/maps/api/geocode/json?address=%E7%BE%BD%E7%94%B0%E7%A9%BA%E6%B8%AF
+</pre>
+<!-- section end -->
+</div>
+<!-- 2015/01/06 end -->
+
+
+
+<hr class="hide">
+<!-- 2015/01/07 start -->
+<h2><a name="20150107" href="201501a.html#20150107">2015-01-07 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="201501071" title="201501071" href="201501a.html#201501071">■</a> 
+curlで実際にアクセスしないでurlencode</h3>
+<p>
+昨日のcurlの例でアクセスせずにurlencodeした結果だけ得たい場合はどうするか？<br>
+思い付くのは実在しないURLを指定すればよさげだが、空でもいいのかやってみるとなんといけた。
+</p>
+<pre>
+% curl -s '' --get --data-urlencode 'address=羽田空港' -w '%{url_effective}\n'
+/?address=%E7%BE%BD%E7%94%B0%E7%A9%BA%E6%B8%AF
+zsh: exit 3     curl -s '' --get --data-urlencode 'address=羽田空港' -w
+</pre>
+<p>
+ただ終了ステータスが3(URL malformed. The syntax was not correct.)になるようなので注意。
+</p>
+<p>
+/?が不要ならcut -c3-とかtail -c+3とかsed s/..//で。
+</p>
+<!-- section end -->
+</div>
+<!-- 2015/01/07 end -->
+
+
+
+<hr class="hide">
+<!-- 2015/01/08 start -->
+<h2><a name="20150108" href="201501a.html#20150108">2015-01-08 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="201501081" title="201501081" href="201501a.html#201501081">■</a> 
+urlencodeコマンド</h3>
+<p>
+gridsite-clientsというパッケージをインストールすると<br>
+urlencodeというコマンドが使えるようになるが、<br>
+日本語には対応してないらしく全部%FFになってしまう。残念。
+</p>
+<pre>
+% urlencode 羽田空港
+%FF%FF%FF%FF%FF%FF%FF%FF%FF%FF%FF%FF
+</pre>
+<p>
+速攻でpurgeした。
+</p>
+<!-- section end -->
+</div>
+<!-- 2015/01/08 end -->
+
+
+
+<hr class="hide">
+<!-- 2015/01/09 start -->
+<h2><a name="20150109" href="201501a.html#20150109">2015-01-09 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="201501091" title="201501091" href="201501a.html#201501091">■</a> 
+スムーススクロール</h3>
+<p>
+Inoreaderを再読み込みしたらスムーススクロールするようになっていた。<br>
+なぜかそっちがデフォルトになるケースが多いってことは、<br>
+そっちを好む人が多いんだろうなあ。
+</p>
+<p>
+速攻で設定を見直した。
+</p>
+<!-- section end -->
+</div>
+<!-- 2015/01/09 end -->
+
+
+
+<hr class="hide">
+<!-- 2015/01/10 start -->
+<h2><a name="20150110" href="201501a.html#20150110">2015-01-10 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="201501101" title="201501101" href="201501a.html#201501101">■</a> 
+bashでjoin</h3>
+<p>
+配列を文字列内で展開すると空白で区切られる。
+</p>
+<pre>
+% bash -c 'a=(h o g e);echo &quot;${a[*]}&quot;' 
+h o g e
+</pre>
+<p>
+これはIFSの先頭が使われる。<br>
+ということはechoする前にIFSを書き換えれば好きな文字でjoinできる。
+</p>
+<pre>
+% bash -c 'a=(h o g e);(IFS=,; echo &quot;${a[*]}&quot;)'
+h,o,g,e
+</pre>
+<p>
+ただこれは1文字だけなので文字列ではできない。
+</p>
+<p>
+zshの場合は専用のjというフラグがあるので文字列もok。
+</p>
+<pre>
+% zsh -c 'a=(h o g e);echo ${(j:-/-:)a}'      
+h-/-o-/-g-/-e
+</pre>
+<!-- section end -->
+</div>
+<!-- 2015/01/10 end -->
+
+<hr>
+<div>
+<a href="201412c.html">&lt;Older(,)</a> | 
+<a href="201501b.html">Newer(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

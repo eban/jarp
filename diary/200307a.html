@@ -1,0 +1,518 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2003-7-a</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="200306c.html">
+<link rel="next" href="200307b.html">
+
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2003年7月上旬〜</p>
+<hr>
+<div>
+<a href="200306c.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="200307b.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2003/07/01 start -->
+<h2><a name="20030701" href="200307a.html#20030701">2003-07-01 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="200307011" title="200307011" href="200307a.html#200307011">■</a> 
+6月のspam</h3>
+<p>
+1297通。先月と同じぐらい。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200307012" title="200307012" href="200307a.html#200307012">■</a> 
+<a href="http://www.uclibc.org/">[Linux] uClibc 0.9.20</a></h3>
+<p>
+gmon-start.cをコンパイルするところでstddef.hが見つからないと言われる。
+何を実行してるのかじっと見てみると
+</p>
+<pre>
+-I/usr/local/lib/gcc-lib/i586-pc-linuxnu/3.3/include
+</pre>
+<p>
+という謎の指定を発見。
+i586-pc-linux-gnuのはずなんだけど、-gはいずこへ？
+libc/sysdeps/linux/i386/Makefileを見てみると
+</p>
+<pre>
+ifeq ($(strip $(UCLIBC_PROFILING)),y)
+SAFECFLAGS := $(subst -g,,$(CFLAGS))
+gmon-start.S: ../common/gmon-start.c
+        $(CC) $(SAFECFLAGS) -c $&lt; -S -o $*.S
+gcrt1.o: $(CRT0_DEPS)
+endif
+</pre>
+<p>
+となってた。これか。
+</p>
+<pre>
+SAFECFLAGS := $(subst -g ,,$(CFLAGS))
+</pre>
+<p>
+としとこう。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200307013" title="200307013" href="200307a.html#200307013">■</a> 
+[Win32] bcc32</h3>
+<p>
+strerror()が&quot;\n&quot;を追加して返してくる。やめてくれー。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200307014" title="200307014" href="200307a.html#200307014">■</a> 
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-talk/74805">[Win32] Borland make</a></h3>
+<p>
+なんかとってもいやな仕様のmakeだが、
+まあ、大文字のICONDIRSを使えば問題なく渡せるわけだし、それでいいんじゃない？
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200307015" title="200307015" href="200307a.html#200307015">■</a> 
+[Ruby] ChangeLogその他</h3>
+<p>
+commitする前にChangeLogも書くように。
+インデントも周りと合わせるように。
+version.hの更新も忘れずに。
+あ、あとmake testしてからcommitするように。
+</p>
+<!-- section end -->
+</div>
+<!-- 2003/07/01 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/07/02 start -->
+<h2><a name="20030702" href="200307a.html#20030702">2003-07-02 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="200307021" title="200307021" href="200307a.html#200307021">■</a> 
+[Cygwin][MinGW][Ruby] make 3.80-1</h3>
+<p>
+困ったことにCygwin版make 3.80-1のVPATHはドライブ:を認識しなくなった。
+このままだとCygwin上でMinGW版Rubyをmakeすると拡張ライブラリのところでエラーになる。
+</p>
+
+<p>
+たとえばMakefileに
+</p>
+<pre>
+srcdir = C:/src/ruby/ext/bigdecimal
+VPATH = $(srcdir)
+</pre>
+<p>
+と書かれていた場合、
+make 3.79.1-7ではcygpath -u相当の処理が入っていたので問題なかったんだが、
+make 3.80-1でunix modeのときはその処理が入らなくなった。
+字面通りCと/src/ruby/ext/bigdecimalの2つのパスとみなされるので、
+ソースファイルが見つからないというエラーになる。
+</p>
+
+<p>
+SHELL = /bin/shを削除すればwin32 modeでも動くことがわかったので、
+拡張ライブラリだけwin32 modeでmakeを起動すればよさそう。
+build_osがCygwinのときという判断も必要か。
+</p>
+
+<p>
+ad hocな実験。これでうまくいくか明日試そう。
+</p>
+<pre>
+Index: ext/extmk.rb
+===================================================================
+RCS file: /src/ruby/ext/extmk.rb,v
+retrieving revision 1.34
+diff -u -1 -r1.34 extmk.rb
+--- ext/extmk.rb	24 Apr 2003 10:49:57 -0000	1.34
++++ ext/extmk.rb	2 Jul 2003 16:15:40 -0000
+@@ -140,2 +140,6 @@
+   $make, *rest = Shellwords.shellwords($make)
++  if $mingw and CONFIG[&quot;build_os&quot;] == &quot;cygwin&quot;
++    $mflags.delete(&quot;--unix&quot;)
++    $mflags.unshift(&quot;--win32&quot;)
++  end
+   $mflags.unshift(*rest) unless rest.empty?
+@@ -274,2 +278,5 @@
+ 
++if $mingw and CONFIG[&quot;build_os&quot;] == &quot;cygwin&quot;
++  $mflags.delete(&quot;--win32&quot;)
++end
+ system($make, *sysquote($mflags)) or exit($?.exitstatus)
+Index: lib/mkmf.rb
+===================================================================
+RCS file: /src/ruby/lib/mkmf.rb,v
+retrieving revision 1.132
+diff -u -1 -r1.132 mkmf.rb
+--- lib/mkmf.rb	25 Jun 2003 05:28:24 -0000	1.132
++++ lib/mkmf.rb	2 Jul 2003 16:15:40 -0000
+@@ -539,3 +539,3 @@
+   mk &lt;&lt; %{
+-SHELL = /bin/sh
++#{$mingw ? &quot;&quot; : &quot;SHELL = /bin/sh&quot;}
+</pre>
+
+<!-- section end -->
+</div>
+<!-- 2003/07/02 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/07/03 start -->
+<h2><a name="20030703" href="200307a.html#20030703">2003-07-03 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="200307031" title="200307031" href="200307a.html#200307031">■</a> 
+[Ruby] VPATHドライブレター問題</h3>
+<p>
+結局VPATHだけ騙せればいいので、
+</p>
+<pre>
+VPATH = $(shell cygpath -u $(srcdir))
+</pre>
+<p>
+とした。
+</p>
+<!-- section end -->
+</div>
+<!-- 2003/07/03 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/07/04 start -->
+<h2><a name="20030704" href="200307a.html#20030704">2003-07-04 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="200307041" title="200307041" href="200307a.html#200307041">■</a> 
+[Ruby] LDFLAGS</h3>
+<p>
+うーむ。難しい。ccとldのオプションは共通ではないから共有には無理がある。
+たぶん共有したいのは-Lぐらいだから、これだけ抜き出すのはどうだろう？
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200307042" title="200307042" href="200307a.html#200307042">■</a> 
+[TV] Mステ</h3>
+<p>
+まったくt.A.T.u.に触れることなく進行。
+そういえばアルバムランキングを発表しなかった。
+ってことはランキングに入ってるわけだ。徹底的に無視か。
+</p>
+<!-- section end -->
+</div>
+<!-- 2003/07/04 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/07/05 start -->
+<h2><a name="20030705" href="200307a.html#20030705">2003-07-05 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="200307051" title="200307051" href="200307a.html#200307051">■</a> 
+<a href="http://www.rubyist.net/~tamura/d/?date=20030705#p01">[autoconf] AC_CHECK_PROG</a></h3>
+<p>
+info autoconfするとわかるけど
+</p>
+<pre>
+- Macro: AC_CHECK_PROG (VARIABLE, PROG-TO-CHECK-FOR, VALUE-IF-FOUND,
+         [VALUE-IF-NOT-FOUND], [PATH], [REJECT])
+</pre>
+<p>
+なので、3番目の引数は省略不可。
+AC_CHECK_PROG(RUBY, ruby, ruby)としないとだめです。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200307052" title="200307052" href="200307a.html#200307052">■</a> 
+<a href="http://cygwin.com/ml/cygwin/2003-07/msg00248.html">[Cygwin] cygwin 1.5.0 coming - 64 bit file I/O and more</a></h3>
+<p>
+Large file対応になるのはいいとして、やっぱ1.4を飛ばして1.5か。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200307053" title="200307053" href="200307a.html#200307053">■</a> 
+[Windows 2000] SP4</h3>
+<p>
+Windows Updateで更新。特に問題なし。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200307054" title="200307054" href="200307a.html#200307054">■</a> 
+[Soft] openssl.pc</h3>
+<p>
+<a href="http://curl.haxx.se/">cURL</a>をupdateすると、ssl機能が死んでいることに後で気づく。
+configure時になぜ見つけてくれないのか注意して見てみると
+</p>
+<pre>
+checking for OpenSSL options using pkg-config... no
+</pre>
+<p>
+とあった。pkg-configを使ってるのか。
+pkg-config --list-allしてみるとたしかにOpenSSLは出てこない。
+locate openssl.pcしてみると/usr/local/ssl/lib/pkgconfigにあった。
+なるほど。prefixが違うからこうなるわけね。
+</p>
+<pre>
+ln -s /usr/local/{ssl/,}lib/pkgconfig/openssl.pc
+</pre>
+<p>
+としとこう。cURL的には--with-ssl=/usr/local/sslでもいいんだけどね。
+</p>
+<!-- section end -->
+</div>
+<!-- 2003/07/05 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/07/06 start -->
+<h2><a name="20030706" href="200307a.html#20030706">2003-07-06 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="200307061" title="200307061" href="200307a.html#200307061">■</a> 
+[Emacs][cmail] S/MIME</h3>
+<p>
+さてcmailでS/MIMEを送るにはどうすればいいのか？
+SEMIにはsmime.elがあるのでこれでできそうだけど、
+smimeというコマンドを呼ぶようだ。なにそれ？
+<a href="http://www.bacus.pt/Net_SSLeay/smime.html">これか？</a><a href="http://www.dsmit.com/cons/">cons</a>が必要だと言わちゃったよ。
+</p>
+
+<p>
+consはPerlスクリプトで/usr/local/binにコピーすればok。
+cons smimeしてみると
+</p>
+<pre>
+keygen.c: In function `add_attribute_object':
+keygen.c:165: structure has no member named `set'
+keygen.c: In function `keygen':
+keygen.c:336: structure has no member named `req_kludge'
+</pre>
+<p>
+というエラーに。全然更新されてないし、最近のOpenSSLには対応してないようだな。
+setはsingleでよさそう。req_kludgeは他に使ってないから削除してもいいだろう。
+これでコンパイルは警告だらけだが一応通った。
+でもリンクでMalloc,Free,Reallocがundefinedに。
+単純に小文字にすればよさそうだけど、
+不思議なことに小文字のmallocやreallocも存在してたりで、
+よくわからん。
+</p>
+<!-- section end -->
+</div>
+<!-- 2003/07/06 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/07/07 start -->
+<h2><a name="20030707" href="200307a.html#20030707">2003-07-07 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="200307071" title="200307071" href="200307a.html#200307071">■</a> 
+<a href="http://raa.ruby-lang.org/project/bdb/">[Ruby] bdb 0.4.5</a></h3>
+<p>
+更新。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200307072" title="200307072" href="200307a.html#200307072">■</a> 
+[Ruby] ruby-talk ML</h3>
+<p>
+いちいちspamに反応するなよ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2003/07/07 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/07/08 start -->
+<h2><a name="20030708" href="200307a.html#20030708">2003-07-08 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="200307081" title="200307081" href="200307a.html#200307081">■</a> 
+[S/MIME] openssl smime</h3>
+<p>
+とりあえず復号して検証すれば読めることはわかった。
+</p>
+<pre>
+% openssl smime -decrypt -in mail.txt \
+  -recip eban@os.rim.or.jp.crt -inkey keypair.pem | \
+  openssl smime -verify -CApath ~/.certs
+</pre>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200307082" title="200307082" href="200307a.html#200307082">■</a> 
+<a href="http://josefsson.org/smime.html">[S/MIME] S/MIME implementation for Emacs and Gnus</a></h3>
+<p>
+Gnus用のsmime.elはopensslコマンドを使うようだ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2003/07/08 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/07/09 start -->
+<h2><a name="20030709" href="200307a.html#20030709">2003-07-09 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="200307091" title="200307091" href="200307a.html#200307091">■</a> 
+[Ruby] バグ報告</h3>
+<p>
+今頃になって1.8.0 preview3のバグ報告が山のようにやってきた。
+preview3が出てからもう2週間以上経つのにね。
+このくらい待たないと駄目ってことか。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200307092" title="200307092" href="200307a.html#200307092">■</a> 
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-talk/75456">[Ruby] CR+LF</a></h3>
+<p>
+text mountしてるとconfig.statusがCR+LFになって、
+</p>
+<pre>
+srcdir=.^M
+</pre>
+<p>
+となっていると推察。mount -f -t -uでremountして見ると再現した。
+面倒なのでmkconfig.rbでString#stripしちゃおう。
+</p>
+<!-- section end -->
+</div>
+<!-- 2003/07/09 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/07/10 start -->
+<h2><a name="20030710" href="200307a.html#20030710">2003-07-10 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="200307101" title="200307101" href="200307a.html#200307101">■</a> 
+[Ruby][Cygwin] extern double nan _PARAMS((const char *));</h3>
+<p>
+Cygwin 1.5.0になったら、nanがダミーの引数を取るようになった。
+というわけで、math.cは
+</p>
+<pre>
+#if defined __CYGWIN__
+# include &lt;cygwin/version.h&gt;
+# if CYGWIN_VERSION_DLL_MAJOR &lt; 1005
+#  define nan(x) nan()
+# endif
+# define log(x) ((x) &lt; 0.0 ? nan(&quot;&quot;) : log(x))
+# define log10(x) ((x) &lt; 0.0 ? nan(&quot;&quot;) : log10(x))
+#endif
+</pre>
+<p>
+とした。
+</p>
+<!-- section end -->
+</div>
+<!-- 2003/07/10 end -->
+
+<hr>
+<div>
+<a href="200306c.html">&lt;Prev(,)</a> | 
+<a href="200307b.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

@@ -1,0 +1,358 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2011-2-a</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="201101c.html">
+<link rel="next" href="201102b.html">
+
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2011年2月上旬〜</p>
+<hr>
+<div>
+<a href="201101c.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="201102b.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2011/02/01 start -->
+<h2><a name="20110201" href="201102a.html#20110201">2011-02-01 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="201102011" title="201102011" href="201102a.html#201102011">■</a> 
+vimのswpファイル</h3>
+<p>
+Dropboxに置いたファイルをvimで編集するとswpファイルもそこに作って消すので、<br>
+そのたびにアイコンがぐるぐる回るのがちょっといやだなと気になりだした。<br>
+set directoryでswpファイルを作るディレクトリを指定してもいいけど、<br>
+名前が衝突するかもしれないし、Dropbox以外は別にする必要もない。<br>
+というわけで、Dropboxだったらswpファイルを作るのをやめてしまおう。
+</p>
+<pre>
+autocmd BufRead,BufNewFile ~/Dropbox/* setl noswapfile
+</pre>
+<p>
+クラッシュしたらあきらめる。
+</p>
+<!-- section end -->
+</div>
+<!-- 2011/02/01 end -->
+
+
+
+<hr class="hide">
+<!-- 2011/02/02 start -->
+<h2><a name="20110202" href="201102a.html#20110202">2011-02-02 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="201102021" title="201102021" href="201102a.html#201102021">■</a> 
+<a href="http://golf.shinh.org/p.rb?ON+bit+fixed">ON bit fixed</a></h3>
+<p>
+順番に並んべればいいほうは時間をかければいけるよなとやってみたら通った。<br>
+10Bほどリードしていたがすぐにyvlさんにもばれて抜かれた。<br>
+最初のパラメータを読むとこがだめだめなんだよなあ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2011/02/02 end -->
+
+
+
+<hr class="hide">
+<!-- 2011/02/03 start -->
+<h2><a name="20110203" href="201102a.html#20110203">2011-02-03 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="201102031" title="201102031" href="201102a.html#201102031">■</a> 
+<a href="http://golf.shinh.org/p.rb?Yes">Yes</a></h3>
+<p>
+久し振りの軽い問題。だけどsedがわからない。2人いるから何か見逃してるんだろうな。
+</p>
+<!-- section end -->
+</div>
+<!-- 2011/02/03 end -->
+
+
+
+<hr class="hide">
+<!-- 2011/02/04 start -->
+<h2><a name="20110204" href="201102a.html#20110204">2011-02-04 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="201102041" title="201102041" href="201102a.html#201102041">■</a> 
+真田濠</h3>
+<p>
+ブラタモリを見てたら母校の弓道場とゴルフ練習場がちらっと出てきた。<br>
+近くで野球やってるのも見えた。テニスコート。もう20数年経つのに全然変わってないな。<br>
+おお、あの小屋はゴミ箱とか置いてあるのか。
+</p>
+<!-- section end -->
+</div>
+<!-- 2011/02/04 end -->
+
+
+
+<hr class="hide">
+<!-- 2011/02/05 start -->
+<h2><a name="20110205" href="201102a.html#20110205">2011-02-05 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="201102051" title="201102051" href="201102a.html#201102051">■</a> 
+1月の氷点下日</h3>
+<p>
+1時間ごとに情報を取ってきてるので1月の氷点下になった日を抽出してみた。
+</p>
+<pre>
+[さいたま市] 2011-01-01 00:00 気温4.5度 降水量0.0mm 西北西の風3m
+</pre>
+<p>
+という形式で残してる。
+</p>
+<pre>
+% grep -e '-01-.*気温-' ~/tmp/saitama-temp.log | uniq -f 1 -w11 | cut -f2 -d' '
+2011-01-01
+2011-01-02
+2011-01-03
+2011-01-05
+2011-01-07
+2011-01-08
+2011-01-09
+2011-01-10
+2011-01-11
+2011-01-12
+2011-01-14
+2011-01-15
+2011-01-16
+2011-01-17
+2011-01-18
+2011-01-19
+2011-01-20
+2011-01-21
+2011-01-22
+2011-01-23
+2011-01-26
+2011-01-27
+2011-01-28
+2011-01-29
+2011-01-30
+2011-01-31
+</pre>
+<p>
+ええと、結局氷点下にならなかったのは4,6,13,24,25の5日間だけということだね。寒いわけだ。
+</p>
+<pre>
+% comm =(echo 2011-01-{01..31}|fmt -1) =(grep -e '-01-.*気温-' ~/tmp/saitama-temp.log | uniq -f 1 -w11 | cut -f2 -d' ')
+                2011-01-01
+                2011-01-02
+                2011-01-03
+2011-01-04
+                2011-01-05
+2011-01-06
+                2011-01-07
+                2011-01-08
+                2011-01-09
+                2011-01-10
+                2011-01-11
+                2011-01-12
+2011-01-13
+                2011-01-14
+                2011-01-15
+                2011-01-16
+                2011-01-17
+                2011-01-18
+                2011-01-19
+                2011-01-20
+                2011-01-21
+                2011-01-22
+                2011-01-23
+2011-01-24
+2011-01-25
+                2011-01-26
+                2011-01-27
+                2011-01-28
+                2011-01-29
+                2011-01-30
+                2011-01-31
+</pre>
+<p>
+まあこんな感じでその5日間は抜き出せる。diffでもいいけど。
+</p>
+<!-- section end -->
+</div>
+<!-- 2011/02/05 end -->
+
+
+
+<hr class="hide">
+<!-- 2011/02/06 start -->
+<h2><a name="20110206" href="201102a.html#20110206">2011-02-06 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="201102061" title="201102061" href="201102a.html#201102061">■</a> 
+<a href="https://addons.mozilla.org/ja/thunderbird/addon/ruler-bar/">ルーラーバー (Ruler Bar) :: Add-ons for Thunderbird</a></h3>
+<p>
+結構愛用している。でも更新したらどういうわけか1文字で折り返されるようになった。<br>
+見に行ってみると不具合として報告もされてた。
+</p>
+<p>
+とりあえずはuserChrome.cssで
+</p>
+<pre>
+#msgcomposeWindow #compose-toolbar-sizer:after {
+    font-size: 13pt;
+    content: &quot;----+----1----+----2----+----3----+----4----+----5----+----6----+----7----+----8----+----9----+----0&quot;;
+}
+</pre>
+<p>
+として、なんちゃてルーラーを表示し幅を微妙に調節して位置を合わせてごまかしている。
+</p>
+<!-- section end -->
+</div>
+<!-- 2011/02/06 end -->
+
+
+
+<hr class="hide">
+<!-- 2011/02/07 start -->
+<h2><a name="20110207" href="201102a.html#20110207">2011-02-07 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="201102071" title="201102071" href="201102a.html#201102071">■</a> 
+Firefoxのタブの並びがいつの間にか変わってる</h3>
+<p>
+FLDRからvで開いたタブは右側にどんどんたまっていくよね(数十個ほど)。<br>
+それはまあいいとして、いつの間にかその一部がFLDRよりも左側にいたりする。<br>
+勘違いだと思っていたがとあるシリーズ物の並びが変わってやっぱ飛ぶんだと確信した。<br>
+飛ぶ瞬間は見られないんだが。なんのいたずらだ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2011/02/07 end -->
+
+
+
+<hr class="hide">
+<!-- 2011/02/08 start -->
+<h2><a name="20110208" href="201102a.html#20110208">2011-02-08 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="201102081" title="201102081" href="201102a.html#201102081">■</a> 
+YYYY年MM月DD日のn日後の日付をGNU dateで</h3>
+<p>
+-dで指定する日付はミニ言語的になっているので
+</p>
+<pre>
+% date -d '2011-02-04 87 days' -I
+2011-05-02
+</pre>
+<p>
+こんな指定も可能。八十八夜。
+</p>
+<!-- section end -->
+</div>
+<!-- 2011/02/08 end -->
+
+
+
+<hr class="hide">
+<!-- 2011/02/09 start -->
+<h2><a name="20110209" href="201102a.html#20110209">2011-02-09 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="201102091" title="201102091" href="201102a.html#201102091">■</a> 
+Windowsのオーディオデバイス復活</h3>
+<p>
+軽く1年以上は死んでいたWindowsのオーディオデバイスが昨日なぜか復活した。<br>
+仕事で使ってるときはむしろミュートしてるんで全然差し支えなかったが、<br>
+たまに動画を見るときに困るんだよね、音が出ないと。
+</p>
+<p>
+で何をやったかを思い出してみるに前日初めてCドライブのデフラグをしたわけだけど、これか？<br>
+うまいこと秘孔を突いたか。やるな、デフラグ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2011/02/09 end -->
+
+
+
+<hr class="hide">
+<!-- 2011/02/10 start -->
+<h2><a name="20110210" href="201102a.html#20110210">2011-02-10 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="201102101" title="201102101" href="201102a.html#201102101">■</a> 
+<a href="http://golf.shinh.org/p.rb?Yes#sed">Yes</a></h3>
+<p>
+sed完敗。しかしGを先にもってくればよかったんだな。<br>
+それはそれとしてLかー。そんなのいつできたんだ。<br>
+GNU sed 4.1のNEWSには
+</p><blockquote><p>
+* `L' command is deprecated and will be removed in sed 4.2.
+</p></blockquote><p>
+と書いてあるが、4.2.1でもまだ残っているようだ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2011/02/10 end -->
+
+<hr>
+<div>
+<a href="201101c.html">&lt;Prev(,)</a> | 
+<a href="201102b.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

@@ -1,0 +1,461 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2012-12-c</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="201212b.html">
+<link rel="next" href="201301a.html">
+
+<link rel="stylesheet" type="text/css" href="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.css">
+<script type="text/javascript" src="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.js"></script>
+<script type="text/javascript">
+<!--       
+$(document).ready(function() {
+  prettyPrint();
+});
+-->
+</script>
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2012年12月下旬〜</p>
+<hr>
+<div>
+<a href="201212b.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="201301a.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2012/12/21 start -->
+<h2><a name="20121221" href="201212c.html#20121221">2012-12-21 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="201212211" title="201212211" href="201212c.html#201212211">■</a> 
+Ruby Weekly退会</h3>
+<p>
+gmailでsubscribeしてるユーザーは全部退会させられた。
+</p><blockquote><p>
+Recently Gmail has been throwing Ruby Weekly into the 'spam' folder more and more despite it passing all of the spam checks I can find. One thing that can cause this problem is when there are too many 'disengaged' subscribers on a list because they think we are sending e-mail to people who no longer want it.<br><br>
+For this reason, we have performed an analysis of all subscribers who haven't opened any recent issues or clicked any links in those issues. This should remove most of the genuinely disengaged subscribers but there are a few cases where you may be a genuine, active subscriber getting caught up in this.
+</p></blockquote>
+<p>
+ああ、クリックしてないようなやつはどうせ見てないんだからってことか。<br>
+確かにほとんど見てないので、@rubyinsideを見るようにしよう。
+</p>
+<!-- section end -->
+</div>
+<!-- 2012/12/21 end -->
+
+
+
+<hr class="hide">
+<!-- 2012/12/22 start -->
+<h2><a name="20121222" href="201212c.html#20121222">2012-12-22 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="201212221" title="201212221" href="201212c.html#201212221">■</a> 
+共有フォルダにあるファイルをThunderbirdでリンクに</h3>
+<p>
+Outlookだと\\servername\share\file.txtで勝手にリンクになるのでクリックできるが、<br>
+Thunderbirdでは単なるテキストになってしまう。どうすればリンクになるか調べたら、<br>
+<a href="http://kb.mozillazine.org/Links_to_local_pages_don%27t_work#UNC_Paths">Links to local pages do not work - MozillaZine Knowledge Base</a>が見つかった。<br>
+つまりfile://///servername/share/file.extとすればいいらしい。<br>
+たしかにリンクになった。Outlookでもいけた。<br>
+しかしこれがUNCとは思えなくてどこに飛ばされるんだかわからず逆にクリックしづらい。<br>
+なんで5個も/が必要なのかとか。さてどうしたもんか。
+</p>
+<!-- section end -->
+</div>
+<!-- 2012/12/22 end -->
+
+
+
+<hr class="hide">
+<!-- 2012/12/23 start -->
+<h2><a name="20121223" href="201212c.html#20121223">2012-12-23 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="201212231" title="201212231" href="201212c.html#201212231">■</a> 
+Tumblrにamnimated GIFをアップロードすると静止画になってしまうことがある</h3>
+<p>
+ちゃんとアップロードできることもあるし、なにか制限があるのかと調べてみた。<br>
+<a href="http://www.tumblr.com/docs/en/photo_troubleshooting">Photo Upload Troubleshooting</a>によるとやはりサイズ制限があった。
+</p><blockquote><p>
+If you are using animated GIF, make sure it is no larger than 1MB and no more than 500 pixels wide.
+</p></blockquote><p>
+ああ、1MBはちょっときついな。
+</p>
+<!-- section end -->
+</div>
+<!-- 2012/12/23 end -->
+
+
+
+<hr class="hide">
+<!-- 2012/12/24 start -->
+<h2><a name="20121224" href="201212c.html#20121224">2012-12-24 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="201212241" title="201212241" href="201212c.html#201212241">■</a> 
+imapfilterで別のサーバへメールを移動</h3>
+<p>
+会社のメールサーバはspoolに置いとけるサイズが制限されてるので、<br>
+別のimapサーバ立てて適宜メッセージを移動させているが、<br>
+長期休暇があるとそれもできず、あふれてしまいそうなのでなんとかしたい。<br>
+どうでもいい通知メールだけでも自動で移動させられればいいんだが。<br>
+いやさせないといけない。この通知メールが諸悪の根源でしかも休日とか関係なくやってくるので。<br>
+まあ、それもおれが送るようにしてるので自業自得なんだけど。
+</p>
+<p>
+それはそれとして適当にaptitude search imapするとimapfilterってのが見つかった。<br>
+luaで書かれているらしい。設定ファイルもluaだ。<br>
+だったらrubyで書いてもいいような気がするが、まあ、すでにあるので試してみた。<br>
+参考ページ:
+<a href="http://www.npcglib.org/~stathis/blog/2012/07/09/linux-task-sorting-mail-with-imapfilter/">linux task: sorting mail with imapfilter - sigmoid</a><br>
+やりたいのはSubjectに特定の文字列があったら別のサーバへ移動なので、ちょっといじって試した。<br>
+1回目はうまくいったように見えたが、送り先のフォルダを見ても新たなメールがない。<br>
+どこ行っちゃったんだ？
+</p>
+<!-- section end -->
+</div>
+<!-- 2012/12/24 end -->
+
+
+
+<hr class="hide">
+<!-- 2012/12/25 start -->
+<h2><a name="20121225" href="201212c.html#20121225">2012-12-25 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="201212251" title="201212251" href="201212c.html#201212251">■</a> 
+imapfilterの続き</h3>
+<p>
+-vつきで実行してみたらmailbox名が不正なようで。
+</p>
+<pre>
+C (5): 1011 APPEND &quot;9:Backups/2012/Log&quot; () &quot;25-Dec-2012 13:43:28 +0900&quot; {1437}
+S (5): 1011 NO [CANNOT] Invalid mailbox name
+imapfilter: IMAP (5): 1011 NO [CANNOT] Invalid mailbox name
+</pre>
+<p>
+サブフォルダはだめか。いやでも参考にしたページでは使っているよな。<br>
+ひょっとしてdovecotは違う区切りになるのかとMaildirの下を見たら&quot;.&quot;区切りになっていた。<br>
+というわけで&quot;9:Backups/2012/Log&quot;から&quot;9:Backups.2012.Log&quot;にしたらうまくいった。
+</p>
+<p>
+いや、options.namespace = falseのせいだった。コメントアウトしたら&quot;/&quot;を区切りにできた。<br>
+man imapfilter_configを見てfalseにしちゃったけど余計なお世話だったようで。<br>
+ついでにmark_seen()を追加して既読になるようした。
+</p>
+<pre>
+----------------------
+--  Global Options  --
+----------------------
+
+options.timeout = 120
+options.subscribe = true
+-- options.namespace = false
+
+----------------
+--  Accounts  --
+----------------
+-- For every account create an account entry and check() its status
+
+acc1 = IMAP {
+        server = 'imap-server',
+        username = 'username',
+        password = 'password',
+        ssl = 'ssl3',
+}
+
+acc1.INBOX:check_status()
+
+----------------
+
+acc2 = IMAP {
+        server = 'localhost',
+        username = 'eban',
+        password = 'password',
+        ssl = 'ssl3',
+}
+
+-- acc2.INBOX:check_status()
+
+----------------
+
+-- select all messages from all INBOXes and construct a single table of messages
+results = acc1.INBOX:select_all()
+-- results = acc1.INBOX:is_unseen()
+
+-----------------
+--  Functions  --
+-----------------
+-- parseRules is used to filter message results using a table of rules (see below)
+
+-- @param res         the table of messages to filter
+-- @param ruleTable   the table of rules to match messages against
+parseRules = function ( res, ruleTable )
+local subresults = {}
+  for _,entry in pairs(ruleTable) do
+    -- don't use match_field, it downloads part of the msg (slow)
+    subresults = res:contain_field(entry[&quot;header&quot;], entry[&quot;p&quot;])
+    subresults:mark_seen()
+    if subresults:move_messages( entry[&quot;moveto&quot;] ) == false then
+      print(&quot;Cannot move messages!&quot;)
+    end
+  end
+end
+
+---------------
+--  Filters  --
+---------------
+
+pre_filters = {
+  -- Banned IPs typically sending me spam
+--  { header = &quot;Received&quot; , p = &quot;85.31.186.26&quot;, moveto = acc1['Trash'] },
+--  { header = &quot;Received&quot; , p = &quot;176.251.35.146&quot;, moveto = acc1['Trash'] },
+}
+
+log = acc2['9:Backups.2012.Log']
+inbox = acc2['INBOX']
+
+filters = {
+
+  -- Job log
+  { header = &quot;Subject&quot;, p = &quot;AnalizeJob &quot;, moveto = log },
+  { header = &quot;Subject&quot;, p = &quot;SyncJob &quot;, moveto = log },
+  { header = &quot;Subject&quot;, p = &quot;find /backups&quot;, moveto = log },
+
+}
+
+post_filters = {
+
+  -- Any remaining mail having in the subject SPAM? goes in Junk
+--  { header = &quot;Subject&quot; , p = &quot;[SPAM?] &quot;, moveto = acc1['Junk'] },
+
+}
+
+---------------------
+--  Parse messages --
+---------------------
+
+-- pre filter messages
+parseRules(results, pre_filters)
+
+-- sort messages
+parseRules(results, filters)
+
+-- post filter messages
+parseRules(results, post_filters)
+
+----------------
+</pre>
+<p>
+preとpostは結局なんで分かれてんのかよくわからないよねえ。<br>
+あと2012って数字が埋まっているところも来週にはもうまずいわけで、なんとかしないと。
+</p>
+<!-- section end -->
+</div>
+<!-- 2012/12/25 end -->
+
+
+
+<hr class="hide">
+<!-- 2012/12/26 start -->
+<h2><a name="20121226" href="201212c.html#20121226">2012-12-26 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="201212261" title="201212261" href="201212c.html#201212261">■</a> 
+仕事納め</h3>
+<p>
+imapfilterはいいかんじで動いてるが、spamが残ってしまう問題が残った。<br>
+まあ、しょうがないか。
+</p>
+<!-- section end -->
+</div>
+<!-- 2012/12/26 end -->
+
+
+
+<hr class="hide">
+<!-- 2012/12/27 start -->
+<h2><a name="20121227" href="201212c.html#20121227">2012-12-27 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="201212271" title="201212271" href="201212c.html#201212271">■</a> 
+imapfilterはサイズで移動することに</h3>
+<p>
+subjectとか考えてると切りがないので、10000バイトより大きければ移動することにした。<br>
+もうこうなったら全部移動してもいい気もするが。
+</p>
+<pre>
+large = acc1.INBOX:is_larger(10000)
+</pre>
+<p>
+でフィルタリングできる。あと年はos.date(&quot;%Y&quot;)で取れる。<br>
+あらかじめoptions.subscribe = trueしておけばmailboxが存在しなければ自動的に作成されるので、<br>
+新春を迎えてもいけるはず。
+</p>
+<pre>
+year = os.date(&quot;%Y&quot;)
+log = acc2['9:Backups/' .. year .. '/Log']
+</pre>
+<p>
+spamは大抵でかいので勝手に移動されるだろう。
+</p>
+<!-- section end -->
+</div>
+<!-- 2012/12/27 end -->
+
+
+
+<hr class="hide">
+<!-- 2012/12/28 start -->
+<h2><a name="20121228" href="201212c.html#20121228">2012-12-28 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="201212281" title="201212281" href="201212c.html#201212281">■</a> 
+グインを今さらながらダウンロード</h3>
+<p>
+買って忘れてた。<br>
+数が50冊と多いし全部入りきるかなと思ったら、画像ではなかった。<br>
+予想外でうれしい。
+</p>
+<!-- section end -->
+</div>
+<!-- 2012/12/28 end -->
+
+
+
+<hr class="hide">
+<!-- 2012/12/29 start -->
+<h2><a name="20121229" href="201212c.html#20121229">2012-12-29 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="201212291" title="201212291" href="201212c.html#201212291">■</a> 
+忘年会</h3>
+<p>
+馬場のShakey'sでピザとパスタの毎年恒例の忘年会。<br>
+ふと気づくと16時で遅刻していた。<br>
+なひさんが体調悪く残念ながら不参加。<br>
+これで皆勤はゆぞさんとおれだけになった。<br>
+というわけで恒例の公開内緒話はなかった模様。
+</p>
+<p>
+SFDCは意外にもドットコムだったとか、地図アプリとか、<br>
+メールはあふれるものとか、Felicaとか、パネットーネありがとうとか、<br>
+氷点下7℃にならないと水道は凍らないとか。
+</p>
+<!-- section end -->
+</div>
+<!-- 2012/12/29 end -->
+
+
+
+<hr class="hide">
+<!-- 2012/12/30 start -->
+<h2><a name="20121230" href="201212c.html#20121230">2012-12-30 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="201212301" title="201212301" href="201212c.html#201212301">■</a> 
+Google Chromeでuserscript</h3>
+<p>
+直接クリックすると
+</p><blockquote><p>
+「拡張機能、アプリケーション、ユーザースクリプトはChromeウェブストア以外から追加できません。」
+</p></blockquote><p>
+と文句言われるが、横の詳しく見るをクリックすると追加する方法が書かれている。<br>
+<a href="http://support.google.com/chrome_webstore/bin/answer.py?hl=ja&amp;answer=2664769">他のウェブサイトからの拡張機能の追加</a><br>
+要するにダウンロードして[拡張機能]へD&amp;Dしろってことで。<br>
+ちょっと面倒だけど
+<a href="http://let.hatelabo.jp/eban/let/gYC-xqfslsW-Hw">邪魔なTracking Query Stringを削除するユーザースクリプト</a>もあっさりと入った。
+</p>
+<!-- section end -->
+</div>
+<!-- 2012/12/30 end -->
+
+
+
+<hr class="hide">
+<!-- 2012/12/31 start -->
+<h2><a name="20121231" href="201212c.html#20121231">2012-12-31 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="201212311" title="201212311" href="201212c.html#201212311">■</a> 
+散歩</h3>
+<p>
+fitbit買ってから休みの日の散歩が増えた。<br>
+それはいいんだが、通っていた小学校に行ってみようと思ったらたどりつけなかった。<br>
+道がもうないんだよな。ないというか整備されて舗装されてるもんだから、風景がまるで違う。<br>
+元々方向音痴な上なぜか確信を持ってどんどん進むもんだから、全然見当違いな場所行きつく。<br>
+夕陽を頼りに泣きながら帰ったよ。
+</p>
+<p>
+で次の日にリベンジしたが、普通に歩いて往復で軽く1時間以上かかった。<br>
+途中でちょっと買い物したが、遠すぎるだろ。<br>
+たしかに小学生の頃もなんか早起きして学校行ってた気がするが、そんなに遠かったのか。<br>
+Goolge Mapで見たら、2,3kmはあるような。<br>
+なんだろう。この頃から通学時間とか通勤時間は1時間ぐらいはあたりまえ的に感じていたのかもしれない。
+</p>
+<!-- section end -->
+</div>
+<!-- 2012/12/31 end -->
+
+<hr>
+<div>
+<a href="201212b.html">&lt;Prev(,)</a> | 
+<a href="201301a.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

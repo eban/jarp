@@ -1,0 +1,371 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2007-7-c</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="200707b.html">
+<link rel="next" href="200708a.html">
+
+<link rel="stylesheet" type="text/css" href="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.css">
+<script async type="text/javascript" src="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.js"></script>
+<script type="text/javascript">
+<!--       
+$(document).ready(function() {
+  prettyPrint();
+});
+-->
+</script>
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2007年7月下旬〜</p>
+<hr>
+<div>
+<a href="200707b.html" accesskey=",">&lt;Older(,)</a> | 
+<a href="200708a.html" accesskey=".">Newer(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2007/07/21 start -->
+<h2><a name="20070721" href="200707c.html#20070721">2007-07-21 (Sat)</a></h2>
+<!-- 2007-07-22 01:38:27 -->
+
+<div class="entry1">
+<h3><a name="200707211" title="200707211" href="200707c.html#200707211">■</a> 
+[Firefox] TwitterFoxとDiigo Toolbar for Firefox</h3>
+<p>
+突然TwitterFoxが動かなくなった。クリックしても反応なし。<br>
+右クリックは活きているがPreferencesでOKが押せない。<br>
+で、今日何が変わったかと思い出してみるとDiigo Toolbarしかないわけで、<br>
+試しに無効にしてみるとTwitterFoxが生き返った。これは困ったねえ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2007/07/21 end -->
+
+
+
+<hr class="hide">
+<!-- 2007/07/22 start -->
+<h2><a name="20070722" href="200707c.html#20070722">2007-07-22 (Sun)</a></h2>
+<!-- 2007-07-23 01:56:55 -->
+
+<div class="entry1">
+<h3><a name="200707221" title="200707221" href="200707c.html#200707221">■</a> 
+[Diigo] Diigolet</h3>
+<p>
+で、Diigo Toolbarの代わりをどうするかと考えると
+
+<a href="http://www.diigo.com/tools/diigolet">Diigolet</a>
+しかないわけで、<br>
+久し振りに導入してみると結構いい感じに洗練されてて、<br>
+これでいいかなと思い始めた。QuickDだけ使えればいいしなあ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200707222" title="200707222" href="200707c.html#200707222">■</a> 
+[Vim] ゴルフ用に</h3>
+<p>
+1行がやたら長くなりがちな人に。画面上で折り返してしまう場合に有効。
+</p>
+
+<pre>
+noremap &lt;silent&gt; j gj
+noremap &lt;silent&gt; k gk
+</pre>
+<p>
+で、j/kの移動が楽になる。
+</p>
+<!-- section end -->
+</div>
+<!-- 2007/07/22 end -->
+
+
+
+<hr class="hide">
+<!-- 2007/07/23 start -->
+<h2><a name="20070723" href="200707c.html#20070723">2007-07-23 (Mon)</a></h2>
+<!-- 2007-07-24 21:49:11 -->
+
+<div class="entry1">
+<h3><a name="200707231" title="200707231" href="200707c.html#200707231">■</a> 
+[Golf] Quine</h3>
+<p>
+
+<a href="http://golf.shinh.org/p.rb?transpose+lines#test3">こんなとこ</a>にQuineの解が。今頃気づいた。ってことはこれはフラたんが出題したのか。
+</p>
+<!-- section end -->
+</div>
+<!-- 2007/07/23 end -->
+
+
+
+<hr class="hide">
+<!-- 2007/07/24 start -->
+<h2><a name="20070724" href="200707c.html#20070724">2007-07-24 (Tue)</a></h2>
+<!-- 2007-07-25 08:26:39 -->
+
+<div class="entry1">
+<h3><a name="200707241" title="200707241" href="200707c.html#200707241">■</a> 
+<a href="http://golf.shinh.org/p.rb?Reverse+BWT#Ruby">[Golf] Reverse BWT</a></h3>
+<p>
+一部で好評だったのでtransposeを3個使ったやつをさらそう。
+</p>
+
+<pre>
+#!ruby -pa
+a=$F[1].split''
+b=[]
+a.map{b=[a,*b].transpose.sort.transpose}
+$_=b.transpose[$_.to_i]*''+$/
+</pre>
+<p>
+
+<a href="http://ja.wikipedia.org/wiki/%E3%83%96%E3%83%AD%E3%83%83%E3%82%AF%E3%82%BD%E3%83%BC%E3%83%88">wikipediaに載っていた方法</a>
+をそのまま実装しただけ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2007/07/24 end -->
+
+
+
+<hr class="hide">
+<!-- 2007/07/25 start -->
+<h2><a name="20070725" href="200707c.html#20070725">2007-07-25 (Wed)</a></h2>
+<!-- 2007-07-26 01:52:26 -->
+
+<div class="entry1">
+<h3><a name="200707251" title="200707251" href="200707c.html#200707251">■</a> 
+[Firefox] ブラウザを再起動</h3>
+<p>
+
+<a href="https://addons.mozilla.org/ja/firefox/addon/3559">QuickRestart</a>
+のCtrl+Alt+Rしか使わないので、<br>
+だったらKeyconfigでいいじゃんと探したら、<br>
+
+<a href="https://developer.mozilla.org/en-US/docs/Mozilla/Tech/XPCOM/Reference/Interface/nsIAppStartup">nsIAppStartup</a>というのを発見した。
+</p>
+
+<pre>
+var nsIAppStartup = Components.interfaces.nsIAppStartup;
+Components.classes[&quot;@mozilla.org/toolkit/app-startup;1&quot;]
+  .getService(nsIAppStartup)
+  .quit(nsIAppStartup.eForceQuit | nsIAppStartup.eRestart);
+</pre>
+<p>
+をコードに書いてCtrl+Alt+Rに割り当てれば完了。
+</p>
+<!-- section end -->
+</div>
+<!-- 2007/07/25 end -->
+
+
+
+<hr class="hide">
+<!-- 2007/07/26 start -->
+<h2><a name="20070726" href="200707c.html#20070726">2007-07-26 (Thu)</a></h2>
+<!-- 2007-07-27 02:32:43 -->
+
+<div class="entry1">
+<h3><a name="200707261" title="200707261" href="200707c.html#200707261">■</a> 
+[Thunderbird] j/kにスクロールを割り当てる</h3>
+<p>
+長いことcmailを使っていたj/kでスクロールさせたくなった。<br>
+jが迷惑メールとしてマークのキーなので間違えると面倒なことになるのでなおさら。<br>
+というわけでKeyconfigでjには
+</p>
+
+<pre>
+goDoCommand('cmd_scrollLineDown');
+</pre>
+<p>
+をkには
+</p>
+
+<pre>
+goDoCommand('cmd_scrollLineUp');
+</pre>
+<p>
+を割り当てた。これでlessのようにスクロールする。
+</p>
+<!-- section end -->
+</div>
+<!-- 2007/07/26 end -->
+
+
+
+<hr class="hide">
+<!-- 2007/07/27 start -->
+<h2><a name="20070727" href="200707c.html#20070727">2007-07-27 (Fri)</a></h2>
+<!-- 2007-07-28 19:24:39 -->
+
+<div class="entry1">
+<h3><a name="200707271" title="200707271" href="200707c.html#200707271">■</a> 
+[Golf] delete last line</h3>
+<p>
+Perlで解いてなかった。
+</p>
+
+<pre>
+@_=&lt;&gt;;pop@_;print@_
+eof||print while&lt;&gt;
+</pre>
+<p>
+for&lt;&gt;だと全部読んだ後なんだな。
+</p>
+<!-- section end -->
+</div>
+<!-- 2007/07/27 end -->
+
+
+
+<hr class="hide">
+<!-- 2007/07/28 start -->
+<h2><a name="20070728" href="200707c.html#20070728">2007-07-28 (Sat)</a></h2>
+<!-- 2007-07-29 02:09:18 -->
+
+<div class="entry1">
+<h3><a name="200707281" title="200707281" href="200707c.html#200707281">■</a> 
+[Linux] kernelを更新したらgkrellmのグラフが変化なし</h3>
+<p>
+kernel 2.6.22.1-33上げたらそんなことに。なんで？あれ？crondもなんか変だ。<br>
+しかたなく-27へ戻す。問題ない。やっぱkernelのせいか。
+</p>
+<!-- section end -->
+</div>
+<!-- 2007/07/28 end -->
+
+
+
+<hr class="hide">
+<!-- 2007/07/29 start -->
+<h2><a name="20070729" href="200707c.html#20070729">2007-07-29 (Sun)</a></h2>
+<!-- 2007-07-30 01:13:37 -->
+
+<div class="entry1">
+<h3><a name="200707291" title="200707291" href="200707c.html#200707291">■</a> 
+[Mail] ruby-talk MLとRails</h3>
+<p>
+最近ruby-talk MLでRailsの質問が出るとRails MLへ行けと強く言う人がいるんだけど、<br>
+一体いつのまにそんな了解ができあがったのか？
+</p>
+<!-- section end -->
+</div>
+<!-- 2007/07/29 end -->
+
+
+
+<hr class="hide">
+<!-- 2007/07/30 start -->
+<h2><a name="20070730" href="200707c.html#20070730">2007-07-30 (Mon)</a></h2>
+<!-- 2007-07-31 02:26:08 -->
+
+<div class="entry1">
+<h3><a name="200707301" title="200707301" href="200707c.html#200707301">■</a> 
+梅雨</h3>
+<p>
+いやもう梅雨じゃないでしょ、この雨は。<br>
+で、このまま台風5号が来ると梅雨明け宣言は来週？
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200707302" title="200707302" href="200707c.html#200707302">■</a> 
+<a href="http://el-tramo.be/software/atomail">[Soft] AtoMail 0.7</a></h3>
+<blockquote><p>
+AtoMail is a Python script that converts email (or other messages)
+into an (Atom) RSS feed. This is for example useful for tracking
+announcement mailinglists in your favorite RSS reader, if no classic
+RSS feed is available.<br>
+Mail can be retrieved from many different sources, including local
+mailboxes, remote mailboxes (POP3/IMAP4), and usenet newsgroups
+(NNTP). The goal of AtoMail is to be clean, modular, well documented,
+and easy to modify.
+</p></blockquote>
+<!-- section end -->
+</div>
+<!-- 2007/07/30 end -->
+
+
+
+<hr class="hide">
+<!-- 2007/07/31 start -->
+<h2><a name="20070731" href="200707c.html#20070731">2007-07-31 (Tue)</a></h2>
+<!-- 2007-08-01 02:20:22 -->
+
+<div class="entry1">
+<h3><a name="200707311" title="200707311" href="200707c.html#200707311">■</a> 
+<a href="http://golf.shinh.org/p.rb?Numeral+system">[Golf] Numeral system</a></h3>
+<p>
+Luaで解いたのがあっという間に抜かれた。<br>
+まあマニュアル見ながらだから、これ以上は縮みそうもないんだが。<br>
+Rubyの解が3つあるのが興味深い。
+</p>
+<!-- section end -->
+</div>
+<!-- 2007/07/31 end -->
+
+<hr>
+<div>
+<a href="200707b.html">&lt;Older(,)</a> | 
+<a href="200708a.html">Newer(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

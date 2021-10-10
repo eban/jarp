@@ -1,0 +1,291 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2009-7-a</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="200906c.html">
+<link rel="next" href="200907b.html">
+
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2009年7月上旬〜</p>
+<hr>
+<div>
+<a href="200906c.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="200907b.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2009/07/01 start -->
+<h2><a name="20090701" href="200907a.html#20090701">2009-07-01 (Wed)</a></h2>
+<!-- 2009-07-02 00:15:37 -->
+
+<div class="entry1">
+<h3><a name="200907011" title="200907011" href="200907a.html#200907011">■</a> 
+<a href="http://sourceforge.jp/magazine/09/07/01/1039245">[Soft] 米Sun、仮想SMPをサポートした「VirtualBox 3.0」正式版 - SourceForge.JP Magazine</a></h3>
+<p>
+昨日2.2.4に上げたばかりなのに。<br>
+で、3.0に上げて久し振りに復帰したらできませんて言われた。<br>
+さすがにメジャーが上がってるだけにそこまでは無理か。<br>
+状態を破棄したら立ち上がった。
+</p>
+<!-- section end -->
+</div>
+<!-- 2009/07/01 end -->
+
+
+
+<hr class="hide">
+<!-- 2009/07/02 start -->
+<h2><a name="20090702" href="200907a.html#20090702">2009-07-02 (Thu)</a></h2>
+<!-- 2009-07-03 02:15:15 -->
+
+<div class="entry1">
+<h3><a name="200907021" title="200907021" href="200907a.html#200907021">■</a> 
+[Golf] るびまゴルフ</h3>
+<p>
+23Bとか20Bとかいけるという噂なので、25Bなんてもう隠しても意味ないよね。<br>
+適当にさらす。意外と思ったのがRange.new。
+</p>
+
+<pre>
+28B: eval&quot;p *Range.new(&quot;+gets+&quot;)&quot;
+27B: eval&quot;p *Range.new(#{gets})&quot;
+27B: eval&quot;p *Range.new(%s)&quot;%gets
+26B: p *eval(&quot;Range.new &quot;+gets)
+25B: p *eval(gets.sub&quot;,&quot;,&quot;..&quot;)
+</pre>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200907022" title="200907022" href="200907a.html#200907022">■</a> 
+[FLDR] Fx 3.5とFx 3.0でFLDRの挙動が違う</h3>
+<p>
+どういうわけか、Fx 3.5とFx 3.0でFLDRにアクセスすると別人として認識されてしまう。<br>
+どっちも同じアカウント名なわけなんだけど、なぜか独立してるよう。<br>
+F11もFx 3.5の正式版になったので久し振りに3.5でFLDRにアクセスしてみたが、<br>
+やっぱ変だな。何がどうなってんだか。
+</p>
+<!-- section end -->
+</div>
+<!-- 2009/07/02 end -->
+
+
+
+<hr class="hide">
+<!-- 2009/07/03 start -->
+<h2><a name="20090703" href="200907a.html#20090703">2009-07-03 (Fri)</a></h2>
+<!-- 2009-07-04 12:51:46 -->
+
+<div class="entry1">
+<h3><a name="200907031" title="200907031" href="200907a.html#200907031">■</a> 
+6月のspam</h3>
+<p>
+3200通ほど。激減したけどまたなんかあったのかな。
+</p>
+<!-- section end -->
+</div>
+<!-- 2009/07/03 end -->
+
+
+
+<hr class="hide">
+<!-- 2009/07/04 start -->
+<h2><a name="20090704" href="200907a.html#20090704">2009-07-04 (Sat)</a></h2>
+<!-- 2009-07-05 04:06:40 -->
+
+<div class="entry1">
+<h3><a name="200907041" title="200907041" href="200907a.html#200907041">■</a> 
+<a href="http://www.pixelbeat.org/docs/terminal_colours/">[Tips] Terminal colour highlights</a></h3>
+<p>
+なかなか面白い。
+<a href="http://www.commandlinefu.com/">command line fu</a>でも頻繁に取り上げられている。
+</p>
+
+
+
+
+<!-- section end -->
+</div>
+<!-- 2009/07/04 end -->
+
+
+
+<hr class="hide">
+<!-- 2009/07/05 start -->
+<h2><a name="20090705" href="200907a.html#20090705">2009-07-05 (Sun)</a></h2>
+<!-- 2009-07-06 02:28:59 -->
+
+<div class="entry1">
+<h3><a name="200907051" title="200907051" href="200907a.html#200907051">■</a> 
+<a href="http://www.nicovideo.jp/watch/sm7542692">[ニコニコ動画] 2009上半期VOCALOID新曲ランキングSP 巡音編</a></h3>
+<p>
+
+<a href="http://www.nicovideo.jp/mylist/13359058">プレイリスト</a>
+で確認してみたら上位100曲中64曲が既読だった。<br>
+上位20位は全部既読だし。どんだけ見てるんだよ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2009/07/05 end -->
+
+
+
+<hr class="hide">
+<!-- 2009/07/06 start -->
+<h2><a name="20090706" href="200907a.html#20090706">2009-07-06 (Mon)</a></h2>
+<!-- 2009-07-07 01:50:55 -->
+
+<div class="entry1">
+<h3><a name="200907061" title="200907061" href="200907a.html#200907061">■</a> 
+[Subversion] たまにsvn ciで時間がかかる理由</h3>
+<p>
+ログを取って調べたら、原因はpost-commit.shの中でやってるsvnadmin dumpだった。<br>
+これが1分ぐらいかかるときがある。これこそbatchにすべきか？
+</p>
+<!-- section end -->
+</div>
+<!-- 2009/07/06 end -->
+
+
+
+<hr class="hide">
+<!-- 2009/07/07 start -->
+<h2><a name="20090707" href="200907a.html#20090707">2009-07-07 (Tue)</a></h2>
+<!-- 2009-07-08 01:58:57 -->
+
+<div class="entry1">
+<h3><a name="200907071" title="200907071" href="200907a.html#200907071">■</a> 
+<a href="http://golf.shinh.org/p.rb?Short+Pi">[Golf] Short Pi</a></h3>
+<p>
+これ意外とp 4*Math.atan(1)でも結構短いな。
+</p>
+
+<!-- section end -->
+</div>
+<!-- 2009/07/07 end -->
+
+
+
+<hr class="hide">
+<!-- 2009/07/08 start -->
+<h2><a name="20090708" href="200907a.html#20090708">2009-07-08 (Wed)</a></h2>
+<!-- 2009-07-09 01:49:56 -->
+
+<div class="entry1">
+<h3><a name="200907081" title="200907081" href="200907a.html#200907081">■</a> 
+[Linux] beepコマンド</h3>
+<p>
+
+<a href="http://www.commandlinefu.com/commands/view/2581/frequency-sweep">Frequency Sweep</a>
+を見てbeepコマンドをyumで入れてみた。実に微妙だな。
+</p>
+<!-- section end -->
+</div>
+<!-- 2009/07/08 end -->
+
+
+
+<hr class="hide">
+<!-- 2009/07/09 start -->
+<h2><a name="20090709" href="200907a.html#20090709">2009-07-09 (Thu)</a></h2>
+<!-- 2009-07-09 23:27:10 -->
+
+<div class="entry1">
+<h3><a name="200907091" title="200907091" href="200907a.html#200907091">■</a> 
+<a href="http://ja.doukaku.org/275/">[Bash] バイナリクロック</a></h3>
+<p>
+
+<a href="http://ja.doukaku.org/comment/9330/">timeなんて変数</a>は要らなかったよな。
+</p>
+
+<pre>
+bins=({□,■}{□,■}{□,■}{□,■}{□,■}{□,■})
+for i in `date &quot;+%H %M %S&quot;`; do
+  echo ${bins[i]}
+done
+</pre>
+
+<!-- section end -->
+</div>
+<!-- 2009/07/09 end -->
+
+
+
+<hr class="hide">
+<!-- 2009/07/10 start -->
+<h2><a name="20090710" href="200907a.html#20090710">2009-07-10 (Fri)</a></h2>
+<!-- 2009-07-11 22:29:14 -->
+
+<div class="entry1">
+<h3><a name="200907101" title="200907101" href="200907a.html#200907101">■</a> 
+[DSi] NINTENDO DSi</h3>
+<p>
+なんか家中探しても見つからないのでDSiを買っちゃったよ。<br>
+明日のために。
+</p>
+<!-- section end -->
+</div>
+<!-- 2009/07/10 end -->
+
+<hr>
+<div>
+<a href="200906c.html">&lt;Prev(,)</a> | 
+<a href="200907b.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

@@ -1,0 +1,742 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2001-2-c</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="200102b.html">
+<link rel="next" href="200103a.html">
+
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2001年2月下旬〜</p>
+<hr>
+<div>
+<a href="200102b.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="200103a.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2001/02/21 start -->
+<h2><a name="20010221" href="200102c.html#20010221">2001-02-21 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="200102211" title="200102211" href="200102c.html#200102211">■</a> 
+RCR</h3>
+Ruby Change Requestの略らしい。
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200102212" title="200102212" href="200102c.html#200102212">■</a> 
+gcc-2.95.2-7</h3>
+とうとう削除されてしまった。
+-mno-win32がデフォルトってのはちょっと無理があるのかも。
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200102213" title="200102213" href="200102c.html#200102213">■</a> 
+JARH</h3>
+raise 'Just another Ruby hacker,' rescue print $!
+<!-- section end -->
+</div>
+<!-- 2001/02/21 end -->
+
+
+
+<hr class="hide">
+<!-- 2001/02/22 start -->
+<h2><a name="20010222" href="200102c.html#20010222">2001-02-22 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="200102221" title="200102221" href="200102c.html#200102221">■</a> 
+JARHとはなにか？</h3>
+<pre>
+Just another Ruby hacker,
+</pre>
+と表示するスクリプトをいう。
+最後に改行は入らないのが望ましい。
+自分の美意識の範囲内で短めのスクリプトとする。
+mailのsignatureの前あたりにさりげなく置いたりする。
+と勝手に定義してみたがどう？
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200102222" title="200102222" href="200102c.html#200102222">■</a> 
+printいろいろ</h3>
+JARHで思い出したが、Rubyには標準出力へ表示する方法がどれだけあるんだろう？
+print, printf, writeとか、明示的に$stdout, STDOUT, $&gt;とか、&lt;&lt;もある。
+displayもあるね。各々sendもあるか。__send__は…、やめとこう。<br>
+思いつくままに並べてみる。
+<pre>
+print 'Just another Ruby hacker,'
+printf 'Just another Ruby hacker,'
+$stdout.print 'Just another Ruby hacker,'
+$stdout.send :print, 'Just another Ruby hacker,'
+$stdout.printf 'Just another Ruby hacker,'
+$stdout.send :printf, 'Just another Ruby hacker,'
+$stdout.write 'Just another Ruby hacker,'
+$stdout.send :write, 'Just another Ruby hacker,'
+$stdout &lt;&lt; 'Just another Ruby hacker,'
+$stdout.send :&lt;&lt;, 'Just another Ruby hacker,'
+STDOUT.print 'Just another Ruby hacker,'
+STDOUT.send :print, 'Just another Ruby hacker,'
+STDOUT.printf 'Just another Ruby hacker,'
+STDOUT.send :printf, 'Just another Ruby hacker,'
+STDOUT.write 'Just another Ruby hacker,'
+STDOUT.send :write, 'Just another Ruby hacker,'
+STDOUT &lt;&lt; 'Just another Ruby hacker,'
+STDOUT.send :&lt;&lt;, 'Just another Ruby hacker,'
+$&gt;.print 'Just another Ruby hacker,'
+$&gt;.send :print, 'Just another Ruby hacker,'
+$&gt;.printf 'Just another Ruby hacker,'
+$&gt;.send :printf, 'Just another Ruby hacker,'
+$&gt;.write 'Just another Ruby hacker,'
+$&gt;.send :write, 'Just another Ruby hacker,'
+$&gt; &lt;&lt; 'Just another Ruby hacker,'
+$&gt;.send :&lt;&lt;, 'Just another Ruby hacker,'
+'Just another Ruby hacker,'.display
+'Just another Ruby hacker,'.send :display
+</pre>
+
+あ、syswriteもあるな。それと$&gt;の別名の$defoutとか。
+printfに関しては第1引数にIOを指定することもできる。
+もちろんちゃんと%sを使うのもありだ。
+<pre>
+printf $stdout, '%s', 'Just another Ruby hacker,'
+</pre>
+sendをsendをsendをsendをsendしてもいい。
+<pre>
+$stdout.send :send, :send, :send, :send, :print, 'Just another Ruby hacker,'
+</pre>
+要するに切りがない。
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200102223" title="200102223" href="200102c.html#200102223">■</a> 
+JARH</h3>
+print File.basename '~/Just another Ruby hacker,.rb','.*'
+<!-- section end -->
+</div>
+<!-- 2001/02/22 end -->
+
+
+
+<hr class="hide">
+<!-- 2001/02/23 start -->
+<h2><a name="20010223" href="200102c.html#20010223">2001-02-23 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="200102231" title="200102231" href="200102c.html#200102231">■</a> 
+<a href="http://cygwin.com/ml/cygwin/2001-02/msg01260.html">Cygwinのsymlink</a></h3>
+Cygwinで
+<pre>
+% ln -s ../../i686-pc-cygwin/2.95.2-7/cc1 .
+</pre>
+すると
+<pre>
+% c:/usr/local/bin/ruby -ve 'p $&lt;.read' cc1
+ruby 1.6.3 (2001-02-20) [i386-mingw32]
+&quot;!&lt;symlink&gt;../../i686-pc-cygwin/2.95.2-7/cc1\000&quot;
+</pre>
+という内容のファイルを作る。
+中を見なくてもsymlinkかどうかを速く判断できるようにシステム属性もつける。
+この実行例を見てもわかるように、
+Cygwin以外のアプリケーションにとっては
+システム属性のついた普通のファイルにすぎない。
+さすがにそれじゃ使い辛いとやっと思ったのか、
+Windowsのショートカットを利用することになったらしい
+<a href="#20010223F1"><sup><small>*1</small></sup></a>。というかCVSではもうすでにそうなってる。
+試してみるとなかなか面白い。
+ソースを見ると実装も簡単そうな気もするし、
+bmingwはCygwinのそういうとこ
+<a href="#20010223F2"><sup><small>*2</small></sup></a>をサポートするのもよさそうだな。
+
+<hr align="left" width="40%">
+<div>
+<a name="20010223F1" href="200102c.html#20010223F1"><small>*1</small></a>:
+<a href="http://www.research.att.com/sw/tools/uwin/">U/WIN</a>は元々そうなってるそうだ。
+<br>
+<a name="20010223F2" href="200102c.html#20010223F2"><small>*2</small></a>:
+つまりmountとsymlink。
+</div>
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200102232" title="200102232" href="200102c.html#200102232">■</a> 
+JARH</h3>
+proc{|x|x['Just another Ruby hacker,']}[proc{|x|print x}]
+<!-- section end -->
+</div>
+<!-- 2001/02/23 end -->
+
+
+
+<hr class="hide">
+<!-- 2001/02/24 start -->
+<h2><a name="20010224" href="200102c.html#20010224">2001-02-24 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="200102241" title="200102241" href="200102c.html#200102241">■</a> 
+myrename</h3>
+Cygwinのをほとんどそのままパクってきたのだが、
+syscall_printfはstrace用だから残しちゃだめだよ。
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200102242" title="200102242" href="200102c.html#200102242">■</a> 
+Message-Id</h3>
+SugHimsiさんへのリプライメールのスレッドがつながらない。
+ちと調べてみると
+<pre>
+Message-Id: &lt;20010223062911.061E.MAILI31S@clio.ne.jp &gt;
+</pre>
+というように&gt;の前に空白が入っている。ってRFC的にはこれってあり？
+とりあえずcmail-thread.elの
+<pre>
+&quot;&lt;[^\033 &gt;]+&gt;&quot;
+</pre>
+を
+<pre>
+&quot;&lt;[^\033&gt;]+&gt;&quot;
+</pre>
+にしてつなげてみた。
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200102243" title="200102243" href="200102c.html#200102243">■</a> 
+ほんパラ!関口堂書店</h3>
+今週のベストセラーを紹介するコーナーがどうも昔見たCX深夜の
+「マーケティング天国」とダブる。
+声の調子まで似てる。似てるはずだ。城ケ崎祐子本人だし。
+あ、フリーになったのか。
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200102244" title="200102244" href="200102c.html#200102244">■</a> 
+JARH</h3>
+method(:print)['Just another Ruby hacker,']
+<!-- section end -->
+</div>
+<!-- 2001/02/24 end -->
+
+
+
+<hr class="hide">
+<!-- 2001/02/25 start -->
+<h2><a name="20010225" href="200102c.html#20010225">2001-02-25 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="200102251" title="200102251" href="200102c.html#200102251">■</a> 
+<a href="http://www.ruby-lang.org/en/raa-list.rhtml?name=RubySameGame">SameGame</a></h3>
+<a href="http://www.ruby-lang.org/en/raa.html">RAA</a>にRubySameGameが登録された。作者は日本人じゃないけどやっぱあれか？
+やってみればわかるか。
+<pre>
+% ruby same.rb
+same.rb:9:in `require': No such file to load -- gtk (LoadError)
+        from same.rb:9
+</pre>
+がーん。
+mingwだcygwinだと作ったが、
+おいらはLinux上にインストールしたことがなかったのか。
+そういえば一年程前にディスククラッシュして、
+Linux自体を再インストールしてからRuby/GTKを入れてないかも。
+あ、そうじゃなくて1.6にしてからは入れてないのか。
+<pre>
+% ruby-1.5.4 same.rb
+same.rb:414:in `makePixmap': uninitialized constant Game::GdkImlib (NameError)
+&lt;後略&gt;
+</pre>
+今度はimlibか。やっぱgnome-ruby 0.24をインストールしよう。
+ってことはmingw版もimlibをなんとかしといたほうがいいのかな。<br>
+で、gnome-rubyをインストールしてもう一度実行してみると
+<pre>
+% ruby same.rb
+same.rb:414:in `makePixmap': uninitialized constant Game::GdkImlib (NameError)
+</pre>
+何も変わってない。そういえばimlibって独立したんだよね。
+</p><blockquote><p>
+require 'gtk'
+</p></blockquote><p>
+の変わりに
+</p><blockquote><p>
+require 'gdk_imlib'
+</p></blockquote><p>
+にしてみた。
+これで一応初期画面が拝めたわけだが、
+なんかすごいbusy waitでクリックしてもどーにもならない。
+さめがめだということはわかったからよしとしよう。
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200102252" title="200102252" href="200102c.html#200102252">■</a> 
+rename</h3>
+あれはCygwinからパクってきたと
+<a href="200102c.html#200102241">昨日</a>書いたが、ってことはerrnoが正しくないのはCygwinも同じじゃん。
+まいったね。rb_file_s_rename()に入れるしかないか。
+とりあえずそれでcommitして、rename()の件はcygwin-jpn MLに報告した。
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200102253" title="200102253" href="200102c.html#200102253">■</a> 
+Cマガプログラミング期末試験</h3>
+答えられそうなC,Perl,Rubyをやってみたが、Rubyが一番難しかったと思う。
+それぞれ83点,98点,94点だった。Perlが一番得意らしい。
+
+<h4><a name="200102253S1" href="200102c.html#200102253S1">_</a> <strong>Perl</strong>: </h4>
+<div class="sub">
+Perlの問25はどっちも同じ意味である。
+とあるjperlユーザが2年程前においらに質問してきて調べたから覚えているのさ。
+てゆうか解答はどっちも(2)になっていてこれじゃ正解がわからんと思うのだが。
+
+</div>
+<h4><a name="200102253S2" href="200102c.html#200102253S2">_</a> <strong>Ruby</strong>: </h4>
+<div class="sub">
+Rubyの問17と問22はどう考えても解答のほうが間違ってる。
+いや実行してみれば一目瞭然ではある。
+結構高得点なのはJARHを作るのに頻繁にリファレンスマニュアルを見てるせいか？
+
+</div>
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200102254" title="200102254" href="200102c.html#200102254">■</a> 
+JARH</h3>
+print ''.replace 'Just another Ruby hacker,'
+<!-- section end -->
+</div>
+<!-- 2001/02/25 end -->
+
+
+
+<hr class="hide">
+<!-- 2001/02/26 start -->
+<h2><a name="20010226" href="200102c.html#20010226">2001-02-26 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="200102261" title="200102261" href="200102c.html#200102261">■</a> 
+<a href="http://www.pragmaticprogrammer.com/ruby/downloads/ri.html">ri</a></h3>
+これは便利だ。早速インストールしよう。
+<pre>
+--- install.rb.orig	Sun Feb 25 15:13:47 2001
++++ install.rb	Mon Feb 26 00:50:06 2001
+@@ -45,3 +45,3 @@
+ opfile = &quot;ri&quot;
+-opfile = &quot;ri.rb&quot; if CONFIG[&quot;target_os&quot;] =~ /win/
++opfile = &quot;ri.rb&quot; if CONFIG[&quot;target_os&quot;] =~ /win|mingw|djgpp/
+ File::install(&quot;ri&quot;, File.join($bindir, opfile), 0755, true)
+</pre>
+ri.rbにしといたほうがよさそう。というよりri.contentsの都合上こうしとく。
+<pre>
+% i386-cygwin-ruby install.rb
+% cat &gt;../ri.contents
+DOC=COPYING ChangeLog README
+CONTENTS=usr/local/lib/ruby/site_ruby/$(RUBYVER)/ri \
+usr/local/bin/ri.rb
+% make -f ../Makefile.pack PACKAGE=ri VERSION=0.2 TARGET=i386-cygwin
+% i386-mingw32-ruby install.rb
+% make -f ../Makefile.pack PACKAGE=ri VERSION=0.2 TARGET=i386-mingw32
+% i386-msdosdjgpp-ruby install.rb
+% make -f ../Makefile.pack PACKAGE=ri VERSION=0.2 TARGET=i386-msdosdjgpp
+</pre>
+と思ったがターゲットに依存するものはないのでsymlinkにしよう。
+あ、ri.rbの#!は/usr/local/bin/rubyに変更。
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200102262" title="200102262" href="200102c.html#200102262">■</a> 
+<a href="http://duch.cz/gnuce/">gcc for WinCE</a></h3>
+SH3用もMIPS用もある。
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200102263" title="200102263" href="200102c.html#200102263">■</a> 
+<a href="../ruby/jarh.rb">JARH</a></h3>
+とりあえず2年前に作ったものを置いとこう。
+先頭に;がついてるものが発表したもの、その他が未発表のもの(たぶん)。
+今だとmarshalはまずいし、filterもcollect!にしないとね。
+あ、以前は正式名称がrubyだったので最初のほうはRubyじゃなくてrubyになってる。
+<!-- section end -->
+</div>
+<!-- 2001/02/26 end -->
+
+
+
+<hr class="hide">
+<!-- 2001/02/27 start -->
+<h2><a name="20010227" href="200102c.html#20010227">2001-02-27 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="200102271" title="200102271" href="200102c.html#200102271">■</a> 
+kakasi 2.3.3</h3>
+というわけでkakasiだ。まずはi386-mingw32で。
+てゆうかkakasi-2.3.3.zipがあるんだから、
+わざわざクロスでmakeすることもないんだが。
+
+<h4><a name="200102271S1" href="200102c.html#200102271S1">_</a> <strong>i386-mingw32</strong>: </h4>
+<div class="sub">
+<pre>
+% CC='i686-pc-cygwin-gcc -bmingw' \
+  CFLAGS=-Os \
+  AR=i686-pc-cygwin-ar \
+  NM=/usr/local/cygwin/bin/i686-pc-cygwin-nm \
+  RANLIB=i686-pc-cygwin-ranlib \
+  ./configure \
+  --target=i386-mingw32 \
+  --host=i686-pc-cygwin \
+  --build=i586-pc-linux \
+  --prefix=/usr/local/mingw
+% make
+&lt;途中略&gt;
+if test -f kakasidict; then \
+    ITAIJIDICT=&quot;itaijidict&quot; src/mkkanwa.exe kanwadict kakasidict; \
+fi
+/bin/sh: src/mkkanwa.exe: cannot execute binary file
+</pre>
+そっか。
+Linux版もあるわけだからそっちで実行してもいいけどwineにやらせてみよう。
+<pre>
+% ITAIJIDICT=&quot;itaijidict&quot; wine -- src/mkkanwa.exe kanwadict kakasidict
+</pre>
+これだとkanwadicが/usr/local/mingw/share/kakasi/kanwadicになってしまうので、
+<pre>
+% make datadir=/usr/local/share
+</pre>
+しなおした。
+<pre>
+% sudo make datadir=/usr/local/share install
+</pre>
+
+</div>
+<h4><a name="200102271S2" href="200102c.html#200102271S2">_</a> <strong>binfmt_misc</strong>: </h4>
+<div class="sub">
+どうせなら自動的にwineを起動してしまう設定にしてみよう。
+例は/usr/src/linux/Documentation/binfmt_misc.txtにある。
+<pre>
+% su
+Password: 
+# insmod binfmt_misc
+Using /lib/modules/2.2.18/fs/binfmt_misc.o
+# echo ':DOSWin:M::MZ::/usr/local/bin/wine:' &gt;/proc/sys/fs/binfmt_misc/register
+</pre>
+この設定でmakeしなおしてみる。見事に最後まで通る。面白い。
+rebootしたら当然のことながらまた設定が必要なので、
+常に使いたいときは/etc/rc*あたりに書いとくのがいいだろう。
+
+</div>
+<h4><a name="200102271S3" href="200102c.html#200102271S3">_</a> <strong>i386-cygwin</strong>: </h4>
+<div class="sub">
+<pre>
+% CC=i686-pc-cygwin-gcc \
+  CFLAGS=-Os \
+  AR=i686-pc-cygwin-ar \
+  NM=/usr/local/cygwin/bin/i686-pc-cygwin-nm \
+  RANLIB=i686-pc-cygwin-ranlib \
+  ./configure \
+  --target=i686-pccygwin \
+  --host=i686-pc-cygwin \
+  --build=i586-pc-linux \
+  --prefix=/usr/local/cygwin-local
+% make datadir=/usr/local/share
+% sudo make datadir=/usr/local/share install
+
+</pre>
+</div>
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200102272" title="200102272" href="200102c.html#200102272">■</a> 
+kakasi 000124</h3>
+準備OK。
+<h4><a name="200102272S1" href="200102c.html#200102272S1">_</a> <strong>i386-mingw32</strong>: </h4>
+<div class="sub">
+<pre>
+% mkdir mingw cygwin
+% cd mingw
+% i386-mingw32-ruby ../extconf.rb
+</pre>
+うーむ。ちょっと具合が悪い。軽く修正。
+<pre>
+--- extconf.rb.orig	Wed Jul 28 15:46:02 1999
++++ extconf.rb	Tue Feb 27 01:11:24 2001
+@@ -2,4 +2,7 @@
+ 
+-$CFLAGS += &quot; -I /usr/local/include &quot;
+-$LOCAL_LIBS += &quot; -L /usr/local/lib -lkakasi &quot;
+-create_makefile(&quot;kakasi&quot;)
++#$CFLAGS += &quot; -I /usr/local/include &quot;
++#$LOCAL_LIBS += &quot; -L /usr/local/lib -lkakasi &quot;
++dir_config(&quot;kakasi&quot;)
++if have_library(&quot;kakasi&quot;, nil)
++  create_makefile(&quot;kakasi&quot;)
++end
+</pre>
+あとはいつもと同じ。
+<pre>
+% i386-mingw32-ruby ../extconf.rb
+% make
+% upx kakasi.so
+% make site-install
+</pre>
+
+</div>
+<h4><a name="200102272S2" href="200102c.html#200102272S2">_</a> <strong>i386-cygwin</strong>: </h4>
+<div class="sub">
+<pre>
+% cd ../cygwin
+% i386-cygwin-ruby ../extconf.rb
+% make
+% upx kakasi.so
+% make site-install
+</pre>
+
+</div>
+<h4><a name="200102272S3" href="200102c.html#200102272S3">_</a> <strong>package</strong>: </h4>
+<div class="sub">
+<pre>
+% cd ..
+% cat &gt;../kakasi.contents
+DOC=ChangeLog MANIFEST README* test.rb wdcnt*
+CONTENTS=usr/local/lib/ruby/site_ruby/$(RUBYVER)/$(TARGET)/kakasi.so \
+usr/local/share/kakasi/kanwadict \
+usr/local/share/kakasi/itaijidict
+% make -f ../Makefile.pack PACKAGE=kakasi VERSION=000124 TARGET=i386-mingw32
+% make -f ../Makefile.pack PACKAGE=kakasi VERSION=000124 TARGET=i386-cygwin
+</pre>
+
+</div>
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200102273" title="200102273" href="200102c.html#200102273">■</a> 
+EINVAL</h3>
+困ったことにCygwin版で
+<pre>
+Invalid argument - &quot;connect(2)&quot; (Errno::EINVAL)
+</pre>
+というエラーが多発してるようなんだけど、なぜに？
+なんかWindows 2000という場合が多いようだけど、
+会社の新しいVAIOのWindows 2000でも再現しない。
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200102274" title="200102274" href="200102c.html#200102274">■</a> 
+ri 0.3</h3>
+インストールされる場所が変更になった。ri.contentsを更新。
+<pre>
+% cat ../ri.contents
+DOC=COPYING ChangeLog README
+CONTENTS=usr/local/lib/ruby/site_ruby/ri \
+usr/local/bin/ri.rb
+</pre>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200102275" title="200102275" href="200102c.html#200102275">■</a> 
+<a href="../ruby/jarh.rb">jarh.rb</a></h3>
+aliasでcollect!にしてみたが、
+rescueのとこは1.6以上じゃないとparse errorになるからあまり意味ないね。
+というわけで、1.6以上必須にしよう。
+<pre>
+% ruby jarh.rb|tr , '\n'|wc
+    109     436    2725
+</pre>
+お、いつのまにか100を越えてるのか。
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200102276" title="200102276" href="200102c.html#200102276">■</a> 
+予告JARH</h3>
+今日はinstance_evalを使ったので明日はmodule_evalに違いない。
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200102277" title="200102277" href="200102c.html#200102277">■</a> 
+JARH</h3>
+instance_eval do print 'Just another Ruby hacker,' end
+<!-- section end -->
+</div>
+<!-- 2001/02/27 end -->
+
+
+
+<hr class="hide">
+<!-- 2001/02/28 start -->
+<h2><a name="20010228" href="200102c.html#20010228">2001-02-28 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="200102281" title="200102281" href="200102c.html#200102281">■</a> 
+<a href="http://www.ruby-lang.org/~rubikitch/refm/ruby162-refm.rd.gz">リファレンスマニュアル</a></h3>
+<pre>
+% gzip -dc ruby162-refm.rd.gz | rd2 -r rd/rd2man-lib -o rubyrefm
+% mv rubyrefm.1 ~/man/man1
+% man rubyrefm
+</pre>
+して気づいたんだけど、
+なぜかコマンドラインオプションの次にThreadがいきなり出てくる。
+これは--debugの説明でThreadクラスの話が出てくるから
+mapがそうなっちゃうのか。
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200102282" title="200102282" href="200102c.html#200102282">■</a> 
+<a href="http://www.freecom.ne.jp/">freecom</a></h3>
+新しすぎが原因かと思ったが、そういう問題じゃないようだ。
+なにしろprimaryのDNSが反応しないし。逆引きできないとつらい。
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200102283" title="200102283" href="200102c.html#200102283">■</a> 
+<a href="http://www.dm4lab.to/~usa/dekigoto/200102c.html#20010228_P1">_stat()</a></h3>
+Win98とLinux sambaで実験してみた。msvcrt.dll使用。
+<pre>
+#include &lt;stdio.h&gt;
+#include &lt;sys/stat.h&gt;
+
+s(char *path)
+{
+    struct _stat buf;
+    printf(&quot;%s: %d\n&quot;, path, _stat(path, &amp;buf));
+}
+
+main()
+{
+    s(&quot;//ruby/pub&quot;);
+    s(&quot;//ruby/pub/&quot;);
+    s(&quot;//ruby/pub\\&quot;);
+    s(&quot;//ruby/pub/ruby&quot;);
+    s(&quot;//ruby/pub/ruby/&quot;);
+    s(&quot;//ruby/pub/ruby\\&quot;);
+
+    s(&quot;\\\\ruby\\pub&quot;);
+    s(&quot;\\\\ruby\\pub\\&quot;);
+    s(&quot;\\\\ruby\\pub\\&quot;);
+    s(&quot;\\\\ruby\\pub\\ruby&quot;);
+    s(&quot;\\\\ruby\\pub\\ruby\\&quot;);
+    s(&quot;\\\\ruby\\pub\\ruby\\&quot;);
+}
+</pre>
+結果はこうなる。
+<pre>
+//ruby/pub: -1
+//ruby/pub/: -1
+//ruby/pub\: -1
+//ruby/pub/ruby: 0
+//ruby/pub/ruby/: -1
+//ruby/pub/ruby\: -1
+\\ruby\pub: -1
+\\ruby\pub\: 0
+\\ruby\pub\: 0
+\\ruby\pub\ruby: 0
+\\ruby\pub\ruby\: -1
+\\ruby\pub\ruby\: -1
+</pre>
+うーむ。また困った結果だ。
+明日会社のWinNT/2kでもう一度確認してみよう。
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200102284" title="200102284" href="200102c.html#200102284">■</a> 
+JARH</h3>
+Kernel.module_eval do print 'Just another Ruby hacker,' end
+<!-- section end -->
+</div>
+<!-- 2001/02/28 end -->
+
+<hr>
+<div>
+<a href="200102b.html">&lt;Prev(,)</a> | 
+<a href="200103a.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

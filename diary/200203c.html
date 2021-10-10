@@ -1,0 +1,952 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2002-3-c</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="200203b.html">
+<link rel="next" href="200204a.html">
+
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2002年3月下旬〜</p>
+<hr>
+<div>
+<a href="200203b.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="200204a.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2002/03/21 start -->
+<h2><a name="20020321" href="200203c.html#20020321">2002-03-21 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="200203211" title="200203211" href="200203c.html#200203211">■</a> 
+<a href="http://www.ruby-lang.org/en/raa-list.rhtml?name=ERb+-+Tiny+eRuby">erb 1.4.1</a></h3>
+<p>
+更新。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200203212" title="200203212" href="200203c.html#200203212">■</a> 
+<a href="http://www.ruby-lang.org/en/raa-list.rhtml?name=XMLParser">XMLParser 0.6.1</a></h3>
+<p>
+御要望にお応えして、
+</p>
+<pre>
+--with-perl-enc-map=/usr/local/doc/ruby/xmlparser-0.6.1-1/Encodings
+</pre>
+<p>
+をつけて作り直し。それだけじゃなんなのでexpatも1.95.2に上げた。
+ついでに環境変数XML_ENC_PATHが設定されてたらそっちを優先するようにしたので、
+よろしく &gt; なひさん。その差分は同梱のxmlparser-0.6.1-1.diffに。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200203213" title="200203213" href="200203c.html#200203213">■</a> 
+[Cygwin] new setup.exe</h3>
+<p>
+なんか文字がはみ出て見えるのは大きいフォントを選んでいるとそうなるらしい。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/03/21 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/03/22 start -->
+<h2><a name="20020322" href="200203c.html#20020322">2002-03-22 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="200203221" title="200203221" href="200203c.html#200203221">■</a> 
+<a href="http://www.thekelleys.org.uk/dnsmasq/doc.html">Dnsmasq 1.4</a></h3>
+<pre>
+Fix a bug with DHPC lease parsing which broke in non-UTC timezones.
+</pre>
+<p>
+ということらしいが、ISC DHCP 3.0だと
+</p>
+<pre>
+# All times in this file are in UTC (GMT), not your local timezone.
+</pre>
+<p>
+と/var/state/dhcp/dhcpd.leasesに書かれているとおりなのであまり関係ないか。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200203222" title="200203222" href="200203c.html#200203222">■</a> 
+<a href="http://www.uclibc.org/">uClibc 0.9.10</a></h3>
+<p>
+pthreadsが追加されたようだ。
+</p>
+<pre>
+21 March 2002, uClibc 0.9.10 Released!
+   CodePoet Consulting is pleased to announce the immediate
+   availability of uClibc 0.9.10. This release adds pthreads support
+   (including pthreads support for mmu-less systems!). Additionally,
+   thanks to Manuel Novoa III, we now have a completely new stdio
+   library, which is small, standards compliant, supports pthreads,
+   wide/narrow streams, large files, and can even operate in a
+   low-memory unbuffered mode. Many, many bugs have been fixed and a
+   number of additional applications now compile and run perfectly.
+   Even with all these changes, uClibc continues to be very small. On 
+   x86, a default build of the uClibc C library is still just 168k.
+</pre>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200203223" title="200203223" href="200203c.html#200203223">■</a> 
+[Ruby] VMS対応</h3>
+<p>
+1.7にVMS対応が入った。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/03/22 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/03/23 start -->
+<h2><a name="20020323" href="200203c.html#20020323">2002-03-23 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="200203231" title="200203231" href="200203c.html#200203231">■</a> 
+<a href="http://www.ruby-lang.org/en/raa-list.rhtml?name=rubyzip">rubyzip 0.4.1</a></h3>
+<p>
+更新。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200203232" title="200203232" href="200203c.html#200203232">■</a> 
+<a href="http://www.ruby-lang.org/en/raa-list.rhtml?name=REXML">REXML 2.0.1</a></h3>
+<p>
+更新。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200203233" title="200203233" href="200203c.html#200203233">■</a> 
+grep 2.5</h3>
+<p>
+grepのmultibyte対応はものすごく遅い。
+</p>
+<pre>
+% ls -l ruby-talk.0201
+-rw-------    1 watanabe ruby      9967155 Feb  2 00:48 ruby-talk.0201
+% time /usr/bin/grep hogehoge ruby-talk.0201
+/usr/bin/grep hogehoge ruby-talk.0201  0.37s user 0.07s system 88% cpu 0.497 total
+% time grep hogehoge ruby-talk.0201         
+grep hogehoge ruby-talk.0201  24.60s user 0.53s system 98% cpu 25.405 total
+% time LANG=C grep hogehoge ruby-talk.0201          
+LANG=C grep hogehoge ruby-talk.0201  0.20s user 0.51s system 99% cpu 0.715 total
+</pre>
+<p>
+Rubyに負けてるじゃん。
+</p>
+<pre>
+% time ruby -Ke -ne 'print if /hogehoge/' ruby-talk.0201
+ruby -Ke -ne 'print if /hogehoge/' ruby-talk.0201  17.11s user 0.68s system 97% cpu 18.245 total
+</pre>
+<p>
+あれ？でもRuby 1.7.2は遅くなってるなあ。
+</p>
+<pre>
+% time ruby-1.7.2 -Ke -ne 'print if /hogehoge/' ruby-talk.0201
+ruby-1.7.2 -Ke -ne 'print if /hogehoge/' ruby-talk.0201  27.70s user 0.50s system 99% cpu 28.483 total
+</pre>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200203234" title="200203234" href="200203c.html#200203234">■</a> 
+[Ruby] IO#gets, IO#read</h3>
+<p>
+結局のところRuby 1.7では読み込みが遅くなってるのか。
+</p>
+<pre>
+% TIMEFMT='%U user %S system %E total'
+% time ruby-1.6.7 -Ke -ne '' ruby-talk.0201 
+13.12s user 0.56s system 14.567 total
+% time ruby-1.7.2 -Ke -ne '' ruby-talk.0201 
+21.65s user 0.62s system 22.444 total
+</pre>
+<p>
+1.7でIOは速くなったんじゃなかったっけ？
+</p>
+<pre>
+% time ruby-1.2.6 -Ke -ne '' ruby-talk.0201
+12.26s user 0.56s system 13.054 total
+% time ruby-1.4.6 -Ke -ne '' ruby-talk.0201
+11.87s user 0.72s system 12.655 total
+</pre>
+<p>
+やっぱ1.7は遅すぎる。
+</p>
+<pre>
+% time ruby-1.2.6 -Ke -e 'ARGF.read' ruby-talk.0201
+0.08s user 0.76s system 0.816 total
+% time ruby-1.4.6 -Ke -e 'ARGF.read' ruby-talk.0201
+13.32s user 1.02s system 14.540 total
+% time ruby-1.6.7 -Ke -e 'ARGF.read' ruby-talk.0201 
+9.71s user 0.81s system 10.583 total
+% time ruby-1.7.2 -Ke -e 'ARGF.read' ruby-talk.0201
+0.85s user 0.89s system 1.776 total
+</pre>
+<p>
+と思ったらIO#readは速い。IO#getsが遅い？
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200203235" title="200203235" href="200203c.html#200203235">■</a> 
+<a href="http://www.gedanken.demon.co.uk/wwwoffle/">WWWOFFLE 2.7a</a></h3>
+<p>
+2.7に上げた時から多発してたよくわからないエラーが、
+2.7aにしたらピタっと治まったようだ。
+そういうエラーになるとw3mはNo Lineになるんだけど、
+
+<a href="http://homepage1.nifty.com/markey/memo/diary.html">昨日の雑感</a>
+がNo Lineになってまだ駄目なのかと思ったら、ほんとに0バイトのようだ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200203236" title="200203236" href="200203c.html#200203236">■</a> 
+<a href="http://homepage1.nifty.com/~tetsu/ruby/diary/0203.html#22">買いもの</a></h3>
+<p>
+バカボンドと言う人が結構いるなあ。Vagabond(放浪者、ならず者)です。
+やはりバカボンにつられるんだろうか。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200203237" title="200203237" href="200203c.html#200203237">■</a> 
+<a href="http://www.ruby-lang.org/en/raa-list.rhtml?name=Win32OLE">Win32OLE 0.4.4</a></h3>
+<p>
+更新。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/03/23 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/03/24 start -->
+<h2><a name="20020324" href="200203c.html#20020324">2002-03-24 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="200203241" title="200203241" href="200203c.html#200203241">■</a> 
+<a href="http://www.fefe.de/dietlibc/">diet libc 0.16</a></h3>
+<p>
+更新。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200203242" title="200203242" href="200203c.html#200203242">■</a> 
+GNU readline 4.2a</h3>
+<p>
+bashをまだ2.05aに上げてないことに突然気づく。どうせなら
+</p>
+<pre>
+--with-installed-readline
+</pre>
+<p>
+としてインストールされてるreadlineを使おうと思ったら、
+</p>
+<pre>
+checking version of installed readline library... 2.2
+configure: WARNING: installed readline library is too old to be linked with bash
+configure: WARNING: using private bash version
+</pre>
+<p>
+と言われてしまった。しょうがないから上げる。
+</p>
+
+<p>
+普通にmakeだけだとstatic libraryしか作らないので、
+make sharedとかmake everythingする必要がある。
+同様にインストール時はmake install install-sharedてな具合。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200203243" title="200203243" href="200203c.html#200203243">■</a> 
+bash 2.05a</h3>
+<p>
+で、--with-installed-readlineつけてconfigureしてみると
+</p>
+<pre>
+test: 2a: bad number
+</pre>
+<p>
+と微妙にエラーメッセージがはみ出てる。aとかつけるからだよ。
+</p>
+<pre>
+elif test $RL_MAJOR -gt 4 || { test $RL_MAJOR = 4 &amp;&amp; test $RL_MINOR -gt 2 ; } ;
+</pre>
+<p>
+これだと4.2より大きい場合になるが、4.2aはどっちなんだ？
+ま、いいや、このままで。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200203244" title="200203244" href="200203c.html#200203244">■</a> 
+<a href="http://homepage1.nifty.com/~tetsu/ruby/diary/">Ruby 日記</a></h3>
+<p>
+ツッコんでばかりで申し訳ない気もするけど、1週間ワープしてるようです。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200203245" title="200203245" href="200203c.html#200203245">■</a> 
+<a href="http://www.ruby-lang.org/en/raa-list.rhtml?name=XMLParser">XMLParser 0.6.2</a></h3>
+<p>
+更新。mswin32/mingw32のときはwsock32もリンクする必要があるので
+</p>
+<pre>
+--- extconf.rb.orig     Wed Jun 20 12:35:18 2001
++++ extconf.rb  Sun Mar 24 19:08:44 2002
+@@ -49,2 +49,3 @@
+     have_library(&quot;socket&quot;, &quot;ntohl&quot;)
++    have_library(&quot;wsock32&quot;) if RUBY_PLATFORM =~ /mswin32|mingw/
+     create_makefile(&quot;xmlparser&quot;)
+</pre>
+<p>
+とした(ntohl, ntohsのため)。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200203246" title="200203246" href="200203c.html#200203246">■</a> 
+<a href="http://www.ruby-lang.org/en/raa-list.rhtml?name=Mmap">Mmap 0.1.7</a></h3>
+<p>
+更新。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/03/24 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/03/25 start -->
+<h2><a name="20020325" href="200203c.html#20020325">2002-03-25 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="200203251" title="200203251" href="200203c.html#200203251">■</a> 
+<a href="http://www.ruby-lang.org/en/raa-list.rhtml?name=Win32OLE">Win32OLE 0.4.5</a></h3>
+<p>
+更新。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200203252" title="200203252" href="200203c.html#200203252">■</a> 
+<a href="http://www.ruby-lang.org/en/raa-list.rhtml?name=REXML">REXML 2.0.2</a></h3>
+<p>
+更新。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200203253" title="200203253" href="200203c.html#200203253">■</a> 
+<a href="http://www.ruby-lang.org/en/raa-list.rhtml?name=NArray">NArray 0.5.6</a></h3>
+<p>
+narray.defにはまだna_touch_objectが残っているためエラーになる。
+パッチも入れとこう。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/03/25 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/03/26 start -->
+<h2><a name="20020326" href="200203c.html#20020326">2002-03-26 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="200203261" title="200203261" href="200203c.html#200203261">■</a> 
+vim 6.1</h3>
+<p>
+出てたのか。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200203262" title="200203262" href="200203c.html#200203262">■</a> 
+GNU diffutils 2.8</h3>
+<p>
+7年半振りのバージョンアップ。
+</p>
+<pre>
+% diff -u1 =(echo a) =(echo b)
+--- /tmp/zshSsK8La      2002-03-26 22:53:59.000000000 +0900
++++ /tmp/zshMv1olc      2002-03-26 22:53:59.000000000 +0900
+@@ -1 +1 @@
+-a
++b
+</pre>
+<p>
+とタイムスタンプの表示がちとうるさい。
+diffにそんなところの精度を期待してないんだけどなあ。
+しかも、ほとんどの場合0だと思うんだけど。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200203263" title="200203263" href="200203c.html#200203263">■</a> 
+<a href="http://tamura.tdiary.net/20020326.html#p01">time</a></h3>
+<p>
+zshはtimeが文法に組み込まれているようだ。
+</p>
+<pre>
+% time date                   
+Tue Mar 26 22:58:10 JST 2002
+date  0.06s user 0.05s system 101% cpu 0.108 total
+% time LC_ALL=ja_JP.eucJP date
+2002年 3月26日 (火) 22:58:12 JST
+LC_ALL=ja_JP.eucJP date  0.09s user 0.03s system 99% cpu 0.120 total
+% LC_ALL=ja_JP.eucJP time date
+zsh: parse error near `time'
+</pre>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200203264" title="200203264" href="200203c.html#200203264">■</a> 
+[Ruby] overlineとyenmark</h3>
+<p>
+おそらくVMS対応のpatchに紛れこんでいたんだと思われる。
+</p>
+<pre>
+% ruby -ne 'p [ARGF.filename,$_] if /\033/' *.c
+[&quot;bignum.c&quot;, &quot;\t    *buf = \e(J~\e(B*buf;\n&quot;]
+[&quot;dln.c&quot;, &quot;\t    *p2 = '\e(J\\\e(B0';\n&quot;]
+</pre>
+<p>
+なぜか、gccは文句言わなかった。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/03/26 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/03/27 start -->
+<h2><a name="20020327" href="200203c.html#20020327">2002-03-27 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="200203271" title="200203271" href="200203c.html#200203271">■</a> 
+<a href="http://www.ruby-lang.org/en/raa-list.rhtml?name=ERb+-+Tiny+eRuby">erb 1.4.2</a></h3>
+<p>
+更新。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200203272" title="200203272" href="200203c.html#200203272">■</a> 
+<a href="http://www.ruby-lang.org/en/raa-list.rhtml?name=druby+-+distributed+ruby">druby 1.3.6</a></h3>
+<p>
+更新。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/03/27 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/03/28 start -->
+<h2><a name="20020328" href="200203c.html#20020328">2002-03-28 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="200203281" title="200203281" href="200203c.html#200203281">■</a> 
+rpm 4.0.3</h3>
+<p>
+なんだかんだでrpmなパッケージをインストールしなきゃいけないこともあるので、
+Red Hatからrpm本体を取ってきた。
+てゆかこのソースもrpmなんだけど、どこかにtarballもあるんだろうか？
+Plamoにはrpm2targzがあるのでこれでtarballに変換して中を見ると
+rpm-4.0.3.tar.gzが入ってた。ぐはぁ。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/03/28 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/03/29 start -->
+<h2><a name="20020329" href="200203c.html#20020329">2002-03-29 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="200203291" title="200203291" href="200203c.html#200203291">■</a> 
+<a href="http://www.ruby-lang.org/en/raa-list.rhtml?name=REXML">REXML 2.0.4</a></h3>
+<p>
+2.0.3はどうなったんだろう？
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200203292" title="200203292" href="200203c.html#200203292">■</a> 
+<a href="http://www.xmms.org/">xmms 1.2.7</a></h3>
+<p>
+
+<a href="http://www.debian.or.jp/Lists-Archives/debian-devel/200202/msg00032.html">これ</a>
+を見る限り日本語パッチをあてなくてもよさそう。
+確かにいけてる。ただSJISなlocale環境は作ってないから、
+ja_JP.eucJPでID3タグもEUC-JPにしてだけど。
+Autoscroll songnameもできていいじゃん。
+Windowsへ持ってくときにSJISに変換することにしよう。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200203293" title="200203293" href="200203c.html#200203293">■</a> 
+<a href="http://www.ruby-lang.org/en/raa-list.rhtml?name=Mp3Tag">Mp3Tag 1.0</a></h3>
+<p>
+ID3タグを扱うライブラリを
+<a href="http://www.ruby-lang.org/en/raa.html">RAA</a>
+で探すとMp3Tagが見つかった。これを使ってみる。
+commitすると書き込むわけか。ふむふむ。
+songname, artist, album, commentあたりを変換してやればよさそうだ。
+&quot;r&quot;とか&quot;r+&quot;でopenしてるので、Windowsではbinmodeする必要もあるだろう。
+</p>
+
+<p>
+ところ&quot;r+b&quot;と&quot;rb+&quot;ってどっちかがエラーになる処理系もあったりするので、
+&quot;r+&quot;に限ってはIO#binmodeを使ったほうが無難だ。これはそのままCのfopenに渡る。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200203294" title="200203294" href="200203c.html#200203294">■</a> 
+<a href="http://www.intel.co.jp/jp/developer/software/products/eval/index.htm">icc</a></h3>
+<p>
+rpmを入れたのは実はiccのためだったりする。
+installのi386をi586に書き換えただけでインストール可能。
+あとは
+</p>
+<pre>
+% source /opt/intel/compiler50/ia32/bin/iccvars.sh
+</pre>
+<p>
+でok。
+</p>
+
+<p>
+でもrpmはなぜか
+</p>
+<p>
+ % ldd =rpm                                        
+</p>
+<pre>
+       not a dynamic executable
+</pre>
+<p>
+だったりするのがちと気になる。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200203295" title="200203295" href="200203c.html#200203295">■</a> 
+DRY</h3>
+<p>
+Don't Repeat Yourself(同じことを繰り返すな)。
+Andy&amp;Daveのありがたいお言葉。
+つまりext/mkmf.rb.inとlib/mkmf.rbのように同じようなものを作ってはいけない。
+Shellwords::shellwordsの変更を片方忘れるやつが出てきたりするんだから(意訳:ごめん)。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/03/29 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/03/30 start -->
+<h2><a name="20020330" href="200203c.html#20020330">2002-03-30 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="200203301" title="200203301" href="200203c.html#200203301">■</a> 
+<a href="http://www.ruby-lang.org/en/raa-list.rhtml?name=iconv">iconv 0.4.5</a></h3>
+<p>
+今ごろではあるが更新。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200203302" title="200203302" href="200203c.html#200203302">■</a> 
+xmms</h3>
+<p>
+なぜか
+</p>
+<pre>
+% LC_ALL=japanese xmms &amp;
+</pre>
+<p>
+だとmainもplaylistもSJISになる。
+いろんなメニューも日本語になるが、みんな化ける。
+</p>
+<pre>
+% LC_ALL=japanese LANGUAGE=C xmms &amp;
+</pre>
+<p>
+で英語になるので~/.icewm/toolbarは
+</p>
+<pre>
+prog XMMS button1a env LC_ALL=japanese LANGUAGE=C xmms
+</pre>
+<p>
+とした。ID3タグはSJISにする。
+というかEUC-JPへの変換はまだ試験的に数曲しかしてないのが幸いしてる。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200203303" title="200203303" href="200203c.html#200203303">■</a> 
+<a href="http://www.ruby-lang.org/en/raa-list.rhtml?name=AspectR">AspectR</a></h3>
+<p>
+これを使うとclass定義のほうを変更しないで、いろんなことができる。
+たとえばあるメソッドが呼ばれるたびにlog messageを吐かせたいときは、
+こんな感じだ。
+</p>
+<pre>
+% cat foo.rb
+require 'aspectr'
+
+class Foo
+  def a() p &quot;a&quot; end
+  def b() p &quot;b&quot; end
+end
+
+class MyAspect &lt; AspectR::Aspect
+  def preAdvice(method, object, exitstatus, *args)
+    print &quot;entering &quot;, method, &quot;\n&quot;
+  end
+  def postAdvice(method, object, exitstatus, *args)
+    print &quot;leaving &quot;, method, &quot;\n&quot;
+  end
+end
+
+MyAspect.ma.wrap(Foo, :preAdvice, :postAdvice, :a, :b)
+foo = Foo.new
+foo.a
+foo.b
+% ruby foo.rb
+entering a
+&quot;a&quot;
+leaving a
+entering b
+&quot;b&quot;
+leaving b
+</pre>
+<p>
+PREとPOSTのうちどちらかが要らないときはnilを指定すればいい。
+Aspect#wrapは正規表現でメソッドの指定もできるので
+</p>
+<pre>
+MyAspect.new.wrap(Foo, :preAdvice, :postAdvice, /\w+/)
+</pre>
+<p>
+てなことをすると、
+respond_to?だのinstance_evalだのが呼ばれてる様子がわかって面白い。
+いや欝陶しいだけなので、
+</p>
+<pre>
+MyAspect.new.wrap(Foo, :preAdvice, :postAdvice, /^[ab]$/)
+</pre>
+<p>
+と自分で定義したものだけにmatchする正規表現を与えよう。
+</p>
+
+<p>
+残念ながらインスタンスメソッドにしか使えないようだ。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/03/30 end -->
+
+
+
+<hr class="hide">
+<!-- 2002/03/31 start -->
+<h2><a name="20020331" href="200203c.html#20020331">2002-03-31 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="200203311" title="200203311" href="200203c.html#200203311">■</a> 
+<a href="http://www.ruby-lang.org/en/raa-list.rhtml?name=ERb+-+Tiny+eRuby">erb 1.4.3</a></h3>
+<p>
+更新。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200203312" title="200203312" href="200203c.html#200203312">■</a> 
+<a href="http://www.ruby-lang.org/en/raa-list.rhtml?name=rubyzip">rubyzip 0.4.2</a></h3>
+<p>
+更新。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200203313" title="200203313" href="200203c.html#200203313">■</a> 
+<a href="http://www.ruby-lang.org/en/raa-list.rhtml?name=Test%3A%3AUnit">Test::Unit</a></h3>
+<p>
+RubyUnitの互換レイヤがあるということなので、
+RubyUnitをuninstallしないと面倒なことになるのかなと思ったら、
+RubyUnitがインストールされてたらスキップするようだ。
+</p>
+<pre>
+Preconfiguring...
+Skipping the install of the runit compatibility layer because a
+version of runit is already installed.
+</pre>
+<p>
+全ファイルがCR+LFだなあ。Nathaniel TalbottさんはWindowsな人なのか。
+</p>
+
+<p>
+packages/testunit/lib/pre-install.rbがsrcdir対応してないようだ。
+中を見てみると
+</p>
+<pre>
+Dir.chdir(&quot;../test/test/unit&quot;)
+</pre>
+<p>
+とある。ここはcurr_srcdir相対にすればいい。
+</p>
+<pre>
+Dir.chdir(File.join(curr_srcdir, &quot;../test/test/unit&quot;))
+</pre>
+
+<p>
+というわけでこんな感じでパッケージング。
+</p>
+<pre>
+% mkdir cygwin; cd cygwin
+% i386-cygwin-ruby ../setup.rb config
+% i386-cygwin-ruby ../setup.rb setup
+% i386-cygwin-ruby ../setup.rb install
+% cd ..
+% cat &gt;../testunit.contents
+DOC=ChangeLog README TODO doc examples
+CONTENTS=$(RUBYVER_DIR)/test
+% make -f ../Makefile.pack P=testunit V=0.1.4 T=cyg
+% make -f ../Makefile.pack P=testunit V=0.1.4 T=min sym
+% make -f ../Makefile.pack P=testunit V=0.1.4 T=dj sym
+</pre>
+<p>
+rubytest.rbのようなものはないらしい。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200203314" title="200203314" href="200203c.html#200203314">■</a> 
+<a href="http://www.ruby-lang.org/en/raa-list.rhtml?name=date2">date2 3</a></h3>
+<p>
+newdateがdate2になったようなのでパッケージング。
+</p>
+<pre>
+% mkdir cygwin; cd cygwin
+% i386-cygwin-ruby ../install.rb config
+% i386-cygwin-ruby ../install.rb setup
+% i386-cygwin-ruby ../install.rb install
+% cd ..
+% cat &gt;../date2.contents
+DOC=MANUAL* README* sample
+CONTENTS=$(RUBYVER_DIR)/date2
+% make -f ../Makefile.pack P=date2 V=3 T=cyg
+% make -f ../Makefile.pack P=date2 V=3 T=min sym
+% make -f ../Makefile.pack P=date2 V=3 T=dj sym
+</pre>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200203315" title="200203315" href="200203c.html#200203315">■</a> 
+<a href="http://ccache.samba.org/">ccache</a></h3>
+<p>
+ああ、またおれが好きそうなのが。と思ったら
+
+<a href="http://www.erikyyy.de/compilercache/">compilercache</a>
+に触発されてCで書き直したものみたいだ。
+<a href="http://yendot.org/">Yendot</a> から。
+</p>
+
+<p>
+man ccacheすると
+</p>
+<pre>
+cp ccache /usr/local/bin/
+ln -s /usr/local/bin/ccache /usr/local/bin/gcc
+ln -s /usr/local/bin/ccache /usr/local/bin/cc
+</pre>
+<p>
+として使うようだ。
+これはもちろん/usr/local/binにgccやccがあったら駄目なので
+</p>
+<pre>
+% mkdir ~/ccache; cd ~/ccache
+% ln -s =ccache gcc
+% ln -s =ccache cc
+% ln -s =ccache i686-pc-cygwin-gcc
+% ln -s =ccache i586-pc-msdosdjgpp-gcc
+</pre>
+<p>
+としてみた。使うときだけ~/ccacheにPATHを通そう。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2002/03/31 end -->
+
+<hr>
+<div>
+<a href="200203b.html">&lt;Prev(,)</a> | 
+<a href="200204a.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

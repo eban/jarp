@@ -1,0 +1,642 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2003-4-a</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="200303c.html">
+<link rel="next" href="200304b.html">
+
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2003年4月上旬〜</p>
+<hr>
+<div>
+<a href="200303c.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="200304b.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2003/04/01 start -->
+<h2><a name="20030401" href="200304a.html#20030401">2003-04-01 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="200304011" title="200304011" href="200304a.html#200304011">■</a> 
+3月のspam</h3>
+<p>
+548通。とうとう500を越えた。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200304012" title="200304012" href="200304a.html#200304012">■</a> 
+<a href="http://www.openssl.org/">[Linux] OpenSSL 0.9.7a</a></h3>
+<p>
+今頃ではあるが更新。
+</p>
+<pre>
+% ./config shared
+% make all test
+% sudo make install
+</pre>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200304013" title="200304013" href="200304a.html#200304013">■</a> 
+<a href="http://www.openssh.org/">[Linux] OpenSSH 3.6</a></h3>
+<p>
+というのもOpenSSH 3.6がリリースされたからなんだけど。
+</p>
+<pre>
+% CFLAGS=-Os ./configure 
+% make
+% sudo make install
+</pre>
+
+<!-- section end -->
+</div>
+<!-- 2003/04/01 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/04/02 start -->
+<h2><a name="20030402" href="200304a.html#20030402">2003-04-02 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="200304021" title="200304021" href="200304a.html#200304021">■</a> 
+<a href="http://www.loveruby.net/ja/prog/refe.html">[Ruby] refe 0.6.0</a></h3>
+<p>
+更新。
+<a href="http://www.loveruby.net/~aamine/ja/tdiary/20030331.html#p02">パスに使える文字</a>ってこのためだったのか。
+</p>
+
+<p>
+-dオプションが無効だったのでその修正。
+</p>
+<pre>
+--- lib/refe/database.rb~	2003-04-02 07:04:51.000000000 +0900
++++ lib/refe/database.rb	2003-04-03 01:28:10.000000000 +0900
+@@ -23,3 +23,3 @@
+     def initialize( rootdir = nil, init = false )
+-      @rootdir = nil
++      @rootdir = rootdir
+       @init = init
+</pre>
+<p>
+REFE_DATA_DIRのデフォルトが/usr/local/share/refeになってなかったので追加。
+</p>
+<pre>
+--- bin/refe~	2003-04-02 08:56:00.000000000 +0900
++++ bin/refe	2003-04-03 01:28:59.000000000 +0900
+@@ -121,2 +121,3 @@
+ 
++REFE_DATA_DIR = '/usr/local/share/refe'
+
+</pre>
+<p>
+あ、どうせなら、
+</p>
+<pre>
+REFE_DATA_DIR = File.join(File.dirname(File.dirname(__FILE__)), 'share', 'refe')
+</pre>
+<p>
+のほうがいいか。これでパッケージ作っとこう。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200304022" title="200304022" href="200304a.html#200304022">■</a> 
+<a href="http://kog.s2.xrea.com/tdiary/index.cgi?date=20030401#p02">りふぁら</a></h3>
+<p>
+niftyに書いたのって4, 5年ぐらい前の話かなあ。
+jperlの最終版は2000年4月1日だから、もう3年も経つのか。
+</p>
+<!-- section end -->
+</div>
+<!-- 2003/04/02 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/04/03 start -->
+<h2><a name="20030403" href="200304a.html#20030403">2003-04-03 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="200304031" title="200304031" href="200304a.html#200304031">■</a> 
+<a href="http://raa.ruby-lang.org/project/bdb/">[Ruby] bdb 0.4.1</a></h3>
+<p>
+更新。
+statという名前が使われているため、
+</p>
+<pre>
+common.c:851:47: macro &quot;stat&quot; passed 3 arguments, but takes just 2
+</pre>
+<p>
+というエラーになる。win32/win32.hでstatをdefineしてるから。実際は
+</p>
+<pre>
+bdb_test_error(dbp-&gt;stat(dbp, &amp;bdb_stat, 0));
+</pre>
+<p>
+という感じで使われているんだけど、
+考えてみるとstatという名前の変数はありがちだ。
+</p>
+
+<p>
+とりあえず直前でundefしてお茶を濁す。
+</p>
+<!-- section end -->
+</div>
+<!-- 2003/04/03 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/04/04 start -->
+<h2><a name="20030404" href="200304a.html#20030404">2003-04-04 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="200304041" title="200304041" href="200304a.html#200304041">■</a> 
+<a href="http://www.loveruby.net/ja/prog/refe.html">[Ruby] refe 0.7.0</a></h3>
+<p>
+更新。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200304042" title="200304042" href="200304a.html#200304042">■</a> 
+<a href="http://www.openssh.org/">[Linux] OpenSSH 3.6.1</a></h3>
+<p>
+更新。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200304043" title="200304043" href="200304a.html#200304043">■</a> 
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-talk/68624">[Ruby] Relocatable install patch</a></h3>
+<p>
+同じようなことを考えている人がいるなあ。でも
+</p>
+<pre>
+./configure --prefix=/foo
+make
+make PREFIX=/bar install
+</pre>
+<p>
+じゃ、$LOAD_PATHのprefixは/usr/localなので駄目なのだよ。
+config.hができた時点で決まってしまうので。
+</p>
+
+<p>
+DOSISH(Cygwinを含む)な環境ではRuby DLLやruby.exe相対になるから問題ないんだけど。
+というより、すべての環境でそうなっていれば自由に移動できていいんだよね。
+でも、一般的に自分自身がどこにあるのかはわからない。
+argv[0]にはフルパスで入ってるわけでもないし、PATHから探し出すのもねえ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2003/04/04 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/04/05 start -->
+<h2><a name="20030405" href="200304a.html#20030405">2003-04-05 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="200304051" title="200304051" href="200304a.html#200304051">■</a> 
+<a href="http://packages.debian.org/posh">[Linux] posh 0.2.27</a></h3>
+<pre>
+ posh is a stripped-down version of pdksh with several improvements
+ that aims for compliance with Debian's /bin/sh policy, and few
+ extra features. Currently, Debian's policy is to adhere to POSIX
+ with the exception of supporting 'echo -n', so posh strives toward
+ compliance with SUSv3 (with the exception of 'echo -n').
+</pre>
+<p>
+早速
+<a href="http://www.fefe.de/dietlibc/">diet libc</a>で試すとget_current_dir_nameとcanonicalize_file_nameがundefinedになる。
+Debianだしglibc固有の関数だろうか？info libcしてみると見つかった。
+そのようだ。get_current_dir_nameはだいたいgetcwd(NULL, 0)と同じ。
+違いは環境変数PWDを見ることぐらい。
+canonicalize_file_name(x)はrealpath(x, NULL)と同じらしい。ということで、
+</p>
+<pre>
+#ifdef __dietlibc__
+#define get_current_dir_name() getcwd(NULL, 0)
+#define canonicalize_file_name(x) realpath(x, NULL)
+#endif
+</pre>
+<p>
+を追加したらmakeは通った。でもmake checkするといっぱいFAILする。
+</p>
+<pre>
+Total failed: 159 (155 unexpected)
+Total passed: 2
+</pre>
+<p>
+2個だけかよ!直接verboseモードでテストスクリプトを動かしてみると
+</p>
+<pre>
+unexpected exit status 11 (signal 11), expected 0
+</pre>
+<p>
+と出てる。どうもSEGVってるようだ。でも手でその通りに入力するとちゃんと動くんだよねえ。困ったね。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200304052" title="200304052" href="200304a.html#200304052">■</a> 
+[Linux] tempfile</h3>
+<p>
+例のtempfile.rbではなくtempfile(1)のほう。
+poshのmake checkで呼ばれるがPlamoにはない。
+調べてみると
+<a href="http://packages.debian.org/stable/base/debianutils.html">debianutils</a>にある。道理でないわけだよ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2003/04/05 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/04/06 start -->
+<h2><a name="20030406" href="200304a.html#20030406">2003-04-06 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="200304061" title="200304061" href="200304a.html#200304061">■</a> 
+<a href="200304a.html#200304051">[Linux] uClibc版posh</a></h3>
+<p>
+<a href="http://www.fefe.de/dietlibc/">diet libc</a>はとりあえず置いといて、
+<a href="http://www.uclibc.org/">uClibc</a>で再挑戦。こっちにはget_current_dir_nameはあるのでsh.hは
+</p>
+<pre>
+#ifdef __dietlibc__
+#define get_current_dir_name() getcwd(NULL, 0)
+#endif
+
+#if defined __dietlibc__ || defined __UCLIBC__
+#define canonicalize_file_name(x) realpath(x, NULL)
+#endif
+</pre>
+<p>
+のように分割。make checkもかなり順調。
+</p>
+<pre>
+Total failed: 5 (1 unexpected)
+Total passed: 156
+</pre>
+<p>
+unexpectedは1個だけだ。-vつきで実行してみると、これもSEGVしてる。
+実際はcd -P /で起きてる。これは手動でも再現した。あ、realpathの中だ。
+ということはあのdefineじゃまずいわけだね。
+uClibcのrealpathのソースを見ると2番目の引数にチェックなしてstrcpyしてる。
+というわけで、
+</p>
+<pre>
+#if defined __dietlibc__ || defined __UCLIBC__
+#include &lt;sys/param.h&gt;
+#define canonicalize_file_name(x) realpath(x, malloc(MAXPATHLEN))
+#endif
+</pre>
+<p>
+に変更。これでmake checkも通った。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200304062" title="200304062" href="200304a.html#200304062">■</a> 
+[Linux] /bin/shをposhで置き換え</h3>
+<pre>
+% sudo cp posh /bin/posh
+% sudo ln -sf /bin/posh /bin/sh
+</pre>
+<p>
+として、posh自身をconfigureし直してみよう。
+</p>
+<pre>
+checking for a BSD-compatible install... /usr/bin/install -c
+checking whether build environment is sane... yes
+Memory fault 
+configure: WARNING: `missing' script is too old or missing
+</pre>
+<p>
+いきなりなんか変だ。missingが動いてない。
+</p>
+<pre>
+% ./missing --run true 
+zsh: segmentation fault  ./missing --run true
+</pre>
+<p>
+これもSEGVか。というかshiftがSEGVだな。
+</p>
+<pre>
+% ./posh -c shift
+zsh: segmentation fault  ./posh -c shift
+</pre>
+<p>
+uCLibcだからというわけでなく、glibcでも同じだ。
+うーむ。こんな基本的なところにバグがあるのか？
+</p>
+<pre>
+% cd tests
+% grep shift *.t
+</pre>
+<p>
+とshiftのテストはない。
+gdbで調べてみるとsrc/builtin.cのgetoptを呼んでいるところで起きてることがわかった。
+shiftに対する引数の処理なんだけど、
+</p>
+<pre>
+while ((optc = getopt(argc, argv, NULL)) != -1) {
+    switch (optc) {
+        default:
+            bi_errorf(&quot;shiftza&quot;);
+    }
+}
+</pre>
+<p>
+このNULLがかなり意味不明だ。そこにNULLを渡しちゃまずいでしょ、やっぱ。
+NULLの変わりに&quot;&quot;を渡せばいけそうだ。それにしてもshiftzaってなに？
+</p>
+
+<p>
+CC='/usr/i386-linux-uclibc/usr/bin/gcc -static'で作り直して、
+/bin/poshへコピー。configureも問題ないようだ。
+ちゃんとbootするかどうかは明日の楽しみにとっておこう。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200304063" title="200304063" href="200304a.html#200304063">■</a> 
+<a href="http://www.gnu.org/software/coreutils/">[GNU] Coreutils 5.0</a></h3>
+<p>
+早速configureを実行してみると
+</p>
+<pre>
+checking build system type... config.guess: \
+  cannot create a temporary directory in /tmp
+</pre>
+<p>
+と謎のエラーに。まずいとしたらposhぐらいしかない。
+</p>
+<pre>
+% cd /bin
+% sudo ln -sf bash sh
+</pre>
+<p>
+してみたら通った。
+</p>
+<pre>
+% posh config/config.guess   
+config.guess: cannot create a temporary directory in /tmp
+% ash config/config.guess
+config.guess: cannot create a temporary directory in /tmp
+</pre>
+<p>
+どうも、config.guessでは互換性のない機能を使ってるようだ。
+というより
+</p>
+<pre>
+% mktemp -d -q /tmp/cgXXXXXX
+error: -d option is not supported on Linux
+</pre>
+<p>
+がいけないようだ。debianutilsにあるので、これを使おう。
+</p>
+<pre>
+% posh config/config.guess
+i586-pc-linux-gnu
+% ash config/config.guess
+i586-pc-linux-gnu
+</pre>
+<p>
+okだ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2003/04/06 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/04/07 start -->
+<h2><a name="20030407" href="200304a.html#20030407">2003-04-07 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="200304071" title="200304071" href="200304a.html#200304071">■</a> 
+[autoconf] config.subのmktempと$RANDOMとRuby 1.8</h3>
+<p>
+<a href="200304a.html#200304063">昨日の件</a>を抜き出して整形してみる。
+</p>
+<pre>
+{
+  tmp=`(umask 077 &amp;&amp; mktemp -d -q &quot;$TMPDIR/cgXXXXXX&quot;) 2&gt;/dev/null` &amp;&amp;
+    test -n &quot;$tmp&quot; &amp;&amp; test -d &quot;$tmp&quot;
+} ||
+{
+  test -n &quot;$RANDOM&quot; &amp;&amp; tmp=$TMPDIR/cg$$-$RANDOM &amp;&amp;
+    (umask 077 &amp;&amp; mkdir $tmp)
+} ||
+{
+  echo &quot;$me: cannot create a temporary directory in $TMPDIR&quot; &gt;&amp;2
+  exit 1
+}
+</pre>
+<p>
+これは要するにmktempも$RANDOMも使えない環境ではconfig.guessは失敗することを意味する。
+ということは先日アップデートされたRubyのconfig.guessでも全く同じわけで、
+Ruby 1.8 preview3を出したほうがいいんじゃないかと思ってしまう。
+</p>
+
+<p>
+bashやzshでは$RANDAMを参照するたびに乱数を生成する。
+</p>
+<pre>
+% echo $RANDOM,$RANDOM,$RANDOM
+27074,15634,19319
+</pre>
+<p>
+poshやashにはそんな機能はない。
+</p>
+<!-- section end -->
+</div>
+<!-- 2003/04/07 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/04/08 start -->
+<h2><a name="20030408" href="200304a.html#20030408">2003-04-08 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="200304081" title="200304081" href="200304a.html#200304081">■</a> 
+<a href="http://raa.ruby-lang.org/project/xml-rpc/">[Ruby] XML-RPC 1.7.16</a></h3>
+<p>
+更新。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200304082" title="200304082" href="200304a.html#200304082">■</a> 
+<a href="http://www.gwdg.de/~mrickma/ming/">[MinGW] readline-4.0-mingw32</a></h3>
+<p>
+これを元にreadline 4.3対応をしてみよう。
+</p>
+<!-- section end -->
+</div>
+<!-- 2003/04/08 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/04/09 start -->
+<h2><a name="20030409" href="200304a.html#20030409">2003-04-09 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="200304091" title="200304091" href="200304a.html#200304091">■</a> 
+<a href="http://sourceforge.net/project/showfiles.php?group_id=42128">[Ruby] ri 1.8a</a></h3>
+<p>
+1.8用のriが公開された。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200304092" title="200304092" href="200304a.html#200304092">■</a> 
+[MinGW][Win32] readline 4.3 for win32</h3>
+<p>
+うささんの協力でRubyのmswin32版でもreadline.soが使えるところまではできた。
+これから、移植したライブラリを
+<a href="../win32/">ここ</a>に集めようと思う。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200304093" title="200304093" href="200304a.html#200304093">■</a> 
+<a href="http://sheepman.parfait.ne.jp/20030406.html#p01">[ネット] Namazuをインストール</a></h3>
+<p>
+サイズが2MBって、単にstripしてないだけのような。
+たぶん500KB以内に収まる気がします。
+</p>
+<!-- section end -->
+</div>
+<!-- 2003/04/09 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/04/10 start -->
+<h2><a name="20030410" href="200304a.html#20030410">2003-04-10 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="200304101" title="200304101" href="200304a.html#200304101">■</a> 
+<a href="http://jarp.jin.gr.jp/win32/">[MinGW][Win32] readline 4.3 for win32</a></h3>
+<p>
+kbhit()をやめてWaitForSingleObject()だけを使えば、
+busy waitはなくなった。なんかとても変なループだったなあ。
+</p>
+
+<p>
+次はカーソルキー対応だな。
+ってunsigned charじゃ0x1f8は表現できないよ。解決。
+</p>
+
+<p>
+うささんのVC++対応をマージ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200304102" title="200304102" href="200304a.html#200304102">■</a> 
+[Virus] Internet Security Patch</h3>
+<p>
+新手のvirusか？Fromがいまいちなので、騙されないと思うんだけど。
+</p>
+<!-- section end -->
+</div>
+<!-- 2003/04/10 end -->
+
+<hr>
+<div>
+<a href="200303c.html">&lt;Prev(,)</a> | 
+<a href="200304b.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

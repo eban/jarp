@@ -1,0 +1,579 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2004-12-b</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="200412a.html">
+<link rel="next" href="200412c.html">
+
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2004年12月中旬〜</p>
+<hr>
+<div>
+<a href="200412a.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="200412c.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2004/12/11 start -->
+<h2><a name="20041211" href="200412b.html#20041211">2004-12-11 (Sat)</a></h2>
+<!-- 2004-12-12 01:26:38 -->
+
+<div class="entry1">
+<h3><a name="200412111" title="200412111" href="200412b.html#200412111">■</a> 
+[Linux] Fedora Core 3</h3>
+<p>
+DQ8の裏でFedora Core 3をインストール。
+GNOME Terminalを使っていて、C-\が効かなくて困った。
+いろいろ試しまくったらなぜかC-4だった。
+まあいいか。
+</p>
+<!-- section end -->
+</div>
+<!-- 2004/12/11 end -->
+
+
+
+<hr class="hide">
+<!-- 2004/12/12 start -->
+<h2><a name="20041212" href="200412b.html#20041212">2004-12-12 (Sun)</a></h2>
+<!-- 2004-12-13 02:23:55 -->
+
+<div class="entry1">
+<h3><a name="200412121" title="200412121" href="200412b.html#200412121">■</a> 
+<a href="http://www.openntpd.org/">[Soft] OpenNTPd 1.6.1p1</a></h3>
+<p>
+Changes:
+</p><blockquote><p>
+A new &quot;-s&quot; option was added to step the clock on startup rather
+than slewing. The stratum, precision, and refid are now set correctly in
+replies (the latter means ntptrace will now work). The program is more
+robust and less noisy in the case of some network error conditions. The IP
+ToS low-delay bit is now set on IPv4 packets. HP-UX and Solaris &lt; 7 are now
+supported platforms. There were also other minor bugfixes and
+improvements.
+</p></blockquote>
+
+<p>
+Link: 
+<a href="http://www.openntpd.org/">http://www.openntpd.org/</a>
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200412122" title="200412122" href="200412b.html#200412122">■</a> 
+<a href="http://cvsfs.sf.net/">[Soft] cvsfs fuse 0.2</a></h3>
+<p>
+それにしても、なんでもfile systemにするもんだねえ。
+Linuxの
+<a href="http://fuse.sf.net/">FUSE</a>に対応したらしい。
+</p>
+
+<p>
+About:
+</p><blockquote><p>
+cvsfs is an attempt to let a user mount a CVS project like any file
+system. It allows you to navigate and browse through a project tree. No
+preparations are required on the CVS server side.
+</p></blockquote>
+
+<p>
+Link: 
+<a href="http://cvsfs.sf.net/">http://cvsfs.sf.net/</a>
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200412123" title="200412123" href="200412b.html#200412123">■</a> 
+[VMware] Linux 2.4でsuspendしたイメージをLinux 2.6で再開</h3>
+<p>
+何も考えずに旧ホームディレクトリをコピーしたら、VMwareのvirtual diskもコピーされたわけで、そういえばsuspendしたままなんだけど、そのままpower onしたら動くのか？
+とりあえずVMwareをvmware-config.plでインストール。これはあっさり成功。
+vmwareの実行も問題なし。
+ただしタブにゲストOSが出てこない。
+FileのOpen Virtual Machineで*.vmxをopenするとscreenshotがちゃんと出てきた。
+これは期待できる。
+power onすると、なんか警告してくるがちゃんと立ち上がった。
+すばらしい。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200412124" title="200412124" href="200412b.html#200412124">■</a> 
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-talk/123401">[Ruby] 実行ファイルからの相対位置</a></h3>
+<p>
+DOSishな環境ではどこにでもインストールできるように、DLLまたは実行ファイルからの相対位置でlibrary pathが決まるようになっている。
+だから、make時のminirubyからの相対位置だとubygems.rbは見つからない。
+一方その他のplatformではprefixからなので、
+環境変数RUBYOPTにrubygemsを設定しても無事に見つかる。
+</p>
+
+<p>
+1click installerはRUBYOPTを設定しちゃうからなあ。
+makeのときはRUBYOPTをunsetしたいけど、移植性のある方法が思いつかない。
+なにしろminirubyが使えないし。
+RUBYOPTを見てtopdirにサイズ0のubygems.rbを作るればいいか。
+というか面倒だから最初から用意しとくとか。
+</p>
+
+<p>
+あ、minirubyを-Tで起動すればいいのか。って、そのほうがもっと面倒だよ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2004/12/12 end -->
+
+
+
+<hr class="hide">
+<!-- 2004/12/13 start -->
+<h2><a name="20041213" href="200412b.html#20041213">2004-12-13 (Mon)</a></h2>
+<!-- 2004-12-14 01:34:03 -->
+
+<div class="entry1">
+<h3><a name="200412131" title="200412131" href="200412b.html#200412131">■</a> 
+<a href="http://www.ku3g.org/negi/diary/?20041205#200412051">[Firefox] Emacs key binding</a></h3>
+<p>
+Fedora Core 3でGNOME 2.8を使ってると
+<a href="200409b.html#200409171">~/.gtkrc-2.0での設定</a>が無視されて困った状態になった。
+そういえばどこかで見た記憶があるなあと探したら、
+<a href="http://www.ku3g.org/negi/diary/?20041205#200412051">ねぎさんのとこ</a>だったようで、
+参考にして無事解決。
+もうしょうがないから徹底的に
+<a href="http://www.mozilla-japan.org/unix/customizing.html#keys">カスタマイズ</a>
+するかーと思っていたところだった。
+</p>
+
+<p>
+探してみると
+<a href="http://kb.mozillazine.org/index.phtml?title=Emacs_Keybindings_(Firefox)">mozillaZine</a>
+にまとまった情報があった。
+platformHTMLBindings.xmlでの解決方法もあるので、Windowsでもいけるか。
+まあ、そっちは
+<a href="http://www.cam.hi-ho.ne.jp/oishi/">XKeymacs</a>があるからいいんだけど。
+</p>
+<!-- section end -->
+</div>
+<!-- 2004/12/13 end -->
+
+
+
+<hr class="hide">
+<!-- 2004/12/14 start -->
+<h2><a name="20041214" href="200412b.html#20041214">2004-12-14 (Tue)</a></h2>
+<!-- 2004-12-15 02:20:15 -->
+
+<div class="entry1">
+<h3><a name="200412141" title="200412141" href="200412b.html#200412141">■</a> 
+[VMware] VMwareとudev</h3>
+<p>
+VMwareを立ち上げるとエラーになってしまうことに気づいた。
+</p><blockquote><p>
+VMware Workstation is installed, but it has not been (correctly)
+configured for your running kernel.  To (re-)configure it, your system
+administrator must find and run &quot;vmware-config.pl&quot;.  For more
+information, please read the VMware Workstation documentation.
+</p></blockquote><p>
+なぜかもう一度configしなおせと言われてしまう。
+/var/log/messagesを見てみると
+</p>
+<pre>
+VMware[init]: /dev/vmnet8: No such file or directory
+</pre>
+<p>
+ということらしい。
+なるほどFedora Core 3はudevだからconfigしたときに作っても、
+rebootしたらなくなっちゃうんだね。
+というわけで、ぐぐったらまた
+<a href="http://www.ku3g.org/negi/diary/?20040430#200404301S2">ねぎさんとこ</a>にヒット。
+</p>
+<pre>
+% cat /etc/udev/links.conf
+M vmmon         c 10 165
+M vmnet0        c 119 0
+M vmnet1        c 119 1
+M vmnet2        c 119 2
+M vmnet3        c 119 3
+M vmnet4        c 119 4
+M vmnet5        c 119 5
+M vmnet6        c 119 6
+M vmnet7        c 119 7
+M vmnet8        c 119 8
+M vmnet9        c 119 9
+</pre>
+<p>
+で無事解決。とはならず、なぜか無視されてる様子。
+udev自体の仕様が変わったのか？
+</p>
+
+<p>
+さらに検索してみるとRedHatのBugzillaで
+<a href="https://bugzilla.redhat.com/bugzilla/show_bug.cgi?id=134641#c6">quick fix</a>を発見。
+</p>
+<pre>
+A quick fix is to run the vmware-config.pl to create the appropriate
+/dev/vm* entries and then copy these to /etc/udev/devices with:
+
+# cp -rp /dev/vm* /etc/udev/devices/
+
+vmware finds the devices correctly on subsequent reboots.  Not a long
+term fix but eliminates the need to rerun vmware-config.pl every time
+the machine is rebooted.
+</pre>
+<p>
+なるほど。
+</p>
+<pre>
+% sudo vmware-config.pl
+% sudo cp -a /dev/vm* /etc/udev/devices
+</pre>
+<p>
+でreboot。無事解決。
+</p>
+<!-- section end -->
+</div>
+<!-- 2004/12/14 end -->
+
+
+
+<hr class="hide">
+<!-- 2004/12/15 start -->
+<h2><a name="20041215" href="200412b.html#20041215">2004-12-15 (Wed)</a></h2>
+<!-- 2004-12-16 15:45:39 -->
+
+<div class="entry1">
+<h3><a name="200412151" title="200412151" href="200412b.html#200412151">■</a> 
+[Firefox] タブを中クリック</h3>
+<p>
+UNIX USER誌を立ち読みしてたら、about:configのmiddlemouse.contentLoadURLについて書いてあった。
+これがタブの中クリックの挙動を決めるパラメータらしい。
+trueでpaste &amp; go、falseでダブを閉じるという意味。
+で、なぜかWindowsではfalse、Linuxではtrueが初期値になっている。
+全然違うものを真偽値で設定するというのも無理があるが、まあ、それは置いといて、初期値ぐらいは揃えて欲しい。
+両方使う人を混乱させるだけだ。
+</p>
+
+<p>
+違いといえば、設定だかオプションだかPreferencesだか忘れたけど、
+これの位置もEditの下だったりToolsの下だったりで迷う。
+あ、これってWindowsはIEに合わせているのか。
+</p>
+<!-- section end -->
+</div>
+<!-- 2004/12/15 end -->
+
+
+
+<hr class="hide">
+<!-- 2004/12/16 start -->
+<h2><a name="20041216" href="200412b.html#20041216">2004-12-16 (Thu)</a></h2>
+<!-- 2004-12-17 02:16:05 -->
+
+<div class="entry1">
+<h3><a name="200412161" title="200412161" href="200412b.html#200412161">■</a> 
+[FC3] crontab</h3>
+<p>
+cronでfetchmailのログを残そうと
+</p>
+<pre>
+*/10 * * * * PATH=/usr/local/bin:$PATH fetchmail -a &gt;&gt;$HOME/.fetchmail/$(date +&quot;%Y-%m&quot;.log) 2&gt;&amp;1
+</pre>
+<p>
+としてみたら、エラーになってしまった。どうも%が嫌いみたいだ。
+man 5 crontabしてみると
+</p><blockquote><p>
+コマンド中にパーセント記号 (%) がバックスラッシュ (\)
+によってエスケープされずに置かれていると、
+改行文字に置き換えられ、
+最初に現れた % 以降の全てのデータは標準入力としてコマンドに送られる。
+</p></blockquote><p>
+ということらしい。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200412162" title="200412162" href="200412b.html#200412162">■</a> 
+[DQ8] 地図</h3>
+<p>
+薬草園の洞窟で最後の宝箱を開けると地図が出てきた。力が抜けた。
+地図なしはつらかったよ。レベルがいつのまにか2段階アップしてるし。
+てゆか入口の近くにあるんだから、すぐに取れよ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2004/12/16 end -->
+
+
+
+<hr class="hide">
+<!-- 2004/12/17 start -->
+<h2><a name="20041217" href="200412b.html#20041217">2004-12-17 (Fri)</a></h2>
+<!-- 2004-12-18 01:49:12 -->
+
+<div class="entry1">
+<h3><a name="200412171" title="200412171" href="200412b.html#200412171">■</a> 
+<a href="http://spamassassin.apache.org/">[Soft] SpamAssassin 3.0.2</a></h3>
+<p>
+Changes:
+</p><blockquote><p>
+This release detects legitimate SMTP AUTH submission, to avoid
+false positives on Dynablock-style rules. The URIDNSBL plugin has been
+fixed to honor the uridnsbl_max_domains config option. Various
+documentation and rule fixes. The ability to deal with 'rewrite_header
+Subject' markup when no Subject header exists. 'make test' failure on
+Solaris has been fixed.
+</p></blockquote>
+<!-- section end -->
+</div>
+<!-- 2004/12/17 end -->
+
+
+
+<hr class="hide">
+<!-- 2004/12/18 start -->
+<h2><a name="20041218" href="200412b.html#20041218">2004-12-18 (Sat)</a></h2>
+<!-- 2004-12-20 01:38:07 -->
+
+<div class="entry1">
+<h3><a name="200412181" title="200412181" href="200412b.html#200412181">■</a> 
+[Linux] ~/.viminfo</h3>
+<p>
+最近保存時のカーソルへ飛ぶ設定が機能してないことに気づいた。
+FC3にしてからか？情報がちゃんと保存されているかどうか調べてみると、
+なぜか~/.viminfのownerがrootになっている。しかも0600だから読めない。
+よって飛べない。suかなにかの使い方を間違えたか？
+</p>
+
+<p>
+Link: 
+<a href="200303c.html#200303281">vimrcの設定</a>
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200412182" title="200412182" href="200412b.html#200412182">■</a> 
+[DQ8] 後半戦</h3>
+<p>
+やっとカジノでグリンガムのムチを手に入れた。
+ハッスルダンスも覚えたし、あとは先に進めるだけだ(だめじゃん)。
+</p>
+<!-- section end -->
+</div>
+<!-- 2004/12/18 end -->
+
+
+
+<hr class="hide">
+<!-- 2004/12/19 start -->
+<h2><a name="20041219" href="200412b.html#20041219">2004-12-19 (Sun)</a></h2>
+<!-- 2004-12-20 01:46:36 -->
+
+<div class="entry1">
+<h3><a name="200412191" title="200412191" href="200412b.html#200412191">■</a> 
+[make] subdirでのmake</h3>
+<p>
+Recursive Make Considered Harmfulという話はこの際置いとくとして、Makefileの中でさらにmakeをfor文で呼ぶのはよくある。
+だいたい下のような感じが多い。
+</p>
+<pre>
+SUBDIRS = foo bar
+all: ; for dir in $(SUBDIRS); do \
+          (cd $$dir; $(MAKE) all); \
+       done
+</pre>
+<p>
+installやcleanを別に用意するのが面倒なときは
+</p>
+<pre>
+SUBDIRS = foo bar
+all install clean: ; for dir in $(SUBDIRS); do \
+          (cd $$dir; $(MAKE) $@); \
+       done
+</pre>
+<p>
+のようにターゲットに並べてしまい$@を使うのもよく見かける。
+まあ、こうしてしまうとmake all installと打っても、
+make installと同じ意味になるので注意が必要なんだけど。
+</p>
+
+<p>
+さて本題である。この方法で困るのはfooでエラーが起こっても、
+続いてbarへcdしてmake実行し続けてしまうことだ。
+2つぐらいなら気づくかもしれないが、
+SUBDIRS数が増えた場合は途中でエラーが起こっても気づきにくい。
+解決するにはfor文自体を抜けられればいいわけで、
+</p>
+<pre>
+(cd $$dir; $(MAKE) all) || exit 1; \
+</pre>
+<p>
+とすればok。でもそれよりは
+</p>
+<pre>
+set -e; for dir in ...
+</pre>
+<p>
+とすればいいことに今日気づいた。
+これならどこでエラーが起こってもそこで終了する。
+</p>
+
+<p>
+と思ったら、()の中でエラーが起こった場合はだめみたい。
+なかなか難しい。かと言って、
+</p>
+<pre>
+cd $$dir; $(MAKE) all; cd ..; \
+</pre>
+<p>
+というのもなあ。最近のmakeなら
+</p>
+<pre>
+$(MAKE) -C $$dir all; \
+</pre>
+<p>
+でいいか。
+</p>
+
+<p>
+Link: 
+<a href="http://www.pcug.org.au/~millerp/rmch/recu-make-cons-harm.html">Recursive Make Considered Harmful</a>
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200412192" title="200412192" href="200412b.html#200412192">■</a> 
+[DQ8] 小ネタ</h3>
+<p>
+メタルキングにまじん斬りが決まった。30000ポイント。
+トロデ王の姿だと暇になると耳掻きを始めたり手鏡を見たりする。
+だいまじんは片足で立ってるのが疲れるのか、たまに足を下ろす。
+なんだかんだで100コインスロット2時間で777が4回出てる。かなりの確率だ。
+メダル王女の城に銀行があることに気づいた。
+</p>
+<!-- section end -->
+</div>
+<!-- 2004/12/19 end -->
+
+
+
+<hr class="hide">
+<!-- 2004/12/20 start -->
+<h2><a name="20041220" href="200412b.html#20041220">2004-12-20 (Mon)</a></h2>
+<!-- 2004-12-21 02:47:50 -->
+
+<div class="entry1">
+<h3><a name="200412201" title="200412201" href="200412b.html#200412201">■</a> 
+<a href="http://www.impsec.org/email-tools/procmail-security.html">[Soft] Email Security through Procmail 1.148</a></h3>
+<p>
+About:
+</p><blockquote><p>
+Email Security through Procmail (the Procmail Sanitizer) provides
+methods to sanitize email, removing obvious exploit attempts and disabling
+the channels through which exploits are delivered. Facilities for detecting
+and blocking Trojan Horse exploits and worms are also provided.
+</p></blockquote>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200412202" title="200412202" href="200412b.html#200412202">■</a> 
+<a href="http://p7zip.sf.net/">[Soft] p7zip 4.13</a></h3>
+<p>
+About:
+</p><blockquote><p>
+p7zip is a port of 7za.exe for Unix.
+7za.exe is the command line version of
+7-zip, is a file archiver with a high
+compression ratio.
+</p></blockquote><p>
+というわけで、p7zip, bzip2(-9), gzip(-9), zip(-9)で比較。
+preview4で試そうと思ったが、まだ出てない。
+</p>
+<pre>
+% LANG=C du ruby-1.8.2-preview3.tar*
+16396   ruby-1.8.2-preview3.tar
+2652    ruby-1.8.2-preview3.tar.7z
+2964    ruby-1.8.2-preview3.tar.bz2
+3476    ruby-1.8.2-preview3.tar.gz
+3476    ruby-1.8.2-preview3.tar.zip
+</pre>
+<p>
+さすがにすごい圧縮率だ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2004/12/20 end -->
+
+<hr>
+<div>
+<a href="200412a.html">&lt;Prev(,)</a> | 
+<a href="200412c.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

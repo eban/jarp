@@ -1,0 +1,671 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2001-6-a</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="200105c.html">
+<link rel="next" href="200106b.html">
+
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2001年6月上旬〜</p>
+<hr>
+<div>
+<a href="200105c.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="200106b.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2001/06/01 start -->
+<h2><a name="20010601" href="200106a.html#20010601">2001-06-01 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="200106011" title="200106011" href="200106a.html#200106011">■</a> 
+<a href="http://www.ruby-talk.com/16131">www.ruby-talk.com</a></h3>
+<p>
+http://www.ruby-talk.com/12345てな具合にアクセスできるらしい。
+bladeのproxyだ。さっそくリンクしてみる。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200106012" title="200106012" href="200106a.html#200106012">■</a> 
+ruby 1.6.4 (2001-05-02) [i586-linux]</h3>
+<p>
+なにげなくruby -vしてみると
+</p>
+<pre>
+ruby 1.6.4 (2001-05-02) [i586-linux]
+</pre>
+<p>
+と表示された。
+cygwin,mingw32,djgpp版は毎日のように作っているのに。
+医者の不養生みたいなもんか
+<a href="#20010601F1"><sup><small>*1</small></sup></a>。
+バージョンが変わったらクロスのほうにも
+<a href="200104b.html#200104122S1">影響が</a>
+出るんだから、Linux版もこまめに更新しなきゃ。
+</p>
+
+<hr align="left" width="40%">
+<div>
+<a name="20010601F1" href="200106a.html#20010601F1"><small>*1</small></a>:
+いや違う。
+</div>
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200106013" title="200106013" href="200106a.html#200106013">■</a> 
+<a href="http://www9.xdsl.ne.jp/~aamine/ja/diary/latest.html#d29_7">SKK</a></h3>
+<p>
+分けるというかSKK関係は~/.skkに書けば勝手にロードされます。
+おいらのはこんな感じ。
+</p>
+<pre>
+(setq skk-server-host &quot;localhost&quot;)
+(setq skk-auto-okuri-process t)
+(setq skk-egg-like-newline t)
+(setq skk-rom-kana-rule-list '((&quot;:&quot; nil &quot;:&quot;)
+                             (&quot;@&quot; nil &quot;＠&quot;)
+                             (&quot;!&quot; nil &quot;！&quot;)
+                             (&quot;#&quot; nil &quot;＃&quot;)
+                             (&quot;wh&quot; nil &quot;-- \nわたなべひろふみ\n&quot;)))
+</pre>
+<p>
+こんなとこにsignatureを入れるやつはあまりいないと思うが。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200106014" title="200106014" href="200106a.html#200106014">■</a> 
+vim 6.0ah</h3>
+<p>
+着実に増えてる。巷の噂ではvim 5.8 user releaseとか。
+そっちも進んでいたんだね。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2001/06/01 end -->
+
+
+
+<hr class="hide">
+<!-- 2001/06/02 start -->
+<h2><a name="20010602" href="200106a.html#20010602">2001-06-02 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="200106021" title="200106021" href="200106a.html#200106021">■</a> 
+gd 2.0.1</h3>
+<p>
+これだと
+</p>
+<pre>
+fontpath = &quot;c:/windows/FONTS/times.ttf&quot;
+</pre>
+<p>
+じゃ駄目だということが判明。単純に絶対パスかどうかの判断が
+</p>
+<pre>
+*name == '/'
+</pre>
+<p>
+だからなんだけど。やっぱgd 2.0.1に手を入れるべきか？
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2001/06/02 end -->
+
+
+
+<hr class="hide">
+<!-- 2001/06/03 start -->
+<h2><a name="20010603" href="200106a.html#20010603">2001-06-03 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="200106031" title="200106031" href="200106a.html#200106031">■</a> 
+ruby-talk ML</h3>
+<p>
+ruby-talk MLがすごい量だが、じゃどのくらいかというと
+</p>
+<pre>
+   413: ruby-talk.0008
+   518: ruby-talk.0009
+   765: ruby-talk.0010
+   705: ruby-talk.0011
+  1742: ruby-talk.0012
+  1750: ruby-talk.0101
+  1608: ruby-talk.0102
+  1609: ruby-talk.0103
+  1048: ruby-talk.0104
+  1629: ruby-talk.0105
+</pre>
+<p>
+という感じ
+<a href="#20010603F1"><sup><small>*1</small></sup></a>。
+昨年の12月から爆発してる。
+月に1600を越えると1日平均50を越えてるわけで、
+そりゃ読んでらんないって。
+</p>
+
+<hr align="left" width="40%">
+<div>
+<a name="20010603F1" href="200106a.html#20010603F1"><small>*1</small></a>:
+spamとか消してるかもしれないので、ほんとはもうちょっと多いかも。
+</div>
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200106032" title="200106032" href="200106a.html#200106032">■</a> 
+[Cygwin] gcc -mwin32</h3>
+<p>
+
+<a href="200105c.html#200105281">-mwin32を使わないように変更した</a>
+翌日に「こんな内容のメールをもらったがどう思う？」
+とAndyさんからのメール。
+</p>
+<pre>
+Andy,
+
+This is not a big deal, but the question might come up.
+
+The &quot;rbconfig.rb&quot; file distributed with your Ruby 1.6.3-1 installer
+includes the gcc compiler flag &quot;-mwin32&quot;, which did not exist for
+some earlier versions of gcc-2.95.2. In particular, I'm using:
+
+        $ gcc --version
+        2.95.2-6
+
+and he doesn't recognize this flag.
+&lt;以下略&gt;
+</pre>
+<p>
+gccをバージョンアップしてもらうのが一番だが、
+偶然にもその前日-mwin32を使わないように変更したので、
+近々リリース予定の1.6.4ではokでしょうと返事を書いた。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200106033" title="200106033" href="200106a.html#200106033">■</a> 
+<a href="http://homepage2.nifty.com/zn/nnikki/200106.html#02_t1">Cygwin sshd</a></h3>
+<p>
+Win98とかだとパーミッションのチェックはしないので。<br>
+inetd経由だと反応も遅いし、わたしはWin98ではsshdを直接動かしてます。
+最近はinetdは動かしてないなあ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200106034" title="200106034" href="200106a.html#200106034">■</a> 
+<a href="http://www.ish.ic.kanagawa-it.ac.jp/~katsuwo/diary/?200106a&amp;to=200106013#200106013">dhcp pool address.</a></h3>
+<pre>
+subnet 192.168.0.0 netmask 255.255.255.0 {
+  range 192.168.0.16 192.168.0.31;
+  range 192.168.0.48 192.168.0.63;
+  option broadcast-address 192.168.0.255;
+  option routers 192.168.0.1;
+}
+</pre>
+<p>
+のようにrangeを並べればいいと思います。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200106035" title="200106035" href="200106a.html#200106035">■</a> 
+<a href="http://www.dm4lab.to/~usa/dekigoto/200106a.html#20010603_P1_2">gdのフォントパス</a></h3>
+<p>
+どうも1.8.4ではgdImageStringTTF()が呼ばれていたので、
+&quot;c:/windows/...&quot;でいけてたみたいです。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200106036" title="200106036" href="200106a.html#200106036">■</a> 
+Office XP</h3>
+<p>
+TVのCMを見てたら
+</p>
+<pre>
+今度のOfficeなら大丈夫。
+フリーズしてもデータが消えない。
+</pre>
+<p>
+だとぉ？なに言ってんだよ。
+</p>
+
+<p>
+<!-- * モーニング娘。 -->
+<!-- また増えます。 -->
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2001/06/03 end -->
+
+
+
+<hr class="hide">
+<!-- 2001/06/04 start -->
+<h2><a name="20010604" href="200106a.html#20010604">2001-06-04 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="200106041" title="200106041" href="200106a.html#200106041">■</a> 
+Ruby 1.6.4</h3>
+<p>
+というわけでRuby 1.6.4のリリースだ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200106042" title="200106042" href="200106a.html#200106042">■</a> 
+[Cygwin] Apache 1.3.20</h3>
+<p>
+どうも
+</p>
+<pre>
+% ./configure --enable-ruby=SHARED_CORE
+</pre>
+<p>
+で、libhttpd.dllが作られるようだ。<br>
+が、よくわからん。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200106043" title="200106043" href="200106a.html#200106043">■</a> 
+gtk 0.25</h3>
+<p>
+更新。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2001/06/04 end -->
+
+
+
+<hr class="hide">
+<!-- 2001/06/05 start -->
+<h2><a name="20010605" href="200106a.html#20010605">2001-06-05 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="200106051" title="200106051" href="200106a.html#200106051">■</a> 
+[Cygwin] Apache 1.3.20</h3>
+<p>
+axpsがちゃんと動くようにすればいけるわけだね。
+これってモジュールを作るとこまでやってくれるのか。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200106052" title="200106052" href="200106a.html#200106052">■</a> 
+eruby 0.9.3</h3>
+<pre>
+% make site-install
+eruby.exe -&gt; /c/usr/local/bin/eruby.exe
+chmod 0755 /c/usr/local/bin/eruby.exe
+liberuby.a -&gt; /c/usr/local/lib/liberuby.a
+chmod 0644 /c/usr/local/lib/liberuby.a
+../eruby.h -&gt; /usr/local/cygwin-local/include/eruby.h
+chmod 0644 /usr/local/cygwin-local/include/eruby.h
+eruby.so -&gt; /c/usr/local/lib/ruby/site_ruby/1.6/i386-cygwin/eruby.so
+chmod 0555 /c/usr/local/lib/ruby/site_ruby/1.6/i386-cygwin/eruby.so
+</pre>
+<p>
+あれ？includedirはそうなっちゃうのか。
+</p>
+<pre>
+% make site-install includedir=/c/usr/local/include
+</pre>
+<p>
+とするしかないな。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200106053" title="200106053" href="200106a.html#200106053">■</a> 
+vrswin010601, vruby010603</h3>
+<p>
+更新。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2001/06/05 end -->
+
+
+
+<hr class="hide">
+<!-- 2001/06/06 start -->
+<h2><a name="20010606" href="200106a.html#20010606">2001-06-06 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="200106061" title="200106061" href="200106a.html#200106061">■</a> 
+<a href="http://www.modruby.net/ml/archive/modruby-ja/200106.month/70.html">Re: mod_ruby 0.8.2 &amp; eruby 0.9.3</a></h3>
+<p>
+家で試したら全然問題ない。
+Apacheのバージョンは1.3.12だった。
+ひょっとしてバージョンの違いと思い会社と同じ1.3.20にしても問題ない。
+うーむ。わからん。
+</p>
+
+
+
+
+<!-- section end -->
+</div>
+<!-- 2001/06/06 end -->
+
+
+
+<hr class="hide">
+<!-- 2001/06/07 start -->
+<h2><a name="20010607" href="200106a.html#20010607">2001-06-07 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="200106071" title="200106071" href="200106a.html#200106071">■</a> 
+rdtool 0.6.10</h3>
+<pre>
+% time gzip -dc ruby-refm.rd.gz| rd2 -r rd/rd2man-lib -o rubyrefm
+/usr/local/bin/rd2: output to rubyrefm.1...
+gzip -dc ruby-refm.rd.gz  0.17s user 0.03s system 8% cpu 2.454 total
+rd2 -r rd/rd2man-lib -o rubyrefm  132.16s user 0.45s system 99% cpu 2:12.86 total
+</pre>
+<p>
+
+<a href="200105a.html#200105032">0.6.7</a>
+よりも速い。更新。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200106072" title="200106072" href="200106a.html#200106072">■</a> 
+gawk 3.1.0</h3>
+<p>
+いよいよ3.1.0だが、なんかすごいことになってる。
+/inetのnetworkingも入っちゃったし、BINMODEあるし、mktimeもある。
+</p>
+<pre>
+% gawk 'BEGIN{&quot;/inet/tcp/0/localhost/daytime&quot; |&amp; getline;print}'
+Thu Jun  7 23:32:45 2001
+</pre>
+<p>
+16進もこんな感じだ。
+</p>
+<pre>
+% gawk 'BEGIN{print strtonum(&quot;0x10&quot;)}'
+16
+</pre>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200106073" title="200106073" href="200106a.html#200106073">■</a> 
+eruby 0.9.4</h3>
+<pre>
+--includedir=/home/watanabe/dist/i386-cygwin/usr/local/include
+</pre>
+<p>
+しろってことか。更新。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2001/06/07 end -->
+
+
+
+<hr class="hide">
+<!-- 2001/06/08 start -->
+<h2><a name="20010608" href="200106a.html#20010608">2001-06-08 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="200106081" title="200106081" href="200106a.html#200106081">■</a> 
+[Cygwin] OpenSSH</h3>
+<p>
+setup.exeでupdateしたらOpenSSHがPermission deniedになる。
+-vつきで見てみるとDSAがどーのこーの言ってる。
+RSAで試さないんだっけ？
+よくわからんが、どっちもOpenSSHだしDSAの設定もしとくか。
+まずはkeyを作ろうってわけで、man ssh-keygenすると-dしろとある。
+これで~/.ssh/id_dsa{,.pub}ができあがる。
+id_dsa.pubをserver側の~/.ssh/authorized_keysへ追加すればいいんだろう
+と勝手に思い込む。本当はauthorized_keys2なんだけど。
+だってssh-dssで始まってればDSAだってわかる気がするし。
+でもよく考えるとssh1にとってはそんな後づけのことなんかわかるわけないし、
+エラーで異常終了してもおかしくない。
+だから分ける必要があるんだね。なっとく。<br>
+とりあえずsshdを動かす前にadministratorで
+</p>
+<pre>
+$ ssh-host-config
+</pre>
+<p>
+して、各種keyや設定ファイルを作っておく。<br>
+つづく。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200106082" title="200106082" href="200106a.html#200106082">■</a> 
+kernel panic</h3>
+<p>
+4ヶ月ほど動き続けてたんだけどなあ。そろそろ2.4に上げるか。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2001/06/08 end -->
+
+
+
+<hr class="hide">
+<!-- 2001/06/09 start -->
+<h2><a name="20010609" href="200106a.html#20010609">2001-06-09 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="200106091" title="200106091" href="200106a.html#200106091">■</a> 
+[Cygwin] OpenSSH, cygrunsrv</h3>
+<p>
+autoexはすでに入手困難なので、
+これからはcygrunsrvでサービスとしてsshdを動かすことにした。
+</p>
+<pre>
+$ cygrunsrv -I sshd -p /usr/sbin/sshd -a '-D' -u watanabe
+Enter password of user `.\watanabe':
+Reenter, please:
+</pre>
+<p>
+何も考えずに/usr/doc/Cygwin/cygrunsrv.READMEに書いてあった例の通りに実行。 
+これでサービスに登録される。あとは開始させればいいはずだが、
+</p>
+<pre>
+$ cygrunsrv --start sshd
+cygrunsrv: Error starting a service: QueryServiceStatus:  Win32 error 1062:
+そのサービスは開始されていません。
+</pre>
+<p>
+となってしまう。イベントビューアを見ると
+</p>
+<pre>
+ソース (sshd) 内のイベント ID (0) に関する説明が見つかりません。
+次の挿入文字列が含まれています:
+sshd : Win32 Process Id = 0x4C :
+Cygwin Process Id = 0x4C :
+starting service `sshd' failed: execv: 1, Not owner.
+</pre>
+<p>
+てな感じでNot onwerというのがちょっとナニだ。sshdのlogも見てみる。
+</p>
+<pre>
+$ cat /var/log/sshd.log
+Could not load host key: /etc/ssh_host_key
+Could not load host key: /etc/ssh_host_rsa_key
+Could not load host key: /etc/ssh_host_dsa_key
+Disabling protocol version 1. Could not load host key
+Disabling protocol version 2. Could not load host key
+sshd: no hostkeys available -- exiting.
+</pre>
+<p>
+Not ownerなのはこの3つなんだろうってわけで
+</p>
+<pre>
+$ cd /etc
+$ chown watanabe ssh_host_*key
+</pre>
+<p>
+する。
+</p>
+<pre>
+$ cygrunsrv --start sshd
+</pre>
+<p>
+これで文句も言われずに開始する。<br>
+やっとokだが、結局のところwatanabeしか使えないわけだな。うーむ。
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2001/06/09 end -->
+
+
+
+<hr class="hide">
+<!-- 2001/06/10 start -->
+<h2><a name="20010610" href="200106a.html#20010610">2001-06-10 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="200106101" title="200106101" href="200106a.html#200106101">■</a> 
+comp.lang.ruby and ruby-talk</h3>
+<p>
+確かに最近別々になってるようだ。
+gatewayが死んでる？
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200106102" title="200106102" href="200106a.html#200106102">■</a> 
+AC_CANONICAL_BUILD</h3>
+<p>
+やっぱAC_CANONICAL_SYSTEMを使うべきか。
+--target=i386-linuxするとprogram_prefixが
+i386-linuxになってしまうのがいやなんだけど、
+autoconf 2.50はどっちにしてもそうなってしまうし、
+--program-prefix=''してもらうか。
+</p>
+<pre>
+AC_DEFUN(RUBY_CANONICAL_BUILD,
+[AC_REQUIRE([AC_CANONICAL_BUILD])])
+
+AC_CANONICAL_HOST
+AC_CANONICAL_TARGET
+RUBY_CANONICAL_BUILD
+</pre>
+<p>
+というのはどうだろう？
+</p>
+
+
+<!-- section end -->
+</div>
+<!-- 2001/06/10 end -->
+
+<hr>
+<div>
+<a href="200105c.html">&lt;Prev(,)</a> | 
+<a href="200106b.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

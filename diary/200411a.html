@@ -1,0 +1,601 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2004-11-a</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="200410c.html">
+<link rel="next" href="200411b.html">
+
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2004年11月上旬〜</p>
+<hr>
+<div>
+<a href="200410c.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="200411b.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2004/11/01 start -->
+<h2><a name="20041101" href="200411a.html#20041101">2004-11-01 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="200411011" title="200411011" href="200411a.html#200411011">■</a> 
+10月のspam</h3>
+<p>
+5178通。とうとう5000通を越えたか。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200411012" title="200411012" href="200411a.html#200411012">■</a> 
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-dev/24669">[Ruby] MANIFESTの削除</a></h3>
+<p>
+というわけで、MANIFESTは削除された。
+cvs rmはちょっとどきどきした。
+でもrm直後はまたaddすればなかったことにできるようだ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200411013" title="200411013" href="200411a.html#200411013">■</a> 
+[CSS] margin</h3>
+<p>
+やっぱ余白がないと変だな。左右は4%にしよう。
+</p>
+<!-- section end -->
+</div>
+<!-- 2004/11/01 end -->
+
+
+
+<hr class="hide">
+<!-- 2004/11/02 start -->
+<h2><a name="20041102" href="200411a.html#20041102">2004-11-02 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="200411021" title="200411021" href="200411a.html#200411021">■</a> 
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-talk/118679">[Ruby] 某選挙</a></h3>
+<p>
+この時点でspamとして扱うべきだったか。てゆかOTつければなんでもありかよ。
+かなりうっとうしいことになってる。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200411022" title="200411022" href="200411a.html#200411022">■</a> 
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-dev/24679">[Ruby] IO.popen</a></h3>
+<p>
+たしかに以前はちゃんとそういう挙動だった。
+</p>
+<pre>
+% ruby1.9 -ve 'p IO.popen([[&quot;echo&quot;, &quot;aaa&quot;], &quot;bbb&quot;], &quot;r&quot;).read' 
+ruby 1.9.0 (2004-06-04) [i686-linux]
+&quot;bbb\n&quot;
+</pre>
+<p>
+さすが、
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-dev/22877">なかださん</a>だ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200411023" title="200411023" href="200411a.html#200411023">■</a> 
+<a href="http://www-6.ibm.com/jp/developerworks/java/041029/j_j-alj09084.html">[Java] dW : Java technology : alt.lang.jre: JRubyを好きになってください</a></h3>
+<p>
+タイトルが気持ち悪いんですけど。
+それよりもJRubyがまだ活動していたことに驚いた。
+CVSを見るとそれなりにコミットされてるようだ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2004/11/02 end -->
+
+
+
+<hr class="hide">
+<!-- 2004/11/03 start -->
+<h2><a name="20041103" href="200411a.html#20041103">2004-11-03 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="200411031" title="200411031" href="200411a.html#200411031">■</a> 
+<a href="http://freshmeat.net/projects/util-linux/">[Linux] util-linux 2.12.h</a></h3>
+<p>
+Changes:
+</p><blockquote class="cite"><p>
+Several bugfixes were made. ocfs and ocfs2 are now supported for
+mount. New fstab comment types were added. shutdown doesn't unmount
+various virtual filesystems. 
+</p></blockquote><p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200411032" title="200411032" href="200411a.html#200411032">■</a> 
+[Linux] uClibcでutil-linuxをmake</h3>
+<p>
+ふと思い立って挑戦。
+</p>
+<pre>
+% CC='/usr/i386-linux-uclibc/usr/bin/gcc -static' ./configure
+</pre>
+<p>
+したらzlibがないと言われた。まずはそっちか。zlib 1.2.1を
+</p>
+<pre>
+% CC='/usr/i386-linux-uclibc/usr/bin/gcc -static' ./configure \
+  -p /usr/i386-linux-uclibc
+% make all install
+</pre>
+<p>
+して再度configure実行。
+makeするとmount/fstab.cでsys_siglistがundeclaredになる。
+uClibcの&lt;signal.h&gt;を見るとコメントに
+</p>
+<pre>
+/* Names of the signals.  This variable exists only for compatibility.
+   Use `strsignal' instead (see &lt;string.h&gt;).  */
+</pre>
+<p>
+とあるので、それに従いsys_siglist[sig]をstrsignal(sig)に変更。
+</p>
+
+<p>
+makeを進めてみると今度はmountをリンクする際にいろんなものがundefinedに。
+RPC関係がごっそり存在しないようだ。
+ええと、uClibcの.configを確認してみると、ああ、忘れてた。
+uClibcを作り直してと思ったら、なぜかリンクされないなあ。
+</p>
+
+<p>
+むむ。どうもいつの間にかuClibcの使いかたを間違えてたようだ。
+
+<a href="http://www.uclibc.org/toolchains.html">toolchains</a>が必要らしい。
+これはまたいずれ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2004/11/03 end -->
+
+
+
+<hr class="hide">
+<!-- 2004/11/04 start -->
+<h2><a name="20041104" href="200411a.html#20041104">2004-11-04 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="200411041" title="200411041" href="200411a.html#200411041">■</a> 
+<a href="http://www.openntpd.org/">[Soft] OpenNTPD 3.6p1</a></h3>
+<p>
+p1というあたりがOpenSSH同様OpenBSD teamっぽい。
+</p><blockquote class="cite"><p>
+OpenNTPd is a portable implementation of the Network Time Protocol.
+It provides the ability to sync the local clock to remote NTP servers and
+can act as an NTP server itself, redistributing the local clock.
+</p></blockquote><p>
+
+<p>
+sudo make installすると
+</p>
+<pre>
+Please create a dedicated group for ntpd.
+This is system-dependant, possibly:
+# groupadd _ntp
+Please create a dedicated user for ntpd and ensure it can
+not be used to log in.  This is system-dependant, possibly:
+# useradd -g _ntp -s /sbin/nologin -d /var/empty -c 'OpenNTP daemon' _ntp
+</pre>
+<p>
+と言われる。でも
+</p>
+<pre>
+% sudo groupadd _ntp
+groupadd: _ntp is a not a valid group name
+</pre>
+<p>
+なんだよね。_は使えないようだ。直接/etc/groupをいじって追加。
+</p>
+<pre>
+% sudo useradd -g _ntp -s /bin/false -d /var/empty -c 'OpenNTP daemon' _ntp
+useradd: invalid user name `_ntp'
+</pre>
+<p>
+こっちもやっぱだめか。sudo vipwして追加。/etc/ntpd.confには
+</p>
+<pre>
+# use a random selection of 8 public stratum 2 servers
+# see http://twiki.ntp.org/bin/view/Servers/NTPPoolServers
+</pre>
+<p>
+と書いてあり、
+</p>
+<pre>
+servers pool.ntp.org
+</pre>
+<p>
+だけが活きている。ほぉ。random selectionなんてのがあるのか。
+起動してみると徐々に合っていく様子が見て取れる。
+</p>
+<pre>
+Nov  4 23:05:55 xxx ntpd[3810]: adjusting local clock by -0.588829s
+Nov  4 23:09:39 xxx ntpd[3810]: adjusting local clock by -0.574757s
+Nov  4 23:13:45 xxx ntpd[3810]: adjusting local clock by -0.480721s
+Nov  4 23:22:16 xxx ntpd[3810]: adjusting local clock by -0.330777s
+Nov  4 23:46:36 xxx ntpd[3810]: adjusting local clock by -0.119731s
+</pre>
+<p>
+こりゃ簡単でいいや。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200411042" title="200411042" href="200411a.html#200411042">■</a> 
+<a href="http://lftp.yar.ru/">[Soft] lftp 3.0.11</a></h3>
+<p>
+Changes:
+</p><blockquote class="cite"><p>
+There is a new mirror option --no-symlinks. Transfer continue in
+the fish protocol has been implemented. Completion for aliases has been
+improved. File removal in mirror --delete-first has been fixed. FXP
+transfer mode has been fixed.
+</p></blockquote><p>
+<!-- section end -->
+</div>
+<!-- 2004/11/04 end -->
+
+
+
+<hr class="hide">
+<!-- 2004/11/05 start -->
+<h2><a name="20041105" href="200411a.html#20041105">2004-11-05 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="200411051" title="200411051" href="200411a.html#200411051">■</a> 
+<a href="http://procps.sourceforge.net/">[Soft] procps 3.2.4</a></h3>
+<p>
+Changes:
+</p><blockquote class="cite"><p>
+This release adds UTF-8 support to ps, along with many minor
+enhancements and fixes. The FAQ has been updated. Those that ship the FAQ
+as part of a package (not suggested) should be sure to get a fresh copy.
+The 2.6.10 kernel, as well as the current pre-release versions, may be
+used to get correct %CPU data for multi-threaded processes.
+</p></blockquote><p>
+topってzで色がつくんだね。
+<!-- section end -->
+</div>
+<!-- 2004/11/05 end -->
+
+
+
+<hr class="hide">
+<!-- 2004/11/06 start -->
+<h2><a name="20041106" href="200411a.html#20041106">2004-11-06 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="200411061" title="200411061" href="200411a.html#200411061">■</a> 
+[Blog] Bloglines Update</h3>
+<p>
+フォルダもサポートされてたようだ。
+</p><blockquote class="cite"><p>
+Finally, we have updated the Bloglines Web Services Sync API. The
+getitems method now supports bulk fetching of articles from all the
+subscriptions within a folder.
+</p></blockquote><p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200411062" title="200411062" href="200411a.html#200411062">■</a> 
+<a href="http://www.zlib.net/">[Soft] zlib 1.2.2</a></h3>
+<p>
+なぜか
+<a href="http://www.gzip.org/zlib/">http://www.gzip.org/zlib/</a>のほうが古いな。
+こっちはまだ1.2.1のままだ。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200411063" title="200411063" href="200411a.html#200411063">■</a> 
+[Mail] Gmailのspam</h3>
+<p>
+30日で消えるはずが、なぜか9/27-10/5のspamが残ってる。
+</p><blockquote class="cite"><p>
+Note: Spam messages more than 30 days old will be automatically deleted.
+</p></blockquote><p>
+<!-- section end -->
+</div>
+<!-- 2004/11/06 end -->
+
+
+
+<hr class="hide">
+<!-- 2004/11/07 start -->
+<h2><a name="20041107" href="200411a.html#20041107">2004-11-07 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="200411071" title="200411071" href="200411a.html#200411071">■</a> 
+<a href="http://gcc.gnu.org/">[GNU] GCC 3.4.3</a></h3>
+<p>
+Minor bugfixesということで。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200411072" title="200411072" href="200411a.html#200411072">■</a> 
+<a href="http://internet.impress.co.jp/">[Magazine] iNTERNET magazine</a></h3>
+<p>
+本屋でインターネットマガジンでも立ち読みしようと探したがなかなか見つからない。
+売り切れかと思ったら、
+<a href="http://internet.impress.co.jp/im/bn/200412.htm">思いもよらない表紙</a>だった。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200411073" title="200411073" href="200411a.html#200411073">■</a> 
+[Soft] uClibcのtoolchain wrapperがなくなった理由</h3>
+<p>
+
+<a href="http://www.uclibc.org/FAQ.html#wrapper">uClibcのFAQ</a>によると:
+</p><blockquote><dl>
+<dt>
+What happened to the old toolchain wrapper?
+<dd>
+It is possible in some limited cases to re-use an existing glibc
+toolchain and subvert it into building uClibc binaries by using
+gcc commands such as &quot;-nostdlib&quot; and &quot;-nostdinc&quot;. In fact, this
+used to be the recommended method for compiling programs with
+uClibc using a uClibc toolchain wrapper. This toolchain wrapper
+was removed from uClibc 0.9.22, and it will not be coming back.
+This is because it is impossible to fully subvert an existing
+toolchain in many cases. As uClibc has become more capable the
+many problems with re-using an existing glibc toolchain led us to
+conclude that the only safe and sane way to build uClibc binaries
+is to use a uClibc toolchain.
+</dl></blockquote><p>
+ということらしい。
+うまくいかないケースがあって完全に対処するにはuClibc専用のtoolchainが必要だという話だが、
+いちいちそんなケースに対処するのが面倒になったというところかな。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200411074" title="200411074" href="200411a.html#200411074">■</a> 
+<a href="http://www.uclibc.org/cgi-bin/cvsweb/toolchain/">[Soft] uClibc Toolchains</a></h3>
+<p>
+早速
+<a href="http://www.uclibc.org/FAQ.html#compiling">FAQ</a>を参考に
+
+<a href="http://www.uclibc.org/cgi-bin/cvsweb/toolchain/gcc-3.4.x/">gcc-3.4.x</a>
+を使ってbuildしてみる。Makefileは最適化のために
+</p>
+<pre>
+OPTIMIZE_FOR_CPU=i686
+</pre>
+<p>
+としてみた。
+これで、makeするとwgetで必要なソースも取ってきて、
+toolchain_i386/の下にいろいろ作られる。
+</p>
+<pre>
+% ls toolchain_i386 
+bin         i686-linux         include  lib      man   usr
+bin-ccache  i686-linux-uclibc  info     libexec  sbin
+</pre>
+<p>
+できるのはいいけど、これってこのまま使えということか？
+Makefileにはinstallというターゲットがない。
+makeしたときのログを見てみると、
+--prefixでtoolchain_i386を指定してるから、ここから他へ移動はできない。
+ちょっと使いにくいな。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200411075" title="200411075" href="200411a.html#200411075">■</a> 
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-core/03692">[Ruby] &quot;Old&quot; CVS-revisions of Ruby fail to compile</a></h3>
+<p>
+まあ、どの時点でも全部コンパイルが成功するというのはありえないわけで。
+commit missとかいろいろね。
+</p>
+
+<p>
+それにしてもこの人はここ半年ほど全部試したんだろうか？
+そっちのがすごいというか、ごくろうさまというか。
+</p>
+<!-- section end -->
+</div>
+<!-- 2004/11/07 end -->
+
+
+
+<hr class="hide">
+<!-- 2004/11/08 start -->
+<h2><a name="20041108" href="200411a.html#20041108">2004-11-08 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="200411081" title="200411081" href="200411a.html#200411081">■</a> 
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-talk/119409">[Ruby] mingw32の設定をconfigure.inに</a></h3>
+<p>
+なんだか聞かれることが多いので、configure.inに入れた。
+こういうのを増やすとconfigureの意味がなくなる気がするというか、
+なんでmingw32だけ対応するんだというか、あまり好きじゃないんだけど。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200411082" title="200411082" href="200411a.html#200411082">■</a> 
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-core/03701">[Ruby] make check</a></h3>
+<p>
+やけにmake checkにこだわる人だな。はっきり言ってどうでもいいじゃん。
+regex.cのwarningはslow_matchの引数にconstつければいいんだけど、
+onigurumaだしなあ。いや、1.8はonigurumaじゃないよ。
+つけとこ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2004/11/08 end -->
+
+
+
+<hr class="hide">
+<!-- 2004/11/09 start -->
+<h2><a name="20041109" href="200411a.html#20041109">2004-11-09 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="200411091" title="200411091" href="200411a.html#200411091">■</a> 
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-talk/119598">[Ruby] [ANN] RedCloth 3.0.0 -- Textile and Markdown Elope!</a></h3>
+<p>
+むむむ。
+<a href="http://raa.ruby-lang.org/project/redcloth/">RedCloth</a>が
+<a href="http://daringfireball.net/projects/markdown/">Markdown</a>をサポートした。
+でも、なんか変だ。ああ、まだ対応してないのか。
+</p>
+<pre>
+ ToDo
+ ====
+ # Add Markdown lists
+
+   Allow lists fronted by digits,
+   followed by a period
+</pre>
+<p>
+いや、Code Blockもpreにならないようだ。
+</p>
+
+<p>
+それにしても、
+<a href="http://www.textism.com/tools/textile/">Textile</a>との共存ってのはどうなんだろう？
+意外とぶつからないもんなのかな。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200411092" title="200411092" href="200411a.html#200411092">■</a> 
+<a href="http://devlog.moonwolf.com/20041109.html#p08">[Ruby] クロスコンパイル</a></h3>
+<p>
+できないんでしょうかというか、
+<a href="http://ftp.ruby-lang.org/pub/ruby/binaries/">ruby-lang.org</a>に置いてるdjgpp,cygwin,mingw版は全部クロスコンパイルしたものなのでばりばりできます。
+ただ、拡張ライブラリもクロスの環境で作るとなるとコツがいるのでまあ面倒だよねえ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2004/11/09 end -->
+
+
+
+<hr class="hide">
+<!-- 2004/11/10 start -->
+<h2><a name="20041110" href="200411a.html#20041110">2004-11-10 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="200411101" title="200411101" href="200411a.html#200411101">■</a> 
+<a href="http://www.mozilla-japan.org/">[Browser] Firefox 1.0</a></h3>
+<p>
+やっとインストール。1.0PRで使っていたプロファイルだとエラーで立ち上がらない。
+1.0RC1のときに作ったプロファイルを使うことにしよう。
+例によって-ProfileManagerでプロファイルを切り替える。
+拡張を入れるかと思ったら、どこもつながりづらい。
+今日はさすがに混んでるな。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200411102" title="200411102" href="200411a.html#200411102">■</a> 
+<a href="http://raa.ruby-lang.org/project/report-bug/">[Ruby] report-bug 0.1.0</a></h3>
+<p>
+ええと問答無用でMoonWolfさんとこにしか飛ばないバグがあるようです。
+たぶん3通ほど無意味なメールが飛んでると思いますが、
+まあ、それがバグ報告だということにしとこう。
+</p>
+<!-- section end -->
+</div>
+<!-- 2004/11/10 end -->
+
+<hr>
+<div>
+<a href="200410c.html">&lt;Prev(,)</a> | 
+<a href="200411b.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

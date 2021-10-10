@@ -1,0 +1,376 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2009-12-c</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="200912b.html">
+<link rel="next" href="201001a.html">
+
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2009年12月下旬〜</p>
+<hr>
+<div>
+<a href="200912b.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="201001a.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2009/12/21 start -->
+<h2><a name="20091221" href="200912c.html#20091221">2009-12-21 (Mon)</a></h2>
+<!-- 2009-12-22 01:49:23 -->
+
+<div class="entry1">
+<h3><a name="200912211" title="200912211" href="200912c.html#200912211">■</a> 
+[Fedora] scim-skk</h3>
+<p>
+考えてみるとFedoraのscim-skkはバグってていつもソース取ってきて<br>
+patchあててインストールしてるのでFedora12でも同じなんだよなと、<br>
+scim-skk-0.5.2-12.fc11.src.rpmを取ってきてmakeした。<br>
+やっぱskkじゃないとね。
+</p>
+<!-- section end -->
+</div>
+<!-- 2009/12/21 end -->
+
+
+
+<hr class="hide">
+<!-- 2009/12/22 start -->
+<h2><a name="20091222" href="200912c.html#20091222">2009-12-22 (Tue)</a></h2>
+<!-- 2009-12-23 01:00:02 -->
+
+<div class="entry1">
+<h3><a name="200912221" title="200912221" href="200912c.html#200912221">■</a> 
+<a href="http://www.tanita.co.jp/tanita/hp/productDetail.do?_productId=708">[Wellness] 歩数計 TANITA FB-720</a></h3>
+<p>
+ダイクマに歩数計を見に行ったら3Dセンサー塔載ってのが結構主流になっていた。<br>
+かばんやポケットに入れといてもokというタイプが多い。<br>
+それにしてもだんだんサイズが大きくなってる気も。
+</p>
+
+<p>
+今回は手頃な大きさのを選んだ。<br>
+7日間メモリを保っていて毎日午前3時に自動的にカウンタは0リセットされるが、<br>
+今日の値を強制0リセットするには電池を外せという説明には笑った。<br>
+ボタン3つもあるんだからなんとかなったと思うんだが。
+</p>
+
+<p>
+前回はいつのまにかどこかに落としていたようで。なくさないようにしないと。
+</p>
+<!-- section end -->
+</div>
+<!-- 2009/12/22 end -->
+
+
+
+<hr class="hide">
+<!-- 2009/12/23 start -->
+<h2><a name="20091223" href="200912c.html#20091223">2009-12-23 (Wed)</a></h2>
+<!-- 2009-12-24 10:13:36 -->
+
+<div class="entry1">
+<h3><a name="200912231" title="200912231" href="200912c.html#200912231">■</a> 
+[Fedora] Fedora 12でFirefoxからの通知がSEGV</h3>
+<p>
+具体的には
+<a href="https://addons.mozilla.org/ja/firefox/addon/8888">NicoFox</a>
+とか。通知が消えるところでFirefoxが落ちる。これは困るねえ。<br>
+
+<a href="https://addons.mozilla.org/ja/firefox/addon/52856">HandyTab</a>
+は通知しないという設定ができてこれなら落ちない。<br>
+つまりNicoFoxが悪いんじゃなくてFirefoxからの通知が問題らしい。
+</p>
+
+<p>
+で、F12のパッケージじゃなくて本家のバイナリを取ってきて動かしてみたら、<br>
+肝心のニコ動へアクセスするだけでFirefoxが落ちてしまう。困ったもんだよ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2009/12/23 end -->
+
+
+
+<hr class="hide">
+<!-- 2009/12/24 start -->
+<h2><a name="20091224" href="200912c.html#20091224">2009-12-24 (Thu)</a></h2>
+<!-- 2009-12-25 02:16:35 -->
+
+<div class="entry1">
+<h3><a name="200912241" title="200912241" href="200912c.html#200912241">■</a> 
+[PC] DISK HAS MANY BAD SECTORS</h3>
+<p>
+SMARTからやばいお知らせが。バッドセクタ数77とのこと。<br>
+早いとこ全部バックアップ取って交換しろとのメッセージも出てる。<br>
+壊れたディスクは80GBで、ホームや別のディスクなので、<br>
+まあバックアップも取らなくても交換は可能。<br>
+160GBのディスクも余ってることだし近いうちに交換だな。<br>
+このままUSB-IDEケーブルでつないでyum groupinstall Baseしてみるのも手だな。
+</p>
+
+<p>
+なんかごろごろ100GBクラスのディスクが出てくるんだけど、<br>
+どこで手に入れたんだっけかな。
+</p>
+
+<p>
+SMARTのセルフテストをやらせてるけど、あきらかに異音が聞こえてきてる。<br>
+こりゃやっぱだめだ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2009/12/24 end -->
+
+
+
+<hr class="hide">
+<!-- 2009/12/25 start -->
+<h2><a name="20091225" href="200912c.html#20091225">2009-12-25 (Fri)</a></h2>
+<!-- 2009-12-26 01:09:32 -->
+
+<div class="entry1">
+<h3><a name="200912251" title="200912251" href="200912c.html#200912251">■</a> 
+[Cygwin] Cygwin 1.7.1でck</h3>
+<p>
+なぜかCygwin 1.7.1でckが動かないという話をちらほら聞くが、<br>
+うちのEeePCでは元気に動いてる。何が違うんだろう。<br>
+古いck2だから？ck3はなんか挙動が怪しくて使わないうちにああいうことになったしなあ。
+</p>
+
+<pre>
+% ck --help|head -1
+ck version 2.0.27 , build 2007/08/10 18:37:35 UTC+9
+</pre>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200912252" title="200912252" href="200912c.html#200912252">■</a> 
+[Cygwin] mount -c /</h3>
+<p>
+なんかmount -cが/etc/fstabに反映されないような？<br>
+/cygdrive/cとか面倒だから/cでアクセスできるようにmount -c /してるわけだが、<br>
+それ相当は/etc/fstabではこうなる。
+</p>
+
+<pre>
+none / cygdrive binary,posix=0,user 0 0
+</pre>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200912253" title="200912253" href="200912c.html#200912253">■</a> 
+[Fedora] Fedora 12のvimが+rubyに</h3>
+<p>
+どういうことかということ
+</p>
+
+<pre>
+% vim --version|grep -o +ruby
++ruby
+</pre>
+<p>
+という話で、
+</p>
+
+<pre>
+:ruby print &quot;hoge&quot;
+</pre>
+<p>
+なんてことができるわけだ。かなり恣意的な例だけど
+</p>
+
+<pre>
+:rubydo gsub(/^/){[$_.size,&quot;:&quot;]}
+</pre>
+<p>
+とするとバイト数が行頭に挿入される。
+</p>
+<!-- section end -->
+</div>
+<!-- 2009/12/25 end -->
+
+
+
+<hr class="hide">
+<!-- 2009/12/26 start -->
+<h2><a name="20091226" href="200912c.html#20091226">2009-12-26 (Sat)</a></h2>
+<!-- 2009-12-27 11:31:37 -->
+
+<div class="entry1">
+<h3><a name="200912261" title="200912261" href="200912c.html#200912261">■</a> 
+忘年会</h3>
+<p>
+馬場のShakey'sでピザとパスタの毎年恒例の忘年会。<br>
+公開内緒話は後半多め。おーぷんささる1.0対応したら隠居していいよ的な。<br>
+とにかく怒ってるとか。苦手な人の話とか。中一朝練のおかげで健康的な生活。<br>
+金がない。
+</p>
+
+<p>
+なぜか声を枯らしてる人。
+</p>
+<!-- section end -->
+</div>
+<!-- 2009/12/26 end -->
+
+
+
+<hr class="hide">
+<!-- 2009/12/27 start -->
+<h2><a name="20091227" href="200912c.html#20091227">2009-12-27 (Sun)</a></h2>
+<!-- 2009-12-28 12:48:55 -->
+
+<div class="entry1">
+<h3><a name="200912271" title="200912271" href="200912c.html#200912271">■</a> 
+[Firefox] NicoFoxの通知をどうにかする</h3>
+<p>
+jarファイルだと面倒だなと思って見てみたら、<br>
+extensions/nicofox
+というファイルの最後のallDone()がまさにそうだった。<br>
+コメントアウトして無事使えるようになった。めでたしめでたし。
+</p>
+<!-- section end -->
+</div>
+<!-- 2009/12/27 end -->
+
+
+
+<hr class="hide">
+<!-- 2009/12/28 start -->
+<h2><a name="20091228" href="200912c.html#20091228">2009-12-28 (Mon)</a></h2>
+<!-- 2009-12-29 01:58:02 -->
+
+<div class="entry1">
+<h3><a name="200912281" title="200912281" href="200912c.html#200912281">■</a> 
+<a href="https://addons.mozilla.org/ja/thunderbird/addon/55713">[Thunderbird] WAT (WebApplicationTab) 0.2.2</a></h3>
+<p>
+GmailとFriendFeedをこれで動かしてる。<br>
+でもNostalgyにいろいろキーを取られてしまいちょっと困る。<br>
+それ以外は結構快適。
+</p>
+<!-- section end -->
+</div>
+<!-- 2009/12/28 end -->
+
+
+
+<hr class="hide">
+<!-- 2009/12/29 start -->
+<h2><a name="20091229" href="200912c.html#20091229">2009-12-29 (Tue)</a></h2>
+<!-- 2009-12-30 07:45:56 -->
+
+<div class="entry1">
+<h3><a name="200912291" title="200912291" href="200912c.html#200912291">■</a> 
+体調悪し</h3>
+<p>
+一回休み。
+</p>
+
+<!-- section end -->
+</div>
+<!-- 2009/12/29 end -->
+
+
+
+<hr class="hide">
+<!-- 2009/12/30 start -->
+<h2><a name="20091230" href="200912c.html#20091230">2009-12-30 (Wed)</a></h2>
+<!-- 2009-12-30 17:43:56 -->
+
+<div class="entry1">
+<h3><a name="200912301" title="200912301" href="200912c.html#200912301">■</a> 
+体調悪し</h3>
+<p>
+2回休み。
+</p>
+<!-- section end -->
+</div>
+<!-- 2009/12/30 end -->
+
+
+
+<hr class="hide">
+<!-- 2009/12/31 start -->
+<h2><a name="20091231" href="200912c.html#20091231">2009-12-31 (Thu)</a></h2>
+<!-- 2009-12-31 18:54:47 -->
+
+<div class="entry1">
+<h3><a name="200912311" title="200912311" href="200912c.html#200912311">■</a> 
+体調ちょっとよくなった</h3>
+<p>
+全然twitter見てなかったけど、なひさんと同じタイミングだな。<br>
+ってことは。
+</p>
+
+<p>
+早いとこsdaのHDDを交換したいんだが。明日やるか。って今日は大晦日じゃん。
+</p>
+<!-- section end -->
+</div>
+<!-- 2009/12/31 end -->
+
+<hr>
+<div>
+<a href="200912b.html">&lt;Prev(,)</a> | 
+<a href="201001a.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

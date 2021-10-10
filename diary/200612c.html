@@ -1,0 +1,489 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2006-12-c</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="200612b.html">
+<link rel="next" href="200701a.html">
+
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2006年12月下旬〜</p>
+<hr>
+<div>
+<a href="200612b.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="200701a.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2006/12/21 start -->
+<h2><a name="20061221" href="200612c.html#20061221">2006-12-21 (Thu)</a></h2>
+<!-- 2006-12-22 02:17:06 -->
+
+<div class="entry1">
+<h3><a name="200612211" title="200612211" href="200612c.html#200612211">■</a> 
+[spam] Subject: Microsoft 0ffice 2OO7, Vista, ...</h3>
+<p>
+最近のいたちごっこ。Oと0が相互に入れ替わってるわけだが、
+</p>
+<pre>
+Micr.s.ft .ffice 2..7
+</pre>
+<p>
+ではじくことにしたよ。0に斜線が入ったフォントを使うべきか。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200612212" title="200612212" href="200612c.html#200612212">■</a> 
+[SVN] svnでversion.hの自動更新</h3>
+<p>
+なんというかSVNはCVSよりやっかいだな。<br>
+version.hだけcoできないのが痛い。
+</p>
+<!-- section end -->
+</div>
+<!-- 2006/12/21 end -->
+
+
+
+<hr class="hide">
+<!-- 2006/12/22 start -->
+<h2><a name="20061222" href="200612c.html#20061222">2006-12-22 (Fri)</a></h2>
+<!-- 2006-12-23 16:46:18 -->
+
+<div class="entry1">
+<h3><a name="200612221" title="200612221" href="200612c.html#200612221">■</a> 
+めがね</h3>
+<p>
+火曜日に躓いて転んだ拍子に壁に激突してめがねのフレームが歪んでしまった。<br>
+水曜日めがね屋へ行ったはいいが、閉店間際で眼科の診療までで時間切れ。<br>
+とりあえずそのままめがねを置いて歪みを直してもらうことに。
+</p>
+
+<p>
+で、今日は改めて新しくめがねを作りに行った。<br>
+歪んだめがねは無理に力を入れるとポキっと折れそうなので、<br>
+これ以上はいじらないほうがいいとの判断により結局そのまま。<br>
+掛け心地わるい。
+</p>
+<!-- section end -->
+</div>
+<!-- 2006/12/22 end -->
+
+
+
+<hr class="hide">
+<!-- 2006/12/23 start -->
+<h2><a name="20061223" href="200612c.html#20061223">2006-12-23 (Sat)</a></h2>
+<!-- 2006-12-24 02:16:43 -->
+
+<div class="entry1">
+<h3><a name="200612231" title="200612231" href="200612c.html#200612231">■</a> 
+[Firefox] Firefoxでブックマーク時にキーワードも追加</h3>
+<p>
+ブックマークするときになぜかキーワードが追加できないのが不満だったが、<br>
+
+<a href="http://www.supernova00.biz/userchrome.html">Firefox - Tips &amp; Tricks</a>
+によるとuserChrome.cssに
+</p>
+<pre>
+/* Add a keyword when adding a bookmark */
+#keywordRow { display: -moz-grid-line !important; }
+</pre>
+<p>
+を追加すればいいらしい。おお、出てきた。すばらしい。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200612232" title="200612232" href="200612c.html#200612232">■</a> 
+<a href="200602b.html#200602161">[Firefox] Textareaでのコピー/カット/ペースト</a></h3>
+<p>
+userChrome.cssをいじってるときにふと気づいた。なぜか
+</p>
+<pre>
+#context-cut {
+}
+
+#context-copy {
+}
+
+#context-paste {
+}
+</pre>
+<p>
+というコードがあった。これか。コピペできなかった原因は。<br>
+しかし、おれは一体なんのためにこんなコードを。<br>
+ばっさり削除。10ヶ月振りにコピペできるようなった。
+</p>
+<!-- section end -->
+</div>
+<!-- 2006/12/23 end -->
+
+
+
+<hr class="hide">
+<!-- 2006/12/24 start -->
+<h2><a name="20061224" href="200612c.html#20061224">2006-12-24 (Sun)</a></h2>
+<!-- 2006-12-25 02:11:53 -->
+
+<div class="entry1">
+<h3><a name="200612241" title="200612241" href="200612c.html#200612241">■</a> 
+[SVN] committerを共通ユーザで</h3>
+<p>
+現在のRubyのcommitter用のリポジトリURLは
+</p>
+<pre>
+svn+ssh://svn@ci.ruby-lang.org/ruby/
+</pre>
+<p>
+と共通ユーザになっているが、これは
+<a href="http://subversion.bluegate.org/doc/ch06s03.html#svn.serverconfig.svnserve.sshtricks.fixedcmd">起動コマンドの制御</a>
+に書いてあるように、<br>
+svnserveの--tunnel-userオプションを使っている。<br>
+これだとユーザアカウントを作る必要もないし、chroot環境も提供できて都合がいい。
+</p>
+<!-- section end -->
+</div>
+<!-- 2006/12/24 end -->
+
+
+
+<hr class="hide">
+<!-- 2006/12/25 start -->
+<h2><a name="20061225" href="200612c.html#20061225">2006-12-25 (Mon)</a></h2>
+<!-- 2006-12-26 02:39:09 -->
+
+<div class="entry1">
+<h3><a name="200612251" title="200612251" href="200612c.html#200612251">■</a> 
+[Vim] gvim -v</h3>
+<p>
+とあるところでvimで&quot;*pとすればクリップボードの内容がペーストできると聞いたが、<br>
+FC6のvimだとだめっぽい。ちょっとhelpを読んで調べてみたらこういうことらしい。
+</p><blockquote><dl>
+<dt>
+7. Selection and drop registers &quot;*, &quot;+ and &quot;<br>
+<dd>
+Use these register for storing and retrieving the selected text for the GUI.
+See |quotestar| and |quoteplus|.  When the clipboard is not available or not
+working, the unnamed register is used instead.  For Unix systems the clipboard
+is only available when the |+xterm_clipboard| feature is present.  {not in Vi}
+</dl></blockquote><p>
++xterm_clipboardがないといけないわけだ。
+</p>
+<pre>
+% vim --version |grep xterm_clipboard
+-xterm_clipboard -xterm_save 
+% gvim --version |grep xterm_clipboard
++xterm_clipboard -xterm_save 
+</pre>
+<p>
+これが原因か。FC6でこの機能を使うにはgvimを起動するしかない。<br>
+個人的にはktermの中で使うのが好きなんだけどなあ。<br>
+あ、gvim -vでいけるようだ。だが、それも面倒。
+</p>
+<pre>
+% ln -sf /usr/bin/gvim ~/bin/vi
+</pre>
+<p>
+でしばらく使ってみるか。どうせ/bin/viは機能限定版だし。
+</p>
+<pre>
+% /bin/vi --version |egrep -o '\+\w+'
++builtin_terms
++fork
++iconv
++multi_byte
++terminfo
++wildignore
++writebackup
+</pre>
+
+<!-- section end -->
+</div>
+<!-- 2006/12/25 end -->
+
+
+
+<hr class="hide">
+<!-- 2006/12/26 start -->
+<h2><a name="20061226" href="200612c.html#20061226">2006-12-26 (Tue)</a></h2>
+<!-- 2006-12-27 02:06:25 -->
+
+<div class="entry1">
+<h3><a name="200612261" title="200612261" href="200612c.html#200612261">■</a> 
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-talk/230206">[Ruby] [ANN] Rassmalog 2.1.1</a></h3>
+<p>
+静的なコンテンツを作るblog engine。
+</p><blockquote><p>
+Rassmalog is a static blog engine based on RSS 2.0, YAML,
+and Textile. It features an extensible blog formatting
+mechanism, easy configuration, and automatic tagging,
+archiving, syntax coloring, and table of contents.
+</p></blockquote><p>
+
+<a href="http://rassmalog.rubyforge.org/">http://rassmalog.rubyforge.org/</a>
+</p>
+
+<p>
+String#to_htmlを置き換えることで好きなformatting systemに変更できるらしい。<br>
+なかなかいいかもしれない。
+</p>
+<!-- section end -->
+</div>
+<!-- 2006/12/26 end -->
+
+
+
+<hr class="hide">
+<!-- 2006/12/27 start -->
+<h2><a name="20061227" href="200612c.html#20061227">2006-12-27 (Wed)</a></h2>
+<!-- 2006-12-28 02:47:53 -->
+
+<div class="entry1">
+<h3><a name="200612271" title="200612271" href="200612c.html#200612271">■</a> 
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-talk/231398">[Ruby] Using an UnboundMethod instead of an alias to redefine a method</a></h3>
+<p>
+aliasだとpublicのままなのでオリジナルが呼ばれちゃうとか、<br>
+その名前で再定義されちゃうといろいろ問題があるのでUnboundMethodを使おうという話。<br>
+スピードを優先するなら簡単に呼ばれないような変な名前にする手もあるかな。<br>
+普通の文字じゃ心配なら適当に空白混じりにしちゃうとか。
+</p>
+<pre>
+class Hash
+  alias :' old_hset' :[]=
+  
+  def []=(key, value)
+    send(' old_hset', key, value)
+  end
+end
+</pre>
+
+<!-- section end -->
+</div>
+<!-- 2006/12/27 end -->
+
+
+
+<hr class="hide">
+<!-- 2006/12/28 start -->
+<h2><a name="20061228" href="200612c.html#20061228">2006-12-28 (Thu)</a></h2>
+<!-- 2006-12-29 03:39:52 -->
+
+<div class="entry1">
+<h3><a name="200612281" title="200612281" href="200612c.html#200612281">■</a> 
+rrr忘年会</h3>
+<p>
+馬場のShakey'sでピザとパスタの毎年恒例の忘年会。
+</p>
+<!-- section end -->
+</div>
+<!-- 2006/12/28 end -->
+
+
+
+<hr class="hide">
+<!-- 2006/12/29 start -->
+<h2><a name="20061229" href="200612c.html#20061229">2006-12-29 (Fri)</a></h2>
+<!-- 2006-12-30 03:01:33 -->
+
+<div class="entry1">
+<h3><a name="200612291" title="200612291" href="200612c.html#200612291">■</a> 
+<a href="http://www.vmware.com/">[Soft] VMware 6 Beta Build 36983 (Workstation Development)</a></h3>
+<blockquote><dl>
+<dt>
+Changes:
+<dd>
+Support for several operating systems, most notably Windows Vista
+and Solaris 10, was added. 64-bit guest support was improved. Support for
+multiple monitors, also for those not physically available on the host,
+was added. Integrated virtual debuggers for Visual Studio and Eclipse were
+added. Virtual machines can now run in the background, detached from the
+screen, as in VMware Server. They can also act as VNC servers without
+special software on the host or guest. Copy and Paste buffer support and
+Drag and Drop functionality were enhanced. High-Speed USB (2.0) devices
+are now supported.
+</dl></blockquote>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200612292" title="200612292" href="200612c.html#200612292">■</a> 
+<a href="http://joel.rosdahl.net/maildirproc/">[Soft] maildirproc</a></h3>
+<blockquote><dl>
+<dt>
+About:
+<dd>
+maildirproc is a program that processes one or several existing mail boxes in
+the maildir format. It is primarily focused on mail sorting ? i.e., moving,
+copying, forwarding and deleting mail according to a set of rules. It can be
+seen as an alternative to procmail, but instead of being a delivery agent
+(which wants to be part of the delivery chain), maildirproc only processes
+already delivered mail.
+</dl></blockquote>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200612293" title="200612293" href="200612c.html#200612293">■</a> 
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-talk/231168">[Ruby] Cropmail 0.9 mail filter</a></h3>
+<blockquote><p>
+Cropmail  --  A Ruby MDA. Sort and delazaridify your mail
+using plain Ruby statements.
+</p></blockquote><p>
+
+<a href="http://opensource.bertram-scharpf.de/sites/cropmail/">http://opensource.bertram-scharpf.de/sites/cropmail/</a>
+</p>
+<!-- section end -->
+</div>
+<!-- 2006/12/29 end -->
+
+
+
+<hr class="hide">
+<!-- 2006/12/30 start -->
+<h2><a name="20061230" href="200612c.html#20061230">2006-12-30 (Sat)</a></h2>
+<!-- 2006-12-31 01:56:50 -->
+
+<div class="entry1">
+<h3><a name="200612301" title="200612301" href="200612c.html#200612301">■</a> 
+[Life] 新しいめがね</h3>
+<p>
+軽い。半分ぐらいに感じる。ちょっと奮発した甲斐があったか。<br>
+その代わり視野も狭くなったのは痛い。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200612302" title="200612302" href="200612c.html#200612302">■</a> 
+[SVN] version.h自動更新案</h3>
+<p>
+svnではversion.hだけをcoすることはできないので、<br>
+version.hだけ更新するのはいろいろ問題がある。<br>
+今考えられるは以下の3つ。
+</p><ol>
+<li>全体を問答無用でsvn coする
+<li>svn mkdir version; svn mv version.h versionしてversion/だけcoする
+<li>主要なブランチをあらかじめcoしておいてsvn update version.hで済ます
+</ol><p>
+ここで1はかっこ悪いし時間がかかるし問題外なので除外。<br>
+2は結構魅力的ではあるが、このためだけにディレクトリ構成を変えるのも躊躇われる。<br>
+というわけで今のところ3が有力。version.h以外は消してしまっても構わないので、<br>
+ほぼversion.hだけをcoしたのと同等になる。
+</p>
+
+<p>
+手順としては
+</p><ol>
+<li>svnlook changed $REPOS -r $REVからブランチ名を取得
+<li>svnlook cat $REPOS -r $REV $BRANCH/version.h
+<li>日付けが古ければ相当するブランチの作業ディレクトリでsvn upして
+version.hを更新してciする
+</ol><p>
+てな感じ。こうするとcoする必要がなくURLとしてのリポジトリ名が出てこないので都合がいい。
+</p>
+<!-- section end -->
+</div>
+<!-- 2006/12/30 end -->
+
+
+
+<hr class="hide">
+<!-- 2006/12/31 start -->
+<h2><a name="20061231" href="200612c.html#20061231">2006-12-31 (Sun)</a></h2>
+<!-- 2007-01-01 21:53:14 -->
+
+<div class="entry1">
+<h3><a name="200612311" title="200612311" href="200612c.html#200612311">■</a> 
+<a href="http://www.courier-mta.org/maildrop/">[Soft] maildrop 2.0.3</a></h3>
+<blockquote><dl>
+<dt>
+Changes:
+<dd>
+Messages delivered by maildrop will use the process's inherited
+umask. The -f option now allows an empty return address to be specified.
+The lockmail utility now drops any group-id privileges if the setgid bit
+was added to lockmail's permissions. 
+</dl></blockquote>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200612312" title="200612312" href="200612c.html#200612312">■</a> 
+[Ruby] YARVがマージされた</h3>
+<p>
+test関連もぼろぼろだけど、最初はこんなもんでしょう。
+</p>
+<!-- section end -->
+</div>
+<!-- 2006/12/31 end -->
+
+<hr>
+<div>
+<a href="200612b.html">&lt;Prev(,)</a> | 
+<a href="200701a.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>

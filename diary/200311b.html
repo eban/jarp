@@ -1,0 +1,482 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja-JP">
+<head>
+<title>Just another Ruby porter, 2003-11-b</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="nsmm v0.6.3.2(2005/08/18)">
+<meta name="author" content="わたなべひろふみ">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="stylesheet" href="../css/basic.css" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://jarp.does.notwork.org/diary/index.rdf">
+<link rev="made" href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">
+<link rel="index" href="./">
+<link rel="prev" href="200311a.html">
+<link rel="next" href="200311c.html">
+
+</head>
+<body>
+<div><h1><span>Just another Ruby porter,</span></h1></div>
+
+<p>〜2003年11月中旬〜</p>
+<hr>
+<div>
+<a href="200311a.html" accesskey=",">&lt;Prev(,)</a> | 
+<a href="200311c.html" accesskey=".">Next(.)&gt;</a> | 
+<a href="index.html" accesskey="/">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+
+<!-- 2003/11/11 start -->
+<h2><a name="20031111" href="200311b.html#20031111">2003-11-11 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="200311111" title="200311111" href="200311b.html#200311111">■</a> 
+[Mail] ham vs. spam</h3>
+<pre>
+% grep '^From' ~/.procmail/2003-11.log |wc -l
+   2388
+% folder last
+                 spam+ has  787 messages (   1- 787); cur= 787.
+% echo $[2380/787.0]
+3.0241423125794156
+</pre>
+<p>
+1/3がspamかー。と、書いてるうちにhamが2通、spamが1通。やっぱり1/3だ。
+</p>
+<!-- section end -->
+</div>
+<!-- 2003/11/11 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/11/12 start -->
+<h2><a name="20031112" href="200311b.html#20031112">2003-11-12 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="200311121" title="200311121" href="200311b.html#200311121">■</a> 
+<a href="http://www.ivarch.com/programs/qsf.shtml">[Mail] Quick Spam Filter 0.9.4</a></h3>
+<p>
+heliumで動かすための軽いbayesian filterが欲しくなった。
+<a href="http://freshmeat.net/">freshmeat</a>でspamをキーに検索してみたら、最初に出てきたのが
+<a href="http://freshmeat.net/projects/qsf/">Quick Spam Filter</a>で、結構よさそうだ。
+spamとhamのmbox形式のファイルを用意して、
+</p>
+<pre>
+% qsf -T spam.mbox ham.mbox
+</pre>
+<p>
+で学習させればok。
+</p>
+<pre>
+     -a, --allowlist
+            Enable  the  allow-list.   This  causes  the  email
+            address given in the message's &quot;From:&quot; header to be
+            checked against a list; if  it  matches,  then  the
+            message  is  always treated as non-spam, regardless
+            of what the token database  says.
+</pre>
+<p>
+が便利そう。
+</p>
+
+<p>
+gdbmとbuiltin databaseとどっちがいいのか、あとで比較してみよう。
+</p>
+<!-- section end -->
+</div>
+<!-- 2003/11/12 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/11/13 start -->
+<h2><a name="20031113" href="200311b.html#20031113">2003-11-13 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="200311131" title="200311131" href="200311b.html#200311131">■</a> 
+<a href="200311b.html#200311121">[Mail] qsf 0.9.4</a></h3>
+<p>
+とりあえずbuiltin dbの実力。
+</p>
+<pre>
+% TIMEFMT='%U user %S system %E total'
+% time zsh -c 'for i in *; do qsf -t &lt; $i; done'
+29.00s user 24.86s system 96% cpu 56.009 total
+</pre>
+<p>
+--with-gdbmで作り直したら2倍以上速い。
+</p>
+<pre>
+% time zsh -c 'for i in *; do qsf-gdbm -d ~/.qsfgdbm -t &lt; $i; done'
+19.94s user 4.89s system 95% cpu 25.922 total
+</pre>
+<p>
+<a href="http://qdbm.sf.net/">QDBM</a>のGDBM-compatible APIを使うとさらに速くなる。
+</p>
+<pre>
+% time zsh -c 'for i in *; do qsf-qdbm -d ~/.qsfqdbm -t &lt; $i; done'
+17.04s user 3.18s system 97% cpu 20.788 total
+</pre>
+<p>
+で、
+<a href="http://bogofilter.sf.net/">bogofilter</a>はどうなんだというと実はもっと速い。
+</p>
+<pre>
+% time zsh -c 'for i in *; do bogofilter -e &lt; $i; done'
+11.01s user 4.48s system 91% cpu 16.988 total
+</pre>
+<p>
+ええと、何がしたかったんだっけ？
+</p>
+
+<p>
+qsfのREADMEにはBerkeley DBも使えると書いてあるから、
+次はそっちを試そう(意地になってる)。
+</p>
+
+<p>
+doc/NEWSを見ると
+</p>
+<pre>
+0.9.4 - 21 October 2003
+&lt;途中略&gt;
+  - dropped support for Berkeley DB
+</pre>
+<p>
+だそうだ。ぐはぁ。これほど裏目に出るのも珍しい。
+</p>
+<!-- section end -->
+</div>
+<!-- 2003/11/13 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/11/14 start -->
+<h2><a name="20031114" href="200311b.html#20031114">2003-11-14 (Fri)</a></h2>
+
+<div class="entry1">
+<h3><a name="200311141" title="200311141" href="200311b.html#200311141">■</a> 
+<a href="http://www.mounet.com/~edcogburn/d.html">[Soft] d 1.2.0</a></h3>
+<p>
+<a href="http://cygwin.com/ml/cygwin-announce/2003-11/msg00012.html">このソフト</a>自体にはあまり興味はないんだけど、
+dなんて名前じゃweb pageを探すのが大変だよ。
+freshmeatにあるかなと思って
+<a href="http://freshmeat.net/projects/d/">http://freshmeat.net/projects/d/</a>を試したら本当にあった。ちょっとびっくり。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200311142" title="200311142" href="200311b.html#200311142">■</a> 
+[w3m] freshmeat.cgi</h3>
+<p>
+もちろんw3m用のfreshmeat.cgiも用意してある。
+</p>
+<pre>
+#! /bin/sh
+
+cat &lt;&lt;EOF
+w3m-control: GOTO http://freshmeat.net/projects/${QUERY_STRING##*:}
+w3m-control: DELETE_PREVBUF
+EOF
+</pre>
+<p>
+urimethodmapに
+</p>
+<pre>
+f: file:///cgi-bin/freshmeat.cgi?%s
+</pre>
+<p>
+を追加。
+dもw3m f:dで試せる。
+</p>
+<!-- section end -->
+</div>
+<!-- 2003/11/14 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/11/15 start -->
+<h2><a name="20031115" href="200311b.html#20031115">2003-11-15 (Sat)</a></h2>
+
+<div class="entry1">
+<h3><a name="200311151" title="200311151" href="200311b.html#200311151">■</a> 
+<a href="http://www.gnu.org/software/gdb/">[Soft] GDB 6.0</a></h3>
+<p>
+このあたりに魅かれて更新。
+</p>
+<pre>
+* GNU/Linux's Thread Local Storage (TLS)
+
+GDB now includes support for for the GNU/Linux implementation of
+per-thread variables.
+
+* GNU/Linux's Native POSIX Thread Library (NPTL)
+
+GDB's thread code has been updated to work with either the new
+GNU/Linux NPTL thread library or the older &quot;LinuxThreads&quot; library.
+</pre>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200311152" title="200311152" href="200311b.html#200311152">■</a> 
+<a href="http://www.gnu.org/software/wget/">[Soft] Wget 1.9.1</a></h3>
+<pre>
+* Wget 1.9.1 is a bugfix release with no user-visible changes.
+</pre>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200311153" title="200311153" href="200311b.html#200311153">■</a> 
+<a href="http://www.movies.co.jp/voice/">[Video] ボイス</a></h3>
+<p>
+妻役と女子高生役のどちらも1980年生まれらしい。10歳は離れてると思ったよ。
+それにしても子役が一番恐いというのはいかがなものか。
+</p>
+<!-- section end -->
+</div>
+<!-- 2003/11/15 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/11/16 start -->
+<h2><a name="20031116" href="200311b.html#20031116">2003-11-16 (Sun)</a></h2>
+
+<div class="entry1">
+<h3><a name="200311161" title="200311161" href="200311b.html#200311161">■</a> 
+[Mail] ruby-bugs</h3>
+<p>
+mark@gogodatapro.comってとこから1000通以上のspamが来た。
+To:に50個以上指定しているので、
+PR#1223, PR#1224は単純にTo:全部へreplyして文句を言ってきたと思われる。
+こういうのはちゃんと送る前に確認して欲しいよなあ。spuriousへ移動しとこう。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200311162" title="200311162" href="200311b.html#200311162">■</a> 
+<a href="http://www.uclibc.org/">[Soft] uClibc 0.9.23</a></h3>
+<pre>
+o Fixed several silly configuration problems that were
+    present in the 0.9.22 release.
+o Fixed compilation problem with soft-float support on
+    several architectures.
+o Lots of cleanup work on the powepc shared lib loader
+    thanks to Joakim Tjernlund.
+o Updated the debian packaging for use in a standalone uClibc
+    system, rather than being a subordinate library under a
+    glibc based system.
+</pre>
+
+<!-- section end -->
+</div>
+<!-- 2003/11/16 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/11/17 start -->
+<h2><a name="20031117" href="200311b.html#20031117">2003-11-17 (Mon)</a></h2>
+
+<div class="entry1">
+<h3><a name="200311171" title="200311171" href="200311b.html#200311171">■</a> 
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-talk/85291">[Ruby][Mail] ruby-talk news gateway</a></h3>
+<p>
+TU-Berlin.DEでnews gatewayが復活。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200311172" title="200311172" href="200311b.html#200311172">■</a> 
+<a href="http://www.rubyist.net/~matz/slides/rc2003/">[Ruby] How Ruby Sucks</a></h3>
+<p>
+Method visibilityがよくわからない。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry1">
+<h3><a name="200311173" title="200311173" href="200311b.html#200311173">■</a> 
+<a href="../files/bareruby.sh">[Ruby] bareruby.sh</a></h3>
+<p>
+久し振りに試したらprocess.cでWNOHANGが見つからないので
+</p>
+<pre>
+#define WNOHANG 1
+</pre>
+<p>
+を追加してみた。
+</p>
+<pre>
+% ./bareruby -v
+ruby 1.8.1 (2003-11-17) [unknown-unknown]
+</pre>
+<p>
+Linux以外でも試さないと。
+</p>
+<!-- section end -->
+</div>
+<!-- 2003/11/17 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/11/18 start -->
+<h2><a name="20031118" href="200311b.html#20031118">2003-11-18 (Tue)</a></h2>
+
+<div class="entry1">
+<h3><a name="200311181" title="200311181" href="200311b.html#200311181">■</a> 
+<a href="../files/bareruby.sh">[Ruby] bareruby.sh</a></h3>
+<p>
+FreeBSDでエラーが出る。調べてみるとなんとmissing.hがバグってる。
+これを
+<a href="http://www.ruby-lang.org/cgi-bin/cvsweb.cgi/ruby/missing.h?cvsroot=src&amp;r1=1.11&amp;r2=1.12">直して</a>NetBSDでも試すとこちらもok。
+次にOpenBSDで試すとlseekとtruncateの宣言がエラーに。
+io.cの
+</p>
+<pre>
+#if !HAVE_OFF_T &amp;&amp; !defined(off_t)
+# define off_t  long
+#endif
+</pre>
+<p>
+が原因だった。OpenBSDのときはHAVE_OFF_Tをdefineしよう。
+</p>
+<!-- section end -->
+</div>
+<!-- 2003/11/18 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/11/19 start -->
+<h2><a name="20031119" href="200311b.html#20031119">2003-11-19 (Wed)</a></h2>
+
+<div class="entry1">
+<h3><a name="200311191" title="200311191" href="200311b.html#200311191">■</a> 
+[Emacs] viper-mode</h3>
+<p>
+久し振りにviper-modeでskkを使ってみたら全然遅くないのであった。
+何が原因だったのかな。
+<a href="200211b.html#200211182">やめて丸々一年経つのか。</a></p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200311192" title="200311192" href="200311b.html#200311192">■</a> 
+[DJGPP][Ruby] Rubyをmakeするのに必要なDJGPPパッケージ</h3>
+<p>
+<a href="ftp://ftp.iij.ad.jp/pub/djgpp/current/">ftp://ftp.iij.ad.jp/pub/djgpp/current/</a>から以下のファイルを取ってくる。djつきがv2/で残りはv2gnu/から。
+</p>
+<pre>
+% ls -w70
+acnf257b.zip  bsn135b.zip   fil41b.zip   grep24b.zip   shl2011b.zip
+bnu214b.zip   djdev203.zip  gcc332b.zip  mak3791b.zip  txt20b.zip
+bsh204b.zip   djtzn203.zip  gpp332b.zip  sed407b.zip
+</pre>
+<p>
+Cygwinから操作するとこんな感じだ。
+</p>
+<pre>
+% mkdir c:/djgpp
+% unzip \*.zip -d c:/djgpp
+% chmod +x c:/djgpp/**/*.exe
+</pre>
+<p>
+あとは環境変数DJGPPにc:/djgpp/djgpp.envを設定すればいい。
+</p>
+<!-- section end -->
+</div>
+<!-- 2003/11/19 end -->
+
+
+
+<hr class="hide">
+<!-- 2003/11/20 start -->
+<h2><a name="20031120" href="200311b.html#20031120">2003-11-20 (Thu)</a></h2>
+
+<div class="entry1">
+<h3><a name="200311201" title="200311201" href="200311b.html#200311201">■</a> 
+<a href="http://www.gnu.org/software/autoconf/">[Soft] Autoconf 2.58</a></h3>
+<p>
+結構久し振り。Rubyで試す。とりあえずok。
+それにしてもmake checkの長いこと長いこと。
+</p>
+
+<!-- section end -->
+</div>
+
+<div class="entry0">
+<h3><a name="200311202" title="200311202" href="200311b.html#200311202">■</a> 
+[Ruby] ruby-talk</h3>
+<p>
+今日1日で270通。読めるかー。
+</p>
+<!-- section end -->
+</div>
+<!-- 2003/11/20 end -->
+
+<hr>
+<div>
+<a href="200311a.html">&lt;Prev(,)</a> | 
+<a href="200311c.html">Next(.)&gt;</a> | 
+<a href="index.html">Recent(/)&gt;&gt;</a>
+| <a href="index.rdf">RDF</a>
+</div>
+
+<hr>
+<!-- SiteSearch Google -->
+<form method=GET action="http://www.google.co.jp/search">
+<p>
+<input type=text name=q size=31 maxlength=255 value="">
+<input type=hidden name=hl value="ja">
+<input type=hidden name=ie value="UTF-8">
+<input type=submit name=btnG value="Google 検索">
+<input type=hidden name=domains value="jarp.does.notwork.org"><br>
+<input type=radio name=sitesearch value=""> WWW を検索
+<input type=radio name=sitesearch value="jarp.does.notwork.org" checked> jarp.does.notwork.org を検索 <br>
+</form>
+
+<!-- nsmm v0.6.3.2(2005/08/18) -->
+
+<address><a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3A;&#101;&#98;&#x61;&#110;&#64;&#x6F;&#x73;&#x2E;&#x72;&#105;&#109;&#46;&#x6F;&#x72;&#x2E;&#106;&#x70;">わたなべひろふみ</a><br>
+Key fingerprint = C456 1350 085F A320 C6C8  8A36 0F15 9B2E EB12 3885<br>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!" height="16" width="88"></a>
+
+<script type="text/javascript" src="http://trackfeed.com/usr/aa7471e560.js"></script>
+</address>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+<!--
+_uacct = "UA-101613-1";
+urchinTracker();
+// -->
+</script>
+<script src="title.js" type="text/javascript">
+</script>
+</body>
+</html>
