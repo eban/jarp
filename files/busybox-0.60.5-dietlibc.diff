@@ -1,0 +1,14 @@
+--- ash.c~	2002-10-23 07:14:29.000000000 +0900
++++ ash.c	2002-12-01 22:12:59.000000000 +0900
+@@ -7779,3 +7779,3 @@ static void ungrabstackstr(char *s, char
+ 
+-#if !defined(__GLIBC__) || __GLIBC__ == 2 && __GLIBC_MINOR__ < 1
++#if !defined(__GLIBC__) && !defined __dietlibc__ || __GLIBC__ == 2 && __GLIBC_MINOR__ < 1
+ typedef long rlim_t;
+--- cmdedit.c~	2002-04-25 08:07:03.000000000 +0900
++++ cmdedit.c	2002-12-01 22:23:27.000000000 +0900
+@@ -167,3 +167,3 @@ static int my_gid;
+ /* It seems that libc5 doesn't know what a sighandler_t is... */
+-#if (__GLIBC__ <= 2) && (__GLIBC_MINOR__ < 1)
++#if defined __GLIBC__ && (__GLIBC__ <= 2) && (__GLIBC_MINOR__ < 1)
+ typedef void (*sighandler_t) (int);

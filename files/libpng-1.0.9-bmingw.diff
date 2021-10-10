@@ -1,0 +1,40 @@
+--- scripts/makefile.cygwin	Wed Jan 31 20:56:52 2001
++++ scripts/makefile.bmingw	Fri Feb 16 01:37:16 2001
+@@ -1,2 +1,2 @@
+-# makefile for cygwin on x86
++# makefile for bmingw on x86
+ #   builds both dll (with import lib) and static lib versions
+@@ -13,6 +13,6 @@
+ 
+-CC=gcc
++CC=i686-pc-cygwin-gcc -bmingw
+ 
+ # where "make install" puts libpng.a, libpng.so*, png.h, and pngconf.h
+-prefix=/usr
++prefix=/usr/local/mingw
+ 
+@@ -41,3 +41,3 @@
+ #PNGDLL = $%DLLNUM% # msvc
+-PNGDLL = 2 # cygwin 1.0.9
++PNGDLL = 2
+ PNGMIN = 1.0.9
+@@ -46,3 +46,3 @@
+ 
+-SHAREDLIB=cygpng$(PNGDLL).dll
++SHAREDLIB=mingwpng$(PNGDLL).dll
+ STATLIB=libpng.a
+@@ -54,6 +54,7 @@
+ LDFLAGS=-L. -L$(ZLIBLIB) -lpng -lz
+-LDSHARED=gcc -shared -Wl,--enable-auto-image-base
++LDSHARED=$(CC) -shared -Wl,--enable-auto-image-base
+ LDEXTRA=-Wl,--out-implib=$(IMPLIB) $(SHAREDDEF)
+ 
+-RANLIB=ranlib
++AR=i686-pc-cygwin-ar
++RANLIB=i686-pc-cygwin-ranlib
+ #RANLIB=echo
+@@ -106,3 +107,3 @@
+ $(STATLIB): $(OBJS)
+-	ar rc $@ $(OBJS)
++	$(AR) rc $@ $(OBJS)
+ 	$(RANLIB) $@

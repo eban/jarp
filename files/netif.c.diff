@@ -1,0 +1,9 @@
+--- OS/Linux/netif.c.orig	Wed Jan 31 17:01:54 2001
++++ OS/Linux/netif.c	Wed Oct 31 01:31:32 2001
+@@ -326,2 +326,6 @@
+     minor = SearchMajor(miscFp, "net/tun");
++    if (minor < 0) {
++	DummyIoctl("tun");
++	minor = SearchMajor(devsFp, "net/tun");
++    }
+     if (minor < 0) minor = TUN_MINOR;

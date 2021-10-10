@@ -1,0 +1,30 @@
+--- src/ls.c.orig	Sun Apr 29 18:42:47 2001
++++ src/ls.c	Tue Jan 29 02:36:05 2002
+@@ -1373,7 +1373,7 @@
+ 	long_time_format[0] = long_time_format[1] =
+-	  dcgettext (NULL, "%a %b %d %H:%M:%S %Y", LC_TIME);
++	  dcgettext (NULL, "%a %b %d %H:%M:%S %Y", LC_MESSAGES);
+       else
+ 	{
+-	  long_time_format[0] = dcgettext (NULL, "%b %e  %Y", LC_TIME);
+-	  long_time_format[1] = dcgettext (NULL, "%b %e %H:%M", LC_TIME);
++	  long_time_format[0] = dcgettext (NULL, "%b %e  %Y", LC_MESSAGES);
++	  long_time_format[1] = dcgettext (NULL, "%b %e %H:%M", LC_MESSAGES);
+ 	}
+--- po/ja.po.orig	Sun Apr 29 20:39:06 2001
++++ po/ja.po	Tue Jan 29 01:26:00 2002
+@@ -1692,3 +1692,3 @@
+ msgid "%a %b %d %H:%M:%S %Y"
+-msgstr ""
++msgstr "%Y年%m月%e日 %H時%M分%S秒"
+ 
+@@ -1696,3 +1696,3 @@
+ msgid "%b %e  %Y"
+-msgstr ""
++msgstr "  %Y年 %m月%e日"
+ 
+@@ -1700,3 +1700,3 @@
+ msgid "%b %e %H:%M"
+-msgstr ""
++msgstr "%m月%e日 %H時%M分"
+ 

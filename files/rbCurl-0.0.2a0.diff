@@ -1,0 +1,9 @@
+--- init.c.orig	2002-05-16 02:07:22.000000000 
++++ init.c	2002-06-15 00:35:29.000000000 
+@@ -382,2 +382,6 @@
+ 
++#ifndef TIMECOND_NONE
++#define TIMECOND_NONE CURL_TIMECOND_NONE
++#endif
++
+    rb_define_const(cCurl, "TIMECOND_NONE", INT2FIX(TIMECOND_NONE));

@@ -1,0 +1,10 @@
+--- locale.c.bak	2002-05-16 19:31:43.000000000 +0000
++++ locale.c	2002-07-28 06:10:13.000000000 +0000
+@@ -192,3 +192,7 @@
+ {
++#ifdef HAVE_SETLOCALE
+   return ((lc_all == 0 || *lc_all == 0) ? setlocale (LC_ALL, value?value:"") != NULL : 0);
++#else
++  return 0;
++#endif
+ }

@@ -1,0 +1,51 @@
+*cpp:
+  -nostdinc \
+  -remap %(cpp_cpu) %{posix:-D_POSIX_SOURCE} \
+  -DWIN32 -D__WIN32__ -D__MINGW32__=0.2 %{mthreads:-D_MT} \
+  -iwithprefixbefore include \
+  -iwithprefixbefore ../../../../mingw/include \
+  -isystem /usr/local/include/mingw \
+  -isystem /usr/local/mingw/include \
+  -iwithprefixbefore ../../../../%(target)/include/mingw \
+  -iwithprefixbefore ../../../../%(target)/include/g++-3 \
+  -iwithprefixbefore ../../../../include/mingw \
+  -iwithprefixbefore ../../../../include/g++-3 \
+  -D_WIN32 -DWINNT \
+  -iwithprefix ../../../../%(target)/include/w32api \
+  -iwithprefix ../../../../include/w32api \
+  -D__MSVCRT__
+
+*link:
+  %{mwindows:--subsystem windows} \
+  %{mconsole:--subsystem console} \
+  %{shared: %{mdll: %eshared and mdll are not compatible}} \
+  %{shared: --shared} \
+  %{mdll:--dll} \
+  %{static:-Bstatic} \
+  %{!static:-Bdynamic} \
+  %{shared|mdll: -e _DllMainCRTStartup@12}
+
+*lib:
+  %{pg:-lgmon} \
+  %{mthreads:-lmingwthrd} \
+  %{mwindows:-lgdi32 -lcomdlg32} \
+  -luser32 -lkernel32 -ladvapi32 -lshell32
+
+*libgcc:
+  %{Zbmingw:-lbmingw} \
+  %{mthreads:-lmingwthrd} \
+  -lmingw32 -lgcc -lmoldname -lmsvcrt
+
+*startfile:
+  -L/usr/local/cygwin/i686-pc-cygwin/lib/mingw \
+  -L/usr/local/cygwin/mingw/lib \
+  -L/usr/local/mingw/lib \
+  -L/usr/mingw/lib \
+  %{shared|mdll: dllcrt2%O%s} \
+  %{!shared: %{!mdll: -L/usr/lib/mingw crt2%O%s  %{pg:gcrt0%O%s}}}
+
+*multilib:
+  ../../../../i686-pc-cygwin/lib/mingw ;
+
+*target:
+i686-pc-cygwin

@@ -1,0 +1,17 @@
+--- extra/Configs/Config.i386	2002-08-08 07:45:00.000000000 +0000
++++ Config	2002-08-14 12:11:03.000000000 +0000
+@@ -67,3 +67,3 @@
+ # of C99 math library features.  Costs an extra 35k or so on x86. 
+-DO_C99_MATH = false
++DO_C99_MATH = true
+ 
+@@ -76,3 +76,3 @@
+ # Set this to 'false if you don't need shadow password support.
+-HAS_SHADOW = false
++HAS_SHADOW = true
+ 
+@@ -122,3 +122,3 @@
+ # Protocol: IP version 6, enable this.  This is off by default.
+-INCLUDE_IPV6 = false
++INCLUDE_IPV6 = true
+ 

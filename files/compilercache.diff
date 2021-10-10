@@ -1,0 +1,14 @@
+--- compilercache.orig	Wed Apr 18 17:21:44 2001
++++ compilercache	Mon Jun 18 00:53:44 2001
+@@ -65,6 +65,7 @@
+ COMP="$(basename "$0")"
+-if ! ( [ "$COMP" = gcc ] || [ "$COMP" = cc ] || [ "$COMP" = g++ ] || [ "$COMP" = c++ ] ); then
+-  printf "unsupported compiler type\n" 1>&2
+-  exit 1
+-fi
++case "$COMP" in
++*cc|*[cg]++);;
++*) printf "unsupported compiler type\n" 1>&2
++   exit 1;;
++esac
+ 

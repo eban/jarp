@@ -1,0 +1,24 @@
+--- depot.c.orig	2003-02-08 22:54:10.000000000 +0900
++++ depot.c	2003-02-10 03:17:51.000000000 +0900
+@@ -686,10 +686,2 @@
+   depot->aunit = tdepot->aunit;
+-  if(rename(tdepot->name, depot->name) == -1){
+-    unlink(tdepot->name);
+-    dpecode = DP_ERENAME;
+-    err = TRUE;
+-  }
+-  /* 不要リソースの解放 */
+-  free(tdepot->name);
+-  free(tdepot);
+   if(munmap(map, msiz) == -1){
+@@ -702,2 +694,10 @@
+   }
++  if(rename(tdepot->name, depot->name) == -1){
++    unlink(tdepot->name);
++    dpecode = DP_ERENAME;
++    err = TRUE;
++  }
++  /* 不要リソースの解放 */
++  free(tdepot->name);
++  free(tdepot);
+   if(err){

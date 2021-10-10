@@ -1,0 +1,32 @@
+--- winsup/Makefile.common.orig	Thu Nov 22 05:24:16 2001
++++ winsup/Makefile.common	Thu Nov 22 05:08:49 2001
+@@ -68,14 +68,14 @@
+ utils_source:=$(updir)/utils
+-ifeq (,${findstring $(newlib_source)/libc/include,$(CFLAGS) $(CXXFLAGS) $(CXX) $(CC)})
++#ifeq (,${findstring $(newlib_source)/libc/include,$(CFLAGS) $(CXXFLAGS) $(CXX) $(CC)})
+ newlib_include:=-I$(newlib_source)/libc/include
+-endif
+-ifeq (,${findstring $(newlib_source)/libc/sys/cygwin,$(CFLAGS) $(CXXFLAGS) $(CXX) $(CC)})
++#endif
++#ifeq (,${findstring $(newlib_source)/libc/sys/cygwin,$(CFLAGS) $(CXXFLAGS) $(CXX) $(CC)})
+ newlib_sys_include:=-I$(newlib_source)/libc/sys/cygwin
+-endif
+-ifeq (,${findstring $(newlib_source)/libc/sys/cygwin/include,$(CFLAGS) $(CXXFLAGS) $(CXX) $(CC)})
++#endif
++#ifeq (,${findstring $(newlib_source)/libc/sys/cygwin/include,$(CFLAGS) $(CXXFLAGS) $(CXX) $(CC)})
+ newlib_sys_include_include:=-I$(newlib_source)/libc/sys/cygwin/include
+-endif
+-ifeq (,${findstring $(cygwin_source)/include,$(CFLAGS) $(CXXFLAGS) $(CXX) $(CC)})
++#endif
++#ifeq (,${findstring $(cygwin_source)/include,$(CFLAGS) $(CXXFLAGS) $(CXX) $(CC)})
+ cygwin_include:=-I$(cygwin_source)/include
+-endif
++#endif
+ 
+--- winsup/w32api/lib/Makefile.in.orig	Thu Nov 22 05:34:00 2001
++++ winsup/w32api/lib/Makefile.in	Thu Nov 22 05:34:12 2001
+@@ -43,3 +43,3 @@
+ ifneq (,$(findstring cygwin,$(target_alias)))
+-ifeq ($(build_alias),$(host_alias))
++ifeq (1,1) #($(build_alias),$(host_alias))
+ ifeq ($(prefix),$(config_prefix))

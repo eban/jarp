@@ -1,0 +1,18 @@
+Index: src/if_ruby.c
+===================================================================
+RCS file: /cvsroot/vim/vim/src/if_ruby.c,v
+retrieving revision 1.18
+diff -u -1 -r1.18 if_ruby.c
+--- src/if_ruby.c	22 Apr 2003 21:33:31 -0000	1.18
++++ src/if_ruby.c	28 Jul 2003 15:28:53 -0000
+@@ -784,7 +784,7 @@
+ #ifndef DYNAMIC_RUBY
+-    RUBYEXTERN VALUE rb_defout;
++    RUBYEXTERN VALUE rb_stdout;
+ #endif
+ 
+-    rb_defout = rb_obj_alloc(rb_cObject);
+-    rb_define_singleton_method(rb_defout, "write", vim_message, 1);
++    rb_stdout = rb_obj_alloc(rb_cObject);
++    rb_define_singleton_method(rb_stdout, "write", vim_message, 1);
+     rb_define_global_function("p", f_p, -1);

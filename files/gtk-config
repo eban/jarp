@@ -1,0 +1,18 @@
+#!/usr/local/bin/ruby
+
+gtk_src = '/usr/local/mingw/src'
+glib_dir = gtk_src + '/glib'
+gdk_dir = gtk_src + '/gtk+/gdk'
+gtk_dir = gtk_src + '/gtk+/gtk'
+gtkp_dir = gtk_src + '/gtk+'
+
+for arg in ARGV
+  case arg
+  when '--version'
+    print "1.3\n"
+  when '--libs'
+    print "-L#{glib_dir} -L#{gdk_dir} -L#{gtk_dir} -lgtk-1.3 -lgdk-1.3 -lgmodule-1.3 -lglib-1.3\n"
+  when '--cflags'
+    print "-fnative-struct -I#{glib_dir} -I#{gdk_dir} -I#{gtkp_dir}\n"
+  end
+end

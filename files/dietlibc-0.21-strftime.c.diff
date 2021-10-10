@@ -1,0 +1,7 @@
+--- libugly/strftime.c~	2002-02-12 05:41:06.000000000 +0900
++++ libugly/strftime.c	2002-12-02 01:01:15.000000000 +0900
+@@ -94,3 +94,3 @@ again:
+ 		      src = buf;
+-		_str: while (*src  &&  p < dst+max)		 /* append string */
++		_str: while (src && *src  &&  p < dst+max)	 /* append string */
+       	                  *p++ = *src++;

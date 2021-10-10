@@ -1,0 +1,432 @@
+diff -u1 bin/sh/Makefile bin/sh-eban/Makefile
+--- bin/sh/Makefile	Fri Jul  1 19:48:58 1983
++++ bin/sh-eban/Makefile	Sat Jan 26 19:06:49 2002
+@@ -27,3 +27,3 @@
+ sh:
+-	cc -o sh *.o
++	$(CC) -o sh *.o
+ 
+diff -u1 bin/sh/args.c bin/sh-eban/args.c
+--- bin/sh/args.c	Fri Aug 12 12:21:51 1983
++++ bin/sh-eban/args.c	Sat Jan 26 18:46:46 2002
+@@ -111,4 +111,4 @@
+ 
+-	np->doluse=1;	/* use count */
+-	np=np->dolarg;
++	((DOLPTR)np)->doluse=1;	/* use count */
++	np=((DOLPTR)np)->dolarg;
+ 	dolv=np;
+diff -u1 bin/sh/cmd.c bin/sh-eban/cmd.c
+--- bin/sh/cmd.c	Fri Aug 12 12:21:52 1983
++++ bin/sh-eban/cmd.c	Sat Jan 26 20:35:19 2002
+@@ -38,7 +38,7 @@
+ {
+-	REG TREPTR	t;
++	REG FORKPTR	t;
+ 
+-	t=getstak(FORKTYPE);
++	t=(FORKPTR)getstak(FORKTYPE);
+ 	t->forktyp=flgs|TFORK; t->forktre=i; t->forkio=0;
+-	return(t);
++	return((TREPTR)t);
+ }
+@@ -49,3 +49,3 @@
+ {
+-	REG TREPTR	t;
++	REG LSTPTR	t;
+ 
+@@ -53,3 +53,3 @@
+ 	THEN	synbad();
+-	ELSE	t = getstak(LSTTYPE);
++	ELSE	t = (LSTPTR)getstak(LSTTYPE);
+ 		t->lsttyp = type;
+@@ -57,3 +57,3 @@
+ 	FI
+-	return(t);
++	return((TREPTR)t);
+ }
+@@ -207,3 +207,4 @@
+ 		BEGIN
+-		   t=getstak(SWTYPE);
++		   REG SWPTR	t;
++		   t=(SWPTR)getstak(SWTYPE);
+ 		   chkword();
+@@ -219,3 +220,4 @@
+ 		   REG INT	w;
+-		   t=getstak(IFTYPE);
++		   REG IFPTR	t;
++		   t=(IFPTR)getstak(IFTYPE);
+ 		   t->iftyp=TIF;
+@@ -230,3 +232,4 @@
+ 		BEGIN
+-		   t=getstak(FORTYPE);
++		   REG FORPTR	t;
++		   t=(FORPTR)getstak(FORTYPE);
+ 		   t->fortyp=TFOR;
+@@ -251,3 +254,4 @@
+ 		BEGIN
+-		   t=getstak(WHTYPE);
++		   REG WHPTR	t;
++		   t=(WHPTR)getstak(WHTYPE);
+ 		   t->whtyp=(wdval==WHSYM ? TWH : TUN);
+@@ -283,3 +287,4 @@
+ 		   INT		keywd=1;
+-		   t=getstak(COMTYPE);
++		   REG COMPTR	t;
++		   t=(COMPTR)getstak(COMTYPE);
+ 		   t->comio=io; /*initial io chain*/
+diff -u1 bin/sh/ctype.c bin/sh-eban/ctype.c
+--- bin/sh/ctype.c	Fri Aug 12 12:21:52 1983
++++ bin/sh-eban/ctype.c	Sat Jan 26 18:56:34 2002
+@@ -15,3 +15,3 @@
+ 
+-char	_ctype1[] {
++char	_ctype1[] = {
+ /*	000	001	002	003	004	005	006	007	*/
+@@ -64,3 +64,3 @@
+ 
+-char	_ctype2[] {
++char	_ctype2[] = {
+ /*	000	001	002	003	004	005	006	007	*/
+diff -u1 bin/sh/ctype.h bin/sh-eban/ctype.h
+--- bin/sh/ctype.h	Wed Jun  9 13:14:14 1982
++++ bin/sh-eban/ctype.h	Sat Jan 26 18:59:51 2002
+@@ -70,3 +70,3 @@
+ 
+-char	_ctype1[];
++extern char	_ctype1[];
+ 
+@@ -81,3 +81,3 @@
+ 
+-char	_ctype2[];
++extern char	_ctype2[];
+ 
+diff -u1 bin/sh/defs.h bin/sh-eban/defs.h
+--- bin/sh/defs.h	Sat Jun 11 15:38:06 1983
++++ bin/sh-eban/defs.h	Sat Jan 26 19:30:28 2002
+@@ -140,14 +140,14 @@
+ /* string constants */
+-MSG		atline;
+-MSG		readmsg;
+-MSG		colon;
+-MSG		minus;
+-MSG		nullstr;
+-MSG		sptbnl;
+-MSG		unexpected;
+-MSG		endoffile;
+-MSG		synmsg;
++extern MSG		atline;
++extern MSG		readmsg;
++extern MSG		colon;
++extern MSG		minus;
++extern MSG		nullstr;
++extern MSG		sptbnl;
++extern MSG		unexpected;
++extern MSG		endoffile;
++extern MSG		synmsg;
+ 
+ /* name tree and words */
+-SYSTAB		reserved;
++extern SYSTAB		reserved;
+ INT		wdval;
+@@ -159,5 +159,5 @@
+ /* prompting */
+-MSG		stdprompt;
+-MSG		supprompt;
+-MSG		profile;
++extern MSG		stdprompt;
++extern MSG		supprompt;
++extern MSG		profile;
+ 
+@@ -168,3 +168,3 @@
+ NAMNOD		mailnod;
+-NAMNOD		pathnod;
++extern NAMNOD		pathnod;
+ NAMNOD		ps1nod;
+@@ -180,15 +180,15 @@
+ 
+-MSG		defpath;
++extern MSG		defpath;
+ 
+ /* names always present */
+-MSG		mailname;
+-MSG		homename;
+-MSG		pathname;
+-MSG		fngname;
+-MSG		ifsname;
+-MSG		ps1name;
+-MSG		ps2name;
++extern MSG		mailname;
++extern MSG		homename;
++extern MSG		pathname;
++extern MSG		fngname;
++extern MSG		ifsname;
++extern MSG		ps1name;
++extern MSG		ps2name;
+ 
+ /* transput */
+-CHAR		tmpout[];
++extern CHAR		tmpout[];
+ STRING		tmpnam;
+@@ -201,3 +201,3 @@
+ STRING		comdiv;
+-MSG		devnull;
++extern MSG		devnull;
+ 
+@@ -249,6 +249,6 @@
+ /* name tree and words */
+-STRING		*environ;
++extern STRING		*environ;
+ CHAR		numbuf[];
+-MSG		export;
+-MSG		readonly;
++extern MSG		export;
++extern MSG		readonly;
+ 
+@@ -261,27 +261,26 @@
+ /* messages */
+-MSG		mailmsg;
+-MSG		coredump;
+-MSG		badopt;
+-MSG		badparam;
+-MSG		badsub;
+-MSG		nospace;
+-MSG		notfound;
+-MSG		badtrap;
+-MSG		baddir;
+-MSG		badshift;
+-MSG		illegal;
+-MSG		restricted;
+-MSG		execpmsg;
+-MSG		notid;
+-MSG		wtfailed;
+-MSG		badcreate;
+-MSG		piperr;
+-MSG		badopen;
+-MSG		badnum;
+-MSG		arglist;
+-MSG		txtbsy;
+-MSG		toobig;
+-MSG		badexec;
+-MSG		notfound;
+-MSG		badfile;
++extern MSG		mailmsg;
++extern MSG		coredump;
++extern MSG		badopt;
++extern MSG		badparam;
++extern MSG		badsub;
++extern MSG		nospace;
++extern MSG		notfound;
++extern MSG		badtrap;
++extern MSG		baddir;
++extern MSG		badshift;
++extern MSG		illegal;
++extern MSG		restricted;
++extern MSG		execpmsg;
++extern MSG		notid;
++extern MSG		wtfailed;
++extern MSG		badcreate;
++extern MSG		piperr;
++extern MSG		badopen;
++extern MSG		badnum;
++extern MSG		arglist;
++extern MSG		txtbsy;
++extern MSG		toobig;
++extern MSG		badexec;
++extern MSG		badfile;
+ 
+@@ -290,2 +289 @@
+ #include	"ctype.h"
+-
+diff -u1 bin/sh/expand.c bin/sh-eban/expand.c
+--- bin/sh/expand.c	Fri Aug 12 12:21:52 1983
++++ bin/sh-eban/expand.c	Sat Jan 26 19:18:36 2002
+@@ -71,3 +71,3 @@
+ 	    ANDF (statb.st_mode&S_IFMT)==S_IFDIR
+-	    ANDF (dirf=opendir(s)) != NULL
++	    ANDF (dirf=opendir(s))
+ 	THEN	dir++;
+@@ -84,3 +84,3 @@
+ 		IF setjmp(INTbuf) == 0 THEN trapjmp[INTR] = 1; FI
+-		WHILE (trapnote&SIGSET) == 0 ANDF (dp = readdir(dirf)) != NULL
++		WHILE (trapnote&SIGSET) == 0 ANDF (dp = readdir(dirf))
+ 		DO	IF (*dp->d_name=='.' ANDF *cs!='.')
+@@ -190,3 +190,3 @@
+ {
+-	args->argnxt=gchain;
++	((ARGPTR)args)->argnxt=gchain;
+ 	gchain=args;
+diff -u1 bin/sh/main.c bin/sh-eban/main.c
+--- bin/sh/main.c	Fri Aug 12 12:21:53 1983
++++ bin/sh-eban/main.c	Sat Jan 26 20:36:01 2002
+@@ -121,3 +121,3 @@
+ 	/* decide whether interactive */
+-	IF (flags&intflg) ORF ((flags&oneflg)==0 ANDF gtty(output,&statb)==0 ANDF gtty(input,&statb)==0)
++	IF (flags&intflg) ORF ((flags&oneflg)==0 ANDF isatty(output) ANDF isatty(input))
+ 	THEN	dfault(&ps1nod, (userid?stdprompt:supprompt));
+diff -u1 bin/sh/mode.h bin/sh-eban/mode.h
+--- bin/sh/mode.h	Wed Jun  9 13:14:18 1982
++++ bin/sh-eban/mode.h	Sat Jan 26 20:34:51 2002
+@@ -56,4 +56,3 @@
+  */
+-union { int _cheat;};
+-#define Lcheat(a)	((a)._cheat)
++#define Lcheat(a)	*((int *)&(a))
+ #define Rcheat(a)	((int)(a))
+diff -u1 bin/sh/msg.c bin/sh-eban/msg.c
+--- bin/sh/msg.c	Fri Aug 12 12:21:53 1983
++++ bin/sh-eban/msg.c	Sat Jan 26 18:56:59 2002
+@@ -73,3 +73,3 @@
+ /* tables */
+-SYSTAB reserved {
++SYSTAB reserved = {
+ 		{"in",		INSYM},
+@@ -92,3 +92,3 @@
+ 
+-STRING	sysmsg[] {
++STRING	sysmsg[] = {
+ 		0,
+@@ -114,3 +114,3 @@
+ MSG		readonly = "readonly";
+-SYSTAB	commands {
++SYSTAB	commands = {
+ 		{"cd",		SYSCD},
+diff -u1 bin/sh/service.c bin/sh-eban/service.c
+--- bin/sh/service.c	Mon Sep 26 10:05:08 1983
++++ bin/sh-eban/service.c	Sat Jan 26 18:55:24 2002
+@@ -391,3 +391,3 @@
+ 		FI
+-		IF c=expand((argp=endstak(argp))->argval,0)
++		IF c=expand(((ARGPTR)(argp=endstak(argp)))->argval,0)
+ 		THEN	count += c;
+diff -u1 bin/sh/word.c bin/sh-eban/word.c
+--- bin/sh/word.c	Fri Aug 12 12:21:56 1983
++++ bin/sh-eban/word.c	Sat Jan 26 18:45:29 2002
+@@ -52,9 +52,9 @@
+ 		argp=endstak(argp);
+-		IF !letter(argp->argval[0]) THEN wdset=0 FI
++		IF !letter(((ARGPTR)argp)->argval[0]) THEN wdset=0 FI
+ 
+ 		peekc=c|MARK;
+-		IF argp->argval[1]==0 ANDF (d=argp->argval[0], digit(d)) ANDF (c=='>' ORF c=='<')
++		IF ((ARGPTR)argp)->argval[1]==0 ANDF (d=((ARGPTR)argp)->argval[0], digit(d)) ANDF (c=='>' ORF c=='<')
+ 		THEN	word(); wdnum=d-'0';
+ 		ELSE	/*check for reserved words*/
+-			IF reserv==FALSE ORF (wdval=syslook(argp->argval,reserved))==0
++			IF reserv==FALSE ORF (wdval=syslook(((ARGPTR)argp)->argval,reserved))==0
+ 			THEN	wdarg=argp; wdval=0;
+diff -u1 bin/sh/xec.c bin/sh-eban/xec.c
+--- bin/sh/xec.c	Fri Aug 12 12:21:56 1983
++++ bin/sh-eban/xec.c	Sat Jan 26 18:54:02 2002
+@@ -57,3 +57,3 @@
+ 			IF argn==0 ORF (internal=syslook(com[0],commands))
+-			THEN	setlist(t->comset, 0);
++			THEN	setlist(((COMPTR)t)->comset, 0);
+ 			FI
+@@ -181,3 +181,3 @@
+ 						FI
+-					ELIF t->comset==0
++					ELIF ((COMPTR)t)->comset==0
+ 					THEN	/*scan name chain and print*/
+@@ -208,3 +208,3 @@
+                                         if (a1) {
+-                                                int c, i
++                                                int c, i;
+                                                 i = 0;
+@@ -295,5 +295,5 @@
+ 				IF type!=TCOM
+-				THEN	execute(t->forktre,1);
++				THEN	execute(((FORKPTR)t)->forktre,1);
+ 				ELIF com[0]!=ENDARGS
+-				THEN	setlist(t->comset,N_EXPORT);
++				THEN	setlist(((COMPTR)t)->comset,N_EXPORT);
+ 					execa(com);
+@@ -305,3 +305,3 @@
+ 			rename(dup(2),output);
+-			execute(t->partre,execflg);
++			execute(((PARPTR)t)->partre,execflg);
+ 			done();
+@@ -311,4 +311,4 @@
+ 			   INT pv[2]; chkpipe(pv);
+-			   IF execute(t->lstlef, 0, pf1, pv)==0
+-			   THEN	execute(t->lstrit, execflg, pv, pf2);
++			   IF execute(((LSTPTR)t)->lstlef, 0, pf1, pv)==0
++			   THEN	execute(((LSTPTR)t)->lstrit, execflg, pv, pf2);
+ 			   ELSE	closepipe(pv);
+@@ -319,4 +319,4 @@
+ 		case TLST:
+-			execute(t->lstlef,0);
+-			execute(t->lstrit,execflg);
++			execute(((LSTPTR)t)->lstlef,0);
++			execute(((LSTPTR)t)->lstrit,execflg);
+ 			break;
+@@ -324,4 +324,4 @@
+ 		case TAND:
+-			IF execute(t->lstlef,0)==0
+-			THEN	execute(t->lstrit,execflg);
++			IF execute(((LSTPTR)t)->lstlef,0)==0
++			THEN	execute(((LSTPTR)t)->lstrit,execflg);
+ 			FI
+@@ -330,4 +330,4 @@
+ 		case TORF:
+-			IF execute(t->lstlef,0)!=0
+-			THEN	execute(t->lstrit,execflg);
++			IF execute(((LSTPTR)t)->lstlef,0)!=0
++			THEN	execute(((LSTPTR)t)->lstrit,execflg);
+ 			FI
+@@ -337,3 +337,3 @@
+ 			BEGIN
+-			   NAMPTR	n = lookup(t->fornam);
++			   NAMPTR	n = lookup(((FORPTR)t)->fornam);
+ 			   STRING	*args;
+@@ -341,3 +341,3 @@
+ 
+-			   IF t->forlst==0
++			   IF ((FORPTR)t)->forlst==0
+ 			   THEN    args=dolv+1;
+@@ -346,3 +346,3 @@
+ 				   gchain=0;
+-				   trim((args=scan(getarg(t->forlst)))[0]);
++				   trim((args=scan(getarg(((FORPTR)t)->forlst)))[0]);
+ 				   gchain=schain;
+@@ -352,3 +352,3 @@
+ 			   DO	assign(n,*args++);
+-				execute(t->fortre,0);
++				execute(((FORPTR)t)->fortre,0);
+ 				IF execbrk<0 THEN execbrk=0 FI
+@@ -367,4 +367,4 @@
+ 			   loopcnt++;
+-			   WHILE execbrk==0 ANDF (execute(t->whtre,0)==0)==(type==TWH)
+-			   DO i=execute(t->dotre,0);
++			   WHILE execbrk==0 ANDF (execute(((WHPTR)t)->whtre,0)==0)==(type==TWH)
++			   DO i=execute(((WHPTR)t)->dotre,0);
+ 			      IF execbrk<0 THEN execbrk=0 FI
+@@ -377,5 +377,5 @@
+ 		case TIF:
+-			IF execute(t->iftre,0)==0
+-			THEN	execute(t->thtre,execflg);
+-			ELSE	execute(t->eltre,execflg);
++			IF execute(((IFPTR)t)->iftre,0)==0
++			THEN	execute(((IFPTR)t)->thtre,execflg);
++			ELSE	execute(((IFPTR)t)->eltre,execflg);
+ 			FI
+@@ -385,6 +385,6 @@
+ 			BEGIN
+-			   REG STRING	r = mactrim(t->swarg);
+-			   t=t->swlst;
++			   REG STRING	r = mactrim(((SWPTR)t)->swarg);
++			   t=((SWPTR)t)->swlst;
+ 			   WHILE t
+-			   DO	ARGPTR		rex=t->regptr;
++			   DO	ARGPTR		rex=((REGPTR)t)->regptr;
+ 				WHILE rex
+@@ -392,3 +392,3 @@
+ 					IF gmatch(r,s=macro(rex->argval)) ORF (trim(s), eq(r,s))
+-					THEN	execute(t->regcom,0);
++					THEN	execute(((REGPTR)t)->regcom,0);
+ 						t=0; break;
+@@ -397,3 +397,3 @@
+ 				OD
+-				IF t THEN t=t->regnxt FI
++				IF t THEN t=((REGPTR)t)->regnxt FI
+ 			   OD

@@ -1,0 +1,84 @@
+Index: ruby.c
+===================================================================
+RCS file: /src/ruby/ruby.c,v
+retrieving revision 1.70
+diff -u -1 -r1.70 ruby.c
+--- ruby.c	15 Dec 2002 03:18:04 -0000	1.70
++++ ruby.c	2 Jan 2003 13:42:20 -0000
+@@ -240,8 +240,4 @@
+ #if defined _WIN32 || defined __CYGWIN__
+-# if defined LIBRUBY_SO
+-    HMODULE libruby = GetModuleHandle(LIBRUBY_SO);
+-# else
+-    HMODULE libruby = NULL;
+-# endif
+-    GetModuleFileName(libruby, libpath, sizeof libpath);
++    LoadString(0, 0, libpath, sizeof libpath);
++    GetModuleFileName(GetModuleHandle(libpath), libpath, sizeof libpath);
+ #elif defined(DJGPP)
+Index: bcc32/Makefile.sub
+===================================================================
+RCS file: /src/ruby/bcc32/Makefile.sub,v
+retrieving revision 1.19
+diff -u -1 -r1.19 Makefile.sub
+--- bcc32/Makefile.sub	31 Dec 2002 12:31:12 -0000	1.19
++++ bcc32/Makefile.sub	2 Jan 2003 13:42:20 -0000
+@@ -92,3 +92,3 @@
+ !ifndef CPPFLAGS
+-CPPFLAGS = -I. -I$(srcdir) -I$(srcdir)missing -DLIBRUBY_SO=\"$(LIBRUBY_SO)\"
++CPPFLAGS = -I. -I$(srcdir) -I$(srcdir)missing
+ !endif
+@@ -484,2 +484,3 @@
+ 			-so_name=$(RUBY_SO_NAME) \
++			-libruby_so=$(LIBRUBY_SO) \
+ 			. $(icondirs) $(srcdir)win32
+Index: cygwin/GNUmakefile.in
+===================================================================
+RCS file: /src/ruby/cygwin/GNUmakefile.in,v
+retrieving revision 1.22
+diff -u -1 -r1.22 GNUmakefile.in
+--- cygwin/GNUmakefile.in	21 Oct 2002 14:03:46 -0000	1.22
++++ cygwin/GNUmakefile.in	2 Jan 2003 13:42:20 -0000
+@@ -2,7 +2,3 @@
+ 
+-ENABLE_SHARED=@ENABLE_SHARED@
+-
+-ifeq ($(ENABLE_SHARED),yes)
+-  CPPFLAGS += -DLIBRUBY_SO=\"$(LIBRUBY_SO)\"
+-else
++ifneq (@ENABLE_SHARED@,yes)
+   RUBY_EXP = $(RUBY_INSTALL_NAME).exp
+@@ -32,2 +28,3 @@
+ 	  -so_name=$(RUBY_SO_NAME) \
++	  -libruby_so=$(LIBRUBY_SO) \
+ 	  . $(icondirs) $(srcdir)/win32
+Index: win32/Makefile.sub
+===================================================================
+RCS file: /src/ruby/win32/Makefile.sub,v
+retrieving revision 1.38
+diff -u -1 -r1.38 Makefile.sub
+--- win32/Makefile.sub	31 Dec 2002 12:31:12 -0000	1.38
++++ win32/Makefile.sub	2 Jan 2003 13:42:22 -0000
+@@ -83,3 +83,3 @@
+ !if !defined(CPPFLAGS)
+-CPPFLAGS = -I. -I$(srcdir) -I$(srcdir)/missing -DLIBRUBY_SO=\"$(LIBRUBY_SO)\"
++CPPFLAGS = -I. -I$(srcdir) -I$(srcdir)/missing
+ !endif
+@@ -482,2 +482,3 @@
+ 			-so_name=$(RUBY_SO_NAME) \
++			-libruby_so=$(LIBRUBY_SO) \
+ 			. $(icondirs) $(srcdir)/win32
+Index: win32/resource.rb
+===================================================================
+RCS file: /src/ruby/win32/resource.rb,v
+retrieving revision 1.6
+diff -u -1 -r1.6 resource.rb
+--- win32/resource.rb	11 Sep 2002 02:38:51 -0000	1.6
++++ win32/resource.rb	2 Jan 2003 13:42:22 -0000
+@@ -92,2 +92,6 @@
+ END
++STRINGTABLE
++BEGIN
++  0 "#{$libruby_so}"
++END
+ EOF

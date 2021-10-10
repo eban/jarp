@@ -1,0 +1,8 @@
+--- extconf.rb.orig	Tue Oct  9 02:30:10 2001
++++ extconf.rb	Sat Dec 29 17:25:22 2001
+@@ -64,3 +64,4 @@
+   lib_ary = []
+-  if /cygwin/ =~ PLATFORM
++  if /cygwin|mingw/ =~ PLATFORM
++    $CFLAGS += " -fnative-struct -DNATIVE_WIN32"
+   elsif /mswin32/ !~ PLATFORM

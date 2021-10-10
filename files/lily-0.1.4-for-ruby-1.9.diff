@@ -1,0 +1,74 @@
+--- lily.cgi.orig	2004-04-11 21:56:36.000000000 +0900
++++ lily.cgi	2004-05-10 01:06:06.000000000 +0900
+@@ -4,4 +4,5 @@
+ require 'kconv'
+ require 'cgi'
++require 'dbm'
+ 
+ begin
+@@ -28,5 +29,5 @@
+   def initialize(cgi,env)
+     @version = "0.1.4"
+-    @ruby_version = ::VERSION
++    @ruby_version = ::RUBY_VERSION
+ 
+     @cgi                 = cgi
+@@ -87,21 +88,13 @@
+   
+   def get_post_time(file)
+-    ptimes = []
+-    
+-    begin
+-      File::open("#{@datadir}/.entrydate","r"){|f|
+-        pt = f.read.split(/\n/)
+-        pt.each{|pts| ptimes.push(pts.split(/@@/)) }
+-      }
+-    rescue
+-    end
+-    if ptimes.assoc(file).nil?
+-      File::open("#{@datadir}/.entrydate","a"){|f|
+-        f.puts "#{file}@@#{File::stat(file).mtime.rfc2822}"
+-      }
+-      File::stat(file).mtime
++
++    @dbm ||= DBM.open("#{@datadir}/.entry")
++    if @dbm[file]
++      mtime = Marshal.load @dbm[file]
+     else
+-      Time.rfc2822(ptimes.assoc(file)[1])
++      mtime = File::stat(file).mtime
++      @dbm[file] = Marshal.dump mtime
+     end
++    return mtime
+   end
+   
+@@ -229,8 +222,5 @@
+     end
+     
+-    @storys.sort! {|f1,f2|
+-      get_post_time(f1) <=> get_post_time(f2)
+-    }
+-    @storys.reverse!
++    @storys = @storys.sort_by {|f| get_post_time(f) }.reverse
+     
+     if (@path_info.nil? or
+--- plugin/trackback.rb.orig	2004-03-29 23:01:00.000000000 +0900
++++ plugin/trackback.rb	2004-05-08 22:43:22.000000000 +0900
+@@ -17,6 +17,6 @@
+ 
+           if Kconv.guess(@body) == Kconv::SJIS then
+-            if /[\020-\177][\200-\237]/ =~ @body or
+-               /[\300-\377][\000-\177\300-\377]/ =~ @body then
++            if /[\020-\177][\200-\237]/n =~ @body or
++               /[\300-\377][\000-\177\300-\377]/n =~ @body then
+               @title = Uconv.sjistou8(@title)
+ 	          @body = Uconv.sjistou8(@body)
+@@ -76,6 +76,6 @@
+           blog_name = Uconv.euctou8(blog_name)
+ 		elsif Kconv.guess(excerpt) == Kconv::SJIS then
+-		  if /[\020-\177][\200-\237]/ =~ excerpt or
+-		     /[\300-\377][\000-\177\300-\377]/ =~ excerpt then
++		  if /[\020-\177][\200-\237]/n =~ excerpt or
++		     /[\300-\377][\000-\177\300-\377]/n =~ excerpt then
+             title = Uconv.sjistou8(title)
+             url = Uconv.sjistou8(url)

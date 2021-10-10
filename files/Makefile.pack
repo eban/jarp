@@ -1,0 +1,80 @@
+SHELL=/bin/bash
+PACKAGE=
+VERSION=
+TARGET=
+RUBYVER=1.6
+DESTDIR=$(HOME)/dist/$(TARGET)
+BINDIR=$(HOME)/helium/public_html/ruby/binaries/$(TARGET)/ext
+
+ifneq ($(P),)
+  PACKAGE=$(P)
+endif
+ifneq ($(V),)
+  VERSION=$(V)
+endif
+ifneq ($(T),)
+  TARGET=$(T)
+endif
+
+ifneq (,$(findstring $(TARGET),i386-cygwin))
+  TARGET=i386-cygwin
+endif
+ifneq (,$(findstring $(TARGET),i386-mingw32))
+  TARGET=i386-mingw32
+endif
+ifneq (,$(findstring $(TARGET),i386-msdosdjgpp))
+  TARGET=i386-msdosdjgpp
+endif
+
+ifneq ($(words $(PACKAGE) $(VERSION) $(TARGET)), 3)
+  $(error You must set PACKAGE, VERSION and TARGET.)
+endif
+
+CONTENTS=usr/local/lib/ruby/site_ruby/$(RUBYVER)/$(TARGET)/$(PACKAGE).so
+SITE_RUBY_DIR=usr/local/lib/ruby/site_ruby
+RUBYVER_DIR=$(SITE_RUBY_DIR)/$(RUBYVER)
+RUBY_VER_DIR=$(RUBYVER_DIR)
+TARGET_DIR=$(RUBYVER_DIR)/$(TARGET)
+
+-include ../$(PACKAGE).contents
+ifndef DOC
+-include ../../$(PACKAGE).contents
+endif
+
+TARBALL = $(PACKAGE)-$(VERSION)-$(TARGET).tar.gz
+
+ifeq ($(TARGET),i386-cygwin)
+  LN_S = ln -sf $(TARBALL) $(PACKAGE)-$(VERSION)-1.tar.gz
+else
+  LN_S = :
+endif
+
+DOC += $(wildcard $(PACKAGE)-$(VERSION)*.diff)
+
+pack: doc
+	cd $(DESTDIR) && \
+	chmod -R +w $(CONTENTS) && \
+	GZIP=-9 tar cfvz \
+	$(BINDIR)/$(TARBALL) \
+	$(CONTENTS) \
+	usr/local/doc/ruby/$(PACKAGE)-$(VERSION)/* \
+	--exclude='*.bak' \
+	--owner=ruby --group=ruby
+	cd $(BINDIR) && \
+	ls -l $(TARBALL) && \
+	$(LN_S)
+
+doc: $(DESTDIR)/usr/local/doc/ruby/$(PACKAGE)-$(VERSION)
+	find $(DOC) -print0 | cpio -pdm0 $(DESTDIR)/usr/local/doc/ruby/$(PACKAGE)-$(VERSION)
+	chmod 0755 `find $(DESTDIR)/usr/local/doc/ruby/$(PACKAGE)-$(VERSION) -type d -print`
+
+$(DESTDIR)/usr/local/doc/ruby/$(PACKAGE)-$(VERSION):
+	mkdir -p $(DESTDIR)/usr/local/doc/ruby/$(PACKAGE)-$(VERSION)
+
+symlink:
+	cd $(BINDIR) && \
+	ln -sf ../../cygwin/ext/$(PACKAGE)-$(VERSION)-i386-cygwin.tar.gz \
+	  $(PACKAGE)-$(VERSION)-$(TARGET).tar.gz
+
+debug:
+	@echo $(TARGET)

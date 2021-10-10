@@ -1,0 +1,30 @@
+## Automatically generated incremental diff
+## From:   linux-2.4.18-rc3
+## To:     linux-2.4.18-rc4
+## Robot:  $Id: make-incremental-diff,v 1.11 2002/02/20 02:59:33 hpa Exp $
+
+diff -urN linux-2.4.18-rc3/Makefile linux-2.4.18-rc4/Makefile
+--- linux-2.4.18-rc3/Makefile	Fri Feb 22 04:30:39 2002
++++ linux-2.4.18-rc4/Makefile	Fri Feb 22 04:30:46 2002
+@@ -1,7 +1,7 @@
+ VERSION = 2
+ PATCHLEVEL = 4
+ SUBLEVEL = 18
+-EXTRAVERSION = -rc3
++EXTRAVERSION = -rc4
+ 
+ KERNELRELEASE=$(VERSION).$(PATCHLEVEL).$(SUBLEVEL)$(EXTRAVERSION)
+ 
+diff -urN linux-2.4.18-rc3/fs/binfmt_elf.c linux-2.4.18-rc4/fs/binfmt_elf.c
+--- linux-2.4.18-rc3/fs/binfmt_elf.c	Fri Feb 22 04:30:42 2002
++++ linux-2.4.18-rc4/fs/binfmt_elf.c	Fri Feb 22 04:30:50 2002
+@@ -564,6 +564,9 @@
+ 			// printk(KERN_WARNING "ELF: Ambiguous type, using ELF\n");
+ 			interpreter_type = INTERPRETER_ELF;
+ 		}
++	} else {
++		/* Executables without an interpreter also need a personality  */
++		SET_PERSONALITY(elf_ex, ibcs2_interpreter);
+ 	}
+ 
+ 	/* OK, we are done with that, now set up the arg stuff,

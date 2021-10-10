@@ -1,0 +1,347 @@
+Index: Makefile.in
+===================================================================
+RCS file: /src/ruby/Makefile.in,v
+retrieving revision 1.43
+diff -u -r1.43 Makefile.in
+--- Makefile.in	9 Mar 2003 08:17:02 -0000	1.43
++++ Makefile.in	4 Apr 2003 15:31:46 -0000
+@@ -11,7 +11,7 @@
+ AUTOCONF = autoconf
+ @SET_MAKE@
+ 
+-prefix = @prefix@
++prefix = $(DESTDIR)@prefix@
+ exec_prefix = @exec_prefix@
+ bindir = @bindir@
+ sbindir = @sbindir@
+@@ -102,7 +102,7 @@
+ 
+ MANTYPE	      = @MANTYPE@
+ 
+-SCRIPT_ARGS   =	--dest-dir="$(DESTDIR)" \
++SCRIPT_ARGS   =	--prefix="$(prefix)" \
+ 		--make="$(MAKE)" \
+ 		--mflags="$(MFLAGS)" \
+ 		--make-flags="$(MAKEFLAGS)"
+Index: instruby.rb
+===================================================================
+RCS file: /src/ruby/instruby.rb,v
+retrieving revision 1.52
+diff -u -r1.52 instruby.rb
+--- instruby.rb	29 Mar 2003 06:39:49 -0000	1.52
++++ instruby.rb	4 Apr 2003 15:31:46 -0000
+@@ -3,7 +3,15 @@
+ load "./rbconfig.rb"
+ include Config
+ 
+-$:.unshift File.join(CONFIG["srcdir"], "lib")
++def conf(s)
++  if MAKEFILE_CONFIG[s]
++    Config::expand(MAKEFILE_CONFIG[s], MAKEFILE_CONFIG)
++  else
++    nil
++  end
++end
++
++$:.unshift File.join(conf("srcdir"), "lib")
+ require 'fileutils'
+ require 'shellwords'
+ require 'getopts'
+@@ -12,12 +20,11 @@
+ File.umask(0022)
+ 
+ def parse_args()
+-  getopts('n', 'dest-dir:',
++  getopts('n', 'prefix:',
+ 	  'make:', 'make-flags:', 'mflags:',
+ 	  'mantype:doc')
+ 
+   $dryrun = $OPT['n']
+-  $destdir = $OPT['dest-dir'] || ''
+   $make = $OPT['make'] || $make || 'make'
+   $mantype = $OPT['mantype']
+   mflags = ($OPT['make-flags'] || '').strip
+@@ -42,9 +49,9 @@
+     $mflags << '-n' if $dryrun
+   end
+ 
+-  $mflags << "DESTDIR=#{$destdir}"
+-
+   $continue = $mflags.set?(?k)
++
++  MAKEFILE_CONFIG['prefix'] = $OPT['prefix'] if $OPT['prefix']
+ end
+ 
+ parse_args()
+@@ -72,24 +79,24 @@
+   super(dirs, :verbose) unless dirs.empty?
+ end
+ 
+-exeext = CONFIG["EXEEXT"]
++exeext = conf("EXEEXT")
+ 
+-ruby_install_name = CONFIG["ruby_install_name"]
+-rubyw_install_name = CONFIG["rubyw_install_name"]
++ruby_install_name = conf("ruby_install_name")
++rubyw_install_name = conf("rubyw_install_name")
+ 
+-version = CONFIG["ruby_version"]
+-bindir = $destdir+CONFIG["bindir"]
+-libdir = $destdir+CONFIG["libdir"]
+-rubylibdir = $destdir+CONFIG["rubylibdir"]
+-archlibdir = $destdir+CONFIG["archdir"]
+-sitelibdir = $destdir+CONFIG["sitelibdir"]
+-sitearchlibdir = $destdir+CONFIG["sitearchdir"]
+-mandir = File.join($destdir+CONFIG["mandir"], "man")
+-configure_args = Shellwords.shellwords(CONFIG["configure_args"])
+-enable_shared = CONFIG["ENABLE_SHARED"] == 'yes'
+-dll = CONFIG["LIBRUBY_SO"]
+-lib = CONFIG["LIBRUBY"]
+-arc = CONFIG["LIBRUBY_A"]
++version = conf("ruby_version")
++bindir = conf("bindir")
++libdir = conf("libdir")
++rubylibdir = conf("rubylibdir")
++archlibdir = conf("archdir")
++sitelibdir = conf("sitelibdir")
++sitearchlibdir = conf("sitearchdir")
++mandir = File.join(conf("mandir"), "man")
++configure_args = Shellwords.shellwords(conf("configure_args"))
++enable_shared = conf("ENABLE_SHARED") == 'yes'
++dll = conf("LIBRUBY_SO")
++lib = conf("LIBRUBY")
++arc = conf("LIBRUBY_A")
+ 
+ makedirs [bindir, libdir, rubylibdir, archlibdir, sitelibdir, sitearchlibdir]
+ 
+@@ -104,21 +111,21 @@
+ install arc, libdir, 0644
+ install "config.h", archlibdir, 0644
+ install "rbconfig.rb", archlibdir, 0644
+-if CONFIG["ARCHFILE"]
+-  for file in CONFIG["ARCHFILE"].split
++if conf("ARCHFILE")
++  for file in conf("ARCHFILE").split
+     install file, archlibdir, 0644
+   end
+ end
+ 
+ if dll == lib and dll != arc
+-  for link in CONFIG["LIBRUBY_ALIASES"].split
++  for link in conf("LIBRUBY_ALIASES").split
+     makelink(dll, File.join(libdir, link))
+   end
+ end
+ 
+-Dir.chdir CONFIG["srcdir"]
++Dir.chdir conf("srcdir")
+ 
+-ruby_shebang = File.join(CONFIG["bindir"], ruby_install_name)
++ruby_shebang = File.join(conf("bindir"), ruby_install_name)
+ for src in Dir["bin/*"]
+   next unless File.file?(src)
+   next if /\/[.#]|(\.(old|bak|orig|rej|diff|patch|core)|~|\/core)$/i =~ src
+Index: mkconfig.rb
+===================================================================
+RCS file: /src/ruby/mkconfig.rb,v
+retrieving revision 1.29
+diff -u -r1.29 mkconfig.rb
+--- mkconfig.rb	31 Dec 2002 12:31:12 -0000	1.29
++++ mkconfig.rb	4 Apr 2003 15:31:46 -0000
+@@ -110,21 +110,19 @@
+   MAKEFILE_CONFIG = {}
+   CONFIG.each{|k,v| MAKEFILE_CONFIG[k] = v.dup}
+   def Config::expand(val, config = CONFIG)
+-    val.gsub!(/\\$\\$|\\$\\(([^()]+)\\)|\\$\\{([^{}]+)\\}/) do |var|
++    val.gsub(/\\$\\$|\\$\\(([^()]+)\\)|\\$\\{([^{}]+)\\}/) do |var|
+       if !(v = $1 || $2)
+ 	'$'
+       elsif key = config[v]
+ 	config[v] = false
+-        Config::expand(key, config)
+-	config[v] = key
++	config[v] = Config::expand(key, config)
+       else
+ 	var
+       end
+     end
+-    val
+   end
+   CONFIG.each_value do |val|
+-    Config::expand(val)
++    val.replace Config::expand(val)
+   end
+ end
+ CROSS_COMPILING = nil unless defined? CROSS_COMPILING
+Index: bcc32/Makefile.sub
+===================================================================
+RCS file: /src/ruby/bcc32/Makefile.sub,v
+retrieving revision 1.24
+diff -u -r1.24 Makefile.sub
+--- bcc32/Makefile.sub	4 Mar 2003 14:12:19 -0000	1.24
++++ bcc32/Makefile.sub	4 Apr 2003 15:31:46 -0000
+@@ -80,12 +80,6 @@
+ OPTFLAGS = -O
+ !endif
+ 
+-!ifndef prefix
+-prefix = /usr
+-!endif
+-!ifndef DESTDIR
+-DESTDIR = $(prefix)
+-!endif
+ !ifndef CFLAGS
+ CFLAGS = -q $(DEBUGFLAGS) $(OPTFLAGS) $(PROCESSOR_FLAG) -w-
+ !endif
+@@ -182,7 +176,7 @@
+ 		version.obj \
+ 		$(MISSING)
+ 
+-SCRIPT_ARGS   =	"--dest-dir=$(DESTDIR)" \
++SCRIPT_ARGS   =	"--prefix=$(prefix)" \
+ 		"--make=$(MAKE)" \
+ 		"--mflags=$(MFLAGS)" \
+ 		"--make-flags=$(MAKEFLAGS)"
+Index: ext/extmk.rb
+===================================================================
+RCS file: /src/ruby/ext/extmk.rb,v
+retrieving revision 1.33
+diff -u -r1.33 extmk.rb
+--- ext/extmk.rb	29 Mar 2003 06:39:50 -0000	1.33
++++ ext/extmk.rb	4 Apr 2003 15:31:46 -0000
+@@ -3,7 +3,6 @@
+ 
+ $force_static = nil
+ $install = nil
+-$destdir = nil
+ $clean = nil
+ $nodynamic = nil
+ $extinit = nil
+@@ -115,12 +114,12 @@
+ end
+ 
+ def parse_args()
+-  getopts('n', 'extstatic:', 'dest-dir:',
++  getopts('n', 'extstatic:', 'prefix:',
+ 	  'make:', 'make-flags:', 'mflags:')
+ 
+   $dryrun = $OPT['n']
+   $force_static = $OPT['extstatic'] == 'static'
+-  $destdir = $OPT['dest-dir'] || ''
++  prefix = $OPT['prefix'] || ''
+   $make = $OPT['make'] || $make || 'make'
+   mflags = ($OPT['make-flags'] || '').strip
+   mflags = ($OPT['mflags'] || '').strip if mflags.empty?
+@@ -145,7 +144,10 @@
+   end
+ 
+   $continue = $mflags.set?(?k)
+-  $mflags |= ["DESTDIR=#{$destdir}"]
++  unless prefix.empty?
++    CONFIG['prefix'] = prefix
++    $mflags |= ["prefix=#{prefix}"]
++  end
+ end
+ 
+ parse_args()
+Index: lib/mkmf.rb
+===================================================================
+RCS file: /src/ruby/lib/mkmf.rb,v
+retrieving revision 1.126
+diff -u -r1.126 mkmf.rb
+--- lib/mkmf.rb	9 Feb 2003 03:28:22 -0000	1.126
++++ lib/mkmf.rb	4 Apr 2003 15:31:46 -0000
+@@ -157,16 +157,15 @@
+ end
+ 
+ def xsystem command
+-  Config.expand(command)
+   Logging::open do
+-    command = Shellwords.shellwords(command)
++    command = Shellwords.shellwords(Config::expand(command))
+     puts command.quote.join(' ')
+     system(*command)
+   end
+ end
+ 
+ def xpopen command, *mode, &block
+-  Config.expand(command)
++  command = Config::expand(command)
+   Logging::open do
+     case mode[0]
+     when nil, /^r/
+@@ -202,7 +201,7 @@
+ end
+ 
+ def link_command(ldflags, opt="", libpath=$LIBPATH)
+-  Config::expand(TRY_LINK.dup,
++  Config::expand(TRY_LINK,
+ 		 'hdrdir' => $hdrdir,
+ 		 'src' => CONFTEST_C,
+ 		 'INCFLAGS' => $INCFLAGS,
+@@ -322,7 +321,7 @@
+ def install_files(mfile, ifiles, map = nil, srcprefix = nil)
+   ifiles or return
+   srcprefix ||= '$(srcdir)'
+-  Config::expand(srcdir = srcprefix.dup)
++  srcdir = File.dirname($0)
+   dirs = []
+   path = Hash.new {|h, i| h[i] = dirs.push([i])[-1]}
+   ifiles.each do |files, dir, prefix|
+@@ -589,7 +588,7 @@
+ }
+   if $nmake == ?b
+     mk.each do |x|
+-      x.gsub!(/^(MAKEDIRS|INSTALL_(?:PROG|DATA))+\s*=.*\n/) do
++      x.gsub!(/^(prefix|MAKEDIRS|INSTALL_(?:PROG|DATA))+\s*=.*\n/) do
+         "!ifndef " + $1 + "\n" +
+         $& +
+ 	"!endif\n"
+@@ -623,7 +622,7 @@
+   end
+ 
+   srcprefix ||= '$(srcdir)'
+-  Config::expand(srcdir = srcprefix.dup)
++  srcdir = File.dirname($0)
+ 
+   unless $objs then
+     $objs = []
+@@ -802,7 +801,8 @@
+ 
+   $objs = nil
+   $libs = ""
+-  if $enable_shared or Config.expand(config["LIBRUBY"].dup) != Config.expand(config["LIBRUBY_A"].dup)
++
++  if $enable_shared or Config::expand("$(LIBRUBY)") != Config::expand("$(LIBRUBY_A)")
+     $LIBRUBYARG = config['LIBRUBYARG']
+   end
+ 
+Index: win32/Makefile.sub
+===================================================================
+RCS file: /src/ruby/win32/Makefile.sub,v
+retrieving revision 1.44
+diff -u -r1.44 Makefile.sub
+--- win32/Makefile.sub	4 Mar 2003 14:12:19 -0000	1.44
++++ win32/Makefile.sub	4 Apr 2003 15:31:47 -0000
+@@ -71,12 +71,6 @@
+ RUBY_SO_NAME = $(RT)-$(RUBY_INSTALL_NAME)$(MAJOR)$(MINOR)
+ !endif
+ 
+-!if !defined(prefix)
+-prefix = /usr
+-!endif
+-!if !defined(DESTDIR)
+-DESTDIR = $(prefix)
+-!endif
+ !if !defined(CFLAGS)
+ CFLAGS = -MD $(DEBUGFLAGS) $(OPTFLAGS) $(PROCESSOR_FLAG)
+ !endif
+@@ -169,7 +163,7 @@
+ 		version.obj \
+ 		$(MISSING)
+ 
+-SCRIPT_ARGS   =	"--dest-dir=$(DESTDIR)" \
++SCRIPT_ARGS   =	"--prefix=$(prefix)" \
+ 		"--make=$(MAKE)" \
+ 		"--mflags=$(MFLAGS)" \
+ 		"--make-flags=$(MAKEFLAGS)"

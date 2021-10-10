@@ -1,0 +1,14 @@
+--- src/main.c~	2001-05-14 18:26:36.000000000 +0900
++++ src/main.c	2002-12-07 22:35:37.000000000 +0900
+@@ -236,2 +236,5 @@
+ 
++static void QuitParent(int sig) {
++    exit(0);
++}
+ inline static void
+@@ -245,5 +248,2 @@
+     if (child) {
+-	static void QuitParent(int sig) {
+-	    exit(0);
+-	}
+ 	signal(SIGTERM, QuitParent);

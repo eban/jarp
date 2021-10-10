@@ -1,0 +1,18 @@
+diff -u1 ash-20011018-1/setmode.c ash-20011018-1-diet/setmode.c
+--- ash-20011018-1/setmode.c	Wed May 17 18:17:22 2000
++++ ash-20011018-1-diet/setmode.c	Sun Jan 20 23:53:16 2002
+@@ -54,2 +54,3 @@
+ #include <unistd.h>
++#include "shell.h"
+ 
+diff -u1 ash-20011018-1/shell.h ash-20011018-1-diet/shell.h
+--- ash-20011018-1/shell.h	Sun Apr 15 22:51:45 2001
++++ ash-20011018-1-diet/shell.h	Sun Jan 20 23:54:02 2002
+@@ -113 +113,7 @@
+ #endif
++
++#ifdef __DIET_LIBC__
++typedef long long quad_t;
++typedef unsigned long long u_quad_t;
++#define __S_ISVTX 01000
++#endif

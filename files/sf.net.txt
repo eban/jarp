@@ -1,0 +1,42 @@
+#! /usr/bin/env ruby
+
+# cp sf.net.cgi ~/.w3m/cgi-bin/
+# chmod +x ~/.w3m/cgi-bin/sf.net.cgi
+# echo 'keymap "x s" GOTO file:///cgi-bin/sf.net.cgi' >> ~/.w3m/keymap
+
+require 'cgi'
+require 'nkf'
+require 'zlib'
+
+
+begin
+  url = ENV['W3M_URL']
+  content_type = ENV['W3M_TYPE']
+  sourcefile = ENV['W3M_SOURCEFILE']
+  body = ''
+  body << "Content-Type: #{content_type}; charset=iso-2022-jp;\n"
+  body << "\n"
+  body << "<base href=\"#{url}\">\n";
+
+  begin
+    Zlib::GzipReader.open(sourcefile) do |r|
+      body << r.read
+    end
+  rescue Zlib::GzipFile::Error
+    body << File.read(sourcefile)
+  end
+  body.gsub!(/\e\$B(.+?)\e\([BJ]/) do
+    CGI::unescapeHTML($&).gsub(/G"/, "G'")
+  end
+  body.gsub!(/<!-- begin OSTG navbar -->.+?<H3>/im, "<H3>")
+  body.gsub!(/<!-- begin OSTG Footer -->.+<!-- done with OSDN Footer -->/im, "")
+  print NKF.nkf('', body).gsub(/(=\?(ISO-2022-JP|UTF-8)\?[QB]\?)(.+?\?=)/i) {
+    NKF.nkf('', $&)
+  }
+rescue Exception => e
+  require 'logger'
+  logger = Logger.new("/tmp/sf.net.log")
+  logger.debug(e.message)
+  logger.debug($@)
+  logger.close
+end

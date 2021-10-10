@@ -1,0 +1,7 @@
+--- extconf.rb.orig	Fri Feb  9 01:14:53 2001
++++ extconf.rb	Tue May 15 23:18:24 2001
+@@ -27,3 +27,3 @@
+    EOF
+-   Dir.foreach('tests') do |x|
++   Dir.foreach((File::dirname($0)||'.') + '/tests') do |x|
+       next if /^\./ =~ x || /(_\.rb|~)$/ =~ x

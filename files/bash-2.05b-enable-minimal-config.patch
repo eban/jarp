@@ -1,0 +1,17 @@
+--- execute_cmd.c.bak	2002-03-18 18:24:22.000000000 +0000
++++ execute_cmd.c	2002-07-24 16:05:55.000000000 +0000
+@@ -288,8 +288,14 @@
+ 	return currently_executing_command->value.Simple->line;
++#if defined (COND_COMMAND)
+       else if (currently_executing_command->type == cm_cond)
+ 	return currently_executing_command->value.Cond->line;
++#endif
++#if defined (DPAREN_ARITHMETIC)
+       else if (currently_executing_command->type == cm_arith)
+ 	return currently_executing_command->value.Arith->line;
++#endif
++#if defined (ARITH_FOR_COMMAND)
+       else if (currently_executing_command->type == cm_arith_for)
+ 	return currently_executing_command->value.ArithFor->line;
++#endif
+       else

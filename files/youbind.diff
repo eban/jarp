@@ -1,0 +1,51 @@
+--- protocol.c.orig	Tue Jun 20 21:08:00 2000
++++ protocol.c	Fri Oct 26 11:53:21 2001
+@@ -177,2 +177,34 @@
+ 
++void
++do_Empty(char *mess)
++{
++    /*
++     * Value of mess is
++     * packet = "EMPT user_ID"         format 1
++     *          "EMPT 0 <user name>"   format 2
++     */
++    UserP   up;
++    StateP  sp = 0L;                  /* for debug_log */
++
++    if( *mess == '0' && *(mess + 1) == ' ' ){    /* format 2 */
++      if(( up = find_user( mess + 2 )) == NULL ){
++	warn_log("Invalid Update: Unknown User = %s\n", mess + 2 );
++	return;
++      }
++    } else {                                     /* format 1 */
++      if((sp = get_id(mess)) == NULL) {
++	warn_log("Invalid Update: Non_ID=%s\n", mess );
++	return;
++      }
++      up = sp->parent;
++    }
++    debug_log("    Update packet: %s [%ld]\n", up->name, (long)sp);
++    up->size = up->time = 0;
++    for (sp = up->stat; sp != NULL; sp = sp->next) {
++      if( sp->state < NOT_USED )
++	send_Status(sp);
++    }
++}
++
+ void parse_mess( char *mess, char *options, char *params[] )
+--- server.c.orig	Tue Jun 20 21:08:00 2000
++++ server.c	Fri Oct 26 11:38:57 2001
+@@ -425,2 +425,4 @@
+       do_Quit( buff + PREFIX_LEN );
++    } else if( strncmp( buff, "EMPT ", 5 ) == 0 ){   /* Empty packet.     */
++      do_Empty( buff + PREFIX_LEN);
+     } else {
+@@ -462,2 +464,3 @@
+     debug_log("periodic: %d\n", times);
++#if 0
+     if (times++ & 1) {                      /* Check spool every two tic. */
+@@ -467,2 +470,3 @@
+     }
++#endif
+     for (upp = &UserList; (up = upp->next) != NULL; upp = up) {

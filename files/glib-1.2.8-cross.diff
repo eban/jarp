@@ -1,0 +1,155 @@
+--- acglib.m4.orig	Sat Jul 17 18:47:53 1999
++++ acglib.m4	Tue Jan 16 01:33:14 2001
+@@ -124,3 +124,15 @@
+ 	done
+-	AC_MSG_RESULT(failed)])
++	AC_MSG_RESULT(failed)],
++[	for glib_sysdef_input in $2 ; do
++		glib_sysdef=`echo $glib_sysdef_input | sed 's/^\([[^:]]*\):.*$/\1/'`
++		glib_default=`echo $glib_sysdef_input | sed 's/^[[^:]]*:\(.*\)$/\1/'`
++		if test $glib_sysdef != $glib_default; then
++			glib_default=" $4$glib_default"
++		else
++			glib_default=
++		fi
++		echo "#define GLIB_SYSDEF_$glib_sysdef$glib_default" >>$glib_sysdefso
++	done
++	AC_MSG_RESULT(failed)]
++	)
+ rm -f confrun.c
+--- configure.in.orig	Thu May 25 09:29:09 2000
++++ configure.in	Tue Jan 16 01:03:14 2001
+@@ -174,4 +174,8 @@
+          AC_MSG_WARN(
++                [No ANSI prototypes found in library. (-std1 didn't work.)]),
++         AC_MSG_RESULT()
++         CFLAGS=$glib_save_CFLAGS
++         AC_MSG_WARN(
+                 [No ANSI prototypes found in library. (-std1 didn't work.)])
+-     )
++     ), AC_MSG_RESULT()
+ )
+@@ -199,8 +203,8 @@
+ 
+-AC_CHECK_SIZEOF(char)
+-AC_CHECK_SIZEOF(short)
+-AC_CHECK_SIZEOF(long)
+-AC_CHECK_SIZEOF(int)
+-AC_CHECK_SIZEOF(void *)
+-AC_CHECK_SIZEOF(long long)
++AC_CHECK_SIZEOF(char, 1)
++AC_CHECK_SIZEOF(short, 2)
++AC_CHECK_SIZEOF(long, 4)
++AC_CHECK_SIZEOF(int, 4)
++AC_CHECK_SIZEOF(void *, 4)
++AC_CHECK_SIZEOF(long long, 8)
+ 
+@@ -222,3 +226,5 @@
+ 	glib_cv_has__inline=no
+-        ,)
++        ,
++	glib_cv_has__inline=no
++	)
+ ])
+@@ -237,3 +243,5 @@
+ 	glib_cv_has__inline__=no
+-        ,)
++        ,
++	glib_cv_has__inline__=no
++	)
+ ])
+@@ -252,3 +260,5 @@
+ 	glib_cv_hasinline=no
+-        ,)
++        ,
++	glib_cv_hasinline=no
++	)
+ ])
+@@ -389,3 +399,5 @@
+ 	glib_cv_sane_realloc=no
+-	,)
++	,
++	glib_cv_sane_realloc=no
++	)
+ ])
+@@ -418,3 +430,5 @@
+ 	glib_cv_va_copy=no
+-	,)
++	,
++	glib_cv_va_copy=no
++	)
+ ])
+@@ -440,3 +454,5 @@
+ 	glib_cv___va_copy=no
+-	,)
++	,
++	glib_cv___va_copy=no
++	)
+ ])
+@@ -462,3 +478,5 @@
+ 	glib_cv_va_val_copy=no
+-	,)
++	,
++	glib_cv_va_val_copy=no
++	)
+ ])
+@@ -551,2 +569,3 @@
+ 			glib_cv_uscore=no,
++			glib_cv_uscore=no
+ 		)
+@@ -792,2 +811,3 @@
+ 				[ac_cv_func_getpwuid_r=yes],
++				[ac_cv_func_getpwuid_r=no],
+ 				[ac_cv_func_getpwuid_r=no])])
+@@ -829,3 +849,5 @@
+ 			[AC_MSG_RESULT(yes)
+-			AC_DEFINE(HAVE_PTHREAD_MUTEX_TRYLOCK_POSIX)])
++			AC_DEFINE(HAVE_PTHREAD_MUTEX_TRYLOCK_POSIX)],
++			[AC_MSG_RESULT(no)]
++			)
+ 		AC_MSG_CHECKING(whether pthread_cond_timedwait is posix like)
+@@ -845,3 +867,5 @@
+ 			[AC_MSG_RESULT(yes)
+-			AC_DEFINE(HAVE_PTHREAD_COND_TIMEDWAIT_POSIX)])
++			AC_DEFINE(HAVE_PTHREAD_COND_TIMEDWAIT_POSIX)],
++			[AC_MSG_RESULT(no)]
++			)
+ 	fi
+--- gutils.c.orig	Fri May 19 18:34:26 2000
++++ gutils.c	Tue Jan 16 01:37:17 2001
+@@ -270,3 +270,3 @@
+ 
+-#ifdef NATIVE_WIN32
++#if defined NATIVE_WIN32 || defined MSDOS
+   if (isalpha (file_name[0]) && file_name[1] == ':')
+@@ -286,3 +286,3 @@
+ 
+-#ifdef NATIVE_WIN32
++#if defined NATIVE_WIN32 || defined MSDOS
+   if (isalpha (file_name[0]) && file_name[1] == ':' && file_name[2] == G_DIR_SEPARATOR)
+@@ -302,3 +302,3 @@
+ 
+-#ifdef NATIVE_WIN32
++#if defined NATIVE_WIN32 || defined MSDOS
+   if (isalpha (file_name[0]) && file_name[1] == ':' && file_name[2] == G_DIR_SEPARATOR)
+@@ -441,3 +441,3 @@
+ 	{
+-#ifndef NATIVE_WIN32
++#if !defined NATIVE_WIN32 && !defined MSDOS
+ 	  g_tmp_dir = g_strdup ("/tmp");
+@@ -539,3 +539,7 @@
+ 	    g_user_name = g_strdup (pw->pw_name);
++#if defined __DJGPP__
++	    g_real_name = "user";
++#else
+ 	    g_real_name = g_strdup (pw->pw_gecos);
++#endif
+ 	    if (!g_home_dir)
+--- gerror.c.orig	Sat Jul 17 18:48:04 1999
++++ gerror.c	Tue Jan 16 01:35:03 2001
+@@ -206,3 +206,5 @@
+   stack_trace_done = FALSE;
++#if defined SIGCHLD
+   signal (SIGCHLD, stack_trace_sigchld);
++#endif
+ 

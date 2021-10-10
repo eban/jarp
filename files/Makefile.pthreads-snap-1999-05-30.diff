@@ -1,0 +1,28 @@
+--- Makefile.orig	Sat May 29 23:48:24 1999
++++ Makefile	Sun Feb  4 15:20:25 2001
+@@ -20,11 +20,11 @@
+ 
+-RM	= erase
++RM	= rm
+ 
+-CC	= g++
++CC	= i686-pc-cygwin-g++ -bmingw
+ 
+-AR	= ar
++AR	= i686-pc-cygwin-ar
+ 
+-LD	= gcc -mdll -e _DllMain@12
++LD	= i686-pc-cygwin-gcc -mdll -e _DllMain@12
+ 
+-OPT	= -g -O2
++OPT	= -Os
+ 
+@@ -49,4 +49,6 @@
+ 
+-$(LIB): $(DLL)
+-	dlltool --def $(DLL:.dll=.def) --output-lib $@ --dllname $(DLL)
++#$(LIB): $(DLL)
++#	dlltool --def $(DLL:.dll=.def) --output-lib $@ --dllname $(DLL)
++$(LIB): $(OBJS)
++	$(AR) rcv $(LIB) $(OBJS)
+ 

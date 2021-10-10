@@ -1,0 +1,14 @@
+--- src/paste.c.orig	Sun Apr  4 04:42:47 1999
++++ src/paste.c	Sun Feb 24 23:27:33 2002
+@@ -56,9 +56,7 @@
+ 
+-static FILE dummy_closed;
+ /* Element marking a file that has reached EOF and been closed. */
+-#define CLOSED (&dummy_closed)
++#define CLOSED ((FILE *)-1)
+ 
+-static FILE dummy_endlist;
+ /* Element marking end of list of open files. */
+-#define ENDLIST (&dummy_endlist)
++#define ENDLIST ((FILE *)-2)
+ 

@@ -1,0 +1,106 @@
+Section "Module"
+    Load        "dbe"  	# Double buffer extension
+
+    SubSection  "extmod"
+    Option    "omit xfree86-dga"   # don't initialise the DGA extension
+    EndSubSection
+
+    Load        "type1"
+    Load        "speedo"
+    Load        "xtt"
+
+EndSection
+
+
+Section "Files"
+    RgbPath	"/usr/X11R6/lib/X11/rgb"
+    FontPath   "/usr/X11R6/lib/X11/fonts/local/:unscaled"
+    FontPath   "/usr/X11R6/lib/X11/fonts/misc/:unscaled"
+    FontPath   "/usr/X11R6/lib/X11/fonts/75dpi/:unscaled"
+    FontPath   "/usr/X11R6/lib/X11/fonts/100dpi/:unscaled"
+    FontPath   "/usr/X11R6/lib/X11/fonts/Type1/"
+    FontPath   "/usr/X11R6/lib/X11/fonts/Speedo/"
+    FontPath   "/usr/X11R6/lib/X11/fonts/TrueType/"
+    FontPath   "/usr/X11R6/lib/X11/fonts/freefont/"
+    FontPath   "/usr/X11R6/lib/X11/fonts/misc/"
+    FontPath   "/usr/X11R6/lib/X11/fonts/75dpi/"
+    FontPath   "/usr/X11R6/lib/X11/fonts/100dpi/"
+
+EndSection
+
+
+Section "ServerFlags"
+EndSection
+
+
+Section "InputDevice"
+    Identifier	"Keyboard1"
+    Driver	"Keyboard"
+    Option "AutoRepeat" "500 30"
+
+#    Option "XkbDisable"
+
+    Option "XkbRules"	"xfree86"
+    Option "XkbModel"	"pc104"
+    Option "XkbLayout"	"us"
+EndSection
+
+
+Section "InputDevice"
+    Identifier	"Mouse1"
+    Driver	"mouse"
+    Option "Protocol"    "Microsoft"
+    Option "Device"      "/dev/mouse"
+EndSection
+
+
+Section "Monitor"
+	#DisplaySize	  320   250	# mm
+	Identifier   "Monitor0"
+	VendorName   "SHP"
+	ModelName    "LL-T1610W"
+	Option	    "DPMS"
+EndSection
+
+
+Section "Device"
+	Identifier  "Card0"
+	Driver      "mga"
+	VendorName  "Matrox"
+	BoardName   "MGA 2064W"
+	BusID       "PCI:0:12:0"
+EndSection
+
+
+Section "Screen"
+    Identifier  "Screen 1"
+    Device      "Card0"
+    Monitor     "Monitor0"
+    DefaultDepth 16
+
+    Subsection "Display"
+        Depth       8
+        Modes        "1600x1200" "1280x1024" "1152x864" "1024x768" "800x600" "640x480" "352x240"
+        ViewPort    0 0
+    EndSubsection
+    Subsection "Display"
+        Depth       16
+        Modes        "1600x1200" "1280x1024" "1152x864" "1024x768" "800x600" "640x480" "352x240"
+        ViewPort    0 0
+    EndSubsection
+    Subsection "Display"
+        Depth       24
+        Modes       "640x480" "800x600"
+        ViewPort    0 0
+    EndSubsection
+EndSection
+
+
+Section "ServerLayout"
+    Identifier  "Simple Layout"
+    Screen "Screen 1"
+
+    InputDevice "Mouse1" "CorePointer"
+    InputDevice "Keyboard1" "CoreKeyboard"
+
+EndSection

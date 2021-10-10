@@ -1,0 +1,6 @@
+--- configure.ac.orig	2001-09-28 01:34:45.000000000 +0000
++++ configure.ac	2002-09-01 10:57:01.000000000 +0000
+@@ -422,2 +422,3 @@
+   LIBS=""
++  AC_CHECK_LIB(termcap, tgetent)
+   AC_SEARCH_LIBS(readline, readline,,,)

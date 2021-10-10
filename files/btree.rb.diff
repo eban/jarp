@@ -1,0 +1,31 @@
+--- tests/btree.rb.orig	Tue Aug 28 22:33:49 2001
++++ tests/btree.rb	Sun Jan  6 18:20:42 2002
+@@ -1,2 +1,4 @@
+ #!/usr/bin/ruby
++$stdout.sync = true
++$stderr.sync = true
+ $LOAD_PATH.unshift *%w{../src src tests}
+@@ -39,3 +41,3 @@
+       assert_equal(nil, $bdb["gamma"], "<retrieve nil>")
+-      assert($bdb.key?("alpha"), "<has key>")
++      assert($bdb.key?("alpha") == "alpha", "<has key>")
+       assert_equal(false, $bdb.key?("unknown"), "<has unknown key>")
+@@ -203,2 +205,3 @@
+       assert_equal("KLMTU", $bdb["yellow"], "<partial get>")
++      $bdb.close
+    end
+@@ -226,3 +229,4 @@
+       $bdb = nil
+-      assert_kind_of(BDB::Btree, BDB::Unknown.open("tmp/aa", nil, "r"), "<unknown>")
++      assert_kind_of(BDB::Btree, unknown = BDB::Unknown.open("tmp/aa", nil, "r"), "<unknown>")
++      unknown.close
+    end
+@@ -292,2 +296,3 @@
+       assert_equal(nil, $bdb.close, "<close>")
++      $env.close
+    end
+@@ -358,3 +363,3 @@
+ 	 $hash.each_key do |k|
+-	    assert($bdb.key?(k), "<key>")
++	    assert($bdb.key?(k) == k.reverse, "<key>")
+ 	 end

@@ -1,0 +1,35 @@
+--- nt/configure.bat.orig	Tue Mar  6 19:32:08 2001
++++ nt/configure.bat	Sat Mar 17 23:11:34 2001
+@@ -204,8 +204,8 @@
+ echo {PIMAGE_SECTION_HEADER pSection = IMAGE_FIRST_SECTION(pHeader);} >>junk.c
+-if (%nocygwin%) == (Y) goto checkw32api1
++if (%nocygwin%) == (Y) goto check1
+ set cf=%usercflags%
+-goto checkw32api2
+-:checkw32api1
++goto check2
++:check1
+ set cf=%usercflags% -mno-cygwin
+-:checkw32api2
++:check2
+ echo on
+--- nt/gmake.defs.orig	Mon Feb 26 17:59:42 2001
++++ nt/gmake.defs	Sun Mar 18 01:06:02 2001
+@@ -76,3 +76,3 @@
+ SHELLTYPE=SH
+-SETLOADPATH=EMACSLOADPATH=$(CURDIR)/../lisp
++SETLOADPATH=EMACSLOADPATH=$(subst \,/,$(shell cygpath -w $(CURDIR)))/../lisp
+ endif
+@@ -103,3 +103,3 @@
+ ifndef INSTALL_DIR
+-INSTALL_DIR     = $(CURDIR)/..
++INSTALL_DIR     = $(subst \,/,$(shell cygpath -w $(CURDIR)))/..
+ endif
+--- leim/makefile.w32-in.orig	Wed Feb  7 00:59:00 2001
++++ leim/makefile.w32-in	Sun Mar 18 01:33:32 2001
+@@ -34,2 +34,5 @@
+ buildlisppath=$(CURDIR)/$(dot)$(dot)/lisp
++ifdef USING_SH
++buildlisppath := $(subst \,/,$(shell cygpath -w $(buildlisppath)))
++endif
+ 

@@ -1,0 +1,11 @@
+--- config.rb.orig	Sat Feb 24 00:00:00 2001
++++ config.rb	Sat Mar  3 19:24:22 2001
+@@ -53,7 +53,7 @@
+ 
+   $RESCC = <<STR
+ resource.o: $(srcdir)/resource.rc $(srcdir)/resource.h
+-	#{CONFIG['WINDRES']} --include-dir $(srcdir) --define USE_WINDRES $(srcdir)/resource.rc resource.o
++	#{CONFIG['WINDRES']} --preprocessor '$(CC) -E -xc-header -DRC_INVOKE #{CONFIG["MWIN32"]||""}' --include-dir $(srcdir) --define USE_WINDRES $(srcdir)/resource.rc resource.o
+ STR
+ 
+ end

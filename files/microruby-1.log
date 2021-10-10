@@ -1,0 +1,627 @@
+dir.c:232: parse error before "DIR"
+dir.c:232: warning: data definition has no type or storage class
+dir.c:233: parse error before '{' token
+dir.c: In function `dir_s_new':
+dir.c:245: `free_dir' undeclared (first use in this function)
+dir.c:245: (Each undeclared identifier is reported only once
+dir.c:245: for each function it appears in.)
+dir.c: In function `dir_initialize':
+dir.c:256: `DIR' undeclared (first use in this function)
+dir.c:256: `dirp' undeclared (first use in this function)
+dir.c: In function `dir_s_open':
+dir.c:280: `free_dir' undeclared (first use in this function)
+dir.c: In function `dir_read':
+dir.c:306: `DIR' undeclared (first use in this function)
+dir.c:306: `dirp' undeclared (first use in this function)
+dir.c:309: parse error before ')' token
+dir.c:311: warning: assignment makes pointer from integer without a cast
+dir.c:313: dereferencing pointer to incomplete type
+dir.c:313: dereferencing pointer to incomplete type
+dir.c: In function `dir_each':
+dir.c:327: `DIR' undeclared (first use in this function)
+dir.c:327: `dirp' undeclared (first use in this function)
+dir.c:330: parse error before ')' token
+dir.c:331: warning: assignment makes pointer from integer without a cast
+dir.c:331: warning: assignment makes pointer from integer without a cast
+dir.c:332: dereferencing pointer to incomplete type
+dir.c:332: dereferencing pointer to incomplete type
+dir.c: In function `dir_seek':
+dir.c:358: `DIR' undeclared (first use in this function)
+dir.c:358: `dirp' undeclared (first use in this function)
+dir.c: In function `dir_rewind':
+dir.c:373: `DIR' undeclared (first use in this function)
+dir.c:373: `dirp' undeclared (first use in this function)
+dir.c:375: parse error before ')' token
+dir.c: In function `dir_close':
+dir.c:384: `DIR' undeclared (first use in this function)
+dir.c:384: `dirp' undeclared (first use in this function)
+dir.c:386: parse error before ')' token
+dir.c: In function `rb_glob_helper':
+dir.c:605: `DIR' undeclared (first use in this function)
+dir.c:605: `dirp' undeclared (first use in this function)
+dir.c:649: warning: assignment makes pointer from integer without a cast
+dir.c:649: warning: assignment makes pointer from integer without a cast
+dir.c:651: dereferencing pointer to incomplete type
+dir.c:651: dereferencing pointer to incomplete type
+dir.c:653: dereferencing pointer to incomplete type
+dir.c:654: dereferencing pointer to incomplete type
+dir.c:667: dereferencing pointer to incomplete type
+dir.c:668: dereferencing pointer to incomplete type
+dir.c:669: dereferencing pointer to incomplete type
+dln.c: In function `dln_find_1':
+dln.c:1675: `X_OK' undeclared (first use in this function)
+dln.c:1675: (Each undeclared identifier is reported only once
+dln.c:1675: for each function it appears in.)
+eval.c:81: redefinition of `struct timeval'
+eval.c:5336: `DLEXT' undeclared here (not in a function)
+eval.c:5336: initializer element is not constant
+eval.c:5336: (near initialization for `loadable_ext[1]')
+eval.c: In function `rb_f_require':
+eval.c:5403: `DLEXT' undeclared (first use in this function)
+eval.c:5403: (Each undeclared identifier is reported only once
+eval.c:5403: for each function it appears in.)
+eval.c: In function `mnew':
+eval.c:6614: `free' undeclared (first use in this function)
+eval.c: In function `method_unbind':
+eval.c:6634: `free' undeclared (first use in this function)
+eval.c: In function `method_clone':
+eval.c:6677: `free' undeclared (first use in this function)
+eval.c: In function `umethod_bind':
+eval.c:6744: `free' undeclared (first use in this function)
+eval.c: In function `thread_free':
+eval.c:7182: `free' used prior to declaration
+eval.c: In function `rb_thread_start_0':
+eval.c:8345: `free' used prior to declaration
+eval.c: In function `thgroup_s_new':
+eval.c:8834: `free' undeclared (first use in this function)
+In file included from /usr/include/sys/select.h:45,
+                 from /usr/include/sys/types.h:215,
+                 from file.c:66:
+/usr/include/bits/time.h:68: redefinition of `struct timeval'
+file.c: In function `stat_new_0':
+file.c:124: `free' undeclared (first use in this function)
+file.c:124: (Each undeclared identifier is reported only once
+file.c:124: for each function it appears in.)
+file.c: At top level:
+file.c:396: parse error before "GETGROUPS_T"
+file.c:396: warning: data definition has no type or storage class
+file.c: In function `eaccess':
+file.c:438: `X_OK' undeclared (first use in this function)
+file.c: In function `test_r':
+file.c:605: `R_OK' undeclared (first use in this function)
+file.c: In function `test_R':
+file.c:614: `R_OK' undeclared (first use in this function)
+file.c: In function `test_w':
+file.c:623: `W_OK' undeclared (first use in this function)
+file.c: In function `test_W':
+file.c:632: `W_OK' undeclared (first use in this function)
+file.c: In function `test_x':
+file.c:641: `X_OK' undeclared (first use in this function)
+file.c: In function `test_X':
+file.c:650: `X_OK' undeclared (first use in this function)
+file.c: In function `rb_file_s_expand_path':
+file.c:1240: warning: initialization makes pointer from integer without a cast
+gc.c: In function `ruby_xmalloc':
+gc.c:97: warning: assignment makes pointer from integer without a cast
+gc.c:100: warning: assignment makes pointer from integer without a cast
+gc.c: In function `ruby_xrealloc':
+gc.c:137: warning: assignment makes pointer from integer without a cast
+gc.c:140: warning: assignment makes pointer from integer without a cast
+hash.c: In function `env_delete':
+hash.c:881: warning: assignment makes pointer from integer without a cast
+hash.c: In function `rb_f_getenv':
+hash.c:914: warning: assignment makes pointer from integer without a cast
+hash.c: In function `env_fetch':
+hash.c:937: warning: assignment makes pointer from integer without a cast
+hash.c: In function `env_indexes':
+hash.c:1436: warning: assignment makes pointer from integer without a cast
+io.c:48: redefinition of `struct timeval'
+io.c: In function `rb_io_mode_flags2':
+io.c:1281: `O_RDONLY' undeclared (first use in this function)
+io.c:1281: (Each undeclared identifier is reported only once
+io.c:1281: for each function it appears in.)
+io.c:1281: `O_WRONLY' undeclared (first use in this function)
+io.c:1281: `O_RDWR' undeclared (first use in this function)
+io.c: In function `rb_io_flags_mode':
+io.c:1309: `O_RDONLY' undeclared (first use in this function)
+io.c:1309: `O_WRONLY' undeclared (first use in this function)
+io.c:1309: `O_RDWR' undeclared (first use in this function)
+io.c: In function `Init_IO':
+io.c:3548: `O_RDONLY' undeclared (first use in this function)
+io.c:3549: `O_WRONLY' undeclared (first use in this function)
+io.c:3550: `O_RDWR' undeclared (first use in this function)
+io.c:3551: `O_APPEND' undeclared (first use in this function)
+io.c:3552: `O_CREAT' undeclared (first use in this function)
+io.c:3553: `O_EXCL' undeclared (first use in this function)
+io.c:3561: `O_TRUNC' undeclared (first use in this function)
+lex.c:3: field `state' has incomplete type
+lex.c: In function `rb_reserved_word':
+lex.c:80: `kEND' undeclared (first use in this function)
+lex.c:80: (Each undeclared identifier is reported only once
+lex.c:80: for each function it appears in.)
+lex.c:80: initializer element is not constant
+lex.c:80: (near initialization for `wordlist[6].id')
+lex.c:80: initializer element is not constant
+lex.c:80: (near initialization for `wordlist[6].state')
+lex.c:80: `EXPR_END' undeclared (first use in this function)
+lex.c:80: warning: excess elements in struct initializer
+lex.c:80: warning: (near initialization for `wordlist[6]')
+lex.c:80: initializer element is not constant
+lex.c:80: (near initialization for `wordlist[6]')
+lex.c:81: `kELSE' undeclared (first use in this function)
+lex.c:81: initializer element is not constant
+lex.c:81: (near initialization for `wordlist[7].id')
+lex.c:81: initializer element is not constant
+lex.c:81: (near initialization for `wordlist[7].state')
+lex.c:81: `EXPR_BEG' undeclared (first use in this function)
+lex.c:81: warning: excess elements in struct initializer
+lex.c:81: warning: (near initialization for `wordlist[7]')
+lex.c:81: initializer element is not constant
+lex.c:81: (near initialization for `wordlist[7]')
+lex.c:82: `kCASE' undeclared (first use in this function)
+lex.c:82: initializer element is not constant
+lex.c:82: (near initialization for `wordlist[8].id')
+lex.c:82: initializer element is not constant
+lex.c:82: (near initialization for `wordlist[8].state')
+lex.c:82: warning: excess elements in struct initializer
+lex.c:82: warning: (near initialization for `wordlist[8]')
+lex.c:82: initializer element is not constant
+lex.c:82: (near initialization for `wordlist[8]')
+lex.c:83: `kENSURE' undeclared (first use in this function)
+lex.c:83: initializer element is not constant
+lex.c:83: (near initialization for `wordlist[9].id')
+lex.c:83: initializer element is not constant
+lex.c:83: (near initialization for `wordlist[9].state')
+lex.c:83: warning: excess elements in struct initializer
+lex.c:83: warning: (near initialization for `wordlist[9]')
+lex.c:83: initializer element is not constant
+lex.c:83: (near initialization for `wordlist[9]')
+lex.c:84: `kMODULE' undeclared (first use in this function)
+lex.c:84: initializer element is not constant
+lex.c:84: (near initialization for `wordlist[10].id')
+lex.c:84: initializer element is not constant
+lex.c:84: (near initialization for `wordlist[10].state')
+lex.c:84: warning: excess elements in struct initializer
+lex.c:84: warning: (near initialization for `wordlist[10]')
+lex.c:84: initializer element is not constant
+lex.c:84: (near initialization for `wordlist[10]')
+lex.c:85: `kELSIF' undeclared (first use in this function)
+lex.c:85: initializer element is not constant
+lex.c:85: (near initialization for `wordlist[11].id')
+lex.c:85: initializer element is not constant
+lex.c:85: (near initialization for `wordlist[11].state')
+lex.c:85: warning: excess elements in struct initializer
+lex.c:85: warning: (near initialization for `wordlist[11]')
+lex.c:85: initializer element is not constant
+lex.c:85: (near initialization for `wordlist[11]')
+lex.c:86: `kDEF' undeclared (first use in this function)
+lex.c:86: initializer element is not constant
+lex.c:86: (near initialization for `wordlist[12].id')
+lex.c:86: initializer element is not constant
+lex.c:86: (near initialization for `wordlist[12].state')
+lex.c:86: `EXPR_FNAME' undeclared (first use in this function)
+lex.c:86: warning: excess elements in struct initializer
+lex.c:86: warning: (near initialization for `wordlist[12]')
+lex.c:86: initializer element is not constant
+lex.c:86: (near initialization for `wordlist[12]')
+lex.c:87: `kRESCUE' undeclared (first use in this function)
+lex.c:87: initializer element is not constant
+lex.c:87: (near initialization for `wordlist[13].id')
+lex.c:87: `kRESCUE_MOD' undeclared (first use in this function)
+lex.c:87: initializer element is not constant
+lex.c:87: (near initialization for `wordlist[13].state')
+lex.c:87: `EXPR_MID' undeclared (first use in this function)
+lex.c:87: warning: excess elements in struct initializer
+lex.c:87: warning: (near initialization for `wordlist[13]')
+lex.c:87: initializer element is not constant
+lex.c:87: (near initialization for `wordlist[13]')
+lex.c:88: `kNOT' undeclared (first use in this function)
+lex.c:88: initializer element is not constant
+lex.c:88: (near initialization for `wordlist[14].id')
+lex.c:88: initializer element is not constant
+lex.c:88: (near initialization for `wordlist[14].state')
+lex.c:88: warning: excess elements in struct initializer
+lex.c:88: warning: (near initialization for `wordlist[14]')
+lex.c:88: initializer element is not constant
+lex.c:88: (near initialization for `wordlist[14]')
+lex.c:89: `kTHEN' undeclared (first use in this function)
+lex.c:89: initializer element is not constant
+lex.c:89: (near initialization for `wordlist[15].id')
+lex.c:89: initializer element is not constant
+lex.c:89: (near initialization for `wordlist[15].state')
+lex.c:89: warning: excess elements in struct initializer
+lex.c:89: warning: (near initialization for `wordlist[15]')
+lex.c:89: initializer element is not constant
+lex.c:89: (near initialization for `wordlist[15]')
+lex.c:90: `kYIELD' undeclared (first use in this function)
+lex.c:90: initializer element is not constant
+lex.c:90: (near initialization for `wordlist[16].id')
+lex.c:90: initializer element is not constant
+lex.c:90: (near initialization for `wordlist[16].state')
+lex.c:90: `EXPR_ARG' undeclared (first use in this function)
+lex.c:90: warning: excess elements in struct initializer
+lex.c:90: warning: (near initialization for `wordlist[16]')
+lex.c:90: initializer element is not constant
+lex.c:90: (near initialization for `wordlist[16]')
+lex.c:91: `kFOR' undeclared (first use in this function)
+lex.c:91: initializer element is not constant
+lex.c:91: (near initialization for `wordlist[17].id')
+lex.c:91: initializer element is not constant
+lex.c:91: (near initialization for `wordlist[17].state')
+lex.c:91: warning: excess elements in struct initializer
+lex.c:91: warning: (near initialization for `wordlist[17]')
+lex.c:91: initializer element is not constant
+lex.c:91: (near initialization for `wordlist[17]')
+lex.c:92: `kSELF' undeclared (first use in this function)
+lex.c:92: initializer element is not constant
+lex.c:92: (near initialization for `wordlist[18].id')
+lex.c:92: initializer element is not constant
+lex.c:92: (near initialization for `wordlist[18].state')
+lex.c:92: warning: excess elements in struct initializer
+lex.c:92: warning: (near initialization for `wordlist[18]')
+lex.c:92: initializer element is not constant
+lex.c:92: (near initialization for `wordlist[18]')
+lex.c:93: `kFALSE' undeclared (first use in this function)
+lex.c:93: initializer element is not constant
+lex.c:93: (near initialization for `wordlist[19].id')
+lex.c:93: initializer element is not constant
+lex.c:93: (near initialization for `wordlist[19].state')
+lex.c:93: warning: excess elements in struct initializer
+lex.c:93: warning: (near initialization for `wordlist[19]')
+lex.c:93: initializer element is not constant
+lex.c:93: (near initialization for `wordlist[19]')
+lex.c:94: `kRETRY' undeclared (first use in this function)
+lex.c:94: initializer element is not constant
+lex.c:94: (near initialization for `wordlist[20].id')
+lex.c:94: initializer element is not constant
+lex.c:94: (near initialization for `wordlist[20].state')
+lex.c:94: warning: excess elements in struct initializer
+lex.c:94: warning: (near initialization for `wordlist[20]')
+lex.c:94: initializer element is not constant
+lex.c:94: (near initialization for `wordlist[20]')
+lex.c:95: `kRETURN' undeclared (first use in this function)
+lex.c:95: initializer element is not constant
+lex.c:95: (near initialization for `wordlist[21].id')
+lex.c:95: initializer element is not constant
+lex.c:95: (near initialization for `wordlist[21].state')
+lex.c:95: warning: excess elements in struct initializer
+lex.c:95: warning: (near initialization for `wordlist[21]')
+lex.c:95: initializer element is not constant
+lex.c:95: (near initialization for `wordlist[21]')
+lex.c:96: `kTRUE' undeclared (first use in this function)
+lex.c:96: initializer element is not constant
+lex.c:96: (near initialization for `wordlist[22].id')
+lex.c:96: initializer element is not constant
+lex.c:96: (near initialization for `wordlist[22].state')
+lex.c:96: warning: excess elements in struct initializer
+lex.c:96: warning: (near initialization for `wordlist[22]')
+lex.c:96: initializer element is not constant
+lex.c:96: (near initialization for `wordlist[22]')
+lex.c:97: `kIF' undeclared (first use in this function)
+lex.c:97: initializer element is not constant
+lex.c:97: (near initialization for `wordlist[23].id')
+lex.c:97: `kIF_MOD' undeclared (first use in this function)
+lex.c:97: initializer element is not constant
+lex.c:97: (near initialization for `wordlist[23].state')
+lex.c:97: warning: excess elements in struct initializer
+lex.c:97: warning: (near initialization for `wordlist[23]')
+lex.c:97: initializer element is not constant
+lex.c:97: (near initialization for `wordlist[23]')
+lex.c:98: `kDEFINED' undeclared (first use in this function)
+lex.c:98: initializer element is not constant
+lex.c:98: (near initialization for `wordlist[24].id')
+lex.c:98: initializer element is not constant
+lex.c:98: (near initialization for `wordlist[24].state')
+lex.c:98: warning: excess elements in struct initializer
+lex.c:98: warning: (near initialization for `wordlist[24]')
+lex.c:98: initializer element is not constant
+lex.c:98: (near initialization for `wordlist[24]')
+lex.c:99: `kSUPER' undeclared (first use in this function)
+lex.c:99: initializer element is not constant
+lex.c:99: (near initialization for `wordlist[25].id')
+lex.c:99: initializer element is not constant
+lex.c:99: (near initialization for `wordlist[25].state')
+lex.c:99: warning: excess elements in struct initializer
+lex.c:99: warning: (near initialization for `wordlist[25]')
+lex.c:99: initializer element is not constant
+lex.c:99: (near initialization for `wordlist[25]')
+lex.c:100: `kUNDEF' undeclared (first use in this function)
+lex.c:100: initializer element is not constant
+lex.c:100: (near initialization for `wordlist[26].id')
+lex.c:100: initializer element is not constant
+lex.c:100: (near initialization for `wordlist[26].state')
+lex.c:100: warning: excess elements in struct initializer
+lex.c:100: warning: (near initialization for `wordlist[26]')
+lex.c:100: initializer element is not constant
+lex.c:100: (near initialization for `wordlist[26]')
+lex.c:101: `kBREAK' undeclared (first use in this function)
+lex.c:101: initializer element is not constant
+lex.c:101: (near initialization for `wordlist[27].id')
+lex.c:101: initializer element is not constant
+lex.c:101: (near initialization for `wordlist[27].state')
+lex.c:101: warning: excess elements in struct initializer
+lex.c:101: warning: (near initialization for `wordlist[27]')
+lex.c:101: initializer element is not constant
+lex.c:101: (near initialization for `wordlist[27]')
+lex.c:102: `kIN' undeclared (first use in this function)
+lex.c:102: initializer element is not constant
+lex.c:102: (near initialization for `wordlist[28].id')
+lex.c:102: initializer element is not constant
+lex.c:102: (near initialization for `wordlist[28].state')
+lex.c:102: warning: excess elements in struct initializer
+lex.c:102: warning: (near initialization for `wordlist[28]')
+lex.c:102: initializer element is not constant
+lex.c:102: (near initialization for `wordlist[28]')
+lex.c:103: `kDO' undeclared (first use in this function)
+lex.c:103: initializer element is not constant
+lex.c:103: (near initialization for `wordlist[29].id')
+lex.c:103: initializer element is not constant
+lex.c:103: (near initialization for `wordlist[29].state')
+lex.c:103: warning: excess elements in struct initializer
+lex.c:103: warning: (near initialization for `wordlist[29]')
+lex.c:103: initializer element is not constant
+lex.c:103: (near initialization for `wordlist[29]')
+lex.c:104: `kNIL' undeclared (first use in this function)
+lex.c:104: initializer element is not constant
+lex.c:104: (near initialization for `wordlist[30].id')
+lex.c:104: initializer element is not constant
+lex.c:104: (near initialization for `wordlist[30].state')
+lex.c:104: warning: excess elements in struct initializer
+lex.c:104: warning: (near initialization for `wordlist[30]')
+lex.c:104: initializer element is not constant
+lex.c:104: (near initialization for `wordlist[30]')
+lex.c:105: `kUNTIL' undeclared (first use in this function)
+lex.c:105: initializer element is not constant
+lex.c:105: (near initialization for `wordlist[31].id')
+lex.c:105: `kUNTIL_MOD' undeclared (first use in this function)
+lex.c:105: initializer element is not constant
+lex.c:105: (near initialization for `wordlist[31].state')
+lex.c:105: warning: excess elements in struct initializer
+lex.c:105: warning: (near initialization for `wordlist[31]')
+lex.c:105: initializer element is not constant
+lex.c:105: (near initialization for `wordlist[31]')
+lex.c:106: `kUNLESS' undeclared (first use in this function)
+lex.c:106: initializer element is not constant
+lex.c:106: (near initialization for `wordlist[32].id')
+lex.c:106: `kUNLESS_MOD' undeclared (first use in this function)
+lex.c:106: initializer element is not constant
+lex.c:106: (near initialization for `wordlist[32].state')
+lex.c:106: warning: excess elements in struct initializer
+lex.c:106: warning: (near initialization for `wordlist[32]')
+lex.c:106: initializer element is not constant
+lex.c:106: (near initialization for `wordlist[32]')
+lex.c:107: `kOR' undeclared (first use in this function)
+lex.c:107: initializer element is not constant
+lex.c:107: (near initialization for `wordlist[33].id')
+lex.c:107: initializer element is not constant
+lex.c:107: (near initialization for `wordlist[33].state')
+lex.c:107: warning: excess elements in struct initializer
+lex.c:107: warning: (near initialization for `wordlist[33]')
+lex.c:107: initializer element is not constant
+lex.c:107: (near initialization for `wordlist[33]')
+lex.c:108: `kNEXT' undeclared (first use in this function)
+lex.c:108: initializer element is not constant
+lex.c:108: (near initialization for `wordlist[34].id')
+lex.c:108: initializer element is not constant
+lex.c:108: (near initialization for `wordlist[34].state')
+lex.c:108: warning: excess elements in struct initializer
+lex.c:108: warning: (near initialization for `wordlist[34]')
+lex.c:108: initializer element is not constant
+lex.c:108: (near initialization for `wordlist[34]')
+lex.c:109: `kWHEN' undeclared (first use in this function)
+lex.c:109: initializer element is not constant
+lex.c:109: (near initialization for `wordlist[35].id')
+lex.c:109: initializer element is not constant
+lex.c:109: (near initialization for `wordlist[35].state')
+lex.c:109: warning: excess elements in struct initializer
+lex.c:109: warning: (near initialization for `wordlist[35]')
+lex.c:109: initializer element is not constant
+lex.c:109: (near initialization for `wordlist[35]')
+lex.c:110: `kREDO' undeclared (first use in this function)
+lex.c:110: initializer element is not constant
+lex.c:110: (near initialization for `wordlist[36].id')
+lex.c:110: initializer element is not constant
+lex.c:110: (near initialization for `wordlist[36].state')
+lex.c:110: warning: excess elements in struct initializer
+lex.c:110: warning: (near initialization for `wordlist[36]')
+lex.c:110: initializer element is not constant
+lex.c:110: (near initialization for `wordlist[36]')
+lex.c:111: `kAND' undeclared (first use in this function)
+lex.c:111: initializer element is not constant
+lex.c:111: (near initialization for `wordlist[37].id')
+lex.c:111: initializer element is not constant
+lex.c:111: (near initialization for `wordlist[37].state')
+lex.c:111: warning: excess elements in struct initializer
+lex.c:111: warning: (near initialization for `wordlist[37]')
+lex.c:111: initializer element is not constant
+lex.c:111: (near initialization for `wordlist[37]')
+lex.c:112: `kBEGIN' undeclared (first use in this function)
+lex.c:112: initializer element is not constant
+lex.c:112: (near initialization for `wordlist[38].id')
+lex.c:112: initializer element is not constant
+lex.c:112: (near initialization for `wordlist[38].state')
+lex.c:112: warning: excess elements in struct initializer
+lex.c:112: warning: (near initialization for `wordlist[38]')
+lex.c:112: initializer element is not constant
+lex.c:112: (near initialization for `wordlist[38]')
+lex.c:113: `k__LINE__' undeclared (first use in this function)
+lex.c:113: initializer element is not constant
+lex.c:113: (near initialization for `wordlist[39].id')
+lex.c:113: initializer element is not constant
+lex.c:113: (near initialization for `wordlist[39].state')
+lex.c:113: warning: excess elements in struct initializer
+lex.c:113: warning: (near initialization for `wordlist[39]')
+lex.c:113: initializer element is not constant
+lex.c:113: (near initialization for `wordlist[39]')
+lex.c:114: `kCLASS' undeclared (first use in this function)
+lex.c:114: initializer element is not constant
+lex.c:114: (near initialization for `wordlist[40].id')
+lex.c:114: initializer element is not constant
+lex.c:114: (near initialization for `wordlist[40].state')
+lex.c:114: `EXPR_CLASS' undeclared (first use in this function)
+lex.c:114: warning: excess elements in struct initializer
+lex.c:114: warning: (near initialization for `wordlist[40]')
+lex.c:114: initializer element is not constant
+lex.c:114: (near initialization for `wordlist[40]')
+lex.c:115: `k__FILE__' undeclared (first use in this function)
+lex.c:115: initializer element is not constant
+lex.c:115: (near initialization for `wordlist[41].id')
+lex.c:115: initializer element is not constant
+lex.c:115: (near initialization for `wordlist[41].state')
+lex.c:115: warning: excess elements in struct initializer
+lex.c:115: warning: (near initialization for `wordlist[41]')
+lex.c:115: initializer element is not constant
+lex.c:115: (near initialization for `wordlist[41]')
+lex.c:116: `klEND' undeclared (first use in this function)
+lex.c:116: initializer element is not constant
+lex.c:116: (near initialization for `wordlist[42].id')
+lex.c:116: initializer element is not constant
+lex.c:116: (near initialization for `wordlist[42].state')
+lex.c:116: warning: excess elements in struct initializer
+lex.c:116: warning: (near initialization for `wordlist[42]')
+lex.c:116: initializer element is not constant
+lex.c:116: (near initialization for `wordlist[42]')
+lex.c:117: `klBEGIN' undeclared (first use in this function)
+lex.c:117: initializer element is not constant
+lex.c:117: (near initialization for `wordlist[43].id')
+lex.c:117: initializer element is not constant
+lex.c:117: (near initialization for `wordlist[43].state')
+lex.c:117: warning: excess elements in struct initializer
+lex.c:117: warning: (near initialization for `wordlist[43]')
+lex.c:117: initializer element is not constant
+lex.c:117: (near initialization for `wordlist[43]')
+lex.c:118: `kWHILE' undeclared (first use in this function)
+lex.c:118: initializer element is not constant
+lex.c:118: (near initialization for `wordlist[44].id')
+lex.c:118: `kWHILE_MOD' undeclared (first use in this function)
+lex.c:118: initializer element is not constant
+lex.c:118: (near initialization for `wordlist[44].state')
+lex.c:118: warning: excess elements in struct initializer
+lex.c:118: warning: (near initialization for `wordlist[44]')
+lex.c:118: initializer element is not constant
+lex.c:118: (near initialization for `wordlist[44]')
+lex.c:119: initializer element is not constant
+lex.c:119: (near initialization for `wordlist[45]')
+lex.c:119: initializer element is not constant
+lex.c:119: (near initialization for `wordlist[46]')
+lex.c:119: initializer element is not constant
+lex.c:119: (near initialization for `wordlist[47]')
+lex.c:119: initializer element is not constant
+lex.c:119: (near initialization for `wordlist[48]')
+lex.c:119: initializer element is not constant
+lex.c:119: (near initialization for `wordlist[49]')
+lex.c:119: initializer element is not constant
+lex.c:119: (near initialization for `wordlist[50]')
+lex.c:119: initializer element is not constant
+lex.c:119: (near initialization for `wordlist[51]')
+lex.c:119: initializer element is not constant
+lex.c:119: (near initialization for `wordlist[52]')
+lex.c:119: initializer element is not constant
+lex.c:119: (near initialization for `wordlist[53]')
+lex.c:120: initializer element is not constant
+lex.c:120: (near initialization for `wordlist[54]')
+lex.c:121: `kALIAS' undeclared (first use in this function)
+lex.c:121: initializer element is not constant
+lex.c:121: (near initialization for `wordlist[55].id')
+lex.c:121: initializer element is not constant
+lex.c:121: (near initialization for `wordlist[55].state')
+lex.c:121: warning: excess elements in struct initializer
+lex.c:121: warning: (near initialization for `wordlist[55]')
+lex.c:121: initializer element is not constant
+lex.c:121: (near initialization for `wordlist[55]')
+pack.c:82: warning: parameter names (without types) in function declaration
+pack.c:82: `TOKEN_PASTE' declared as function returning a function
+pack.c: In function `TOKEN_PASTE':
+pack.c:82: declaration for parameter `z' but no such parameter
+pack.c:82: warning: declaration of `s' shadows a parameter
+pack.c: At top level:
+pack.c:102: warning: parameter names (without types) in function declaration
+pack.c:102: `TOKEN_PASTE' declared as function returning a function
+pack.c:102: redefinition of `TOKEN_PASTE'
+pack.c:82: `TOKEN_PASTE' previously defined here
+pack.c: In function `TOKEN_PASTE':
+pack.c:102: declaration for parameter `z' but no such parameter
+pack.c: At top level:
+pack.c:119: warning: parameter names (without types) in function declaration
+pack.c:119: `TOKEN_PASTE' declared as function returning a function
+pack.c:119: redefinition of `TOKEN_PASTE'
+pack.c:102: `TOKEN_PASTE' previously defined here
+pack.c: In function `TOKEN_PASTE':
+pack.c:119: declaration for parameter `z' but no such parameter
+pack.c: At top level:
+pack.c:168: warning: parameter names (without types) in function declaration
+pack.c:168: `TOKEN_PASTE' declared as function returning a function
+pack.c:168: redefinition of `TOKEN_PASTE'
+pack.c:119: `TOKEN_PASTE' previously defined here
+pack.c: In function `TOKEN_PASTE':
+pack.c:168: declaration for parameter `z' but no such parameter
+process.c: In function `rb_syswait':
+process.c:594: `hfunc' undeclared (first use in this function)
+process.c:594: (Each undeclared identifier is reported only once
+process.c:594: for each function it appears in.)
+process.c:594: called object is not a function
+process.c:594: `qfunc' undeclared (first use in this function)
+process.c:594: `ifunc' undeclared (first use in this function)
+random.c: In function `rb_f_rand':
+random.c:158: `RAND_MAX' undeclared (first use in this function)
+random.c:158: (Each undeclared identifier is reported only once
+random.c:158: for each function it appears in.)
+ruby.c: In function `ruby_init_loadpath':
+ruby.c:266: `RUBY_SITE_LIB2' undeclared (first use in this function)
+ruby.c:266: (Each undeclared identifier is reported only once
+ruby.c:266: for each function it appears in.)
+ruby.c:270: `RUBY_SITE_ARCHLIB' undeclared (first use in this function)
+ruby.c:271: `RUBY_SITE_LIB' undeclared (first use in this function)
+ruby.c:273: `RUBY_LIB' undeclared (first use in this function)
+ruby.c:277: `RUBY_ARCHLIB' undeclared (first use in this function)
+signal.c:348: parse error before "sighandle"
+signal.c:348: warning: data definition has no type or storage class
+signal.c:350: parse error before "sighandle"
+signal.c: In function `sighandle':
+signal.c:364: warning: passing arg 2 of `signal' from incompatible pointer type
+signal.c: At top level:
+signal.c:378: parse error before "sigbus"
+signal.c:378: warning: data definition has no type or storage class
+signal.c:380: parse error before "sigbus"
+signal.c:388: parse error before "sigsegv"
+signal.c:388: warning: data definition has no type or storage class
+signal.c:390: parse error before "sigsegv"
+signal.c:398: parse error before "sigpipe"
+signal.c:398: warning: data definition has no type or storage class
+signal.c:400: parse error before "sigpipe"
+signal.c:453: parse error before "sigexit"
+signal.c:453: warning: data definition has no type or storage class
+signal.c:455: parse error before "sigexit"
+signal.c: In function `trap':
+signal.c:465: `func' undeclared (first use in this function)
+signal.c:465: (Each undeclared identifier is reported only once
+signal.c:465: for each function it appears in.)
+signal.c:465: called object is not a function
+signal.c: In function `Init_signal':
+signal.c:656: warning: passing arg 2 of `signal' from incompatible pointer type
+signal.c:658: warning: passing arg 2 of `signal' from incompatible pointer type
+signal.c:661: warning: passing arg 2 of `signal' from incompatible pointer type
+signal.c:664: warning: passing arg 2 of `signal' from incompatible pointer type
+signal.c:667: warning: passing arg 2 of `signal' from incompatible pointer type
+signal.c:670: warning: passing arg 2 of `signal' from incompatible pointer type
+signal.c:674: warning: passing arg 2 of `signal' from incompatible pointer type
+signal.c:677: warning: passing arg 2 of `signal' from incompatible pointer type
+signal.c:680: warning: passing arg 2 of `signal' from incompatible pointer type
+time.c:22: redefinition of `struct timeval'
+time.c: In function `time_s_now':
+time.c:60: `free' undeclared (first use in this function)
+time.c:60: (Each undeclared identifier is reported only once
+time.c:60: for each function it appears in.)
+time.c: In function `time_new_internal':
+time.c:101: `free' undeclared (first use in this function)
+time.c: In function `time_clone':
+time.c:570: `free' undeclared (first use in this function)
+time.c: In function `rb_strftime':
+time.c:932: `free' used prior to declaration
+time.c: In function `time_strftime':
+time.c:968: `free' used prior to declaration
+time.c:976: `free' used prior to declaration
+util.c: In function `check_dir':
+util.c:90: `W_OK' undeclared (first use in this function)
+util.c:90: (Each undeclared identifier is reported only once
+util.c:90: for each function it appears in.)

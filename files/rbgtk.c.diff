@@ -1,0 +1,7 @@
+--- src/rbgtk.c.orig	Fri Jan 12 05:51:22 2001
++++ src/rbgtk.c	Wed May  2 02:00:03 2001
+@@ -664,3 +664,3 @@
+ 
+-#ifdef NATIVE_WIN32
++#if defined _WIN32
+ # undef USE_POLL_FUNC /* I don't know whether this works for win32. */

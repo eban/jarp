@@ -1,0 +1,15 @@
+--- cmbinfo.h.orig	2002-06-29 00:00:00.000000000 +0900
++++ cmbinfo.h	2002-07-16 22:32:48.000000000 +0900
+@@ -7,5 +7,5 @@
+ #define CMBINFO_H
+-#include <windows.h>
+ #include <string>
+ #include <deque>
++#include <windows.h>
+ using namespace std;
+--- rubyitpr.cpp.orig	2002-06-29 00:00:00.000000000 +0900
++++ rubyitpr.cpp	2002-07-16 22:33:21.000000000 +0900
+@@ -8,2 +8,3 @@
+ #include <stdio.h>
++#include <windows.h>
+ #include <ruby.h>

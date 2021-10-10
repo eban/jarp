@@ -1,0 +1,173 @@
+diff -u1r cvs-1.11/src/client.c cvs-1.11.http/src/client.c
+--- cvs-1.11/src/client.c	Fri Jul  7 01:20:41 2000
++++ cvs-1.11.http/src/client.c	Tue Nov 21 13:36:54 2000
+@@ -3675,3 +3675,9 @@
+ {
+-    struct servent *s = getservbyname ("cvspserver", "tcp");
++    struct servent *s;
++
++    /* If the user explicitly specified a port use that one.  */
++    if (CVSroot_port != 0)
++	return CVSroot_port;
++
++    s = getservbyname ("cvspserver", "tcp");
+ 
+@@ -3791,7 +3797,54 @@
+     port_number = auth_server_port_number ();
+-    hostinfo = init_sockaddr (&client_sai, CVSroot_hostname, port_number);
++    /* if we have a proxy connect to that instead */
++    if (CVSroot_proxy)
++    {
++	hostinfo = init_sockaddr (&client_sai, CVSroot_proxy, CVSroot_proxy_port);
++    }
++    else
++    {
++	hostinfo = init_sockaddr (&client_sai, CVSroot_hostname, port_number);
++    }
++
+     if (connect (sock, (struct sockaddr *) &client_sai, sizeof (client_sai))
+ 	< 0)
+-	error (1, 0, "connect to %s:%d failed: %s", CVSroot_hostname,
+-	       port_number, SOCK_STRERROR (SOCK_ERRNO));
++	error (1, 0, "connect to %s:%d failed: %s",
++	       CVSroot_proxy ? CVSroot_proxy : CVSroot_hostname,
++	       CVSroot_proxy ? CVSroot_proxy_port : port_number,
++	       SOCK_STRERROR (SOCK_ERRNO));
++
++    /* if we have proxy then connect to the proxy first */
++    if (CVSroot_proxy)
++    {
++#define CONNECT_STRING "CONNECT %s:%d HTTP/1.0\r\n\r\n"
++	/* Send a "CONNECT" command to proxy: */
++	char* read_buf;
++	int codenum, count;
++	/* 4 characters for port covered by the length of %s & %d */
++	char* write_buf = xmalloc (strlen (CONNECT_STRING)
++				   + strlen (CVSroot_hostname) + 1);
++	sprintf (write_buf, CONNECT_STRING, CVSroot_hostname, port_number);
++	send (sock, write_buf, strlen (write_buf), 0);
++
++	/* Wait for HTTP status code, bail out if you don't get back a 2xx code.*/
++	count = recv_line (sock, &read_buf);
++	sscanf (read_buf, "%s %d", write_buf, &codenum);
++
++	if ((codenum / 100) != 2)
++	    error (1, 0, "proxy server %s:%d does not support http tunnelling",
++		   CVSroot_proxy, CVSroot_proxy_port);
++	free (read_buf);
++	free (write_buf);
++
++	/* Skip through remaining part of MIME header, recv_line
++           consumes the trailing \n */
++	while(recv_line (sock, &read_buf) > 0)
++	{
++	    if (read_buf[0] == '\r' || read_buf[0] == 0)
++	    {
++		free (read_buf);
++		break;
++	    }
++	    free (read_buf);
++	}
++    }
+ 
+diff -u1r cvs-1.11/src/client.h cvs-1.11.http/src/client.h
+--- cvs-1.11/src/client.h	Mon Jan  3 12:21:29 2000
++++ cvs-1.11.http/src/client.h	Tue Nov 21 13:36:54 2000
+@@ -63,2 +63,5 @@
+ # endif /* CVS_AUTH_PORT */
++# ifndef CVS_PROXY_PORT
++# define CVS_PROXY_PORT 80
++# endif /* CVS_PROXY_PORT */
+ #endif /* AUTH_CLIENT_SUPPORT */
+diff -u1r cvs-1.11/src/cvs.h cvs-1.11.http/src/cvs.h
+--- cvs-1.11/src/cvs.h	Sun Jul  9 04:57:21 2000
++++ cvs-1.11.http/src/cvs.h	Tue Nov 21 13:36:54 2000
+@@ -386,2 +386,9 @@
+ 
++/*
++ * Options for non-standard ports etc
++ */
++extern int CVSroot_port;	/* port on the remote cvs server */
++extern int CVSroot_proxy_port;	/* the port on the proxy through which to tunnel */
++extern char* CVSroot_proxy;	/* proxy to tunnel through */
++
+ /* These variables keep track of all of the CVSROOT directories that
+diff -u1r cvs-1.11/src/root.c cvs-1.11.http/src/root.c
+--- cvs-1.11/src/root.c	Fri Jul 28 07:28:36 2000
++++ cvs-1.11.http/src/root.c	Tue Nov 21 13:38:07 2000
+@@ -290,2 +290,5 @@
+ char *CVSroot_directory;	/* the directory name */
++char *CVSroot_proxy = NULL;	/* the proxy to tunnel through */
++int CVSroot_port = 0;		/* the remote port to use */
++int CVSroot_proxy_port = CVS_PROXY_PORT; /* the proxy port to tunnel through */
+ 
+@@ -321,2 +324,3 @@
+ 	char *method = ++cvsroot_copy;
++	int have_semicolon;
+ 
+@@ -331,3 +335,4 @@
+ 
+-	if (! (p = strchr (method, ':')))
++	p = strpbrk (method, ":;#");
++	if (p == NULL)
+ 	{
+@@ -337,2 +342,3 @@
+ 	}
++	have_semicolon = (*p == ';' || *p == '#');
+ 	*p = '\0';
+@@ -361,2 +367,55 @@
+ 	    return 1;
++	}
++
++	while (have_semicolon)
++	{
++	    /* More elaborate implementation would allow multiple
++	       semicolons, for example:
++
++	           :server;rsh=34;command=cvs-1.6:
++
++	        we will allow
++	           :server;port=22;proxy=www-proxy;proxyport=8080:
++
++	        we will also allow # as well as ; as a separator to
++	        avoid having to quote the root in a shell.
++	    */
++	    /* FIXME: lots of error conditions should be better handled,
++	       e.g. garbage after the number or no valid number.
++
++	       Would be nice to have testcases for some of these cases
++	       including the error cases.  */
++	    p = strpbrk (cvsroot_copy, ":;#");
++	    if (p == NULL)
++		error (1, 0, "[semi]colon missing in %s", CVSroot);
++
++	    /* pick up more options if we have them */
++	    have_semicolon = (*p == ';' || *p == '#');
++	    *p = '\0';
++
++	    if (strncmp (cvsroot_copy, "port=", 5) == 0)
++	    {
++		if (cvsroot_copy [5] == '\0')
++		    error (1, 0, "no port specified in CVSROOT: %s",
++			   cvsroot_copy);
++		CVSroot_port = atoi (cvsroot_copy + 5);
++	    }
++	    else if (strncmp (cvsroot_copy, "proxy=", 6) == 0)
++	    {
++		CVSroot_proxy = xstrdup (cvsroot_copy + 6);
++		if (*CVSroot_proxy == '\0')
++		    error (1, 0, "no proxy specified in CVSROOT: %s",
++			   cvsroot_copy);
++	    }
++	    else if (strncmp (cvsroot_copy, "proxyport=", 10) == 0)
++	    {
++		if (cvsroot_copy [10] == '\0')
++		    error (1, 0, "no proxy port specified in CVSROOT: %s",
++			   cvsroot_copy);
++		CVSroot_proxy_port = atoi (cvsroot_copy + 10);
++	    }
++	    else
++		error (1, 0, "invalid semicolon expression in CVSROOT: %s",
++		       cvsroot_copy);
++	    cvsroot_copy = ++p;
+ 	}

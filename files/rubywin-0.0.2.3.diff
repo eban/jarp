@@ -1,0 +1,28 @@
+--- config.rb.orig	Mon Jan  8 14:12:50 2001
++++ config.rb	Wed Jan 24 01:42:09 2001
+@@ -89,3 +89,3 @@
+ install: $(TARGET)
+-	#{CONFIG['ruby_install_name']} ./install.rb
++	#{CONFIG['ruby_install_name']} $(RUBYOPT1) $(srcdir)/install.rb $(RUBYOPT2)
+ EOF
+--- install.rb.orig	Mon Jan  8 14:12:52 2001
++++ install.rb	Wed Jan 24 01:47:12 2001
+@@ -5,5 +5,6 @@
+ bindir = CONFIG["bindir"]
++srcdir = File.dirname($0)
+ 
+-for dll in Dir['*.dll']
+-  File.install dll, "#{bindir}/#{dll}", 0755, true
++for dll in Dir["#{srcdir}/*.dll"]
++  File.install dll, bindir, 0755, true
+ end
+@@ -11,3 +12,3 @@
+ for exe in Dir['*.exe']
+-  File.install exe, "#{bindir}/#{exe}", 0755, true
++  File.install exe, bindir, 0755, true
+ end
+@@ -15,3 +16,3 @@
+ File.makedirs "#{bindir}/rwlib"
+-for rb in Dir['rwlib/*.rb']
++for rb in Dir["#{srcdir}/rwlib/*.rb"]
+   File.install rb, "#{bindir}/rwlib", 0644, true

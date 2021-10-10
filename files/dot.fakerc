@@ -1,0 +1,36 @@
+platform = ENV['RUBY_PLATFORM']
+version = ENV['RUBY_VERSION']
+
+distdir = File.join(File.expand_path("~/dist"), platform)
+
+$:.collect! do |x|
+  x.sub! /^\/usr/, distdir+'/usr'
+  x.sub! Regexp.quote(RUBY_PLATFORM), platform
+  x.sub! /\d+\.\d+/, version[/\d+\.\d+/] if version
+  x
+end
+
+ENV['PATH'] = File.join(distdir, 'usr/local/bin') + ':' + ENV['PATH']
+
+if /\brdoc\b/ =~ Dir.pwd and /\binstall\.rb\b/ =~ $0 and
+  not File.exist? "install.rb~"
+  File.rename "install.rb", "install.rb~"
+  install = open("install.rb~").read
+  install.sub!(/^\$realbindir = \$bindir/,
+    '\&.sub %r(^.*dist/i386-(cygwin|mingw32|msdosdjgpp)), ""')
+  install.sub!(/^  opfile /, '#\&')
+  open("install.rb", "w") do |fw|
+    fw.print install
+  end
+end    
+
+END {
+  if /\bextconf\.rb\b/ =~ $0 and File.exist?('Makefile')
+    ARGV.replace ['Makefile']
+    $-i = '~'
+    while line = gets
+	print line.sub(/^(install:)/, 'system-\1')
+    end
+    print "export PATH:=#{ENV['PATH']}\n"
+  end
+}

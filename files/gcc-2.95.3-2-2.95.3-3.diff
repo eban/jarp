@@ -1,0 +1,80 @@
+diff -u1r gcc-2.95.3-2/gcc/ChangeLog.Cygwin gcc-2.95.3-3/gcc/ChangeLog.Cygwin
+--- gcc-2.95.3-2/gcc/ChangeLog.Cygwin	Sat Mar 17 02:42:19 2001
++++ gcc-2.95.3-3/gcc/ChangeLog.Cygwin	Thu Apr 19 10:39:06 2001
+@@ -1 +1,5 @@
++Wed Apr 18 21:38:06 2001  Li-Kai Liu  <edwin.liu@usa.net>
++
++	* i386/cygwin.h (CPP_SPEC): Fix missing 'm' in no-cygwin test.
++
+ Wed May 31 14:52:18 CDT 2000 Ron Parker  (rdparker@butlermfg.com)
+Only in gcc-2.95.3-3/gcc/config/i386: .winnt.c.swp
+diff -u1r gcc-2.95.3-2/gcc/config/i386/cygwin.h gcc-2.95.3-3/gcc/config/i386/cygwin.h
+--- gcc-2.95.3-2/gcc/config/i386/cygwin.h	Mon Mar 26 06:55:17 2001
++++ gcc-2.95.3-3/gcc/config/i386/cygwin.h	Thu Apr 19 09:54:15 2001
+@@ -58,11 +58,4 @@
+ 
+-/* Normally, -lgcc is not needed since everything in it is in the DLL, but we
+-   want to allow things to be added to it when installing new versions of
+-   GCC without making a new CYGWIN.DLL, so we leave it.  Profiling is handled
+-   by calling the init function from the prologue. */
+-
+-#undef LIBGCC_SPEC
+-#define LIBGCC_SPEC "%{mno-cygwin: %{mthreads:-lmingwthrd} -lmingw32} -lgcc %{mno-cygwin:-lmoldname -lmsvcrt}"
+-
+-#define LINKER_NAME "collect2"
++#undef CPP_PREDEFINES
++#define CPP_PREDEFINES "-D_X86_=1 -Asystem(winnt)"
+ 
+@@ -72,4 +65,5 @@
+ 			"-isystem " CYGWIN_CROSS_DIR "/include/g++"
+-#define CYGWIN_W32API "-idirafter " CYGWIN_CROSS_DIR "/include/w32api"
+-#define CYGWIN_LIBS "%q" CYGWIN_CROSS_DIR "/lib/"
++#define W32API_INC "-idirafter " CYGWIN_CROSS_DIR "/include/w32api"
++#define W32API_LIB "%q" CYGWIN_CROSS_DIR "/lib/w32api/"
++#define CYGWIN_LIBS "%q" CYGWIN_CROSS_DIR "/lib/ %q"
+ #define MINGW_LIBS "%q" CYGWIN_CROSS_DIR "/lib/mingw/"
+@@ -83,3 +77,4 @@
+ 			"-isystem /usr/include/g++"
+-#define CYGWIN_W32API "-idirafter /usr/include/w32api"
++#define W32API_INC "-idirafter /usr/include/w32api"
++#define W32API_LIB "%q/usr/lib/w32api/"
+ #define CYGWIN_LIBS "%q/usr/lib/ %q/usr/local/lib/"
+@@ -92,5 +87,2 @@
+ 
+-#undef CPP_PREDEFINES
+-#define CPP_PREDEFINES "-D_X86_=1 -Asystem(winnt)"
+-
+ /* Support the __declspec keyword by turning them into attributes.
+@@ -115,4 +107,4 @@
+     CYGWIN_INCLUDES "}\
+-  %{mwin32|no-cygwin:-DWIN32 -D_WIN32 -D__WIN32 -D__WIN32__ -DWINNT}\
+-  %{!mno-win32:" CYGWIN_W32API "}\
++  %{mwin32|mno-cygwin:-DWIN32 -D_WIN32 -D__WIN32 -D__WIN32__ -DWINNT}\
++  %{!mno-win32:" W32API_INC "}\
+ "
+@@ -126,3 +118,3 @@
+ #undef STARTFILE_SPEC
+-#define STARTFILE_SPEC "-L/usr/lib/w32api\
++#define STARTFILE_SPEC W32API_LIB "\
+   %{mno-cygwin:" MINGW_LIBS "}\
+@@ -133,2 +125,12 @@
+ "
++
++/* Normally, -lgcc is not needed since everything in it is in the DLL, but we
++   want to allow things to be added to it when installing new versions of
++   GCC without making a new CYGWIN.DLL, so we leave it.  Profiling is handled
++   by calling the init function from the prologue. */
++
++#undef LIBGCC_SPEC
++#define LIBGCC_SPEC "%{mno-cygwin: %{mthreads:-lmingwthrd} -lmingw32} -lgcc %{mno-cygwin:-lmoldname -lmsvcrt}"
++
++#define LINKER_NAME "collect2"
+ 
+Only in gcc-2.95.3-2/gcc: objc
+diff -u1r gcc-2.95.3-2/gcc/version.c gcc-2.95.3-3/gcc/version.c
+--- gcc-2.95.3-2/gcc/version.c	Mon Mar 26 11:54:09 2001
++++ gcc-2.95.3-3/gcc/version.c	Thu Apr 19 10:08:00 2001
+@@ -1 +1 @@
+-char *version_string = "2.95.3-2 (cygwin special)";
++char *version_string = "2.95.3-3 (cygwin special)";
+Only in gcc-2.95.3-2: libobjc

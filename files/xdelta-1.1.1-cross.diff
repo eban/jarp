@@ -1,0 +1,37 @@
+--- xdmain.c.orig	Sat Apr 10 09:56:00 1999
++++ xdmain.c	Tue Jan 16 02:10:17 2001
+@@ -37,3 +37,8 @@
+ #include <sys/mman.h>
++#ifndef O_BINARY
+ #define O_BINARY 0
++#endif
++#if defined MSDOS
++#define lstat stat
++#endif
+ #else
+@@ -82,3 +87,3 @@
+ 
+-#ifdef _WIN32
++#if defined _WIN32 || defined MSDOS
+ #define FOPEN_READ_ARG "rb"
+@@ -312,2 +317,3 @@
+   gint longind;
++  gchar *p;
+ 
+@@ -320,2 +326,6 @@
+ 
++  p = (gchar *)program_name + strlen(program_name) - 4;
++  if (strcasecmp(p, ".exe") == 0)
++    *p = 0;
++
+   g_log_set_handler (G_LOG_DOMAIN,
+@@ -1103,3 +1113,3 @@
+ 	{
+-#ifdef WIN32
++#if defined WIN32 || defined MSDOS
+ 	  g_free (lru_dead->buffer);
+@@ -1217,3 +1227,3 @@
+ 	{
+-#ifdef WIN32
++#if defined WIN32 || defined MSDOS
+ 	  lru->buffer = g_malloc (to_map);

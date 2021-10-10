@@ -1,0 +1,5 @@
+#!/bin/sh
+script=$1
+shift
+target=`basename $0 | sed 's/-ruby$//'`
+exec ruby -rfake_TARGET -s $script -target=$target -- "$@"

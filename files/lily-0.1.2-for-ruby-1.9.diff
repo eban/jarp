@@ -1,0 +1,23 @@
+--- lily.cgi~	2004-03-30 17:00:00.000000000 +0900
++++ lily.cgi	2004-04-06 02:47:05.000000000 +0900
+@@ -29,3 +29,3 @@
+     @version = "0.1.2"
+-    @ruby_version = ::VERSION
++    @ruby_version = ::RUBY_VERSION
+ 
+--- plugin/trackback.rb~	2004-03-29 23:01:00.000000000 +0900
++++ plugin/trackback.rb	2004-04-06 02:46:29.000000000 +0900
+@@ -18,4 +18,4 @@
+           if Kconv.guess(@body) == Kconv::SJIS then
+-            if /[\020-\177][\200-\237]/ =~ @body or
+-               /[\300-\377][\000-\177\300-\377]/ =~ @body then
++            if /[\020-\177][\200-\237]/n =~ @body or
++               /[\300-\377][\000-\177\300-\377]/n =~ @body then
+               @title = Uconv.sjistou8(@title)
+@@ -77,4 +77,4 @@
+ 		elsif Kconv.guess(excerpt) == Kconv::SJIS then
+-		  if /[\020-\177][\200-\237]/ =~ excerpt or
+-		     /[\300-\377][\000-\177\300-\377]/ =~ excerpt then
++		  if /[\020-\177][\200-\237]/n =~ excerpt or
++		     /[\300-\377][\000-\177\300-\377]/n =~ excerpt then
+             title = Uconv.sjistou8(title)

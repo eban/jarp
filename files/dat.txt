@@ -1,0 +1,37 @@
+#!/usr/bin/perl -w
+use strict;
+
+my $query_string = $ENV{"QUERY_STRING"};
+if ($query_string) {
+    @ARGV = ($query_string);
+    print "Content-Type: text/html\n\n";
+}
+
+my $i = 1;
+while (<>) {
+    s/\r?\n$//;
+    my ($name, $mail, $date, $body, $title) = split(/<>/);
+    if ($i == 1) {
+        print <<EOF;
+<title>$title</title>
+<p>$title</p>
+<dl>
+EOF
+    }
+    if ($mail) {
+        $name .= " &lt;$mail&gt;";
+    }
+    $body =~ s@http://ime.nu/@http://@g;
+    $body =~ s@<a href="\.\./test/read.cgi/.+/((\d+)(-\d+)?)" target="_blank">(.+?)\1</a>@<a href="#$2">$4$1</a>@;
+    print <<EOF;
+<dt><a name="$i">$i</a> ÅF$nameÅF$date
+<dd>
+$body
+<p>
+EOF
+    $i++;
+}
+print <<EOF;
+</dl>
+<hr>
+EOF

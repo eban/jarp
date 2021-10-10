@@ -1,0 +1,76 @@
+include Makefile
+SHELL=/bin/bash
+TAR=tar
+RUBYW_INSTALL_NAME=rubyw
+TARGET=$(shell ruby -rfake_TARGET -s -r./rbconfig -e 'print Config::CONFIG["arch"]' -- -version=$(MAJOR).$(MINOR).$(TEENY))
+DESTDIR=$(HOME)/dist/$(TARGET)
+HOST=$(shell ruby -rfake_TARGET -s -r./rbconfig -e 'print Config::CONFIG["host"]' -- -version=$(MAJOR).$(MINOR).$(TEENY))
+PUBLIC_HTML=$(HOME)/helium/public_html
+RELEASE_CODE=$(shell if [ -d $(srcdir)/CVS ]; then \
+	awk '/RUBY_RELEASE_CODE/{print "-" $$3}' $(srcdir)/version.h;\
+	else echo ''; fi)
+WINS=$(if $(wildcard $(LIBRUBY_SO)),usr/local/bin/$(RUBYW_INSTALL_NAME)$(EXEEXT) usr/local/bin/$(LIBRUBY_SO))
+ifeq ($(WINS),)
+  DEVEL=--exclude='*.[ah]'
+  PRECMD=:
+else
+  IMPLIB_ORG=lib$(subst .dll,,$(LIBRUBY_SO)).a
+  IMPLIB=lib$(LIBRUBY_SO).a
+  DEVEL=--exclude='librubys.a'
+#  PRECMD=cd usr/local/lib; ln -fs ../bin/$(LIBRUBY_SO) .; cd ../../..
+  PRECMD=cd usr/local/lib; mv -f $(IMPLIB_ORG) $(IMPLIB); cd ../../..
+  WINS += usr/local/lib/$(IMPLIB)
+endif
+ifeq ($(TARGET),i386-mingw32)
+  BMINGW=-e 'sub Regexp.quote("-bmingw"), "-mno-cygwin"'
+else
+  BMINGW=
+endif
+DOC=usr/local/doc/ruby/ruby-$(MAJOR).$(MINOR).$(TEENY)
+DIR=$(DESTDIR)/$(DOC)
+
+xdelta: install-cross pack
+	cd $(PUBLIC_HTML)/ruby/binaries/$(TARGET);\
+	xdelta delta -9 \
+	ruby-$(MAJOR).$(MINOR).$(TEENY)-$(TARGET).tar.gz \
+	ruby-$(MAJOR).$(MINOR).$(TEENY)$(RELEASE_CODE)-$(TARGET).tar.gz \
+	ruby-$(MAJOR).$(MINOR).$(TEENY)$(RELEASE_CODE)-$(TARGET).xdelta || true
+
+pack:
+	cd $(DESTDIR);\
+	$(PRECMD);\
+	chmod -R +w usr/local/lib/ruby/$(MAJOR).$(MINOR)/$(TARGET) usr/local/lib/lib*a; \
+	ruby -i~ -pe 'gsub Regexp.quote("$(HOST)-"), ""' \
+	$(BMINGW) \
+	usr/local/lib/ruby/$(MAJOR).$(MINOR)/$(TARGET)/rbconfig.rb;\
+	trap 'mv usr/local/lib/ruby/$(MAJOR).$(MINOR)/$(TARGET)/rbconfig.rb~ usr/local/lib/ruby/$(MAJOR).$(MINOR)/$(TARGET)/rbconfig.rb;exit' 0 1 2 3 15;\
+	GZIP=-9 $(TAR) cfvz $(PUBLIC_HTML)/ruby/binaries/$(TARGET)/ruby-$(MAJOR).$(MINOR).$(TEENY)$(RELEASE_CODE)-$(TARGET).tar.gz \
+	usr/local/bin/$(RUBY_INSTALL_NAME)$(EXEEXT) \
+	$(WINS) \
+	usr/local/bin/irb \
+	usr/local/lib/ruby/$(MAJOR).$(MINOR) \
+	$(DOC) \
+	$(DEVEL) \
+	--exclude='*.bak' \
+	--exclude='*~' \
+	--exclude='*.orig' \
+	--exclude='*.org' \
+	--exclude='CVS' \
+	--owner=ruby --group=ruby
+
+install-cross: strip-all install
+	mkdir -p $(DIR)
+	cp -auv $(srcdir)/{COPYING*,*GPL,LEGAL,ChangeLog,MANIFEST,README*,ToDo,doc,misc,sample,*.rb} $(DIR)
+	mkdir -p $(DIR)/ext/{digest,etc,syslog}
+	cp -auv $(srcdir)/ext/digest/*.txt* $(DIR)/ext/
+	cp -auv $(srcdir)/ext/etc/*.txt* $(DIR)/ext/
+	cp -auv $(srcdir)/ext/syslog/*.txt* $(DIR)/ext/
+
+strip-all:
+	$(HOST)-strip *.exe
+
+debug:
+	@echo $(DLL)
+	@echo $(RELEASE_CODE)
+	@echo $(WINS)
+	@echo $(TARGET)

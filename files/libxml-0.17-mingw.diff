@@ -1,0 +1,9 @@
+--- glade/glade-sax.c.orig	2001-02-10 20:45:31.000000000 
++++ glade/glade-sax.c	2002-05-19 15:24:06.000000000 
+@@ -26,2 +26,6 @@
+ 
++#ifdef _WIN32
++#include <windows.h>
++#endif
++
+ #include <stdio.h>
