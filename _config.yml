@@ -1,6 +1,6 @@
 defaults:
   - scope:
-      path: _posts
-      type: ""
+      path: ""
+      type: posts
     values:
       permalink: /blog/:year-:month-:day.html
