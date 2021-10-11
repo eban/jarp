@@ -2,9 +2,9 @@
 permalink: /foo.html
 ---
 <ul>
-  {% for post in site.posts %}
+  {% for pages in site.pages %}
     <li>
-      <a href="{{ post.url }}">{{ post.title }}</a>
+      <a href="{{ pages.url }}">{{ pages.title }}</a>
     </li>
   {% endfor %}
 </ul>
